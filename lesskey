@@ -1,0 +1,14 @@
+# need to be complied --!
+# lesskey -o ~/.less ~/.lesskey
+
+#command
+? help
+
+- back-screen
+; toggle-option
+
+v pipe . vim - \n
+V pipe $ vim - \n
+
+l right-scroll
+h left-scroll

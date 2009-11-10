@@ -1,0 +1,6 @@
+MIRRORSITE="http://ftp2.jp.debian.org/debian/"
+DEBBUILDOPTS="-sa -i.git"
+DEBOOTSTRAP="debootstrap"
+APTCACHE="/var/cache/apt/archives"
+DEBIAN_FRONTEND="readline"
+AUTO_DEBSIGN=yes

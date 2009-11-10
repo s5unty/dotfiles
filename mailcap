@@ -1,0 +1,24 @@
+text/html ;\
+w3m -T text/html -I %{charset} -dump %s ;\
+nametemplate=%s.html ;\
+copiousoutput
+
+image/*; feh %s
+text/* ; source-highlight --failsafe -t4 -fesc -i %s | less -r
+
+application/x-diff-gzip; zcat %s; copiousoutput
+application/x-gtar; tar tvf %s; copiousoutput
+application/x-tar; tar tvf %s; copiousoutput
+application/x-tar-gz; tar tvfz %s; copiousoutput
+application/x-rar-compressed; rar v %s; copiousoutput
+application/x-zip-compressed; unzip -v %s; copiousoutput
+application/zip; unzip -v %s; copiousoutput
+
+application/pdf; xpdf %s; copiousoutput
+application/msword; ooffice %s; test=test -n "$DISPLAY"
+application/excel; ooffice %s; test=test -n "$DISPLAY"
+application/powerpoint; ooimpress %s; test=test -n "$DISPLAY"
+application/vnd.ms-excel; ooffice %s; test=test -n "$DISPLAY"
+application/vnd.ms-powerpoint; ooimpress %s; test=test -n "$DISPLAY"
+application/mspowerpoint;ooimpress %s; test=test -n "$DISPLAY"
+

@@ -1,0 +1,19 @@
+# Set banner=no to suppress authorship info at top of
+# colordiff output
+banner=no
+
+# To make the patch file *include* colours, change the option
+# below to 'yes'
+color_patches=no
+
+# available colours are: white, yellow, green, blue,
+#                        cyan, red, magenta, black,
+#                        darkwhite, darkyellow, darkgreen,
+#                        darkblue, darkcyan, darkred,
+#                        darkmagenta, darkblack
+plain=off
+newtext=darkblue
+oldtext=darkred
+diffstuff=darkmagenta
+cvsstuff=darkgreen
+

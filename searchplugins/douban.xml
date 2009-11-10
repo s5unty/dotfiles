@@ -1,0 +1,11 @@
+<SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
+<os:ShortName>douban</os:ShortName>
+<os:Description>douban search</os:Description>
+<os:InputEncoding>UTF-8</os:InputEncoding>
+<os:Image width="16" height="16">data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAUdJREFUOE99kz1uwkAQhYc2VFugdClcwAF8AK7AKVzTIaWPBBeIRE2HlD4RVKldQwVKj0RHvfBteGZsy4y02vXOvjd/zz0rLJqz8BJsPBzb6HVk2SDzLsvfcgv9YMfT0bb7rS1+Fjc/BLe1LtfxcDrE8+Ucuwwfb3g7+5olXEVQ/pUJxz7/nsfl7zJudpsE4A5AmIZ/kF/6wJm9Z8kp8ORzku7k46zvisSz4SSaIkLEmSy8UUr+kddLgEhlPOuBfJRX6wHRZUSAjAyoXaWwq8mcawSaBCQAVRrEPOZO4GoCfgoCkJoyaNauDItV8ZhEcyywN7UAEcSMl2xUUqsEP1KisKpu32cPCdZqombPrnNzxCgQI8NWEwHJCbtERQZSphdWp5AAsOgFRNK9F5WXd/oXcHLZ1fUuYaEVo1HeRCQhqSdk5BurEq/D2YV//aAbOgAAAABJRU5ErkJggg==</os:Image>
+<UpdateInterval>7</UpdateInterval>
+<UpdateUrl>http://mycroft.mozdev.org/update.php/id0/douban.src</UpdateUrl>
+<IconUpdateUrl>http://mycroft.mozdev.org/update.php/id0/douban.png</IconUpdateUrl>
+<os:Url type="text/html" method="GET" template="http://www.douban.com/subject_search?sourceid=Mozilla-search&amp;search_text={searchTerms}">
+</os:Url>
+</SearchPlugin>

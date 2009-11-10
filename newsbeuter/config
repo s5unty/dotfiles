@@ -1,0 +1,37 @@
+# newsbeuter_2.0-1
+# text mode rss feed reader with podcast support
+
+# General {{{
+notify-always yes
+notify-xterm yes
+auto-reload yes
+reload-time 20
+suppress-first-reload yes
+confirm-exit yes
+goto-next-feed no
+max-items 500
+refresh-on-startup no
+html-renderer "w3m -T text/html -dump"
+browser "x-www-browser"
+# }}}
+
+# Keybinding {{{
+bind-key j down
+bind-key k up
+bind-key h prev-dialog
+bind-key l next-dialog
+bind-key d close-dialog
+bind-key SPACE open
+bind-key - PPAGE
+bind-key i quit
+bind-key TAB next-unread
+#}}}
+
+# Color {{{
+color background   default default
+color listnormal   default default
+color listfocus    black   yellow
+color info         default default
+color article      default default
+#}}}
+

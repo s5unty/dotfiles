@@ -1,0 +1,39 @@
+# 信箱类型
+set mbox_type="Maildir"
+# 信箱目录
+set folder="/sun/mails/"
+# 默认使用的信箱
+set spoolfile="=personal"
+# 
+set record=""
+
+# 邮箱列表 {{{
+mailboxes !
+mailboxes =awesome
+mailboxes =debian-zh
+mailboxes =personal
+mailboxes =shopping
+mailboxes =debian-www
+mailboxes =debian-mentors
+mailboxes =shlug
+# }}}
+
+# 邮件列表选项 {{{
+subscribe awesome-devel@naquadah.org
+subscribe openrays@openrays.org
+subscribe wikizh-l@lists.wikimedia.org
+subscribe directfb-users@directfb.org
+subscribe desktop@sw.*
+subscribe team.nj@sw.*
+subscribe kde-china@kde.org
+subscribe ubuntu-zh@lists.ubuntu.com
+subscribe fcitx-dev@googlegroups.com
+subscribe shlug@googlegroups.com
+subscribe debian-boot@lists.debian.org
+subscribe debian-mentors@lists.debian.org
+subscribe debian-qa@lists.debian.org
+subscribe debian-mips@lists.debian.org
+subscribe debian-www@lists.debian.org
+subscribe debian-chinese-gb@lists.debian.org
+subscribe \d*@bugs.debian.org
+# }}}

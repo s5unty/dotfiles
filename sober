@@ -1,0 +1,28 @@
+#! /bin/sh 
+#
+# Packages.gz
+# Sources.gz
+# pkg1
+#   ver1
+#   ver2
+# pkg2
+#   ver3
+#     ...
+# pkg3
+# ...
+
+for file in `ls *.changes`
+do
+  source="`grep \"Source: \" $file | cut -d' ' -f2`"
+  version="`grep -m1 \"Version: \" $file | cut -d' ' -f2`"
+
+  mkdir -p "$source/$version"
+  mv `cut -d' ' -f6 $file | grep -E "\.deb$|\.udeb$|\.tar.gz$|\.diff.gz$|\.dsc$"` $file "$source/$version"
+done
+
+dir=`pwd -P | grep -E -o "\w*$"`
+pre='~s5unty/'
+cd -P ..
+dpkg-scanpackages -m $dir /dev/null $pre 2> /dev/null | gzip > $dir/Packages.gz
+dpkg-scansources $dir /dev/null $pre 2> /dev/null | gzip > $dir/Sources.gz
+

@@ -1,0 +1,15 @@
+# 设置要显示的邮件头及其显示顺序
+ignore *
+unignore From:
+unignore To:
+unignore CC:
+unignore BCC:
+unignore X-LDate:
+unignore Reply-To:
+unignore Organization:
+unignore Subject:
+
+hdr_order From: To: CC: BCC: Reply-To: Organization: X-LDate: Subject:
+
+# 特殊邮件头
+color header black yellow "^Subject:"

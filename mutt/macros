@@ -1,0 +1,19 @@
+macro generic "<esc>1" ":set from='Vern Sun <wuan.sun@sw-linux.com>'"
+macro generic "<esc>2" ":set from='Vern Sun <s5unty@gmail.com>'"
+
+macro compose "<esc>1" ":push <edit-from><enter><kill-line>Vern Sun <wuan.sun@sw-linux.com><enter>"
+macro compose "<esc>2" ":push <edit-from><enter><kill-line>Vern Sun <s5unty@gmail.com><enter>"
+
+macro index "c" "<change-folder>?<toggle-mailboxes>"
+macro pager "c" "<change-folder>?<toggle-mailboxes>"
+
+macro index G "<shell-escape>fetchmail<enter>" 'retrieve mail from POP server'
+macro pager G "<shell-escape>fetchmail<enter>" 'retrieve mail from POP server'
+
+macro index \cb |urlview\n 'call urlview to extract URLs out of a message'
+macro pager \cb |urlview\n 'call urlview to extract URLs out of a message'
+
+macro pager J "!gpg --keyserver pgp.mit.edu --recv-key " "Get PGP Key"
+macro pager K "!gpg --lsign-key " "Sign PGP Key"
+
+macro index \cr "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>"

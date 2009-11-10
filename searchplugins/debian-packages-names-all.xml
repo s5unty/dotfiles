@@ -1,0 +1,12 @@
+<SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
+<os:ShortName>Debian Packages - Names (All)</os:ShortName>
+<os:Description>Search for a package in any version of Debian</os:Description>
+<os:InputEncoding>UTF-8</os:InputEncoding>
+<os:Image width="16" height="16">data:image/x-icon;base64,R0lGODlhEAAQAPcAAP///++/z9BIcMAAQMgYQNAoYNhggOevv8gQUN9/n9BAcNhYgOCIoOefr8AIQO/Hz8ggUPff3+/P38gQQN+Hn9hogPfn7++/v/ff7++vv9AwYNBAYO+vr9BQgNA4cMgYUNhgcMg4UNhokO+nv9hQgOePr/fP3////////////////////////////////////////////////////////////////////////////////////////////////////wkEAAAAEF8tNymRfPT1EwAzCJF89PUTACx5AAAAAF8tqABfLXz0EwAseQAAtPQTAJUIkXwAAF8tAQAAAAIAAADc9BMAqABfLQAAXy0U9RMAdSmRfAAAXy0BAAAAAgAAAAAAAABnaWYALHkAAEAGFQAzCJF8oJkBACx5AAAAAF8tqABfLQAAAACgpxoAABBfLfT1EwDM9BMAAQAAAJj1EwAY7pB8wCmRfP////+5KZF8cPgaAAAAXy2wMF8tiPUTAAAAAAAAAAAANymRfJkskXwIAAAAGPUTAAAAAAAAAAAAeAEVAKj1EwBY9xoAoJkBALAwXy2I9RMAAAAAAHgBFQAAAF8tePgaAIj1EwCYpxoA9PUTAHgBFQAAAAAAEAAAAAkAAAD49RMA/gAAALz1EwDv8EF+eFtIAP4AAADU9RMA7m5gLRIAAADyAAAA/gAAAAAAAADo9RMA3d9CfgAAAADubmAtoKcaAPj1EwAJAAAAAAAAAMrQRwCGW0gAblcVAABXFQA7qkIAWPcaAO5uYC0kAAAA/wAAAAAAAAAseQAAeFtIAP8AAABuVxUAUPcaAGgBFQAAAAAAAAAAAFD3GgAgAQAAWPcaAG4AAAB4ARUAIAEAAAUBAAAAABUAPPQTAGJtcDuY9hMAGO6QfPAGkXz/////6waRfN+ZgHwAABUACAAUAPCZgHwAVxUAAAAAAAAAAAAAAAAAAAAAAPTCRAB+9xoAtE4YAIL3GgCi+RMA/////1j3GgBew0QAfvcaACH5BAEAAAAALAAAAAAQABAAQAh7AAEIBNAggYYBAzQkaDBQYIIBAwUkGEiAAEOBDQYYGGhAwEYAAiw2NCCyoUmMBAZMHNhAwICLAEg61DBwIkmYBxsmWHiyYUiYPQmm1CBAgIaUQEGWbJhRQE2IAj8+vWgAqkGCK4uyfOkwJEIBSTOuDGryJtmTDQjwNBkQADs=</os:Image>
+<UpdateInterval>7</UpdateInterval>
+<UpdateUrl>http://mycroft.mozdev.org/updateos.php/id0/all-debian-packages.xml</UpdateUrl>
+<IconUpdateUrl>http://mycroft.mozdev.org/updateos.php/id0/all-debian-packages.gif</IconUpdateUrl>
+<SearchForm>http://packages.debian.org/</SearchForm>
+<os:Url type="text/html" method="GET" template="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords={searchTerms}">
+</os:Url>
+</SearchPlugin>

@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# watch upstream sources for new releases
+# called by cron
+# * */2 * * *    /sun/home/.uscan 
+
+DIR=/sun/contrib
+LOG=/tmp/.uscan.log
+LOCK=/tmp/.uscan.lock
+
+`which uscan` --report-status $DIR > $LOG
+if  grep -q 'Newer version' $LOG; then
+  if [ ! -e $LOCK ]; then
+    mail -a 'From: TODO <~/.uscan@localhost>' -s '[cron] Newer version available' s5unty@localhost < $LOG
+    cd $HOME
+    `which todo` -a `grep 'Newer version' $LOG`
+  fi
+  touch $LOCK
+fi
+

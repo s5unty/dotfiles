@@ -1,0 +1,12 @@
+# hook 的执行顺序是先声明、后调用
+#
+# 1. 启动后立即使用折叠方式显示邮件
+folder-hook . push "<collapse-all><first-entry><last-entry><next-unread>"
+# 2. 进入公司邮箱后自动切换邮送域，保存已发邮件，不自动签名
+folder-hook company set "from='ZHANGSAN <xx@oo.com>'"
+folder-hook company set "record='=company'"
+folder-hook company set "crypt_autosign=no"
+# 3. 私人邮箱
+folder-hook !company set "from='LISI <xx@oo.org>'"
+folder-hook !company set "record=''"
+folder-hook !company set "crypt_autosign=yes"

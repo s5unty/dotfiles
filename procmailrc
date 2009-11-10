@@ -1,0 +1,110 @@
+# 使用 Maildir 格式保存信件
+# 用户邮箱目录的位置
+MAILDIR="/sun/mails/"
+# 分拣日志保存的位置
+LOGFILE="/var/log/procmail.log"
+# 邮件转换程序
+FORMAIL="/usr/bin/formail"
+# 使用简单日志
+VERBOSE=off
+
+# 本地化邮件日期
+# 原始日期 Tue, 31 Oct 2006 20:24:16 -0600 (CST)
+# 本地化后 Wed, 2006-11-01 10:24 +0800 | Tue, 20:24 -0600
+:0
+* ^Date: \/.*
+{
+    date = `echo "$MATCH" | grep -E -o '^[^\(+-]*'`
+    zone = `echo "$MATCH" | grep -E -o '[\(+-].*$'`
+    org_date = `date +'%a, %R' -d "$date"`
+    loc_date = `date +'%a, %F %R %z' -d "$MATCH"`
+    :0 fhw
+    | $FORMAIL -I "X-LDate: ${loc_date} | ${org_date} ${zone}"
+}
+
+# 关心的邮件列表
+:0
+* ^(List-Id|To|CC|BCC):.*(debian-chinese-|ubuntu-zh)
+debian-zh/
+
+:0
+* ^(List-Id|To|CC|BCC):.*debian-www.lists.debian.org
+debian-www/
+
+:0
+* ^(List-Id|To|CC|BCC):.*debian-mentors.lists.debian.org
+debian-mentors/
+
+:0
+* ^(List-Id|To|CC|BCC):.*(awesome-devel)
+awesome/
+
+:0
+* ^(List-Id|To|CC|BCC):.*shlug.googlegroups.com
+shlug/
+
+:0
+* ^From:.*(amazon.cn|taobao.com|alipay.com)
+shopping/
+
+# 暂时失去兴趣又不想退出的邮件列表
+:0 h
+* ^(List-Id|To|CC|Bcc):.*pkg-mono-devel.lists.alioth.debian.org
+/dev/null
+
+:0 h
+* ^(To|CC|BCC):.*wxChinese@googlegroups.com
+/dev/null
+
+:0 h
+* ^(To|CC|BCC):.*list.cn99.com
+/dev/null
+
+:0 h
+* ^(To|CC|BCC):.*(packages.debian.org)
+/dev/null
+
+:0 h
+* ^(To|CC|BCC):.*fcitx.*@
+/dev/null
+
+:0 h
+* ^From:.*robot@translationproject.org
+/dev/null
+
+:0 h
+* ^From:.*igs-adm@panda-igs.joyjoy.net
+/dev/null
+
+:0
+* ^(List-Id|To|CC|BCC):.*kde-china.kde.org
+/dev/null
+
+:0
+* ^(List-Id|To|CC|BCC):.*directfb.org
+/dev/null
+
+:0
+* ^(List-Id|To|CC|BCC):.*debian-www.lists.debian.org
+/dev/null
+
+:0
+* ^(List-Id|To|CC|BCC):.*debian-boot.lists.debian.org
+/dev/null
+
+:0
+* ^(List-Id|To|CC|BCC):.*debian-mentors.lists.debian.org
+/dev/null
+
+:0
+* ^(List-Id|To|CC|BCC):.*debian-mips.lists.debian.org
+/dev/null
+
+:0
+* ^(List-Id|To|CC|BCC):.*xfce-i18n.xfce.org
+/dev/null
+
+# 其它的邮件统统保存
+:0
+* .*
+personal/

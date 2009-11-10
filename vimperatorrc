@@ -1,0 +1,24 @@
+" work with theme 'Chromifox Extreme'
+hi StatusLine color: #9acd32; background: #D2E1F6;
+
+" binding
+map    . <C-PageDown>
+map    , <C-PageUp>
+map -- - <C-b>
+map   \\ <C-i>
+map <BS> <C-o>
+
+" macro
+map <F2>  :set encoding=GB2312<CR>
+map <C-q> :winclose<CR>
+map <C-d> :winclose<CR>
+map W     ;w
+map c     :set ds=d<CR>P:set ds=google<CR>:echo ""<CR>
+
+" general
+set go=""
+set cpt=sbfl
+set fc
+set visualbell
+set shell="/usr/bin/zsh"
+set editor="/usr/bin/urxvt -e vi"

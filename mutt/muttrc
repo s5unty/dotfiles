@@ -1,0 +1,119 @@
+source ~/.mutt/aliases                    # 指定通讯录
+source ~/.mutt/headers                    # 定义邮件头显示格式
+source ~/.mutt/bindings                   # 定义快捷键
+source ~/.mutt/macros                     # 定义宏(快捷键)
+source ~/.mutt/hooks                      # 定义事件钩子
+source ~/.mutt/colours                    # 定义 Mutt 颜色
+source ~/.mutt/auto_views                 # 定义支持自动浏览的文件格式
+#source ~/.mutt/imap                      # 使用 IMAP 服务
+source ~/.mutt/pop3                       # 使用 POP3 服务
+
+# 终端的编码
+set charset="UTF-8"
+# 外发邮件使用的编码
+set send_charset="UTF-8"
+# 用中文格式显示日期
+set locale=`echo "${LC_ALL:-${LC_TIME:-${LANG}}}"`
+# 解决未经过MIME编码的信件显示为乱码的问题
+set assumed_charset="GB2312:UTF-8"
+# 解决中文附件名为乱码的问题
+set rfc2047_parameters=yes
+# 回信时自动包含原文
+set include
+# 回信引文之前的符号
+set indent_str="> " 
+# 回信引文不用包含原文的信头
+set header=no
+# 采用msmtp发送邮件
+set sendmail="/usr/bin/msmtp"
+# 让mutt识别不同的邮件特征
+alternates s5unty@gmail.com
+# 在mutt提示To:时，按tab显示通讯录
+# 在mutt按a，把发件人添加到通讯录
+set alias_file="~/.mutt/aliases"
+# 借助 lbdb 快速查询通讯录
+set query_command="lbdbq %s"
+# 自定义显示界面
+set index_format="%S %?M?%-20.20F (%-2.2M)&%-25.25F? %T %?y?%.6y   %-118.118s&%-128.128s? %> %?X?%%& ?%[%b%d] - %4c"
+# 自定义标题界面
+set pager_format="%S %?M?%-20.20F (%-2.2M)&%-25.25F? %T %?y?%.6y   %-118.118s&%-128.128s? %> %?X?%%& ?%[%b%d] - %4c"
+# 自定义通讯录界面
+set alias_format="%3n %f %t %-38a %r"
+# 信箱列表格式
+set folder_format="%2C %t %4N %F %6s %f "
+# 信件按话题/时间排序
+set sort=threads
+set sort_aux=date-sent
+# 使用通讯录显示发件人
+set reverse_alias=yes
+# 邮件正文折行时不要显示前导加号
+set markers=no
+# 实现从多个账户发送信件
+set use_from=yes
+# 此选项确保从真正的邮送域发送信件
+set envelope_from=yes
+# 默认使用的的邮送域
+set from='Vern Sun <s5unty@gmail.com>'
+# 把状态栏放在页眉
+set status_on_top
+# 认为所有未读邮件都是新邮件
+set mark_old=no
+# 转发邮件时默认使用的主题
+set forward_format="Fwd: %s"
+# 转移信件时不必确认
+set confirmappend=no
+# 禁止折叠存在未读邮件的话题
+set collapse_unread=no
+# 撰写新邮件时不再提示是否使用草稿箱
+set recall=no
+# 开启邮件标题缓存功能，加快载入速度
+set header_cache="~/.mutt/cache/"
+# 开启 POP/IMAP 缓存功能
+set message_cachedir="~/.mutt/cache/"
+# 保存草稿的位置
+set postponed="~/.mutt/cache/postponed"
+# 中断发送的邮件自动保存在草稿箱
+set postpone=yes
+# 默认用主题内容和发件人作搜索关键字
+set simple_search="~f %s | ~s %s"
+# 将邮件正文解码再搜索
+set thorough_search=yes
+# 退出mutt前提示
+set quit=ask-no
+# mutt用纯ascii表示树状列表
+set ascii_chars=yes
+# 禁止PAGE键切换到下一封信件
+set pager_stop=yes
+# 快速回复，不用确认回复地址和主题
+set fast_reply
+# 退出时不再提示把信件从spool移动到的mbox文件
+set move=no
+# 避免整页整页的翻，我们要一行一行的翻
+set menu_scroll
+# 撰写邮件时让我直接编辑CC
+set askcc=yes
+# 签名文件，最后竖线|表示该文件是一段脚本
+set signature=~/.mutt/signature|
+# 在签名前添加 "-- "
+set sig_dashes=yes
+# 设定回信的模板
+set date_format="%a, %F at %R %z"
+set attribution="on %D, %n wrote:"
+# 设定编辑器在宽度76处自动折行
+set editor="vim \"+set textwidth=78\" \"+set formatoptions+=mM\""
+# 采用作为附件而非作为引用的方式转发邮件
+# 为了在转发邮件时自动包含待转发邮件本身的附件，似乎暂时只有这个办法。
+set mime_forward=yes
+# 让mutt识别不同的邮件特征
+# 1(空): 表示这封邮件的 To: 和 Cc: Bcc: 都没有你的地址，很多垃圾邮件都有这个特征。
+# 2: 表示你是收件人(To: 是你的地址之一)，而且是唯一的收件人。
+# 3: 表示你是收件人(To: 包括了你的地址之一)，但是你不是唯一的收件人。这是一封群体信件。
+# 4: 表示你的地址出现在 CC:，但是你不是唯一的被抄送的人。
+# 5: 表示这封邮件是你发出去的。
+# 6: 表示这是一封你已经加入的邮件列表寄来的。
+#             123456
+set to_chars=" TLCZ|"
+# 给邮件签名
+set crypt_autosign=yes
+# 有新邮件时提醒
+set beep_new=yes

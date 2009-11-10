@@ -1,0 +1,62 @@
+Xft.dpi:             96
+
+URxvt.termName:      rxvt
+URxvt.scrollBar:     False
+URxvt.cursorBlink:   True
+URxvt.urgentOnBell:  True
+URxvt.preeditType:   OverTheSpot
+URxvt.transparent:   On
+URxvt.shading:       100
+URxvt.saveLines:     2048
+URxvt.modifier:      Alt
+URxvt.urlLauncher:   x-www-browser
+URxvt.matcher.button:1
+URxvt.scrollTtyKeypress: True
+URxvt.scrollTtyOutput:   False
+URxvt.scrollWithBuffer:  True
+URxvt.secondaryScreen:   False
+URxvt.secondaryScroll:   False
+URxvt.perl-ext-common:   default,matcher
+
+URxvt.font:      xft:Andale Mono-10, xft:WenQuanYi Zen Hei-10, xft:WenQuanYi Bitmap Song-10
+URxvt.boldfont:  xft:Andale Mono-10, xft:WenQuanYi Zen Hei-10, xft:WenQuanYi Bitmap Song-10
+
+URxvt.background:    #111111
+URxvt.foreground:    #B8B000
+URxvt.cursorColor:   #FF3333
+URxvt.colorBD:       #f57900
+
+! Black
+*color0:                        #000000
+*color8:                        #555753
+! Red
+*color1:                        #ff6565
+*color9:                        #ff8d8d
+! Green
+*color2:                        #6E9E3C
+*color10:                       #93d44f
+! Yellow
+*color3:                        #B8B000
+*color11:                       #f57900
+! Blue
+*color4:                        #3465a4
+*color12:                       #005BCD
+! Mangenta
+*color5:                        #B967B0
+*color13:                       #BB0BA7
+! Cyan
+*color6:                        #89b6e2
+*color14:                       #46a4ff
+! White
+*color7:                        #cccccc
+*color15:                       #ffffff
+
+!!scroll_up
+URxvt.keysym.M-minus:command:\033]720;10\007
+!!font size
+URxvt.keysym.M-Up: command:\033]710;xft:Andale Mono-14,xft:WenQuanYi Zen Hei-14,xft: WenQuanYi Bitmap Song-14\007;
+URxvt.keysym.M-Down: command:\033]710;xft:Andale Mono-10,xft:WenQuanYi Zen Hei-10,xft: WenQuanYi Bitmap Song-10\007;
+!!icon path
+URxvt.iconFile:     $HOME/.config/awesome/terminator.png
+Mutt.iconFile:      /usr/share/pixmaps/mutt.xpm
+Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm
