@@ -298,14 +298,13 @@ globalkeys = awful.util.table.join (
         old_word = new_word
 
         local fc = ""
-        local f  = io.popen("sdcv -n --utf8-output -u '牛津英汉双解美化版' "..new_word)
-
+        local f  = io.popen("sdcv -n --utf8-output -u 'XDICT英汉辞典' "..new_word)
         for line in f:lines() do
             fc = fc .. line .. '\n'
         end
         f:close()
 
-        frame = naughty.notify({ text = fc, timeout = 180, width = 360 })
+        frame = naughty.notify({ text = fc, timeout = 7, width = 360 })
     end),
     awful.key({ modkey, "Shift" }, "d", function ()
         awful.prompt.run({prompt = "Dict: "}, mypromptbox[mouse.screen].widget, function(cin_word)
@@ -316,13 +315,13 @@ globalkeys = awful.util.table.join (
             end
 
             local fc = ""
-            local f  = io.popen("sdcv -n --utf8-output -u 'XDICT英汉辞典' -u 'XDICT汉英辞典' "..cin_word)
+            local f  = io.popen("sdcv -n --utf8-output -u '牛津英汉双解美化版' "..cin_word)
             for line in f:lines() do
                 fc = fc .. line .. '\n'
             end
             f:close()
 
-            frame = naughty.notify({ text = fc, timeout = 6, width = 320 })
+            frame = naughty.notify({ text = fc, timeout = 0, width = 360 })
         end, nil, awful.util.getdir("cache").."/dict")
     end),
     -- }}}
@@ -370,6 +369,8 @@ for i = 1, keynumber do
                       local v = tags[screen][i]
                       if v == t and i < 4 then
                           awful.tag.history.restore(screen)
+                      elseif v == t then
+                          return -- keep the history
                       else
                           awful.tag.viewonly(v)
                       end
@@ -440,6 +441,8 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    { rule = { class = "Pqiv" },
+      properties = { floating = true } },
     { rule = { class = "Qq" },
       properties = { floating = true } },
     { rule = { instance = "MPlayer" },
@@ -454,7 +457,7 @@ awful.rules.rules = {
       properties = { floating = true } },
 
     -- Set Firefox to always map on tags number 2 of screen 1.
-    { rule = { instance = "Navigator" }, -- if set this, video in youku can not be played fullscreen.
+    { rule = { instance = "Navigator" },
       properties = { tag = tags[1][2] } },
     { rule = { instance = "Mutt" },
       properties = { tag = tags[1][3] } },

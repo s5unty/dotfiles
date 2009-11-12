@@ -3,29 +3,29 @@ let &termencoding=&encoding
 set fileencodings=UTF-8,GB2312,BIG5
 set fileformats=unix,dos
 set statusline=%<%f\ \[%{&fileencoding}\]\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-syn on " 语法高亮
 set mouse=a " 开启鼠标支持
-set guifont=Courier\ 10\ Pitch\ 14
-set nocompatible " XXX
+"set guifont=Courier\ 10\ Pitch\ 14
 set tabstop=4 " 缩进的宽度
 set shiftwidth=4 " TAB 的宽度
-set expandtab " TAB -> SPACE
-set nowrap " 不自动折行
 set clipboard+=unnamed " 选入剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set pastetoggle=<F4>
 set ignorecase " 搜索忽略大小写
-set noincsearch " 非渐进搜索
 set autoindent " 自动缩进
-set nohls " 不高亮匹配关键字
 set number " 显示行数
-filetype plugin indent on
-let mapleader=","
 set completeopt=longest,menu
 set smartcase
+syn on " 语法高亮
+filetype plugin indent on
+let mapleader=","
 set nocompatible
 set noswapfile
+set nocompatible
+set nohls " 不高亮匹配关键字
+set noincsearch " 非渐进搜索
+set noexpandtab " ! TAB -> SPACE
+set nowrap " 不自动折行
 set updatetime=200
 " }}}
 
@@ -130,8 +130,8 @@ imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 
 nmap <silent> <unique> <F8> :wa!<CR>:make<CR>:call G_QFixToggle(1)<CR>
 imap <silent> <unique> <F8> <ESC>:wa!<CR>:make<CR>:call G_QFixToggle(1)<CR>
-nmap <silent> <unique> <F9> :w<CR>:set makeprg=g++\ %<CR>:make<CR>:call G_QFixToggle(1)<CR>
-imap <silent> <unique> <F9> <ESC>:w<CR>:set makeprg=g++\ %<CR>:make<CR>:call G_QFixToggle(1)<CR>
+nmap <silent> <unique> <F9> :!!<CR>
+imap <silent> <unique> <F9> <ESC>:!!<CR>
 
 nmap <silent> <unique> <F11> g]
 nmap <silent> <unique> <F12> <C-]>
@@ -158,10 +158,14 @@ nmap <silent> <unique> <leader>f 10[{zf%
 nmap <silent> <unique> <leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
-nmap <silent> <unique> <ESC>a I
-imap <silent> <unique> <ESC>a <ESC>I
-nmap <silent> <unique> <ESC>e A
-imap <silent> <unique> <ESC>e <ESC>A
+
+imap <silent> <unique> <ESC><SPACE> <ESC>:<CR>
+imap <silent> <unique> <ESC>f <C-O>w
+imap <silent> <unique> <ESC>b <C-O>b
+imap <silent> <unique> <ESC>e <ESC>ea
+imap <silent> <unique> <C-A> <C-O>I
+imap <silent> <unique> <C-E> <C-O>A
+imap <silent> <unique> <C-S> <ESC>:wa<CR>
 " }}}
 
 " Autocmd {{{
@@ -188,7 +192,7 @@ endif
 " }}}
 
 " Plugins {{{
-" mru.vim 3.1 : Plugin to manage Most Recently Used (MRU) files {{{
+" mru.vim 3.2 : Plugin to manage Most Recently Used (MRU) files {{{
 let MRU_Max_Entries=30
 let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
 let MRU_Include_Files='\.c$\|\.cpp$\|\.h$\|\.hpp$'  " For C Source
@@ -336,16 +340,16 @@ hi Directory        ctermfg=darkblue                        guifg=blue
 hi ErrorMsg         ctermfg=red         ctermbg=none        guibg=red gui=bold
 hi WarningMsg       ctermfg=yellow      ctermbg=none        guibg=yellow gui=bold
 hi StatusLine       ctermfg=gray        ctermbg=black
-hi MatchParen       ctermfg=cyan        ctermbg=none        guifg=cyan
+hi MatchParen       ctermfg=darkcyan    ctermbg=none        guifg=cyan
 hi StatusLineNC     ctermfg=gray        ctermbg=black
 hi IncSearch        ctermfg=darkyellow  ctermbg=darkblue
 hi Search           ctermfg=darkyellow  ctermbg=darkblue
 hi Question         ctermfg=gray                            guifg=gray
 hi LineNr           ctermfg=darkgreen                       guifg=green
-hi DiffAdd          ctermfg=green       ctermbg=black       guifg=green guibg=black
-hi DiffChange       ctermfg=blue        ctermbg=black       guifg=blue guibg=black
-hi DiffDelete       ctermfg=red         ctermbg=black       guifg=red guibg=black
-hi DiffText         ctermfg=yellow      ctermbg=black       guifg=yellow guibg=black
+hi DiffAdd          ctermfg=darkgreen   ctermbg=none        guifg=green
+hi DiffChange       ctermfg=blue        ctermbg=black       guifg=blue
+hi DiffDelete       ctermfg=darkred     ctermbg=none        guifg=red
+hi DiffText         ctermfg=yellow      ctermbg=none        guifg=yellow
 hi Folded           ctermfg=darkyellow  ctermbg=none        guifg=yellow
 hi FoldColumn       ctermfg=darkyellow  ctermbg=none        guifg=yellow
 " dev
@@ -370,6 +374,11 @@ hi VertSplit        ctermfg=grey        ctermbg=black       guifg=black guibg=gr
 hi Title            ctermfg=darkblue                        guifg=red guibg=grey
 hi Visual           ctermfg=darkblue    ctermbg=darkyellow  guifg=darkblue guibg=yellow
 hi WildMenu         ctermfg=black       ctermbg=darkcyan    guifg=black guibg=cyan
-
+" link - diff/patch
+hi def link diffAdded 		DiffAdd
+hi def link diffRemoved 	DiffDelete
+hi def link diffFile		DiffText
+hi def link diffSubname 	MatchParen
+hi def link diffLine 		MatchParen
 " }}}
 
