@@ -16,6 +16,10 @@ alias -g G="| grep"
 alias -g L="| $__LESS"
 alias -g M="| $__LESS"
 alias -g C="| xclip"
+alias -g IUS="iconv -futf8 -tgb2312"
+alias -g IUT="iconv -futf8 -tbig5"
+alias -g IST="iconv -fgb2312 -tbig5"
+alias -g ITS="iconv -fbig5 -tgb2312"
 # }}}
 
 # 普通别名 {{{
@@ -115,20 +119,20 @@ tjg() { tar -tf $@ }
 # }}}
 
 # 文件类型别名 {{{
-alias -s png=feh
-alias -s PNG=feh
-alias -s gif=feh
-alias -s GIF=feh
-alias -s jpg=feh
-alias -s JPG=feh
-alias -s bmp=feh
-alias -s BMP=feh
-alias -s xpm=feh
-alias -s XPM=feh
-alias -s jpeg=feh
-alias -s JPEG=feh
-alias -s icon=feh
-alias -s ICON=feh
+alias -s png=pqiv
+alias -s PNG=pqiv
+alias -s gif=pqiv
+alias -s GIF=pqiv
+alias -s jpg=pqiv
+alias -s JPG=pqiv
+alias -s bmp=pqiv
+alias -s BMP=pqiv
+alias -s xpm=pqiv
+alias -s XPM=pqiv
+alias -s jpeg=pqiv
+alias -s JPEG=pqiv
+alias -s icon=pqiv
+alias -s ICON=pqiv
 alias -s odt=ooffice -writer %U
 alias -s doc=ooffice -writer %U
 alias -s ods=ooffice -calc %U
@@ -144,6 +148,7 @@ alias -s planner=planner
 # 其它别名 {{{ 
 cd() {
     if builtin cd "$@"; then
+        todo
         ls
     fi
 }
@@ -278,7 +283,7 @@ zstyle ':completion:*:processes' command 'ps -au$USER'
 # sudo {{{
 # http://blog.chinaunix.net/u1/39544/showart_1852988.html
 zle -N sudo-command-line
-bindkey "^s" sudo-command-line
+#bindkey "^s" sudo-command-line
 sudo-command-line() {
     if [[ -z $BUFFER ]]; then
         zle up-history
@@ -292,7 +297,7 @@ sudo-command-line() {
 
 # bc {{{
 zle -N bc-command-line
-bindkey "^b" bc-command-line
+#bindkey "^b" bc-command-line
 bc-command-line() {
     if [[ -z $BUFFER ]]; then
         zle up-history
@@ -305,15 +310,14 @@ bc-command-line() {
 ## }}}
 
 ## 快捷键绑定 {{{
-bindkey '\eu'   undo
-bindkey '\er'   history-incremental-search-backward
-bindkey '\ea'   beginning-of-line
-bindkey '\ee'   end-of-line
-bindkey '\eb'   vi-backward-blank-word
-bindkey '\ew'   vi-backward-kill-word
-bindkey '\e '   complete-word
-bindkey '\e;'   vi-cmd-mode
 bindkey '\e\e'  vi-cmd-mode
+bindkey '\e;'   vi-cmd-mode
+bindkey '\e '   complete-word
+bindkey '\eu'   undo
+bindkey '\ew'   vi-backward-blank-word
+bindkey '\ef'   vi-forward-blank-word
+bindkey '\er'   history-incremental-search-backward
+bindkey '^u'    backward-kill-line
 ## }}}
 
 ## 杂七杂八选项 {{{
