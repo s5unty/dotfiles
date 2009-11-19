@@ -1,14 +1,14 @@
 #!/bin/sh
 
 /usr/bin/xset b off m 3 10 r rate 400 30
+/usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
 /usr/bin/fetchmail -d 600
 /usr/bin/x-www-browser &
 /usr/bin/mocp -S
 /usr/bin/urxvt -name Mutt -T Mutt -e mutt &
-/usr/bin/fcitx # need disable the XIMPROGRAM line in /etc/X11/xinit/xinput.d/fcitx
 
 # nvidia-settings -l
 # /usr/bin/xmodmap ~/.Xmodmaprc
-smbmount //192.168.1.4/temp /sun/samba -ousername="nil",password="",iocharset=utf8 &
+# smbmount //192.168.1.4/temp /sun/samba -ousername="nil",password="",iocharset=utf8 &
 
 exec /usr/bin/awesome
