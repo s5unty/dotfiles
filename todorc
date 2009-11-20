@@ -1,11 +1,11 @@
 colour title=+yellow
-colour info=green
-colour veryhigh=red
-colour high=cyan
-colour medium=magenta
-colour low=blue
-colour verylow=green
-colour comment=green
+colour info=cyan
+colour veryhigh=white
+colour high=magenta
+colour medium=yellow
+colour low=green
+colour verylow=blue
+colour comment=blue
 
 format date=%F %R
 format display=%2>%i%[info]%f%2n.%[priority]%+2T\n
@@ -21,20 +21,20 @@ on create {
     exec chmod 600 $TODODB
 }
 
-priority medium
+priority veryhigh
 timeout 10
 paranoid
 comment
 global-database $HOME/.todo
-sort priority,-created,-text
+sort -created
 date-format %F %R
 
 # When saving a database, also create a HTML version as .todo.html.
-on save {
-    if [ -f `which sabcmd` ]; then
-        exec sabcmd /usr/share/devtodo/todo2html.xslt $TODODB > $TODODB.html
-        exec chmod 600 $TODODB.html
-        echo HTML `$TODODB.html' created
-    fi
-}
-
+#on save {
+#    if [ -f `which sabcmd` ]; then
+#        exec sabcmd /usr/share/devtodo/todo2html.xslt $TODODB > $TODODB.html
+#        exec chmod 600 $TODODB.html
+#        echo HTML `$TODODB.html' created
+#    fi
+#}
+#

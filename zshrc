@@ -77,6 +77,7 @@ alias tdD="devtodo -D"
 alias tdR="devtodo -R"
 alias tdG="devtodo -c"
 alias tdS="devtodo -Av"
+alias tda="cat - | todo -a"
 tdg() {
     if [ -z "$1" ]; then
         devtodo
@@ -312,7 +313,7 @@ bc-command-line() {
 ## 快捷键绑定 {{{
 bindkey '\e\e'  vi-cmd-mode
 bindkey '\e;'   vi-cmd-mode
-bindkey '\e '   complete-word
+#bindkey '\e '   complete-word
 bindkey '\eu'   undo
 bindkey '\ew'   vi-backward-blank-word
 bindkey '\ef'   vi-forward-blank-word
