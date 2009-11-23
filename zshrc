@@ -227,10 +227,17 @@ parse_git_branch() {
     echo "`git branch --no-color 2> /dev/null \
          | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
 }
+parse_git_status() {
+	git diff --exit-code --quiet 2> /dev/null
+	if [ $? -eq 1 ]; then
+		echo "*"
+	fi
+}
 
 set_prompt() {
     mypath="$C_OFF$C_L_MAGENTA%~"
     mygitb="$C_OFF$C_WHITE$(parse_git_branch)"
+    mygits="$C_OFF$C_WHITE$(parse_git_status)"
     myjobs=()
     for a (${(k)jobstates}) {
         j=$jobstates[$a];i="${${(@s,:,)j}[2]}"
@@ -242,7 +249,7 @@ set_prompt() {
     rehash
 }
 RPSL=$'$C_OFF$C_GREY%$MAXMID<...<'
-RPSR=$'$C_OFF$C_L_RED%(0?.$C_L_GREEN. (%?%))$mygitb$C_OFF'
+RPSR=$'$C_OFF$C_L_RED%(0?.$C_L_GREEN. (%?%))$mygitb$mygits$C_OFF'
 RPS2='%^'
 # }}}
 
