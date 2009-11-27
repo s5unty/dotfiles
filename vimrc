@@ -248,7 +248,7 @@ nmap <silent> <unique> <leader>, :BufExplorer<CR>
 " SuperTab continued. : Do all your insert-mode completion with Tab. {{{
 " http://www.vim.org/scripts/script.php?script_id=1643
 let g:SuperTabRetainCompletionType=2
-let g:SuperTabDefaultCompletionType="<C-X><C-N>"
+let g:SuperTabDefaultCompletionType="<C-X><C-U>"
 " }}}
 
 " Mark : a little script to highlight several words in different colors simultaneously {{{
@@ -262,9 +262,8 @@ function <SID>G_Mark(bm)
 endfunction
 " }}}
 
-" Cscope {{{
+" Cscope : Interactively examine a C program source {{{
 set tag=cscope.tags,~/.tags;
-
 if has("cscope")
     set csto=1
     set nocsverb
@@ -287,7 +286,7 @@ if has("cscope")
     " 在后台更新 tags | cscope*，便于在代码间正确的跳转
     autocmd BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
       \ call system("cscope -kbq &")|
-      \ call system("ctags -u --c++-kinds=+p --fields=+iaS --extra=+q -Lcscope.files -fcscope.tags &")|
+      \ call system("ctags -e -u --c++-kinds=+p --fields=+iaS --extra=+q -Lcscope.files -fcscope.tags &")|
       \ exec "cscope add cscope.out"|
       \ exec "cscope reset"
 endif
@@ -320,6 +319,11 @@ nmap <silent> <unique> <leader>G :call <SID>CscopeFind('e', 'n')<CR>
 nmap <silent> <unique> <leader>D :call <SID>CscopeFind('d', 'n')<CR>
 " }}}
 
+" {{{ VimIM: Vim 中文输入法
+" http://vimim.googlecode.com/svn/vimim/vimim.html
+let g:vimim_shuangpin_microsoft=1
+" }}}
+
 " }}}
 
 " Colour {{{
@@ -340,7 +344,7 @@ hi Directory        ctermfg=darkblue                        guifg=blue
 hi ErrorMsg         ctermfg=red         ctermbg=none        guibg=red gui=bold
 hi WarningMsg       ctermfg=yellow      ctermbg=none        guibg=yellow gui=bold
 hi StatusLine       ctermfg=gray        ctermbg=black
-hi MatchParen       ctermfg=darkcyan    ctermbg=none        guifg=cyan
+hi MatchParen       ctermfg=white 		ctermbg=cyan 		guifg=white guibg=cyan
 hi StatusLineNC     ctermfg=gray        ctermbg=black
 hi IncSearch        ctermfg=darkyellow  ctermbg=darkblue
 hi Search           ctermfg=darkyellow  ctermbg=darkblue
@@ -365,7 +369,7 @@ hi Underlined       ctermfg=darkyellow  ctermbg=darkblue    guifg=yellow guibg=b
 hi Ignore           ctermfg=darkgrey    ctermbg=yellow      guifg=grey guibg=yellow
 hi Error            ctermfg=white       ctermbg=red         guifg=white guibg=red
 hi Todo             ctermfg=white       ctermbg=green       guifg=white guibg=green
-hi String           ctermfg=darkyellow                      guifg=yellow
+hi String           ctermfg=darkcyan 						guifg=cyan
 hi Number           ctermfg=darkmagenta                     guifg=magenta
 " misc
 hi MoreMsg          ctermfg=darkgreen                       guifg=green
@@ -378,7 +382,7 @@ hi WildMenu         ctermfg=black       ctermbg=darkcyan    guifg=black guibg=cy
 hi def link diffAdded 		DiffAdd
 hi def link diffRemoved 	DiffDelete
 hi def link diffFile		DiffText
-hi def link diffSubname 	MatchParen
-hi def link diffLine 		MatchParen
+hi def link diffSubname 	String
+hi def link diffLine 		String
 " }}}
 
