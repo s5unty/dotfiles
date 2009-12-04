@@ -19,7 +19,6 @@ set smartcase
 syn on " 语法高亮
 filetype plugin indent on
 let mapleader=","
-set nocompatible
 set noswapfile
 set nocompatible
 set nohls " 不高亮匹配关键字
