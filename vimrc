@@ -4,7 +4,6 @@ set fileencodings=UTF-8,GB2312,BIG5
 set fileformats=unix,dos
 set statusline=%<%f\ \[%{&fileencoding}\]\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set mouse=a " 开启鼠标支持
-"set guifont=Courier\ 10\ Pitch\ 14
 set tabstop=4 " 缩进的宽度
 set shiftwidth=4 " TAB 的宽度
 set clipboard+=unnamed " 选入剪贴板
@@ -115,6 +114,14 @@ function G_GotoEditor()
 
     call G_GotoEditor()
 endfunction
+
+" vim macro to jump to devhelp topics.
+" ref: http://blog.csdn.net/ThinkHY/archive/2008/12/30/3655697.aspx
+function! DevHelpCurrentWord()
+	let word = expand("<cword>")
+	exe "!devhelp -s " . word
+endfunction
+
 " }}}
 
 " Key bindings {{{
@@ -145,6 +152,7 @@ nmap          <unique> t <ESC>:!
 nnor <silent> <unique> y "*y
 nnor <silent> <unique> d "*d
 nnor <silent> <unique> p :call G_Good_p()<CR>
+nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent> <unique> <SPACE> :call G_GoodSpace(1)<CR>
 nmap <silent> <unique> <ESC><SPACE> :call G_GoodSpace(0)<CR>
 nmap <silent> <unique> <ESC><TAB> :pclose<CR>:set cursorline<CR><C-W>}:set nocursorline<CR>
@@ -247,7 +255,12 @@ nmap <silent> <unique> <leader>, :BufExplorer<CR>
 " SuperTab continued. : Do all your insert-mode completion with Tab. {{{
 " http://www.vim.org/scripts/script.php?script_id=1643
 let g:SuperTabRetainCompletionType=2
-let g:SuperTabDefaultCompletionType="<C-X><C-U>"
+let g:SuperTabDefaultCompletionType="<C-X><C-N>"
+" }}}
+
+" Echofunc : Echo the function declaration in the command line for C/C++ {{{
+" http://www.vim.org/scripts/script.php?script_id=1735
+let g:EchoFuncLangsUsed = ["c", "cpp", "lua", "java"]
 " }}}
 
 " Mark : a little script to highlight several words in different colors simultaneously {{{
@@ -285,7 +298,7 @@ if has("cscope")
     " 在后台更新 tags | cscope*，便于在代码间正确的跳转
     autocmd BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
       \ call system("cscope -kbq &")|
-      \ call system("ctags -e -u --c++-kinds=+p --fields=+iaS --extra=+q -Lcscope.files -fcscope.tags &")|
+      \ call system("ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -Lcscope.files -fcscope.tags &")|
       \ exec "cscope add cscope.out"|
       \ exec "cscope reset"
 endif
@@ -316,11 +329,6 @@ nmap <silent> <unique> <leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <leader>G :call <SID>CscopeFind('e', 'n')<CR>
 nmap <silent> <unique> <leader>D :call <SID>CscopeFind('d', 'n')<CR>
-" }}}
-
-" {{{ VimIM: Vim 中文输入法
-" http://vimim.googlecode.com/svn/vimim/vimim.html
-let g:vimim_shuangpin_microsoft=1
 " }}}
 
 " }}}
