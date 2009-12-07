@@ -1,0 +1,145 @@
+ file.c |   26 ++++++++++++++++++++------
+ fm.h   |    1 +
+ main.c |   20 +++++++++++++++++++-
+ rc.c   |    3 +++
+ 4 files changed, 43 insertions(+), 7 deletions(-)
+
+diff --git a/file.c b/file.c
+index 0e559c6..3061cab 100644
+--- a/file.c
++++ b/file.c
+@@ -1679,6 +1679,13 @@ checkRedirection(ParsedURL *pu)
+     return TRUE;
+ }
+ 
++static void
++addLinkNumber(Str tmp, int hseq)
++{
++	if (displayLinkNumber)
++		Strcat(tmp, Sprintf("[%d]", hseq));
++}
++
+ /* 
+  * loadGeneralFile: load file to buffer
+  */
+@@ -3512,15 +3519,17 @@ process_img(struct parsed_tag *tag, int width)
+ Str
+ process_anchor(struct parsed_tag *tag, char *tagbuf)
+ {
++	Str tmp;
+     if (parsedtag_need_reconstruct(tag)) {
+-	parsedtag_set_value(tag, ATTR_HSEQ, Sprintf("%d", cur_hseq++)->ptr);
+-	return parsedtag2str(tag);
++	parsedtag_set_value(tag, ATTR_HSEQ, Sprintf("%d", cur_hseq)->ptr);
++	tmp = parsedtag2str(tag);
+     }
+     else {
+-	Str tmp = Sprintf("<a hseq=\"%d\"", cur_hseq++);
++	tmp = Sprintf("<a hseq=\"%d\"", cur_hseq);
+ 	Strcat_charp(tmp, tagbuf + 2);
+-	return tmp;
+     }
++    addLinkNumber(tmp, cur_hseq++);
++    return tmp;
+ }
+ 
+ Str
+@@ -3592,9 +3601,11 @@ process_input(struct parsed_tag *tag)
+     case FORM_INPUT_TEXT:
+     case FORM_INPUT_FILE:
+     case FORM_INPUT_CHECKBOX:
++	addLinkNumber(tmp, cur_hseq);
+ 	Strcat_char(tmp, '[');
+ 	break;
+     case FORM_INPUT_RADIO:
++	addLinkNumber(tmp, cur_hseq);
+ 	Strcat_char(tmp, '(');
+     }
+     Strcat(tmp, Sprintf("<input_alt hseq=\"%d\" fid=\"%d\" type=%s "
+@@ -3635,6 +3646,7 @@ process_input(struct parsed_tag *tag)
+ 	case FORM_INPUT_SUBMIT:
+ 	case FORM_INPUT_BUTTON:
+ 	case FORM_INPUT_RESET:
++		addLinkNumber(tmp, cur_hseq - 1);
+ 	    Strcat_charp(tmp, "[");
+ 	    break;
+ 	}
+@@ -3721,9 +3733,11 @@ process_select(struct parsed_tag *tag)
+ 
+ #ifdef MENU_SELECT
+     if (!select_is_multiple) {
+-	select_str = Sprintf("<pre_int>[<input_alt hseq=\"%d\" "
++	select_str = Strnew_charp("<pre_int>");
++	addLinkNumber(select_str, cur_hseq);
++	Strcat(select_str, Sprintf("[<input_alt hseq=\"%d\" "
+ 			     "fid=\"%d\" type=select name=\"%s\" selectnumber=%d",
+-			     cur_hseq++, cur_form_id, html_quote(p), n_select);
++			     cur_hseq++, cur_form_id, html_quote(p), n_select));
+ 	Strcat_charp(select_str, ">");
+ 	if (n_select == max_select) {
+ 	    max_select *= 2;
+diff --git a/fm.h b/fm.h
+index 7ac6b30..dcee256 100644
+--- a/fm.h
++++ b/fm.h
+@@ -931,6 +931,7 @@ global int label_topline init(FALSE);
+ global int nextpage_topline init(FALSE);
+ global char *displayTitleTerm init(NULL);
+ global int displayLink init(FALSE);
++global int displayLinkNumber init(FALSE);
+ global int displayLineInfo init(FALSE);
+ global int DecodeURL init(FALSE);
+ global int retryAsHttp init(TRUE);
+diff --git a/main.c b/main.c
+index fed8c55..de2ba7e 100644
+--- a/main.c
++++ b/main.c
+@@ -1284,8 +1284,26 @@ do_dump(Buffer *buf)
+ 	dump_head(buf);
+     if (w3m_dump & DUMP_SOURCE)
+ 	dump_source(buf);
+-    if (w3m_dump == DUMP_BUFFER)
++    if (w3m_dump == DUMP_BUFFER) {
++	int i;
+ 	saveBuffer(buf, stdout, FALSE);
++	if (displayLinkNumber && buf->href->nanchor) {
++		printf("\nReferences:\n\n");
++		for (i = 0; i < buf->href->nanchor; i++) {
++			ParsedURL pu;
++			static Str s = NULL;
++			if (buf->href->anchors[i].slave)
++				continue;
++			parseURL2(buf->href->anchors[i].url, &pu, baseURL(buf));
++			s = parsedURL2Str(&pu);
++			if (DecodeURL)
++				s = Strnew_charp(url_unquote_conv
++						(s->ptr, Currentbuf->document_charset));
++			printf("[%d] %s\n", buf->href->anchors[i].hseq + 1, s->ptr);
++		}
++	}
++    }
++
+     mySignal(SIGINT, prevtrap);
+ }
+ 
+diff --git a/rc.c b/rc.c
+index abb2e31..b25f7d2 100644
+--- a/rc.c
++++ b/rc.c
+@@ -72,6 +72,7 @@ static int OptionEncode = FALSE;
+ #define CMT_OPEN_TAB_BLANK N_("Open link on new tab if target is _blank or _new")
+ #define CMT_OPEN_TAB_DL_LIST N_("Open download list panel on new tab")
+ #define CMT_DISPLINK     N_("Display link URL automatically")
++#define CMT_DISPLINKNUMBER N_("Display link numbers")
+ #define CMT_DECODE_URL   N_("Display decoded URL")
+ #define CMT_DISPLINEINFO N_("Display current line number")
+ #define CMT_DISP_IMAGE   N_("Display inline images")
+@@ -348,6 +349,8 @@ struct param_ptr params1[] = {
+      CMT_OPEN_TAB_DL_LIST, NULL},
+     {"display_link", P_INT, PI_ONOFF, (void *)&displayLink, CMT_DISPLINK,
+      NULL},
++    {"display_link_number", P_INT, PI_ONOFF, (void *)&displayLinkNumber,
++     CMT_DISPLINKNUMBER, NULL},
+     {"decode_url", P_INT, PI_ONOFF, (void *)&DecodeURL, CMT_DECODE_URL, NULL},
+     {"display_lineinfo", P_INT, PI_ONOFF, (void *)&displayLineInfo,
+      CMT_DISPLINEINFO, NULL},
