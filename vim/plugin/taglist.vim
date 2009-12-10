@@ -1568,14 +1568,14 @@ function! s:Tlist_Window_Init()
                 \ :call <SID>Tlist_Window_Jump_To_Tag('useopen')<CR>
     nnoremap <buffer> <silent> s
                 \ :call <SID>Tlist_Change_Sort('cmd', 'toggle', '')<CR>
-    nnoremap <buffer> <silent> + :silent! foldopen<CR>
-    nnoremap <buffer> <silent> - :silent! foldclose<CR>
+    "nnoremap <buffer> <silent> + :silent! foldopen<CR>
+    "nnoremap <buffer> <silent> - :silent! foldclose<CR>
     nnoremap <buffer> <silent> * :silent! %foldopen!<CR>
     nnoremap <buffer> <silent> = :silent! %foldclose<CR>
     nnoremap <buffer> <silent> <kPlus> :silent! foldopen<CR>
     nnoremap <buffer> <silent> <kMinus> :silent! foldclose<CR>
     nnoremap <buffer> <silent> <kMultiply> :silent! %foldopen!<CR>
-    nnoremap <buffer> <silent> <Space> :call <SID>Tlist_Window_Show_Info()<CR>
+    "nnoremap <buffer> <silent> <Space> :call <SID>Tlist_Window_Show_Info()<CR>
     nnoremap <buffer> <silent> u :call <SID>Tlist_Window_Update_File()<CR>
     nnoremap <buffer> <silent> d :call <SID>Tlist_Remove_File(-1, 1)<CR>
     nnoremap <buffer> <silent> x :call <SID>Tlist_Window_Zoom()<CR>
@@ -1608,15 +1608,15 @@ function! s:Tlist_Window_Init()
                 \ <C-o>:call <SID>Tlist_Window_Jump_To_Tag('useopen')<CR>
     inoremap <buffer> <silent> s
                 \ <C-o>:call <SID>Tlist_Change_Sort('cmd', 'toggle', '')<CR>
-    inoremap <buffer> <silent> +             <C-o>:silent! foldopen<CR>
-    inoremap <buffer> <silent> -             <C-o>:silent! foldclose<CR>
+    "inoremap <buffer> <silent> +             <C-o>:silent! foldopen<CR>
+    "inoremap <buffer> <silent> -             <C-o>:silent! foldclose<CR>
     inoremap <buffer> <silent> *             <C-o>:silent! %foldopen!<CR>
     inoremap <buffer> <silent> =             <C-o>:silent! %foldclose<CR>
     inoremap <buffer> <silent> <kPlus>       <C-o>:silent! foldopen<CR>
     inoremap <buffer> <silent> <kMinus>      <C-o>:silent! foldclose<CR>
     inoremap <buffer> <silent> <kMultiply>   <C-o>:silent! %foldopen!<CR>
-    inoremap <buffer> <silent> <Space>       <C-o>:call
-                                    \ <SID>Tlist_Window_Show_Info()<CR>
+    "inoremap <buffer> <silent> <Space>       <C-o>:call
+    "                                \ <SID>Tlist_Window_Show_Info()<CR>
     inoremap <buffer> <silent> u
                             \ <C-o>:call <SID>Tlist_Window_Update_File()<CR>
     inoremap <buffer> <silent> d    <C-o>:call <SID>Tlist_Remove_File(-1, 1)<CR>
@@ -1659,8 +1659,7 @@ function! s:Tlist_Window_Init()
         autocmd CursorHold __Tag_List__ call s:Tlist_Window_Show_Info()
         " Highlight the current tag periodically
         autocmd CursorHold * silent call s:Tlist_Window_Highlight_Tag(
-                            \ fnamemodify(bufname('%'), ':p'), line('.'), 1, 0)
-
+                            \ fnamemodify(bufname('%'), ':p'), line('.'), 1, 1)
         " Adjust the Vim window width when taglist window is closed
         autocmd BufUnload __Tag_List__ call s:Tlist_Post_Close_Cleanup()
         " Close the fold for this buffer when leaving the buffer

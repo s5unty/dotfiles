@@ -100,15 +100,15 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
             noremap <unique> <script> <ESC>8 :call <SID>Bf_SwitchTo( 8)<CR>:<BS>
             noremap <unique> <script> <ESC>9 :call <SID>Bf_SwitchTo( 9)<CR>:<BS>
             "INSERT mode bindings for vim( terminal)
-            inoremap <unique> <script> <ESC>1 <esc>:call <SID>Bf_SwitchTo( 1)<CR>:<BS>a
-            inoremap <unique> <script> <ESC>2 <esc>:call <SID>Bf_SwitchTo( 2)<CR>:<BS>a
-            inoremap <unique> <script> <ESC>3 <esc>:call <SID>Bf_SwitchTo( 3)<CR>:<BS>a
-            inoremap <unique> <script> <ESC>4 <esc>:call <SID>Bf_SwitchTo( 4)<CR>:<BS>a
-            inoremap <unique> <script> <ESC>5 <esc>:call <SID>Bf_SwitchTo( 5)<CR>:<BS>a
-            inoremap <unique> <script> <ESC>6 <esc>:call <SID>Bf_SwitchTo( 6)<CR>:<BS>a
-            inoremap <unique> <script> <ESC>7 <esc>:call <SID>Bf_SwitchTo( 7)<CR>:<BS>a
-            inoremap <unique> <script> <ESC>8 <esc>:call <SID>Bf_SwitchTo( 8)<CR>:<BS>a
-            inoremap <unique> <script> <ESC>9 <esc>:call <SID>Bf_SwitchTo( 9)<CR>:<BS>a
+            inoremap <unique> <script> <ESC>1 <esc>:call <SID>Bf_SwitchTo( 1)<CR>a
+            inoremap <unique> <script> <ESC>2 <esc>:call <SID>Bf_SwitchTo( 2)<CR>a
+            inoremap <unique> <script> <ESC>3 <esc>:call <SID>Bf_SwitchTo( 3)<CR>a
+            inoremap <unique> <script> <ESC>4 <esc>:call <SID>Bf_SwitchTo( 4)<CR>a
+            inoremap <unique> <script> <ESC>5 <esc>:call <SID>Bf_SwitchTo( 5)<CR>a
+            inoremap <unique> <script> <ESC>6 <esc>:call <SID>Bf_SwitchTo( 6)<CR>a
+            inoremap <unique> <script> <ESC>7 <esc>:call <SID>Bf_SwitchTo( 7)<CR>a
+            inoremap <unique> <script> <ESC>8 <esc>:call <SID>Bf_SwitchTo( 8)<CR>a
+            inoremap <unique> <script> <ESC>9 <esc>:call <SID>Bf_SwitchTo( 9)<CR>a
       endif
 endif " %%
 
@@ -1234,7 +1234,6 @@ endfunction " %%
 
 " Bf_SwitchTo      Switch to bufNum( parameter) buffer~~
 function! <SID>Bf_SwitchTo( bufNum)
-
     let l:vimbuf = <SID>Map_Get_key( a:bufNum )
     exec "b!" . l:vimbuf
 endfunction " %%

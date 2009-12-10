@@ -139,10 +139,11 @@ imap <silent> <unique> <F8> <ESC>:wa!<CR>:make<CR>:call G_QFixToggle(1)<CR>
 nmap <silent> <unique> <F9> :!!<CR>
 imap <silent> <unique> <F9> <ESC>:!!<CR>
 
-nmap <silent> <unique> <F11> g]
-nmap <silent> <unique> <F12> <C-]>
-nmap <silent> <unique> \     <C-I>
-nmap <silent> <unique> <Backspace> <C-O>
+nmap <silent> <unique> <F10> g]
+nmap <silent> <unique> <F11> <C-T>zz
+nmap <silent> <unique> <F12> <C-]>zz
+nmap <silent> <unique> \ <C-I>zz
+nmap <silent> <unique> <Backspace> <C-O>zz
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> = 10[{zz
 nmap <silent> <unique> ; zz
@@ -263,17 +264,6 @@ let g:SuperTabDefaultCompletionType="<C-X><C-N>"
 let g:EchoFuncLangsUsed = ["c", "cpp", "lua", "java"]
 " }}}
 
-" Mark : a little script to highlight several words in different colors simultaneously {{{
-" http://www.vim.org/scripts/script.php?script_id=1238
-nnoremap <silent> <unique> mA :call <SID>G_Mark("A")<CR>
-nnoremap <silent> <unique> mB :call <SID>G_Mark("B")<CR>
-nnoremap <silent> <unique> mC :call <SID>G_Mark("C")<CR>
-function <SID>G_Mark(bm)
-    exec "mark ".a:bm
-    normal V,m
-endfunction
-" }}}
-
 " Cscope : Interactively examine a C program source {{{
 set tag=cscope.tags,~/.tags;
 if has("cscope")
@@ -331,6 +321,23 @@ nmap <silent> <unique> <leader>G :call <SID>CscopeFind('e', 'n')<CR>
 nmap <silent> <unique> <leader>D :call <SID>CscopeFind('d', 'n')<CR>
 " }}}
 
+" vimwiki : Personal Wiki for Vim {{{
+let g:vimwiki_list = [{ 'path': '~/wiki/', 'path_html': '~/wiki/html/', 'ext': '.wiki' }]
+nmap <silent> <unique> <F7> :call <SID>G_Asciidoc2Html()<CR>
+function <SID>G_Asciidoc2Html()
+	let wiki = g:vimwiki_list[g:vimwiki_current_idx]['path']
+	let html = g:vimwiki_list[g:vimwiki_current_idx]['path_html']
+	let src  = expand('%:f')
+	let dst  = expand('%:t:r').".html"
+	exec ":! asciidoc -o ".html.dst." ".wiki.src
+endfunction
+" }}}
+
+" ShowMarks : Visually shows the location of marks. {{{
+" http://www.vim.org/scripts/script.php?script_id=152
+let g:showmarks_hlline_upper=1
+let g:showmarks_hlline_lower=1
+" }}}
 " }}}
 
 " Colour {{{
@@ -350,9 +357,9 @@ hi NonText          ctermfg=darkmagenta                     guifg=magenta
 hi Directory        ctermfg=darkblue                        guifg=blue
 hi ErrorMsg         ctermfg=red         ctermbg=none        guibg=red gui=bold
 hi WarningMsg       ctermfg=yellow      ctermbg=none        guibg=yellow gui=bold
-hi StatusLine       ctermfg=gray        ctermbg=black
+hi StatusLine       ctermfg=gray        ctermbg=none
 hi MatchParen       ctermfg=white 		ctermbg=cyan 		guifg=white guibg=cyan
-hi StatusLineNC     ctermfg=gray        ctermbg=black
+hi StatusLineNC     ctermfg=gray        ctermbg=none
 hi IncSearch        ctermfg=darkyellow  ctermbg=darkblue
 hi Search           ctermfg=darkyellow  ctermbg=darkblue
 hi Question         ctermfg=gray                            guifg=gray
@@ -391,5 +398,8 @@ hi def link diffRemoved 	DiffDelete
 hi def link diffFile		DiffText
 hi def link diffSubname 	String
 hi def link diffLine 		String
+" mark - ShowMarks
+hi def ShowMarksHLl ctermfg=grey ctermbg=darkblue
+hi def ShowMarksHLu ctermfg=grey ctermbg=darkmagenta
 " }}}
 
