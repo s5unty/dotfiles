@@ -195,12 +195,11 @@ if has("autocmd")
   " 让 checkpath 找到相关文件，便于 [I 正常工作
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ set path+=./
-
 endif
 " }}}
 
-" Plugins {{{
-" mru.vim 3.2 : Plugin to manage Most Recently Used (MRU) files {{{
+" Plugins {{{1
+" mru.vim 3.2 : Plugin to manage Most Recently Used (MRU) files {{{2
 let MRU_Max_Entries=30
 let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
 let MRU_Include_Files='\.c$\|\.cpp$\|\.h$\|\.hpp$'  " For C Source
@@ -211,9 +210,8 @@ if has("autocmd")
   autocmd BufReadPost,FileReadPost *
     \ chdir .
 endif
-" }}}
 
-" taglist.vim : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{
+" taglist.vim 4.5 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
 " http://www.vim.org/scripts/script.php?script_id=273
 let Tlist_Ctags_Cmd = "/usr/bin/ctags-exuberant"
 let Tlist_WinWidth=35
@@ -228,9 +226,8 @@ function <SID>ShowTaglist()
         exec "TlistSync"
     endif
 endfunction
-" }}}
 
-" TabBar-0.7 : Plugin to add tab bar (derived from miniBufExplorer) {{{
+" TabBar 0.7 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
 " http://www.vim.org/scripts/script.php?script_id=1338
 nmap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
@@ -245,26 +242,22 @@ function <SID>CloseBuffer()
         exec "normal \<CR>"
     endif
 endfunction
-" }}}
 
-" bufexplorer.zip : Buffer Explorer / Browser {{{
+" bufexplorer 7.2.2 : Buffer Explorer / Browser {{{2
 " http://www.vim.org/scripts/script.php?script_id=42
 let bufExplorerShowRelativePath = 0
 nmap <silent> <unique> <leader>, :BufExplorer<CR>
-" }}}
 
-" SuperTab continued. : Do all your insert-mode completion with Tab. {{{
+" SuperTab 0.41 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
 let g:SuperTabRetainCompletionType=2
 let g:SuperTabDefaultCompletionType="<C-X><C-N>"
-" }}}
 
-" Echofunc : Echo the function declaration in the command line for C/C++ {{{
+" Echofunc : Echo the function declaration in the command line for C/C++ {{{2
 " http://www.vim.org/scripts/script.php?script_id=1735
 let g:EchoFuncLangsUsed = ["c", "cpp", "lua", "java"]
-" }}}
 
-" Cscope : Interactively examine a C program source {{{
+" Cscope : Interactively examine a C program source {{{2
 set tag=cscope.tags,~/.tags;
 if has("cscope")
     set csto=1
@@ -319,10 +312,30 @@ nmap <silent> <unique> <leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <leader>G :call <SID>CscopeFind('e', 'n')<CR>
 nmap <silent> <unique> <leader>D :call <SID>CscopeFind('d', 'n')<CR>
-" }}}
 
-" vimwiki : Personal Wiki for Vim {{{
-let g:vimwiki_list = [{ 'path': '~/wiki/', 'path_html': '~/wiki/html/', 'ext': '.wiki' }]
+" vimwiki : Personal Wiki for Vim {{{2
+" http://www.vim.org/scripts/script.php?script_id=2226
+let g:vimwiki_list = [
+			\ { 'proj': 'dtv-gui',  'path': '~/dtv-gui/wiki/',  'path_html': '~/dtv-gui/html/',  'ext': '.wiki' },
+			\ { 'proj': 'gpicview', 'path': '~/gpicview/wiki/', 'path_html': '~/gpicview/html/', 'ext': '.wiki' },
+			\ { 'proj': 'mouse-fm', 'path': '~/mouse-fm/wiki/', 'path_html': '~/mouse-fm/html/', 'ext': '.wiki' },
+			\ { 'proj': 'pidgin',   'path': '~/pidgin/wiki/',   'path_html': '~/pidgin/html/',   'ext': '.wiki' },
+			\ { 'proj': 'stardict', 'path': '~/stardict/wiki/', 'path_html': '~/stardict/html/', 'ext': '.wiki' },
+			\ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' }]
+nmap <silent><unique> <leader>. :call <SID>VimwikiGoProject()<CR>
+function <SID>VimwikiGoProject()
+	let proj_path = expand('~/')
+	let idx = 1
+	for wiki in g:vimwiki_list
+		if stridx(getcwd(), wiki.proj, strlen(proj_path)) > 0
+			call vimwiki#WikiGoHome(idx)
+			call vimwiki_html#WikiAll2HTML(wiki.path_html)
+			return
+		endif
+		let idx += 1
+	endfor
+endfunction
+
 nmap <silent> <unique> <F7> :call <SID>G_Asciidoc2Html()<CR>
 function <SID>G_Asciidoc2Html()
 	let wiki = g:vimwiki_list[g:vimwiki_current_idx]['path']
@@ -331,14 +344,8 @@ function <SID>G_Asciidoc2Html()
 	let dst  = expand('%:t:r').".html"
 	exec ":! asciidoc -o ".html.dst." ".wiki.src
 endfunction
-" }}}
 
-" ShowMarks : Visually shows the location of marks. {{{
-" http://www.vim.org/scripts/script.php?script_id=152
-let g:showmarks_hlline_upper=1
-let g:showmarks_hlline_lower=1
-" }}}
-" }}}
+" }}}1
 
 " Colour {{{
 let g:colors_name="blue"
@@ -351,55 +358,51 @@ endif
 
 set background=dark
 " normal
-hi Normal           ctermfg=darkyellow                      guifg=yellow guibg=#000066
+hi Normal           ctermfg=darkyellow
 hi SpecialKey       cterm=reverse
-hi NonText          ctermfg=darkmagenta                     guifg=magenta
-hi Directory        ctermfg=darkblue                        guifg=blue
-hi ErrorMsg         ctermfg=red         ctermbg=none        guibg=red gui=bold
-hi WarningMsg       ctermfg=yellow      ctermbg=none        guibg=yellow gui=bold
-hi StatusLine       ctermfg=gray        ctermbg=none
-hi MatchParen       ctermfg=white 		ctermbg=cyan 		guifg=white guibg=cyan
+hi NonText          ctermfg=darkmagenta
+hi Directory        ctermfg=darkblue
+hi ErrorMsg         ctermfg=red 		ctermbg=none
+hi WarningMsg       ctermfg=yellow      ctermbg=none
+hi StatusLine       ctermfg=gray 		ctermbg=none
+hi MatchParen       ctermfg=white 		ctermbg=cyan
 hi StatusLineNC     ctermfg=gray        ctermbg=none
 hi IncSearch        ctermfg=darkyellow  ctermbg=darkblue
 hi Search           ctermfg=darkyellow  ctermbg=darkblue
-hi Question         ctermfg=gray                            guifg=gray
-hi LineNr           ctermfg=darkgreen                       guifg=green
-hi DiffAdd          ctermfg=darkgreen   ctermbg=none        guifg=green
-hi DiffChange       ctermfg=blue        ctermbg=black       guifg=blue
-hi DiffDelete       ctermfg=darkred     ctermbg=none        guifg=red
-hi DiffText         ctermfg=yellow      ctermbg=none        guifg=yellow
-hi Folded           ctermfg=darkyellow  ctermbg=none        guifg=yellow
-hi FoldColumn       ctermfg=darkyellow  ctermbg=none        guifg=yellow
+hi Question         ctermfg=gray
+hi LineNr           ctermfg=darkgreen
+hi DiffAdd          ctermfg=darkgreen 	ctermbg=none
+hi DiffChange       ctermfg=blue        ctermbg=black
+hi DiffDelete       ctermfg=darkred     ctermbg=none
+hi DiffText         ctermfg=yellow 		ctermbg=none
+hi Folded           ctermfg=yellow 		ctermbg=none
+hi FoldColumn       ctermfg=darkyellow 	ctermbg=none
 " dev
-hi Comment          ctermfg=darkgreen                       guifg=green
-hi Constant         ctermfg=gray                            guifg=gray
-hi Special          ctermfg=darkred                         guifg=red
-hi Identifier       ctermfg=darkblue                        guifg=blue
-hi Statement        ctermfg=gray                            guifg=gray
-hi Operator         ctermfg=darkblue                        guifg=blue
-hi PreProc          ctermfg=darkmagenta                     guifg=magenta
-hi Type             ctermfg=darkblue                        guifg=blue
-hi Underlined       ctermfg=darkyellow  ctermbg=darkblue    guifg=yellow guibg=blue
-hi Ignore           ctermfg=darkgrey    ctermbg=yellow      guifg=grey guibg=yellow
-hi Error            ctermfg=white       ctermbg=red         guifg=white guibg=red
-hi Todo             ctermfg=white       ctermbg=green       guifg=white guibg=green
-hi String           ctermfg=darkcyan 						guifg=cyan
-hi Number           ctermfg=darkmagenta                     guifg=magenta
+hi Comment          ctermfg=darkgreen
+hi Constant         ctermfg=gray
+hi Special          ctermfg=darkred
+hi Identifier       ctermfg=darkblue
+hi Statement        ctermfg=gray
+hi Operator         ctermfg=darkblue
+hi PreProc          ctermfg=darkmagenta
+hi Type             ctermfg=darkblue
+hi Underlined       ctermfg=darkyellow  ctermbg=darkblue
+hi Ignore           ctermfg=darkgrey    ctermbg=yellow
+hi Error            ctermfg=white       ctermbg=red
+hi Todo             ctermfg=white       ctermbg=green
+hi String           ctermfg=darkcyan
+hi Number           ctermfg=darkmagenta
 " misc
-hi MoreMsg          ctermfg=darkgreen                       guifg=green
-hi ModeMsg          ctermfg=darkred                         guifg=red
-hi VertSplit        ctermfg=grey        ctermbg=black       guifg=black guibg=grey
-hi Title            ctermfg=darkblue                        guifg=red guibg=grey
-hi Visual           ctermfg=darkblue    ctermbg=darkyellow  guifg=darkblue guibg=yellow
-hi WildMenu         ctermfg=black       ctermbg=darkcyan    guifg=black guibg=cyan
+hi MoreMsg          ctermfg=darkgreen
+hi ModeMsg          ctermfg=darkred
+hi VertSplit        ctermfg=grey
+hi Title            ctermfg=darkblue
+hi Visual           ctermfg=darkblue    ctermbg=darkyellow
+hi WildMenu         ctermfg=black       ctermbg=darkcyan
 " link - diff/patch
 hi def link diffAdded 		DiffAdd
 hi def link diffRemoved 	DiffDelete
 hi def link diffFile		DiffText
 hi def link diffSubname 	String
 hi def link diffLine 		String
-" mark - ShowMarks
-hi def ShowMarksHLl ctermfg=grey ctermbg=darkblue
-hi def ShowMarksHLu ctermfg=grey ctermbg=darkmagenta
 " }}}
-
