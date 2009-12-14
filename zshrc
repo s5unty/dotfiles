@@ -13,9 +13,7 @@ __IP=`/sbin/ifconfig -v | grep 192.168.1 | tail -1 | cut -d'.' -f4 | cut -d' ' -
 
 # 全局别名 {{{
 alias -g G="| grep"
-alias -g L="| $__LESS"
 alias -g M="| $__LESS"
-alias -g C="| xclip"
 alias -g IUS="iconv -futf8 -tgb2312"
 alias -g IUT="iconv -futf8 -tbig5"
 alias -g IST="iconv -fgb2312 -tbig5"
@@ -174,6 +172,12 @@ F() { # find
 R() { # find in files
     grep -r $1 . ${(@)argv[2,$#]} L
 }
+C() { # gen cscope.files
+	find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' \
+		-o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' > cscope.files
+	cscope -kbq
+	ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -Lcscope.files -fcscope.tags
+}
 
 dup() { # dupload
     if echo "$1" | grep -q '\.changes$' ; then
@@ -320,7 +324,7 @@ bc-command-line() {
 ## 快捷键绑定 {{{
 bindkey '\e\e'  vi-cmd-mode
 bindkey '\e;'   vi-cmd-mode
-#bindkey '\e '   complete-word
+bindkey '\e '   complete-word
 bindkey '\eu'   undo
 bindkey '\ew'   vi-backward-blank-word
 bindkey '\ef'   vi-forward-blank-word

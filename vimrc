@@ -13,7 +13,7 @@ set pastetoggle=<F4>
 set ignorecase " 搜索忽略大小写
 set autoindent " 自动缩进
 set number " 显示行数
-set completeopt=longest,menu
+set completeopt=longest,menu " 显示补全预览菜单
 set smartcase
 syn on " 语法高亮
 filetype plugin indent on
@@ -250,8 +250,15 @@ nmap <silent> <unique> <leader>, :BufExplorer<CR>
 
 " SuperTab 0.41 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
+"
+" 0，意味着不记录上次的补全方式
+" 1，意为记住你上次的补全方式，直到使用其它的补全命令改变它
+" 2，意味着记住上次的补全方式，直到按ESC退出插入模式为止
 let g:SuperTabRetainCompletionType=2
 let g:SuperTabDefaultCompletionType="<C-X><C-N>"
+" 设定下列变量是为了能和 snipMate 更好的配合
+let g:SuperTabMappingForward="<Tab>"
+let g:SuperTabMappingBackward="<S-Tab>"
 
 " Echofunc : Echo the function declaration in the command line for C/C++ {{{2
 " http://www.vim.org/scripts/script.php?script_id=1735
@@ -278,12 +285,19 @@ if has("cscope")
         cscope reset
     endif
 
+	function <SID>CscopeRefresh()
+		" 如果当前目录存在 cscope.files 的话
+		if glob('cscope.files') != ""
+			call system("cscope -kbq &")
+			call system("ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -Lcscope.files -fcscope.tags &")
+			exec "cscope add cscope.out"
+			exec "cscope reset"
+		endif
+	endfunction
+
     " 在后台更新 tags | cscope*，便于在代码间正确的跳转
     autocmd BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
-      \ call system("cscope -kbq &")|
-      \ call system("ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -Lcscope.files -fcscope.tags &")|
-      \ exec "cscope add cscope.out"|
-      \ exec "cscope reset"
+	  \ call <SID>CscopeRefresh()
 endif
 
 function <SID>CscopeFind(mask, quick)
@@ -313,7 +327,7 @@ nmap <silent> <unique> <leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <leader>G :call <SID>CscopeFind('e', 'n')<CR>
 nmap <silent> <unique> <leader>D :call <SID>CscopeFind('d', 'n')<CR>
 
-" vimwiki : Personal Wiki for Vim {{{2
+" vimwiki 0.9.7 : Personal Wiki for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2226
 let g:vimwiki_list = [
 			\ { 'proj': 'dtv-gui',  'path': '~/dtv-gui/wiki/',  'path_html': '~/dtv-gui/html/',  'ext': '.wiki' },
@@ -344,6 +358,11 @@ function <SID>G_Asciidoc2Html()
 	let dst  = expand('%:t:r').".html"
 	exec ":! asciidoc -o ".html.dst." ".wiki.src
 endfunction
+
+" snipMate 0.83 : TextMate-style snippets for Vim {{{2
+" http://www.vim.org/scripts/script.php?script_id=2540
+"
+" nothing, it works perfect
 
 " }}}1
 
@@ -405,4 +424,10 @@ hi def link diffRemoved 	DiffDelete
 hi def link diffFile		DiffText
 hi def link diffSubname 	String
 hi def link diffLine 		String
+" vimwiki
+hi def VimwikiItalic 		cterm=underline
+hi def VimwikiDelText 		ctermfg=black
+hi def VimwikiWord 			ctermfg=darkblue
+hi def VimwikiNoExistsWord 	ctermfg=cyan cterm=Underline
+hi def VimwikiList 			ctermfg=green
 " }}}

@@ -1,10 +1,10 @@
 text/html ;\
-w3m -T text/html -I %{charset} -o display_link_number=1 -dump %s ;\
+w3m -T text/html -I %{charset} -dump %s ;\
 nametemplate=%s.html ;\
 needsterminal;\
 copiousoutput
 
-image/*; feh %s
+image/*; pqiv %s
 text/* ; source-highlight --failsafe -t8 -fesc -i %s | less -r
 
 application/x-diff-gzip; zcat %s; copiousoutput
