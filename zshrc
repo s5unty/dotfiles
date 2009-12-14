@@ -280,6 +280,15 @@ PS1=$'$C_CYAN%(1j.[$myjobs]% $C_OFF .$C_OFF)%B%#%b '
 autoload -U compinit
 compinit
 
+# highlight {{{
+zstyle ':completion:*' menu select
+# }}}
+
+# correct {{{
+zstyle ':completion:::::' completer _complete _approximate
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+# }}}
+
 # caching {{{
 zstyle ':completion::complete:*' use-cache on
 zstyle ':completion::complete:*' cache-path .zcache
@@ -292,31 +301,9 @@ zstyle ':completion:*:*:kill:*' menu select
 zstyle ':completion:*:processes' command 'ps -au$USER'
 # }}}
 
-# sudo {{{
-# http://blog.chinaunix.net/u1/39544/showart_1852988.html
-zle -N sudo-command-line
-#bindkey "^s" sudo-command-line
-sudo-command-line() {
-    if [[ -z $BUFFER ]]; then
-        zle up-history
-    fi
-    if [[ $BUFFER != sudo\ * ]]; then
-        BUFFER="sudo $BUFFER"
-    fi
-    zle end-of-line
-}
-# }}}
-
-# bc {{{
-zle -N bc-command-line
-#bindkey "^b" bc-command-line
-bc-command-line() {
-    if [[ -z $BUFFER ]]; then
-        zle up-history
-    fi
-    LBUFFER="echo \"scale=2;$BUFFER"
-    RBUFFER="\" | bc"
-}
+# ping {{{
+zstyle ':completion:*:ping:*' hosts 202.102.24.35 google.com \
+       192.168.1.{{1..4},{100..103}}
 # }}}
 
 ## }}}
@@ -326,10 +313,14 @@ bindkey '\e\e'  vi-cmd-mode
 bindkey '\e;'   vi-cmd-mode
 bindkey '\e '   complete-word
 bindkey '\eu'   undo
+bindkey '\ea'   beginning-of-line
+bindkey '\ee'   end-of-line
+bindkey '\ed'   kill-line
 bindkey '\ew'   vi-backward-blank-word
 bindkey '\ef'   vi-forward-blank-word
 bindkey '\er'   history-incremental-search-backward
-bindkey '^u'    backward-kill-line
+bindkey '\e2'   quote-region
+bindkey '^u'    undo
 ## }}}
 
 ## 杂七杂八选项 {{{
@@ -343,6 +334,7 @@ setopt PUSHD_TO_HOME
 setopt PUSHD_IGNOREDUPS
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
+setopt SHARE_HISTORY
 
 # Umask of 022
 umask 022
@@ -361,6 +353,15 @@ tty > /dev/null && stty -ixon -ixoff
 
 # terminfo module
 autoload zsh/terminfo
+
+# don't ask me 'do you wish to see all XX possibilities' before menu selection
+LISTPROMPT=''
+
+WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
+
+zle_highlight=(region:bg=blue     #选中区域
+               special:bold       #特殊字符
+               isearch:underline) #搜索时使用的关键字
 
 # Load specific local stuff.
 # (find-fline "~/.zshrc.local")
