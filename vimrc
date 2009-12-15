@@ -81,10 +81,12 @@ endfunction
 function G_Good_p()
     if &buftype == "quickfix"
         exec "normal \<Return>"
-        exec "set cursorline"
         normal zz
         wincmd w
-    else
+	elseif bufname('%') == "__MRU_Files__"
+		exec "normal \<Return>"
+		exec ":MRU"
+	else
         nunmap p
         normal "*p
         nnor <silent> <unique> p :call G_Good_p()<CR>
@@ -185,7 +187,8 @@ if has("autocmd")
   endfunction
 
   " 每次访问文件时都把光标放置在上次离开的位置
-  autocmd BufReadPost *
+  " autocmd BufReadPost *
+  autocmd BufEnter,BufWinEnter,WinEnter *
     \ call <SID>AC_ResetCursorPosition()
 
   " 保存文件之前先删除行末的多余空格
@@ -200,7 +203,7 @@ endif
 
 " Plugins {{{1
 " mru.vim 3.2 : Plugin to manage Most Recently Used (MRU) files {{{2
-let MRU_Max_Entries=30
+let MRU_Max_Entries=15
 let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
 let MRU_Include_Files='\.c$\|\.cpp$\|\.h$\|\.hpp$'  " For C Source
 let MRU_Window_Height=15
@@ -260,7 +263,7 @@ let g:SuperTabDefaultCompletionType="<C-X><C-N>"
 let g:SuperTabMappingForward="<Tab>"
 let g:SuperTabMappingBackward="<S-Tab>"
 
-" Echofunc : Echo the function declaration in the command line for C/C++ {{{2
+" Echofunc 1.19 : Echo the function declaration in the command line for C/C++ {{{2
 " http://www.vim.org/scripts/script.php?script_id=1735
 let g:EchoFuncLangsUsed = ["c", "cpp", "lua", "java"]
 
@@ -361,8 +364,11 @@ endfunction
 
 " snipMate 0.83 : TextMate-style snippets for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2540
-"
-" nothing, it works perfect
+" nothing
+
+" quickfixsigns 0.5 : Mark quickfix & location list items with signs {{{2
+" http://www.vim.org/scripts/script.php?script_id=2584
+set lazyredraw
 
 " }}}1
 
@@ -381,8 +387,8 @@ hi Normal           ctermfg=darkyellow
 hi SpecialKey       cterm=reverse
 hi NonText          ctermfg=darkmagenta
 hi Directory        ctermfg=darkblue
-hi ErrorMsg         ctermfg=red 		ctermbg=none
-hi WarningMsg       ctermfg=yellow      ctermbg=none
+hi ErrorMsg         ctermfg=darkred 	ctermbg=none
+hi WarningMsg       ctermfg=white       ctermbg=none
 hi StatusLine       ctermfg=gray 		ctermbg=none
 hi MatchParen       ctermfg=white 		ctermbg=cyan
 hi StatusLineNC     ctermfg=gray        ctermbg=none
@@ -396,11 +402,12 @@ hi DiffDelete       ctermfg=darkred     ctermbg=none
 hi DiffText         ctermfg=yellow 		ctermbg=none
 hi Folded           ctermfg=yellow 		ctermbg=none
 hi FoldColumn       ctermfg=darkyellow 	ctermbg=none
+hi SignColumn 		ctermfg=white 		ctermbg=none
 " dev
 hi Comment          ctermfg=darkgreen
 hi Constant         ctermfg=gray
 hi Special          ctermfg=darkred
-hi Identifier       ctermfg=darkblue
+hi Identifier       ctermfg=red
 hi Statement        ctermfg=gray
 hi Operator         ctermfg=darkblue
 hi PreProc          ctermfg=darkmagenta
