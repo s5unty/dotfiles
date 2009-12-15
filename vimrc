@@ -144,6 +144,7 @@ imap <silent> <unique> <F9> <ESC>:!!<CR>
 nmap <silent> <unique> <F10> g]
 nmap <silent> <unique> <F11> <C-T>zz
 nmap <silent> <unique> <F12> <C-]>zz
+nmap <silent> <unique> ' `"zz
 nmap <silent> <unique> \ <C-I>zz
 nmap <silent> <unique> <Backspace> <C-O>zz
 nmap <silent> <unique> - <C-U>
@@ -187,8 +188,7 @@ if has("autocmd")
   endfunction
 
   " 每次访问文件时都把光标放置在上次离开的位置
-  " autocmd BufReadPost *
-  autocmd BufEnter,BufWinEnter,WinEnter *
+  autocmd BufReadPost *
     \ call <SID>AC_ResetCursorPosition()
 
   " 保存文件之前先删除行末的多余空格
@@ -369,7 +369,7 @@ endfunction
 " quickfixsigns 0.5 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
 set lazyredraw
-
+let g:quickfixsigns_marks = split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>"^', '\zs')
 " }}}1
 
 " Colour {{{
