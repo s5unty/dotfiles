@@ -143,12 +143,12 @@ imap <silent> <unique> <F9> <ESC>:!!<CR>
 
 nmap <silent> <unique> <F10> g]
 nmap <silent> <unique> <F11> <C-T>zz
-nmap <silent> <unique> <F12> <C-]>zz
+nmap <silent> <unique> <F12> <C-]>z<CR>
 nmap <silent> <unique> ' `"zz
 nmap <silent> <unique> \ <C-I>zz
 nmap <silent> <unique> <Backspace> <C-O>zz
 nmap <silent> <unique> - <C-U>
-nmap <silent> <unique> = 10[{zz
+nmap <silent> <unique> = 10[{kz<CR>``
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
