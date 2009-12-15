@@ -143,3 +143,4 @@ index abb2e31..b25f7d2 100644
      {"decode_url", P_INT, PI_ONOFF, (void *)&DecodeURL, CMT_DECODE_URL, NULL},
      {"display_lineinfo", P_INT, PI_ONOFF, (void *)&displayLineInfo,
       CMT_DISPLINEINFO, NULL},
+
