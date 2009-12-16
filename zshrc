@@ -232,7 +232,7 @@ parse_git_branch() {
          | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
 }
 parse_git_status() {
-	git diff --exit-code --quiet 2> /dev/null
+	git diff --quiet 2> /dev/null
 	if [ $? -eq 1 ]; then
 		echo "*"
 	fi
