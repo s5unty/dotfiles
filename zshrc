@@ -316,11 +316,17 @@ bindkey '\eu'   undo
 bindkey '\ea'   beginning-of-line
 bindkey '\ee'   end-of-line
 bindkey '\ed'   kill-line
+bindkey '\e,'   insert-later-word ##
 bindkey '\ew'   vi-backward-blank-word
 bindkey '\ef'   vi-forward-blank-word
 bindkey '\er'   history-incremental-search-backward
 bindkey '\e2'   quote-region
 bindkey '^u'    undo
+# > cmd args: 1 first, 2 second, ... -2 later, -1 last
+# < cmd history: -1 prev, 0 curr, ?1 next?
+#                                             <  >
+insert-later-word() { zle insert-last-word -- 0 -2 }
+zle -N insert-later-word
 ## }}}
 
 ## 杂七杂八选项 {{{
