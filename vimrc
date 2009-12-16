@@ -2,7 +2,6 @@
 let &termencoding=&encoding
 set fileencodings=UTF-8,GB2312,BIG5
 set fileformats=unix,dos
-set statusline=%<%f\ \[%{&fileencoding}\]\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set mouse=a " 开启鼠标支持
 set tabstop=4 " 缩进的宽度
 set shiftwidth=4 " TAB 的宽度
@@ -25,6 +24,8 @@ set noincsearch " 非渐进搜索
 set noexpandtab " ! TAB -> SPACE
 set nowrap " 不自动折行
 set updatetime=200
+set laststatus=2 " 总是显示
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %p%%\  
 " }}}
 
 " Function {{{
@@ -148,28 +149,26 @@ nmap <silent> <unique> ' `"zz
 nmap <silent> <unique> \ <C-I>zz
 nmap <silent> <unique> <Backspace> <C-O>zz
 nmap <silent> <unique> - <C-U>
-nmap <silent> <unique> = 10[{kz<CR>``
+nmap <silent> <unique> = 10[{kz<CR>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
-nmap          <unique> t <ESC>:!
 nnor <silent> <unique> y "*y
 nnor <silent> <unique> d "*d
 nnor <silent> <unique> p :call G_Good_p()<CR>
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent> <unique> <SPACE> :call G_GoodSpace(1)<CR>
 nmap <silent> <unique> <ESC><SPACE> :call G_GoodSpace(0)<CR>
-nmap <silent> <unique> <ESC><TAB> :pclose<CR>:set cursorline<CR><C-W>}:set nocursorline<CR>
 nmap <silent> <unique> <ESC>m :marks ABC<CR>
 nmap <silent> <unique> <ESC>` :e #<CR>
 imap <silent> <unique> <ESC>` <ESC>:e #<CR>
-nmap <silent> <unique> <ESC>q :pclose<CR>
 nmap <silent> <unique> <C-Q> :qa!<CR>
 nmap <silent> <unique> <leader>f 10[{zf%
 nmap <silent> <unique> <leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
 
+imap <silent> <unique> <ESC><TAB> <C-V><TAB>
 imap <silent> <unique> <ESC><SPACE> <ESC>:<CR>
 imap <silent> <unique> <ESC>f <C-O>w
 imap <silent> <unique> <ESC>b <C-O>b
@@ -217,21 +216,30 @@ endif
 " taglist.vim 4.5 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
 " http://www.vim.org/scripts/script.php?script_id=273
 let Tlist_Ctags_Cmd = "/usr/bin/ctags-exuberant"
-let Tlist_WinWidth=35
+let Tlist_WinWidth = 35
 let Tlist_Show_One_File = 1
+let Tlist_Compact_Format = 1 " 紧凑显示，无空行
+let Tlist_Enable_Fold_Column = 0 " 不显示竖线
 let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Process_File_Always = 1
 let Tlist_Use_Horiz_Window = 0
+let Tlist_Use_SingleClick = 1
+let Tlist_Sort_Type = "name"
 nmap <silent> <unique> <leader>l :call <SID>ShowTaglist()<CR>
+
 function <SID>ShowTaglist()
     if exists("g:loaded_taglist")
         call G_GotoEditor()
         exec "TlistToggle"
-        exec "TlistSync"
     endif
 endfunction
 
 " TabBar 0.7 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
 " http://www.vim.org/scripts/script.php?script_id=1338
+let Tb_UseSingleClick = 1 " 单击切换
+let Tb_TabWrap = 1 " 禁止跨行显示
+let Tb_MaxSize = 3 " 最大显示3行
+" ??let Tb_ModSelTarget = 0
 nmap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 nmap <silent> <unique> <ESC>d :call <SID>CloseBuffer()<CR>
@@ -316,9 +324,7 @@ function <SID>CscopeFind(mask, quick)
         endif
     endif
     let @/ = str
-    normal mG
     exec ":cs find ".a:mask." ".str
-    normal `G
     call G_QFixToggle(1)
 endfunction
 nmap <silent> <unique> <leader>s :call <SID>CscopeFind('s', 'y')<CR>
@@ -338,6 +344,7 @@ let g:vimwiki_list = [
 			\ { 'proj': 'mouse-fm', 'path': '~/mouse-fm/wiki/', 'path_html': '~/mouse-fm/html/', 'ext': '.wiki' },
 			\ { 'proj': 'pidgin',   'path': '~/pidgin/wiki/',   'path_html': '~/pidgin/html/',   'ext': '.wiki' },
 			\ { 'proj': 'stardict', 'path': '~/stardict/wiki/', 'path_html': '~/stardict/html/', 'ext': '.wiki' },
+			\ { 'proj': 'myqq-gui', 'path': '~/myqq/wiki/',     'path_html': '~/myqq/html/',     'ext': '.wiki' },
 			\ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' }]
 nmap <silent><unique> <leader>. :call <SID>VimwikiGoProject()<CR>
 function <SID>VimwikiGoProject()
@@ -369,7 +376,7 @@ endfunction
 " quickfixsigns 0.5 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
 set lazyredraw
-let g:quickfixsigns_marks = split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>"^', '\zs')
+let g:quickfixsigns_marks = split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>^', '\zs')
 " }}}1
 
 " Colour {{{
@@ -400,7 +407,7 @@ hi DiffAdd          ctermfg=darkgreen 	ctermbg=none
 hi DiffChange       ctermfg=blue        ctermbg=black
 hi DiffDelete       ctermfg=darkred     ctermbg=none
 hi DiffText         ctermfg=yellow 		ctermbg=none
-hi Folded           ctermfg=yellow 		ctermbg=none
+hi Folded           ctermfg=darkyellow 	ctermbg=none
 hi FoldColumn       ctermfg=darkyellow 	ctermbg=none
 hi SignColumn 		ctermfg=white 		ctermbg=none
 " dev
@@ -426,15 +433,25 @@ hi Title            ctermfg=darkblue
 hi Visual           ctermfg=darkblue    ctermbg=darkyellow
 hi WildMenu         ctermfg=black       ctermbg=darkcyan
 " link - diff/patch
-hi def link diffAdded 		DiffAdd
+hi def link diffAdded		DiffAdd
 hi def link diffRemoved 	DiffDelete
 hi def link diffFile		DiffText
 hi def link diffSubname 	String
 hi def link diffLine 		String
 " vimwiki
-hi def VimwikiItalic 		cterm=underline
-hi def VimwikiDelText 		ctermfg=black
-hi def VimwikiWord 			ctermfg=darkblue
-hi def VimwikiNoExistsWord 	ctermfg=cyan cterm=Underline
-hi def VimwikiList 			ctermfg=green
+hi VimwikiItalic 		cterm=underline
+hi VimwikiDelText 		ctermfg=black
+hi VimwikiWord 			ctermfg=darkblue
+hi VimwikiNoExistsWord 	ctermfg=cyan 		cterm=Underline
+hi VimwikiList 			ctermfg=green
+" taglist
+hi MyTagListTagName 	ctermfg=white 		ctermbg=none
+hi MyTagListFileName 	ctermfg=yellow		ctermbg=none
+hi MyTagListTitle 		ctermfg=grey 		ctermbg=none
+hi MyTagListTagScope 	ctermfg=none 		ctermbg=none
+" tabbar
+hi Tb_Normal			ctermfg=darkgreen 	ctermbg=none
+hi Tb_Changed			ctermfg=red 		ctermbg=none
+hi Tb_VisibleNormal		ctermfg=black		ctermbg=white
+hi Tb_VisibleChanged	ctermfg=black		ctermbg=white
 " }}}
