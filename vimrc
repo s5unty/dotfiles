@@ -5,7 +5,7 @@ set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
 set tabstop=4 " 缩进的宽度
 set shiftwidth=4 " TAB 的宽度
-set clipboard+=unnamed " 选入剪贴板
+set clipboard=unnamed " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set pastetoggle=<F4>
@@ -21,7 +21,9 @@ set noswapfile
 set nocompatible
 set nohls " 不高亮匹配关键字
 set noincsearch " 非渐进搜索
-set noexpandtab " ! TAB -> SPACE
+set expandtab " TAB -> SPACE
+set softtabstop=4
+set tabstop=4
 set nowrap " 不自动折行
 set updatetime=200
 set laststatus=2 " 总是显示
@@ -84,12 +86,12 @@ function G_Good_p()
         exec "normal \<Return>"
         normal zz
         wincmd w
-	elseif bufname('%') == "__MRU_Files__"
-		exec "normal \<Return>"
-		exec ":MRU"
-	else
-        nunmap p
-        normal "*p
+    elseif bufname('%') == "__MRU_Files__"
+        exec "normal \<Return>"
+        exec ":MRU"
+    else
+        unmap p
+        normal p
         nnor <silent> <unique> p :call G_Good_p()<CR>
     endif
 endfunction
@@ -121,10 +123,24 @@ endfunction
 " vim macro to jump to devhelp topics.
 " ref: http://blog.csdn.net/ThinkHY/archive/2008/12/30/3655697.aspx
 function! DevHelpCurrentWord()
-	let word = expand("<cword>")
-	exe "!devhelp -s " . word
+    let word = expand("<cword>")
+    exe "!devhelp -s " . word
 endfunction
 
+function G_FindInFile()
+    call G_QFixToggle(0)
+    call G_GotoEditor()
+
+    let str = input('Search Pattern(f): ')
+    if str == ""
+        echo ""
+        return
+    endif
+
+    let @/ = str
+    exec ":vimgrep ".str." %"
+    call G_QFixToggle(1)
+endfunction
 " }}}
 
 " Key bindings {{{
@@ -153,8 +169,6 @@ nmap <silent> <unique> ' 10[{kz<CR>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
-nnor <silent> <unique> y "*y
-nnor <silent> <unique> d "*d
 nnor <silent> <unique> p :call G_Good_p()<CR>
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent> <unique> <SPACE> :call G_GoodSpace(1)<CR>
@@ -163,10 +177,10 @@ nmap <silent> <unique> <ESC>m :marks ABC<CR>
 nmap <silent> <unique> <ESC>` :e #<CR>
 imap <silent> <unique> <ESC>` <ESC>:e #<CR>
 nmap <silent> <unique> <C-Q> :qa!<CR>
-nmap <silent> <unique> <leader>f 10[{zf%
 nmap <silent> <unique> <leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
+nmap <silent> <unique> <leader>/ :call G_FindInFile()<CR>
 
 imap <silent> <unique> <ESC><TAB> <C-V><TAB>
 imap <silent> <unique> <ESC><SPACE> <ESC>:<CR>
@@ -296,15 +310,15 @@ if has("cscope")
         cscope reset
     endif
 
-	function <SID>CscopeRefresh()
-		" 如果当前目录存在 cscope.files 的话
-		if glob('cscope.files') != ""
-			call system("cscope -kbq &")
-			call system("ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -Lcscope.files -fcscope.tags &")
-			exec "cscope add cscope.out"
-			exec "cscope reset"
-		endif
-	endfunction
+    function <SID>CscopeRefresh()
+        " 如果当前目录存在 cscope.files 的话
+        if glob('cscope.files') != ""
+            call system("cscope -kbq &")
+            call system("ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -Lcscope.files -fcscope.tags &")
+            exec "cscope add cscope.out"
+            exec "cscope reset"
+        endif
+    endfunction
 
     " 在后台更新 tags | cscope*，便于在代码间正确的跳转
     autocmd BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
@@ -317,7 +331,7 @@ function <SID>CscopeFind(mask, quick)
     if a:quick == 'y'
         let str = expand('<cword>')
     elseif a:quick == 'n'
-        let str = input('Search Pattern: ')
+        let str = input('Search Pattern('.a:mask.'): ')
         if str == ""
             echo ""
             return
@@ -329,44 +343,44 @@ function <SID>CscopeFind(mask, quick)
 endfunction
 nmap <silent> <unique> <leader>s :call <SID>CscopeFind('s', 'y')<CR>
 nmap <silent> <unique> <leader>c :call <SID>CscopeFind('c', 'y')<CR>
-nmap <silent> <unique> <leader>g :call <SID>CscopeFind('e', 'y')<CR>
+nmap <silent> <unique> <leader>e :call <SID>CscopeFind('e', 'y')<CR>
 nmap <silent> <unique> <leader>d :call <SID>CscopeFind('d', 'y')<CR>
 nmap <silent> <unique> <leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <leader>C :call <SID>CscopeFind('c', 'n')<CR>
-nmap <silent> <unique> <leader>G :call <SID>CscopeFind('e', 'n')<CR>
+nmap <silent> <unique> <leader>E :call <SID>CscopeFind('e', 'n')<CR>
 nmap <silent> <unique> <leader>D :call <SID>CscopeFind('d', 'n')<CR>
 
 " vimwiki 0.9.7 : Personal Wiki for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2226
 let g:vimwiki_list = [
-			\ { 'proj': 'dtv-gui',  'path': '~/dtv-gui/wiki/',  'path_html': '~/dtv-gui/html/',  'ext': '.wiki' },
-			\ { 'proj': 'gpicview', 'path': '~/gpicview/wiki/', 'path_html': '~/gpicview/html/', 'ext': '.wiki' },
-			\ { 'proj': 'mouse-fm', 'path': '~/mouse-fm/wiki/', 'path_html': '~/mouse-fm/html/', 'ext': '.wiki' },
-			\ { 'proj': 'pidgin',   'path': '~/pidgin/wiki/',   'path_html': '~/pidgin/html/',   'ext': '.wiki' },
-			\ { 'proj': 'stardict', 'path': '~/stardict/wiki/', 'path_html': '~/stardict/html/', 'ext': '.wiki' },
-			\ { 'proj': 'myqq-gui', 'path': '~/myqq/wiki/',     'path_html': '~/myqq/html/',     'ext': '.wiki' },
-			\ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' }]
+            \ { 'proj': 'dtv-gui',  'path': '~/dtv-gui/wiki/',  'path_html': '~/dtv-gui/html/',  'ext': '.wiki' },
+            \ { 'proj': 'gpicview', 'path': '~/gpicview/wiki/', 'path_html': '~/gpicview/html/', 'ext': '.wiki' },
+            \ { 'proj': 'mouse-fm', 'path': '~/mouse-fm/wiki/', 'path_html': '~/mouse-fm/html/', 'ext': '.wiki' },
+            \ { 'proj': 'pidgin',   'path': '~/pidgin/wiki/',   'path_html': '~/pidgin/html/',   'ext': '.wiki' },
+            \ { 'proj': 'stardict', 'path': '~/stardict/wiki/', 'path_html': '~/stardict/html/', 'ext': '.wiki' },
+            \ { 'proj': 'myqq-gui', 'path': '~/myqq/wiki/',     'path_html': '~/myqq/html/',     'ext': '.wiki' },
+            \ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' }]
 nmap <silent><unique> <leader>. :call <SID>VimwikiGoProject()<CR>
 function <SID>VimwikiGoProject()
-	let proj_path = expand('~/')
-	let idx = 1
-	for wiki in g:vimwiki_list
-		if stridx(getcwd(), wiki.proj, strlen(proj_path)) > 0
-			call vimwiki#WikiGoHome(idx)
-			call vimwiki_html#WikiAll2HTML(wiki.path_html)
-			return
-		endif
-		let idx += 1
-	endfor
+    let proj_path = expand('~/')
+    let idx = 1
+    for wiki in g:vimwiki_list
+        if stridx(getcwd(), wiki.proj, strlen(proj_path)) > 0
+            call vimwiki#WikiGoHome(idx)
+            call vimwiki_html#WikiAll2HTML(wiki.path_html)
+            return
+        endif
+        let idx += 1
+    endfor
 endfunction
 
 nmap <silent> <unique> <F7> :call <SID>G_Asciidoc2Html()<CR>
 function <SID>G_Asciidoc2Html()
-	let wiki = g:vimwiki_list[g:vimwiki_current_idx]['path']
-	let html = g:vimwiki_list[g:vimwiki_current_idx]['path_html']
-	let src  = expand('%:f')
-	let dst  = expand('%:t:r').".html"
-	exec ":! asciidoc -o ".html.dst." ".wiki.src
+    let wiki = g:vimwiki_list[g:vimwiki_current_idx]['path']
+    let html = g:vimwiki_list[g:vimwiki_current_idx]['path_html']
+    let src  = expand('%:f')
+    let dst  = expand('%:t:r').".html"
+    exec ":! asciidoc -o ".html.dst." ".wiki.src
 endfunction
 
 " snipMate 0.83 : TextMate-style snippets for Vim {{{2
