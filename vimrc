@@ -227,8 +227,10 @@ if has("autocmd")
     \ chdir .
 endif
 
-" taglist.vim 4.5 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
+" taglist.vim 4.5-p1 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
 " http://www.vim.org/scripts/script.php?script_id=273
+"
+" p1: let win_dir = 'aboveleft vertical'
 let Tlist_Ctags_Cmd = "/usr/bin/ctags-exuberant"
 let Tlist_WinWidth = 35
 let Tlist_Show_One_File = 1
@@ -253,7 +255,8 @@ endfunction
 let Tb_UseSingleClick = 1 " 单击切换
 let Tb_TabWrap = 1 " 禁止跨行显示
 let Tb_MaxSize = 3 " 最大显示3行
-" ??let Tb_ModSelTarget = 0
+let Tb_ModSelTarget = 1
+let Tb_MoreThanOne = 1
 nmap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 nmap <silent> <unique> <ESC>d :call <SID>CloseBuffer()<CR>

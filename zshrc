@@ -232,10 +232,10 @@ parse_git_branch() {
          | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
 }
 parse_git_status() {
-	git diff --quiet 2> /dev/null
-	if [ $? -eq 1 ]; then
-		echo "*"
-	fi
+    git diff --quiet 2> /dev/null
+    if [ $? -eq 1 ]; then
+        echo "*"
+    fi
 }
 
 set_prompt() {
@@ -309,7 +309,7 @@ zstyle ':completion:*:ping:*' hosts 202.102.24.35 google.com \
 ## }}}
 
 ## 快捷键绑定 {{{
-bindkey '\e\e'  vi-cmd-mode
+bindkey '\e'    vi-cmd-mode
 bindkey '\e;'   vi-cmd-mode
 bindkey '\e '   complete-word
 bindkey '\eu'   undo
