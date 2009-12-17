@@ -26,6 +26,7 @@ set softtabstop=4
 set tabstop=4
 set nowrap " 不自动折行
 set updatetime=200
+set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set laststatus=2 " 总是显示
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %p%%\  
 " }}}
@@ -49,7 +50,7 @@ function G_QFixToggle(forced)
             return
         endif
 
-        copen 11
+        copen 18
         let g:qfix_win = bufnr("$")
     endif
 endfunction
@@ -124,7 +125,7 @@ endfunction
 " ref: http://blog.csdn.net/ThinkHY/archive/2008/12/30/3655697.aspx
 function! DevHelpCurrentWord()
     let word = expand("<cword>")
-    exe "!devhelp -s " . word
+    exe "!devhelp -s " . word . " &"
 endfunction
 
 function G_FindInFile()
@@ -137,7 +138,7 @@ function G_FindInFile()
         return
     endif
 
-    let @/ = str
+    let @/ = "\\<".str."\\>"
     exec ":vimgrep ".str." %"
     call G_QFixToggle(1)
 endfunction
@@ -183,7 +184,7 @@ nmap <silent> <unique> <leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
 nmap <silent> <unique> <leader>/ :call G_FindInFile()<CR>
 
 imap <silent> <unique> <ESC><TAB> <C-V><TAB>
-imap <silent> <unique> <ESC><SPACE> <ESC>:<CR>
+imap <silent> <unique> <ESC><SPACE> <C-X><C-O>
 imap <silent> <unique> <ESC>f <C-O>w
 imap <silent> <unique> <ESC>b <C-O>b
 imap <silent> <unique> <ESC>e <ESC>ea
@@ -278,15 +279,9 @@ nmap <silent> <unique> <leader>, :BufExplorer<CR>
 
 " SuperTab 0.41 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
-"
-" 0，意味着不记录上次的补全方式
-" 1，意为记住你上次的补全方式，直到使用其它的补全命令改变它
-" 2，意味着记住上次的补全方式，直到按ESC退出插入模式为止
-let g:SuperTabRetainCompletionType=2
-let g:SuperTabDefaultCompletionType="<C-X><C-N>"
-" 设定下列变量是为了能和 snipMate 更好的配合
-let g:SuperTabMappingForward="<Tab>"
-let g:SuperTabMappingBackward="<S-Tab>"
+let SuperTabDefaultCompletionType="<C-X><C-N>"
+let SuperTabMappingForward="<Tab>"
+let SuperTabMappingBackward="<S-Tab>"
 
 " Echofunc 1.19 : Echo the function declaration in the command line for C/C++ {{{2
 " http://www.vim.org/scripts/script.php?script_id=1735
@@ -340,7 +335,7 @@ function <SID>CscopeFind(mask, quick)
             return
         endif
     endif
-    let @/ = str
+    let @/ = "\\<".str."\\>"
     exec ":cs find ".a:mask." ".str
     call G_QFixToggle(1)
 endfunction
