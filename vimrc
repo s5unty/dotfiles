@@ -121,6 +121,20 @@ function G_GotoEditor()
     call G_GotoEditor()
 endfunction
 
+" 关闭当前 Buffer
+function G_CloseBuffer()
+    call G_QFixToggle(0)
+    call G_GotoEditor()
+
+    if exists("g:bufexplorer_version")
+        exec "BufExplorer"
+        normal d
+        exec "normal \<CR>"
+    else
+        normal bd
+    endif
+endfunction
+
 " vim macro to jump to devhelp topics.
 " ref: http://blog.csdn.net/ThinkHY/archive/2008/12/30/3655697.aspx
 function! DevHelpCurrentWord()
@@ -128,14 +142,18 @@ function! DevHelpCurrentWord()
     exe "!devhelp -s " . word . " &"
 endfunction
 
-function G_FindInFile()
+function G_FindInFile(mode, quick)
     call G_QFixToggle(0)
     call G_GotoEditor()
 
-    let str = input('Search Pattern(f): ')
-    if str == ""
-        echo ""
-        return
+    if a:quick == 'y'
+        let str = expand('<cword>')
+    elseif a:quick == 'n'
+        let str = input('Search Pattern(f): ')
+        if str == ""
+            echo ""
+            return
+        endif
     endif
 
     let @/ = "\\<".str."\\>"
@@ -145,6 +163,7 @@ endfunction
 " }}}
 
 " Key bindings {{{
+" function key
 nmap <silent> <unique> <F1> :set cursorline!<CR>:set nocursorline?<CR>
 imap <silent> <unique> <F1> <ESC>:set cursorline!<CR><ESC>:set nocursorline?<CR>a
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
@@ -153,18 +172,19 @@ nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
-
 nmap <silent> <unique> <F8> :wa!<CR>:make<CR>:call G_QFixToggle(1)<CR>
 imap <silent> <unique> <F8> <ESC>:wa!<CR>:make<CR>:call G_QFixToggle(1)<CR>
 nmap <silent> <unique> <F9> :!!<CR>
 imap <silent> <unique> <F9> <ESC>:!!<CR>
-
 nmap <silent> <unique> <F11> g]
 nmap <silent> <unique> <F12> <C-]>zz
+
+" normal mode
 nmap <silent> <unique> <Backspace> <C-O>zz
 nmap <silent> <unique> \ <C-I>zz
 nmap <silent> <unique> <ESC><Backspace> :pop<CR>zz
 nmap <silent> <unique> <ESC>\ :tag<CR>zz
+
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ' 10[{kz<CR>
 nmap <silent> <unique> ; zz
@@ -172,25 +192,32 @@ nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
 nnor <silent> <unique> p :call G_Good_p()<CR>
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
-nmap <silent> <unique> <SPACE> :call G_GoodSpace(1)<CR>
-nmap <silent> <unique> <ESC><SPACE> :call G_GoodSpace(0)<CR>
-nmap <silent> <unique> <ESC>m :marks ABC<CR>
-nmap <silent> <unique> <ESC>` :e #<CR>
-imap <silent> <unique> <ESC>` <ESC>:e #<CR>
-nmap <silent> <unique> <C-Q> :qa!<CR>
-nmap <silent> <unique> <leader>1 :.diffget BASE<CR>:diffupdate<CR>
-nmap <silent> <unique> <leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
-nmap <silent> <unique> <leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
-nmap <silent> <unique> <leader>/ :call G_FindInFile()<CR>
 
-imap <silent> <unique> <ESC><TAB> <C-V><TAB>
-imap <silent> <unique> <ESC><SPACE> <C-X><C-O>
-imap <silent> <unique> <ESC>f <C-O>w
-imap <silent> <unique> <ESC>b <C-O>b
-imap <silent> <unique> <ESC>e <ESC>ea
-imap <silent> <unique> <C-A> <C-O>I
-imap <silent> <unique> <C-E> <C-O>A
-imap <silent> <unique> <C-S> <ESC>:wa<CR>
+nmap <silent> <unique> <C-Q> :qa!<CR>
+nmap <silent> <unique> <C-S> :w<CR>
+nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
+nmap <silent> <unique> <ESC><Space> :call G_GoodSpace(0)<CR>
+nmap <silent> <unique> <Leader>` :e #<CR>
+nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
+nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
+nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
+nmap <silent> <unique> <Leader>/ :call G_FindInFile('n', 'y')<CR>
+nmap <silent> <unique> <Leader>? :call G_FindInFile('n', 'n')<CR>
+nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
+
+" insert mode
+imap <silent> <unique> <ESC><Tab> <C-V><Tab>
+imap <silent> <unique> <C-W> <SPACE><ESC>dbs
+imap <silent> <unique> <C-F> <ESC>ea
+imap <silent> <unique> <C-B> <C-O>b
+imap <silent> <unique> <C-A> <ESC>I
+imap <silent> <unique> <C-E> <ESC>A
+imap <silent> <unique> <C-D> <ESC>ldei
+imap <silent> <unique> <C-U> <C-O>u
+imap <silent> <unique> <C-H> <Left>
+imap <silent> <unique> <C-J> <Down>
+imap <silent> <unique> <C-K> <Up>
+imap <silent> <unique> <C-L> <Right>
 " }}}
 
 " Autocmd {{{
@@ -260,17 +287,6 @@ let Tb_ModSelTarget = 1
 let Tb_MoreThanOne = 1
 nmap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
-nmap <silent> <unique> <ESC>d :call <SID>CloseBuffer()<CR>
-function <SID>CloseBuffer()
-    call G_QFixToggle(0)
-    call G_GotoEditor()
-
-    if exists("g:bufexplorer_version")
-        exec "BufExplorer"
-        normal d
-        exec "normal \<CR>"
-    endif
-endfunction
 
 " bufexplorer 7.2.2 : Buffer Explorer / Browser {{{2
 " http://www.vim.org/scripts/script.php?script_id=42
@@ -279,6 +295,7 @@ nmap <silent> <unique> <leader>, :BufExplorer<CR>
 
 " SuperTab 0.41 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
+let SuperTabRetainCompletionType=0
 let SuperTabDefaultCompletionType="<C-X><C-N>"
 let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
@@ -342,11 +359,9 @@ endfunction
 nmap <silent> <unique> <leader>s :call <SID>CscopeFind('s', 'y')<CR>
 nmap <silent> <unique> <leader>c :call <SID>CscopeFind('c', 'y')<CR>
 nmap <silent> <unique> <leader>e :call <SID>CscopeFind('e', 'y')<CR>
-nmap <silent> <unique> <leader>d :call <SID>CscopeFind('d', 'y')<CR>
 nmap <silent> <unique> <leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <leader>E :call <SID>CscopeFind('e', 'n')<CR>
-nmap <silent> <unique> <leader>D :call <SID>CscopeFind('d', 'n')<CR>
 
 " vimwiki 0.9.7 : Personal Wiki for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2226
@@ -431,8 +446,8 @@ hi Statement        ctermfg=gray
 hi Operator         ctermfg=darkblue
 hi PreProc          ctermfg=darkmagenta
 hi Type             ctermfg=darkblue
-hi Underlined       ctermfg=darkyellow  ctermbg=darkblue
-hi Ignore           ctermfg=darkgrey    ctermbg=yellow
+hi Underlined       ctermfg=none        ctermbg=none
+hi Ignore           ctermfg=darkgrey    ctermbg=none
 hi Error            ctermfg=white       ctermbg=red
 hi Todo             ctermfg=white       ctermbg=green
 hi String           ctermfg=darkcyan
