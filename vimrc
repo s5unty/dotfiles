@@ -98,23 +98,15 @@ function G_Good_p()
 endfunction
 
 " 跳转至文件编辑窗口
+" 参照 tabbar.vim 插件的 <SID>Bf_CrSel() 函数
 function G_GotoEditor()
-    " 禁用 Quickfix 作为编辑窗口
-    if &buftype == "quickfix"
+    if bufname('%') == '__Tag_List__-' || getbufvar(bufnr('%'), '&modifiable') == 0
         wincmd w
-    " 禁用 __Tag_List__ 作为编辑窗口
-    elseif bufname("%") == "__Tag_List__"
-        wincmd l
-    " 禁用 nofile buf 作为编辑窗口
-    elseif &buftype == "nofile"
+    elseif bufname('%') == '-TabBar-' || getbufvar(bufnr('%'), '&modifiable') == 0
         wincmd w
-    " 禁用 mini buf 作为编辑窗口
-    elseif bufname("%") == "-TabBar-"
+    elseif getbufvar(bufnr('%'), '&modifiable') == 0 " QuickFix 或其他不可编辑的窗口
         wincmd w
-    " 正确的编辑窗口
-    elseif &buftype == ""
-        return
-    else
+    else " 已找到可编辑的窗口
         return
     endif
 
@@ -131,7 +123,7 @@ function G_CloseBuffer()
         normal d
         exec "normal \<CR>"
     else
-        normal bd
+        exec "bd"
     endif
 endfunction
 
@@ -212,12 +204,13 @@ imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
 imap <silent> <unique> <C-A> <ESC>I
 imap <silent> <unique> <C-E> <ESC>A
-imap <silent> <unique> <C-D> <ESC>ldei
+imap <silent> <unique> <C-D> <C-O>de
 imap <silent> <unique> <C-U> <C-O>u
 imap <silent> <unique> <C-H> <Left>
 imap <silent> <unique> <C-J> <Down>
 imap <silent> <unique> <C-K> <Up>
 imap <silent> <unique> <C-L> <Right>
+
 " }}}
 
 " Autocmd {{{
@@ -231,10 +224,6 @@ if has("autocmd")
   " 每次访问文件时都把光标放置在上次离开的位置
   autocmd BufReadPost *
     \ call <SID>AC_ResetCursorPosition()
-
-  " 保存文件之前先删除行末的多余空格
-  " autocmd BufWritePre *
-  "   \ exec "%s /\\s\\+$//ge"
 
   " 让 checkpath 找到相关文件，便于 [I 正常工作
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
@@ -278,15 +267,18 @@ function <SID>ShowTaglist()
     endif
 endfunction
 
-" TabBar 0.7 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
+" TabBar 0.7-p1 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
 " http://www.vim.org/scripts/script.php?script_id=1338
+"
+" p1: Bf_SwitchTo
+"     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
 let Tb_UseSingleClick = 1 " 单击切换
 let Tb_TabWrap = 1 " 禁止跨行显示
 let Tb_MaxSize = 3 " 最大显示3行
-let Tb_ModSelTarget = 1
-let Tb_MoreThanOne = 1
-nmap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
-nmap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
+let Tb_ModSelTarget = 1 " 跳转至编辑窗口
+let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
+nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
+nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 
 " bufexplorer 7.2.2 : Buffer Explorer / Browser {{{2
 " http://www.vim.org/scripts/script.php?script_id=42

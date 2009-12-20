@@ -34,10 +34,10 @@ mytags = {
 	{ layout = layouts[1] },
 	{ layout = layouts[3], mwfact = 0.618 },
 	{ layout = layouts[2], mwfact = 0.618 },
-	{ layout = layouts[2], mwfact = 0.935 },
+	{ layout = layouts[2], mwfact = 0.735 },
 	{ layout = layouts[3], mwfact = 0.618 },
 	{ layout = layouts[4] },
-	{ layout = layouts[2], mwfact = 0.935 },
+	{ layout = layouts[2], mwfact = 0.735 },
 	{ layout = layouts[3], mwfact = 0.618 },
 }
 for s = 1, screen.count() do
@@ -180,16 +180,16 @@ globalkeys = awful.util.table.join (
     -- }}}
 
     -- {{{ Tag
-	awful.key({ modkey            }, "grave", awful.tag.history.restore),
-	awful.key({ modkey            }, ";", awful.tag.history.restore),
-	awful.key({ modkey, "Control" }, ".", awful.tag.viewnext),
-	awful.key({ modkey, "Control" }, ",", awful.tag.viewprev),
-	awful.key({ modkey,           }, "9", function () awful.tag.incmwfact(-0.015)   end),
-	awful.key({ modkey,           }, "0", function () awful.tag.incmwfact( 0.015)   end),
-	awful.key({ modkey, "Shift"   }, "9", function () awful.tag.incnmaster( 1)      end),
-	awful.key({ modkey, "Shift"   }, "0", function () awful.tag.incnmaster(-1)      end),
-	awful.key({ modkey, "Control" }, "9", function () awful.tag.incncol( 1)         end),
-	awful.key({ modkey, "Control" }, "0", function () awful.tag.incncol(-1)         end),
+	awful.key({ modkey            }, "grave",   awful.tag.history.restore),
+	awful.key({ modkey            }, ";",       awful.tag.history.restore),
+	awful.key({ modkey, "Control" }, ".",       awful.tag.viewnext),
+	awful.key({ modkey, "Control" }, ",",       awful.tag.viewprev),
+	awful.key({ modkey,           }, "minus",   function () awful.tag.incmwfact(-0.05) end),
+	awful.key({ modkey,           }, "equal",   function () awful.tag.incmwfact( 0.05) end),
+	awful.key({ modkey, "Shift"   }, "minus",   function () awful.tag.incnmaster(-1)   end),
+	awful.key({ modkey, "Shift"   }, "equal",   function () awful.tag.incnmaster( 1)   end),
+	awful.key({ modkey, "Control" }, "minus",   function () awful.tag.incncol(-1)      end),
+	awful.key({ modkey, "Control" }, "equal",   function () awful.tag.incncol( 1)      end),
     -- }}}
 
     -- {{{ Clients
@@ -416,6 +416,11 @@ clientkeys = awful.util.table.join(
 
 	awful.key({ modkey            }, "BackSpace",function (c)
 		c:swap(awful.client.getmaster())
+	end),
+
+	awful.key({ modkey            }, "backslash",function (c)
+        awful.client.setslave(c)
+        awful.client.focus.history.previous()
 	end),
 
 	awful.key({ modkey,           }, "Return",  function (c)

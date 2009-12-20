@@ -178,6 +178,9 @@ C() { # gen cscope.files
 	cscope -kbq
 	ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -Lcscope.files -fcscope.tags
 }
+O() { # chown
+	$__SUDO chown -R s5unty:s5unty $*
+}
 
 dup() { # dupload
     if echo "$1" | grep -q '\.changes$' ; then

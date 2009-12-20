@@ -88,7 +88,7 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
 "            noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 6)<CR>:<BS>
 "            noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 7)<CR>:<BS>
 "            noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 8)<CR>:<BS>
-      "else
+    "else
             "NORMAL mode bindings for vim( terminal)
             noremap <unique> <script> <ESC>1 :call <SID>Bf_SwitchTo( 1)<CR>:<BS>
             noremap <unique> <script> <ESC>2 :call <SID>Bf_SwitchTo( 2)<CR>:<BS>
@@ -670,9 +670,7 @@ function! <SID>Win_FindOrCreate(bufName, forceEdge, isExplorer)
     let l:winFound = 1
   else
 
-        "if g:Tb_SplitToEdge == 1 || a:forceEdge >= 0
-        if a:forceEdge >= 0
-
+        if g:Tb_SplitToEdge == 1 || a:forceEdge >= 0
             let l:edge = &splitbelow
             if a:forceEdge >= 0
                 let l:edge = a:forceEdge
@@ -1234,6 +1232,26 @@ endfunction " %%
 
 " Bf_SwitchTo      Switch to bufNum( parameter) buffer~~
 function! <SID>Bf_SwitchTo( bufNum)
+    " p1 by s5unty@gmail.com 2009年 12月 20日 星期日 11:07:40 UTC {{{
+    " If we are in the buffer explorer or in a nonmodifiable buffer with
+    " g:Tb_ModSelTarget set then try another window (a few times)
+    if bufname('%') == '-TabBar-' || (g:Tb_ModSelTarget == 1 && getbufvar(bufnr('%'), '&modifiable') == 0)
+      wincmd w
+      if bufname('%') == '-TabBar-' || (g:Tb_ModSelTarget == 1 && getbufvar(bufnr('%'), '&modifiable') == 0)
+        wincmd w
+        if bufname('%') == '-TabBar-' || (g:Tb_ModSelTarget == 1 && getbufvar(bufnr('%'), '&modifiable') == 0)
+          wincmd w
+          " The following handles the case where -TabBar-
+          " is the only window left. We need to resize so we don't
+          " end up with a 1 or two line buffer.
+          if bufname('%') == '-TabBar-'
+            let l:resize = 1
+          endif
+        endif
+      endif
+    endif
+    " p1 }}}
+
     let l:vimbuf = <SID>Map_Get_key( a:bufNum )
     exec "b!" . l:vimbuf
 endfunction " %%
