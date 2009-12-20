@@ -21,4 +21,4 @@ set cpt=sbfl
 set fc
 set visualbell
 set shell="/usr/bin/zsh"
-set editor="/usr/bin/urxvt -e vi"
+set editor="/usr/bin/gvim --noplugin"

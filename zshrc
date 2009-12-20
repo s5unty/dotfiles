@@ -314,6 +314,7 @@ zstyle ':completion:*:ping:*' hosts 202.102.24.35 google.com \
 ## 快捷键绑定 {{{
 bindkey '\e;'   vi-cmd-mode
 bindkey '\e'    vi-cmd-mode
+bindkey '^l'    vi-forward-char
 bindkey '^f'    _vi-forward-word-end
 bindkey '^b'    vi-backward-word
 bindkey '^d'    delete-word
@@ -321,18 +322,9 @@ bindkey '^u'    undo
 bindkey '^h'    vi-backward-char
 bindkey '^j'    down-line-or-search
 bindkey '^k'    up-line-or-search
-bindkey '^l'    vi-forward-char
-bindkey '\e,'   _insert-later-word
+bindkey '^n'    history-search-forward
+bindkey '^p'    history-search-backward
 bindkey '\e2'   quote-region
-bindkey ' '     magic-space
-
-_insert-later-word() {
-# > cmd args: 1 first, 2 second, ... -2 later, -1 last
-# < cmd history: -1 prev, 0 curr, ?1 next?
-#                           <  >
-    zle insert-last-word -- 0 -2
-}
-zle -N _insert-later-word
 
 _vi-forward-word-end() {
     # <ESC>ea
