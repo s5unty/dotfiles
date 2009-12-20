@@ -312,24 +312,44 @@ zstyle ':completion:*:ping:*' hosts 202.102.24.35 google.com \
 ## }}}
 
 ## 快捷键绑定 {{{
-bindkey '\e'    vi-cmd-mode
 bindkey '\e;'   vi-cmd-mode
-bindkey '\e '   complete-word
-bindkey '\eu'   undo
-bindkey '\ea'   beginning-of-line
-bindkey '\ee'   end-of-line
-bindkey '\ed'   kill-line
-bindkey '\e,'   insert-later-word ##
-bindkey '\ew'   vi-backward-blank-word
-bindkey '\ef'   vi-forward-blank-word
-bindkey '\er'   history-incremental-search-backward
-bindkey '\e2'   quote-region
+bindkey '\e'    vi-cmd-mode
+bindkey '^f'    _vi-forward-word-end
+bindkey '^b'    vi-backward-word
+bindkey '^d'    delete-word
 bindkey '^u'    undo
+bindkey '^h'    vi-backward-char
+bindkey '^j'    down-line-or-search
+bindkey '^k'    up-line-or-search
+bindkey '^l'    vi-forward-char
+bindkey '\e,'   _insert-later-word
+bindkey '\e2'   quote-region
+bindkey ' '     magic-space
+
+_insert-later-word() {
 # > cmd args: 1 first, 2 second, ... -2 later, -1 last
 # < cmd history: -1 prev, 0 curr, ?1 next?
-#                                             <  >
-insert-later-word() { zle insert-last-word -- 0 -2 }
-zle -N insert-later-word
+#                           <  >
+    zle insert-last-word -- 0 -2
+}
+zle -N _insert-later-word
+
+_vi-forward-word-end() {
+    # <ESC>ea
+    zle vi-cmd-mode
+    zle vi-forward-word-end
+    zle vi-add-next
+}
+zle -N _vi-forward-word-end
+
+## mark #
+# if [[ -z $BUFFER ]]; then
+#     zle up-history
+# fi
+# LBUFFER="echo \"scale=2;$BUFFER"
+# RBUFFER="\" | bc"
+########
+
 ## }}}
 
 ## 杂七杂八选项 {{{
