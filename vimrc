@@ -29,10 +29,11 @@ set updatetime=200
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set laststatus=2 " 总是显示
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %p%%\  
+set winaltkeys=no
 " }}}
 
 " Function {{{
-" 自定义 QuickFix 全局变量
+" 打开/关闭/切换 Quickfix 窗口
 " @forced:
 "   1 always show qfix
 "   0 always hide qfix
@@ -55,7 +56,7 @@ function G_QFixToggle(forced)
     endif
 endfunction
 
-" 快速在 QuickFix, Editor 窗口间切换:
+" 空格键 下翻页
 function G_GoodSpace(browse)
     if a:browse == 1
         " 保留空格键打开折叠
@@ -68,6 +69,7 @@ function G_GoodSpace(browse)
         return
     endif
 
+    " TODO 避免布局依赖
     " 与 Quickfix 交换焦点窗口
     if &buftype == "quickfix"
         wincmd k
@@ -82,7 +84,8 @@ function G_GoodSpace(browse)
     endif
 endfunction
 
-function G_Good_p()
+" P键 预览
+function G_GoodP()
     if &buftype == "quickfix"
         exec "normal \<Return>"
         normal zz
@@ -93,7 +96,7 @@ function G_Good_p()
     else
         unmap p
         normal p
-        nnor <silent> <unique> p :call G_Good_p()<CR>
+        nnor <silent> <unique> p :call G_GoodP()<CR>
     endif
 endfunction
 
@@ -134,13 +137,14 @@ function! DevHelpCurrentWord()
     exe "!devhelp -s " . word . " &"
 endfunction
 
-function G_FindInFile(mode, quick)
+" 在当前文件中查找
+function G_FindInFile(search)
     call G_QFixToggle(0)
     call G_GotoEditor()
 
-    if a:quick == 'y'
-        let str = expand('<cword>')
-    elseif a:quick == 'n'
+    if a:search == 'exact'
+        let str = "\\<".expand('<cword>')."\\>"
+    elseif a:search == 'fuzzy'
         let str = input('Search Pattern(f): ')
         if str == ""
             echo ""
@@ -148,8 +152,8 @@ function G_FindInFile(mode, quick)
         endif
     endif
 
-    let @/ = "\\<".str."\\>"
-    exec ":vimgrep ".str." %"
+    let @/ = str
+    exec ":vimgrep /".str."/j %"
     call G_QFixToggle(1)
 endfunction
 " }}}
@@ -172,17 +176,17 @@ nmap <silent> <unique> <F11> g]
 nmap <silent> <unique> <F12> <C-]>zz
 
 " normal mode
-nmap <silent> <unique> <Backspace> <C-O>zz
-nmap <silent> <unique> \ <C-I>zz
-nmap <silent> <unique> <ESC><Backspace> :pop<CR>zz
-nmap <silent> <unique> <ESC>\ :tag<CR>zz
+nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
+nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
+nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
+nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
 
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ' 10[{kz<CR>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
-nnor <silent> <unique> p :call G_Good_p()<CR>
+nnor <silent> <unique> p :call G_GoodP()<CR>
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 
 nmap <silent> <unique> <C-Q> :qa!<CR>
@@ -193,12 +197,11 @@ nmap <silent> <unique> <Leader>` :e #<CR>
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>/ :call G_FindInFile('n', 'y')<CR>
-nmap <silent> <unique> <Leader>? :call G_FindInFile('n', 'n')<CR>
+nmap <silent> <unique> <Leader>/ :call G_FindInFile('exact')<CR>
+nmap <silent> <unique> <Leader>? :call G_FindInFile('fuzzy')<CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
 
 " insert mode
-imap <silent> <unique> <ESC><Tab> <C-V><Tab>
 imap <silent> <unique> <C-W> <SPACE><ESC>dbs
 imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
@@ -274,7 +277,7 @@ endfunction
 "     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
 let Tb_UseSingleClick = 1 " 单击切换
 let Tb_TabWrap = 1 " 禁止跨行显示
-let Tb_MaxSize = 3 " 最大显示3行
+let Tb_MaxSize = 2 " 最多显示2行
 let Tb_ModSelTarget = 1 " 跳转至编辑窗口
 let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
 nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
@@ -332,6 +335,8 @@ if has("cscope")
 	  \ call <SID>CscopeRefresh()
 endif
 
+" cscope 似乎不支持正则表达式,无法实现精确匹配
+" https://bugzilla.redhat.com/show_bug.cgi?id=163330
 function <SID>CscopeFind(mask, quick)
     call G_QFixToggle(0)
     call G_GotoEditor()
@@ -346,6 +351,12 @@ function <SID>CscopeFind(mask, quick)
     endif
     let @/ = "\\<".str."\\>"
     exec ":cs find ".a:mask." ".str
+
+    " cscope find 不支持像 vimgrep 那样 /j 的参数,
+    " 在这手动跳回原始位置
+    exec "normal \<C-O>"
+
+    " 显示搜索结果窗口
     call G_QFixToggle(1)
 endfunction
 nmap <silent> <unique> <leader>s :call <SID>CscopeFind('s', 'y')<CR>
