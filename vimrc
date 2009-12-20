@@ -28,7 +28,7 @@ set nowrap " 不自动折行
 set updatetime=200
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set laststatus=2 " 总是显示
-set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %p%%\  
+set statusline=%<%f\ %h%m%r%=%P
 set winaltkeys=no
 " }}}
 
