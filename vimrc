@@ -22,14 +22,13 @@ set nocompatible
 set nohls " 不高亮匹配关键字
 set noincsearch " 非渐进搜索
 set expandtab " TAB -> SPACE
-set softtabstop=4
-set tabstop=4
 set nowrap " 不自动折行
 set updatetime=200
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set statusline=%<%f\ %h%m%r%=%P
 set winaltkeys=no
 set guioptions=ai
+set cinoptions=:0,g0,t0
 " }}}
 
 " Function {{{
@@ -54,6 +53,8 @@ function G_QFixToggle(forced)
         copen 18
         let g:qfix_win = bufnr("$")
     endif
+
+    exec "redraw!"
 endfunction
 
 " 空格键 下翻页
@@ -282,6 +283,10 @@ let Tb_ModSelTarget = 1 " 跳转至编辑窗口
 let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
 nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
+if has("autocmd")
+  autocmd BufWritePost,CursorMovedI *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
+    \ exec ":TbAup"
+endif
 
 " bufexplorer 7.2.2 : Buffer Explorer / Browser {{{2
 " http://www.vim.org/scripts/script.php?script_id=42
