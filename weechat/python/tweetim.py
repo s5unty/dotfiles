@@ -234,7 +234,7 @@ def parse (server, modifier, data, the_string):
 
 		m = matcher.search(the_string)
 
-		if not m: return colorize(re.sub("^b_tweetim", "[^^^]", the_string))
+		if not m: return colorize(re.sub("^x_twitter", "[^^^]", the_string))
 
 		dent = colorize(m.group('dent'))
 		username = nick_color(m.group('username'))
