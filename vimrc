@@ -5,7 +5,7 @@ set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
 set tabstop=4 " 缩进的宽度
 set shiftwidth=4 " TAB 的宽度
-set clipboard=unnamed " 使用系统剪贴板
+set clipboard=unnamed,autoselectml " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set pastetoggle=<F4>
@@ -305,7 +305,7 @@ let SuperTabMappingBackward="<S-Tab>"
 let g:EchoFuncLangsUsed = ["c", "cpp", "lua", "java"]
 
 " Cscope : Interactively examine a C program source {{{2
-set tag=cscope.tags,~/.tags;
+set tag=.cscope/cscope.tags,~/.tags;
 if has("cscope")
     set csto=1
     set nocsverb
@@ -327,16 +327,16 @@ if has("cscope")
 
     function <SID>CscopeRefresh()
         " 如果当前目录存在 cscope.files 的话
-        if glob('cscope.files') != ""
-            call system("cscope -kbq &")
-            call system("ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -Lcscope.files -fcscope.tags &")
-            exec "cscope add cscope.out"
+        if glob('.cscope') != ""
+            call system("cscope -kbq -f.cscope/cscope.out &")
+            call system("ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -L.cscope/cscope.files -f.cscope/cscope.tags &")
+            exec "cscope add .cscope/cscope.out"
             exec "cscope reset"
         endif
     endfunction
 
     " 在后台更新 tags | cscope*，便于在代码间正确的跳转
-    autocmd BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
+    autocmd BufReadPost,BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
 	  \ call <SID>CscopeRefresh()
 endif
 

@@ -26,28 +26,26 @@ layouts =
 	awful.layout.suit.fair,
 	awful.layout.suit.tile.bottom,
 	awful.layout.suit.tile.right,
-	awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.floating
 }
 
 tags = { }
 mytags = {
 	{ layout = layouts[1] },
-	{ layout = layouts[3], mwfact = 0.618 },
+	{ layout = layouts[2], mwfact = 0.618, nmaster=2 },
 	{ layout = layouts[2], mwfact = 0.618 },
-	{ layout = layouts[2], mwfact = 0.735 },
-	{ layout = layouts[3], mwfact = 0.618 },
-	{ layout = layouts[4] },
-	{ layout = layouts[2], mwfact = 0.735 },
-	{ layout = layouts[3], mwfact = 0.618 },
+	{ layout = layouts[3], mwfact = 0.735 },
+	{ layout = layouts[2], mwfact = 0.735, nmaster=2 },
+	{ layout = layouts[3], mwfact = 0.618, nmaster=2 },
+	{ layout = layouts[3], mwfact = 0.618, nmaster=2 },
+	{ layout = layouts[2], mwfact = 0.735, nmaster=2 },
 }
 for s = 1, screen.count() do
 	tags[s] = awful.tag({ "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }, s)
 	for i, v in ipairs(mytags) do
 		awful.tag.setproperty(tags[s][i], "layout",   v.layout)
 		awful.tag.setproperty(tags[s][i], "mwfact",   v.mwfact)
-		--  awful.tag.setproperty(tags[s][i], "nmaster",  v.nmaster)
-		--  awful.tag.setproperty(tags[s][i], "ncols",    v.ncols)
-		--  awful.tag.setproperty(tags[s][i], "icon",     v.icon)
+		awful.tag.setproperty(tags[s][i], "nmaster",  v.nmaster)
 	end
 end
 -- }}}
@@ -143,9 +141,9 @@ for s = 1, screen.count() do
 			mypromptbox[s],
 			layout = awful.widget.layout.horizontal.leftright
 		},
+		mylayoutbox[s],
 		s == 1 and mysystray or nil,
 		mytextclock,
-		mylayoutbox[s],
 		mytasklist[s],
 		layout = awful.widget.layout.horizontal.rightleft
 	}

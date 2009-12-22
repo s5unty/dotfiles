@@ -33,9 +33,5 @@ _$*
 core
 .svn/
 .git/
+.cscope/
 .gitignore
-cscope.files
-cscope.in.out
-cscope.out
-cscope.po.out
-cscope.tags

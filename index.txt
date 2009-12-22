@@ -9,10 +9,12 @@ _________________________________________________________________
 
 [[debian]]
 http://www.debian.org[Debian] 是一个致力于自由软件开发并宣扬自由软件基金会之理念的志愿者组织。 +
-Debian 计划创建于 1993 年。当时，Ian Murdock 发出一份公开信，邀请软件开发者们参与构建一个基于较新的 Linux 内核的完整而紧密的软件发行版。经过多年的成长，那群由自由软件基金会资助并受 GNU 哲理影响的爱好者已经演变为一个拥有大约 1010 位 Debian 开发人员的组织。
 
-* link:http://debina.googlecode.com/[translations]
-  翻译 Debian 网页。
+* i18n-zh
+* link:http://packages.qa.debian.org/v/vidalia.html[vidalia]
+  vidalia 的 deb 包维护工作。
+* link:http://packages.qa.debian.org/v/cconv.html[cconv]
+  cconv 的 deb 包维护工作。
 
 [[mutt]]
 http://www.mutt.org[Mutt] 是 Unix 系统下的一款邮件客户端，采用字符界面，虽然简朴但很高效。
@@ -20,18 +22,10 @@ http://www.mutt.org[Mutt] 是 Unix 系统下的一款邮件客户端，采用字
 * link:http://mutt-meta.googlecode.com/[mutt-meta]
   用于简化 Mutt 配置过程的简易安装包，只适用于 Debian 及其衍生版(依赖 debconf)。
 
-[[vidalia]]
-http://vidalia-project.net[Vidalia] 是洋葱代理(Tor)的一个跨平台的图形化控制界面，采用 Qt 框架开发。 +
-通过使用 Vidalia，您可以启动或者停止洋葱代理，还可以观察洋葱代理的状态信息，以及监视洋葱代理占用的带宽。Vidalia 还能帮助您建立和管理您自己的洋葱节点，便于捐赠给洋葱网络。
-
-* link:http://packages.qa.debian.org/v/vidalia.html[QA]
-  Vidalia 的 deb 包维护工作。
-
 [[awesome]]
 http://awesome.naquadah.org/[Awesome] 是一款配置性极高的下一代 X 窗口管理器开发框架。它非常快速，可扩充，采用 GNU GPLv2 许可证发布。
 
-* link:http://awesome.naquadah.org/wiki/Awesome_3_configuration/zh-hans[Awesome 3 配置文件]
-  翻译维基页面。
+* i18n-zh
 
 == Unofficial Debian Repository
 
@@ -43,8 +37,9 @@ sudo apt-get update
 ---------------------------------------------------------------------------------------------------
 
 == About Me
-我比较擅长 C++，会一点 Perl，熟悉 Gtk 开发库，以前从事过 SNMP，Netflow 以及数据库等方面的工作。这里保存了一些我常用的link:http://github.com/s5unty/dotfiles.git/[配置文件]。 +
-link:http://s5unty.blogspot.com[@blogspot]，link:http://identi.ca/s5unty[@identica]，link:http://twitter.com/s5unty[@twitter]。 +
+link:http://identi.ca/s5unty[@identica] link:http://s5unty.blogspot.com[@blogspot] http://www.google.com/reader/shared/s5unty[@reader] link:http://github.com/s5unty/dotfiles.git/[@github] link:http://qa.debian.org/developer.php?login=s5unty%40gmail.com[@maintain]
+
+
 image:http://lh4.ggpht.com/_oKL9t7fM3TU/SvPguSYXA6I/AAAAAAAAAxY/2jnEUzO7K5I/email.png[jabber && msn]
 
 // vim: set syntax=asciidoc:

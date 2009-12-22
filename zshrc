@@ -14,18 +14,12 @@ __IP=`/sbin/ifconfig -v | grep 192.168.1 | tail -1 | cut -d'.' -f4 | cut -d' ' -
 # 全局别名 {{{
 alias -g G="| grep"
 alias -g M="| $__LESS"
-alias -g IUS="iconv -futf8 -tgb2312"
-alias -g IUT="iconv -futf8 -tbig5"
-alias -g IST="iconv -fgb2312 -tbig5"
-alias -g ITS="iconv -fbig5 -tgb2312"
 # }}}
 
 # 普通别名 {{{
 alias ..="cd .."
-alias ..1="cd .."
-alias ..2="cd ../.."
-alias ..3="cd ../../.."
-alias ..4="cd ../../../.."
+alias ...="cd ../.."
+alias ....="cd ../../.."
 alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
 alias ll="ls -hl"
@@ -144,6 +138,14 @@ alias -s chm=kchmviewer
 alias -s planner=planner
 # }}}
 
+# 目录别名 {{{
+unhash -dm '*'
+hash -d log="/var/log/"
+hash -d net="/etc/network/"
+hash -d inc="/usr/include/"
+hash -d rcS="/etc/init.d/"
+# }}}
+
 # 其它别名 {{{ 
 cd() {
     if builtin cd "$@"; then
@@ -173,10 +175,11 @@ R() { # find in files
     grep -r $1 . ${(@)argv[2,$#]} L
 }
 C() { # gen cscope.files
+    mkdir .cscope
 	find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' \
-		-o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' > cscope.files
-	cscope -kbq
-	ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -Lcscope.files -fcscope.tags
+		-o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' > .cscope/cscope.files
+	cscope -kbq -f.cscope/cscope.out
+	ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -L.cscope/cscope.files -f.cscope/cscope.tags
 }
 O() { # chown
 	$__SUDO chown -R s5unty:s5unty $*
@@ -383,6 +386,12 @@ WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
 zle_highlight=(region:bg=blue     #选中区域
                special:bold       #特殊字符
                isearch:underline) #搜索时使用的关键字
+
+# 检查邮件 {{{
+for i in /sun/mails/(company|personal|debian-zh)(/); do
+    mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
+done
+# }}}
 
 # Load specific local stuff.
 # (find-fline "~/.zshrc.local")
