@@ -94,8 +94,8 @@ set menu_scroll
 set askcc=yes
 # 签名文件，最后竖线|表示该文件是一段脚本
 set signature=~/.mutt/signature|
-# 在签名前添加 "-- "
-set sig_dashes=yes
+# 禁止在签名前自动添加 "-- ",由签名脚本负责
+set sig_dashes=no
 # 设定回信的模板
 set date_format="%a, %F at %R %z"
 set attribution="on %D, %n wrote:"

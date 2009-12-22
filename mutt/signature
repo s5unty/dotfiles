@@ -1,4 +1,6 @@
 #! /bin/sh
 
+echo "Regards,"
+echo "-- "
 echo "Vern"
-echo `date +"%F"`
+echo "vim -c \":s?^?\=tr('ZnxQrxVaxPuvan', 'x', ' ')?|:normal Vg?\""
