@@ -90,6 +90,7 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
 "            noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 8)<CR>:<BS>
     "else
             "NORMAL mode bindings for vim( terminal)
+            noremap <unique> <script> <ESC>` :e #<CR>:<BS>
             noremap <unique> <script> <ESC>1 :call <SID>Bf_SwitchTo( 1)<CR>:<BS>
             noremap <unique> <script> <ESC>2 :call <SID>Bf_SwitchTo( 2)<CR>:<BS>
             noremap <unique> <script> <ESC>3 :call <SID>Bf_SwitchTo( 3)<CR>:<BS>
@@ -99,7 +100,24 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
             noremap <unique> <script> <ESC>7 :call <SID>Bf_SwitchTo( 7)<CR>:<BS>
             noremap <unique> <script> <ESC>8 :call <SID>Bf_SwitchTo( 8)<CR>:<BS>
             noremap <unique> <script> <ESC>9 :call <SID>Bf_SwitchTo( 9)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>0 :call <SID>Bf_SwitchTo(10)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>1 :call <SID>Bf_SwitchTo(11)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>2 :call <SID>Bf_SwitchTo(12)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>3 :call <SID>Bf_SwitchTo(13)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>4 :call <SID>Bf_SwitchTo(14)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>5 :call <SID>Bf_SwitchTo(15)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>6 :call <SID>Bf_SwitchTo(16)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>7 :call <SID>Bf_SwitchTo(17)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>8 :call <SID>Bf_SwitchTo(18)<CR>:<BS>
+            noremap <unique> <script> <ESC>1<ESC>9 :call <SID>Bf_SwitchTo(19)<CR>:<BS>
+            noremap <unique> <script> <ESC>2<ESC>0 :call <SID>Bf_SwitchTo(20)<CR>:<BS>
+            noremap <unique> <script> <ESC>2<ESC>1 :call <SID>Bf_SwitchTo(21)<CR>:<BS>
+            noremap <unique> <script> <ESC>2<ESC>2 :call <SID>Bf_SwitchTo(22)<CR>:<BS>
+            noremap <unique> <script> <ESC>2<ESC>3 :call <SID>Bf_SwitchTo(23)<CR>:<BS>
+            noremap <unique> <script> <ESC>2<ESC>4 :call <SID>Bf_SwitchTo(24)<CR>:<BS>
+            noremap <unique> <script> <ESC>2<ESC>5 :call <SID>Bf_SwitchTo(25)<CR>:<BS>
             "INSERT mode bindings for vim( terminal)
+            inoremap <unique> <script> <ESC>` <esc>:e #<CR>a
             inoremap <unique> <script> <ESC>1 <esc>:call <SID>Bf_SwitchTo( 1)<CR>a
             inoremap <unique> <script> <ESC>2 <esc>:call <SID>Bf_SwitchTo( 2)<CR>a
             inoremap <unique> <script> <ESC>3 <esc>:call <SID>Bf_SwitchTo( 3)<CR>a
@@ -109,6 +127,22 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
             inoremap <unique> <script> <ESC>7 <esc>:call <SID>Bf_SwitchTo( 7)<CR>a
             inoremap <unique> <script> <ESC>8 <esc>:call <SID>Bf_SwitchTo( 8)<CR>a
             inoremap <unique> <script> <ESC>9 <esc>:call <SID>Bf_SwitchTo( 9)<CR>a
+            inoremap <unique> <script> <ESC>1<ESC>0 <esc>:call <SID>Bf_SwitchTo(10)<CR>:<BS>
+            inoremap <unique> <script> <ESC>1<ESC>1 <esc>:call <SID>Bf_SwitchTo(11)<CR>:<BS>
+            inoremap <unique> <script> <ESC>1<ESC>2 <esc>:call <SID>Bf_SwitchTo(12)<CR>:<BS>
+            inoremap <unique> <script> <ESC>1<ESC>3 <esc>:call <SID>Bf_SwitchTo(13)<CR>:<BS>
+            inoremap <unique> <script> <ESC>1<ESC>4 <esc>:call <SID>Bf_SwitchTo(14)<CR>:<BS>
+            inoremap <unique> <script> <ESC>1<ESC>5 <esc>:call <SID>Bf_SwitchTo(15)<CR>:<BS>
+            inoremap <unique> <script> <ESC>1<ESC>6 <esc>:call <SID>Bf_SwitchTo(16)<CR>:<BS>
+            inoremap <unique> <script> <ESC>1<ESC>7 <esc>:call <SID>Bf_SwitchTo(17)<CR>:<BS>
+            inoremap <unique> <script> <ESC>1<ESC>8 <esc>:call <SID>Bf_SwitchTo(18)<CR>:<BS>
+            inoremap <unique> <script> <ESC>1<ESC>9 <esc>:call <SID>Bf_SwitchTo(19)<CR>:<BS>
+            inoremap <unique> <script> <ESC>2<ESC>0 <esc>:call <SID>Bf_SwitchTo(20)<CR>:<BS>
+            inoremap <unique> <script> <ESC>2<ESC>1 <esc>:call <SID>Bf_SwitchTo(21)<CR>:<BS>
+            inoremap <unique> <script> <ESC>2<ESC>2 <esc>:call <SID>Bf_SwitchTo(22)<CR>:<BS>
+            inoremap <unique> <script> <ESC>2<ESC>3 <esc>:call <SID>Bf_SwitchTo(23)<CR>:<BS>
+            inoremap <unique> <script> <ESC>2<ESC>4 <esc>:call <SID>Bf_SwitchTo(24)<CR>:<BS>
+            inoremap <unique> <script> <ESC>2<ESC>5 <esc>:call <SID>Bf_SwitchTo(25)<CR>:<BS>
       endif
 endif " %%
 
@@ -370,8 +404,10 @@ function! <SID>Tb_Start(sticky, delBufNum)
         syn clear
         syn match Tb_Normal             '\[[^\]]*\]'
         syn match Tb_Changed            '\[[^\]]*\]+'
+        syn match Tb_Readonly           '\[[^\]]*\]='
         syn match Tb_VisibleNormal      '\[[^\]]*\]\*+\='
         syn match Tb_VisibleChanged     '\[[^\]]*\]\*+'
+        syn match Tb_VisibleReadonly    '\[[^\]]*\]\*='
 
         if !exists("g:did_tabbar_syntax_inits")
             let g:did_tabbar_syntax_inits = 1
@@ -392,7 +428,6 @@ function! <SID>Tb_Start(sticky, delBufNum)
     " If you Bf_DblClkSel in the -TabBar- then try
     " to open the selected buffer in the previous window.
     nnoremap <buffer> <2-LEFTMOUSE> :call <SID>Bf_DblClkSel()<CR>:<BS>
-
 
     " delete the selected buffer.
     nnoremap <buffer> d :call <SID>Bf_DelWithD()<CR>:<BS>
@@ -1131,6 +1166,10 @@ function! <SID>Bf_BuildList(delBufNum, updateBufList)
                         " If the buffer is modified then mark it
                         if(getbufvar(l:i, '&modified') == 1)
                             let l:tab = l:tab . '+'
+                        endif
+                        " If the buffer is readonly then mark it
+                        if(getbufvar(l:i, '&readonly') == 1)
+                            let l:tab = l:tab . '='
                         endif
                         let l:maxTabWidth = <SID>Tb_Max(strlen(l:tab), l:maxTabWidth)
                         let l:fileNames = l:fileNames.l:tab

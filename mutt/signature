@@ -1,5 +1,6 @@
 #! /bin/sh
 
+echo "\n"
 echo "Regards,"
 echo "-- "
 echo "Vern"

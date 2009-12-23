@@ -176,10 +176,10 @@ R() { # find in files
 }
 C() { # gen cscope.files
     mkdir .cscope
-	find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' \
-		-o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' > .cscope/cscope.files
-	cscope -kbq -f.cscope/cscope.out
-	ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -L.cscope/cscope.files -f.cscope/cscope.tags
+    find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' \
+        -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' > .cscope/cscope.files
+    cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
+    ctags -u --c++-kinds=+p --fields=+ialS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
 }
 O() { # chown
 	$__SUDO chown -R s5unty:s5unty $*

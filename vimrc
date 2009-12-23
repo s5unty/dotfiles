@@ -29,6 +29,8 @@ set statusline=%<%f\ %h%m%r%=%P
 set winaltkeys=no
 set guioptions=ai
 set cinoptions=:0,g0,t0
+set timeout
+set timeoutlen=300
 " }}}
 
 " Function {{{
@@ -160,6 +162,11 @@ endfunction
 " }}}
 
 " Key bindings {{{
+" mouse
+map <silent> <unique> <2-LeftMouse> <C-]>zz
+map <silent> <unique> <RightMouse> :call G_GotoEditor()<CR><C-O>zz
+map <silent> <unique> <MiddleMouse> :call G_GotoEditor()<CR><C-I>zz
+
 " function key
 nmap <silent> <unique> <F1> :set cursorline!<CR>:set nocursorline?<CR>
 imap <silent> <unique> <F1> <ESC>:set cursorline!<CR><ESC>:set nocursorline?<CR>a
@@ -169,6 +176,8 @@ nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
+nmap <silent> <unique> <F5> :set noro!<CR>:set noro?<CR>
+imap <silent> <unique> <F5> <ESC>:set noro!<CR>:set noro?<CR>a
 nmap <silent> <unique> <F8> :wa!<CR>:make<CR>:call G_QFixToggle(1)<CR>
 imap <silent> <unique> <F8> <ESC>:wa!<CR>:make<CR>:call G_QFixToggle(1)<CR>
 nmap <silent> <unique> <F9> :!!<CR>
@@ -242,7 +251,7 @@ let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
 let MRU_Include_Files='\.c$\|\.cpp$\|\.h$\|\.hpp$'  " For C Source
 let MRU_Window_Height=15
 let MRU_Add_Menu=0
-nmap <silent> <unique> <F5> :MRU<CR>
+nmap <silent> <unique> <F10> :MRU<CR>
 if has("autocmd")
   autocmd BufReadPost,FileReadPost *
     \ chdir .
@@ -328,15 +337,18 @@ if has("cscope")
     function <SID>CscopeRefresh()
         " 如果当前目录存在 cscope.files 的话
         if glob('.cscope') != ""
-            call system("cscope -kbq -f.cscope/cscope.out &")
-            call system("ctags -u --c++-kinds=+p --fields=+ialS --extra=+q -L.cscope/cscope.files -f.cscope/cscope.tags &")
+            call system("cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out &")
+            " 由于频繁保存引发的多个 ctags 间的互斥，可能会导致以下错误:
+            " ctags: ".cscope/cscope.tags" doesn't look like a tag file; I refuse to overwrite it.
+            " http://www.lslnet.com/linux/dosc1/55/linux-369438.htm
+            call system("ps -e | grep ctags || ctags --c++-kinds=+p --fields=+ialS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags &")
             exec "cscope add .cscope/cscope.out"
             exec "cscope reset"
         endif
     endfunction
 
     " 在后台更新 tags | cscope*，便于在代码间正确的跳转
-    autocmd BufReadPost,BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
+    autocmd BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
 	  \ call <SID>CscopeRefresh()
 endif
 
@@ -379,7 +391,7 @@ let g:vimwiki_list = [
             \ { 'proj': 'mouse-fm', 'path': '~/mouse-fm/wiki/', 'path_html': '~/mouse-fm/html/', 'ext': '.wiki' },
             \ { 'proj': 'pidgin',   'path': '~/pidgin/wiki/',   'path_html': '~/pidgin/html/',   'ext': '.wiki' },
             \ { 'proj': 'stardict', 'path': '~/stardict/wiki/', 'path_html': '~/stardict/html/', 'ext': '.wiki' },
-            \ { 'proj': 'myqq-gui', 'path': '~/myqq/wiki/',     'path_html': '~/myqq/html/',     'ext': '.wiki' },
+            \ { 'proj': 'myqq',     'path': '~/myqq/wiki/',     'path_html': '~/myqq/html/',     'ext': '.wiki' },
             \ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' }]
 nmap <silent><unique> <leader>. :call <SID>VimwikiGoProject()<CR>
 function <SID>VimwikiGoProject()
@@ -488,5 +500,7 @@ hi MyTagListTagScope 	ctermfg=none 		ctermbg=none
 hi Tb_Normal			ctermfg=darkgreen 	ctermbg=none
 hi Tb_Changed			ctermfg=red 		ctermbg=none
 hi Tb_VisibleNormal		ctermfg=black		ctermbg=white
-hi Tb_VisibleChanged	ctermfg=black		ctermbg=white
+hi Tb_VisibleChanged	ctermfg=black		ctermbg=red
+hi Tb_Readonly          ctermfg=green       ctermbg=none
+hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green
 " }}}
