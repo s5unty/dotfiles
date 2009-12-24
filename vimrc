@@ -5,7 +5,7 @@ set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
 set tabstop=4 " 缩进的宽度
 set shiftwidth=4 " TAB 的宽度
-set clipboard=unnamed,autoselectml " 使用系统剪贴板
+set clipboard=unnamed " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set pastetoggle=<F4>
@@ -30,7 +30,7 @@ set winaltkeys=no
 set guioptions=ai
 set cinoptions=:0,g0,t0
 set timeout
-set timeoutlen=300
+set timeoutlen=500
 " }}}
 
 " Function {{{
@@ -159,6 +159,15 @@ function G_FindInFile(search)
     exec ":vimgrep /".str."/j %"
     call G_QFixToggle(1)
 endfunction
+
+" 恢复上次退出时的 BUFFER
+function G_RestoreBuffers()
+    if glob ('~/.vimbuff')
+        for buf in readfile('~/.vimbuff', '', 20)
+            exec "edit ".buf
+        endfor
+    endif
+endfunction
 " }}}
 
 " Key bindings {{{
@@ -234,6 +243,23 @@ if has("autocmd")
       endif
   endfunction
 
+  function <SID>AC_PreserveBuffers()
+      redir => bufoutput
+      buffers!
+      redir END
+
+      let cmd = "cat /dev/null > ~/.vimbuff"
+      for buf in split(bufoutput, '\n')
+          let bits = split(buf, '"')
+          let b = {"attributes": bits[0], "line": substitute(bits[2], '\s*', '', '')}
+          if b.attributes =~ "u"
+              continue
+          endif
+          let cmd = cmd."; echo '".bits[1]."' >> ~/.vimbuff"
+      endfor
+      call system(cmd)
+  endfunction
+
   " 每次访问文件时都把光标放置在上次离开的位置
   autocmd BufReadPost *
     \ call <SID>AC_ResetCursorPosition()
@@ -241,6 +267,10 @@ if has("autocmd")
   " 让 checkpath 找到相关文件，便于 [I 正常工作
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ set path+=./
+
+  " 每次退出 VIM 时记录下未关闭的 buf
+  autocmd VimLeave *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
+    \ silent call <SID>AC_PreserveBuffers()
 endif
 " }}}
 
