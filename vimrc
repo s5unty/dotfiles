@@ -3,8 +3,10 @@ let &termencoding=&encoding
 set fileencodings=UTF-8,GB2312,BIG5
 set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
+set expandtab " TAB -> SPACE
 set tabstop=4 " 缩进的宽度
 set shiftwidth=4 " TAB 的宽度
+set softtabstop=4
 set clipboard=unnamed " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
@@ -21,7 +23,6 @@ set noswapfile
 set nocompatible
 set nohls " 不高亮匹配关键字
 set noincsearch " 非渐进搜索
-set expandtab " TAB -> SPACE
 set nowrap " 不自动折行
 set updatetime=200
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
@@ -31,6 +32,8 @@ set guioptions=ai
 set cinoptions=:0,g0,t0
 set timeout
 set timeoutlen=500
+set autowrite
+set autowriteall
 " }}}
 
 " Function {{{
@@ -176,7 +179,7 @@ map <silent> <unique> <2-LeftMouse> <C-]>zz
 map <silent> <unique> <RightMouse> :call G_GotoEditor()<CR><C-O>zz
 map <silent> <unique> <MiddleMouse> :call G_GotoEditor()<CR><C-I>zz
 
-" function key
+" general
 nmap <silent> <unique> <F1> :set cursorline!<CR>:set nocursorline?<CR>
 imap <silent> <unique> <F1> <ESC>:set cursorline!<CR><ESC>:set nocursorline?<CR>a
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
@@ -193,26 +196,25 @@ nmap <silent> <unique> <F9> :!!<CR>
 imap <silent> <unique> <F9> <ESC>:!!<CR>
 nmap <silent> <unique> <F11> g]
 nmap <silent> <unique> <F12> <C-]>zz
-
-" normal mode
-nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
-nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
-nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
-nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
-
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ' 10[{kz<CR>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
-nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
-nnor <silent> <unique> p :call G_GoodP()<CR>
-nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
-
 nmap <silent> <unique> <C-Q> :qa!<CR>
 nmap <silent> <unique> <C-S> :w<CR>
 nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
+
+" IDE
+nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
+nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
+nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
+nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
+nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
+imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
+nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
+nnor <silent> <unique> p :call G_GoodP()<CR>
+nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent> <unique> <ESC><Space> :call G_GoodSpace(0)<CR>
-nmap <silent> <unique> <Leader>` :e #<CR>
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
@@ -220,7 +222,7 @@ nmap <silent> <unique> <Leader>/ :call G_FindInFile('exact')<CR>
 nmap <silent> <unique> <Leader>? :call G_FindInFile('fuzzy')<CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
 
-" insert mode
+" edit
 imap <silent> <unique> <C-W> <SPACE><ESC>dbs
 imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
@@ -530,7 +532,7 @@ hi MyTagListTagScope 	ctermfg=none 		ctermbg=none
 hi Tb_Normal			ctermfg=darkgreen 	ctermbg=none
 hi Tb_Changed			ctermfg=red 		ctermbg=none
 hi Tb_VisibleNormal		ctermfg=black		ctermbg=white
-hi Tb_VisibleChanged	ctermfg=black		ctermbg=red
+hi Tb_VisibleChanged	ctermfg=red         ctermbg=white
 hi Tb_Readonly          ctermfg=green       ctermbg=none
 hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green
 " }}}

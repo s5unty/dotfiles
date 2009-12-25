@@ -36,7 +36,6 @@ alias tree="tree -C"
 alias scp="scp -p"
 alias lintian="lintian -viI"
 alias vi="/usr/bin/vim -n"
-alias vim="/usr/bin/vim '+set formatoptions+=mM' '+set textwidth=78'"
 # }}}
 
 # apt-get 别名 {{{
@@ -172,7 +171,7 @@ F() { # find
     find ./ -iname "$1" ${(@)argv[2,$#]}
 }
 R() { # find in files
-    grep -r $1 . ${(@)argv[2,$#]} L
+    grep -r $1 . ${(@)argv[2,$#]} M
 }
 C() { # gen cscope.files
     mkdir .cscope
@@ -307,8 +306,12 @@ zstyle ':completion:*:*:kill:*' menu select
 zstyle ':completion:*:processes' command 'ps -au$USER'
 # }}}
 
-# ping {{{
+# ping&ssh {{{
 zstyle ':completion:*:ping:*' hosts 202.102.24.35 google.com \
+       192.168.1.{{1..4},{100..103}}
+zstyle ':completion:*:ssh:*' hosts \
+       192.168.1.{{1..4},{100..103}}
+zstyle ':completion:*:scp:*' hosts \
        192.168.1.{{1..4},{100..103}}
 # }}}
 
