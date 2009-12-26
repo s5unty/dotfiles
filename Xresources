@@ -1,16 +1,16 @@
 Xft.dpi:             96
 
-URxvt.termName:      rxvt
-URxvt.scrollBar:     False
-URxvt.cursorBlink:   True
-URxvt.urgentOnBell:  True
-URxvt.preeditType:   OverTheSpot
-URxvt.transparent:   On
-URxvt.shading:       100
-URxvt.saveLines:     2048
-URxvt.modifier:      Alt
-URxvt.urlLauncher:   x-www-browser
-URxvt.matcher.button:1
+URxvt.termName:     rxvt
+URxvt.scrollBar:    False
+URxvt.cursorBlink:  True
+URxvt.urgentOnBell: True
+URxvt.preeditType:  OverTheSpot
+URxvt.transparent:  On
+URxvt.shading:      100
+URxvt.saveLines:    2048
+URxvt.modifier:     Alt
+URxvt.urlLauncher:  x-www-browser
+URxvt.matcher.button:    1
 URxvt.scrollTtyKeypress: True
 URxvt.scrollTtyOutput:   False
 URxvt.scrollWithBuffer:  True
@@ -18,8 +18,10 @@ URxvt.secondaryScreen:   False
 URxvt.secondaryScroll:   False
 URxvt.perl-ext-common:   default,matcher
 
-URxvt.font:      xft:Andale Mono-10, xft:WenQuanYi Zen Hei-10, xft:WenQuanYi Bitmap Song-10
-URxvt.boldfont:  xft:Andale Mono-10, xft:WenQuanYi Zen Hei-10, xft:WenQuanYi Bitmap Song-10
+URxvt.font:      xft:Inconsolata-12, xft:WenQuanYi Zen Hei-10
+URxvt.boldfont:  xft:Inconsolata-12, xft:WenQuanYi Zen Hei-10
+! URxvt.font:      xft:Andale Mono-10, xft:WenQuanYi Zen Hei-10
+! URxvt.boldfont:  xft:Andale Mono-10, xft:WenQuanYi Zen Hei-10
 
 URxvt.background:    #111111
 URxvt.foreground:    #B8B000

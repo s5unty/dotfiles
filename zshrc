@@ -321,8 +321,8 @@ zstyle ':completion:*:scp:*' hosts \
 bindkey '\e;'   vi-cmd-mode
 bindkey '\e'    vi-cmd-mode
 bindkey '^l'    vi-forward-char
-bindkey '^f'    _vi-forward-word-end
-bindkey '^b'    vi-backward-word
+bindkey '^f'    _vi-forward-blank
+bindkey '^b'    _vi-backward-blank
 bindkey '^d'    delete-word
 bindkey '^u'    undo
 bindkey '^h'    vi-backward-char
@@ -332,14 +332,20 @@ bindkey '^n'    history-search-forward
 bindkey '^p'    history-search-backward
 bindkey '\e2'   quote-region
 
-_vi-forward-word-end() {
+_vi-forward-blank() {
     # <ESC>ea
     zle vi-cmd-mode
-    zle vi-forward-word-end
+    zle vi-forward-blank-word-end
     zle vi-add-next
 }
-zle -N _vi-forward-word-end
+zle -N _vi-forward-blank
 
+_vi-backward-blank() {
+    # <ESC>bh
+    zle vi-backward-blank-word
+    zle vi-backward-char
+}
+zle -N _vi-backward-blank
 ## mark #
 # if [[ -z $BUFFER ]]; then
 #     zle up-history

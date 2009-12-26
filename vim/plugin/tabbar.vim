@@ -90,7 +90,6 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
 "            noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 8)<CR>:<BS>
     "else
             "NORMAL mode bindings for vim( terminal)
-            noremap <unique> <script> <ESC>` :e #<CR>:<BS>
             noremap <unique> <script> <ESC>1 :call <SID>Bf_SwitchTo( 1)<CR>:<BS>
             noremap <unique> <script> <ESC>2 :call <SID>Bf_SwitchTo( 2)<CR>:<BS>
             noremap <unique> <script> <ESC>3 :call <SID>Bf_SwitchTo( 3)<CR>:<BS>
@@ -117,7 +116,6 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
             noremap <unique> <script> <ESC>2<ESC>4 :call <SID>Bf_SwitchTo(24)<CR>:<BS>
             noremap <unique> <script> <ESC>2<ESC>5 :call <SID>Bf_SwitchTo(25)<CR>:<BS>
             "INSERT mode bindings for vim( terminal)
-            inoremap <unique> <script> <ESC>` <esc>:e #<CR>a
             inoremap <unique> <script> <ESC>1 <esc>:call <SID>Bf_SwitchTo( 1)<CR>a
             inoremap <unique> <script> <ESC>2 <esc>:call <SID>Bf_SwitchTo( 2)<CR>a
             inoremap <unique> <script> <ESC>3 <esc>:call <SID>Bf_SwitchTo( 3)<CR>a
