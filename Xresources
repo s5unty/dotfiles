@@ -1,5 +1,3 @@
-Xft.dpi:             96
-
 URxvt.termName:     rxvt
 URxvt.scrollBar:    False
 URxvt.cursorBlink:  True
@@ -18,10 +16,12 @@ URxvt.secondaryScreen:   False
 URxvt.secondaryScroll:   False
 URxvt.perl-ext-common:   default,matcher
 
-URxvt.font:      xft:Inconsolata-12, xft:WenQuanYi Zen Hei-10
-URxvt.boldfont:  xft:Inconsolata-12, xft:WenQuanYi Zen Hei-10
-! URxvt.font:      xft:Andale Mono-10, xft:WenQuanYi Zen Hei-10
-! URxvt.boldfont:  xft:Andale Mono-10, xft:WenQuanYi Zen Hei-10
+!Xft.dpi:         96
+!URxvt.font:      xft:Andale Mono-10, xft:WenQuanYi Zen Hei-10
+!URxvt.boldfont:  xft:Andale Mono-10, xft:WenQuanYi Zen Hei
+Xft.dpi:         100
+URxvt.font:      xft:Monaco-9, xft:WenQuanYi Zen Hei-10
+URxvt.boldfont:  xft:Monaco-9, xft:WenQuanYi Zen Hei
 
 URxvt.background:    #111111
 URxvt.foreground:    #B8B000
@@ -56,8 +56,8 @@ URxvt.colorBD:       #f57900
 !!scroll_up
 URxvt.keysym.M-minus:command:\033]720;10\007
 !!font size
-URxvt.keysym.M-Up: command:\033]710;xft:Andale Mono-14,xft:WenQuanYi Zen Hei-14,xft: WenQuanYi Bitmap Song-14\007;
-URxvt.keysym.M-Down: command:\033]710;xft:Andale Mono-10,xft:WenQuanYi Zen Hei-10,xft: WenQuanYi Bitmap Song-10\007;
+URxvt.keysym.M-Up: command:\033]710;xft:Monaco-13,xft:Andale Mono-14,xft:WenQuanYi Zen Hei-14\007;
+URxvt.keysym.M-Down: command:\033]710;xft:Monaco-9,xft:Andale Mono-10,xft:WenQuanYi Zen Hei-10\007;
 !!icon path
 URxvt.iconFile:     $HOME/.config/awesome/terminator.png
 Mutt.iconFile:      /usr/share/pixmaps/mutt.xpm
