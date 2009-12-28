@@ -18,8 +18,8 @@ URxvt.perl-ext-common:   default,matcher
 
 
 Xft.dpi:          96
-URxvt.font:      xft:Envy Code R-10, xft:WenQuanYi Zen Hei-9
-URxvt.boldfont:  xft:Envy Code R-10, xft:WenQuanYi Zen Hei-9
+URxvt.font:      xft:Envy Code R-10, xft:DejaVu Sans Mono-10, xft:WenQuanYi Zen Hei-9
+URxvt.boldfont:  xft:Envy Code R-10, xft:DejaVu Sans Mono-10, xft:WenQuanYi Zen Hei-9
 
 URxvt.background:    #111111
 URxvt.foreground:    #B8B000
@@ -54,8 +54,8 @@ URxvt.colorBD:       #f57900
 !!scroll_up
 URxvt.keysym.M-minus:command:\033]720;10\007
 !!font size
-URxvt.keysym.M-Up: command:\033]710;xft:Envy Code R-14,xft:WenQuanYi Zen Hei-13\007;
-URxvt.keysym.M-Down: command:\033]710;xft:Envy Code R-10,xft:WenQuanYi Zen Hei-9\007;
+URxvt.keysym.M-Up: command:\033]710;xft:Envy Code R-14,xft:DejaVu Sans Mono-14,xft:WenQuanYi Zen Hei-13\007;
+URxvt.keysym.M-Down: command:\033]710;xft:Envy Code R-10,xft:DejaVu Sans Mono-10,xft:WenQuanYi Zen Hei-9\007;
 !!icon path
 URxvt.iconFile:     $HOME/.config/awesome/terminator.png
 Mutt.iconFile:      /usr/share/pixmaps/mutt.xpm
