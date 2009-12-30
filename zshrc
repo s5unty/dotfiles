@@ -111,27 +111,25 @@ tjg() { tar -tf $@ }
 # }}}
 
 # 文件类型别名 {{{
-alias -s png=pqiv
-alias -s PNG=pqiv
-alias -s gif=pqiv
-alias -s GIF=pqiv
-alias -s jpg=pqiv
-alias -s JPG=pqiv
-alias -s bmp=pqiv
-alias -s BMP=pqiv
-alias -s xpm=pqiv
-alias -s XPM=pqiv
-alias -s jpeg=pqiv
-alias -s JPEG=pqiv
-alias -s icon=pqiv
-alias -s ICON=pqiv
-alias -s odt=ooffice -writer %U
-alias -s doc=ooffice -writer %U
-alias -s ods=ooffice -calc %U
-alias -s xls=ooffice -calc %U
-alias -s pdf=xpdf
-alias -s txt=vim
-alias -s conf=vim
+alias -s png="qiv -p"
+alias -s PNG="qiv -p"
+alias -s gif="qiv -p"
+alias -s GIF="qiv -p"
+alias -s jpg="qiv -p"
+alias -s JPG="qiv -p"
+alias -s bmp="qiv -p"
+alias -s BMP="qiv -p"
+alias -s xpm="qiv -p"
+alias -s XPM="qiv -p"
+alias -s jpeg="qiv -p"
+alias -s JPEG="qiv -p"
+alias -s icon="qiv -p"
+alias -s ICON="qiv -p"
+alias -s odt="ooffice -writer"
+alias -s doc="ooffice -writer"
+alias -s ods="ooffice -calc"
+alias -s xls="ooffice -calc"
+alias -s pdf=foxitreader
 alias -s html=firefox
 alias -s chm=kchmviewer
 alias -s planner=planner

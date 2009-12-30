@@ -5,7 +5,6 @@
 /usr/bin/fetchmail -d 600
 /usr/bin/x-www-browser &
 /usr/bin/mocp -S
-/usr/bin/urxvt -name Mutt -T Mutt -e mutt &
 /usr/bin/urxvt -name Weechat -T Weechat -e weechat-curses &
 
 # nvidia-settings -l
