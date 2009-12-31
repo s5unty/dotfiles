@@ -203,7 +203,7 @@ export DEBIAN_DIR=""
 export REPREPRO_CONFIG_DIR=""
 export LANG="zh_CN.UTF-8"
 export TZ='UTC-8'
-export TERM="xterm"
+export TERM="rxvt-unicode"
 export HOME="/sun/home"
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
@@ -217,48 +217,71 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 ## 个性化提示符 {{{
 
-# define colors {{{
-autoload colors
-if [[ "$terminfo[colors]" -ge 8 ]]; then
-    colors
-fi
-for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE GREY; do
-    eval C_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-    eval C_L_$color='%{$fg[${(L)color}]%}'
-done
-C_OFF="%{$terminfo[sgr0]%}"
+# define colours {{{
+#Text Foreground Colors
+fg_black=$'%{\e[0;30m%}'
+fg_red=$'%{\e[0;31m%}'
+fg_green=$'%{\e[0;32m%}'
+fg_brown=$'%{\e[0;33m%}'
+fg_blue=$'%{\e[0;34m%}'
+fg_purple=$'%{\e[0;35m%}'
+fg_cyan=$'%{\e[0;36m%}'
+fg_lgray=$'%{\e[0;37m%}'
+fg_dgray=$'%{\e[1;30m%}'
+fg_lred=$'%{\e[1;31m%}'
+fg_lgreen=$'%{\e[1;32m%}'
+fg_yellow=$'%{\e[1;33m%}'
+fg_lblue=$'%{\e[1;34m%}'
+fg_pink=$'%{\e[1;35m%}'
+fg_lcyan=$'%{\e[1;36m%}'
+fg_white=$'%{\e[1;37m%}'
+#Text Background Colors
+bg_red=$'%{\e[0;41m%}'
+bg_green=$'%{\e[0;42m%}'
+bg_brown=$'%{\e[0;43m%}'
+bg_blue=$'%{\e[0;44m%}'
+bg_purple=$'%{\e[0;45m%}'
+bg_cyan=$'%{\e[0;46m%}'
+bg_gray=$'%{\e[0;47m%}'
+#Attributes
+at_none="%{$terminfo[sgr0]%}"
+at_bold=$'%{\e[1m%}'
+at_italics=$'%{\e[3m%}'
+at_underl=$'%{\e[4m%}'
+at_blink=$'%{\e[5m%}'
+at_reverse=$'%{\e[7m%}'
 # }}}
 
 # define prompt {{{
 parse_git_branch() {
-    echo "`git branch --no-color 2> /dev/null \
-         | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
-}
-parse_git_status() {
     git diff --quiet 2> /dev/null
-    if [ $? -eq 1 ]; then
-        echo "*"
+    if [ $? -eq 1 ]; then # branch is not clear
+        echo -n " $at_underl"
+        echo "`git branch --no-color 2> /dev/null | \
+        sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`"
+        # |master|                       | no space here
+    else
+        echo "`git branch --no-color 2> /dev/null | \
+        sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
+        # | master|                      | space here
     fi
 }
 
 set_prompt() {
-    mypath="$C_OFF$C_L_MAGENTA%~"
-    mygitb="$C_OFF$C_WHITE$(parse_git_branch)"
-    mygits="$C_OFF$C_WHITE$(parse_git_status)"
+    MAXMID="$(($COLUMNS / 2 - 5))" # truncate to this value
+    mypath="$at_none$fg_green$at_italics%~"
+    myerrs="$at_none$fg_lred%(0?.. (%?%))"
+    mygitb="$at_none$fg_white$at_bold$(parse_git_branch)"
     myjobs=()
     for a (${(k)jobstates}) {
         j=$jobstates[$a];i="${${(@s,:,)j}[2]}"
         myjobs+=($a${i//[^+-]/})
     }
-    myjobs=${(j:,:)myjobs}
-    ((MAXMID=$COLUMNS / 2 - 2)) # truncate to this value
-    RPS1="$RPSL$mypath$RPSR"
+    myjobs="%(1j/[${(j/,/)myjobs}] /)"
+     PS1="$fg_cyan$myjobs$at_none$at_bold%!%#$at_none "
+    RPS1="$fg_green%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
     rehash
 }
-RPSL=$'$C_OFF$C_GREY%$MAXMID<...<'
-RPSR=$'$C_OFF$C_L_RED%(0?.$C_L_GREEN. (%?%))$mygitb$mygits$C_OFF'
-RPS2='%^'
-# }}}
 
 case `tty` in
     /dev/pts/*)
@@ -275,9 +298,9 @@ case `tty` in
     *)
         ;;
 esac
-
-PS1=$'$C_CYAN%(1j.[$myjobs]% $C_OFF .$C_OFF)%B%#%b '
 ## }}}
+
+# }}}
 
 ## 自动补全功能 {{{
 autoload -U compinit

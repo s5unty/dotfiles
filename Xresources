@@ -1,4 +1,4 @@
-URxvt.termName:     rxvt
+URxvt.termName:     rxvt-unicode
 URxvt.scrollBar:    False
 URxvt.cursorBlink:  True
 URxvt.urgentOnBell: True
@@ -8,6 +8,7 @@ URxvt.shading:      100
 URxvt.saveLines:    2048
 URxvt.modifier:     Alt
 URxvt.urlLauncher:  x-www-browser
+URxvt.cutchars:     "()*,<>[]{}|'"
 URxvt.matcher.button:    1
 URxvt.scrollTtyKeypress: True
 URxvt.scrollTtyOutput:   False
@@ -15,11 +16,12 @@ URxvt.scrollWithBuffer:  True
 URxvt.secondaryScreen:   False
 URxvt.secondaryScroll:   False
 URxvt.perl-ext-common:   default,matcher
-
+URxvt.intensityStyles:   False
 
 Xft.dpi:          96
-URxvt.font:      xft:Envy Code R-10, xft:DejaVu Sans Mono-10, xft:WenQuanYi Zen Hei-9
-URxvt.boldfont:  xft:Envy Code R-10, xft:DejaVu Sans Mono-10, xft:WenQuanYi Zen Hei-9
+URxvt.font:      xft:Envy Code R-10, xft:DejaVu Sans Mono-9, xft:WenQuanYi Zen Hei-9
+URxvt.boldFont:  xft:Envy Code R-10:bold, xft:DejaVu Sans Mono-9:bold, xft:WenQuanYi Zen Hei-9
+URxvt.italicFont:xft:Envy Code R-10:italic, xft:DejaVu Sans Mono-9:oblique, xft:WenQuanYi Zen Hei-9
 
 URxvt.background:    #111111
 URxvt.foreground:    #B8B000
@@ -54,8 +56,8 @@ URxvt.colorBD:       #f57900
 !!scroll_up
 URxvt.keysym.M-minus:command:\033]720;10\007
 !!font size
-URxvt.keysym.M-Up: command:\033]710;xft:Envy Code R-14,xft:DejaVu Sans Mono-14,xft:WenQuanYi Zen Hei-13\007;
-URxvt.keysym.M-Down: command:\033]710;xft:Envy Code R-10,xft:DejaVu Sans Mono-10,xft:WenQuanYi Zen Hei-9\007;
+URxvt.keysym.M-Up: command:\033]710;xft:Envy Code R-14,xft:DejaVu Sans Mono-13,xft:WenQuanYi Zen Hei-13\007;
+URxvt.keysym.M-Down: command:\033]710;xft:Envy Code R-10,xft:DejaVu Sans Mono-9,xft:WenQuanYi Zen Hei-9\007;
 !!icon path
 URxvt.iconFile:     $HOME/.config/awesome/terminator.png
 Mutt.iconFile:      /usr/share/pixmaps/mutt.xpm
