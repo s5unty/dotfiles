@@ -16,7 +16,6 @@ bind index      r           group-reply    # reply to all
 bind index      R           reply          # single reply
 bind index      g           list-reply     # reply to list
 bind index      N           search-opposite
-bind index      <space>     last-entry
 bind index      -           half-up
 # 浏览通讯录时
 bind alias      N           search-opposite

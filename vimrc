@@ -456,6 +456,11 @@ endfunction
 " http://www.vim.org/scripts/script.php?script_id=2584
 set lazyredraw
 let g:quickfixsigns_marks = split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>^', '\zs')
+
+" DoxygenToolkit.vim 0.2.7 : Simplify Doxygen documentation in C, C++, Python. {{{2
+" http://www.vim.org/scripts/script.php?script_id=987
+let g:DoxygenToolkit_authorName="Vern Sun"
+
 " }}}1
 
 " Colour {{{
@@ -469,70 +474,70 @@ endif
 
 set background=dark
 " normal
-hi Normal           ctermfg=darkyellow
-hi SpecialKey       cterm=reverse
-hi NonText          ctermfg=darkmagenta
-hi Directory        ctermfg=darkblue
-hi ErrorMsg         ctermfg=darkred 	ctermbg=none
+hi SpecialKey       ctermfg=none        ctermbg=none        cterm=reverse
+hi Normal           ctermfg=none        ctermbg=none
+hi NonText          ctermfg=darkmagenta ctermbg=none
+hi Directory        ctermfg=darkblue    ctermbg=none
+hi ErrorMsg         ctermfg=darkred     ctermbg=none
 hi WarningMsg       ctermfg=white       ctermbg=none
-hi StatusLine       ctermfg=gray 		ctermbg=none
-hi MatchParen       ctermfg=white 		ctermbg=cyan
-hi StatusLineNC     ctermfg=gray        ctermbg=none
+hi MatchParen       ctermfg=white       ctermbg=cyan        cterm=italic
+hi VertSplit        ctermfg=white       ctermbg=none
+hi StatusLine       ctermfg=white       ctermbg=black       cterm=reverse
+hi StatusLineNC     ctermfg=white       ctermbg=black       cterm=reverse
 hi IncSearch        ctermfg=darkyellow  ctermbg=darkblue
 hi Search           ctermfg=darkyellow  ctermbg=darkblue
-hi Question         ctermfg=gray
-hi LineNr           ctermfg=darkgreen
-hi DiffAdd          ctermfg=darkgreen 	ctermbg=none
+hi Question         ctermfg=white
+hi LineNr           ctermfg=darkgreen                       cterm=italic
+hi DiffAdd          ctermfg=darkgreen   ctermbg=none
 hi DiffChange       ctermfg=blue        ctermbg=black
 hi DiffDelete       ctermfg=darkred     ctermbg=none
-hi DiffText         ctermfg=yellow 		ctermbg=none
-hi Folded           ctermfg=darkyellow 	ctermbg=none
-hi FoldColumn       ctermfg=darkyellow 	ctermbg=none
-hi SignColumn 		ctermfg=white 		ctermbg=none
+hi DiffText         ctermfg=yellow      ctermbg=none
+hi Folded           ctermfg=green       ctermbg=none        cterm=italic
+hi FoldColumn       ctermfg=darkgreen   ctermbg=none
+hi SignColumn       ctermfg=white       ctermbg=none
 " dev
-hi Comment          ctermfg=darkgreen
-hi Constant         ctermfg=gray
+hi Comment          ctermfg=darkgreen                       cterm=italic
+hi Constant         ctermfg=white
 hi Special          ctermfg=darkred
 hi Identifier       ctermfg=red
-hi Statement        ctermfg=gray
+hi Statement        ctermfg=white       ctermbg=none
 hi Operator         ctermfg=darkblue
 hi PreProc          ctermfg=darkmagenta
 hi Type             ctermfg=darkblue
-hi Underlined       ctermfg=none        ctermbg=none
+hi Underlined       ctermfg=none        ctermbg=none        cterm=underline
 hi Ignore           ctermfg=darkgrey    ctermbg=none
-hi Error            ctermfg=white       ctermbg=red
-hi Todo             ctermfg=white       ctermbg=green
+hi Error            ctermfg=white       ctermbg=red         cterm=bold
+hi Todo             ctermfg=white       ctermbg=green       cterm=bold
 hi String           ctermfg=darkcyan
 hi Number           ctermfg=darkmagenta
 " misc
 hi MoreMsg          ctermfg=darkgreen
 hi ModeMsg          ctermfg=darkred
-hi VertSplit        ctermfg=grey
 hi Title            ctermfg=darkblue
-hi Visual           ctermfg=darkblue    ctermbg=darkyellow
+hi Visual           ctermfg=black       ctermbg=darkyellow
 hi WildMenu         ctermfg=black       ctermbg=darkcyan
 " link - diff/patch
-hi def link diffAdded		DiffAdd
-hi def link diffRemoved 	DiffDelete
-hi def link diffFile		DiffText
-hi def link diffSubname 	String
-hi def link diffLine 		String
+hi def link diffAdded   DiffAdd
+hi def link diffRemoved DiffDelete
+hi def link diffFile    DiffText
+hi def link diffSubname String
+hi def link diffLine    String
 " vimwiki
-hi VimwikiItalic 		cterm=underline
-hi VimwikiDelText 		ctermfg=black
-hi VimwikiWord 			ctermfg=darkblue
-hi VimwikiNoExistsWord 	ctermfg=cyan 		cterm=Underline
-hi VimwikiList 			ctermfg=green
+hi VimwikiItalic        cterm=italic
+hi VimwikiDelText       ctermfg=black
+hi VimwikiWord          ctermfg=darkblue
+hi VimwikiNoExistsWord  ctermfg=cyan        cterm=Underline
+hi VimwikiList          ctermfg=green
 " taglist
-hi MyTagListTagName 	ctermfg=white 		ctermbg=none
-hi MyTagListFileName 	ctermfg=yellow		ctermbg=none
-hi MyTagListTitle 		ctermfg=grey 		ctermbg=none
-hi MyTagListTagScope 	ctermfg=none 		ctermbg=none
+hi MyTagListTagName     ctermfg=white       ctermbg=none
+hi MyTagListFileName    ctermfg=green       ctermbg=none
+hi MyTagListTitle       ctermfg=grey        ctermbg=none
+hi MyTagListTagScope    ctermfg=none        ctermbg=none
 " tabbar
-hi Tb_Normal			ctermfg=darkgreen 	ctermbg=none
-hi Tb_Changed			ctermfg=red 		ctermbg=none
-hi Tb_VisibleNormal		ctermfg=black		ctermbg=white
-hi Tb_VisibleChanged	ctermfg=red         ctermbg=white
+hi Tb_Normal            ctermfg=darkgreen   ctermbg=none
+hi Tb_Changed           ctermfg=red         ctermbg=none
+hi Tb_VisibleNormal     ctermfg=black       ctermbg=white
+hi Tb_VisibleChanged    ctermfg=red         ctermbg=white
 hi Tb_Readonly          ctermfg=green       ctermbg=none
 hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green
 " }}}
