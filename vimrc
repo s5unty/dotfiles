@@ -1,5 +1,5 @@
 " General {{{
-let &termencoding=&encoding
+set termencoding=&encoding
 set fileencodings=UTF-8,GB2312,BIG5
 set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
@@ -190,8 +190,8 @@ nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 nmap <silent> <unique> <F5> :set noro!<CR>:set noro?<CR>
 imap <silent> <unique> <F5> <ESC>:set noro!<CR>:set noro?<CR>a
-nmap <silent> <unique> <F8> :wa!<CR>:make<CR>:call G_QFixToggle(1)<CR>
-imap <silent> <unique> <F8> <ESC>:wa!<CR>:make<CR>:call G_QFixToggle(1)<CR>
+nmap <silent> <unique> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
+imap <silent> <unique> <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
 nmap <silent> <unique> <F9> :!!<CR>
 imap <silent> <unique> <F9> <ESC>:!!<CR>
 nmap <silent> <unique> <F11> g]
@@ -497,10 +497,10 @@ hi FoldColumn       ctermfg=darkgreen   ctermbg=none
 hi SignColumn       ctermfg=white       ctermbg=none
 " dev
 hi Comment          ctermfg=darkgreen                       cterm=italic
-hi Constant         ctermfg=white
+hi Constant         ctermfg=darkcyan
 hi Special          ctermfg=darkred
 hi Identifier       ctermfg=red
-hi Statement        ctermfg=white       ctermbg=none
+hi Statement        ctermfg=darkblue
 hi Operator         ctermfg=darkblue
 hi PreProc          ctermfg=darkmagenta
 hi Type             ctermfg=darkblue
@@ -514,8 +514,8 @@ hi Number           ctermfg=darkmagenta
 hi MoreMsg          ctermfg=darkgreen
 hi ModeMsg          ctermfg=darkred
 hi Title            ctermfg=darkblue
-hi Visual           ctermfg=black       ctermbg=darkyellow
-hi WildMenu         ctermfg=black       ctermbg=darkcyan
+hi Visual           ctermfg=white       ctermbg=yellow
+hi WildMenu         ctermfg=white       ctermbg=yellow
 " link - diff/patch
 hi def link diffAdded   DiffAdd
 hi def link diffRemoved DiffDelete

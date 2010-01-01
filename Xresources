@@ -13,8 +13,8 @@ URxvt.matcher.button:    1
 URxvt.scrollTtyKeypress: True
 URxvt.scrollTtyOutput:   False
 URxvt.scrollWithBuffer:  True
-URxvt.secondaryScreen:   False
-URxvt.secondaryScroll:   False
+URxvt.secondaryScreen:   True
+URxvt.secondaryScroll:   True
 URxvt.perl-ext-common:   default,matcher
 URxvt.intensityStyles:   False
 
@@ -29,29 +29,29 @@ URxvt.cursorColor:   #FF3333
 URxvt.colorBD:       #f57900
 
 ! Black
-*color0:                        #000000
-*color8:                        #555753
+*color0:    #000000
+*color8:    #555753
 ! Red
-*color1:                        #ff6565
-*color9:                        #ff8d8d
+*color1:    #ff6565
+*color9:    #ff8d8d
 ! Green
-*color2:                        #6E9E3C
-*color10:                       #93d44f
+*color2:    #6E9E3C
+*color10:   #93d44f
 ! Yellow
-*color3:                        #B8B000
-*color11:                       #f57900
+*color3:    #B8B000
+*color11:   #f57900
 ! Blue
-*color4:                        #3465a4
-*color12:                       #005BCD
+*color4:    #3465a4
+*color12:   #005BCD
 ! Mangenta
-*color5:                        #B967B0
-*color13:                       #BB0BA7
+*color5:    #B967B0
+*color13:   #BB0BA7
 ! Cyan
-*color6:                        #89b6e2
-*color14:                       #46a4ff
+*color6:    #89b6e2
+*color14:   #46a4ff
 ! White
-*color7:                        #cccccc
-*color15:                       #ffffff
+*color7:    #cccccc
+*color15:   #ffffff
 
 !!scroll_up
 URxvt.keysym.M-minus:command:\033]720;10\007
