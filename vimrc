@@ -4,8 +4,8 @@ set fileencodings=UTF-8,GB2312,BIG5
 set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
 set expandtab " TAB -> SPACE
-set tabstop=4 " 缩进的宽度
-set shiftwidth=4 " TAB 的宽度
+set tabstop=4 " TAB 的宽度
+set shiftwidth=4 " 缩进的宽度
 set softtabstop=4
 set clipboard=unnamed " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
@@ -29,7 +29,7 @@ set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set statusline=%<%f\ %h%m%r%=%P
 set winaltkeys=no
 set guioptions=ai
-set cinoptions=:0,g0,t0
+set cinoptions=":0,g0,t0"
 set timeout
 set timeoutlen=500
 set autowrite
@@ -163,23 +163,15 @@ function G_FindInFile(search)
     call G_QFixToggle(1)
 endfunction
 
-" 恢复上次退出时的 BUFFER
-function G_RestoreBuffers()
-    if glob ('~/.vimbuff')
-        for buf in readfile('~/.vimbuff', '', 20)
-            exec "edit ".buf
-        endfor
-    endif
-endfunction
 " }}}
 
 " Key bindings {{{
-" mouse
+" Mouse Bindings {{{2
 map <silent> <unique> <2-LeftMouse> <C-]>zz
 map <silent> <unique> <RightMouse> :call G_GotoEditor()<CR><C-O>zz
 map <silent> <unique> <MiddleMouse> :call G_GotoEditor()<CR><C-I>zz
 
-" general
+" Function Key {{{2
 nmap <silent> <unique> <F1> :set cursorline!<CR>:set nocursorline?<CR>
 imap <silent> <unique> <F1> <ESC>:set cursorline!<CR><ESC>:set nocursorline?<CR>a
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
@@ -196,33 +188,25 @@ nmap <silent> <unique> <F9> :!!<CR>
 imap <silent> <unique> <F9> <ESC>:!!<CR>
 nmap <silent> <unique> <F11> g]
 nmap <silent> <unique> <F12> <C-]>zz
-nmap <silent> <unique> - <C-U>
-nmap <silent> <unique> ' 10[{kz<CR>
-nmap <silent> <unique> ; zz
-nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
-nmap <silent> <unique> <C-Q> :qa!<CR>
-nmap <silent> <unique> <C-S> :w<CR>
-nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
 
-" IDE
+" Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
-nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
-nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
-nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
-imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
+nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
 nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
-nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
-nmap <silent> <unique> <ESC><Space> :call G_GoodSpace(0)<CR>
-nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>/ :call G_FindInFile('exact')<CR>
-nmap <silent> <unique> <Leader>? :call G_FindInFile('fuzzy')<CR>
-nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
+nmap <silent> <unique> - <C-U>
+nmap <silent> <unique> 0 ^
+nmap <silent> <unique> ; zz
+nmap <silent> <unique> ' 10[{kz<CR>
 
-" edit
+" Shift+ {{{2
+nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
+nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
+
+" Ctrl+ {{{2
+nmap <silent> <unique> <C-Q> :qa!<CR>
+imap <silent> <unique> <C-S> :w<CR><ESC>
 imap <silent> <unique> <C-W> <SPACE><ESC>dbs
 imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
@@ -235,7 +219,24 @@ imap <silent> <unique> <C-J> <Down>
 imap <silent> <unique> <C-K> <Up>
 imap <silent> <unique> <C-L> <Right>
 
-" }}}
+" Alt+ {{{2
+nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
+nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
+nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
+imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
+nmap <silent> <unique> <ESC><Space> :call G_GoodSpace(0)<CR>
+nmap <silent> <unique> <ESC><F8> :make! install<CR>
+imap <silent> <unique> <ESC><F8> <ESC>:make! install<CR>
+
+" Leader+ , Leader char is ',' {{{2
+nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
+nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
+nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
+nmap <silent> <unique> <Leader>/ :call G_FindInFile('exact')<CR>
+nmap <silent> <unique> <Leader>? :call G_FindInFile('fuzzy')<CR>
+nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
+
+" }}}1
 
 " Autocmd {{{
 if has("autocmd")
@@ -243,23 +244,6 @@ if has("autocmd")
       if line("'\"") > 0 && line("'\"") <= line("$")
           exec "normal g`\"zz"
       endif
-  endfunction
-
-  function <SID>AC_PreserveBuffers()
-      redir => bufoutput
-      buffers!
-      redir END
-
-      let cmd = "cat /dev/null > ~/.vimbuff"
-      for buf in split(bufoutput, '\n')
-          let bits = split(buf, '"')
-          let b = {"attributes": bits[0], "line": substitute(bits[2], '\s*', '', '')}
-          if b.attributes =~ "u"
-              continue
-          endif
-          let cmd = cmd."; echo '".bits[1]."' >> ~/.vimbuff"
-      endfor
-      call system(cmd)
   endfunction
 
   " 每次访问文件时都把光标放置在上次离开的位置
@@ -270,13 +254,10 @@ if has("autocmd")
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ set path+=./
 
-  " 每次退出 VIM 时记录下未关闭的 buf
-  autocmd VimLeave *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
-    \ silent call <SID>AC_PreserveBuffers()
 endif
 " }}}
 
-" Plugins {{{1
+" Plugins {{{
 " mru.vim 3.2 : Plugin to manage Most Recently Used (MRU) files {{{2
 let MRU_Max_Entries=15
 let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
@@ -452,10 +433,15 @@ endfunction
 " http://www.vim.org/scripts/script.php?script_id=2540
 " nothing
 
-" quickfixsigns 0.5 : Mark quickfix & location list items with signs {{{2
-" http://www.vim.org/scripts/script.php?script_id=2584
-set lazyredraw
-let g:quickfixsigns_marks = split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>^', '\zs')
+" ShowMarks 2.2 : Visually shows the location of marks. {{{2
+" http://www.vim.org/scripts/script.php?script_id=152
+" ShowMarks is faster then quickfixsign
+let showmarks_enable = 1
+let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>^"
+let showmarks_ignore_type = "hqm" " 忽略 help, quickfix, non-modifiable 窗口
+" Hilight lower & upper marks
+let showmarks_hlline_lower = 1
+let showmarks_hlline_upper = 1
 
 " DoxygenToolkit.vim 0.2.7 : Simplify Doxygen documentation in C, C++, Python. {{{2
 " http://www.vim.org/scripts/script.php?script_id=987
@@ -514,7 +500,7 @@ hi Number           ctermfg=darkmagenta
 hi MoreMsg          ctermfg=darkgreen
 hi ModeMsg          ctermfg=darkred
 hi Title            ctermfg=darkblue
-hi Visual           ctermfg=white       ctermbg=yellow
+hi Visual           ctermfg=white       ctermbg=darkblue
 hi WildMenu         ctermfg=white       ctermbg=yellow
 " link - diff/patch
 hi def link diffAdded   DiffAdd
@@ -540,4 +526,9 @@ hi Tb_VisibleNormal     ctermfg=black       ctermbg=white
 hi Tb_VisibleChanged    ctermfg=red         ctermbg=white
 hi Tb_Readonly          ctermfg=green       ctermbg=none
 hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green
+" showmark
+hi ShowMarksHLl         ctermfg=white       ctermbg=darkgreen
+hi ShowMarksHLu         ctermfg=white       ctermbg=darkgreen
+hi ShowMarksHLo         ctermfg=white       ctermbg=darkgreen
+hi ShowMarksHLm         ctermfg=white       ctermbg=darkgreen
 " }}}
