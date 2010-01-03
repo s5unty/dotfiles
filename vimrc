@@ -433,20 +433,13 @@ endfunction
 " http://www.vim.org/scripts/script.php?script_id=2540
 " nothing
 
-" ShowMarks 2.2 : Visually shows the location of marks. {{{2
-" http://www.vim.org/scripts/script.php?script_id=152
-" ShowMarks is faster then quickfixsign
-let showmarks_enable = 1
-let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>^"
-let showmarks_ignore_type = "hqm" " 忽略 help, quickfix, non-modifiable 窗口
-" Hilight lower & upper marks
-let showmarks_hlline_lower = 1
-let showmarks_hlline_upper = 1
+" quickfixsigns 0.5 : Mark quickfix & location list items with signs
+" http://www.vim.org/scripts/script.php?script_id=2584
+set lazyredraw
 
 " DoxygenToolkit.vim 0.2.7 : Simplify Doxygen documentation in C, C++, Python. {{{2
 " http://www.vim.org/scripts/script.php?script_id=987
 let g:DoxygenToolkit_authorName="Vern Sun"
-
 " }}}1
 
 " Colour {{{
@@ -526,9 +519,4 @@ hi Tb_VisibleNormal     ctermfg=black       ctermbg=white
 hi Tb_VisibleChanged    ctermfg=red         ctermbg=white
 hi Tb_Readonly          ctermfg=green       ctermbg=none
 hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green
-" showmark
-hi ShowMarksHLl         ctermfg=white       ctermbg=darkgreen
-hi ShowMarksHLu         ctermfg=white       ctermbg=darkgreen
-hi ShowMarksHLo         ctermfg=white       ctermbg=darkgreen
-hi ShowMarksHLm         ctermfg=white       ctermbg=darkgreen
 " }}}
