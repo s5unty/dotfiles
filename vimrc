@@ -196,7 +196,6 @@ nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
 nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
 nmap <silent> <unique> - <C-U>
-nmap <silent> <unique> 0 ^
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
 
@@ -206,18 +205,25 @@ nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
-imap <silent> <unique> <C-S> :w<CR><ESC>
 imap <silent> <unique> <C-W> <SPACE><ESC>dbs
 imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
-imap <silent> <unique> <C-A> <ESC>I
-imap <silent> <unique> <C-E> <ESC>A
 imap <silent> <unique> <C-D> <C-O>de
-imap <silent> <unique> <C-U> <C-O>u
+imap <silent> <unique> <C-R> <C-O><C-R>
 imap <silent> <unique> <C-H> <Left>
 imap <silent> <unique> <C-J> <Down>
 imap <silent> <unique> <C-K> <Up>
 imap <silent> <unique> <C-L> <Right>
+imap <silent> <unique> <C-S> <Backspace>
+imap <silent> <unique> <C-C> <Del>
+imap <silent> <unique> <C-U> <C-O>u
+" in insert mode, <Ctrl-O>+ {{{3
+nmap <silent> <unique> <C-A> I
+nmap <silent> <unique> <C-E> A
+nmap <silent> <unique> <C-H> ^
+nmap <silent> <unique> <C-J> })
+nmap <silent> <unique> <C-K> {(
+nmap <silent> <unique> <C-L> $
 
 " Alt+ {{{2
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
@@ -306,7 +312,7 @@ let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
 nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 if has("autocmd")
-  autocmd BufWritePost,CursorMovedI *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
+  autocmd BufWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ exec ":TbAup"
 endif
 
@@ -460,9 +466,9 @@ hi Directory        ctermfg=darkblue    ctermbg=none
 hi ErrorMsg         ctermfg=darkred     ctermbg=none
 hi WarningMsg       ctermfg=white       ctermbg=none
 hi MatchParen       ctermfg=white       ctermbg=cyan        cterm=italic
-hi VertSplit        ctermfg=white       ctermbg=none
-hi StatusLine       ctermfg=white       ctermbg=black       cterm=reverse
-hi StatusLineNC     ctermfg=white       ctermbg=black       cterm=reverse
+hi VertSplit        ctermfg=white       ctermbg=none        cterm=bold
+hi StatusLine       ctermfg=white       ctermbg=none        cterm=reverse
+hi StatusLineNC     ctermfg=white       ctermbg=none        cterm=reverse
 hi IncSearch        ctermfg=darkyellow  ctermbg=darkblue
 hi Search           ctermfg=darkyellow  ctermbg=darkblue
 hi Question         ctermfg=white
@@ -485,8 +491,8 @@ hi PreProc          ctermfg=darkmagenta
 hi Type             ctermfg=darkblue
 hi Underlined       ctermfg=none        ctermbg=none        cterm=underline
 hi Ignore           ctermfg=darkgrey    ctermbg=none
-hi Error            ctermfg=white       ctermbg=red         cterm=bold
-hi Todo             ctermfg=white       ctermbg=green       cterm=bold
+hi Error            ctermfg=white       ctermbg=darkred     cterm=bold
+hi Todo             ctermfg=white       ctermbg=darkgreen   cterm=bold
 hi String           ctermfg=darkcyan
 hi Number           ctermfg=darkmagenta
 " misc
