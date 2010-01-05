@@ -260,6 +260,12 @@ if has("autocmd")
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ set path+=./
 
+  " 设定 StatusLine
+  augroup StatusLine
+      au! StatusLine
+      au BufLeave * setlocal statusline=""
+      au BufEnter * setlocal statusline=%<%F%(\ %m%h%w%y%r%)\ %a%=\ %l,%c%V/%L\ (%P)
+  augroup END
 endif
 " }}}
 
@@ -458,7 +464,19 @@ if exists("syntax_on")
 endif
 
 set background=dark
-" normal
+hi Comment          ctermfg=darkgreen                       cterm=italic
+hi Constant         ctermfg=darkcyan
+hi Special          ctermfg=darkred
+hi Identifier       ctermfg=red
+hi PreProc          ctermfg=darkmagenta
+hi Statement        ctermfg=darkblue                        cterm=bold
+hi Type             ctermfg=darkblue                        cterm=bold
+hi Underlined       ctermfg=none        ctermbg=none        cterm=underline
+hi Ignore           ctermfg=darkgrey    ctermbg=none
+hi Error            ctermfg=white       ctermbg=darkred     cterm=bold
+hi Todo             ctermfg=white       ctermbg=darkgreen   cterm=bold
+hi String           ctermfg=darkcyan
+hi Number           ctermfg=darkmagenta
 hi SpecialKey       ctermfg=none        ctermbg=none        cterm=reverse
 hi Normal           ctermfg=none        ctermbg=none
 hi NonText          ctermfg=darkmagenta ctermbg=none
@@ -480,22 +498,6 @@ hi DiffText         ctermfg=yellow      ctermbg=none
 hi Folded           ctermfg=green       ctermbg=none        cterm=italic
 hi FoldColumn       ctermfg=darkgreen   ctermbg=none
 hi SignColumn       ctermfg=white       ctermbg=none
-" dev
-hi Comment          ctermfg=darkgreen                       cterm=italic
-hi Constant         ctermfg=darkcyan
-hi Special          ctermfg=darkred
-hi Identifier       ctermfg=red
-hi Statement        ctermfg=darkblue
-hi Operator         ctermfg=darkblue
-hi PreProc          ctermfg=darkmagenta
-hi Type             ctermfg=darkblue
-hi Underlined       ctermfg=none        ctermbg=none        cterm=underline
-hi Ignore           ctermfg=darkgrey    ctermbg=none
-hi Error            ctermfg=white       ctermbg=darkred     cterm=bold
-hi Todo             ctermfg=white       ctermbg=darkgreen   cterm=bold
-hi String           ctermfg=darkcyan
-hi Number           ctermfg=darkmagenta
-" misc
 hi MoreMsg          ctermfg=darkgreen
 hi ModeMsg          ctermfg=darkred
 hi Title            ctermfg=darkblue
@@ -508,10 +510,10 @@ hi def link diffFile    DiffText
 hi def link diffSubname String
 hi def link diffLine    String
 " vimwiki
-hi VimwikiItalic        cterm=italic
+hi VimwikiItalic                                            cterm=italic
 hi VimwikiDelText       ctermfg=black
 hi VimwikiWord          ctermfg=darkblue
-hi VimwikiNoExistsWord  ctermfg=cyan        cterm=Underline
+hi VimwikiNoExistsWord  ctermfg=cyan                        cterm=Underline
 hi VimwikiList          ctermfg=green
 " taglist
 hi MyTagListTagName     ctermfg=white       ctermbg=none

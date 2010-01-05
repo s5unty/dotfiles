@@ -72,14 +72,6 @@ mycpugraph:set_color('#FF5656')
 mycpugraph:set_gradient_colors({ '#FF5656', '#88A175', '#AECF96' })
 vicious.register(mycpugraph, vicious.widgets.cpu, '$1', 3)
 
--- Emails {{{2
-myemailicon       = widget({ type = "imagebox", name = "myemailicon" })
-myemailicon.image = image(beautiful.widget_mail)
-myemails = widget({ type = "textbox" })
-vicious.register(myemails, vicious.widgets.mdir, "$1", 300, {"/sun/mails/personal"})
-myemails:buttons(awful.util.table.join(
-  awful.button({ }, 1, function () exec("urxvt -name Mutt -T Mutt -e mutt") end)
-))
 
 -- Separator {{{
 myspacer         = widget({ type = "textbox", name = "myspacer" })
@@ -165,7 +157,6 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         s == 1 and mysystray or nil,
         mytextclock,
-        myemailicon, myemails, myspacer, 
         mycpugraph,
         mytasklist[s],
         ["layout"] = awful.widget.layout.horizontal.rightleft
@@ -271,7 +262,7 @@ globalkeys = awful.util.table.join (
 	awful.key({ modkey }, "F4", function () awful.util.spawn("urxvt -name Weechat -T Weechat -e weechat-curses") end),
 	awful.key({ modkey }, "F8", function () awful.util.spawn("VirtualBox") end),
 	awful.key({ modkey }, "space", function () awful.util.spawn("x-terminal-emulator") end),
-	awful.key({ modkey }, "Print", function () awful.util.spawn("urxvt -name Scrot -e scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
+	awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
 	awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
 	awful.key({        }, "XF86AudioPlay",        function () awful.util.spawn("mocp.sh") end),
 	awful.key({        }, "XF86AudioStop",        function () awful.util.spawn("mocp -s") end),
@@ -492,11 +483,11 @@ client.add_signal("manage", function (c, startup)
 	-- Add a titlebar
 	-- awful.titlebar.add(c, { modkey = modkey })
 
-	-- Disable sloppy focus
+	-- Enable sloppy focus
 	c:add_signal("mouse::enter", function(c)
 		if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
 			and awful.client.focus.filter(c) then
-			-- client.focus = c
+			client.focus = c
 		end
 	end)
 
