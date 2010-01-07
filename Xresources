@@ -23,35 +23,35 @@ URxvt.font:      xft:Envy Code R-10, xft:DejaVu Sans Mono-9, xft:WenQuanYi Zen H
 URxvt.boldFont:  xft:Envy Code R-10:bold, xft:DejaVu Sans Mono-9:bold, xft:WenQuanYi Zen Hei-9
 URxvt.italicFont:xft:Envy Code R-10:italic, xft:DejaVu Sans Mono-9:oblique, xft:WenQuanYi Zen Hei-9
 
-URxvt.background:    #111111
-URxvt.foreground:    #B8B000
-URxvt.cursorColor:   #FF3333
-URxvt.colorBD:       #f57900
+! @@ COLORS AND GRAPHICS @@ {{{
+! man urxvt
+! http://sedition.com/perl/rgb.html
+! http://web.njit.edu/~kevin/rgb.txt.html
+URxvt.background:    black
+URxvt.foreground:    yellow3
+URxvt.cursorColor:   tan4
+URxvt.cursorColor2:  green1
+URxvt.colorBD:       chocolate1
+URxvt.colorUL:       sienna1
+URxvt.colorIT:       chocolate4
 
-! Black
-*color0:    #000000
-*color8:    #555753
-! Red
-*color1:    #ff6565
-*color9:    #ff8d8d
-! Green
-*color2:    #6E9E3C
-*color10:   #93d44f
-! Yellow
-*color3:    #B8B000
-*color11:   #f57900
-! Blue
-*color4:    #3465a4
-*color12:   #005BCD
-! Mangenta
-*color5:    #B967B0
-*color13:   #BB0BA7
-! Cyan
-*color6:    #89b6e2
-*color14:   #46a4ff
-! White
-*color7:    #cccccc
-*color15:   #ffffff
+*color0:    black
+*color1:    firebrick2
+*color2:    chartreuse4
+*color3:    yellow3
+*color4:    DodgerBlue3
+*color5:    VioletRed3
+*color6:    turquoise3
+*color7:    AntiqueWhite
+*color8:    grey25
+*color9:    brown1
+*color10:   green2
+*color11:   khaki1
+*color12:   cornflower blue
+*color13:   hot pink
+*color14:   cyan1
+*color15:   white
+! }}}
 
 !!scroll_up
 URxvt.keysym.M-minus:command:\033]720;10\007

@@ -2,6 +2,8 @@
 set termencoding=&encoding
 set fileencodings=UTF-8,GB2312,BIG5
 set fileformats=unix,dos
+set guifont=Envy\ Code\ R\ 11,
+set guifontwide=WenQuanYi\ Zen\ Hei\ 11,
 set mouse=a " 开启鼠标支持
 set expandtab " TAB -> SPACE
 set tabstop=4 " TAB 的宽度
@@ -24,7 +26,7 @@ set nocompatible
 set nohls " 不高亮匹配关键字
 set noincsearch " 非渐进搜索
 set nowrap " 不自动折行
-set updatetime=200
+set updatetime=1000
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set statusline=%<%f\ %h%m%r%=%P
 set winaltkeys=no
@@ -205,6 +207,7 @@ nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
+imap <silent> <unique> <C-Q> <ESC>ZZ
 imap <silent> <unique> <C-W> <SPACE><ESC>dbs
 imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
@@ -269,7 +272,7 @@ if has("autocmd")
 endif
 " }}}
 
-" Plugins {{{
+" 12# Plugins {{{
 " mru.vim 3.2 : Plugin to manage Most Recently Used (MRU) files {{{2
 let MRU_Max_Entries=15
 let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
@@ -445,7 +448,7 @@ endfunction
 " http://www.vim.org/scripts/script.php?script_id=2540
 " nothing
 
-" quickfixsigns 0.5 : Mark quickfix & location list items with signs
+" quickfixsigns 0.5 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
 set lazyredraw
 
@@ -464,45 +467,47 @@ if exists("syntax_on")
 endif
 
 set background=dark
-hi Comment          ctermfg=darkgreen                       cterm=italic
-hi Constant         ctermfg=darkcyan
-hi Special          ctermfg=darkred
-hi Identifier       ctermfg=red
-hi PreProc          ctermfg=darkmagenta
-hi Statement        ctermfg=darkblue                        cterm=bold
-hi Type             ctermfg=darkblue                        cterm=bold
-hi Underlined       ctermfg=none        ctermbg=none        cterm=underline
-hi Ignore           ctermfg=darkgrey    ctermbg=none
-hi Error            ctermfg=white       ctermbg=darkred     cterm=bold
-hi Todo             ctermfg=white       ctermbg=darkgreen   cterm=bold
-hi String           ctermfg=darkcyan
-hi Number           ctermfg=darkmagenta
-hi SpecialKey       ctermfg=none        ctermbg=none        cterm=reverse
-hi Normal           ctermfg=none        ctermbg=none
-hi NonText          ctermfg=darkmagenta ctermbg=none
-hi Directory        ctermfg=darkblue    ctermbg=none
-hi ErrorMsg         ctermfg=darkred     ctermbg=none
-hi WarningMsg       ctermfg=white       ctermbg=none
-hi MatchParen       ctermfg=white       ctermbg=cyan        cterm=italic
-hi VertSplit        ctermfg=white       ctermbg=none        cterm=bold
-hi StatusLine       ctermfg=white       ctermbg=none        cterm=reverse
-hi StatusLineNC     ctermfg=white       ctermbg=none        cterm=reverse
-hi IncSearch        ctermfg=darkyellow  ctermbg=darkblue
-hi Search           ctermfg=darkyellow  ctermbg=darkblue
-hi Question         ctermfg=white
-hi LineNr           ctermfg=darkgreen                       cterm=italic
-hi DiffAdd          ctermfg=darkgreen   ctermbg=none
-hi DiffChange       ctermfg=blue        ctermbg=black
-hi DiffDelete       ctermfg=darkred     ctermbg=none
-hi DiffText         ctermfg=yellow      ctermbg=none
-hi Folded           ctermfg=green       ctermbg=none        cterm=italic
-hi FoldColumn       ctermfg=darkgreen   ctermbg=none
-hi SignColumn       ctermfg=white       ctermbg=none
-hi MoreMsg          ctermfg=darkgreen
-hi ModeMsg          ctermfg=darkred
-hi Title            ctermfg=darkblue
-hi Visual           ctermfg=white       ctermbg=darkblue
-hi WildMenu         ctermfg=white       ctermbg=yellow
+
+hi Comment          ctermfg=darkgreen                       cterm=italic        guifg=darkgreen                         gui=italic
+hi Constant         ctermfg=darkcyan                                            guifg=darkcyan
+hi Special          ctermfg=darkred                                             guifg=darkred
+hi PreProc          ctermfg=darkmagenta                                         guifg=darkmagenta
+hi Statement        ctermfg=darkblue                                            guifg=lightblue
+hi Type             ctermfg=darkblue                                            guifg=lightblue
+hi Underlined       ctermfg=NONE        ctermbg=NONE        cterm=underline     guifg=NONE          guibg=NONE          gui=underline
+hi Ignore           ctermfg=darkgrey    ctermbg=NONE                            guifg=darkgrey      guibg=NONE
+hi Error            ctermfg=white       ctermbg=darkred     cterm=bold          guifg=white         guibg=darkred       gui=bold
+hi Todo             ctermfg=white       ctermbg=darkgreen   cterm=bold          guifg=white         guibg=darkgreen     gui=bold
+hi String           ctermfg=darkcyan                                            guifg=darkcyan
+hi Identifier       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
+hi Normal           ctermfg=NONE        ctermbg=NONE                            guifg=yellow        guibg=#222222
+hi Pmenu            ctermfg=black       ctermbg=magenta                         guifg=black         guibg=magenta
+hi PmenuSel         ctermfg=yellow      ctermbg=darkblue    cterm=bold          guifg=yellow        guibg=darkblue      gui=bold
+hi SpecialKey       ctermfg=white       ctermbg=red         cterm=underline     guifg=white         guibg=red           gui=underline
+hi NonText          ctermfg=magenta     ctermbg=NONE                            guifg=magenta       guibg=NONE
+hi Directory        ctermfg=darkblue    ctermbg=NONE                            guifg=lightblue     guibg=NONE
+hi ErrorMsg         ctermfg=darkred     ctermbg=NONE                            guifg=darkred       guibg=NONE
+hi WarningMsg       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
+hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        guifg=black         guibg=cyan          gui=italic
+hi VertSplit        ctermfg=white       ctermbg=NONE        cterm=bold          guifg=white         guibg=NONE          gui=bold
+hi StatusLine       ctermfg=white       ctermbg=black                           guifg=white         guibg=black
+hi StatusLineNC     ctermfg=white       ctermbg=black                           guifg=white         guibg=black
+hi IncSearch        ctermfg=darkyellow  ctermbg=darkblue                        guifg=darkyellow    guibg=blue
+hi Search           ctermfg=darkyellow  ctermbg=darkblue                        guifg=darkyellow    guibg=blue
+hi Question         ctermfg=magenta                                             guifg=magenta
+hi LineNr           ctermfg=darkgreen                       cterm=italic        guifg=darkgreen     guibg=NONE          gui=italic
+hi DiffAdd          ctermfg=darkgreen   ctermbg=NONE                            guifg=darkgreen     guibg=NONE
+hi DiffChange       ctermfg=blue        ctermbg=black                           guifg=lightblue     guibg=black
+hi DiffDelete       ctermfg=darkred     ctermbg=NONE                            guifg=darkred       guibg=NONE
+hi DiffText         ctermfg=yellow      ctermbg=NONE                            guifg=yellow        guibg=NONE
+hi Folded           ctermfg=green       ctermbg=NONE        cterm=italic        guifg=green         guibg=NONE          gui=italic
+hi FoldColumn       ctermfg=darkgreen   ctermbg=NONE                            guifg=darkgreen     guibg=NONE
+hi SignColumn       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
+hi MoreMsg          ctermfg=darkgreen                                           guifg=darkgreen
+hi ModeMsg          ctermfg=darkred                                             guifg=darkred
+hi Title            ctermfg=darkblue                                            guifg=lightblue
+hi Visual           ctermfg=white       ctermbg=darkblue                        guifg=white         guibg=blue
+hi WildMenu         ctermfg=white       ctermbg=yellow                          guifg=white         guibg=yellow
 " link - diff/patch
 hi def link diffAdded   DiffAdd
 hi def link diffRemoved DiffDelete
@@ -516,15 +521,15 @@ hi VimwikiWord          ctermfg=darkblue
 hi VimwikiNoExistsWord  ctermfg=cyan                        cterm=Underline
 hi VimwikiList          ctermfg=green
 " taglist
-hi MyTagListTagName     ctermfg=white       ctermbg=none
-hi MyTagListFileName    ctermfg=green       ctermbg=none
-hi MyTagListTitle       ctermfg=grey        ctermbg=none
-hi MyTagListTagScope    ctermfg=none        ctermbg=none
+hi MyTagListTagName     ctermfg=white       ctermbg=NONE
+hi MyTagListFileName    ctermfg=green       ctermbg=NONE
+hi MyTagListTitle       ctermfg=grey        ctermbg=NONE
+hi MyTagListTagScope    ctermfg=NONE        ctermbg=NONE
 " tabbar
-hi Tb_Normal            ctermfg=darkgreen   ctermbg=none
-hi Tb_Changed           ctermfg=red         ctermbg=none
+hi Tb_Normal            ctermfg=darkgreen   ctermbg=NONE
+hi Tb_Changed           ctermfg=red         ctermbg=NONE
 hi Tb_VisibleNormal     ctermfg=black       ctermbg=white
 hi Tb_VisibleChanged    ctermfg=red         ctermbg=white
-hi Tb_Readonly          ctermfg=green       ctermbg=none
+hi Tb_Readonly          ctermfg=green       ctermbg=NONE
 hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green
 " }}}
