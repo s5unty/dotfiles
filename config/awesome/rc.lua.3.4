@@ -264,6 +264,7 @@ globalkeys = awful.util.table.join (
 	awful.key({ modkey }, "space", function () awful.util.spawn("x-terminal-emulator") end),
 	awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
 	awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
+	awful.key({        }, "XF86Mail", function () awful.util.spawn("urxvt -name Mutt -T Mutt -e mutt") end),
 	awful.key({        }, "XF86AudioPlay",        function () awful.util.spawn("mocp.sh") end),
 	awful.key({        }, "XF86AudioStop",        function () awful.util.spawn("mocp -s") end),
 	awful.key({        }, "XF86AudioPrev",        function () awful.util.spawn("mocp -r") end),

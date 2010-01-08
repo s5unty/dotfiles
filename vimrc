@@ -479,7 +479,7 @@ hi Ignore           ctermfg=darkgrey    ctermbg=NONE                            
 hi Error            ctermfg=white       ctermbg=darkred     cterm=bold          guifg=white         guibg=darkred       gui=bold
 hi Todo             ctermfg=white       ctermbg=darkgreen   cterm=bold          guifg=white         guibg=darkgreen     gui=bold
 hi String           ctermfg=darkcyan                                            guifg=darkcyan
-hi Identifier       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
+hi Identifier       ctermfg=grey        ctermbg=NONE                            guifg=lightgrey     guibg=NONE
 hi Normal           ctermfg=NONE        ctermbg=NONE                            guifg=yellow        guibg=#222222
 hi Pmenu            ctermfg=black       ctermbg=magenta                         guifg=black         guibg=magenta
 hi PmenuSel         ctermfg=yellow      ctermbg=darkblue    cterm=bold          guifg=yellow        guibg=darkblue      gui=bold
