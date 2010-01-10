@@ -212,14 +212,13 @@ imap <silent> <unique> <C-W> <SPACE><ESC>dbs
 imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
 imap <silent> <unique> <C-D> <C-O>de
-imap <silent> <unique> <C-R> <C-O><C-R>
 imap <silent> <unique> <C-H> <Left>
 imap <silent> <unique> <C-J> <Down>
 imap <silent> <unique> <C-K> <Up>
 imap <silent> <unique> <C-L> <Right>
 imap <silent> <unique> <C-S> <Backspace>
 imap <silent> <unique> <C-C> <Del>
-imap <silent> <unique> <C-U> <C-O>u
+imap <silent> <unique> <C-Z> <C-O>u
 " in insert mode, <Ctrl-O>+ {{{3
 nmap <silent> <unique> <C-A> I
 nmap <silent> <unique> <C-E> A
@@ -332,7 +331,7 @@ nmap <silent> <unique> <leader>, :BufExplorer<CR>
 
 " SuperTab 0.41 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
-let SuperTabRetainCompletionType=0
+let SuperTabRetainCompletionType=1
 let SuperTabDefaultCompletionType="<C-X><C-N>"
 let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
