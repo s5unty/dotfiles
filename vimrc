@@ -33,7 +33,8 @@ set winaltkeys=no
 set guioptions=ai
 set cinoptions=":0,g0,t0"
 set timeout
-set timeoutlen=500
+set timeoutlen=3000
+set ttimeoutlen=300
 set autowrite
 set autowriteall
 " }}}
@@ -184,10 +185,12 @@ nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 nmap <silent> <unique> <F5> :set noro!<CR>:set noro?<CR>
 imap <silent> <unique> <F5> <ESC>:set noro!<CR>:set noro?<CR>a
+nmap <silent> <unique> <F7> :call <SID>G_Asciidoc2Html()<CR>
 nmap <silent> <unique> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
 imap <silent> <unique> <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
 nmap <silent> <unique> <F9> :!!<CR>
 imap <silent> <unique> <F9> <ESC>:!!<CR>
+nmap <silent> <unique> <F10> :Mru<CR>
 nmap <silent> <unique> <F11> g]
 nmap <silent> <unique> <F12> <C-]>zz
 
@@ -207,7 +210,11 @@ nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
-imap <silent> <unique> <C-Q> <ESC>ZZ
+imap <silent> <unique> <C-Q> <ESC>;
+nmap <silent> <unique> <C-H> <C-W>h
+nmap <silent> <unique> <C-J> <C-W>j
+nmap <silent> <unique> <C-K> <C-W>k
+nmap <silent> <unique> <C-L> <C-W>l
 imap <silent> <unique> <C-W> <SPACE><ESC>dbs
 imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
@@ -219,22 +226,18 @@ imap <silent> <unique> <C-L> <Right>
 imap <silent> <unique> <C-S> <Backspace>
 imap <silent> <unique> <C-C> <Del>
 imap <silent> <unique> <C-Z> <C-O>u
-" in insert mode, <Ctrl-O>+ {{{3
-nmap <silent> <unique> <C-A> I
-nmap <silent> <unique> <C-E> A
-nmap <silent> <unique> <C-H> ^
-nmap <silent> <unique> <C-J> })
-nmap <silent> <unique> <C-K> {(
-nmap <silent> <unique> <C-L> $
+nmap <silent> <unique> <C-A> ^
+nmap <silent> <unique> <C-E> $
+nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
+nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 
 " Alt+ {{{2
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
+nmap <silent> <unique> <ESC><F8> :make! install<CR>
+imap <silent> <unique> <ESC><F8> <ESC>:make! install<CR>
 nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
 imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
-nmap <silent> <unique> <ESC><Space> :call G_GoodSpace(0)<CR>
-nmap <silent> <unique> <ESC><F8> :make! install<CR>
-imap <silent> <unique> <ESC><F8> <ESC>:make! install<CR>
 
 " Leader+ , Leader char is ',' {{{2
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
@@ -243,7 +246,15 @@ nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>/ :call G_FindInFile('exact')<CR>
 nmap <silent> <unique> <Leader>? :call G_FindInFile('fuzzy')<CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
-
+nmap <silent> <unique> <leader>l :call <SID>ShowTaglist()<CR>
+nmap <silent> <unique> <leader>, :BufExplorer<CR>
+nmap <silent> <unique> <leader>s :call <SID>CscopeFind('s', 'y')<CR>
+nmap <silent> <unique> <leader>c :call <SID>CscopeFind('c', 'y')<CR>
+nmap <silent> <unique> <leader>e :call <SID>CscopeFind('e', 'y')<CR>
+nmap <silent> <unique> <leader>S :call <SID>CscopeFind('s', 'n')<CR>
+nmap <silent> <unique> <leader>C :call <SID>CscopeFind('c', 'n')<CR>
+nmap <silent> <unique> <leader>E :call <SID>CscopeFind('e', 'n')<CR>
+nmap <silent> <unique> <leader>. :call <SID>VimwikiGoProject()<CR>
 " }}}1
 
 " Autocmd {{{
@@ -271,18 +282,16 @@ if has("autocmd")
 endif
 " }}}
 
-" 12# Plugins {{{
-" mru.vim 3.2 : Plugin to manage Most Recently Used (MRU) files {{{2
-let MRU_Max_Entries=15
+" 11# Plugins {{{
+" mru.vim 3.3-p1 : Plugin to manage Most Recently Used (MRU) files {{{2
+" http://www.vim.org/scripts/script.php?script_id=521
+"
+" p1: @@529@@
+"             let split_window = 0
+let MRU_Max_Entries=256
 let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
-let MRU_Include_Files='\.c$\|\.cpp$\|\.h$\|\.hpp$'  " For C Source
-let MRU_Window_Height=15
+let MRU_Window_Height=18
 let MRU_Add_Menu=0
-nmap <silent> <unique> <F10> :MRU<CR>
-if has("autocmd")
-  autocmd BufReadPost,FileReadPost *
-    \ chdir .
-endif
 
 " taglist.vim 4.5-p1 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
 " http://www.vim.org/scripts/script.php?script_id=273
@@ -298,7 +307,6 @@ let Tlist_Process_File_Always = 1
 let Tlist_Use_Horiz_Window = 0
 let Tlist_Use_SingleClick = 1
 let Tlist_Sort_Type = "name"
-nmap <silent> <unique> <leader>l :call <SID>ShowTaglist()<CR>
 
 function <SID>ShowTaglist()
     if exists("g:loaded_taglist")
@@ -317,8 +325,6 @@ let Tb_TabWrap = 1 " 禁止跨行显示
 let Tb_MaxSize = 2 " 最多显示2行
 let Tb_ModSelTarget = 1 " 跳转至编辑窗口
 let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
-nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
-nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 if has("autocmd")
   autocmd BufWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ exec ":TbAup"
@@ -327,7 +333,6 @@ endif
 " bufexplorer 7.2.2 : Buffer Explorer / Browser {{{2
 " http://www.vim.org/scripts/script.php?script_id=42
 let bufExplorerShowRelativePath = 0
-nmap <silent> <unique> <leader>, :BufExplorer<CR>
 
 " SuperTab 0.41 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
@@ -341,6 +346,7 @@ let SuperTabMappingBackward="<S-Tab>"
 let g:EchoFuncLangsUsed = ["c", "cpp", "lua", "java"]
 
 " Cscope : Interactively examine a C program source {{{2
+" http://cscope.sourceforge.net/
 set tag=.cscope/cscope.tags,~/.tags;
 if has("cscope")
     set csto=1
@@ -403,12 +409,6 @@ function <SID>CscopeFind(mask, quick)
     " 显示搜索结果窗口
     call G_QFixToggle(1)
 endfunction
-nmap <silent> <unique> <leader>s :call <SID>CscopeFind('s', 'y')<CR>
-nmap <silent> <unique> <leader>c :call <SID>CscopeFind('c', 'y')<CR>
-nmap <silent> <unique> <leader>e :call <SID>CscopeFind('e', 'y')<CR>
-nmap <silent> <unique> <leader>S :call <SID>CscopeFind('s', 'n')<CR>
-nmap <silent> <unique> <leader>C :call <SID>CscopeFind('c', 'n')<CR>
-nmap <silent> <unique> <leader>E :call <SID>CscopeFind('e', 'n')<CR>
 
 " vimwiki 0.9.7 : Personal Wiki for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2226
@@ -420,7 +420,6 @@ let g:vimwiki_list = [
             \ { 'proj': 'stardict', 'path': '~/stardict/wiki/', 'path_html': '~/stardict/html/', 'ext': '.wiki' },
             \ { 'proj': 'myqq',     'path': '~/myqq/wiki/',     'path_html': '~/myqq/html/',     'ext': '.wiki' },
             \ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' }]
-nmap <silent><unique> <leader>. :call <SID>VimwikiGoProject()<CR>
 function <SID>VimwikiGoProject()
     let proj_path = expand('~/')
     let idx = 1
@@ -434,7 +433,6 @@ function <SID>VimwikiGoProject()
     endfor
 endfunction
 
-nmap <silent> <unique> <F7> :call <SID>G_Asciidoc2Html()<CR>
 function <SID>G_Asciidoc2Html()
     let wiki = g:vimwiki_list[g:vimwiki_current_idx]['path']
     let html = g:vimwiki_list[g:vimwiki_current_idx]['path_html']
