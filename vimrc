@@ -198,11 +198,12 @@ nmap <silent> <unique> <F12> <C-]>zz
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
-nmap <silent> <unique> q :call G_QFixToggle(-1)<CR>
+nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
+vmap <silent> <unique> + :Align =<CR>
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
@@ -307,6 +308,8 @@ let Tlist_Process_File_Always = 1
 let Tlist_Use_Horiz_Window = 0
 let Tlist_Use_SingleClick = 1
 let Tlist_Sort_Type = "name"
+let tlist_c_settings = 'c;p:prototype;f:implementation'
+let tlist_cpp_settings = 'c++;c:object;p:prototype;f:implementation'
 
 function <SID>ShowTaglist()
     if exists("g:loaded_taglist")
@@ -402,10 +405,6 @@ function <SID>CscopeFind(mask, quick)
     let @/ = "\\<".str."\\>"
     exec ":cs find ".a:mask." ".str
 
-    " cscope find 不支持像 vimgrep 那样 /j 的参数,
-    " 在这手动跳回原始位置
-    exec "normal \<C-O>"
-
     " 显示搜索结果窗口
     call G_QFixToggle(1)
 endfunction
@@ -449,9 +448,9 @@ endfunction
 " http://www.vim.org/scripts/script.php?script_id=2584
 set lazyredraw
 
-" DoxygenToolkit.vim 0.2.7 : Simplify Doxygen documentation in C, C++, Python. {{{2
-" http://www.vim.org/scripts/script.php?script_id=987
-let g:DoxygenToolkit_authorName="Vern Sun"
+" Align 35/41 : Help folks to align text, eqns, declarations, tables, etc  {{{2
+" http://www.vim.org/scripts/script.php?script_id=294
+
 " }}}1
 
 " Colour {{{

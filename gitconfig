@@ -29,7 +29,7 @@
     sl  = stash list
     sp  = stash pop
 
-    ll  = log --pretty=format:'%Cgreen%h%Creset ... %s %Cred%d%Creset' --decorate --all --graph -20
+    ll  = log --pretty=format:'%Cgreen%h%Creset ... %an - %s %Cblue%ar%Creset %Cred%d%Creset' --decorate --all --graph -20
     ls  = log --pretty=format:'%Cgreen%h%Creset ... %an - %s %Cblue%ar%Creset' -20
 
     me  = merge

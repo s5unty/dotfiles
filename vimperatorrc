@@ -13,17 +13,21 @@ map    k 5<C-y>
 " macro
 map <F2>  :set encoding=GB2312<CR>
 map <C-q> :winclose<CR>
+map <C-.> :tabm +1<CR>
+map <C-,> :tabm -1<CR>
 map W     ;w
 map qd    :set ds=d<CR>P:set ds=google<CR>:echo ""<CR>
 map qg    :set ds=gtk<CR>P:set ds=google<CR>:echo ""<CR>
 map qb    :set ds=baidu<CR>P:set ds=google<CR>:echo ""<CR>
 map qw    :set ds=wc<CR>P:set ds=google<CR>:echo ""<CR>
 map qp    :set ds=pkg<CR>P:set ds=google<CR>:echo ""<CR>
+map b     :bmarks -tag
 
 " general
-set go=""
-set cpt=sbfl
+set go=br
+set cpt=slt
 set fc
 set visualbell
 set shell="/usr/bin/zsh"
-set editor="/usr/bin/gvim --noplugin -f"
+set editor="urxvt -e zsh -c 'stty -ixon; vim --noplugin'"
+set newtab=all
