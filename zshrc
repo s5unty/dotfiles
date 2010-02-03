@@ -36,6 +36,7 @@ alias tree="tree -C"
 alias scp="scp -p"
 alias lintian="lintian -viI"
 alias vi="/usr/bin/vim -n"
+#alias make="/usr/bin/make -j2"
 # }}}
 
 # apt-get 别名 {{{
@@ -203,7 +204,6 @@ export DEBIAN_DIR=""
 export REPREPRO_CONFIG_DIR=""
 export LANG="zh_CN.UTF-8"
 export TZ='UTC-8'
-export TERM="rxvt-unicode"
 export HOME="/sun/home"
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
@@ -285,17 +285,12 @@ set_prompt() {
 
 case `tty` in
     /dev/pts/*)
-        precmd()  {
-            set_prompt
-            print -Pn "\a\e]0;%n@$__IP:%l\a"
-        }
+        export TERM="rxvt-unicode"
+        precmd() { set_prompt; print -Pn "\a\e]0;%n@$__IP:%l\a" }
         ;;
     /dev/tty*)
-        precmd()  {
-            set_prompt
-        }
-        ;;
-    *)
+        export TERM="xterm"
+        precmd() { set_prompt; }
         ;;
 esac
 ## }}}

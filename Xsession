@@ -9,6 +9,6 @@
 
 # nvidia-settings -l
 # /usr/bin/xmodmap ~/.Xmodmaprc
-# smbmount //192.168.1.4/temp /sun/samba -ousername="nil",password="",iocharset=utf8 &
+smbmount //192.168.1.4/temp /sun/samba -ousername="nil",password="",iocharset=utf8 &
 
 exec /usr/bin/awesome

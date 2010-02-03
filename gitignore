@@ -5,8 +5,8 @@ CVS
 CVS.adm
 RCSLOG
 cvslog.*
-tags
-TAGS
+/tags
+/TAGS
 .cvsignore
 .make.state
 .nse_depinfo
@@ -30,8 +30,15 @@ _$*
 *.Z
 *.elc
 *.ln
-core
+/core
 .svn/
 .git/
 .cscope/
 .gitignore
+# automake
+Makefile.in
+aclocal.m4
+autom4te.cache/
+config.h.in
+/configure
+

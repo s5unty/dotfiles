@@ -13,7 +13,7 @@ http://www.debian.org[Debian] 是一个致力于自由软件开发并宣扬自�
 * i18n-zh
 * link:http://packages.qa.debian.org/v/vidalia.html[vidalia]
   vidalia 的 deb 包维护工作。
-* link:http://packages.qa.debian.org/v/cconv.html[cconv]
+* link:http://packages.qa.debian.org/c/cconv.html[cconv]
   cconv 的 deb 包维护工作。
 
 [[mutt]]
@@ -37,7 +37,7 @@ sudo apt-get update
 ---------------------------------------------------------------------------------------------------
 
 == About Me
-link:http://identi.ca/s5unty[@identica] link:http://s5unty.blogspot.com[@blogspot] http://www.google.com/reader/shared/s5unty[@reader] link:http://github.com/s5unty/dotfiles.git/[@github] link:http://qa.debian.org/developer.php?login=s5unty%40gmail.com[@maintain]
+@http://identi.ca/s5unty[identica] @http://s5unty.blogspot.com[blogspot] @http://www.google.com/reader/shared/s5unty[reader] @http://github.com/s5unty/dotfiles.git/[github] @http://qa.debian.org/developer.php?login=s5unty%40gmail.com[maintain]
 
 
 image:http://lh4.ggpht.com/_oKL9t7fM3TU/SvPguSYXA6I/AAAAAAAAAxY/2jnEUzO7K5I/email.png[jabber && msn]
