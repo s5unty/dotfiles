@@ -28,18 +28,17 @@ layouts =
 	awful.layout.suit.fair,
 	awful.layout.suit.tile.bottom,
 	awful.layout.suit.tile.right,
-    awful.layout.suit.floating
 }
 
 tags = { }
 mytags = {
-	{ layout = layouts[2], mwfact = 0.735 },
+	{ layout = layouts[2], mwfact = 0.875, nmaster=1 },
 	{ layout = layouts[3], mwfact = 0.618, nmaster=1 },
-	{ layout = layouts[2], mwfact = 0.618 },
-	{ layout = layouts[2], mwfact = 0.735 },
-	{ layout = layouts[3], mwfact = 0.618, nmaster=2 },
+	{ layout = layouts[2], mwfact = 0.618, nmaster=1 },
 	{ layout = layouts[2], mwfact = 0.735, nmaster=2 },
-	{ layout = layouts[3], mwfact = 0.618, nmaster=2 },
+	{ layout = layouts[3], mwfact = 0.500, nmaster=2 },
+	{ layout = layouts[2], mwfact = 0.735, nmaster=2 },
+	{ layout = layouts[3], mwfact = 0.500, nmaster=3 },
 	{ layout = layouts[1] },
 }
 for s = 1, screen.count() do
@@ -80,7 +79,10 @@ myspacer.text    = " "
 myseparator.text = "|"
 
 -- Others {{{2
-mytextclock = awful.widget.textclock({ align = "right" })
+--mytextclock = awful.widget.textclock({ align = "right" })
+mytextclock = widget({ type = 'textbox' })
+vicious.register(mytextclock, vicious.widgets.date, ' %b %d, %R ', 60)
+
 mysystray = widget({ type = "systray" })
 mytasklist = {}
 mytaglist = {}
@@ -284,15 +286,16 @@ globalkeys = awful.util.table.join (
 		end
 
 		local fc = ""
-		local f  = io.popen("date; cal")
+		local f  = io.popen("cal; date")
 		for line in f:lines() do
 			fc = fc .. line .. '\n'
 		end
 		f:close()
 
 		calendar = naughty.notify({
-			text = string.format('<span font_desc="%s">%s</span>', "WenQuanYi Zen Hei Mono", fc),
-			timeout = 0, width = 180, screen = mouse.screen })
+			text = string.format('<span font_desc="%s">%s</span>', "Envy Code R", fc),
+            position = "bottom_right", --font = "Envy Code R",
+			timeout = 0, width = 230, screen = mouse.screen })
 	end),
     -- }}}
 
@@ -438,8 +441,8 @@ clientkeys = awful.util.table.join(
 	end),
 
 	awful.key({ modkey,           }, "Return",  function (c)
-		if (c:tags()[2]) then
-			awful.tag.viewonly(c:tags()[2])
+		if (c:tags()[1]) then
+			awful.tag.viewonly(c:tags()[1])
 		end
 	end)
 )
