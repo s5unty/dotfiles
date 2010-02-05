@@ -100,14 +100,14 @@ tgz() {
     name=`echo $1 | sed 's/\/*$//g'`
     tar -zcf "$name.tar.gz" $@
 }
-tgx() { tar -zxf $@ }
+tgx() { __SUDO tar -zxf $@ }
 tgg() { tar -tf $@ }
 
 tjz() {
     name=`echo $1 | sed 's/\/*$//g'`
     tar -jcf "$name.tar.bz2" $@
 }
-tjx() { tar -jxf $@ }
+tjx() { __SUDO tar -jxf $@ }
 tjg() { tar -tf $@ }
 # }}}
 
