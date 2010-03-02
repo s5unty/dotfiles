@@ -20,6 +20,8 @@ alias -g M="| $__LESS"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
 alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
 alias ll="ls -hl"
@@ -100,14 +102,14 @@ tgz() {
     name=`echo $1 | sed 's/\/*$//g'`
     tar -zcf "$name.tar.gz" $@
 }
-tgx() { __SUDO tar -zxf $@ }
+tgx() { $__SUDO tar -zxvf $@ }
 tgg() { tar -tf $@ }
 
 tjz() {
     name=`echo $1 | sed 's/\/*$//g'`
     tar -jcf "$name.tar.bz2" $@
 }
-tjx() { __SUDO tar -jxf $@ }
+tjx() { $__SUDO tar -jxvf $@ }
 tjg() { tar -tf $@ }
 # }}}
 
@@ -406,7 +408,7 @@ autoload zsh/terminfo
 # don't ask me 'do you wish to see all XX possibilities' before menu selection
 LISTPROMPT=''
 
-WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
+WORDCHARS='*?_-[]~=&;!#$%^(){}<>‘’'
 
 zle_highlight=(region:bg=blue     #选中区域
                special:bold       #特殊字符
