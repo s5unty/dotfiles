@@ -1,6 +1,6 @@
 [程序]
-显示字体(中)=*
-显示字体(英)=Andale Mono
+显示字体(中)=WenQuanYi Zen Hei
+显示字体(英)=Envy Code R
 显示字体大小=10
 主窗口字体大小=10
 字体区域=zh_CN.UTF-8
@@ -19,7 +19,7 @@ Enter键行为=2
 候选词个数=5
 主窗口是否使用3D界面=0
 输入条使用3D界面=2
-主窗口隐藏模式=1
+主窗口隐藏模式=2
 显示虚拟键盘=0
 是否自动隐藏输入条=1
 输入条是否居中=0
@@ -59,12 +59,12 @@ Enter键行为=2
 双击中英文切换=0
 击键时间间隔=250
 光标跟随=CTRL_ALT_K
-GBK支持=CTRL_M
+GBK支持=CTRL_ALT_M
 GBK繁体切换键=CTRL_ALT_F
 联想支持=CTRL_ALT_L
 反查拼音=CTRL_ALT_E
-全半角=SHIFT_SPACE
-中文标点=CTRL_.
+全半角=CTRL_ALT_SPACE
+中文标点=CTRL_ALT_.
 上一页=- ,
 下一页== .
 第二三候选词选择键=
