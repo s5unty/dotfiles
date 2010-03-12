@@ -192,7 +192,9 @@ nmap <silent> <unique> <F9> :!!<CR>
 imap <silent> <unique> <F9> <ESC>:!!<CR>
 nmap <silent> <unique> <F10> :Mru<CR>
 nmap <silent> <unique> <F11> g]
+vmap <silent> <unique> <F11> g]
 nmap <silent> <unique> <F12> <C-]>zz
+vmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
@@ -228,7 +230,6 @@ imap <silent> <unique> <C-S> <Backspace>
 imap <silent> <unique> <C-C> <Del>
 imap <silent> <unique> <C-Z> <C-O>u
 nmap <silent> <unique> <C-A> ^
-nmap <silent> <unique> <C-E> $
 nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 
@@ -283,7 +284,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 11# Plugins {{{
+" 9# Plugins {{{
 " mru.vim 3.3-p1 : Plugin to manage Most Recently Used (MRU) files {{{2
 " http://www.vim.org/scripts/script.php?script_id=521
 "
@@ -325,17 +326,13 @@ endfunction
 "     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
 let Tb_UseSingleClick = 1 " 单击切换
 let Tb_TabWrap = 1 " 禁止跨行显示
-let Tb_MaxSize = 2 " 最多显示2行
+let Tb_MaxSize = 0 "
 let Tb_ModSelTarget = 1 " 跳转至编辑窗口
 let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
 if has("autocmd")
   autocmd BufWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ exec ":TbAup"
 endif
-
-" bufexplorer 7.2.2 : Buffer Explorer / Browser {{{2
-" http://www.vim.org/scripts/script.php?script_id=42
-let bufExplorerShowRelativePath = 0
 
 " SuperTab 0.41 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
@@ -377,7 +374,7 @@ if has("cscope")
             " 由于频繁保存引发的多个 ctags 间的互斥，可能会导致以下错误:
             " ctags: ".cscope/cscope.tags" doesn't look like a tag file; I refuse to overwrite it.
             " http://www.lslnet.com/linux/dosc1/55/linux-369438.htm
-            call system("ps -e | grep ctags || ctags --c++-kinds=+p --fields=+ialS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags &")
+            call system("ps -e | grep ctags || ctags --c++-kinds=+p --fields=-fst --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags &")
             exec "cscope add .cscope/cscope.out"
             exec "cscope reset"
         endif
@@ -412,13 +409,15 @@ endfunction
 " vimwiki 0.9.7 : Personal Wiki for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2226
 let g:vimwiki_list = [
+            \ { 'proj': 'beta',     'path': '~/beta/wiki/',     'path_html': '~/beta/html/',     'ext': '.wiki' },
             \ { 'proj': 'dtv-gui',  'path': '~/dtv-gui/wiki/',  'path_html': '~/dtv-gui/html/',  'ext': '.wiki' },
             \ { 'proj': 'gpicview', 'path': '~/gpicview/wiki/', 'path_html': '~/gpicview/html/', 'ext': '.wiki' },
             \ { 'proj': 'mouse-fm', 'path': '~/mouse-fm/wiki/', 'path_html': '~/mouse-fm/html/', 'ext': '.wiki' },
             \ { 'proj': 'pidgin',   'path': '~/pidgin/wiki/',   'path_html': '~/pidgin/html/',   'ext': '.wiki' },
             \ { 'proj': 'stardict', 'path': '~/stardict/wiki/', 'path_html': '~/stardict/html/', 'ext': '.wiki' },
             \ { 'proj': 'myqq',     'path': '~/myqq/wiki/',     'path_html': '~/myqq/html/',     'ext': '.wiki' },
-            \ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' }]
+            \ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' },
+            \ { 'proj': 'fbreader', 'path': '~/fbreader/wiki/', 'path_html': '~/fbreader/html/', 'ext': '.wiki' }]
 function <SID>VimwikiGoProject()
     let proj_path = expand('~/')
     let idx = 1
@@ -447,9 +446,6 @@ endfunction
 " quickfixsigns 0.5 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
 set lazyredraw
-
-" Align 35/41 : Help folks to align text, eqns, declarations, tables, etc  {{{2
-" http://www.vim.org/scripts/script.php?script_id=294
 
 " }}}1
 

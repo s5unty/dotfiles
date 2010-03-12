@@ -132,7 +132,7 @@ alias -s odt="ooffice -writer"
 alias -s doc="ooffice -writer"
 alias -s ods="ooffice -calc"
 alias -s xls="ooffice -calc"
-alias -s pdf=foxitreader
+alias -s pdf=FoxitReader
 alias -s html=firefox
 alias -s chm=kchmviewer
 alias -s planner=planner
@@ -179,7 +179,7 @@ C() { # gen cscope.files
     find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' \
         -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' > .cscope/cscope.files
     cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
-    ctags -u --c++-kinds=+p --fields=+ialS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
+    ctags --c++-kinds=+p --fields=-fst --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
 }
 O() { # chown
 	$__SUDO chown -R s5unty:s5unty $*
@@ -408,7 +408,7 @@ autoload zsh/terminfo
 # don't ask me 'do you wish to see all XX possibilities' before menu selection
 LISTPROMPT=''
 
-WORDCHARS='*?_-[]~=&;!#$%^(){}<>‘’'
+WORDCHARS='*?_-‘’[]~=&;!#$%^(){}<>'
 
 zle_highlight=(region:bg=blue     #选中区域
                special:bold       #特殊字符
