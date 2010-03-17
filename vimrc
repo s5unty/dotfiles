@@ -484,8 +484,8 @@ hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        
 hi VertSplit        ctermfg=white       ctermbg=NONE        cterm=bold          guifg=white         guibg=NONE          gui=bold
 hi StatusLine       ctermfg=white       ctermbg=black                           guifg=white         guibg=black
 hi StatusLineNC     ctermfg=white       ctermbg=black                           guifg=white         guibg=black
-hi IncSearch        ctermfg=darkyellow  ctermbg=darkblue                        guifg=darkyellow    guibg=blue
-hi Search           ctermfg=darkyellow  ctermbg=darkblue                        guifg=darkyellow    guibg=blue
+hi IncSearch        ctermfg=NONE        ctermbg=NONE        cterm=underline     guifg=darkyellow    guibg=blue
+hi Search           ctermfg=NONE        ctermbg=NONE        cterm=underline     guifg=darkyellow    guibg=blue
 hi Question         ctermfg=magenta                                             guifg=magenta
 hi LineNr           ctermfg=darkgreen                       cterm=italic        guifg=darkgreen     guibg=NONE          gui=italic
 hi DiffAdd          ctermfg=darkgreen   ctermbg=NONE                            guifg=darkgreen     guibg=NONE

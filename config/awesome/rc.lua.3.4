@@ -32,7 +32,7 @@ layouts =
 
 tags = { }
 mytags = {
-	{ layout = layouts[2], mwfact = 0.875, nmaster=1 },
+	{ layout = layouts[1], mwfact = 0.735, nmaster=1 },
 	{ layout = layouts[3], mwfact = 0.618, nmaster=1 },
 	{ layout = layouts[2], mwfact = 0.618, nmaster=1 },
 	{ layout = layouts[2], mwfact = 0.735, nmaster=2 },
@@ -480,6 +480,8 @@ awful.rules.rules = {
 	  properties = { tag = tags[1][3] } },
 	{ rule = { instance = "Weechat" },
 	  properties = { tag = tags[1][3] } },
+	{ rule = { class = "VirtualBox" },
+	  properties = { tag = tags[1][6] } },
 }
 -- }}}
 
@@ -531,5 +533,6 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- }}}
 
 -- {{{ Autorun
-awful.util.spawn("/usr/bin/fcitx") -- need disable the XIMPROGRAM line in /etc/X11/xinit/xinput.d/fcitx
+awful.util.spawn("/usr/bin/fcitx")
+awful.util.spawn("/usr/bin/VBoxManage startvm 'WindowsXP'")
 -- }}}
