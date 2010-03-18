@@ -1,6 +1,6 @@
 = Vern's Page
 
-[quote, Linus Torvalds]
+[quote, Linus Torvalds, FSF conference(1996)]
 _________________________________________________________________
 软件如性，自由就好。
 _________________________________________________________________
@@ -37,7 +37,7 @@ sudo apt-get update
 ---------------------------------------------------------------------------------------------------
 
 == About Me
-@http://identi.ca/s5unty[identica] @http://s5unty.blogspot.com[blogspot] @http://www.google.com/reader/shared/s5unty[reader] @http://github.com/s5unty/dotfiles.git/[github] @http://qa.debian.org/developer.php?login=s5unty%40gmail.com[maintain]
+@http://identi.ca/s5unty[identica] @http://s5unty.blogspot.com[blogspot] @http://www.google.com/reader/shared/s5unty[reader] @http://github.com/s5unty/dotfiles/[github] @http://qa.debian.org/developer.php?login=s5unty%40gmail.com[maintain]
 
 
 image:http://lh4.ggpht.com/_oKL9t7fM3TU/SvPguSYXA6I/AAAAAAAAAxY/2jnEUzO7K5I/email.png[jabber && msn]
