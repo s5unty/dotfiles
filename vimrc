@@ -37,6 +37,7 @@ set timeoutlen=3000
 set ttimeoutlen=300
 set autowrite
 set autowriteall
+set makeprg=make\ -j2
 " }}}
 
 " Function {{{
@@ -468,7 +469,7 @@ hi Statement        ctermfg=darkblue                                            
 hi Type             ctermfg=darkblue                                            guifg=lightblue
 hi Underlined       ctermfg=NONE        ctermbg=NONE        cterm=underline     guifg=NONE          guibg=NONE          gui=underline
 hi Ignore           ctermfg=darkgrey    ctermbg=NONE                            guifg=darkgrey      guibg=NONE
-hi Error            ctermfg=white       ctermbg=darkred     cterm=bold          guifg=white         guibg=darkred       gui=bold
+hi Error            ctermfg=black       ctermbg=darkred     cterm=bold          guifg=white         guibg=darkred       gui=bold
 hi Todo             ctermfg=white       ctermbg=darkgreen   cterm=bold          guifg=white         guibg=darkgreen     gui=bold
 hi String           ctermfg=darkcyan                                            guifg=darkcyan
 hi Identifier       ctermfg=grey        ctermbg=NONE                            guifg=lightgrey     guibg=NONE
@@ -484,8 +485,8 @@ hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        
 hi VertSplit        ctermfg=white       ctermbg=NONE        cterm=bold          guifg=white         guibg=NONE          gui=bold
 hi StatusLine       ctermfg=white       ctermbg=black                           guifg=white         guibg=black
 hi StatusLineNC     ctermfg=white       ctermbg=black                           guifg=white         guibg=black
-hi IncSearch        ctermfg=NONE        ctermbg=NONE        cterm=underline     guifg=darkyellow    guibg=blue
-hi Search           ctermfg=NONE        ctermbg=NONE        cterm=underline     guifg=darkyellow    guibg=blue
+hi IncSearch        ctermfg=darkblue    ctermbg=white                           guifg=darkyellow    guibg=blue
+hi Search           ctermfg=red         ctermbg=NONE        cterm=bold          guifg=darkyellow    guibg=blue
 hi Question         ctermfg=magenta                                             guifg=magenta
 hi LineNr           ctermfg=darkgreen                       cterm=italic        guifg=darkgreen     guibg=NONE          gui=italic
 hi DiffAdd          ctermfg=darkgreen   ctermbg=NONE                            guifg=darkgreen     guibg=NONE
