@@ -12,7 +12,6 @@ set softtabstop=4
 set clipboard=unnamed " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
-set pastetoggle=<F4>
 set ignorecase " 搜索忽略大小写
 set autoindent " 自动缩进
 set number " 显示行数
@@ -21,7 +20,7 @@ set smartcase
 syn on " 语法高亮
 filetype plugin indent on
 let mapleader=","
-set noswapfile
+set hidden " 用隐藏代替关闭从而保留 undo 列表等私有信息
 set nocompatible
 set nohls " 不高亮匹配关键字
 set noincsearch " 非渐进搜索
@@ -35,8 +34,6 @@ set cinoptions=":0,g0,t0"
 set timeout
 set timeoutlen=3000
 set ttimeoutlen=300
-set autowrite
-set autowriteall
 set makeprg=make\ -j2
 " }}}
 
@@ -184,8 +181,8 @@ nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
-nmap <silent> <unique> <F5> :set noro!<CR>:set noro?<CR>
-imap <silent> <unique> <F5> <ESC>:set noro!<CR>:set noro?<CR>a
+nmap <silent> <unique> <F5> :!git di %<CR>
+imap <silent> <unique> <F5> <ESC>:!git di %<CR>a
 nmap <silent> <unique> <F7> :call <SID>G_Asciidoc2Html()<CR>
 nmap <silent> <unique> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
 imap <silent> <unique> <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
@@ -359,23 +356,23 @@ if has("cscope")
       \ let &path = getcwd()."/*"
 
     " add any database in current directory
-    if filereadable("cscope.out")
-        cscope add cscope.out
-        cscope reset
+    if glob('.cscope') != ""
+        exec "cscope add .cscope/cscope.out"
+        exec "cscope reset"
     " else add database pointed to by environment
     elseif $CSCOPE_DB != ""
-        cscope add $CSCOPE_DB
-        cscope reset
+        exec "cscope add $CSCOPE_DB"
+        exec "cscope reset"
     endif
 
     function <SID>CscopeRefresh()
-        " 如果当前目录存在 cscope.files 的话
+        " 如果当前目录存在 .cscope/ 的话
         if glob('.cscope') != ""
             call system("cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out &")
             " 由于频繁保存引发的多个 ctags 间的互斥，可能会导致以下错误:
             " ctags: ".cscope/cscope.tags" doesn't look like a tag file; I refuse to overwrite it.
             " http://www.lslnet.com/linux/dosc1/55/linux-369438.htm
-            call system("ps -e | grep ctags || ctags --c++-kinds=+p --fields=-fst --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags &")
+            call system("ps -e | grep ctags || ctags --c++-kinds=+p --fields=-fst+aS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags &")
             exec "cscope add .cscope/cscope.out"
             exec "cscope reset"
         endif
