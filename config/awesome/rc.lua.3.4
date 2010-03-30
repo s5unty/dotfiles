@@ -338,7 +338,7 @@ globalkeys = awful.util.table.join (
 			end
 			f:close()
 
-			frame = naughty.notify({ text = fc, timeout = 0, width = 360 })
+			frame = naughty.notify({ text = fc, timeout = 10, width = 360 })
 		end, nil, awful.util.getdir("cache").."/dict")
 	end),
     -- }}}
@@ -535,4 +535,5 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- {{{ Autorun
 awful.util.spawn("/usr/bin/fcitx")
 awful.util.spawn("/usr/bin/VBoxManage startvm 'WindowsXP'")
+awful.util.spawn("/opt/dropbox/bin/dropbox start -i")
 -- }}}
