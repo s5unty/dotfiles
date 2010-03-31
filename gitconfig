@@ -10,9 +10,6 @@
     branch = auto
     interactive = auto
 [alias]
-    br  = branch -v
-    bs  = show-branch
-
     ci  = commit
     cm  = commit --amend
     co  = checkout
@@ -25,25 +22,22 @@
 
     fp  = format-patch -s
 
-    sa  = stash
-    sl  = stash list
-    sp  = stash pop
-    sc  = stash clear
-
     ll  = log --pretty=format:'%Cgreen%h%Creset ... %an - %s %Cblue%ar%Creset %Cred%d%Creset' --decorate --all --graph -20
     ls  = log --pretty=format:'%Cgreen%h%Creset ... %an - %s %Cblue%ar%Creset' -20
 
     ms  = merge --squash
     mt  = mergetool
 
-    rs  = reset
-    rf  = reset --hard
-    del = reset HEAD
-
-    rb  = rebase
-    rc  = rebase --continue
+    # 核弹级选项: filter-branch
+    # http://progit.org/book/zh/ch6-4.html
+    nc = filter-branch --tree-filter
 
     st  = status
+
+    zc  = stash
+    zl  = stash list
+    zo  = stash pop
+    zd  = stash drop
 
     dci = svn dcommit
     dco = svn clone
@@ -68,3 +62,6 @@
     excludesfile = /sun/home/.gitignore
 [gui]
 	fontdiff = -family \"Andale Mono\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
