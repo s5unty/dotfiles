@@ -40,12 +40,12 @@ snippet once
 # If Condition
 snippet if
 	if (${1:/* condition */}) {
-		${2:/* code */}
-	}${3}
+		
+	}
 snippet el
 	else {
 		${1}
-	}{$2}
+	}
 # Tertiary conditional
 snippet t
 	${1:/* condition */} ? ${2:a} : ${3:b}
@@ -53,27 +53,27 @@ snippet t
 snippet do
 	do {
 		${2:/* code */}
-	} while (${1:/* condition */});{$3}
+	} while (${1:/* condition */});${3}
 # While Loop
 snippet wh
 	while (${1:/* condition */}) {
 		${2:/* code */}
-	}{$3}
+	}${3}
 # For Loop
 snippet for
 	for (${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
 		${4:/* code */}
-	}{$5}
+	}${5}
 # Custom For Loop
 snippet forr
 	for (${1:i} = ${2:0}; ${3:$1 < 10}; $1${4:++}) {
 		${5:/* code */}
-	}{$6}
+	}${6}
 # Function
 snippet fun
 	${1:void} ${2:function_name}(${3}) {
 		${4:/* code */}
-	}{$5}
+	}${5}
 # Function Declaration
 snippet fund
 	${1:void} ${2:function_name}(${3});${4}
@@ -100,6 +100,13 @@ snippet tde
 # dynamic `...`
 snippet pr
 	printf("${1:%s}\n"${2});${3}
+snippet pp
+	printf("\033[0;34m%s \033[0;32m\033[3m%s +%-4d${1}\n", __FUNCTION__, __FILE__, __LINE__${2});
+snippet pb
+	clock_t __t1 = clock();
+snippet pe
+	clock_t __t2 = clock();
+	printf("%f seconds elapsed\n", ((double) (__t2 - __t1)) / CLOCKS_PER_SEC);
 # fprintf (again, this isn't as nice as TextMate's version, but it works)
 snippet fpr
 	fprintf(${1:stderr}, "${2:%s}\n"${3});${4}
