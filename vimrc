@@ -56,23 +56,26 @@ function G_QFixToggle(forced)
             return
         endif
 
-        copen 18
+        copen
         let g:qfix_win = bufnr("$")
     endif
 
     exec "redraw!"
 endfunction
 
+" 回车键 打开折叠
+function G_GoodEnter()
+    normal zX
+endfunction
+
 " 空格键 下翻页
 function G_GoodSpace(browse)
     if a:browse == 1
-        " 保留空格键打开折叠
         if foldtextresult(line('.')) != ""
             normal zv
         else
             exec "normal \<C-D>"
         endif
-
         return
     endif
 
@@ -96,6 +99,7 @@ function G_GoodP()
     if &buftype == "quickfix"
         exec "normal \<Return>"
         normal zz
+        exec ":TlistSync"
         wincmd w
     elseif bufname('%') == "__MRU_Files__"
         exec "normal \<Return>"
@@ -128,12 +132,10 @@ function G_CloseBuffer()
     call G_QFixToggle(0)
     call G_GotoEditor()
 
-    if exists("g:bufexplorer_version")
-        exec "BufExplorer"
-        normal d
-        exec "normal \<CR>"
+    exec "bd"
+    if exists('Tb_loaded')
+        exec ":Tbbp"
     else
-        exec "bd"
     endif
 endfunction
 
@@ -200,6 +202,7 @@ nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
 nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
+nmap <silent> <unique> <Enter> :call G_GoodEnter()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
@@ -233,8 +236,8 @@ nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:b
 
 " Alt+ {{{2
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
-nmap <silent> <unique> <ESC><F8> :make! install<CR>
-imap <silent> <unique> <ESC><F8> <ESC>:make! install<CR>
+nmap          <unique> <ESC><F8> :make! install DESTDIR=
+imap          <unique> <ESC><F8> <ESC>:make! install DESTDIR=
 nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
 imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
@@ -276,8 +279,8 @@ if has("autocmd")
   " 设定 StatusLine
   augroup StatusLine
       au! StatusLine
-      au BufLeave * setlocal statusline=""
-      au BufEnter * setlocal statusline=%<%F%(\ %m%h%w%y%r%)\ %a%=\ %l,%c%V/%L\ (%P)
+"      au BufLeave * setlocal statusline=""
+"      au BufEnter * setlocal statusline=%<%F%(\ %m%h%w%y%r%)\ %a%=\ %l,%c%V/%L\ (%P)
   augroup END
 endif
 " }}}
@@ -487,7 +490,7 @@ hi Search           ctermfg=red         ctermbg=NONE        cterm=bold          
 hi Question         ctermfg=magenta                                             guifg=magenta
 hi LineNr           ctermfg=darkgreen                       cterm=italic        guifg=darkgreen     guibg=NONE          gui=italic
 hi DiffAdd          ctermfg=darkgreen   ctermbg=NONE                            guifg=darkgreen     guibg=NONE
-hi DiffChange       ctermfg=blue        ctermbg=black                           guifg=lightblue     guibg=black
+hi DiffChange       ctermfg=white       ctermbg=NONE                            guifg=lightblue     guibg=NONE
 hi DiffDelete       ctermfg=darkred     ctermbg=NONE                            guifg=darkred       guibg=NONE
 hi DiffText         ctermfg=yellow      ctermbg=NONE                            guifg=yellow        guibg=NONE
 hi Folded           ctermfg=green       ctermbg=NONE        cterm=italic        guifg=green         guibg=NONE          gui=italic
