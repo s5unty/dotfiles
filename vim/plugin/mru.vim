@@ -572,6 +572,7 @@ function! s:MRU_Select_File_Cmd(opt) range
 
     let multi = 0
 
+    let fnames = reverse(fnames)
     for f in fnames
         if f == ''
             continue

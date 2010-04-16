@@ -13,3 +13,4 @@ function! FoldBrace()
 endfunction
 set foldexpr=FoldBrace()
 set foldmethod=expr
+set nofoldenable

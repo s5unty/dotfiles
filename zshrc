@@ -14,6 +14,7 @@ __IP=`/sbin/ifconfig -v | grep 192.168.1 | tail -1 | cut -d'.' -f4 | cut -d' ' -
 # 全局别名 {{{
 alias -g G="| grep"
 alias -g M="| $__LESS"
+alias -g C="| xsel"
 # }}}
 
 # 普通别名 {{{
@@ -174,10 +175,10 @@ F() { # find
 R() { # find in files
     grep -r $1 . ${(@)argv[2,$#]} M
 }
-C() { # gen cscope.files
+CS() { # gen cscope.files
     mkdir .cscope
-    find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' \
-        -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' > .cscope/cscope.files
+    find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' -o -iname '*.cxx' \
+        -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' > .cscope/cscope.files
     cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
     ctags --c++-kinds=+p --fields=-fst --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
 }
@@ -415,7 +416,7 @@ zle_highlight=(region:bg=blue     #选中区域
                isearch:underline) #搜索时使用的关键字
 
 # 检查邮件 {{{
-for i in /sun/mails/(company|personal|debian-zh)(/); do
+for i in /sun/mails/(e6-1170|company|personal|debian-zh)(/); do
     mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
 done
 # }}}

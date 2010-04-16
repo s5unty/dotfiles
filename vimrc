@@ -63,19 +63,10 @@ function G_QFixToggle(forced)
     exec "redraw!"
 endfunction
 
-" 回车键 打开折叠
-function G_GoodEnter()
-    normal zX
-endfunction
-
 " 空格键 下翻页
 function G_GoodSpace(browse)
     if a:browse == 1
-        if foldtextresult(line('.')) != ""
-            normal zv
-        else
-            exec "normal \<C-D>"
-        endif
+        exec "normal \<C-D>"
         return
     endif
 
@@ -99,7 +90,7 @@ function G_GoodP()
     if &buftype == "quickfix"
         exec "normal \<Return>"
         normal zz
-        exec ":TlistSync"
+        exec ":silent TlistSync"
         wincmd w
     elseif bufname('%') == "__MRU_Files__"
         exec "normal \<Return>"
@@ -185,12 +176,14 @@ nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 nmap <silent> <unique> <F5> :!git di %<CR>
 imap <silent> <unique> <F5> <ESC>:!git di %<CR>a
-nmap <silent> <unique> <F7> :call <SID>G_Asciidoc2Html()<CR>
+nmap <silent> <unique> <F7> zi<CR>
+imap <silent> <unique> <F7> <Esc>zi<CR>
 nmap <silent> <unique> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
 imap <silent> <unique> <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
 nmap <silent> <unique> <F9> :!!<CR>
 imap <silent> <unique> <F9> <ESC>:!!<CR>
 nmap <silent> <unique> <F10> :Mru<CR>
+imap <silent> <unique> <F10> <ESC>:Mru<CR>
 nmap <silent> <unique> <F11> g]
 vmap <silent> <unique> <F11> g]
 nmap <silent> <unique> <F12> <C-]>zz
@@ -202,7 +195,6 @@ nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
 nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
-nmap <silent> <unique> <Enter> :call G_GoodEnter()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
@@ -286,11 +278,13 @@ endif
 " }}}
 
 " 9# Plugins {{{
-" mru.vim 3.3-p1 : Plugin to manage Most Recently Used (MRU) files {{{2
+" mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
 " http://www.vim.org/scripts/script.php?script_id=521
 "
 " p1: @@529@@
 "             let split_window = 0
+" p2: @@575@@
+"             let fnames = reverse(fnames)
 let MRU_Max_Entries=256
 let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
 let MRU_Window_Height=18
@@ -308,7 +302,6 @@ let Tlist_Enable_Fold_Column = 0 " 不显示竖线
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Process_File_Always = 1
 let Tlist_Use_Horiz_Window = 0
-let Tlist_Use_SingleClick = 1
 let Tlist_Sort_Type = "name"
 let tlist_c_settings = 'c;p:prototype;f:implementation'
 let tlist_cpp_settings = 'c++;c:object;p:prototype;f:implementation'
@@ -492,7 +485,7 @@ hi LineNr           ctermfg=darkgreen                       cterm=italic        
 hi DiffAdd          ctermfg=darkgreen   ctermbg=NONE                            guifg=darkgreen     guibg=NONE
 hi DiffChange       ctermfg=white       ctermbg=NONE                            guifg=lightblue     guibg=NONE
 hi DiffDelete       ctermfg=darkred     ctermbg=NONE                            guifg=darkred       guibg=NONE
-hi DiffText         ctermfg=yellow      ctermbg=NONE                            guifg=yellow        guibg=NONE
+hi DiffText         ctermfg=NONE        ctermbg=NONE        cterm=bold          guifg=NONE          guibg=NONE          gui=bold
 hi Folded           ctermfg=green       ctermbg=NONE        cterm=italic        guifg=green         guibg=NONE          gui=italic
 hi FoldColumn       ctermfg=darkgreen   ctermbg=NONE                            guifg=darkgreen     guibg=NONE
 hi SignColumn       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
@@ -514,9 +507,9 @@ hi VimwikiWord          ctermfg=darkblue
 hi VimwikiNoExistsWord  ctermfg=cyan                        cterm=Underline
 hi VimwikiList          ctermfg=green
 " taglist
-hi MyTagListTagName     ctermfg=white       ctermbg=NONE
-hi MyTagListFileName    ctermfg=green       ctermbg=NONE
-hi MyTagListTitle       ctermfg=grey        ctermbg=NONE
+hi MyTagListTagName     ctermfg=NONE        ctermbg=NONE    cterm=reverse
+hi MyTagListFileName    ctermfg=darkgreen   ctermbg=NONE    cterm=italic
+hi MyTagListTitle       ctermfg=grey        ctermbg=NONE    cterm=bold
 hi MyTagListTagScope    ctermfg=NONE        ctermbg=NONE
 " tabbar
 hi Tb_Normal            ctermfg=darkgreen   ctermbg=NONE
