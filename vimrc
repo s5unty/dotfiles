@@ -1,11 +1,12 @@
 " General {{{
-set termencoding=&encoding
-set fileencodings=UTF-8,GB2312,BIG5
+set encoding=UTF-8
+set termencoding=UTF-8
+set fileencodings=UTF-8,GB2312,BIG5,EUC-JP,UTF-16LE
 set fileformats=unix,dos
-set guifont=Envy\ Code\ R\ 11,
-set guifontwide=WenQuanYi\ Zen\ Hei\ 11,
+set guifont=Envy\ Code\ R\ 10,
+set guifontwide=WenQuanYi\ Zen\ Hei\ 10,
 set mouse=a " 开启鼠标支持
-set expandtab " TAB -> SPACE
+set noexpandtab " TAB is hard
 set tabstop=4 " TAB 的宽度
 set shiftwidth=4 " 缩进的宽度
 set softtabstop=4
@@ -14,6 +15,7 @@ set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
 set autoindent " 自动缩进
+"set equalprg=indent\ -linux
 set number " 显示行数
 set completeopt=longest,menu " 显示补全预览菜单
 set smartcase
@@ -35,6 +37,9 @@ set timeout
 set timeoutlen=3000
 set ttimeoutlen=300
 set makeprg=make\ -j2
+set grepprg=ack-grep
+set autoread
+color pattern
 " }}}
 
 " Function {{{
@@ -43,7 +48,7 @@ set makeprg=make\ -j2
 "   1 always show qfix
 "   0 always hide qfix
 "  -1 switch show/hide
-function G_QFixToggle(forced)
+function! G_QFixToggle(forced)
     if exists("g:qfix_win")
         if a:forced == 1
             return
@@ -64,7 +69,7 @@ function G_QFixToggle(forced)
 endfunction
 
 " 空格键 下翻页
-function G_GoodSpace(browse)
+function! G_GoodSpace(browse)
     if a:browse == 1
         exec "normal \<C-D>"
         return
@@ -86,7 +91,7 @@ function G_GoodSpace(browse)
 endfunction
 
 " P键 预览
-function G_GoodP()
+function! G_GoodP()
     if &buftype == "quickfix"
         exec "normal \<Return>"
         normal zz
@@ -104,7 +109,7 @@ endfunction
 
 " 跳转至文件编辑窗口
 " 参照 tabbar.vim 插件的 <SID>Bf_CrSel() 函数
-function G_GotoEditor()
+function! G_GotoEditor()
     if bufname('%') == '__Tag_List__-' || getbufvar(bufnr('%'), '&modifiable') == 0
         wincmd w
     elseif bufname('%') == '-TabBar-' || getbufvar(bufnr('%'), '&modifiable') == 0
@@ -119,15 +124,28 @@ function G_GotoEditor()
 endfunction
 
 " 关闭当前 Buffer
-function G_CloseBuffer()
-    call G_QFixToggle(0)
-    call G_GotoEditor()
+function! G_CloseBuffer()
+	exec ":TlistClose"
+	call G_GotoEditor()
+    let name = fnamemodify(expand('%'), ':t')
 
-    exec "bd"
-    if exists('Tb_loaded')
-        exec ":Tbbp"
-    else
-    endif
+	if bufname('%') != '-TabBar-'
+		wincmd k
+		if bufname('%') != '-TabBar-'
+			wincmd k
+			if bufname('%') != '-TabBar-'
+				wincmd k
+				if bufname('%') != '-TabBar-'
+					return
+				endif
+			endif
+		endif
+	endif
+
+	exec "normal /" . name . "\<CR>\<CR>"
+	wincmd w
+	normal d
+	call G_GotoEditor()
 endfunction
 
 " vim macro to jump to devhelp topics.
@@ -137,26 +155,38 @@ function! DevHelpCurrentWord()
     exe "!devhelp -s " . word . " &"
 endfunction
 
-" 在当前文件中查找
-function G_FindInFile(search)
+" 在文件中查找
+function! G_FindInFiles(range, quick)
     call G_QFixToggle(0)
     call G_GotoEditor()
 
-    if a:search == 'exact'
-        let str = "\\<".expand('<cword>')."\\>"
-    elseif a:search == 'fuzzy'
-        let str = input('Search Pattern(f): ')
-        if str == ""
+    if a:quick == 'y'
+        let line = "-w ".expand('<cword>')
+	elseif a:quick == 'v'
+        let line = "-w ".@"
+		let @/ = line
+    elseif a:quick == 'n'
+        let line  = input('Search Pattern(g): ')
+        if line == ""
             echo ""
             return
         endif
     endif
 
-    let @/ = str
-    exec ":vimgrep /".str."/j %"
+    let words = split(line)
+    for str in reverse(words)
+        let @/ = str
+        break
+    endfor
+
+    if a:range == 'single'
+        exec ":grep! -H ".line." %"
+    elseif a:range == 'golbal'
+        exec ":grep! ".line
+    endif
+
     call G_QFixToggle(1)
 endfunction
-
 " }}}
 
 " Key bindings {{{
@@ -174,8 +204,8 @@ nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
-nmap <silent> <unique> <F5> :!git di %<CR>
-imap <silent> <unique> <F5> <ESC>:!git di %<CR>a
+nmap <silent> <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<CR>
+imap <silent> <unique> <F5> <ESC>:w<CR>:!git difftool --tool=vimdiff -y HEAD -- %<CR>
 nmap <silent> <unique> <F7> zi<CR>
 imap <silent> <unique> <F7> <Esc>zi<CR>
 nmap <silent> <unique> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
@@ -194,11 +224,14 @@ nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
 nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
+nmap <silent> <unique> q  :<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
 vmap <silent> <unique> + :Align =<CR>
+inor <silent> <unique> <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
+inor <silent> <unique> <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
@@ -238,11 +271,14 @@ imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>/ :call G_FindInFile('exact')<CR>
-nmap <silent> <unique> <Leader>? :call G_FindInFile('fuzzy')<CR>
+nmap <silent> <unique> <Leader>/ :call G_FindInFiles('single', 'y')<CR>
+vmap <silent> <unique> <Leader>/ y:call G_FindInFiles('single', 'v')<CR>
+nmap <silent> <unique> <Leader>? :call G_FindInFiles('single', 'n')<CR>
+nmap <silent> <unique> <leader>g :call G_FindInFiles('golbal', 'y')<CR>
+vmap <silent> <unique> <Leader>g y:call G_FindInFiles('golbal', 'v')<CR>
+nmap <silent> <unique> <leader>G :call G_FindInFiles('golbal', 'n')<CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
 nmap <silent> <unique> <leader>l :call <SID>ShowTaglist()<CR>
-nmap <silent> <unique> <leader>, :BufExplorer<CR>
 nmap <silent> <unique> <leader>s :call <SID>CscopeFind('s', 'y')<CR>
 nmap <silent> <unique> <leader>c :call <SID>CscopeFind('c', 'y')<CR>
 nmap <silent> <unique> <leader>e :call <SID>CscopeFind('e', 'y')<CR>
@@ -254,7 +290,7 @@ nmap <silent> <unique> <leader>. :call <SID>VimwikiGoProject()<CR>
 
 " Autocmd {{{
 if has("autocmd")
-  function <SID>AC_ResetCursorPosition()
+  function! <SID>AC_ResetCursorPosition()
       if line("'\"") > 0 && line("'\"") <= line("$")
           exec "normal g`\"zz"
       endif
@@ -277,7 +313,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 9# Plugins {{{
+" 10# Plugins {{{
 " mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
 " http://www.vim.org/scripts/script.php?script_id=521
 "
@@ -306,7 +342,7 @@ let Tlist_Sort_Type = "name"
 let tlist_c_settings = 'c;p:prototype;f:implementation'
 let tlist_cpp_settings = 'c++;c:object;p:prototype;f:implementation'
 
-function <SID>ShowTaglist()
+function! <SID>ShowTaglist()
     if exists("g:loaded_taglist")
         call G_GotoEditor()
         exec "TlistToggle"
@@ -361,7 +397,7 @@ if has("cscope")
         exec "cscope reset"
     endif
 
-    function <SID>CscopeRefresh()
+    function! <SID>CscopeRefresh()
         " 如果当前目录存在 .cscope/ 的话
         if glob('.cscope') != ""
             call system("cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out &")
@@ -381,7 +417,7 @@ endif
 
 " cscope 似乎不支持正则表达式,无法实现精确匹配
 " https://bugzilla.redhat.com/show_bug.cgi?id=163330
-function <SID>CscopeFind(mask, quick)
+function! <SID>CscopeFind(mask, quick)
     call G_QFixToggle(0)
     call G_GotoEditor()
     if a:quick == 'y'
@@ -412,7 +448,7 @@ let g:vimwiki_list = [
             \ { 'proj': 'myqq',     'path': '~/myqq/wiki/',     'path_html': '~/myqq/html/',     'ext': '.wiki' },
             \ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' },
             \ { 'proj': 'fbreader', 'path': '~/fbreader/wiki/', 'path_html': '~/fbreader/html/', 'ext': '.wiki' }]
-function <SID>VimwikiGoProject()
+function! <SID>VimwikiGoProject()
     let proj_path = expand('~/')
     let idx = 1
     for wiki in g:vimwiki_list
@@ -425,7 +461,7 @@ function <SID>VimwikiGoProject()
     endfor
 endfunction
 
-function <SID>G_Asciidoc2Html()
+function! <SID>G_Asciidoc2Html()
     let wiki = g:vimwiki_list[g:vimwiki_current_idx]['path']
     let html = g:vimwiki_list[g:vimwiki_current_idx]['path_html']
     let src  = expand('%:f')
@@ -441,81 +477,11 @@ endfunction
 " http://www.vim.org/scripts/script.php?script_id=2584
 set lazyredraw
 
+" sessionman.vim 1.04 : Vim session manager {{{2
+" http://www.vim.org/scripts/script.php?script_id=2010
+"
+" p1: s:OpenSession
+"     打开 Session 前禁用 g:Tb_SplitToEdge, 否则布局大乱
+"     打开 Session 后使用 color pattern 自定义的颜色方案
+
 " }}}1
-
-" Colour {{{
-let g:colors_name="blue"
-
-" First remove all existing highlighting.
-hi clear
-if exists("syntax_on")
-  syntax reset
-endif
-
-set background=dark
-
-hi Comment          ctermfg=darkgreen                       cterm=italic        guifg=darkgreen                         gui=italic
-hi Constant         ctermfg=darkcyan                                            guifg=darkcyan
-hi Special          ctermfg=darkred                                             guifg=darkred
-hi PreProc          ctermfg=darkmagenta                                         guifg=darkmagenta
-hi Statement        ctermfg=darkblue                                            guifg=lightblue
-hi Type             ctermfg=darkblue                                            guifg=lightblue
-hi Underlined       ctermfg=NONE        ctermbg=NONE        cterm=underline     guifg=NONE          guibg=NONE          gui=underline
-hi Ignore           ctermfg=darkgrey    ctermbg=NONE                            guifg=darkgrey      guibg=NONE
-hi Error            ctermfg=black       ctermbg=darkred     cterm=bold          guifg=white         guibg=darkred       gui=bold
-hi Todo             ctermfg=white       ctermbg=darkgreen   cterm=bold          guifg=white         guibg=darkgreen     gui=bold
-hi String           ctermfg=darkcyan                                            guifg=darkcyan
-hi Identifier       ctermfg=grey        ctermbg=NONE                            guifg=lightgrey     guibg=NONE
-hi Normal           ctermfg=NONE        ctermbg=NONE                            guifg=yellow        guibg=#222222
-hi Pmenu            ctermfg=black       ctermbg=magenta                         guifg=black         guibg=magenta
-hi PmenuSel         ctermfg=yellow      ctermbg=darkblue    cterm=bold          guifg=yellow        guibg=darkblue      gui=bold
-hi SpecialKey       ctermfg=white       ctermbg=red         cterm=underline     guifg=white         guibg=red           gui=underline
-hi NonText          ctermfg=magenta     ctermbg=NONE                            guifg=magenta       guibg=NONE
-hi Directory        ctermfg=darkblue    ctermbg=NONE                            guifg=lightblue     guibg=NONE
-hi ErrorMsg         ctermfg=darkred     ctermbg=NONE                            guifg=darkred       guibg=NONE
-hi WarningMsg       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
-hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        guifg=black         guibg=cyan          gui=italic
-hi VertSplit        ctermfg=white       ctermbg=NONE        cterm=bold          guifg=white         guibg=NONE          gui=bold
-hi StatusLine       ctermfg=white       ctermbg=black                           guifg=white         guibg=black
-hi StatusLineNC     ctermfg=white       ctermbg=black                           guifg=white         guibg=black
-hi IncSearch        ctermfg=darkblue    ctermbg=white                           guifg=darkyellow    guibg=blue
-hi Search           ctermfg=red         ctermbg=NONE        cterm=bold          guifg=darkyellow    guibg=blue
-hi Question         ctermfg=magenta                                             guifg=magenta
-hi LineNr           ctermfg=darkgreen                       cterm=italic        guifg=darkgreen     guibg=NONE          gui=italic
-hi DiffAdd          ctermfg=darkgreen   ctermbg=NONE                            guifg=darkgreen     guibg=NONE
-hi DiffChange       ctermfg=white       ctermbg=NONE                            guifg=lightblue     guibg=NONE
-hi DiffDelete       ctermfg=darkred     ctermbg=NONE                            guifg=darkred       guibg=NONE
-hi DiffText         ctermfg=NONE        ctermbg=NONE        cterm=bold          guifg=NONE          guibg=NONE          gui=bold
-hi Folded           ctermfg=green       ctermbg=NONE        cterm=italic        guifg=green         guibg=NONE          gui=italic
-hi FoldColumn       ctermfg=darkgreen   ctermbg=NONE                            guifg=darkgreen     guibg=NONE
-hi SignColumn       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
-hi MoreMsg          ctermfg=darkgreen                                           guifg=darkgreen
-hi ModeMsg          ctermfg=darkred                                             guifg=darkred
-hi Title            ctermfg=darkblue                                            guifg=lightblue
-hi Visual           ctermfg=white       ctermbg=darkblue                        guifg=white         guibg=blue
-hi WildMenu         ctermfg=white       ctermbg=yellow                          guifg=white         guibg=yellow
-" link - diff/patch
-hi def link diffAdded   DiffAdd
-hi def link diffRemoved DiffDelete
-hi def link diffFile    DiffText
-hi def link diffSubname String
-hi def link diffLine    String
-" vimwiki
-hi VimwikiItalic                                            cterm=italic
-hi VimwikiDelText       ctermfg=black
-hi VimwikiWord          ctermfg=darkblue
-hi VimwikiNoExistsWord  ctermfg=cyan                        cterm=Underline
-hi VimwikiList          ctermfg=green
-" taglist
-hi MyTagListTagName     ctermfg=NONE        ctermbg=NONE    cterm=reverse
-hi MyTagListFileName    ctermfg=darkgreen   ctermbg=NONE    cterm=italic
-hi MyTagListTitle       ctermfg=grey        ctermbg=NONE    cterm=bold
-hi MyTagListTagScope    ctermfg=NONE        ctermbg=NONE
-" tabbar
-hi Tb_Normal            ctermfg=darkgreen   ctermbg=NONE
-hi Tb_Changed           ctermfg=red         ctermbg=NONE
-hi Tb_VisibleNormal     ctermfg=black       ctermbg=white
-hi Tb_VisibleChanged    ctermfg=red         ctermbg=white
-hi Tb_Readonly          ctermfg=green       ctermbg=NONE
-hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green
-" }}}
