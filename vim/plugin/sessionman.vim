@@ -106,13 +106,14 @@ endfunction
 
 function! s:OpenSession(name)
 	if a:name != '' && a:name[0] != '"'
-		unlet g:Tb_SplitToEdge
+		execute 'TbStop'
 		call s:RestoreDefaults()
 		execute 'silent! 1,' . bufnr('$') . 'bwipeout!'
 		let n = bufnr('%')
 		execute 'silent! so ' . s:sessions_path . '/' . a:name
 		execute 'silent! bwipeout! ' . n
 		execute 'color pattern'
+		execute 'TbStart'
 		if has('cscope')
 			silent! cscope kill -1
 			silent! cscope add .

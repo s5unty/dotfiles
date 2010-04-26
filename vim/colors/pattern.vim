@@ -38,7 +38,7 @@ hi Search           ctermfg=red         ctermbg=NONE        cterm=bold          
 hi Question         ctermfg=magenta                                             guifg=magenta
 hi LineNr           ctermfg=darkgreen                       cterm=italic        guifg=darkgreen     guibg=NONE          gui=italic
 hi DiffAdd          ctermfg=darkgreen   ctermbg=NONE		cterm=bold          guifg=darkgreen     guibg=NONE
-hi DiffChange       ctermfg=white       ctermbg=NONE                            guifg=lightblue     guibg=NONE
+hi DiffChange       ctermfg=white       ctermbg=NONE        cterm=bold          guifg=lightblue     guibg=NONE
 hi DiffDelete       ctermfg=darkred     ctermbg=NONE                            guifg=darkred       guibg=NONE
 hi DiffText         ctermfg=NONE        ctermbg=NONE        cterm=bold          guifg=NONE          guibg=NONE          gui=bold
 hi Folded           ctermfg=green       ctermbg=NONE        cterm=italic        guifg=green         guibg=NONE          gui=italic

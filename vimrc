@@ -15,7 +15,7 @@ set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
 set autoindent " 自动缩进
-"set equalprg=indent\ -linux
+set cindent
 set number " 显示行数
 set completeopt=longest,menu " 显示补全预览菜单
 set smartcase
@@ -32,7 +32,7 @@ set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set statusline=%<%f\ %h%m%r%=%P
 set winaltkeys=no
 set guioptions=ai
-set cinoptions=":0,g0,t0"
+set cinoptions=:0,g0,t0,(0
 set timeout
 set timeoutlen=3000
 set ttimeoutlen=300
@@ -204,8 +204,8 @@ nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
-nmap <silent> <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<CR>
-imap <silent> <unique> <F5> <ESC>:w<CR>:!git difftool --tool=vimdiff -y HEAD -- %<CR>
+nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
+imap          <unique> <F5> <ESC>:w<CR>:!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
 nmap <silent> <unique> <F7> zi<CR>
 imap <silent> <unique> <F7> <Esc>zi<CR>
 nmap <silent> <unique> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
@@ -230,8 +230,6 @@ nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
 vmap <silent> <unique> + :Align =<CR>
-inor <silent> <unique> <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
-inor <silent> <unique> <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
@@ -387,9 +385,9 @@ if has("cscope")
     autocmd BufNewFile,BufReadPost,FileReadPost *
       \ let &path = getcwd()."/*"
 
-    " add any database in current directory
-    if glob('.cscope') != ""
-        exec "cscope add .cscope/cscope.out"
+    " add any database in current working directory
+    if glob(getcwd() . '/.cscope') != ""
+        exec "cscope add ".getcwd()."/.cscope/cscope.out"
         exec "cscope reset"
     " else add database pointed to by environment
     elseif $CSCOPE_DB != ""
@@ -399,13 +397,13 @@ if has("cscope")
 
     function! <SID>CscopeRefresh()
         " 如果当前目录存在 .cscope/ 的话
-        if glob('.cscope') != ""
-            call system("cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out &")
+        if glob(getcwd() . '/.cscope') != ""
+            call system("cscope -kbq -i".getcwd()."/.cscope/cscope.files -f".getcwd()."/.cscope/cscope.out &")
             " 由于频繁保存引发的多个 ctags 间的互斥，可能会导致以下错误:
             " ctags: ".cscope/cscope.tags" doesn't look like a tag file; I refuse to overwrite it.
             " http://www.lslnet.com/linux/dosc1/55/linux-369438.htm
             call system("ps -e | grep ctags || ctags --c++-kinds=+p --fields=-fst+aS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags &")
-            exec "cscope add .cscope/cscope.out"
+            exec "cscope add ".getcwd()."/.cscope/cscope.out"
             exec "cscope reset"
         endif
     endfunction
@@ -481,7 +479,7 @@ set lazyredraw
 " http://www.vim.org/scripts/script.php?script_id=2010
 "
 " p1: s:OpenSession
-"     打开 Session 前禁用 g:Tb_SplitToEdge, 否则布局大乱
+"     打开 Session 前 TbStop, 之后 TbStart. 否则布局大乱
 "     打开 Session 后使用 color pattern 自定义的颜色方案
 
 " }}}1
