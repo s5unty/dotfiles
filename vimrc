@@ -284,6 +284,10 @@ nmap <silent> <unique> <leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <leader>E :call <SID>CscopeFind('e', 'n')<CR>
 nmap <silent> <unique> <leader>. :call <SID>VimwikiGoProject()<CR>
+
+" Colon+, Colon char is ':' {{{2
+command W call GitWipSave()
+
 " }}}1
 
 " Autocmd {{{
