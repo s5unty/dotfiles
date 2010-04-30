@@ -14,16 +14,18 @@
     cm  = commit --amend
     co  = checkout
     cd  = checkout -b
+	cp  = cherry-pick --no-commit
 
     di  = diff -w -p --stat # show difference between working tree and the index
-    dc  = diff -w --cached --stat # what would be committed with "git commit"
-    da  = diff -w -p --stat HEAD # what would be committed with "git commit -a"
-    df  = diff -w --stat # show different files between working tree and the index
+    dc  = diff -w -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
+    da  = diff -w -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
+    df  = diff -w --stat HEAD # show different files between working tree and the index
+	dt  = difftool
 
     fp  = format-patch -s
 
-    ll  = log --pretty=format:'%Cgreen%h%Creset ... %an - %s %Cblue%ar%Creset %Cred%d%Creset' --decorate --all --graph -20
-    ls  = log --pretty=format:'%Cgreen%h%Creset ... %an - %s %Cblue%ar%Creset' -20
+	ll  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%cr%Creset %C(white)%C(bold)%d%Creset' --branches --graph --since='1 months ago'
+    ls  = log --pretty=format:'%C(blue)%h%Creset %ce %m %s %C(green)%C(dim)%ci%Creset %C(white)%C(bold)%d%Creset' --all --graph
 
     ms  = merge --squash
     mt  = mergetool
@@ -34,7 +36,7 @@
 
     st  = status
 
-    zc  = stash
+    zc  = stash save
     zl  = stash list
     zo  = stash pop
     zd  = stash drop
@@ -43,7 +45,9 @@
     dco = svn clone
     dup = svn rebase
     dll = svn log --oneline --limit=20
-    dlog= svn log
+    dls = svn log
+[diff]
+	tool = vimdiff
 [merge]
     tool = persistent
 [mergetool "persistent"]
@@ -65,3 +69,21 @@
 [branch "master"]
 	remote = origin
 	merge = refs/heads/master
+[tig]
+	show-date = yes
+	author-width = 16
+	line-graphics = no
+	tab-size = 4
+[tig "color"]
+	default = default default
+	date = green default italic
+	author = default default
+	cursor = white blue
+	title-blur = black white
+	title-focus = black white bold
+[tig "bind"]
+	diff = i view-close
+	diff = , previous
+	diff = . next
+	log = i view-close
+
