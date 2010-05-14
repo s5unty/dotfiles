@@ -225,11 +225,14 @@ nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
 nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
 nmap <silent> <unique> q  :<CR>
+nmap <silent> <unique> Q  :q<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
 vmap <silent> <unique> + :Align =<CR>
+nmap <silent> <unique> [ :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
+nmap <silent> <unique> ] :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
@@ -272,18 +275,18 @@ nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>/ :call G_FindInFiles('single', 'y')<CR>
 vmap <silent> <unique> <Leader>/ y:call G_FindInFiles('single', 'v')<CR>
 nmap <silent> <unique> <Leader>? :call G_FindInFiles('single', 'n')<CR>
-nmap <silent> <unique> <leader>g :call G_FindInFiles('golbal', 'y')<CR>
+nmap <silent> <unique> <Leader>g :call G_FindInFiles('golbal', 'y')<CR>
 vmap <silent> <unique> <Leader>g y:call G_FindInFiles('golbal', 'v')<CR>
-nmap <silent> <unique> <leader>G :call G_FindInFiles('golbal', 'n')<CR>
+nmap <silent> <unique> <Leader>G :call G_FindInFiles('golbal', 'n')<CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
-nmap <silent> <unique> <leader>l :call <SID>ShowTaglist()<CR>
-nmap <silent> <unique> <leader>s :call <SID>CscopeFind('s', 'y')<CR>
-nmap <silent> <unique> <leader>c :call <SID>CscopeFind('c', 'y')<CR>
-nmap <silent> <unique> <leader>e :call <SID>CscopeFind('e', 'y')<CR>
-nmap <silent> <unique> <leader>S :call <SID>CscopeFind('s', 'n')<CR>
-nmap <silent> <unique> <leader>C :call <SID>CscopeFind('c', 'n')<CR>
-nmap <silent> <unique> <leader>E :call <SID>CscopeFind('e', 'n')<CR>
-nmap <silent> <unique> <leader>. :call <SID>VimwikiGoProject()<CR>
+nmap <silent> <unique> <Leader>l :call <SID>ShowTaglist()<CR>
+nmap <silent> <unique> <Leader>s :call <SID>CscopeFind('s', 'y')<CR>
+nmap <silent> <unique> <Leader>c :call <SID>CscopeFind('c', 'y')<CR>
+nmap <silent> <unique> <Leader>e :call <SID>CscopeFind('e', 'y')<CR>
+nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
+nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
+nmap <silent> <unique> <Leader>E :call <SID>CscopeFind('e', 'n')<CR>
+nmap <silent> <unique> <Leader>. :call <SID>VimwikiGoProject()<CR>
 
 " Colon+, Colon char is ':' {{{2
 command W call GitWipSave()
@@ -338,7 +341,7 @@ let Tlist_Show_One_File = 1
 let Tlist_Compact_Format = 1 " 紧凑显示，无空行
 let Tlist_Enable_Fold_Column = 0 " 不显示竖线
 let Tlist_GainFocus_On_ToggleOpen = 1
-let Tlist_Process_File_Always = 1
+let Tlist_Process_File_Always = 0
 let Tlist_Use_Horiz_Window = 0
 let Tlist_Sort_Type = "name"
 let tlist_c_settings = 'c;p:prototype;f:implementation'

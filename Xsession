@@ -5,7 +5,8 @@
 /usr/bin/fetchmail -d 600
 /usr/bin/x-www-browser &
 /usr/bin/mocp -S
-#/usr/bin/xmailleds -M -m -ln /sun/mails/company
+/usr/bin/xmailleds -ls -M -m /sun/mails/company/
+/usr/bin/sshpass -f/sun/home/.tunnel ssh -ND9527 s5unty@ssh.sshcenter.com &
 
 # nvidia-settings -l
 # /usr/bin/xmodmap ~/.Xmodmaprc

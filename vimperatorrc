@@ -1,5 +1,5 @@
 " work with theme 'Chromifox Extreme'
-hi StatusLine color: #9acd32; background: #D2E1F6;
+hi StatusLine background: #D2E1F6;
 
 " binding
 map    . <C-PageDown>
@@ -7,8 +7,8 @@ map    , <C-PageUp>
 map -- - <C-b>
 map   \\ <C-i>
 map <BS> <C-o>
-map    j 5<C-e>
-map    k 5<C-y>
+map    j 2<C-e>
+map    k 2<C-y>
 
 " macro
 map <F2>  :set encoding=GB2312<CR>
@@ -23,9 +23,14 @@ map qw    :set ds=wc<CR>P:set ds=google<CR>:echo ""<CR>
 map qp    :set ds=pkg<CR>P:set ds=google<CR>:echo ""<CR>
 map b     :bmarks -tag
 
+" quickproxy https://addons.mozilla.org/zh-CN/firefox/addon/1557/
+" instead of AutoProxy
+map	<F12> :set! network.proxy.type=1<CR>:echo ":("<CR>
+map	<S-F12> :set! network.proxy.type=0<CR>:echo ":)"<CR>
+
 " general
-set go=br
-set cpt=slt
+set go=b
+set cpt=sl
 set fc
 set visualbell
 set shell="/usr/bin/zsh"

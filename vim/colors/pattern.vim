@@ -73,4 +73,6 @@ hi Tb_VisibleNormal     ctermfg=black       ctermbg=white
 hi Tb_VisibleChanged    ctermfg=red         ctermbg=white
 hi Tb_Readonly          ctermfg=green       ctermbg=NONE
 hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green
+" lusty-explorer
+hi LustyExpSelected     ctermfg=white		ctermbg=darkblue
 " }}}

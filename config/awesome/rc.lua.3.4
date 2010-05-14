@@ -26,19 +26,19 @@ toggletags = {
 layouts =
 {
 	awful.layout.suit.fair,
-	awful.layout.suit.tile.bottom,
+	awful.layout.suit.tile.top,
 	awful.layout.suit.tile.right,
 }
 
 tags = { }
 mytags = {
 	{ layout = layouts[3], mwfact = 0.618, nmaster=1 },
-	{ layout = layouts[3], mwfact = 0.618, nmaster=1 },
+	{ layout = layouts[3], mwfact = 0.698, nmaster=1 },
+	{ layout = layouts[2], mwfact = 0.500, nmaster=1 },
 	{ layout = layouts[2], mwfact = 0.618, nmaster=1 },
-	{ layout = layouts[2], mwfact = 0.735, nmaster=2 },
+	{ layout = layouts[2], mwfact = 0.618, nmaster=1 },
+	{ layout = layouts[3], mwfact = 0.618, nmaster=1 },
 	{ layout = layouts[3], mwfact = 0.500, nmaster=2 },
-	{ layout = layouts[2], mwfact = 0.735, nmaster=2 },
-	{ layout = layouts[3], mwfact = 0.500, nmaster=3 },
 	{ layout = layouts[1] },
 }
 for s = 1, screen.count() do
@@ -81,7 +81,7 @@ myseparator.text = "|"
 -- Others {{{2
 --mytextclock = awful.widget.textclock({ align = "right" })
 mytextclock = widget({ type = 'textbox' })
-vicious.register(mytextclock, vicious.widgets.date, '  %b %d, %R  ', 60)
+vicious.register(mytextclock, vicious.widgets.date, ' %b %d, %R ', 60)
 
 mysystray = widget({ type = "systray" })
 mytasklist = {}
@@ -156,10 +156,10 @@ for s = 1, screen.count() do
             mypromptbox[s],
             ["layout"] = awful.widget.layout.horizontal.leftright
         },
-        mylayoutbox[s],
         s == 1 and mysystray or nil,
         mytextclock,
         mycpugraph,
+        mylayoutbox[s],
         mytasklist[s],
         ["layout"] = awful.widget.layout.horizontal.rightleft
     }
@@ -259,15 +259,15 @@ globalkeys = awful.util.table.join (
     -- }}}
 
     -- {{{ Program
+	awful.key({ modkey }, "F1", function () awful.util.spawn("x-terminal-emulator -name Weechat -T Weechat -e weechat-curses") end),
 	awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
-	awful.key({ modkey }, "F3", function () awful.util.spawn("urxvt -name Mutt -T Mutt -e mutt") end),
-	awful.key({ modkey }, "F4", function () awful.util.spawn("urxvt -name Weechat -T Weechat -e weechat-curses") end),
-	awful.key({ modkey }, "i",  function () awful.util.spawn("urxvt -e zsh -c 'stty -ixon; vim'") end),
-	awful.key({ modkey }, "F8", function () awful.util.spawn("VirtualBox") end),
+	awful.key({ modkey }, "F3", function () awful.util.spawn("x-terminal-emulator -name Mutt -T Mutt -e mutt") end),
+	awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox") end),
+	awful.key({ modkey }, "i",  function () awful.util.spawn("x-terminal-emulator -e zsh -c 'stty -ixon; vim'") end),
 	awful.key({ modkey }, "space", function () awful.util.spawn("x-terminal-emulator") end),
-	awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
+	awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 	awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
-	awful.key({        }, "XF86Mail", function () awful.util.spawn("urxvt -name Mutt -T Mutt -e mutt") end),
+	awful.key({        }, "XF86Mail", function () awful.util.spawn("x-terminal-emulator -name Mutt -T Mutt -e mutt") end),
 	awful.key({        }, "XF86MyComputer", function () awful.tag.viewonly(tags[1][1]) end),
 	awful.key({        }, "XF86AudioPlay",        function () awful.util.spawn("mocp.sh") end),
 	awful.key({        }, "XF86AudioStop",        function () awful.util.spawn("mocp -s") end),
@@ -533,7 +533,5 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- }}}
 
 -- {{{ Autorun
-awful.util.spawn("/usr/bin/fcitx")
-awful.util.spawn("/usr/bin/VBoxManage startvm 'WindowsXP'")
-awful.util.spawn("/opt/dropbox/bin/dropbox start -i")
+--awful.util.spawn("/opt/dropbox/bin/dropbox start -i") --
 -- }}}
