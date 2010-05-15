@@ -32,7 +32,6 @@ map	<S-F12> :set! network.proxy.type=0<CR>:echo ":)"<CR>
 set go=b
 set cpt=sl
 set fc
-set visualbell
 set shell="/usr/bin/zsh"
 set editor="urxvt -e zsh -c 'stty -ixon; vim --noplugin'"
 set newtab=all
