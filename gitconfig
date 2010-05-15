@@ -67,21 +67,27 @@
 [gui]
 	fontdiff = -family \"Andale Mono\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
 [branch "master"]
+	rebase = true
 	remote = origin
 	merge = refs/heads/master
 [tig]
-	show-date = yes
+	show-refs = yes
+	show-rev-graph = yes
+	line-graphics = yes
+	commit-encoding = "UTF-8"
 	author-width = 16
-	line-graphics = no
 	tab-size = 4
 [tig "color"]
 	default = default default
-	date = green default italic
+	date = green default
 	author = default default
 	cursor = white blue
 	title-blur = black white
 	title-focus = black white bold
 [tig "bind"]
+	main = q view-main
+	main = s view-status
+	main = space enter
 	diff = i view-close
 	diff = , previous
 	diff = . next
