@@ -65,12 +65,11 @@ mylauncher = awful.widget.launcher({
 
 -- Cpu Graph {{{2
 mycpugraph = awful.widget.graph({ layout = awful.widget.layout.horizontal.rightleft })
-mycpugraph:set_width(50)
-mycpugraph:set_background_color('#494B4F')
+mycpugraph:set_width(80)
+mycpugraph:set_background_color('#535d6c')
 mycpugraph:set_color('#FF5656')
 mycpugraph:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
 vicious.register(mycpugraph, vicious.widgets.cpu, '$1', 3)
-
 
 -- Separator {{{
 myspacer         = widget({ type = "textbox", name = "myspacer" })
@@ -157,9 +156,9 @@ for s = 1, screen.count() do
             ["layout"] = awful.widget.layout.horizontal.leftright
         },
         s == 1 and mysystray or nil,
+        mylayoutbox[s],
         mytextclock,
         mycpugraph,
-        mylayoutbox[s],
         mytasklist[s],
         ["layout"] = awful.widget.layout.horizontal.rightleft
     }

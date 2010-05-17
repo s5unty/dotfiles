@@ -39,6 +39,7 @@ alias tree="tree -C"
 alias scp="scp -p"
 alias lintian="lintian -viI"
 alias vi="/usr/bin/vim -n"
+alias tig="tig --all"
 #alias make="/usr/bin/make -j2"
 # }}}
 
@@ -72,7 +73,6 @@ alias tdD="devtodo -D"
 alias tdR="devtodo -R"
 alias tdG="devtodo -c"
 alias tdS="devtodo -Av"
-alias tda="cat - | todo -a"
 tdg() {
     if [ -z "$1" ]; then
         devtodo
