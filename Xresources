@@ -9,13 +9,14 @@ URxvt.saveLines:    2048
 URxvt.modifier:     Alt
 URxvt.urlLauncher:  x-www-browser
 URxvt.cutchars:     "()*,<>[]{}|'"
+URxvt.perl-lib:     /sun/home/.urxvt/
 URxvt.matcher.button:    1
 URxvt.scrollTtyKeypress: True
 URxvt.scrollTtyOutput:   False
 URxvt.scrollWithBuffer:  True
 URxvt.secondaryScreen:   True
 URxvt.secondaryScroll:   True
-URxvt.perl-ext-common:   default,matcher
+URxvt.perl-ext-common:   default,matcher,mark-yank-urls
 URxvt.intensityStyles:   False
 
 Xft.dpi:          96
@@ -59,6 +60,8 @@ URxvt.keysym.M-space:command:\033]721;5\007
 !!font size
 URxvt.keysym.M-Up: command:\033]710;xft:Envy Code R-14,xft:DejaVu Sans Mono-13,xft:WenQuanYi Zen Hei-13\007;
 URxvt.keysym.M-Down: command:\033]710;xft:Envy Code R-10,xft:DejaVu Sans Mono-9,xft:WenQuanYi Zen Hei-9\007;
+!!mouseless url yanking
+URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !!icon path
 URxvt.iconFile:     $HOME/.config/awesome/terminator.png
 Mutt.iconFile:      /usr/share/pixmaps/mutt.xpm

@@ -85,11 +85,13 @@
 	title-blur = black white
 	title-focus = black white bold
 [tig "bind"]
+	generic = i view-close
+    main = i view-main
 	main = q view-main
 	main = s view-status
 	main = space enter
-	diff = i view-close
 	diff = , previous
 	diff = . next
-	log = i view-close
-
+	stage = , previous
+	stage = . next
+    status = space enter
