@@ -1,15 +1,78 @@
-[user]
+[user] # {{{
     name = Vern Sun
     email = s5unty@gmail.com
+[core]
+    excludesfile = /sun/home/.gitignore
 [format]
     headers = ""
     subjectprefix = ""
-[color]
+[diff]
+	tool = vimdiff
+[push]
+	default = current
+[gui]
+	fontdiff = -family \"Andale Mono\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
+# }}}
+
+[tig] # {{{
+	show-refs = yes
+	show-rev-graph = yes
+	line-graphics = no
+	commit-encoding = "UTF-8"
+	author-width = 16
+	tab-size = 4
+[tig "color"]
+	default = default default
+	date = green default
+	author = default default
+	cursor = white blue
+	title-blur = black white
+	title-focus = black white bold
+[tig "bind"]
+	generic = i view-close
+    main = i view-main
+	main = q view-main
+	main = s view-status
+	main = space enter
+	diff = , previous
+	diff = . next
+	stage = , previous
+	stage = . next
+    status = space enter
+# }}}
+
+[color] #{{{
     status = auto
     diff = auto
     branch = auto
     interactive = auto
-[alias]
+[color "diff"]
+	frag = magenta
+	func = magenta
+#}}}
+
+[branch] # {{{
+	autosetuprebase = always
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+# }}}
+
+[merge] # {{{
+    tool = persistent
+[mergetool "persistent"]
+	# ref Brian Phillips @http://stackoverflow.com/questions/585844/merging-with-git-mergetool
+    cmd = "vim --noplugin -d \"$PWD/$MERGED\" \
+        +\":split $PWD/$REMOTE\" +\":set buftype=nowrite\" \
+        +\":vertical diffsplit $PWD/$LOCAL\" +\":set buftype=nowrite\" \
+        +\":vertical diffsplit $PWD/$BASE\" +\":set buftype=nowrite\" \
+        +\":wincmd j\" \
+        +\":nmap <ESC>1 :diffget BASE<CR>:diffupdate<CR>\" \
+        +\":nmap <ESC>2 :diffget LOCAL<CR>:diffupdate<CR>\" \
+        +\":nmap <ESC>3 :diffget REMOTE<CR>:diffupdate<CR>\" "
+#}}}
+
+[alias] # {{{
     ci  = commit
     cm  = commit --amend
     co  = checkout
@@ -46,52 +109,6 @@
     dup = svn rebase
     dll = svn log --oneline --limit=20
     dls = svn log
-[diff]
-	tool = vimdiff
-[merge]
-    tool = persistent
-[mergetool "persistent"]
-###  Brian Phillips: http://stackoverflow.com/questions/585844/merging-with-git-mergetool
-#    cmd = "gvim --noplugin --remote-tab-silent \"+set buftype=nowrite\" \"$PWD/$MERGED\" && sleep 1;\
-#           gvim --remote-send \":split $PWD/$REMOTE<CR>:set buftype=nowrite<CR>:vertical diffsplit $PWD/$LOCAL<CR>:vertical diffsplit $PWD/$BASE<CR>:set buftype=nowrite<CR><C-W>l\""
-    cmd = "vim --noplugin -d \"$PWD/$MERGED\" \
-        +\":split $PWD/$REMOTE\" +\":set buftype=nowrite\" \
-        +\":vertical diffsplit $PWD/$LOCAL\" +\":set buftype=nowrite\" \
-        +\":vertical diffsplit $PWD/$BASE\" +\":set buftype=nowrite\" \
-        +\":wincmd j\" \
-        +\":nmap <ESC>1 :diffget BASE<CR>:diffupdate<CR>\" \
-        +\":nmap <ESC>2 :diffget LOCAL<CR>:diffupdate<CR>\" \
-        +\":nmap <ESC>3 :diffget REMOTE<CR>:diffupdate<CR>\" "
-[core]
-    excludesfile = /sun/home/.gitignore
-[gui]
-	fontdiff = -family \"Andale Mono\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
-[branch "master"]
-	rebase = true
-	remote = origin
-	merge = refs/heads/master
-[tig]
-	show-refs = yes
-	show-rev-graph = yes
-	line-graphics = yes
-	commit-encoding = "UTF-8"
-	author-width = 16
-	tab-size = 4
-[tig "color"]
-	default = default default
-	date = green default
-	author = default default
-	cursor = white blue
-	title-blur = black white
-	title-focus = black white bold
-[tig "bind"]
-	generic = i view-close
-    main = i view-main
-	main = q view-main
-	main = s view-status
-	main = space enter
-	diff = , previous
-	diff = . next
-	stage = , previous
-	stage = . next
-    status = space enter
+# }}}
+
+# vim: set foldmethod=marker:
