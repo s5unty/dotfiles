@@ -55,7 +55,6 @@
 	autosetuprebase = always
 [branch "master"]
 	remote = origin
-	mergeoptions = --squash
 	merge = refs/heads/master
 # }}}
 

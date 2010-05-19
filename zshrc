@@ -140,11 +140,16 @@ alias -s planner=planner
 # }}}
 
 # 目录别名 {{{
-unhash -dm '*'
-hash -d log="/var/log/"
-hash -d net="/etc/network/"
-hash -d inc="/usr/include/"
-hash -d rcS="/etc/init.d/"
+# unhash -dm '*'
+zstyle ':completion:*:*:*:users' ignored-patterns _dhcp _pflogd adm apache \
+	avahi avahi-autoipd backup bin bind clamav cupsys cyrusdaemon daemon \
+	Debian-exim dictd dovecot games gnats gdm ftp halt haldaemon hplip ident \
+	identd irc junkbust klog kmem libuuid list lp mail mailnull man \
+	messagebus mysql munin named news nfsnobody nobody nscd ntp ntpd \
+	operator pcap polkituser pop postfix postgres proftpd proxy pulse radvd \
+	rpc rpcuser rpm saned shutdown smmsp spamd squid sshd statd stunnel sync \
+	sys syslog toor tty uucp vcsa varnish vmail vde2-net www www-data xfs \
+	bitlbee debian-tor minbif root usbmux canna fetchmail privoxy
 # }}}
 
 # 其它别名 {{{ 
