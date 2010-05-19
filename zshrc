@@ -176,7 +176,7 @@ R() { # find in files
     grep -r $1 . ${(@)argv[2,$#]} M
 }
 CS() { # gen cscope.files
-    mkdir .cscope
+    mkdir -p .cscope
     find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' -o -iname '*.cxx' \
         -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' > .cscope/cscope.files
     cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
@@ -352,7 +352,7 @@ bindkey '^p'    history-search-backward
 bindkey '\e2'   quote-region
 
 _vi-forward-blank() {
-    # <ESC>ea
+    # <ESC>Ea
     zle vi-cmd-mode
     zle vi-forward-blank-word-end
     zle vi-add-next
@@ -360,9 +360,9 @@ _vi-forward-blank() {
 zle -N _vi-forward-blank
 
 _vi-backward-blank() {
-    # <ESC>bh
+    # <ESC>B
     zle vi-backward-blank-word
-    zle vi-backward-char
+#    zle vi-backward-char
 }
 zle -N _vi-backward-blank
 ## mark #

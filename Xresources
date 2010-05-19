@@ -20,9 +20,9 @@ URxvt.perl-ext-common:   default,matcher,mark-yank-urls
 URxvt.intensityStyles:   False
 
 Xft.dpi:          96
-URxvt.font:      xft:Envy Code R-10, xft:DejaVu Sans Mono-9, xft:WenQuanYi Zen Hei-9
-URxvt.boldFont:  xft:Envy Code R-10:bold, xft:DejaVu Sans Mono-9:bold, xft:WenQuanYi Zen Hei-9
-URxvt.italicFont:xft:Envy Code R-10:italic, xft:DejaVu Sans Mono-9:oblique, xft:WenQuanYi Zen Hei-9
+URxvt.font:      xft:Envy Code R-10, xft:DejaVu Sans Mono-9, xft:WenQuanYi Zen Hei Sharp
+URxvt.boldFont:  xft:Envy Code R-10:bold, xft:DejaVu Sans Mono-9:bold, xft:WenQuanYi Zen Hei Sharp
+URxvt.italicFont:xft:Envy Code R-10:italic, xft:DejaVu Sans Mono-9:oblique, xft:WenQuanYi Zen Hei Sharp
 
 ! @@ COLORS AND GRAPHICS @@ {{{
 ! man urxvt
@@ -58,8 +58,8 @@ URxvt.colorIT:       chocolate4
 URxvt.keysym.M-minus:command:\033]720;5\007
 URxvt.keysym.M-space:command:\033]721;5\007
 !!font size
-URxvt.keysym.M-Up: command:\033]710;xft:Envy Code R-14,xft:DejaVu Sans Mono-13,xft:WenQuanYi Zen Hei-13\007;
-URxvt.keysym.M-Down: command:\033]710;xft:Envy Code R-10,xft:DejaVu Sans Mono-9,xft:WenQuanYi Zen Hei-9\007;
+URxvt.keysym.M-Up: command:\033]710;xft:Envy Code R-14,xft:DejaVu Sans Mono-13,xft:WenQuanYi Zen Hei Sharp-13\007;
+URxvt.keysym.M-Down: command:\033]710;xft:Envy Code R-10,xft:DejaVu Sans Mono-9,xft:WenQuanYi Zen Hei Sharp-9\007;
 !!mouseless url yanking
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !!icon path

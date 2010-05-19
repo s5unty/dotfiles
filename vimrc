@@ -19,7 +19,7 @@ set cindent
 set number " 显示行数
 set completeopt=longest,menu " 显示补全预览菜单
 set smartcase
-syn on " 语法高亮
+syn enable " 语法高亮
 filetype plugin indent on
 let mapleader=","
 set hidden " 用隐藏代替关闭从而保留 undo 列表等私有信息
@@ -29,7 +29,6 @@ set noincsearch " 非渐进搜索
 set nowrap " 不自动折行
 set updatetime=1000
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
-set statusline=%<%f\ %h%m%r%=%P
 set winaltkeys=no
 set guioptions=ai
 set cinoptions=:0,g0,t0,(0
@@ -225,18 +224,18 @@ nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
 nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
 nmap <silent> <unique> q  :<CR>
-nmap <silent> <unique> Q  :q<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
 vmap <silent> <unique> + :Align =<CR>
-nmap <silent> <unique> [ :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
-nmap <silent> <unique> ] :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
+"nmap <silent> <unique> [ :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
+"nmap <silent> <unique> ] :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
+nmap <silent> <unique> Q :q<CR>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
@@ -289,7 +288,7 @@ nmap <silent> <unique> <Leader>E :call <SID>CscopeFind('e', 'n')<CR>
 nmap <silent> <unique> <Leader>. :call <SID>VimwikiGoProject()<CR>
 
 " Colon+, Colon char is ':' {{{2
-command W call GitWipSave()
+command W :w !sudo tee %
 
 " }}}1
 
@@ -309,12 +308,6 @@ if has("autocmd")
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ set path+=./
 
-  " 设定 StatusLine
-  augroup StatusLine
-      au! StatusLine
-"      au BufLeave * setlocal statusline=""
-"      au BufEnter * setlocal statusline=%<%F%(\ %m%h%w%y%r%)\ %a%=\ %l,%c%V/%L\ (%P)
-  augroup END
 endif
 " }}}
 
@@ -359,6 +352,8 @@ endfunction
 "
 " p1: Bf_SwitchTo
 "     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
+" p2: g:Tb_StatusLine
+"     添加变量用户调整 TabBar 的状态栏信息
 let Tb_UseSingleClick = 1 " 单击切换
 let Tb_TabWrap = 1 " 禁止跨行显示
 let Tb_MaxSize = 0 "
