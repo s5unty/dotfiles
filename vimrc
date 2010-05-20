@@ -4,7 +4,7 @@ set termencoding=UTF-8
 set fileencodings=UTF-8,GB2312,BIG5,EUC-JP,UTF-16LE
 set fileformats=unix,dos
 set guifont=Envy\ Code\ R\ 10,
-set guifontwide=WenQuanYi\ Zen\ Hei\ 10,
+set guifontwide=WenQuanYi\ Zen\ Hei\ Sharp\ 10,
 set mouse=a " 开启鼠标支持
 set noexpandtab " TAB is hard
 set tabstop=4 " TAB 的宽度
@@ -30,7 +30,7 @@ set nowrap " 不自动折行
 set updatetime=1000
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set winaltkeys=no
-set guioptions=ai
+""set guioptions
 set cinoptions=:0,g0,t0,(0
 set timeout
 set timeoutlen=3000
@@ -311,7 +311,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 10# Plugins {{{
+" 13# Plugins {{{
 " mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
 " http://www.vim.org/scripts/script.php?script_id=521
 "
@@ -347,7 +347,7 @@ function! <SID>ShowTaglist()
     endif
 endfunction
 
-" TabBar 0.7-p1 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
+" TabBar 0.7-p2 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
 " http://www.vim.org/scripts/script.php?script_id=1338
 "
 " p1: Bf_SwitchTo
@@ -477,11 +477,34 @@ endfunction
 " http://www.vim.org/scripts/script.php?script_id=2584
 set lazyredraw
 
-" sessionman.vim 1.04 : Vim session manager {{{2
+" sessionman.vim 1.04-p1 : Vim session manager {{{2
 " http://www.vim.org/scripts/script.php?script_id=2010
 "
 " p1: s:OpenSession
 "     打开 Session 前 TbStop, 之后 TbStart. 否则布局大乱
 "     打开 Session 后使用 color pattern 自定义的颜色方案
 
+" svndiff 4.3-p1 : Shows colored signs in buffer indicating diff with original svn/git file, {{{2
+" http://www.vim.org/scripts/script.php?script_id=1881
+"
+" p1: @@@384@@
+"              自定义标识符 + - #
+let svndiff_autoupdate = 1
+autocmd BufReadPost *
+  \ silent call Svndiff("next")
+
+" AutoClose 1.2-p1 : Inserts matching bracket, paren, brace or quote {{{2
+" http://www.vim.org/scripts/script.php?script_id=1849
+"
+" p1: @@120@@
+"             按两次 { 自动缩进
+
+" surround.vim 1.90 : Delete/change/add parentheses/quotes/XML-tags/much more with ease {{{2
+" http://www.vim.org/scripts/script.php?script_id=1697
+" nothing
+"
+" 在 normal mode 下按 ysiwb 或者 cs@1@2
+" 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ] 
+
 " }}}1
+

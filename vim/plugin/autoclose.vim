@@ -117,7 +117,7 @@ function <SID>OpenSpecial(ochar,cchar) " ---{{{2
         while len(s:closeStack) > 0
             call remove(s:closeStack, 0)
         endwhile
-        return "\<esc>a\<CR>;\<CR>".a:cchar."\<esc>\"_xk$\"_xa"
+        return "\<esc>a\<CR>\<esc>O"
     endif
     return a:ochar.<SID>CloseStackPush(a:cchar)
 endfunction
