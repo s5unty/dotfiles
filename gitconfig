@@ -52,7 +52,8 @@
 #}}}
 
 [branch] # {{{
-	autosetuprebase = always
+	autosetupmerge = false
+	#autosetuprebase = always
 [branch "master"]
 	remote = origin
 	merge = refs/heads/master
@@ -79,10 +80,10 @@
     cd  = checkout -b
 	cp  = cherry-pick --no-commit
 
-    di  = diff -w -p --stat # show difference between working tree and the index
-    dc  = diff -w -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
-    da  = diff -w -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
-    df  = diff -w --stat HEAD # show different files between working tree and the index
+    di  = diff -p --stat # show difference between working tree and the index
+    dc  = diff -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
+    da  = diff -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
+    df  = diff --stat HEAD # show different files between working tree and the index
 	dt  = difftool
     dp  = !sh -c 'git diff HEAD "$0" | git apply --whitespace=nowarn --index -' # fast apply the patch against "$0" commit or branch
 

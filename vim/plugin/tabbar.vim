@@ -360,6 +360,11 @@ if g:Tb_UseSingleClick == 1
 endif " %%
 
 
+" StatusLine ~~
+if !exists('g:Tb_StatusLine')
+	let g:Tb_StatusLine = '%<%f\ %y%h%m%r\ PWD:%{getcwd()}%=%-14.(%l,%c%V%)\ %P'
+endif "%%
+
 
 "------------"
 " Variables  "
@@ -843,6 +848,7 @@ function! <SID>Win_FindOrCreate(bufName, forceEdge, isExplorer)
   " Restore the user's split setting.
   let &splitbelow = l:saveSplitBelow
 
+  exec('setlocal statusline='.g:Tb_StatusLine)
 endfunction " %%
 
 
