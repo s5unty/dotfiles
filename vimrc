@@ -19,9 +19,6 @@ set cindent
 set number " 显示行数
 set completeopt=longest,menu " 显示补全预览菜单
 set smartcase
-syn enable " 语法高亮
-filetype plugin indent on
-let mapleader=","
 set hidden " 用隐藏代替关闭从而保留 undo 列表等私有信息
 set nocompatible
 set nohls " 不高亮匹配关键字
@@ -30,7 +27,6 @@ set nowrap " 不自动折行
 set updatetime=1000
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set winaltkeys=no
-""set guioptions
 set cinoptions=:0,g0,t0,(0
 set timeout
 set timeoutlen=3000
@@ -38,6 +34,12 @@ set ttimeoutlen=300
 set makeprg=make\ -j2
 set grepprg=ack-grep
 set autoread
+set wildignore=*.o,*.obj,*.orig
+set wildmenu
+
+syn enable " 语法高亮
+filetype plugin indent on
+let mapleader=","
 color pattern
 " }}}
 
@@ -498,6 +500,8 @@ autocmd BufReadPost *
 "
 " p1: @@120@@
 "             按两次 { 自动缩进
+" p2: @@ToggleAutoCloseMappings@@
+"             取消 <C-h> 的键绑定
 
 " surround.vim 1.90 : Delete/change/add parentheses/quotes/XML-tags/much more with ease {{{2
 " http://www.vim.org/scripts/script.php?script_id=1697
@@ -507,4 +511,3 @@ autocmd BufReadPost *
 " 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ] 
 
 " }}}1
-
