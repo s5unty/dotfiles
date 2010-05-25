@@ -53,7 +53,6 @@
 
 [branch] # {{{
 	autosetupmerge = false
-	#autosetuprebase = always
 [branch "master"]
 	remote = origin
 	merge = refs/heads/master
