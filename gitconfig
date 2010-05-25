@@ -48,7 +48,6 @@
     interactive = auto
 [color "diff"]
 	frag = magenta
-	func = magenta
 #}}}
 
 [branch] # {{{
