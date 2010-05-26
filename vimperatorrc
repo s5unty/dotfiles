@@ -23,10 +23,8 @@ map qw    :set ds=wc<CR>P:set ds=google<CR>:echo ""<CR>
 map qp    :set ds=pkg<CR>P:set ds=google<CR>:echo ""<CR>
 map b     :bmarks -tag
 
-" quickproxy https://addons.mozilla.org/zh-CN/firefox/addon/1557/
-" instead of AutoProxy
-map	<F12> :set! network.proxy.type=1<CR>:echo ":("<CR>
-map	<S-F12> :set! network.proxy.type=0<CR>:echo ":)"<CR>
+map	<F12> :set! extensions.autoproxy.proxyMode=global<CR>
+map	<S-F12> :set! extensions.autoproxy.proxyMode=auto<CR>
 
 " general
 set go=b

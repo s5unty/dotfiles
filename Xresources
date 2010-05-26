@@ -58,8 +58,8 @@ URxvt.colorIT:       chocolate4
 URxvt.keysym.M-minus:command:\033]720;5\007
 URxvt.keysym.M-space:command:\033]721;5\007
 !!font size
-URxvt.keysym.M-Up: command:\033]710;xft:Envy Code R-14,xft:DejaVu Sans Mono-13,xft:WenQuanYi Zen Hei Sharp-13\007;
-URxvt.keysym.M-Down: command:\033]710;xft:Envy Code R-10,xft:DejaVu Sans Mono-9,xft:WenQuanYi Zen Hei Sharp-9\007;
+URxvt.keysym.M-Up: command:\033]710;xft:Envy Code R-13\007\033]711;xft:Envy Code R-13:bold\007\033]712;xft:Envy Code R-13:italic\007
+URxvt.keysym.M-Down: command:\033]710;xft:Envy Code R-10\007\033]711;xft:Envy Code R-10:bold\007\033]712;xft:Envy Code R-10:italic\007
 !!mouseless url yanking
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !!icon path
