@@ -37,9 +37,10 @@ set autoread
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
 
+let mapleader=","
+let html_dynamic_folds=1
 syn enable " 语法高亮
 filetype plugin indent on
-let mapleader=","
 color pattern
 " }}}
 
@@ -69,28 +70,6 @@ function! G_QFixToggle(forced)
     exec "redraw!"
 endfunction
 
-" 空格键 下翻页
-function! G_GoodSpace(browse)
-    if a:browse == 1
-        exec "normal \<C-D>"
-        return
-    endif
-
-    " TODO 避免布局依赖
-    " 与 Quickfix 交换焦点窗口
-    if &buftype == "quickfix"
-        wincmd k
-    elseif &buftype == "nofile"
-        wincmd b
-    elseif &buftype == ""
-        if exists("g:qfix_win")
-            wincmd b
-        else
-            wincmd h
-        endif
-    endif
-endfunction
-
 " P键 预览
 function! G_GoodP()
     if &buftype == "quickfix"
@@ -111,22 +90,24 @@ endfunction
 " 跳转至文件编辑窗口
 " 参照 tabbar.vim 插件的 <SID>Bf_CrSel() 函数
 function! G_GotoEditor()
-    if bufname('%') == '__Tag_List__-' || getbufvar(bufnr('%'), '&modifiable') == 0
-        wincmd w
-    elseif bufname('%') == '-TabBar-' || getbufvar(bufnr('%'), '&modifiable') == 0
-        wincmd w
-    elseif getbufvar(bufnr('%'), '&modifiable') == 0 " QuickFix 或其他不可编辑的窗口
-        wincmd w
-    else " 已找到可编辑的窗口
-        return
-    endif
-
-    call G_GotoEditor()
+	if &buftype != ''
+		wincmd w
+		if &buftype != ''
+			wincmd w
+			if &buftype != ''
+				wincmd w
+				if &buftype != ''
+					wincmd W
+					wincmd W
+					wincmd W
+				endif
+			endif
+		endif
+	endif
 endfunction
 
 " 关闭当前 Buffer
 function! G_CloseBuffer()
-	exec ":TlistClose"
 	call G_GotoEditor()
     let name = fnamemodify(expand('%'), ':t')
 
@@ -206,7 +187,7 @@ imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
-imap          <unique> <F5> <ESC>:w<CR>:!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
+nmap <silent> <unique> <F6> :ConqueTermSplit zsh<CR>
 nmap <silent> <unique> <F7> zi<CR>
 imap <silent> <unique> <F7> <Esc>zi<CR>
 nmap <silent> <unique> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
@@ -223,7 +204,7 @@ vmap <silent> <unique> <F12> <C-]>zz
 " Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
-nmap <silent> <unique> <Space> :call G_GoodSpace(1)<CR>
+nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
 nmap <silent> <unique> q  :<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
@@ -509,5 +490,13 @@ autocmd BufReadPost *
 "
 " 在 normal mode 下按 ysiwb 或者 cs@1@2
 " 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ] 
+
+" Conque Shell 1.1 : Run interactive commands inside a Vim buffer {{{2
+" http://www.vim.org/scripts/script.php?script_id=2771
+let ConqueTerm_EscKey = '<Esc>'
+let ConqueTerm_Color = 1
+let ConqueTerm_TERM = 'rxvt-unicode'
+let ConqueTerm_ReadUnfocused = 1
+let ConqueTerm_CWInsert = 0
 
 " }}}1

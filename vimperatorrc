@@ -9,6 +9,8 @@ map   \\ <C-i>
 map <BS> <C-o>
 map    j 2<C-e>
 map    k 2<C-y>
+map <C-Tab> <C-V><C-Tab>
+map <C-S-Tab> <C-V><C-S-Tab>
 
 " macro
 map <F2>  :set encoding=GB2312<CR>
