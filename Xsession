@@ -6,7 +6,7 @@
 /usr/bin/x-www-browser &
 /usr/bin/mocp -S
 /usr/bin/xmailleds -ls -M -m /sun/mails/company/
-/usr/bin/sshpass -f/sun/home/.tunnel ssh -ND9527 s5unty@ssh.sshcenter.com &
+/usr/bin/sshpass -f/sun/home/.tunnel ssh -ND9527 -y s5unty@ssh.ssh8.com &
 
 # nvidia-settings -l
 # /usr/bin/xmodmap ~/.Xmodmaprc
