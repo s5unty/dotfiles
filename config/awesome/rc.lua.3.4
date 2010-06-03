@@ -205,12 +205,6 @@ globalkeys = awful.util.table.join (
     -- }}}
 
     -- {{{ Clients
-	awful.key({ modkey }, ".", function ()
-		awful.client.focus.byidx( 1)
-	end),
-	awful.key({ modkey }, ",", function ()
-		awful.client.focus.byidx(-1)
-	end),
 	awful.key({ modkey }, "n", function ()
 		awful.client.focus.byidx( 1)
 		client.focus:raise()
@@ -236,6 +230,9 @@ globalkeys = awful.util.table.join (
 	awful.key({ modkey }, "o", awful.client.floating.toggle),
 	awful.key({ modkey }, "t", awful.client.togglemarked),
 
+	awful.key({ modkey }, ".",      function () awful.client.swap.byidx( 1) end),
+	awful.key({ modkey }, ",",      function () awful.client.swap.byidx(-1) end),
+
 	awful.key({ modkey }, "Up",     function () awful.client.focus.bydirection("up")    end),
 	awful.key({ modkey }, "k",      function () awful.client.focus.bydirection("up")    end),
 	awful.key({ modkey }, "Down",   function () awful.client.focus.bydirection("down")  end),
@@ -244,9 +241,6 @@ globalkeys = awful.util.table.join (
 	awful.key({ modkey }, "h",      function () awful.client.focus.bydirection("left")  end),
 	awful.key({ modkey }, "Right",  function () awful.client.focus.bydirection("right") end),
 	awful.key({ modkey }, "l",      function () awful.client.focus.bydirection("right") end),
-
-	awful.key({ modkey, "Shift"   }, ".",  function () awful.client.swap.byidx(  1)      end),
-	awful.key({ modkey, "Shift"   }, ",",  function () awful.client.swap.byidx( -1)      end),
 
 	awful.key({ modkey            }, "/",  function () client.focus:raise()              end),
 	awful.key({ modkey, "Shift"   }, "/",  function () client.focus:lower()              end),
@@ -314,7 +308,7 @@ globalkeys = awful.util.table.join (
 		old_word = new_word
 
 		local fc = ""
-		local f  = io.popen("sdcv -n --utf8-output -u '牛津英汉双解美化版' "..new_word)
+		local f  = io.popen("sdcv -n --utf8-output -u 'XDICT英汉辞典' "..new_word)
 		for line in f:lines() do
 			fc = fc .. line .. '\n'
 		end
@@ -331,7 +325,7 @@ globalkeys = awful.util.table.join (
 			end
 
 			local fc = ""
-			local f  = io.popen("sdcv -n --utf8-output -u '牛津英汉双解美化版' "..cin_word)
+			local f  = io.popen("sdcv -n --utf8-output -u 'XDICT英汉辞典' "..cin_word)
 			for line in f:lines() do
 				fc = fc .. line .. '\n'
 			end
