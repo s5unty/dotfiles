@@ -74,7 +74,8 @@
     cm  = commit --amend
     co  = checkout
     cd  = checkout -b
-	cp  = cherry-pick --no-commit
+	cp  = cherry-pick --no-commit # 复制一个 commit 所做的修改
+	cpr = merge --squash # 复制一个分支所做的修改
 
     di  = diff -p --stat # show difference between working tree and the index
     dc  = diff -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
@@ -89,13 +90,14 @@
     ls  = log --pretty=format:'%C(blue)%h%Creset %ce %m %s %C(green)%C(dim)%ci%Creset %C(white)%C(bold)%d%Creset' --all --graph
 
     ms  = merge --squash
+    mf  = merge --no-ff # generate a merge commit even if the merge resolved as a fast-forward
     mt  = mergetool
 
     # 核弹级选项: filter-branch
     # http://progit.org/book/zh/ch6-4.html
     nc = filter-branch --tree-filter
 
-    st  = status
+    st  = status -s
 
     zc  = stash save
     zl  = stash list

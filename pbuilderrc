@@ -1,4 +1,4 @@
-MIRRORSITE="http://ftp2.jp.debian.org/debian/"
+MIRRORSITE="http://mirrors.163.com/debian/"
 DEBBUILDOPTS="-sa -i.git"
 DEBOOTSTRAP="debootstrap"
 APTCACHE="/var/cache/apt/archives"

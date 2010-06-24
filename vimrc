@@ -34,6 +34,7 @@ set ttimeoutlen=300
 set makeprg=make\ -j2
 set grepprg=ack-grep
 set autoread
+set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
 
@@ -294,7 +295,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 13# Plugins {{{
+" 12# Plugins {{{
 " mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
 " http://www.vim.org/scripts/script.php?script_id=521
 "
@@ -467,14 +468,6 @@ set lazyredraw
 "     打开 Session 前 TbStop, 之后 TbStart. 否则布局大乱
 "     打开 Session 后使用 color pattern 自定义的颜色方案
 
-" svndiff 4.3-p1 : Shows colored signs in buffer indicating diff with original svn/git file, {{{2
-" http://www.vim.org/scripts/script.php?script_id=1881
-"
-" p1: @@@384@@
-"              自定义标识符 + - #
-let svndiff_autoupdate = 1
-autocmd BufReadPost *
-  \ silent call Svndiff("next")
 
 " AutoClose 1.2-p1 : Inserts matching bracket, paren, brace or quote {{{2
 " http://www.vim.org/scripts/script.php?script_id=1849
