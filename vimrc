@@ -14,6 +14,7 @@ set clipboard=unnamed " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
+set expandtab
 set autoindent " 自动缩进
 set cindent
 set number " 显示行数
@@ -193,8 +194,8 @@ nmap <silent> <unique> <F7> zi<CR>
 imap <silent> <unique> <F7> <Esc>zi<CR>
 nmap <silent> <unique> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
 imap <silent> <unique> <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
-nmap <silent> <unique> <F9> :!!<CR>
-imap <silent> <unique> <F9> <ESC>:!!<CR>
+nmap          <unique> <F9> :!<UP>
+imap          <unique> <F9> <ESC>:!<UP>
 nmap <silent> <unique> <F10> :Mru<CR>
 imap <silent> <unique> <F10> <ESC>:Mru<CR>
 nmap <silent> <unique> <F11> g]
@@ -245,8 +246,8 @@ nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:b
 
 " Alt+ {{{2
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
-nmap          <unique> <ESC><F8> :make! install DESTDIR=
-imap          <unique> <ESC><F8> <ESC>:make! install DESTDIR=
+nmap          <unique> <ESC><F8> :make! install DESTDIR=<UP>
+imap          <unique> <ESC><F8> <ESC>:make! install DESTDIR=<UP>
 nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
 imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
