@@ -39,6 +39,7 @@ alias tree="tree -C"
 alias scp="scp -p"
 alias lintian="lintian -viI"
 alias vi="/usr/bin/vim -n"
+alias vim="/usr/bin/vim --noplugin"
 alias tig="tig --all"
 #alias make="/usr/bin/make -j2"
 # }}}
@@ -175,7 +176,7 @@ P() { # ps
     ps -ef | grep "$1" | grep -v "grep"
 }
 F() { # find
-    find ./ -iname "$1" ${(@)argv[2,$#]}
+    find ./ -iname "$1" ${(@)argv[2,$#]} C
 }
 R() { # find in files
     grep -r $1 . ${(@)argv[2,$#]} M
@@ -277,17 +278,17 @@ parse_git_branch() {
 
 set_prompt() {
     MAXMID="$(($COLUMNS / 2 - 5))" # truncate to this value
-    mypath="$at_none$fg_green$at_italics%~"
-    myerrs="$at_none$fg_lred%(0?.. (%?%))"
-    mygitb="$at_none$fg_white$at_bold$(parse_git_branch)"
     myjobs=()
     for a (${(k)jobstates}) {
         j=$jobstates[$a];i="${${(@s,:,)j}[2]}"
         myjobs+=($a${i//[^+-]/})
     }
-    myjobs="%(1j/[${(j/,/)myjobs}] /)"
-     PS1="$fg_cyan$myjobs$at_none$at_bold%!%#$at_none "
-    RPS1="$fg_green%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
+    myjobs="$at_none$fg_cyan%(1j/[${(j/,/)myjobs}] /)"
+    mypath="$at_none$fg_green$at_italics%~"
+    myerrs="$at_none$fg_lred%(0?.. (%?%))"
+    mygitb="$at_none$fg_white$at_bold$(parse_git_branch)"
+       PS1="$at_none$at_bold%!%#$at_none "
+      RPS1="$myjobs$fg_green%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
     rehash
 }
 
@@ -431,4 +432,3 @@ done
 if [ -e ~/.zshrc.local   ]; then . ~/.zshrc.local; fi
 
 ## }}}
-
