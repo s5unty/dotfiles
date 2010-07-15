@@ -1,13 +1,12 @@
 " Colour {{{
 let g:colors_name="pattern"
+set background=dark
 
 " First remove all existing highlighting.
 hi clear
 if exists("syntax_on")
   syntax reset
 endif
-
-set background=dark
 
 " colorname  dark
 " yellow #cdcd00
@@ -45,9 +44,9 @@ hi Directory        ctermfg=darkblue    ctermbg=NONE                            
 hi ErrorMsg         ctermfg=darkred     ctermbg=NONE                            guifg=#ee2c2c       guibg=NONE
 hi WarningMsg       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
 hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        guifg=black         guibg=#00ffff       gui=italic
-hi VertSplit        ctermfg=white       ctermbg=NONE        cterm=bold          guifg=white         guibg=NONE          gui=bold
-hi StatusLine       ctermfg=white       ctermbg=black                           guifg=white         guibg=black
-hi StatusLineNC     ctermfg=white       ctermbg=black                           guifg=white         guibg=black
+hi VertSplit        ctermfg=grey        ctermbg=black                           guifg=white         guibg=NONE          gui=bold
+hi StatusLine       ctermfg=grey        ctermbg=black                           guifg=white         guibg=black
+hi StatusLineNC     ctermfg=grey        ctermbg=black                           guifg=white         guibg=black
 hi IncSearch        ctermfg=darkblue    ctermbg=white                           guifg=#6495ed       guibg=white
 hi Search           ctermfg=red         ctermbg=NONE        cterm=bold          guifg=#ff4040       guibg=NONE          gui=bold
 hi Question         ctermfg=magenta                                             guifg=#ff69b4
@@ -83,8 +82,8 @@ hi MyTagListTitle       ctermfg=grey        ctermbg=NONE    cterm=bold          
 hi MyTagListTagScope    ctermfg=NONE        ctermbg=NONE                        guifg=NONE          guibg=NONE
 " tabbar
 hi Tb_Normal            ctermfg=darkgreen   ctermbg=NONE                        guifg=#458b00       guibg=NONE
-hi Tb_Changed           ctermfg=red         ctermbg=NONE                        guifg=#ff4040       guibg=NONE
-hi Tb_VisibleNormal     ctermfg=black       ctermbg=white                       guifg=black         guibg=white
+hi Tb_Changed           ctermfg=black       ctermbg=red                         guifg=#ff4040       guibg=NONE
+hi Tb_VisibleNormal     ctermfg=black       ctermbg=grey                        guifg=black         guibg=white
 hi Tb_VisibleChanged    ctermfg=red         ctermbg=white                       guifg=#ff4040       guibg=white
 hi Tb_Readonly          ctermfg=green       ctermbg=NONE                        guifg=#00ee00       guibg=NONE
 hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green                       guifg=black         guibg=#00ee00

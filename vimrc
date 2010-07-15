@@ -1,10 +1,8 @@
 " General {{{
-set encoding=UTF-8
-set termencoding=UTF-8
-set fileencodings=UTF-8,GB2312,BIG5,EUC-JP,UTF-16LE
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,chinese,taiwan,japan,korea,latin1
+set termencoding=utf-8
 set fileformats=unix,dos
-set guifont=Envy\ Code\ R\ 10,
-set guifontwide=WenQuanYi\ Zen\ Hei\ Sharp\ 10,
 set mouse=a " 开启鼠标支持
 set noexpandtab " TAB is hard
 set tabstop=4 " TAB 的宽度
@@ -32,12 +30,23 @@ set cinoptions=:0,g0,t0,(0
 set timeout
 set timeoutlen=3000
 set ttimeoutlen=300
-set makeprg=make\ -j2
-set grepprg=ack-grep
 set autoread
 set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
+
+if has("win32")
+    au GUIEnter * simalt ~x
+    language messages zh_CN.UTF-8
+    set grepprg=findstr\ /n
+    set guifont=Envy_Code_R:h10
+    set guifontwide=NSimsun:h10.5
+else
+    set guifont=Envy\ Code\ R\ 10
+    set guifontwide=WenQuanYi\ Zen\ Hei\ Sharp\ 10
+    set makeprg=make\ -j2
+    set grepprg=ack-grep
+endif
 
 let mapleader=","
 let html_dynamic_folds=1
