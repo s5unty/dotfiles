@@ -249,7 +249,6 @@ imap <silent> <unique> <C-L> <Right>
 imap <silent> <unique> <C-S> <Backspace>
 imap <silent> <unique> <C-C> <Del>
 imap <silent> <unique> <C-Z> <C-O>u
-nmap <silent> <unique> <C-A> ^
 nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 
@@ -279,7 +278,7 @@ nmap <silent> <unique> <Leader>e :call <SID>CscopeFind('e', 'y')<CR>
 nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <Leader>E :call <SID>CscopeFind('e', 'n')<CR>
-nmap <silent> <unique> <Leader>. :call <SID>VimwikiGoProject()<CR>
+nmap <silent> <unique> <Leader>. :call <SID>VimwikiGoMain()<CR>
 
 " Colon+, Colon char is ':' {{{2
 command W :w !sudo tee %
@@ -430,27 +429,19 @@ function! <SID>CscopeFind(mask, quick)
     call G_QFixToggle(1)
 endfunction
 
-" vimwiki 0.9.7 : Personal Wiki for Vim {{{2
+" vimwiki 1.0 : Personal Wiki for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2226
 let g:vimwiki_list = [
-            \ { 'proj': 'beta',     'path': '~/beta/wiki/',     'path_html': '~/beta/html/',     'ext': '.wiki' },
-            \ { 'proj': 'dtv-gui',  'path': '~/dtv-gui/wiki/',  'path_html': '~/dtv-gui/html/',  'ext': '.wiki' },
-            \ { 'proj': 'gpicview', 'path': '~/gpicview/wiki/', 'path_html': '~/gpicview/html/', 'ext': '.wiki' },
-            \ { 'proj': 'mouse-fm', 'path': '~/mouse-fm/wiki/', 'path_html': '~/mouse-fm/html/', 'ext': '.wiki' },
-            \ { 'proj': 'pidgin',   'path': '~/pidgin/wiki/',   'path_html': '~/pidgin/html/',   'ext': '.wiki' },
-            \ { 'proj': 'stardict', 'path': '~/stardict/wiki/', 'path_html': '~/stardict/html/', 'ext': '.wiki' },
-            \ { 'proj': 'myqq',     'path': '~/myqq/wiki/',     'path_html': '~/myqq/html/',     'ext': '.wiki' },
-            \ { 'proj': 'oxstroke', 'path': '~/oxstroke/wiki/', 'path_html': '~/oxstroke/html/', 'ext': '.wiki' },
-            \ { 'proj': 'fbreader', 'path': '~/fbreader/wiki/', 'path_html': '~/fbreader/html/', 'ext': '.wiki' }]
-function! <SID>VimwikiGoProject()
-    let proj_path = expand('~/')
+            \ { 'proj': 'main', 'path': '/sun/wiki/', 'path_html': '/sun/wiki/', 'ext': '.wiki' }]
+function! <SID>VimwikiGoMain()
+    let main_path = expand('/sun/wiki/')
     let idx = 1
     for wiki in g:vimwiki_list
-        if stridx(getcwd(), wiki.proj, strlen(proj_path)) > 0
+"        if stridx(getcwd(), wiki.proj, strlen(main_path)) > 0
             call vimwiki#WikiGoHome(idx)
             call vimwiki_html#WikiAll2HTML(wiki.path_html)
             return
-        endif
+"        endif
         let idx += 1
     endfor
 endfunction
@@ -479,13 +470,12 @@ set lazyredraw
 "     打开 Session 后使用 color pattern 自定义的颜色方案
 
 
-" AutoClose 1.2-p1 : Inserts matching bracket, paren, brace or quote {{{2
-" http://www.vim.org/scripts/script.php?script_id=1849
-"
-" p1: @@120@@
-"             按两次 { 自动缩进
-" p2: @@ToggleAutoCloseMappings@@
-"             取消 <C-h> 的键绑定
+" delimitMate.vim 2.3.1: Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
+" http://www.vim.org/scripts/script.php?script_id=2754
+" http://github.com/Raimondi/delimitMate
+let g:delimitMate_autoclose = 1
+let g:delimitMate_expand_space = 1
+let g:delimitMate_expand_cr = 1
 
 " surround.vim 1.90 : Delete/change/add parentheses/quotes/XML-tags/much more with ease {{{2
 " http://www.vim.org/scripts/script.php?script_id=1697

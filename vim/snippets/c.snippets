@@ -98,9 +98,29 @@ snippet tde
 # unfortunately version this isn't as nice as TextMates's, given the lack of a
 # dynamic `...`
 snippet pr
-	printf("${1:%s}\n"${2});${3}
+	printf ("${1:%s}\n"${2});${3}
 snippet pp
-	printf("\033[0;3%dm%s %s +%-4d ${1}\033[m\n", __LINE__%7+1, __FUNCTION__, __FILE__, __LINE__${2});
+	printf ("\033[0;38m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp1
+	printf ("\033[0;31m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp2
+	printf ("\033[0;32m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp3
+	printf ("\033[0;33m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp4
+	printf ("\033[0;34m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp5
+	printf ("\033[0;35m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp6
+	printf ("\033[0;36m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp7
+	printf ("\033[0;37m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp8
+	printf ("\033[0;30m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp9
+	printf ("\033[5m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pd
+	assert (${1});
 snippet pb
 	clock_t __t1 = clock();
 snippet pe

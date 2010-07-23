@@ -71,9 +71,7 @@ hi def link diffSubname String
 hi def link diffLine    String
 " vimwiki
 hi VimwikiItalic                                            cterm=italic                                                gui=italic
-hi VimwikiDelText       ctermfg=black                                           guifg=black
-hi VimwikiWord          ctermfg=darkblue                                        guifg=#1874cd
-hi VimwikiNoExistsWord  ctermfg=cyan                        cterm=Underline     guifg=#00ffff                           gui=Underline
+hi VimwikiDelText       ctermfg=darkgray                                        guifg=black
 hi VimwikiList          ctermfg=green                                           guifg=#00ee00
 " taglist
 hi MyTagListTagName     ctermfg=NONE        ctermbg=NONE    cterm=reverse       guifg=NONE          guibg=NONE          gui=reverse
