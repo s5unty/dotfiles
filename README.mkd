@@ -1,9 +1,0 @@
-Desktop
-=======
-
-[![](http://du1abadd.org/images/desktop/shell_s.png)](http://du1abadd.org/images/desktop/shell_b.png)
-[![](http://du1abadd.org/images/desktop/browser_s.png)](http://du1abadd.org/images/desktop/browser_b.png)
-[![](http://du1abadd.org/images/desktop/weechat_s.png)](http://du1abadd.org/images/desktop/weechat_b.png)
-[![](http://du1abadd.org/images/desktop/vim_s.png)](http://du1abadd.org/images/desktop/vim_b.png)
-[![](http://du1abadd.org/images/desktop/mutt_s.png)](http://du1abadd.org/images/desktop/mutt_b.png)
-[![](http://du1abadd.org/images/desktop/thumb_s.png)](http://du1abadd.org/images/desktop/thumb_b.png)
