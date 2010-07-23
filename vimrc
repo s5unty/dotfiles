@@ -301,6 +301,10 @@ if has("autocmd")
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ set path+=./
 
+  augroup markdown
+      au! BufRead,BufNewFile *.asciidoc setfiletype asciidoc
+  augroup END
+
 endif
 " }}}
 

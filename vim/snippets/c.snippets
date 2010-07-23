@@ -100,7 +100,7 @@ snippet tde
 snippet pr
 	printf ("${1:%s}\n"${2});${3}
 snippet pp
-	printf ("\033[0;38m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+	printf ("\033[0;40m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
 snippet pp1
 	printf ("\033[0;31m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
 snippet pp2
@@ -116,9 +116,11 @@ snippet pp6
 snippet pp7
 	printf ("\033[0;37m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
 snippet pp8
-	printf ("\033[0;30m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
-snippet pp9
 	printf ("\033[5m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp9
+	printf ("\033[5;1;31m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
+snippet pp0
+	printf ("\033[5;7;31m%s:+%-4d${1}\033[m\n", __FILE__, __LINE__${2});
 snippet pd
 	assert (${1});
 snippet pb
