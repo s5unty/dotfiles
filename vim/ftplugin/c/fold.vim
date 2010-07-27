@@ -14,3 +14,5 @@ endfunction
 set foldexpr=FoldBrace()
 set foldmethod=expr
 set nofoldenable
+
+syn keyword	cTodo		contained TODO FIXME XXX NOTE

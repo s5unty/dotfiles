@@ -27,9 +27,7 @@ set updatetime=1000
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set winaltkeys=no
 set cinoptions=:0,g0,t0,(0
-set timeout
-set timeoutlen=3000
-set ttimeoutlen=300
+set timeoutlen=220
 set autoread
 set autowrite
 set wildignore=*.o,*.obj,*.orig
@@ -41,11 +39,13 @@ if has("win32")
     set grepprg=findstr\ /n
     set guifont=Envy_Code_R:h10
     set guifontwide=NSimsun:h10.5
+    set shell=cmd.exe
 else
     set guifont=Envy\ Code\ R\ 10
     set guifontwide=WenQuanYi\ Zen\ Hei\ Sharp\ 10
     set makeprg=make\ -j2
     set grepprg=ack-grep
+    set shell=bash\ -x\ -c
 endif
 
 let mapleader=","
@@ -53,6 +53,12 @@ let html_dynamic_folds=1
 syn enable " 语法高亮
 filetype plugin indent on
 color pattern
+
+
+if v:version >= 703
+    set undodir=~/.vimundo
+    set undofile
+endif
 " }}}
 
 " Function {{{
@@ -213,6 +219,7 @@ nmap <silent> <unique> <F12> <C-]>zz
 vmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
+nmap <silent> <unique> <ESC><ESC> :<CR>
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> <C-D>
@@ -221,6 +228,7 @@ nmap <silent> <unique> q  :<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
+imap <silent> <unique> ;; <ESC>
 nmap <silent> <unique> ' 10[{kz<CR>
 vmap <silent> <unique> + :Align =<CR>
 "nmap <silent> <unique> [ :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
@@ -234,10 +242,6 @@ nmap <silent> <unique> Q :q<CR>
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
 imap <silent> <unique> <C-Q> <ESC>;
-nmap <silent> <unique> <C-H> <C-W>h
-nmap <silent> <unique> <C-J> <C-W>j
-nmap <silent> <unique> <C-K> <C-W>k
-nmap <silent> <unique> <C-L> <C-W>l
 imap <silent> <unique> <C-W> <SPACE><ESC>dbs
 imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
@@ -246,9 +250,7 @@ imap <silent> <unique> <C-H> <Left>
 imap <silent> <unique> <C-J> <Down>
 imap <silent> <unique> <C-K> <Up>
 imap <silent> <unique> <C-L> <Right>
-imap <silent> <unique> <C-S> <Backspace>
-imap <silent> <unique> <C-C> <Del>
-imap <silent> <unique> <C-Z> <C-O>u
+imap <silent> <unique> <C-U> <C-O>u
 nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 
@@ -259,6 +261,10 @@ imap          <unique> <ESC><F8> <ESC>:make! install DESTDIR=<UP>
 nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
 imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
+nmap <silent> <unique> <ESC>h <C-W>h
+nmap <silent> <unique> <ESC>j <C-W>j
+nmap <silent> <unique> <ESC>k <C-W>k
+nmap <silent> <unique> <ESC>l <C-W>l
 
 " Leader+ , Leader char is ',' {{{2
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
@@ -497,3 +503,5 @@ let ConqueTerm_ReadUnfocused = 1
 let ConqueTerm_CWInsert = 0
 
 " }}}1
+
+let c_space_errors=1
