@@ -50,10 +50,10 @@ endif
 
 let mapleader=","
 let html_dynamic_folds=1
+let c_space_errors=1
 syn enable " 语法高亮
 filetype plugin indent on
 color pattern
-
 
 if v:version >= 703
     set undodir=~/.vimundo
@@ -483,9 +483,10 @@ set lazyredraw
 " delimitMate.vim 2.3.1: Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
 " http://github.com/Raimondi/delimitMate
-let g:delimitMate_autoclose = 1
+let g:delimitMate_autoclose = 0
 let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
+let delimitMate_matchpairs = "(:),[:],{:},<:>"
 
 " surround.vim 1.90 : Delete/change/add parentheses/quotes/XML-tags/much more with ease {{{2
 " http://www.vim.org/scripts/script.php?script_id=1697
@@ -503,5 +504,3 @@ let ConqueTerm_ReadUnfocused = 1
 let ConqueTerm_CWInsert = 0
 
 " }}}1
-
-let c_space_errors=1
