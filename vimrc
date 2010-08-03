@@ -615,8 +615,8 @@ map! <Esc>[23;5~ <C-F11>
 map! <Esc>[24;5~ <C-F12>
 
 " rxvt keys {{{2
-map  <Esc>[23~ <S-F1>
-map  <Esc>[24~ <S-F2>
+" <Esc>[23~ confilict between <S-F1> and <F11>
+" <Esc>[24~ confilict between <S-F2> and <F12>
 map  <Esc>[25~ <S-F3>
 map  <Esc>[26~ <S-F4>
 map  <Esc>[28~ <S-F5>
@@ -689,6 +689,5 @@ map! <Esc>[24^ <C-F12>
 " nmap <S-F10> :echo "s-f10"<cr>
 " nmap <S-F11> :echo "s-f11"<cr>
 " nmap <S-F12> :echo "s-f12"<cr>
-
 " }}}1
 
