@@ -27,7 +27,7 @@ set updatetime=1000
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set winaltkeys=no
 set cinoptions=:0,g0,t0,(0
-set timeoutlen=220
+set timeoutlen=500
 set autoread
 set autowrite
 set wildignore=*.o,*.obj,*.orig
@@ -51,6 +51,7 @@ endif
 let mapleader=","
 let html_dynamic_folds=1
 let c_space_errors=1
+let sh_minlines = 500
 syn enable " 语法高亮
 filetype plugin indent on
 color pattern
@@ -219,7 +220,6 @@ nmap <silent> <unique> <F12> <C-]>zz
 vmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
-nmap <silent> <unique> <ESC><ESC> :<CR>
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> <C-D>
@@ -238,6 +238,7 @@ vmap <silent> <unique> + :Align =<CR>
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :q<CR>
+nmap          <unique> <S-F8> :make! install DESTDIR=<UP>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
@@ -253,11 +254,11 @@ imap <silent> <unique> <C-L> <Right>
 imap <silent> <unique> <C-U> <C-O>u
 nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
+nmap <silent> <unique> <C-F8> :make! clean<CR>
 
 " Alt+ {{{2
+nmap <silent> <unique> <ESC><ESC> :<CR>
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
-nmap          <unique> <ESC><F8> :make! install DESTDIR=<UP>
-imap          <unique> <ESC><F8> <ESC>:make! install DESTDIR=<UP>
 nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
 imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
@@ -265,6 +266,7 @@ nmap <silent> <unique> <ESC>h <C-W>h
 nmap <silent> <unique> <ESC>j <C-W>j
 nmap <silent> <unique> <ESC>k <C-W>k
 nmap <silent> <unique> <ESC>l <C-W>l
+nmap <silent> <unique> <ESC>d :CalendarH<CR>
 
 " Leader+ , Leader char is ',' {{{2
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
@@ -314,7 +316,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 12# Plugins {{{
+" 13# Plugins {{{
 " mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
 " http://www.vim.org/scripts/script.php?script_id=521
 "
@@ -503,4 +505,190 @@ let ConqueTerm_TERM = 'rxvt-unicode'
 let ConqueTerm_ReadUnfocused = 1
 let ConqueTerm_CWInsert = 0
 
+" calendar.vim 2.2 : Calendar {{{2
+" http://www.vim.org/scripts/script.php?script_id=52
+let g:calendar_monday = 1
+let g:calendar_mark = 'left-fit'
+let g:calendar_focus_today = 1
 " }}}1
+
+" 3# keys ref: http://tinyurl.com/2cae5vw {{{
+" xterm keys {{{2
+map  <Esc>[1;2P <S-F1>
+map  <Esc>[1;2Q <S-F2>
+map  <Esc>[1;2R <S-F3>
+map  <Esc>[1;2S <S-F4>
+map  <Esc>[15;2~ <S-F5>
+map  <Esc>[17;2~ <S-F6>
+map  <Esc>[18;2~ <S-F7>
+map  <Esc>[19;2~ <S-F8>
+map  <Esc>[20;2~ <S-F9>
+map  <Esc>[21;2~ <S-F10>
+map  <Esc>[23;2~ <S-F11>
+map  <Esc>[24;2~ <S-F12>
+map  <Esc>[1;5P <C-F1>
+map  <Esc>[1;5Q <C-F2>
+map  <Esc>[1;5R <C-F3>
+map  <Esc>[1;5S <C-F4>
+map  <Esc>[15;5~ <C-F5>
+map  <Esc>[17;5~ <C-F6>
+map  <Esc>[18;5~ <C-F7>
+map  <Esc>[19;5~ <C-F8>
+map  <Esc>[20;5~ <C-F9>
+map  <Esc>[21;5~ <C-F10>
+map  <Esc>[23;5~ <C-F11>
+map  <Esc>[24;5~ <C-F12>
+map! <Esc>[1;2P <S-F1>
+map! <Esc>[1;2Q <S-F2>
+map! <Esc>[1;2R <S-F3>
+map! <Esc>[1;2S <S-F4>
+map! <Esc>[15;2~ <S-F5>
+map! <Esc>[17;2~ <S-F6>
+map! <Esc>[18;2~ <S-F7>
+map! <Esc>[19;2~ <S-F8>
+map! <Esc>[20;2~ <S-F9>
+map! <Esc>[21;2~ <S-F10>
+map! <Esc>[23;2~ <S-F11>
+map! <Esc>[24;2~ <S-F12>
+map! <Esc>[1;5P <C-F1>
+map! <Esc>[1;5Q <C-F2>
+map! <Esc>[1;5R <C-F3>
+map! <Esc>[1;5S <C-F4>
+map! <Esc>[15;5~ <C-F5>
+map! <Esc>[17;5~ <C-F6>
+map! <Esc>[18;5~ <C-F7>
+map! <Esc>[19;5~ <C-F8>
+map! <Esc>[20;5~ <C-F9>
+map! <Esc>[21;5~ <C-F10>
+map! <Esc>[23;5~ <C-F11>
+map! <Esc>[24;5~ <C-F12>
+
+" gnome-terminal keys   {{{2
+map  <Esc>O1;2P <S-F1>
+map  <Esc>O1;2Q <S-F2>
+map  <Esc>O1;2R <S-F3>
+map  <Esc>O1;2S <S-F4>
+map  <Esc>[15;2~ <S-F5>
+map  <Esc>[17;2~ <S-F6>
+map  <Esc>[18;2~ <S-F7>
+map  <Esc>[19;2~ <S-F8>
+map  <Esc>[20;2~ <S-F9>
+" not available  <S-F10>
+map  <Esc>[23;2~ <S-F11>
+map  <Esc>[24;2~ <S-F12>
+" not available <C-F1>
+map  <Esc>O1;5Q <C-F2>
+map  <Esc>O1;5R <C-F3>
+map  <Esc>O1;5S <C-F4>
+map  <Esc>[15;5~ <C-F5>
+map  <Esc>[17;5~ <C-F6>
+map  <Esc>[18;5~ <C-F7>
+map  <Esc>[19;5~ <C-F8>
+map  <Esc>[20;5~ <C-F9>
+map  <Esc>[21;5~ <C-F10>
+map  <Esc>[23;5~ <C-F11>
+map  <Esc>[24;5~ <C-F12>
+
+map! <Esc>O1;2P <S-F1>
+map! <Esc>O1;2Q <S-F2>
+map! <Esc>O1;2R <S-F3>
+map! <Esc>O1;2S <S-F4>
+map! <Esc>[15;2~ <S-F5>
+map! <Esc>[17;2~ <S-F6>
+map! <Esc>[18;2~ <S-F7>
+map! <Esc>[19;2~ <S-F8>
+map! <Esc>[20;2~ <S-F9>
+" not available  <S-F10>
+map! <Esc>[23;2~ <S-F11>
+map! <Esc>[24;2~ <S-F12>
+" not available <C-F1>
+map! <Esc>O1;5Q <C-F2>
+map! <Esc>O1;5R <C-F3>
+map! <Esc>O1;5S <C-F4>
+map! <Esc>[15;5~ <C-F5>
+map! <Esc>[17;5~ <C-F6>
+map! <Esc>[18;5~ <C-F7>
+map! <Esc>[19;5~ <C-F8>
+map! <Esc>[20;5~ <C-F9>
+map! <Esc>[21;5~ <C-F10>
+map! <Esc>[23;5~ <C-F11>
+map! <Esc>[24;5~ <C-F12>
+
+" rxvt keys {{{2
+map  <Esc>[23~ <S-F1>
+map  <Esc>[24~ <S-F2>
+map  <Esc>[25~ <S-F3>
+map  <Esc>[26~ <S-F4>
+map  <Esc>[28~ <S-F5>
+map  <Esc>[29~ <S-F6>
+map  <Esc>[31~ <S-F7>
+map  <Esc>[32~ <S-F8>
+map  <Esc>[33~ <S-F9>
+map  <Esc>[34~ <S-F10>
+map  <Esc>[23$ <S-F11>
+map  <Esc>[24$ <S-F12>
+map  <Esc>[11^ <C-F1>
+map  <Esc>[12^ <C-F2>
+map  <Esc>[13^ <C-F3>
+map  <Esc>[14^ <C-F4>
+map  <Esc>[15^ <C-F5>
+map  <Esc>[17^ <C-F6>
+map  <Esc>[18^ <C-F7>
+map  <Esc>[19^ <C-F8>
+map  <Esc>[20^ <C-F9>
+map  <Esc>[21^ <C-F10>
+map  <Esc>[23^ <C-F11>
+map  <Esc>[24^ <C-F12>
+map! <Esc>[23~ <S-F1>
+map! <Esc>[24~ <S-F2>
+map! <Esc>[25~ <S-F3>
+map! <Esc>[26~ <S-F4>
+map! <Esc>[28~ <S-F5>
+map! <Esc>[29~ <S-F6>
+map! <Esc>[31~ <S-F7>
+map! <Esc>[32~ <S-F8>
+map! <Esc>[33~ <S-F9>
+map! <Esc>[34~ <S-F10>
+map! <Esc>[23$ <S-F11>
+map! <Esc>[24$ <S-F12>
+map! <Esc>[11^ <C-F1>
+map! <Esc>[12^ <C-F2>
+map! <Esc>[13^ <C-F3>
+map! <Esc>[14^ <C-F4>
+map! <Esc>[15^ <C-F5>
+map! <Esc>[17^ <C-F6>
+map! <Esc>[18^ <C-F7>
+map! <Esc>[19^ <C-F8>
+map! <Esc>[20^ <C-F9>
+map! <Esc>[21^ <C-F10>
+map! <Esc>[23^ <C-F11>
+map! <Esc>[24^ <C-F12>
+
+" T E S T {{{2
+" nmap <C-F1> :echo "c-f1"<cr>
+" nmap <C-F2> :echo "c-f2"<cr>
+" nmap <C-F3> :echo "c-f3"<cr>
+" nmap <C-F4> :echo "c-f4"<cr>
+" nmap <C-F5> :echo "c-f5"<cr>
+" nmap <C-F6> :echo "c-f6"<cr>
+" nmap <C-F7> :echo "c-f7"<cr>
+" nmap <C-F8> :echo "c-f8"<cr>
+" nmap <C-F9> :echo "c-f9"<cr>
+" nmap <C-F10> :echo "c-f10"<cr>
+" nmap <C-F11> :echo "c-f11"<cr>
+" nmap <C-F12> :echo "c-f12"<cr>
+" nmap <S-F1> :echo "s-f1"<cr>
+" nmap <S-F2> :echo "s-f2"<cr>
+" nmap <S-F3> :echo "s-f3"<cr>
+" nmap <S-F4> :echo "s-f4"<cr>
+" nmap <S-F5> :echo "s-f5"<cr>
+" nmap <S-F6> :echo "s-f6"<cr>
+" nmap <S-F7> :echo "s-f7"<cr>
+" nmap <S-F8> :echo "s-f8"<cr>
+" nmap <S-F9> :echo "s-f9"<cr>
+" nmap <S-F10> :echo "s-f10"<cr>
+" nmap <S-F11> :echo "s-f11"<cr>
+" nmap <S-F12> :echo "s-f12"<cr>
+
+" }}}1
+
