@@ -14,7 +14,7 @@ __IP=`/sbin/ifconfig -v | grep 192.168.1 | tail -1 | cut -d'.' -f4 | cut -d' ' -
 # 全局别名 {{{
 alias -g G="| grep"
 alias -g M="| $__LESS"
-alias -g C="| xsel"
+alias -g Y="| xsel"
 # }}}
 
 # 普通别名 {{{
@@ -50,6 +50,7 @@ alias apo="$__SUDO apt-get source"
 alias ape="$__SUDO vi /etc/apt/sources.list"
 alias apr="$__SUDO apt-get remove"
 alias apu="$__SUDO apt-get update"
+alias app="$__SUDO apt-get purge"
 alias apg="apt-cache search"
 alias aps="apt-cache show"
 alias apv="apt-cache policy"
@@ -176,7 +177,7 @@ P() { # ps
     ps -ef | grep "$1" | grep -v "grep"
 }
 F() { # find
-    find ./ -iname "$1" ${(@)argv[2,$#]} C
+    find ./ -iname "*$1*" ${(@)argv[2,$#]}
 }
 R() { # find in files
     grep -r $1 . ${(@)argv[2,$#]} M
