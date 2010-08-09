@@ -70,7 +70,7 @@ hi def link diffFile    DiffText
 hi def link diffSubname String
 hi def link diffLine    String
 " vimwiki
-hi VimwikiItalic                                            cterm=italic                                                gui=italic
+hi VimwikiItalic        ctermfg=darkyellow                  cterm=italic                                                gui=italic
 hi VimwikiDelText       ctermfg=darkgray                                        guifg=black
 hi VimwikiList          ctermfg=green                                           guifg=#00ee00
 " taglist
