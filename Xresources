@@ -20,9 +20,19 @@ URxvt.perl-ext-common:   default,matcher,mark-yank-urls
 URxvt.intensityStyles:   False
 
 Xft.dpi:          96
-URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Zen Hei Sharp
-URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei
+!URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Zen Hei Sharp
+!URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-10
+URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Micro Hei-10
+URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-11
 URxvt.italicFont:xft:Envy Code R-10:italic, xft:Liberation Mono-10:italic, xft:AR PL UKai CN-11
+URxvt.keysym.M-Up: command: \
+        \033]710;xft:Liberation Mono-13, xft:WenQuanYi Micro Hei-12\007 \
+        \033]711;xft:Liberation Mono-13:bold, xft:WenQuanYi Micro Hei-13\007 \
+        \033]712;xft:Liberation Mono-13:italic, xft:AR PL UKai CN-13\007
+URxvt.keysym.M-Down: command: \
+        \033]710;xft:Envy Code R-10, xft:WenQuanYi Micro Hei-10\007 \
+        \033]711;xft:Envy Code R-10:bold, xft:WenQuanYi Micro Hei-11\007 \
+        \033]712;xft:Envy Code R-10:italic, xft:AR PL UKai CN-11\007
 
 ! @@ COLORS AND GRAPHICS @@ {{{
 ! man urxvt
@@ -57,15 +67,6 @@ URxvt.colorIT:       chocolate4
 !!scroll_up
 URxvt.keysym.M-minus:command:\033]720;5\007
 URxvt.keysym.M-space:command:\033]721;5\007
-!!font size
-URxvt.keysym.M-Up: command: \
-        \033]710;xft:Liberation Mono-13, xft:WenQuanYi Bitmap Song-11\007 \
-        \033]711;xft:Liberation Mono-13:bold, xft:WenQuanYi Micro Hei\007 \
-        \033]712;xft:Liberation Mono-13:italic, xft:AR PL UKai CN\007
-URxvt.keysym.M-Down: command: \
-        \033]710;xft:Envy Code R-10, xft:WenQuanYi Zen Hei Sharp\007 \
-        \033]711;xft:Envy Code R-10:bold, xft:WenQuanYi Micro Hei\007 \
-        \033]712;xft:Envy Code R-10:italic, xft:AR PL UKai CN-11\007
 !!mouseless url yanking
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !!icon path
