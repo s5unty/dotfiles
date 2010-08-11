@@ -1,0 +1,4 @@
+--type-set=wiki=.wiki
+--type-set=ini=.ini,.cfg
+--color-match=on_black
+

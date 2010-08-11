@@ -180,7 +180,7 @@ F() { # find
     find ./ -iname "*$1*" ${(@)argv[2,$#]}
 }
 R() { # find in files
-    grep -r $1 . ${(@)argv[2,$#]} M
+    ack-grep -r $1 . ${(@)argv[2,$#]}
 }
 CS() { # gen cscope.files
     mkdir -p .cscope
