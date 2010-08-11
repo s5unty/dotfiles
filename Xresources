@@ -59,7 +59,7 @@ URxvt.keysym.M-minus:command:\033]720;5\007
 URxvt.keysym.M-space:command:\033]721;5\007
 !!font size
 URxvt.keysym.M-Up: command: \
-        \033]710;xft:Liberation Mono-13, xft:WenQuanYi Zen Hei\007 \
+        \033]710;xft:Liberation Mono-13, xft:WenQuanYi Bitmap Song-11\007 \
         \033]711;xft:Liberation Mono-13:bold, xft:WenQuanYi Micro Hei\007 \
         \033]712;xft:Liberation Mono-13:italic, xft:AR PL UKai CN\007
 URxvt.keysym.M-Down: command: \
