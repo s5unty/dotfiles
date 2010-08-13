@@ -186,8 +186,8 @@ clientbuttons = awful.util.table.join(
 globalkeys = awful.util.table.join (
 
     -- {{{ Screen
-	awful.key({ modkey, "Control" }, "Left",   function () awful.screen.focus(-1) end),
-	awful.key({ modkey, "Control" }, "Right",  function () awful.screen.focus( 1) end),
+	awful.key({ modkey, "Control" }, "h",   function () awful.screen.focus_relative (-1) end),
+	awful.key({ modkey, "Control" }, "l",   function () awful.screen.focus_relative ( 1) end),
 	awful.key({ modkey }, "Escape", function () mymainmenu:show(true)  end),
     -- }}}
 
@@ -476,13 +476,15 @@ awful.rules.rules = {
 
 	-- Set Firefox to always map on tags number 2 of screen 1.
 	{ rule = { instance = "Navigator" },
-	  properties = { tag = tags[1][2] } },
+	  properties = { floating = false, border_width = 0, tag = tags[1][2] } },
 	{ rule = { instance = "Mutt" },
 	  properties = { tag = tags[1][3] } },
 	{ rule = { instance = "Weechat" },
 	  properties = { tag = tags[1][3] } },
 	{ rule = { class = "VirtualBox" },
 	  properties = { tag = tags[1][6] } },
+	{ rule = { instance = "ssh-askpass" },
+	  properties = { tag = tags[1][2] } },
 }
 -- }}}
 

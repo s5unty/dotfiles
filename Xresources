@@ -1,3 +1,4 @@
+! @@ General @@ {{{
 URxvt.termName:     rxvt-unicode
 URxvt.scrollBar:    False
 URxvt.cursorBlink:  True
@@ -16,9 +17,11 @@ URxvt.scrollTtyOutput:   False
 URxvt.scrollWithBuffer:  True
 URxvt.secondaryScreen:   True
 URxvt.secondaryScroll:   True
-URxvt.perl-ext-common:   default,matcher,mark-yank-urls
+URxvt.perl-ext-common:   default,matcher,mark-yank-urls,vim-scrollback,-searchable-scrollback
 URxvt.intensityStyles:   False
+! }}}
 
+! @@ FONTS @@ {{{
 Xft.dpi:          96
 !URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Zen Hei Sharp
 !URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-10
@@ -33,6 +36,7 @@ URxvt.keysym.M-Down: command: \
         \033]710;xft:Envy Code R-10, xft:WenQuanYi Micro Hei-10\007 \
         \033]711;xft:Envy Code R-10:bold, xft:WenQuanYi Micro Hei-11\007 \
         \033]712;xft:Envy Code R-10:italic, xft:AR PL UKai CN-11\007
+! }}}
 
 ! @@ COLORS AND GRAPHICS @@ {{{
 ! man urxvt
@@ -62,16 +66,24 @@ URxvt.colorIT:       chocolate4
 *color13:   hot pink
 *color14:   cyan1
 *color15:   white
-! }}}
 
-!!scroll_up
-URxvt.keysym.M-minus:command:\033]720;5\007
-URxvt.keysym.M-space:command:\033]721;5\007
-!!mouseless url yanking
-URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !!icon path
 URxvt.iconFile:     $HOME/.config/awesome/terminator.png
 Mutt.iconFile:      /usr/share/pixmaps/mutt.xpm
 Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm
+! }}}
 
+! @@ Shortkeys @@ {{{
+!! scroll_up
+URxvt.keysym.M-minus:command:\033]720;5\007
+!! scroll_down
+URxvt.keysym.M-space:command:\033]721;5\007
+!! rot13
 URxvt.keysym.C-M-r: perl:selection:rot13
+!! mouseless url yanking
+URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
+!! vim-scrollback
+!! http://github.com/ervandew/vimfiles
+URxvt.vim-scrollback-paste: M-p
+URxvt.vim-scrollback: M-s
+! }}}
