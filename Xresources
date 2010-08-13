@@ -84,6 +84,6 @@ URxvt.keysym.C-M-r: perl:selection:rot13
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
-URxvt.vim-scrollback-paste: M-p
+URxvt.vim-scrollback-paste: none
 URxvt.vim-scrollback: M-s
 ! }}}

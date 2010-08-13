@@ -713,14 +713,14 @@ sub key_press_visual {
       }
    } elsif ($string eq "y") {
       $self->{registers}{'"'} = $self->selection();
-      $self->normal_mode($event, 1);
+      $self->leave($event);
    } elsif ($string eq "Y") {
       # the act of selecting puts the text on the primary, so just need to copy
       # to secondary.
       if (open(my $process, "| xclip -i -selection clipboard")){
          print $process $self->selection();
       }
-      $self->normal_mode($event, 1);
+      $self->leave($event);
    #} elsif ($string !~ /[\x00-\x1f\x80-\xaf]/) {
    }else{
       # pass to key_press_normal
