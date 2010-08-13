@@ -319,10 +319,10 @@ sub key_press_normal {
    my ($self, $event, $keysym, $string) =  @_;
 
    $self->msg("");
-   if ($keysym == 0xff1b ||
-      $string =~ /^\cC$/ ||
+   if ($string =~ /^\cC$/ ||
+       $string =~ /^\cQ$/ ||
       ($self->{key_buffer} =~ /^:qa?$/ && $keysym == 0xff0d))
-   { # esc, ctrl-c, :q<enter>, :qa<enter>
+   { # ctrl-c, ctrl-q, :q<enter>, :qa<enter>
       if($self->{key_buffer} and $self->{key_buffer} !~ /^:qa?$/){
          $self->{key_buffer} = "";
          $self->msg("");
@@ -482,12 +482,12 @@ sub key_press_normal {
    } elsif ($string eq "G") {
       $self->set_mark("'");
       $self->move_cursor($event, $self->{orig_lnum}, $self->{orig_cnum});
-   } elsif ($string =~ /^\cD$/) {
+   } elsif ($string eq ' ' or $string =~ /^\cD$/) {
       my ($lnum, $cnum) = $self->screen_cur();
       my $row = $lnum + 20;
       $row = $row < $self->{orig_lnum} ? $row : $self->{orig_lnum};
       $self->move_cursor($event, $row, $cnum);
-   } elsif ($string =~ /^\cU$/) {
+   } elsif ($string eq '-' or $string =~ /^\cU$/) {
       my ($lnum, $cnum) = $self->screen_cur();
       my $row = $lnum - 20;
       $row = $row > $self->top_row ? $row : $self->top_row;
