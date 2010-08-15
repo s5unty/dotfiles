@@ -21,7 +21,7 @@ do
 done
 
 dir=`pwd -P | grep -E -o "\w*$"`
-pre='~s5unty/'
+pre='debian/'
 cd -P ..
 dpkg-scanpackages -m $dir /dev/null $pre 2> /dev/null | gzip > $dir/Packages.gz
 dpkg-scansources $dir /dev/null $pre 2> /dev/null | gzip > $dir/Sources.gz
