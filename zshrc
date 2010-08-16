@@ -423,7 +423,7 @@ zle_highlight=(region:bg=blue     #选中区域
                isearch:underline) #搜索时使用的关键字
 
 # 检查邮件 {{{
-for i in /sun/mails/(e6-1170|company|personal|debian-zh)(/); do
+for i in /sun/mails/(company|personal)(/); do
     mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
 done
 # }}}
