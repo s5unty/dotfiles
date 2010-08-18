@@ -7,7 +7,7 @@
 /usr/bin/mocp -S
 /usr/bin/xmailleds -ls -M -m /sun/mails/company
 /usr/bin/xmailleds -ls -M -m /sun/mails/personal
-/usr/bin/autossh -f -N -D 192.168.1.60:9527 s5unty@du1abadd.org
+/usr/bin/autossh -f -N -D 127.0.0.1:9527 du1abadd.org
 /usr/bin/synergys
 
 # nvidia-settings -l
