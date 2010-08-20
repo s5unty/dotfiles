@@ -142,8 +142,7 @@ function! G_CloseBuffer()
 		endif
 	endif
 
-	exec "normal /" . name . "\<CR>\<CR>"
-	wincmd w
+	exec "normal /" . name . "\<CR>"
 	normal d
 	call G_GotoEditor()
 endfunction
@@ -228,7 +227,6 @@ nmap <silent> <unique> q  :<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
-imap <silent> <unique> ;; <ESC>zz
 nmap <silent> <unique> ' 10[{kz<CR>
 vmap <silent> <unique> + :Align =<CR>
 "nmap <silent> <unique> [ :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
@@ -302,7 +300,7 @@ if has("autocmd")
   endfunction
 
   " 每次访问文件时都把光标放置在上次离开的位置
-  autocmd BufReadPost *
+  autocmd BufWinEnter *
     \ call <SID>AC_ResetCursorPosition()
 
   " 让 checkpath 找到相关文件，便于 [I 正常工作
@@ -441,30 +439,17 @@ function! <SID>CscopeFind(mask, quick)
     call G_QFixToggle(1)
 endfunction
 
-" vimwiki 1.0 : Personal Wiki for Vim {{{2
-" http://www.vim.org/scripts/script.php?script_id=2226
-let g:vimwiki_list = [
-            \ { 'proj': 'main', 'path': '/sun/wiki/', 'path_html': '/sun/wiki/', 'ext': '.wiki' }]
-function! <SID>VimwikiGoMain()
-    let main_path = expand('/sun/wiki/')
-    let idx = 1
-    for wiki in g:vimwiki_list
-"        if stridx(getcwd(), wiki.proj, strlen(main_path)) > 0
-            call vimwiki#WikiGoHome(idx)
-            call vimwiki_html#WikiAll2HTML(wiki.path_html)
-            return
-"        endif
-        let idx += 1
-    endfor
-endfunction
-
-function! <SID>G_Asciidoc2Html()
-    let wiki = g:vimwiki_list[g:vimwiki_current_idx]['path']
-    let html = g:vimwiki_list[g:vimwiki_current_idx]['path_html']
-    let src  = expand('%:f')
-    let dst  = expand('%:t:r').".html"
-    exec ":! asciidoc -o ".html.dst." ".wiki.src
-endfunction
+" vimwiki 1.1-dev : Personal Wiki for Vim {{{2
+" http://code.google.com/p/vimwiki/
+let wiki_main = {}
+let wiki_main.ext = '.wiki'
+let wiki_main.path = '/sun/wiki/'
+let wiki_main.path_html = '/sun/wiki/html/'
+let wiki_main.auto_export = 1
+let wiki_main.diary_index = 'index'
+let wiki_main.diary_rel_path = ''
+let wiki_main.diary_link_count = 10
+let g:vimwiki_list = [wiki_main]
 
 " snipMate 0.83 : TextMate-style snippets for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2540
