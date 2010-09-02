@@ -1,3 +1,4 @@
+" vim:tabstop=2:shiftwidth=2:expandtab:foldmethod=marker:textwidth=79
 " Vimwiki filetype plugin file
 " Author: Maxim Kim <habamax@gmail.com>
 " Home: http://code.google.com/p/vimwiki/
@@ -20,6 +21,11 @@ let b:undo_ftplugin = "setlocal ".
 
 setlocal autowriteall
 setlocal commentstring=<!--%s-->
+
+if g:vimwiki_conceallevel && exists("+conceallevel")
+  let &conceallevel = g:vimwiki_conceallevel
+endif
+
 " MISC }}}
 
 " GOTO FILE: gf {{{
@@ -37,19 +43,22 @@ else
 endif
 setlocal formatoptions=tnro
 
-inoremap <buffer> <expr> <CR> vimwiki_lst#insertCR()
-nnoremap <buffer> o :call vimwiki_lst#insertOo('o')<CR>a
-nnoremap <buffer> O :call vimwiki_lst#insertOo('O')<CR>a
+if !empty(&langmap)
+  " Valid only if langmap is a comma separated pairs of chars
+  let l_o = matchstr(&langmap, '\C,\zs.\zeo,')
+  if l_o
+    exe 'nnoremap <buffer> '.l_o.' :call vimwiki_lst#kbd_oO("o")<CR>a'
+  endif
+
+  let l_O = matchstr(&langmap, '\C,\zs.\zeO,')
+  if l_O
+    exe 'nnoremap <buffer> '.l_O.' :call vimwiki_lst#kbd_oO("O")<CR>a'
+  endif
+endif
 
 " COMMENTS }}}
 
 " FOLDING for headers and list items using expr fold method. {{{
-if g:vimwiki_folding == 1
-  setlocal fdm=expr
-  setlocal foldexpr=VimwikiFoldLevel(v:lnum)
-  setlocal foldtext=VimwikiFoldText()
-endif
-
 function! VimwikiFoldLevel(lnum) "{{{
   let line = getline(a:lnum)
 
@@ -72,7 +81,7 @@ function! VimwikiFoldLevel(lnum) "{{{
   " List item folding...
   if g:vimwiki_fold_lists
     let base_level = s:get_base_level(a:lnum)
-
+    
     let rx_list_item = '\('.
           \ g:vimwiki_rxListBullet.'\|'.g:vimwiki_rxListNumber.
           \ '\)'
@@ -83,7 +92,7 @@ function! VimwikiFoldLevel(lnum) "{{{
       let level = s:get_li_level(a:lnum)
       let leveln = s:get_li_level(nnum)
       let adj = s:get_li_level(s:get_start_list(rx_list_item, a:lnum))
-
+      
       if leveln > level
         return ">".(base_level+leveln-adj)
       else
@@ -180,7 +189,7 @@ function! s:get_start_list(rx_item, lnum) "{{{
 endfunction "}}}
 
 function! VimwikiFoldText() "{{{
-  let line = substitute(getline(v:foldstart), '\t',
+  let line = substitute(getline(v:foldstart), '\t', 
         \ repeat(' ', &tabstop), 'g')
   return line.' ['.(v:foldend - v:foldstart).']'
 endfunction "}}}
@@ -205,6 +214,8 @@ command! -buffer VimwikiVSplitWord call vimwiki#WikiFollowWord('vsplit')
 
 command! -buffer -range VimwikiToggleListItem call vimwiki_lst#ToggleListItem(<line1>, <line2>)
 
+command! -buffer VimwikiGenerateLinks call vimwiki#generate_links()
+
 exe 'command! -buffer -nargs=* VimwikiSearch vimgrep <args> '.
       \ escape(VimwikiGet('path').'**/*'.VimwikiGet('ext'), ' ')
 
@@ -215,6 +226,8 @@ exe 'command! -buffer -nargs=* VWS vimgrep <args> '.
 command! -buffer -nargs=* VimwikiTable call vimwiki_tbl#create(<f-args>)
 command! -buffer VimwikiTableAlignQ call vimwiki_tbl#align_or_cmd('gqq')
 command! -buffer VimwikiTableAlignW call vimwiki_tbl#align_or_cmd('gww')
+command! -buffer VimwikiTableMoveColumnLeft call vimwiki_tbl#move_column_left()
+command! -buffer VimwikiTableMoveColumnRight call vimwiki_tbl#move_column_right()
 
 " COMMANDS }}}
 
@@ -287,25 +300,57 @@ noremap <silent><script><buffer>
       \ <Plug>VimwikiToggleListItem :VimwikiToggleListItem<CR>
 
 
+function! s:CR() "{{{
+  let res = vimwiki_lst#kbd_cr()
+  if res == "\<CR>" && g:vimwiki_table_auto_fmt
+    let res = vimwiki_tbl#kbd_cr()
+  endif
+  return res
+endfunction "}}}
+
+" List and Table <CR> mapping
+inoremap <buffer> <expr> <CR> <SID>CR()
+
+" List mappings
+nnoremap <buffer> o :call vimwiki_lst#kbd_oO('o')<CR>a
+nnoremap <buffer> O :call vimwiki_lst#kbd_oO('O')<CR>a
+
 " Table mappings
 if g:vimwiki_table_auto_fmt
-  inoremap <expr> <buffer> <CR> vimwiki_tbl#kbd_cr()
   inoremap <expr> <buffer> <Tab> vimwiki_tbl#kbd_tab()
+  inoremap <expr> <buffer> <S-Tab> vimwiki_tbl#kbd_shift_tab()
 endif
 
 nnoremap <buffer> gqq :VimwikiTableAlignQ<CR>
 nnoremap <buffer> gww :VimwikiTableAlignW<CR>
+nnoremap <buffer> <A-Left> :VimwikiTableMoveColumnLeft<CR>
+nnoremap <buffer> <A-Right> :VimwikiTableMoveColumnRight<CR>
+
+" Misc mappings
+inoremap <buffer> <S-CR> <br /><CR>
 
 
 " Text objects {{{
-omap <silent><buffer> ah :<C-U>call vimwiki#TO_header(0, 0)<CR>
-vmap <silent><buffer> ah :<C-U>call vimwiki#TO_header(0, 1)<CR>
+onoremap <silent><buffer> ah :<C-U>call vimwiki#TO_header(0, 0)<CR>
+vnoremap <silent><buffer> ah :<C-U>call vimwiki#TO_header(0, 1)<CR>
 
-omap <silent><buffer> ih :<C-U>call vimwiki#TO_header(1, 0)<CR>
-vmap <silent><buffer> ih :<C-U>call vimwiki#TO_header(1, 1)<CR>
+onoremap <silent><buffer> ih :<C-U>call vimwiki#TO_header(1, 0)<CR>
+vnoremap <silent><buffer> ih :<C-U>call vimwiki#TO_header(1, 1)<CR>
 
-nmap <silent><buffer> = :call vimwiki#AddHeaderLevel()<CR>
-nmap <silent><buffer> - :call vimwiki#RemoveHeaderLevel()<CR>
+onoremap <silent><buffer> a\ :<C-U>call vimwiki#TO_table_cell(0, 0)<CR>
+vnoremap <silent><buffer> a\ :<C-U>call vimwiki#TO_table_cell(0, 1)<CR>
+
+onoremap <silent><buffer> i\ :<C-U>call vimwiki#TO_table_cell(1, 0)<CR>
+vnoremap <silent><buffer> i\ :<C-U>call vimwiki#TO_table_cell(1, 1)<CR>
+
+onoremap <silent><buffer> ac :<C-U>call vimwiki#TO_table_col(0, 0)<CR>
+vnoremap <silent><buffer> ac :<C-U>call vimwiki#TO_table_col(0, 1)<CR>
+
+onoremap <silent><buffer> ic :<C-U>call vimwiki#TO_table_col(1, 0)<CR>
+vnoremap <silent><buffer> ic :<C-U>call vimwiki#TO_table_col(1, 1)<CR>
+
+noremap <silent><buffer> = :call vimwiki#AddHeaderLevel()<CR>
+noremap <silent><buffer> - :call vimwiki#RemoveHeaderLevel()<CR>
 
 " }}}
 

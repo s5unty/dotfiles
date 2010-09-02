@@ -1,3 +1,4 @@
+" vim:tabstop=2:shiftwidth=2:expandtab:foldmethod=marker:textwidth=79
 " Vimwiki autoload plugin file
 " Todo lists related stuff here.
 " Author: Maxim Kim <habamax@gmail.com>
@@ -170,7 +171,7 @@ function! s:get_child_items(lnum) "{{{
     call add(result, lnum)
     let lnum = s:next_list_item(lnum)
   endwhile
-
+  
   return result
 endfunction "}}}
 
@@ -180,9 +181,7 @@ function! s:get_sibling_items(lnum) "{{{
   let lnum = a:lnum
   let ind = s:get_level(lnum)
 
-  while s:get_level(lnum) >= ind &&
-        \ lnum != 0
-
+  while lnum != 0 && s:get_level(lnum) >= ind
     if s:get_level(lnum) == ind && s:is_cb_list_item(lnum)
       call add(result, lnum)
     endif
@@ -190,15 +189,13 @@ function! s:get_sibling_items(lnum) "{{{
   endwhile
 
   let lnum = s:prev_list_item(a:lnum)
-  while s:get_level(lnum) >= ind &&
-        \ lnum != 0
-
+  while lnum != 0 && s:get_level(lnum) >= ind
     if s:get_level(lnum) == ind && s:is_cb_list_item(lnum)
       call add(result, lnum)
     endif
     let lnum = s:prev_list_item(lnum)
   endwhile
-
+  
   return result
 endfunction "}}}
 
@@ -224,7 +221,8 @@ function! s:create_cb_list_item(lnum) "{{{
   let line = getline(a:lnum)
   let m = matchstr(line, s:rx_list_item())
   if m != ''
-    let line = m.' [ ]'.strpart(line, len(m))
+    let li_content = substitute(strpart(line, len(m)), '^\s*', '', '')
+    let line = substitute(m, '\s*$', ' ', '').'[ ] '.li_content
     call setline(a:lnum, line)
   endif
 endfunction "}}}
@@ -235,9 +233,9 @@ function! s:all_siblings_checked(lnum) "{{{
   let cnt = 0
   let siblings = s:get_sibling_items(a:lnum)
   for lnum in siblings
-    let cnt += s:get_state(lnum)/100.0
+    let cnt += s:get_state(lnum)
   endfor
-  let result = (cnt*100.0)/len(siblings)
+  let result = cnt/len(siblings)
   return result
 endfunction "}}}
 
@@ -288,7 +286,7 @@ endfunction "}}}
 
 " Script functions }}}
 
-" Toggle list item between [ ] and [x]
+" Toggle list item between [ ] and [X]
 function! vimwiki_lst#ToggleListItem(line1, line2) "{{{
   let line1 = a:line1
   let line2 = a:line2
@@ -316,5 +314,46 @@ function! vimwiki_lst#ToggleListItem(line1, line2) "{{{
     let c_lnum = s:find_next_list_item(c_lnum)
   endwhile
 
+endfunction "}}}
+
+function! vimwiki_lst#kbd_cr() "{{{
+  " This function is heavily relies on proper 'set comments' option.
+  let cr = "\<CR>"
+  if getline('.') =~ s:rx_cb_list_item()
+    let cr .= '[ ] '
+  endif
+  return cr
+endfunction "}}}
+
+function! vimwiki_lst#kbd_oO(cmd) "{{{
+  " cmd should be 'o' or 'O'
+
+  let beg_lnum = foldclosed('.')
+  let end_lnum = foldclosedend('.')
+  if end_lnum != -1 && a:cmd ==# 'o'
+    let lnum = end_lnum
+    let line = getline(beg_lnum)
+  else
+    let line = getline('.')
+    let lnum = line('.')
+  endif
+
+    " let line = substitute(m, '\s*$', ' ', '').'[ ] '.li_content
+  let m = matchstr(line, s:rx_list_item())
+  let res = ''
+  if line =~ s:rx_cb_list_item()
+    let res = substitute(m, '\s*$', ' ', '').'[ ] '
+  elseif line =~ s:rx_list_item()
+    let res = substitute(m, '\s*$', ' ', '')
+  elseif &autoindent || &smartindent
+    let res = matchstr(line, '^\s*')
+  endif
+  if a:cmd ==# 'o'
+    call append(lnum, res)
+    call cursor(lnum + 1, col('$'))
+  else
+    call append(lnum - 1, res)
+    call cursor(lnum, col('$'))
+  endif
 endfunction "}}}
 
