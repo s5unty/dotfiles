@@ -57,7 +57,7 @@ filetype plugin indent on
 color pattern
 
 if v:version >= 703
-    set undodir=~/.vimundo
+    set undodir=~/.vimundo/
     set undofile
 endif
 " }}}
@@ -207,8 +207,8 @@ nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEF
 nmap <silent> <unique> <F6> :ConqueTermSplit zsh<CR>
 nmap <silent> <unique> <F7> zi<CR>
 imap <silent> <unique> <F7> <Esc>zi<CR>
-nmap <silent> <unique> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
-imap <silent> <unique> <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
+nmap <silent>          <F8> :make!<CR>:call G_QFixToggle(1)<CR>
+imap <silent>          <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
 nmap          <unique> <F9> :!<UP>
 imap          <unique> <F9> <ESC>:!<UP>
 nmap <silent> <unique> <F10> :Mru<CR>
@@ -441,15 +441,24 @@ endfunction
 
 " vimwiki 1.1-dev : Personal Wiki for Vim {{{2
 " http://code.google.com/p/vimwiki/
-let wiki_main = {}
-let wiki_main.ext = '.wiki'
-let wiki_main.path = '/sun/wiki/'
-let wiki_main.path_html = '/sun/wiki/html/'
-let wiki_main.auto_export = 1
-let wiki_main.diary_index = 'index'
-let wiki_main.diary_rel_path = ''
-let wiki_main.diary_link_count = 10
-let g:vimwiki_list = [wiki_main]
+let vw_home = '/sun/wiki/'
+let vw_html = '/sun/wiki/html/'
+let vw_journal = {}
+let vw_android = {}
+let g:vimwiki_list = [vw_journal, vw_android]
+
+let vw_journal.auto_export = 1
+let vw_journal.path = vw_home.'journal'
+let vw_journal.path_html = vw_html.'journal'
+let vw_journal.html_header = vw_html.'header.tpl'
+let vw_journal.diary_index = 'index'
+let vw_journal.diary_rel_path = ''
+let vw_journal.diary_link_count = 10
+
+let vw_android.auto_export = 1
+let vw_android.path = vw_home.'android'
+let vw_android.path_html = vw_html.'android'
+let vw_android.html_header = vw_html.'header.tpl'
 
 " snipMate 0.83 : TextMate-style snippets for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2540

@@ -22,6 +22,18 @@ VERBOSE=off
     | $FORMAIL -I "X-LDate: ${loc_date} | ${org_date} ${zone}"
 }
 
+:0
+* ^(List-Id|To|CC|BCC):.*e6-1170.*(mid-fun.com)
+company/
+
+:0
+* ^(From):.*trac@mid-fun.com
+company/
+
+:0
+* ^(List-Id|To|CC|BCC):.*(mid-fun.com)
+company/
+
 # 关心的邮件列表
 :0
 * ^(List-Id|To|CC|BCC):.*(debian-chinese-|ubuntu-zh)
@@ -38,6 +50,10 @@ debian-mentors/
 :0
 * ^(List-Id|To|CC|BCC):.*(awesome-devel)
 awesome/
+
+:0
+* ^(List-Id|To|CC|BCC):.*vimim.googlegroups.com
+vimim/
 
 :0
 * ^(List-Id|To|CC|BCC):.*shlug.googlegroups.com

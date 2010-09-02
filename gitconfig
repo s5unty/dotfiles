@@ -75,7 +75,7 @@
     co  = checkout
     cd  = checkout -b
 	cp  = cherry-pick --no-commit # 复制一个 commit 所做的修改
-	cpr = merge --squash # 复制一个分支所做的修改
+	touch = branch -M
 
     di  = diff -p --stat # show difference between working tree and the index
     dc  = diff -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
@@ -95,7 +95,7 @@
 
     # 核弹级选项: filter-branch
     # http://progit.org/book/zh/ch6-4.html
-    nc = filter-branch --tree-filter
+    nc = filter-branch -f --tree-filter
 
     st  = status -s
 

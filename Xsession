@@ -1,17 +1,19 @@
 #!/bin/sh
 
-/usr/bin/xset b off m 3 10 r rate 400 30
+/usr/bin/sshfs s5unty@du1abadd.org:/sun/pages /sun/wiki/html &
+/usr/bin/autossh -f -N -D 0.0.0.0:9527 du1abadd.org
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
-/usr/bin/fetchmail -d 600
+/usr/bin/xset b off m 3 10 r rate 400 30
+/usr/bin/xmodmap ~/.Xmodmaprc
 /usr/bin/x-www-browser &
+/usr/bin/fetchmail -d 600
 /usr/bin/mocp -S
 /usr/bin/xmailleds -ls -M -m /sun/mails/company
 /usr/bin/xmailleds -ls -M -m /sun/mails/personal
-/usr/bin/autossh -f -N -D 127.0.0.1:9527 du1abadd.org
-/usr/bin/synergys
-
-# nvidia-settings -l
-# /usr/bin/xmodmap ~/.Xmodmaprc
-# /usr/bin/synergyc -d ERROR 192.168.1.60
+/usr/bin/synergys # synergy server
+# synergy client
+# sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
+/usr/bin/xscreensaver -no-splash &
+/usr/bin/gdlinux
 
 exec /usr/bin/awesome

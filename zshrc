@@ -161,7 +161,7 @@ cd() {
         ls
     fi
 }
-if [ -f `which todo` ]; then todo; fi
+if [ -f "`which todo`" ]; then todo; fi
 
 T() { # tail
     if [ -r $*[$#] ]; then
