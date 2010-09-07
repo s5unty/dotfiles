@@ -32,6 +32,12 @@ set autoread
 set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
+set wildmode=longest:full,list:full
+ 
+if has("gui_running")
+    set guioptions-=m
+    set guioptions-=T
+endif
 
 if has("win32")
     au GUIEnter * simalt ~x
@@ -255,6 +261,13 @@ nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:b
 nmap <silent> <unique> <C-F8> :make! clean<CR>
 
 " Alt+ {{{2
+if has("gui_running")
+nmap <silent> <unique> <A-h> <C-W>h
+nmap <silent> <unique> <A-j> <C-W>j
+nmap <silent> <unique> <A-k> <C-W>k
+nmap <silent> <unique> <A-l> <C-W>l
+nmap <silent> <unique> <A-d> :CalendarH<CR>
+else
 nmap <silent> <unique> <ESC><ESC> :<CR>
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
 nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
@@ -265,6 +278,7 @@ nmap <silent> <unique> <ESC>j <C-W>j
 nmap <silent> <unique> <ESC>k <C-W>k
 nmap <silent> <unique> <ESC>l <C-W>l
 nmap <silent> <unique> <ESC>d :CalendarH<CR>
+endif
 
 " Leader+ , Leader char is ',' {{{2
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
@@ -504,6 +518,8 @@ let ConqueTerm_CWInsert = 0
 let g:calendar_monday = 1
 let g:calendar_mark = 'left-fit'
 let g:calendar_focus_today = 1
+
+
 " }}}1
 
 " 3# keys ref: http://tinyurl.com/2cae5vw {{{
