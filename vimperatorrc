@@ -1,5 +1,4 @@
-" work with theme 'Chromifox Extreme'
-hi StatusLine background: #D2E1F6;
+hi StatusLine background: #DCDAD5;
 
 " binding
 map    . <C-PageDown>
@@ -18,7 +17,8 @@ map <C-q> :winclose<CR>
 map <C-.> :tabm +1<CR>
 map <C-,> :tabm -1<CR>
 map W     ;w
-map b     :bmarks -tag
+map b     :bmarks 
+map a     :emenu GMarks.添加/编辑书签<CR>:bmark<CR>
 
 map <silent> qd :set ds=d<CR>P:set ds=google<CR>
 map <silent> qg :set ds=gtk<CR>P:set ds=google<CR>
@@ -30,8 +30,8 @@ map	<silent> <S-F12> :set! extensions.autoproxy.proxyMode=auto<CR>
 
 " general
 set go=b
-set cpt=sl
+set cpt=bl
 set fc
 set shell="/usr/bin/zsh"
-set editor="urxvt -e zsh -c 'stty -ixon; vim --noplugin'"
+set editor="/usr/bin/gvim"
 set newtab=all

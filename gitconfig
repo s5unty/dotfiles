@@ -7,37 +7,37 @@
     headers = ""
     subjectprefix = ""
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [push]
-	default = current
+    default = current
 [gui]
-	fontdiff = -family \"Andale Mono\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
+    fontdiff = -family \"Andale Mono\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
 # }}}
 
 [tig] # {{{
-	show-refs = yes
-	show-rev-graph = yes
-	line-graphics = no
-	commit-encoding = "UTF-8"
-	author-width = 16
-	tab-size = 4
+    show-refs = yes
+    show-rev-graph = yes
+    line-graphics = no
+    commit-encoding = "UTF-8"
+    author-width = 16
+    tab-size = 4
 [tig "color"]
-	default = default default
-	date = green default
-	author = default default
-	cursor = white blue
-	title-blur = black white
-	title-focus = black white bold
+    default = default default
+    date = green default
+    author = default default
+    cursor = white blue
+    title-blur = black white
+    title-focus = black white bold
 [tig "bind"]
-	generic = i view-close
+    generic = i view-close
     main = i view-main
-	main = q view-main
-	main = s view-status
-	main = space enter
-	diff = , previous
-	diff = . next
-	stage = , previous
-	stage = . next
+    main = q view-main
+    main = s view-status
+    main = space enter
+    diff = , previous
+    diff = . next
+    stage = , previous
+    stage = . next
     status = space enter
 # }}}
 
@@ -47,18 +47,18 @@
     branch = auto
     interactive = auto
 [color "diff"]
-	frag = magenta
+    frag = magenta
 #}}}
 
 [branch "master"] # {{{
-	remote = origin
-	merge = refs/heads/master
+    remote = origin
+    merge = refs/heads/master
 # }}}
 
 [merge] # {{{
     tool = persistent
 [mergetool "persistent"]
-	# ref Brian Phillips @http://stackoverflow.com/questions/585844/merging-with-git-mergetool
+    # ref Brian Phillips @http://stackoverflow.com/questions/585844/merging-with-git-mergetool
     cmd = "vim --noplugin -d \"$PWD/$MERGED\" \
         +\":split $PWD/$REMOTE\" +\":set buftype=nowrite\" \
         +\":vertical diffsplit $PWD/$LOCAL\" +\":set buftype=nowrite\" \
@@ -74,19 +74,19 @@
     cm  = commit --amend
     co  = checkout
     cd  = checkout -b
-	cp  = cherry-pick --no-commit # 复制一个 commit 所做的修改
-	touch = branch -M
+    cp  = cherry-pick --no-commit # 复制一个 commit 所做的修改
+    touch = branch -M
 
-    di  = diff -p --stat # show difference between working tree and the index
-    dc  = diff -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
-    da  = diff -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
-    df  = diff --stat HEAD # show different files between working tree and the index
-	dt  = difftool
+    di  = diff --no-prefix -p --stat # show difference between working tree and the index
+    dc  = diff --no-prefix -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
+    da  = diff --no-prefix -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
+    df  = diff --no-prefix --stat HEAD # show different files between working tree and the index
+    dt  = difftool
     dp  = !sh -c 'git diff HEAD "$0" | git apply --whitespace=nowarn --index -' # fast apply the patch against "$0" commit or branch
 
     fp  = format-patch -s
 
-	ll  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%cr%Creset %C(white)%C(bold)%d%Creset' --branches --graph --since='1 months ago'
+    ll  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%cr%Creset %C(white)%C(bold)%d%Creset' --branches --graph --since='1 months ago'
     ls  = log --pretty=format:'%C(blue)%h%Creset %ce %m %s %C(green)%C(dim)%ci%Creset %C(white)%C(bold)%d%Creset' --all --graph
 
     ms  = merge --squash

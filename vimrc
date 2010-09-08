@@ -456,23 +456,25 @@ endfunction
 " vimwiki 1.1-dev : Personal Wiki for Vim {{{2
 " http://code.google.com/p/vimwiki/
 let vw_home = '/sun/wiki/'
-let vw_html = '/sun/wiki/html/'
 let vw_journal = {}
 let vw_android = {}
 let g:vimwiki_list = [vw_journal, vw_android]
+let g:vimwiki_stripsym = '_' " 非法符号转换为空格
+let g:vimwiki_badsyms = ' '  " 删除文件名中的空格
+let g:vimwiki_camel_case = 0 " 禁用驼峰格式
 
-let vw_journal.auto_export = 1
+let vw_journal.auto_export = 0
+let vw_journal.index = 'journal'
+let vw_journal.ext = '.txt'
 let vw_journal.path = vw_home.'journal'
-let vw_journal.path_html = vw_html.'journal'
-let vw_journal.html_header = vw_html.'header.tpl'
 let vw_journal.diary_index = 'index'
 let vw_journal.diary_rel_path = ''
 let vw_journal.diary_link_count = 10
 
-let vw_android.auto_export = 1
+let vw_android.auto_export = 0
+let vw_android.index = 'android'
+let vw_android.ext = '.txt'
 let vw_android.path = vw_home.'android'
-let vw_android.path_html = vw_html.'android'
-let vw_android.html_header = vw_html.'header.tpl'
 
 " snipMate 0.83 : TextMate-style snippets for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2540

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-/usr/bin/sshfs -o reconnect s5unty@du1abadd.org:/sun/pages /sun/wiki/html &
+/usr/bin/sshfs -oreconnect -oidmap=user -ouid=1000 -ogid=1000 www-data@du1abadd.org:/sun/dokuwiki/data/pages /sun/wiki/ &
 /usr/bin/autossh -f -N -D 0.0.0.0:9527 du1abadd.org
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
 /usr/bin/xset b off m 3 10 r rate 400 30
