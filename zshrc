@@ -46,7 +46,7 @@ alias tig="tig --all"
 
 # apt-get 别名 {{{
 alias api="$__SUDO apt-get install"
-alias apo="$__SUDO apt-get source"
+alias apo="apt-get source"
 alias ape="$__SUDO vi /etc/apt/sources.list"
 alias apr="$__SUDO apt-get remove"
 alias apu="$__SUDO apt-get update"
@@ -221,7 +221,7 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/b
 export DEBEMAIL="s5unty@gmail.com"
 export DEBFULLNAME="Vern Sun"
 export JAVA_HOME="/usr/lib/jvm/java-6-sun/"
-export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/:/opt/android-sdk/platforms/android-2.0.1/android.jar"
+export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/"
 export XDG_CONFIG_HOME="$HOME/.config"
 ## }}}
 

@@ -1,4 +1,4 @@
-" General {{{
+" General {{{1
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,chinese,taiwan,japan,korea,latin1
 set termencoding=utf-8
@@ -68,14 +68,17 @@ if v:version >= 703
 endif
 " }}}
 
-" Function {{{
+" Function {{{1
 " 打开/关闭/切换 Quickfix 窗口
 " @forced:
 "   1 always show qfix
 "   0 always hide qfix
 "  -1 switch show/hide
 function! G_QFixToggle(forced)
-    if exists("g:qfix_win")
+    if bufname('%') == "[Command Line]"
+        " leave the command-line window: <C-\><C-N> is better then :quit
+        exec "normal \<C-\>\<C-N>"
+    elseif exists("g:qfix_win")
         if a:forced == 1
             return
         endif
@@ -194,7 +197,7 @@ function! G_FindInFiles(range, quick)
 endfunction
 " }}}
 
-" Key bindings {{{
+" Key bindings {{{1
 " Mouse Bindings {{{2
 map <silent> <unique> <2-LeftMouse> <C-]>zz
 map <silent> <unique> <RightMouse> :call G_GotoEditor()<CR><C-O>zz
@@ -209,6 +212,7 @@ nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
+set pastetoggle=<F4>
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
 nmap <silent> <unique> <F6> :ConqueTermSplit zsh<CR>
 nmap <silent> <unique> <F7> zi<CR>
@@ -229,7 +233,6 @@ nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
-nmap <silent> <unique> q  :<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
@@ -243,6 +246,7 @@ nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :q<CR>
 nmap          <unique> <S-F8> :make! install DESTDIR=<UP>
+nmap <silent> <unique> <S-F9> q:<UP>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
@@ -305,7 +309,7 @@ command W :w !sudo tee %
 
 " }}}1
 
-" Autocmd {{{
+" Autocmd {{{1
 if has("autocmd")
   function! <SID>AC_ResetCursorPosition()
       if line("'\"") > 0 && line("'\"") <= line("$")
@@ -328,7 +332,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 13# Plugins {{{
+" 13# Plugins {{{1
 " mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
 " http://www.vim.org/scripts/script.php?script_id=521
 "
@@ -388,9 +392,6 @@ let SuperTabDefaultCompletionType="<C-X><C-N>"
 let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
-" Echofunc 1.19 : Echo the function declaration in the command line for C/C++ {{{2
-" http://www.vim.org/scripts/script.php?script_id=1735
-let g:EchoFuncLangsUsed = ["c", "cpp", "lua", "java"]
 
 " Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
@@ -402,7 +403,7 @@ if has("cscope")
     set cscopequickfix=s-,c-,d-,i-,t-,e-
 
     autocmd BufNewFile,BufReadPost,FileReadPost *
-      \ let &path = getcwd()."/*"
+      \ let &path = getcwd()
 
     " add any database in current working directory
     if glob(getcwd() . '/.cscope') != ""
@@ -417,12 +418,12 @@ if has("cscope")
     function! <SID>CscopeRefresh()
         " 如果当前目录存在 .cscope/ 的话
         if glob(getcwd() . '/.cscope') != ""
-            call system("cscope -kbq -i".getcwd()."/.cscope/cscope.files -f".getcwd()."/.cscope/cscope.out &")
+            call system("cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out &")
             " 由于频繁保存引发的多个 ctags 间的互斥，可能会导致以下错误:
             " ctags: ".cscope/cscope.tags" doesn't look like a tag file; I refuse to overwrite it.
             " http://www.lslnet.com/linux/dosc1/55/linux-369438.htm
             call system("ps -e | grep ctags || ctags --c++-kinds=+p --fields=-fst+aS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags &")
-            exec "cscope add ".getcwd()."/.cscope/cscope.out"
+            exec "cscope add .cscope/cscope.out"
             exec "cscope reset"
         endif
     endfunction
@@ -462,16 +463,17 @@ let g:vimwiki_list = [vw_journal, vw_android]
 let g:vimwiki_stripsym = '_' " 非法符号转换为空格
 let g:vimwiki_badsyms = ' '  " 删除文件名中的空格
 let g:vimwiki_camel_case = 0 " 禁用驼峰格式
+let g:vimwiki_use_calendar = 1
 
-let vw_journal.auto_export = 0
+let vw_journal.syntax = 'doku'
 let vw_journal.index = 'journal'
 let vw_journal.ext = '.txt'
 let vw_journal.path = vw_home.'journal'
-let vw_journal.diary_index = 'index'
+let vw_journal.diary_index = 'journal'
 let vw_journal.diary_rel_path = ''
 let vw_journal.diary_link_count = 10
 
-let vw_android.auto_export = 0
+let vw_android.syntax = 'doku'
 let vw_android.index = 'android'
 let vw_android.ext = '.txt'
 let vw_android.path = vw_home.'android'
@@ -524,7 +526,7 @@ let g:calendar_focus_today = 1
 
 " }}}1
 
-" 3# keys ref: http://tinyurl.com/2cae5vw {{{
+" 3# keys ref: http://tinyurl.com/2cae5vw {{{1
 " xterm keys {{{2
 map  <Esc>[1;2P <S-F1>
 map  <Esc>[1;2Q <S-F2>
@@ -676,30 +678,5 @@ map! <Esc>[21^ <C-F10>
 map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
 
-" T E S T {{{2
-" nmap <C-F1> :echo "c-f1"<cr>
-" nmap <C-F2> :echo "c-f2"<cr>
-" nmap <C-F3> :echo "c-f3"<cr>
-" nmap <C-F4> :echo "c-f4"<cr>
-" nmap <C-F5> :echo "c-f5"<cr>
-" nmap <C-F6> :echo "c-f6"<cr>
-" nmap <C-F7> :echo "c-f7"<cr>
-" nmap <C-F8> :echo "c-f8"<cr>
-" nmap <C-F9> :echo "c-f9"<cr>
-" nmap <C-F10> :echo "c-f10"<cr>
-" nmap <C-F11> :echo "c-f11"<cr>
-" nmap <C-F12> :echo "c-f12"<cr>
-" nmap <S-F1> :echo "s-f1"<cr>
-" nmap <S-F2> :echo "s-f2"<cr>
-" nmap <S-F3> :echo "s-f3"<cr>
-" nmap <S-F4> :echo "s-f4"<cr>
-" nmap <S-F5> :echo "s-f5"<cr>
-" nmap <S-F6> :echo "s-f6"<cr>
-" nmap <S-F7> :echo "s-f7"<cr>
-" nmap <S-F8> :echo "s-f8"<cr>
-" nmap <S-F9> :echo "s-f9"<cr>
-" nmap <S-F10> :echo "s-f10"<cr>
-" nmap <S-F11> :echo "s-f11"<cr>
-" nmap <S-F12> :echo "s-f12"<cr>
 " }}}1
 

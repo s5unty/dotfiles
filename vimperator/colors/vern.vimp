@@ -1,0 +1,6 @@
+" ==Vimperator_Color_Scheme==
+" name: seaweed
+" ==Seaweed_Colorscheme_Settings==
+hi StatusLine			color: #9acd32; background: #D2E1F6;
+hi StatusLineBroken		color: red; background: #D2E1F6;
+hi StatusLineSecure		color: #77a8c1; background: #D2E1F6;

@@ -19,7 +19,8 @@ bind index      N           search-opposite
 bind index      -           half-up
 # 浏览通讯录时
 bind alias      N           search-opposite
-# 切换邮箱时
-bind browser    i           exit
+# 切换邮箱/查看目录时
+bind browser    l           select-entry
+bind browser    <space>     select-entry
 # 查看附件时
 bind attach     i           exit
