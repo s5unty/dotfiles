@@ -28,12 +28,13 @@ layouts =
 	awful.layout.suit.fair,
 	awful.layout.suit.tile.top,
 	awful.layout.suit.tile.right,
+	awful.layout.suit.magnifier,
 }
 
 tags = { }
 mytags = {
 	{ layout = layouts[3], mwfact = 0.668, nmaster=1 },
-	{ layout = layouts[3], mwfact = 0.698, nmaster=1 },
+	{ layout = layouts[4], mwfact = 0.618, nmaster=1 },
 	{ layout = layouts[2], mwfact = 0.500, nmaster=1 },
 	{ layout = layouts[3], mwfact = 0.668, nmaster=1 },
 	{ layout = layouts[2], mwfact = 0.618, nmaster=1 },
@@ -258,8 +259,8 @@ globalkeys = awful.util.table.join (
 	awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'WindowsXP'") end),
 	-- awful.key({ modkey }, "i",  function () awful.util.spawn("x-terminal-emulator -e zsh -c 'stty -ixon; vim'") end),
 	awful.key({ modkey }, "space", function () awful.util.spawn("x-terminal-emulator") end),
-	awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
-	awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
+	awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -q0 -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
+	awful.key({        }, "Print", function () awful.util.spawn("scrot -q0 /tmp/'%Y-%m-%d_$wx$h.png'") end),
 	awful.key({        }, "XF86Mail", function () awful.util.spawn("x-terminal-emulator -name Mutt -T Mutt -e mutt") end),
 	awful.key({        }, "XF86MyComputer", function () awful.tag.viewonly(tags[1][1]) end),
 	awful.key({        }, "XF86AudioPlay",        function () awful.util.spawn("mocp.sh") end),
@@ -314,7 +315,7 @@ globalkeys = awful.util.table.join (
 		end
 		f:close()
 
-		frame = naughty.notify({ text = fc, timeout = 7, width = 360 })
+		frame = naughty.notify({ text = fc, timeout = 15, width = 360 })
 	end),
 	awful.key({ modkey, "Shift" }, "d", function ()
 		awful.prompt.run({prompt = "Dict: "}, mypromptbox[mouse.screen].widget, function(cin_word)
@@ -331,7 +332,7 @@ globalkeys = awful.util.table.join (
 			end
 			f:close()
 
-			frame = naughty.notify({ text = fc, timeout = 10, width = 360 })
+			frame = naughty.notify({ text = fc, timeout = 30, width = 360 })
 		end, nil, awful.util.getdir("cache").."/dict")
 	end),
     -- }}}

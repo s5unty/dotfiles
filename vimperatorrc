@@ -25,13 +25,13 @@ map <silent> qg :set ds=gtk<CR>P:set ds=google<CR>
 map <silent> qb :set ds=baidu<CR>P:set ds=google<CR>
 map <silent> qw :set ds=wc<CR>P:set ds=google<CR>
 map <silent> qp :set ds=pkg<CR>P:set ds=google<CR>
-map <silent> <F12> :set! extensions.autoproxy.proxyMode=global<CR>
-map	<silent> <S-F12> :set! extensions.autoproxy.proxyMode=auto<CR>
+map <silent> <F12> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
+map <silent> <S-F12> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
 
 " general
 set go=b
 set cpt=bl
 set fc
 set shell="/usr/bin/zsh"
-set editor="/usr/bin/gvim"
+set editor="urxvt -e vim -f"
 set newtab=all
