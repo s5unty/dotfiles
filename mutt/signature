@@ -1,7 +1,4 @@
 #! /bin/sh
 
-echo '\n'
-echo 'Regards,'
-echo '-- '
 echo 'Vern'
-echo 'vim -c ":s,^,ZnQr2va8puvan.,|:s/\d\(.\)/ \\U\\1/g|:normal Vg?"'
+echo 'vim -c ":s(^(ZnQr8va1puvan.(|:s)\d\(\S\)) \\U\\1)g|:1 normal g??"'

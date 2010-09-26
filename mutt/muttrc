@@ -5,7 +5,7 @@ source ~/.mutt/macros                     # 定义宏(快捷键)
 source ~/.mutt/hooks                      # 定义事件钩子
 source ~/.mutt/colours                    # 定义 Mutt 颜色
 source ~/.mutt/auto_views                 # 定义支持自动浏览的文件格式
-#source ~/.mutt/imap                      # 使用 IMAP 服务
+#source ~/.mutt/imap                       # 使用 IMAP 服务
 source ~/.mutt/pop3                       # 使用 POP3 服务
 
 # 终端的编码
@@ -95,7 +95,7 @@ set askcc=yes
 # 签名文件，最后竖线|表示该文件是一段脚本
 set signature=~/.mutt/signature|
 # 禁止在签名前自动添加 "-- ",由签名脚本负责
-set sig_dashes=no
+set sig_dashes=yes
 # 设定回信的模板
 set date_format="%a, %F at %R %z"
 set attribution="on %D, %n wrote:"
