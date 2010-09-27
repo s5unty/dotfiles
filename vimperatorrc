@@ -8,25 +8,23 @@ map   \\ <C-i>
 map <BS> <C-o>
 map    j 2<C-e>
 map    k 2<C-y>
-map <C-Tab> <C-V><C-Tab>
-map <C-S-Tab> <C-V><C-S-Tab>
-
-" macro
-map <F2>  :set encoding=GB2312<CR>
 map <C-q> :winclose<CR>
 map <C-.> :tabm +1<CR>
 map <C-,> :tabm -1<CR>
 map W     ;w
-map b     :bmarks 
-map a     :emenu GMarks.添加/编辑书签<CR>:bmark<CR>
+map r     ;c
 
-map <silent> qd :set ds=d<CR>P:set ds=google<CR>
-map <silent> qg :set ds=gtk<CR>P:set ds=google<CR>
-map <silent> qb :set ds=baidu<CR>P:set ds=google<CR>
-map <silent> qw :set ds=wc<CR>P:set ds=google<CR>
-map <silent> qp :set ds=pkg<CR>P:set ds=google<CR>
+" macro
+map <silent> <F2>  :set encoding=GB2312<CR>
+map <silent> <S-F2> :set encoding=UTF-8<CR>
 map <silent> <F12> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
 map <silent> <S-F12> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
+
+" delicious
+map <silent> a :emenu Delicious.Save a new Bookmark...<CR>
+command! -nargs=* delicious topen b <args>
+map B :delicious 
+map <silent> b :emenu Delicious.Bookmarks Sidebar<CR>
 
 " general
 set go=b

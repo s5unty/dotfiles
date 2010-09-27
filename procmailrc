@@ -36,7 +36,7 @@ company/
 
 # 关心的邮件列表
 :0
-* ^(List-Id|To|CC|BCC):.*(debian-chinese-|ubuntu-zh)
+* ^(List-Id|To|CC|BCC):.*(debian-chinese-|debian-l10n-chinese)
 debian-zh/
 
 :0
@@ -44,8 +44,12 @@ debian-zh/
 debian-www/
 
 :0
-* ^(List-Id|To|CC|BCC):.*debian-mentors.lists.debian.org
+* ^(List-Id|To|CC|BCC):.*debian.*mentors.*(googlegroups.com|debian.org)
 debian-mentors/
+
+:0
+* ^(List-Id|To|CC|BCC):.*ubuntu-zh
+debian-ubuntu/
 
 :0
 * ^(List-Id|To|CC|BCC):.*(awesome-devel)
