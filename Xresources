@@ -80,6 +80,9 @@ URxvt.keysym.M-minus:command:\033]720;5\007
 URxvt.keysym.M-space:command:\033]721;5\007
 !! rot13
 URxvt.keysym.C-M-r: perl:selection:rot13
+!! sudo !!
+URxvt.keysym.C-1: \020\001sudo \005
+URxvt.keysym.C-minus: cd -\011
 !! mouseless url yanking
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! vim-scrollback
