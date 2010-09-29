@@ -8,16 +8,28 @@ set spoolfile="=personal"
 # 邮箱列表 {{{
 mailboxes !
 mailboxes =company
-# mailboxes =awesome
-# mailboxes =debian-zh
-# mailboxes =personal
-# mailboxes =shopping
-# mailboxes =debian-www
-# mailboxes =debian-mentors
-# mailboxes =shlug
+mailboxes =debian-zh
+mailboxes =personal
+mailboxes =shlug
+mailboxes =shopping
 # }}}
 
 # 邮件列表选项 {{{
+#
+# debian
+subscribe debian-news@lists.debian.org
+subscribe debian-announce@lists.debian.org
+subscribe debian-boot@lists.debian.org
+subscribe debian-mentors@lists.debian.org
+subscribe debian-qa@lists.debian.org
+subscribe debian-www@lists.debian.org
+subscribe debian-l10n-chinese@lists.debian.org
+subscribe debian-chinese-gb@lists.debian.org
+subscribe debian-chinese-big5@lists.debian.org
+subscribe \d*@bugs.debian.org
+# other
+subscribe e6-1170-staff@mid-fun.com
+subscribe e6-1170-sw@mid-fun.com
 subscribe staff@mid-fun.com
 subscribe vidalia-users@lists.vidalia-project.net
 subscribe awesome-devel@naquadah.org
@@ -28,11 +40,4 @@ subscribe kde-china@kde.org
 subscribe ubuntu-zh@lists.ubuntu.com
 subscribe fcitx-dev@googlegroups.com
 subscribe shlug@googlegroups.com
-subscribe debian-boot@lists.debian.org
-subscribe debian-mentors@lists.debian.org
-subscribe debian-qa@lists.debian.org
-subscribe debian-mips@lists.debian.org
-subscribe debian-www@lists.debian.org
-subscribe debian-chinese-gb@lists.debian.org
-subscribe \d*@bugs.debian.org
 # }}}

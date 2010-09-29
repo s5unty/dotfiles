@@ -1,6 +1,5 @@
 # 光标行为
 # 阅读正文时的光标行为
-bind pager      <backspace> previous-line
 bind pager      k           previous-line
 bind pager      j           next-line
 bind pager      P           recall-message # 'R'ecall-message move to 'P'
@@ -9,7 +8,10 @@ bind pager      R           reply          # single reply
 bind pager      g           list-reply     # reply to list
 bind pager      .           next-entry
 bind pager      ,           previous-entry
+bind pager     \;           next-new-then-unread
 bind pager      b           previous-page
+bind pager      <BackTab>   previous-new-then-unread
+bind pager      <Backspace> parent-message
 # 浏览首页时的光标行为
 bind index      P           recall-message # 'R'ecall-message move to 'P'
 bind index      r           group-reply    # reply to all
@@ -17,6 +19,8 @@ bind index      R           reply          # single reply
 bind index      g           list-reply     # reply to list
 bind index      N           search-opposite
 bind index      -           half-up
+bind index      <BackTab>   previous-new-then-unread
+bind index      \;          current-middle
 # 浏览通讯录时
 bind alias      N           search-opposite
 # 切换邮箱/查看目录时

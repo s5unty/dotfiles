@@ -34,9 +34,9 @@ set alias_file="~/.mutt/aliases"
 # 借助 lbdb 快速查询通讯录
 set query_command="lbdbq %s"
 # 自定义显示界面
-set index_format="%S %?M?%-20.20F (%-2.2M)&%-25.25F? %T %?y?%.6y   %-118.118s&%-128.128s? %> %?X?%%& ?%[%b%d] - %4c"
-# 自定义标题界面
-set pager_format="%S %?M?%-20.20F (%-2.2M)&%-25.25F? %T %?y?%.6y   %-118.118s&%-128.128s? %> %?X?%%& ?%[%b%d] - %4c"
+set index_format="%S %?X?%%& ? %?M?%-20.20F (%-2.2M)&%-25.25F? %T %-128.128s %> %?Y?‹%.9Y›? %[%b%d] - %4c"
+# 隐藏标题界面，在迷你索引和邮件正文之间留一空行
+set pager_format=""
 # 自定义通讯录界面
 set alias_format="%3n %f %t %-38a %r"
 # 信箱列表格式
@@ -62,8 +62,8 @@ set mark_old=no
 set forward_format="Fwd: %s"
 # 转移信件时不必确认
 set confirmappend=no
-# 禁止折叠存在未读邮件的话题
-set collapse_unread=no
+# 允许折叠存在未读邮件的话题
+set collapse_unread=yes
 # 撰写新邮件时不再提示是否使用草稿箱
 set recall=no
 # 开启邮件标题缓存功能，加快载入速度
@@ -112,8 +112,13 @@ set mime_forward=yes
 # 5: 表示这封邮件是你发出去的。
 # 6: 表示这是一封你已经加入的邮件列表寄来的。
 #             123456
-set to_chars=" TLCZ|"
+#set to_chars=" TLCZ|"
+set to_chars=" =--= "
 # 给邮件签名
 set crypt_autosign=yes
 # 有新邮件时提醒
 set beep_new=yes
+# 查看邮件同时显示迷你线索
+set pager_index_lines=5
+# 允许跳到被折叠了的未读邮件
+set uncollapse_jump=yes

@@ -5,11 +5,9 @@ unignore To:
 unignore CC:
 unignore BCC:
 unignore X-LDate:
-unignore Reply-To:
-unignore Organization:
-unignore Subject:
+unignore X-Label:
 
-hdr_order From: To: CC: BCC: Reply-To: Organization: X-LDate: Subject:
+hdr_order From: To: CC: BCC: X-LDate: X-Label:
 
 # 特殊邮件头
-color header black yellow "^Subject:"
+color header yellow default "^X-Label:"
