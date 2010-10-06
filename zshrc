@@ -157,7 +157,7 @@ zstyle ':completion:*:*:*:users' ignored-patterns _dhcp _pflogd adm apache \
 # 其它别名 {{{ 
 cd() {
     if builtin cd "$@"; then
-        todo
+        `which todo`
         ls
     fi
 }
@@ -185,7 +185,8 @@ R() { # find in files
 CS() { # gen cscope.files
     mkdir -p .cscope
     find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' -o -iname '*.cxx' \
-        -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' > .cscope/cscope.files
+        -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' \
+        -o -iname '*.java' > .cscope/cscope.files
     cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
     ctags --c++-kinds=+p --fields=-fst --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
 }
@@ -213,7 +214,7 @@ export SAVEHIST=409600
 export DEBIAN_DIR=""
 export REPREPRO_CONFIG_DIR=""
 export LANG="zh_CN.UTF-8"
-export TZ='UTC-8'
+export TZ="Asia/Shanghai"
 export HOME="/sun/home"
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
