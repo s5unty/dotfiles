@@ -12,24 +12,23 @@ map <C-q> :winclose<CR>
 map <C-.> :tabm +1<CR>
 map <C-,> :tabm -1<CR>
 map W     ;w
-map r     ;c
 
 " macro
 map <silent> <F2>  :set encoding=GB2312<CR>
 map <silent> <S-F2> :set encoding=UTF-8<CR>
-map <silent> <F12> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
-map <silent> <S-F12> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
-
-" delicious
-map <silent> a :emenu Delicious.Save a new Bookmark...<CR>
-command! -nargs=* delicious topen b <args>
-map B :delicious 
-map <silent> b :emenu Delicious.Bookmarks Sidebar<CR>
+map <silent> <F12> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':('<CR>
+map <silent> <S-F12> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':)'<CR>
+map <silent> <C-F12> :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':('<CR>
 
 " general
 set go=b
-set cpt=bl
 set fc
 set shell="/usr/bin/zsh"
 set editor="urxvt -e vim -f"
 set newtab=all
+
+" delicious @ http://code.google.com/p/vimperator-labs/issues/detail?id=241
+" delicious_search.js @ http://www.mozdev.org/pipermail/vimperator/2009-March/003865.html
+" map <silent> a :delicious<CR>
+map <silent> a :emenu Delicious.Save a new Bookmark...<CR>
+autocmd VimperatorEnter ".*" :set complete=Dl
