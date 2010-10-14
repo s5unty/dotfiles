@@ -16,9 +16,9 @@ map W     ;w
 " macro
 map <silent> <F2>  :set encoding=GB2312<CR>
 map <silent> <S-F2> :set encoding=UTF-8<CR>
-map <silent> <F12> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':('<CR>
-map <silent> <S-F12> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':)'<CR>
-map <silent> <C-F12> :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':('<CR>
+map <silent> <F12> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
+map <silent> <S-F12> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
+map <silent> <C-F12> :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
 
 " general
 set go=b
