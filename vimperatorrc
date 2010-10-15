@@ -1,34 +1,52 @@
+" 状态栏的背景色
 hi StatusLine background: #DCDAD5;
 
-" binding
-map    . <C-PageDown>
-map    , <C-PageUp>
-map -- - <C-b>
-map   \\ <C-i>
-map <BS> <C-o>
-map    j 2<C-e>
-map    k 2<C-y>
-map <C-q> :winclose<CR>
-map <C-.> :tabm +1<CR>
-map <C-,> :tabm -1<CR>
-map W     ;w
+" 下一个标签页
+map                     .           <C-PageDown>
+" 上一个标签页
+map                     ,           <C-PageUp>
+" 向上翻页
+map --                  -           <C-b>
+" 前进
+map                     \\          <C-i>
+" 后退
+map                     <BS>        <C-o>
+" 向下滚动2行
+map                     j           2<C-e>
+" 向上滚动2行
+map                     k           2<C-y>
+" 关闭窗口
+map                     <C-q>       :winclose<CR>
+" 右移当前标签页
+map                     <C-.>       :tabm +1<CR>
+" 左移当前标签页
+map                     <C-,>       :tabm -1<CR>
+" 切换当前页面编码
+map <silent>            <F2>        :set encoding=GB2312<CR>
+map <silent>            <S-F2>      :set encoding=UTF-8<CR>
+" 切换 AutoProxy 的代理模式：智能、全局、禁用
+map <silent>            <F12>       :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
+map <silent>            <S-F12>     :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
+map <silent>            <C-F12>     :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
+" 添加 Delicious 书签
+map <silent>            a           :emenu Delicious.Save a new Bookmark...<CR>
 
-" macro
-map <silent> <F2>  :set encoding=GB2312<CR>
-map <silent> <S-F2> :set encoding=UTF-8<CR>
-map <silent> <F12> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
-map <silent> <S-F12> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
-map <silent> <C-F12> :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
 
-" general
-set go=b
-set fc
-set shell="/usr/bin/zsh"
-set editor="urxvt -e vim -f"
+" 只显示底部可能存在的滚动条
+set guioptions=b
+" 不自动跳转到新打开标签页中的输入框
+set focuscontent
+" 新建标签页显示这些命令 :addons :downloads :extoptions :help :javascript :prefs 
 set newtab=all
+" Shell
+set shell="/usr/bin/zsh"
+" 编辑器
+set editor="urxvt -e vim -f"
 
+" 添加 Delicious 书签
 " delicious @ http://code.google.com/p/vimperator-labs/issues/detail?id=241
-" delicious_search.js @ http://www.mozdev.org/pipermail/vimperator/2009-March/003865.html
 " map <silent> a :delicious<CR>
-map <silent> a :emenu Delicious.Save a new Bookmark...<CR>
+
+" 使用 Delicious 搜索
+" delicious_search.js @ http://www.mozdev.org/pipermail/vimperator/2009-March/003865.html
 autocmd VimperatorEnter ".*" :set complete=Dl

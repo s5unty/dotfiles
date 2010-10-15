@@ -1,21 +1,43 @@
 #!/bin/sh
 
-/usr/bin/autossh -f -N -D 0.0.0.0:9527 du1abadd.org
+# ssh 翻墙隧道 0:PORT 的写法使得局域网(虚拟机)可以共享此隧道
+/usr/bin/autossh -f -N -D 0:9527 du1abadd.org
+# 强制启用 Ctrl-Alt-Backspace(重启图形界面) 组合键
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
+# 关闭机箱喇叭蜂鸣 设定键鼠灵敏度
 /usr/bin/xset b off m 3 10 r rate 400 30
+# 加载自定义的特殊的键盘功能键
 /usr/bin/xmodmap ~/.Xmodmaprc
+# 浏览器
 /usr/bin/x-www-browser &
+# 收邮件
 /usr/bin/fetchmail -d 600
+# 听歌
 /usr/bin/mocp -S
+/usr/local/bin/lrcdis &
+# 使用 Scroll Lock 键盘灯指示有新的邮件
 /usr/bin/xmailleds -ls -M -m /sun/mails/company
 /usr/bin/xmailleds -ls -M -m /sun/mails/personal
+# 一套键鼠控制多台机器，服务器端
 /usr/bin/synergys # synergy server
-# synergy client
+# 为了在客户端登录之前(登录界面)就能由服务器端的键鼠控制──输入口令
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
+# 屏保
 /usr/bin/xscreensaver -no-splash &
+# Google Desktop
 /usr/bin/gdlinux
-
+# eclimd
 /usr/local/bin/eclimd &
-/usr/local/bin/lrcdis &
+# 协同本地的 Vimwiki 和远程的 Dokuwiki
+/usr/bin/inotifywait -mrq --timefmt '%d/%m/%y %H:%M' --format '%T %w%f' -e modify,delete,create,attrib /sun/wiki | \
+	while read file; do
+		:<<-COMMENT 先下载远端可能存在的更新的内容
+		COMMENT
+		rsync -azu s5unty@du1abadd.org:/sun/wiki/ /sun/wiki
 
+		:<<-COMMENT 再上传本地已更新的内容
+		COMMENT
+		rsync -azu /sun/wiki/ www-data@du1abadd.org:/sun/wiki
+	done &
+# 窗口管理器
 exec /usr/bin/awesome

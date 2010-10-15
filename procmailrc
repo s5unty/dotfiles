@@ -8,8 +8,8 @@ FORMAIL="/usr/bin/formail"
 # 使用简单日志
 VERBOSE=off
 
-# 本地化邮件日期
-# 原始日期 Tue, 31 Oct 2006 20:24:16 -0600 (CST)
+# 本地化邮件日期，既显示发送者所在时区的时间，也显示接收者所在时区的时间
+# 邮件日期 Tue, 31 Oct 2006 20:24:16 -0600 (CST)
 # 本地化后 Wed, 2006-11-01 10:24 +0800 | Tue, 20:24 -0600
 :0
 * ^Date: \/.*
@@ -22,19 +22,20 @@ VERBOSE=off
     | $FORMAIL -I "X-LDate: ${loc_date} | ${org_date} ${zone}"
 }
 
+# 自定义邮件标签
 :0
-* ^(List-Id|To|CC|BCC):.*e6-1170.*(mid-fun.com)
-company/
-
-:0
-* ^(From):.*trac@mid-fun.com
-company/
+* ^(List-Id|To|CC|BCC|From):.*(e6-1170|trac)@mid-fun.com
+{
+    :0 fhw 
+    | $FORMAIL -I "X-Label: qa"
+    :0:
+    company/
+}
 
 :0
 * ^(List-Id|To|CC|BCC):.*(mid-fun.com)
 company/
 
-# 关心的邮件列表
 :0
 * ^(List-Id|To|CC|BCC):.*(debian-chinese-|debian-l10n-chinese)
 debian-zh/
@@ -67,7 +68,6 @@ shlug/
 * ^From:.*(amazon.cn|taobao.com|alipay.com)
 shopping/
 
-# 暂时失去兴趣又不想退出的邮件列表
 :0 h
 * ^(List-Id|To|CC|Bcc):.*pkg-mono-devel.lists.alioth.debian.org
 /dev/null
@@ -124,7 +124,6 @@ shopping/
 * ^(List-Id|To|CC|BCC):.*xfce-i18n.xfce.org
 /dev/null
 
-# 其它的邮件统统保存
 :0
 * .*
 personal/
