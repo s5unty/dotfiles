@@ -20,5 +20,5 @@ macro pager K "!gpg --lsign-key " "Sign PGP Key"
 macro index \cr "<collapse-all><tag-pattern>~(~N)<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter><collapse-all>"
 
 macro browser h "<first-entry><select-entry>"
-macro attach s "<save-entry><kill-line>/tmp/<enter><shell-escape>vifm /tmp/<enter>"
+macro attach s "<save-entry><kill-line>/tmp/<enter>a"
 

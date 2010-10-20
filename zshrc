@@ -103,14 +103,22 @@ tds() {
 # tar 别名 {{{
 tgz() {
     name=`echo $1 | sed 's/\/*$//g'`
-    tar -zcf "$name.tar.gz" $@
+    tar -zcf "$name.tgz" $@
+}
+tgzz() {
+    name=`echo $1 | sed 's/\/*$//g'`
+    tar -zcf "$name.tgz" $@ --exclude=.cscope --exclude-vcs
 }
 tgx() { $__SUDO tar -zxvf $@ }
 tgg() { tar -tf $@ }
 
 tjz() {
     name=`echo $1 | sed 's/\/*$//g'`
-    tar -jcf "$name.tar.bz2" $@
+    tar -jcf "$name.tbz" $@
+}
+tjzz() {
+    name=`echo $1 | sed 's/\/*$//g'`
+    tar -jcf "$name.tbz" $@ --exclude=.cscope --exclude-vcs
 }
 tjx() { $__SUDO tar -jxvf $@ }
 tjg() { tar -tf $@ }
@@ -157,11 +165,10 @@ zstyle ':completion:*:*:*:users' ignored-patterns _dhcp _pflogd adm apache \
 # 其它别名 {{{ 
 cd() {
     if builtin cd "$@"; then
-        `which todo`
+        task min project:${PWD}
         ls
     fi
 }
-if [ -f "`which todo`" ]; then todo; fi
 
 T() { # tail
     if [ -r $*[$#] ]; then
@@ -214,7 +221,7 @@ export SAVEHIST=409600
 export DEBIAN_DIR=""
 export REPREPRO_CONFIG_DIR=""
 export LANG="zh_CN.UTF-8"
-export TZ="Asia/Shanghai"
+export TZ='Asia/Shanghai'
 export HOME="/sun/home"
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
