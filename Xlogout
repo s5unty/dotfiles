@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# XXX ##############################################
+# sudo ln -sf ~/.Xlogout /etc/X11/Xreset.d/Xlogout
+# ############################################## XXX
+
+pkill autossh
+pkill inotifywait

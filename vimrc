@@ -215,8 +215,8 @@ imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 set pastetoggle=<F4>
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
 nmap <silent> <unique> <F6> :ConqueTermSplit zsh<CR>
-nmap <silent> <unique> <F7> zi<CR>
-imap <silent> <unique> <F7> <Esc>zi<CR>
+nmap          <unique> <F7> :set formatoptions+=2mM<CR>
+imap          <unique> <F7> <Esc>:set formatoptions+=2mM<CR><CR>
 nmap <silent>          <F8> :make!<CR>:call G_QFixToggle(1)<CR>
 imap <silent>          <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
 nmap          <unique> <F9> :!<UP>
@@ -317,6 +317,13 @@ if has("autocmd")
       endif
   endfunction
 
+  function! <SID>AC_ChmodExecutable()
+      if getline(1) =~ "^#!" && getline(1) =~ "/bin/"
+          silent !chmod u+x %
+          redraw!
+      endif
+  endfunction
+
   " 每次访问文件时都把光标放置在上次离开的位置
   autocmd BufWinEnter *
     \ call <SID>AC_ResetCursorPosition()
@@ -329,6 +336,8 @@ if has("autocmd")
       au! BufRead,BufNewFile *.asciidoc setfiletype asciidoc
   augroup END
 
+  autocmd BufWritePost *
+    \ call <SID>AC_ChmodExecutable()
 endif
 " }}}
 
@@ -457,6 +466,7 @@ endfunction
 " vimwiki 1.1-dev : Personal Wiki for Vim {{{2
 " http://code.google.com/p/vimwiki/
 let vw_home = '/sun/wiki/'
+"let vw_home = 'scp://www-data@du1abadd.org//sun/dokuwiki/data/pages/'
 let vw_journal = {}
 let vw_android = {}
 let g:vimwiki_list = [vw_journal, vw_android]
@@ -497,7 +507,7 @@ set lazyredraw
 " delimitMate.vim 2.3.1: Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
 " http://github.com/Raimondi/delimitMate
-let g:delimitMate_autoclose = 0
+let g:delimitMate_autoclose = 1
 let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
