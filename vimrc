@@ -33,6 +33,7 @@ set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
 set wildmode=longest:full,list:full
+set imactivatekey=C-space " GVim 中文无缝输入
  
 if has("gui_running")
     set guioptions-=m
@@ -341,7 +342,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 13# Plugins {{{1
+" 12# Plugins {{{1
 " mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
 " http://www.vim.org/scripts/script.php?script_id=521
 "
@@ -463,7 +464,7 @@ function! <SID>CscopeFind(mask, quick)
     call G_QFixToggle(1)
 endfunction
 
-" vimwiki 1.1-dev : Personal Wiki for Vim {{{2
+" vimwiki 1.1.1: Personal Wiki for Vim {{{2
 " http://code.google.com/p/vimwiki/
 let vw_home = '/sun/wiki/'
 "let vw_home = 'scp://www-data@du1abadd.org//sun/dokuwiki/data/pages/'
@@ -502,15 +503,6 @@ set lazyredraw
 " p1: s:OpenSession
 "     打开 Session 前 TbStop, 之后 TbStart. 否则布局大乱
 "     打开 Session 后使用 color pattern 自定义的颜色方案
-
-
-" delimitMate.vim 2.3.1: Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
-" http://www.vim.org/scripts/script.php?script_id=2754
-" http://github.com/Raimondi/delimitMate
-let g:delimitMate_autoclose = 1
-let g:delimitMate_expand_space = 1
-let g:delimitMate_expand_cr = 1
-let delimitMate_matchpairs = "(:),[:],{:},<:>"
 
 " surround.vim 1.90 : Delete/change/add parentheses/quotes/XML-tags/much more with ease {{{2
 " http://www.vim.org/scripts/script.php?script_id=1697
@@ -689,4 +681,3 @@ map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
 
 " }}}1
-
