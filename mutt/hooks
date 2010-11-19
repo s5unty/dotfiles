@@ -3,10 +3,16 @@
 # 1. 启动后立即使用折叠方式显示邮件
 folder-hook . push "<collapse-all><first-entry><last-entry><next-unread>"
 # 2. 进入公司邮箱后自动切换邮送域，保存已发邮件，不自动签名
-folder-hook company set "from='ZHANGSAN <xx@oo.com>'"
+folder-hook company set "from='孙武安 <wuan.sun@mid-fun.com>'"
 folder-hook company set "record='=company'"
 folder-hook company set "crypt_autosign=no"
-# 3. 私人邮箱
-folder-hook !company set "from='LISI <xx@oo.org>'"
+# 3. 私人邮箱，切换邮送域，不保存已发邮件，自动签名
+folder-hook !company set "from='Vern Sun <s5unty@gmail.com>'"
 folder-hook !company set "record=''"
 folder-hook !company set "crypt_autosign=yes"
+# 4. 默认只显示最近一个月的邮件
+folder-hook !(company|personal) push "<limit>~d\"*30d\"<enter>"
+# 5. 按键     邮件列表                普通邮箱
+#    r        回复给当前邮件列表      回复给发件人
+folder-hook  (company|personal) "bind pager r reply; bind index r reply"
+folder-hook !(company|personal) "bind pager r list-reply; bind index r list-reply"

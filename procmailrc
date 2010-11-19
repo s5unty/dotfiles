@@ -37,6 +37,15 @@ VERBOSE=off
 company/
 
 :0
+* ^(List-Id|To|CC|BCC):.*(debian-l10n-chinese)
+{
+    :0 fhw
+    | $FORMAIL -I "X-Label: l10n"
+    :0:
+    debian-zh/
+}
+
+:0
 * ^(List-Id|To|CC|BCC):.*(debian-chinese-|debian-l10n-chinese)
 debian-zh/
 
@@ -50,23 +59,31 @@ debian-mentors/
 
 :0
 * ^(List-Id|To|CC|BCC):.*ubuntu-zh
-debian-ubuntu/
+ubuntu-zh/
 
 :0
 * ^(List-Id|To|CC|BCC):.*(awesome-devel)
 awesome/
 
 :0
-* ^(List-Id|To|CC|BCC):.*vimim.googlegroups.com
-vimim/
+* ^(List-Id|To|CC|BCC):.*vim(im|-cn).googlegroups.com
+vim-zh/
 
 :0
 * ^(List-Id|To|CC|BCC):.*shlug.googlegroups.com
 shlug/
 
 :0
+* ^(List-Id|To|CC|BCC):.*szlug.googlegroups.com
+szlug/
+
+:0
 * ^From:.*(amazon.cn|taobao.com|alipay.com)
 shopping/
+
+:0 h
+* ^(List-Id|To|CC|BCC):.*fcitx.*@googlegroups.com
+fcitx-dev/
 
 :0 h
 * ^(List-Id|To|CC|Bcc):.*pkg-mono-devel.lists.alioth.debian.org
@@ -85,11 +102,11 @@ shopping/
 /dev/null
 
 :0 h
-* ^(To|CC|BCC):.*fcitx.*@
+* ^From:.*robot@translationproject.org
 /dev/null
 
 :0 h
-* ^From:.*robot@translationproject.org
+* ^From:.*buzz+.*@gmail.com
 /dev/null
 
 :0 h

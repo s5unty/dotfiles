@@ -34,7 +34,7 @@ set alias_file="~/.mutt/aliases"
 # 借助 lbdb 快速查询通讯录
 set query_command="lbdbq %s"
 # 自定义显示界面
-set index_format="%S %?X?%%& ? %?M?%-20.20F (%-2.2M)&%-25.25F? %T %-128.128s %> %?Y?‹%.9Y›? %[%b%d] - %4c"
+set index_format="%S %?X?@& ? %?M?%-20.20F (%-2.2M)&%-25.25F? %T %-128.128s %> %?Y?‹%.9Y›? %[%b%d] - %4c"
 # 隐藏标题界面，在迷你索引和邮件正文之间留一空行
 set pager_format=""
 # 自定义通讯录界面
@@ -85,7 +85,7 @@ set ascii_chars=yes
 # 禁止PAGE键切换到下一封信件
 set pager_stop=yes
 # 快速回复，不用确认回复地址和主题
-set fast_reply
+set fast_reply=yes
 # 退出时不再提示把信件从spool移动到的mbox文件
 set move=no
 # 避免整页整页的翻，我们要一行一行的翻
@@ -122,3 +122,5 @@ set beep_new=yes
 set pager_index_lines=5
 # 允许跳到被折叠了的未读邮件
 set uncollapse_jump=yes
+# 使用 Reply-to 字段作回复地址
+set reply_to=yes

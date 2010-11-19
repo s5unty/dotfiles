@@ -33,11 +33,11 @@ set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
 set wildmode=longest:full,list:full
-set imactivatekey=C-space " GVim 中文无缝输入
  
 if has("gui_running")
     set guioptions-=m
     set guioptions-=T
+    set imactivatekey=C-space " GVim 中文无缝输入
 endif
 
 if has("win32")

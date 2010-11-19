@@ -7,11 +7,14 @@ set spoolfile="=personal"
 
 # 邮箱列表 {{{
 mailboxes !
+mailboxes =personal
 mailboxes =company
 mailboxes =debian-zh
-mailboxes =personal
 mailboxes =shlug
-mailboxes =shopping
+mailboxes =szlug
+mailboxes =ubuntu-zh
+mailboxes =vim-zh
+mailboxes =fcitx-dev
 # }}}
 
 # 邮件列表选项 {{{
@@ -40,4 +43,5 @@ subscribe kde-china@kde.org
 subscribe ubuntu-zh@lists.ubuntu.com
 subscribe fcitx-dev@googlegroups.com
 subscribe shlug@googlegroups.com
+subscribe szlug@googlegroups.com
 # }}}
