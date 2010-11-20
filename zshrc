@@ -70,34 +70,17 @@ dpH() { echo "$1 hold" | $__SUDO dpkg --set-selections }
 dpI() { echo "$1 install" | $__SUDO dpkg --set-selections }
 # }}}
 
-# devtodo 别名 {{{
-alias tdD="devtodo -D"
-alias tdR="devtodo -R"
-alias tdG="devtodo -c"
-alias tdS="devtodo -Av"
-tdg() {
-    if [ -z "$1" ]; then
-        devtodo
-    # tdg [数字[.数字]]: 显示该条记录
-    elif expr "$1" : "^[0-9\.]*$" > /dev/null 2>&1; then
-        devtodo -c "$1"
-    # tdg [字符串]: 查找对应记录
-    else
-        devtodo -A /"$1"
-    fi
-}
-
-tds() {
-    if [ -z "$1" ]; then
-        devtodo -A
-    # tdg [数字[.数字]]: 显示该条记录
-    elif expr "$1" : "^[0-9\.]*$" > /dev/null 2>&1; then
-        devtodo -cv "$1"
-    # tdg [字符串]: 查找对应记录
-    else
-        devtodo -Av /"$1"
-    fi
-}
+# task 别名 {{{
+alias tda="task add"
+alias tde="task edit"
+alias tdu="task undo"
+alias tdg="task long"
+alias tdS="task info"
+alias tds="task start"
+alias tdr="task stop"
+alias tdd="task done"
+alias tdp="task delete"
+alias tdL="task timesheet && task history.annual && task summary"
 # }}}
 
 # tar 别名 {{{
