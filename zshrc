@@ -80,6 +80,7 @@ alias tds="task start"
 alias tdr="task stop"
 alias tdd="task done"
 alias tdp="task delete"
+alias tdi="task annotate"
 alias tdL="task timesheet && task history.annual && task summary"
 # }}}
 
