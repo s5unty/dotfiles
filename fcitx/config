@@ -6,7 +6,7 @@ FontLocale=zh_CN.UTF-8
 # 记录文件
 RecordFile=/sun/home/.config/fcitx/record.dat
 # 使用系统托盘
-UseTray=True
+UseTray=False
 # 使用DBus来显示界面(需要KIMPanel)
 UseDBus=False
 # 在Fcitx启用附加组件
@@ -34,7 +34,7 @@ SendTextWhenSwitchEng=False
 # 候选词个数
 CandidateWordNumber=7
 # 主窗口隐藏模式
-MainWindowHideMode=Hide
+MainWindowHideMode=Auto
 # 输入窗口显示在正中
 CenterInputWindow=False
 # 切换输入时显示输入条
