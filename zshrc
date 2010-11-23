@@ -18,11 +18,6 @@ alias -g Y="| xsel"
 # }}}
 
 # 普通别名 {{{
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias ......="cd ../../../../.."
 alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
 alias ll="ls -hl"
@@ -149,7 +144,6 @@ zstyle ':completion:*:*:*:users' ignored-patterns _dhcp _pflogd adm apache \
 # 其它别名 {{{ 
 cd() {
     if builtin cd "$@"; then
-        task min project:${PWD}
         ls
     fi
 }
@@ -333,6 +327,7 @@ zstyle ':completion:*:scp:*' hosts \
        192.168.1.{{1..4},{100..103}}
 # }}}
 
+zstyle ':completion:*' special-dirs true
 ## }}}
 
 ## 快捷键绑定 {{{
