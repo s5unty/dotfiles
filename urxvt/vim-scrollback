@@ -319,10 +319,10 @@ sub key_press_normal {
    my ($self, $event, $keysym, $string) =  @_;
 
    $self->msg("");
-   if ($string =~ /^\cC$/ ||
-       $string =~ /^\cQ$/ ||
+   if ($keysym == 0xff1b ||
+      $string =~ /^\cC$/ ||
       ($self->{key_buffer} =~ /^:qa?$/ && $keysym == 0xff0d))
-   { # ctrl-c, ctrl-q, :q<enter>, :qa<enter>
+   { # esc, ctrl-c, :q<enter>, :qa<enter>
       if($self->{key_buffer} and $self->{key_buffer} !~ /^:qa?$/){
          $self->{key_buffer} = "";
          $self->msg("");
@@ -713,14 +713,14 @@ sub key_press_visual {
       }
    } elsif ($string eq "y") {
       $self->{registers}{'"'} = $self->selection();
-      $self->leave($event);
+      $self->normal_mode($event, 1);
    } elsif ($string eq "Y") {
       # the act of selecting puts the text on the primary, so just need to copy
       # to secondary.
       if (open(my $process, "| xclip -i -selection clipboard")){
          print $process $self->selection();
       }
-      $self->leave($event);
+      $self->normal_mode($event, 1);
    #} elsif ($string !~ /[\x00-\x1f\x80-\xaf]/) {
    }else{
       # pass to key_press_normal
