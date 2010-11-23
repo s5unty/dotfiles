@@ -47,7 +47,7 @@ URxvt.foreground:    yellow3
 URxvt.cursorColor:   tan4
 URxvt.cursorColor2:  green1
 URxvt.colorBD:       chocolate1
-URxvt.colorUL:       sienna1
+URxvt.colorUL:       yellow3
 URxvt.colorIT:       chocolate4
 
 *color0:    black
@@ -87,6 +87,6 @@ URxvt.keysym.C-minus: cd -\011
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
-URxvt.vim-scrollback-paste: none
-URxvt.vim-scrollback: M-s
+URxvt.vim-scrollback-paste: M-r
+URxvt.vim-scrollback: M-0xff1b
 ! }}}

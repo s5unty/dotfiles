@@ -3,8 +3,8 @@ if   [ -e "/usr/bin/zless" ]; then __LESS="zless -r"
 elif [ -e "/usr/bin/less"  ]; then __LESS="less -r"
 else __LESS="more" fi
 
-if [ -e "/usr/bin/X11/colordiff" ]; then __DIFF="colordiff" else __DIFF="diff" fi
-if [ -e "/usr/bin/sudo" ];          then __SUDO="sudo" fi
+if [ -e "/usr/bin/colordiff" ]; then __DIFF="colordiff" else __DIFF="diff" fi
+if [ -e "/usr/bin/sudo" ];      then __SUDO="sudo" fi
 
 __IP=`/sbin/ifconfig -v | grep 192.168.1 | tail -1 | cut -d'.' -f4 | cut -d' ' -f1`
 ## }}}
@@ -364,6 +364,19 @@ _vi-backward-blank() {
 #    zle vi-backward-char
 }
 zle -N _vi-backward-blank
+
+# what's ranger?
+# http://ranger.nongnu.org/
+# https://github.com/hut/ranger
+ranger() {
+  before="$(pwd)"
+  python /usr/local/bin/ranger --fail-unless-cd "$@" || return 0
+  after="$(grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
+  if [[ "$before" != "$after" ]]; then
+    cd "$after"
+  fi
+}
+bindkey -s '^o' 'ranger\r'
 ## mark #
 # if [[ -z $BUFFER ]]; then
 #     zle up-history

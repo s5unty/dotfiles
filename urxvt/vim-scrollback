@@ -617,6 +617,9 @@ sub key_press_normal {
       if (@exec){
         $self->exec_async(@exec);
       }
+   } elsif ($string =~ "a" || $string =~ "i") {
+      $self->leave($event);
+      return 1;
 
    }elsif ($string =~ /^([0-9]+|[gm'])$/) {
       $self->msg($self->{msg});
