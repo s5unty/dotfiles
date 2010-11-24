@@ -369,6 +369,20 @@ ranger() {
   fi
 }
 bindkey -s '^o' 'ranger\r'
+
+# what's autojump?
+# @joelthelion: https://github.com/joelthelion/autojump
+powertab(){
+  if [[ -z $BUFFER ]] ; then
+    BUFFER="j "
+    zle end-of-line
+    zle expand-or-complete
+  fi
+  zle expand-or-complete
+}
+zle -N powertab
+bindkey "\t" powertab
+
 ## mark #
 # if [[ -z $BUFFER ]]; then
 #     zle up-history
@@ -429,4 +443,5 @@ done
 # (find-fline "~/.zshrc.local")
 if [ -e ~/.zshrc.local   ]; then . ~/.zshrc.local; fi
 
+source /etc/profile.d/autojump.zsh
 ## }}}
