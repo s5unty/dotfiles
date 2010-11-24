@@ -1091,7 +1091,16 @@ sub debug {
 # entry point for paste mode
 sub paste {
    my ($self, $selection) = @_;
-   $self->enable(key_press => \&key_press_paste);
+
+   my $text = $self->selection();
+   if($text){
+      $self->tt_write($text);
+   }else{
+      if(open(my $process, "xclip -o |")){
+         $text = join('', <$process>);
+         $self->tt_write($text);
+      }
+   }
 }
 
 sub key_press_paste {
