@@ -318,13 +318,10 @@ zstyle ':completion:*:*:kill:*' menu select
 zstyle ':completion:*:processes' command 'ps -au$USER'
 # }}}
 
-# ping&ssh {{{
-zstyle ':completion:*:ping:*' hosts 202.102.24.35 google.com \
-       192.168.1.{{1..4},{100..103}}
-zstyle ':completion:*:ssh:*' hosts \
-       192.168.1.{{1..4},{100..103}}
-zstyle ':completion:*:scp:*' hosts \
-       192.168.1.{{1..4},{100..103}}
+# ping|ssh|scp {{{
+zstyle ':completion:*:(ping|ssh|scp|sftp):*' hosts \
+    du1abadd.org \
+    192.168.1.{1,2}
 # }}}
 
 zstyle ':completion:*' special-dirs true
