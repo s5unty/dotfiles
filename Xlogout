@@ -6,3 +6,5 @@
 
 pkill autossh
 pkill inotifywait
+pkill sshfs
+pkill remind

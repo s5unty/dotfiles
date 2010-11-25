@@ -8,6 +8,8 @@
 /usr/bin/xset b off m 3 10 r rate 400 30
 # 加载自定义的特殊的键盘功能键
 /usr/bin/xmodmap ~/.Xmodmaprc
+# 同步各种剪贴板
+/usr/bin/autocutsel -s PRIMARY -f
 # 浏览器
 /usr/bin/x-www-browser &
 # 收邮件
@@ -28,16 +30,12 @@
 /usr/bin/gdlinux
 # eclimd
 /usr/local/bin/eclimd &
-# 协同本地的 Vimwiki 和远程的 Dokuwiki
-/usr/bin/inotifywait -mrq --timefmt '%d/%m/%y %H:%M' --format '%T %w%f' -e modify,delete,create,attrib /sun/wiki | \
+# 开机同步远程文件 TODO 如果同步失败邮件通知自己
+/usr/bin/rsync -azu du1abadd.org:/sun/pages/ /sun/pages &
+# 同步共享目录
+/usr/bin/inotifywait -mrq --timefmt '%d/%m/%y %H:%M' --format '%T %w%f' -e modify,delete,create,attrib /sun/pages | \
 	while read file; do
-		:<<-COMMENT 先下载远端可能存在的更新的内容
-		COMMENT
-		rsync -azu s5unty@du1abadd.org:/sun/wiki/ /sun/wiki
-
-		:<<-COMMENT 再上传本地已更新的内容
-		COMMENT
-		rsync -azu /sun/wiki/ www-data@du1abadd.org:/sun/wiki
+		rsync -azu /sun/pages/ du1abadd.org:/sun/pages
 	done &
-# 窗口管理器
-exec /usr/bin/awesome
+# 启动窗口管理器
+/usr/bin/awesome
