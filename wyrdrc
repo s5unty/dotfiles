@@ -27,6 +27,9 @@ set template1="REM %wdayname% MSG "
 set template2="REM %mday% AT %hour%:%min% DURATION 1:00 MSG "
 set template3="REM %mday% MSG "
 
+# todo recurrence 
+# 每半个小时提示一次当前任务
+set template4="REM %mday% AT 23:00 +1440 +30 MSG "
 
 # algorithm to use for determining busy level
 # "1" -> count the number of reminders in each day
@@ -123,7 +126,7 @@ bind "t"                 new_timed
 bind "T"                 new_timed_dialog
 bind "u"                 new_untimed
 bind "U"                 new_untimed_dialog
-bind "w"                 new_template0
+bind "w"                 new_template4
 bind "W"                 new_template1
 bind "m"                 new_template2
 bind "M"                 new_template3
