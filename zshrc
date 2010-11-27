@@ -83,22 +83,22 @@ tds() { # 每隔 20 分钟由 remind 服务调用 naughty 弹窗通知
     DESC=`task info ${1} | grep ^Desc | cut -b30-`
     UUID=`task info ${1} | grep ^UUID | cut -b30-`
     REM=`date -d"today" +"REM %d AT 23:00 +1440 *20 TAG ${UUID} MSG ${DESC}"`
-    echo ${REM} >> /sun/pages/.reminders
+    echo ${REM} >> ~/.reminders
 }
 tdp() {
     task stop ${1}
     UUID=`task info ${1} | grep ^UUID | cut -b30-`
-    sed -i '/'${UUID}'/d' /sun/pages/.reminders
+    sed -i '/'${UUID}'/d' ~/.reminders
 }
 tdd() {
     task done ${1}
     UUID=`task info ${1} | grep ^UUID | cut -b30-`
-    sed -i '/'${UUID}'/d' /sun/pages/.reminders
+    sed -i '/'${UUID}'/d' ~/.reminders
 }
 tdr() {
     task delete ${1}
     UUID=`task info ${1} | grep ^UUID | cut -b30-`
-    sed -i '/'${UUID}'/d' /sun/pages/.reminders
+    sed -i '/'${UUID}'/d' ~/.reminders
 }
 # }}}
 
