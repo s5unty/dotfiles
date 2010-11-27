@@ -2,40 +2,45 @@
 
 # ssh 翻墙隧道 0:PORT 的写法使得局域网(虚拟机)可以共享此隧道
 /usr/bin/autossh -f -N -D 0:9527 du1abadd.org
+
 # 强制启用 Ctrl-Alt-Backspace(重启图形界面) 组合键
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
+
 # 关闭机箱喇叭蜂鸣 设定键鼠灵敏度
 /usr/bin/xset b off m 3 10 r rate 400 30
+
 # 加载自定义的特殊的键盘功能键
 /usr/bin/xmodmap ~/.Xmodmaprc
-# 同步各种剪贴板
-/usr/bin/autocutsel -s PRIMARY -f
-# 浏览器
-/usr/bin/x-www-browser &
-# 收邮件
-/usr/bin/fetchmail -d 600
-# 听歌
-/usr/bin/mocp -S
-/usr/local/bin/lrcdis &
+
 # 使用 Scroll Lock 键盘灯指示有新的邮件
 /usr/bin/xmailleds -ls -M -m /sun/mails/company
 /usr/bin/xmailleds -ls -M -m /sun/mails/personal
+
+# 设置屏保
+/usr/bin/xscreensaver -no-splash &
+
+# 统一剪贴板
+/usr/bin/autocutsel -s PRIMARY -f
+
+# 启动应用程序
+/usr/bin/x-www-browser & #浏览器
+/usr/bin/fetchmail -d 600 #邮件
+/usr/bin/mocp -S #音乐服务
+/usr/local/bin/lrcdis & # 歌词
+#/usr/bin/gdlinux # Google Desktop
+#/usr/local/bin/eclimd & # eclimd
+
 # 一套键鼠控制多台机器，服务器端
 /usr/bin/synergys # synergy server
-# 为了在客户端登录之前(登录界面)就能由服务器端的键鼠控制──输入口令
+# 客户端，由服务器端的键鼠控制
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
-# 屏保
-/usr/bin/xscreensaver -no-splash &
-# Google Desktop
-/usr/bin/gdlinux
-# eclimd
-/usr/local/bin/eclimd &
-# 开机同步远程文件 TODO 如果同步失败邮件通知自己
-/usr/bin/rsync -azu du1abadd.org:/sun/pages/ /sun/pages &
-# 同步共享目录
-/usr/bin/inotifywait -mrq --timefmt '%d/%m/%y %H:%M' --format '%T %w%f' -e modify,delete,create,attrib /sun/pages | \
-	while read file; do
-		rsync -azu /sun/pages/ du1abadd.org:/sun/pages
-	done &
+
+# 同步任务 TODO 如果同步失败，邮件通知自己
+/usr/bin/rsync -azu du1abadd.org:/sun/home/.reminders /sun/home/.reminders &
+/usr/bin/remind -z -k'/sun/home/.notify-send %s &' /sun/home/.reminders &
+while /usr/bin/inotifywait -e modify,attrib /sun/home/.reminders; do
+rsync -azu /sun/home/.reminders du1abadd.org:/sun/home/.reminders
+done &
+
 # 启动窗口管理器
 /usr/bin/awesome

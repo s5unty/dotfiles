@@ -3,7 +3,7 @@
 # command for the Remind executable
 set remind_command="remind"
 # the default reminder file to display
-set reminders_file="/sun/pages/.reminders"
+set reminders_file="$HOME/.reminders"
 # command for editing an old appointment, given a line number %line% and filename %file%
 set edit_old_command="${VISUAL:-$EDITOR} -n +%line% %file%"
 # command for editing a new appointment, given a filename %file%
@@ -27,10 +27,6 @@ set template1="REM %wdayname% MSG "
 set template2="REM %mday% AT %hour%:%min% DURATION 1:00 MSG "
 set template3="REM %mday% MSG "
 
-# todo recurrence 
-# 每半个小时提示一次当前任务
-set template4="REM %mday% AT 23:00 +1440 +30 MSG "
-
 # algorithm to use for determining busy level
 # "1" -> count the number of reminders in each day
 # "2" -> count the number of hours of reminders in each day
@@ -49,7 +45,7 @@ set busy_level4="7"   # level3 color
 
 
 # first day of the week is Sunday
-set week_starts_monday="false"
+set week_starts_monday="true"
 
 # 12/24 hour time settings
 set schedule_12_hour="false"

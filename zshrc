@@ -70,13 +70,36 @@ alias tda="task add"
 alias tde="task edit"
 alias tdu="task undo"
 alias tdg="task long"
-alias tdS="task info"
-alias tds="task start"
-alias tdr="task stop"
-alias tdd="task done"
-alias tdp="task delete"
+alias tdc="task info"
 alias tdi="task annotate"
 alias tdL="task timesheet && task history.annual && task summary"
+alias tdS="task start"
+alias tdP="task stop"
+alias tdD="task done"
+alias tdR="task delete"
+tds() { # 每隔 20 分钟由 remind 服务调用 naughty 弹窗通知
+    # XXX 不支持逗号，一次只跟踪一项任务
+    task start ${1}
+    DESC=`task info ${1} | grep ^Desc | cut -b30-`
+    UUID=`task info ${1} | grep ^UUID | cut -b30-`
+    REM=`date -d"today" +"REM %d AT 23:00 +1440 *20 TAG ${UUID} MSG ${DESC}"`
+    echo ${REM} >> /sun/pages/.reminders
+}
+tdp() {
+    task stop ${1}
+    UUID=`task info ${1} | grep ^UUID | cut -b30-`
+    sed -i '/'${UUID}'/d' /sun/pages/.reminders
+}
+tdd() {
+    task done ${1}
+    UUID=`task info ${1} | grep ^UUID | cut -b30-`
+    sed -i '/'${UUID}'/d' /sun/pages/.reminders
+}
+tdr() {
+    task delete ${1}
+    UUID=`task info ${1} | grep ^UUID | cut -b30-`
+    sed -i '/'${UUID}'/d' /sun/pages/.reminders
+}
 # }}}
 
 # tar 别名 {{{

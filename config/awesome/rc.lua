@@ -222,6 +222,7 @@ globalkeys = awful.util.table.join (
 			awful.tag.viewonly(c:tags()[1])
 			client.focus = c
 			c:raise()
+            awful.client.togglemarked (c)
 		end
 	end),
 
@@ -539,5 +540,5 @@ client.add_signal("marked", function(c) c.border_color = beautiful.border_marked
 -- }}}
 
 -- {{{ Autorun
---awful.util.spawn("/opt/dropbox/bin/dropbox start -i") --
+-- awful.util.spawn("")
 -- }}}
