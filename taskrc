@@ -95,7 +95,7 @@ color.alternate=on color233                   # [11] Alternate color for line co
 #shadow.command=list                          # Task command for shadow file
 #shadow.notify=on                             # Footnote when updated
 
-default.project=/dev/null                     # Default project for 'add' command
+default.project=                              # Default project for 'add' command
 default.priority=M                            # Default priority for 'add' command
 default.command=list                          # When no arguments are specified
 
@@ -150,7 +150,7 @@ report.long.description=Lists all task, all data, matching the specified criteri
 report.long.columns=id,project,priority,entry,start,due,recur,countdown,age,tags,description
 report.long.labels=ID,Project,Pri,Added,Started,Due,Recur,Countdown,Age,Tags,Description
 report.long.sort=due+,priority-,project+
-report.long.filter=status:pending
+#report.long.filter=status:pending
 #report.long.dateformat=m/d/Y
 #report.long.annotations=full
 
@@ -245,10 +245,14 @@ report.waiting.filter=status:waiting
 #report.waiting.annotations=full
 
 # task all
-report.all.description=Lists all tasks matching the specified criteria
-report.all.columns=id,project,priority,due,active,age,description
-report.all.labels=ID,Project,Pri,Due,Active,Age,Description
-report.all.sort=due+,priority-,active-,project+
+#report.all.description=Lists all tasks matching the specified criteria
+#report.all.columns=id,project,priority,due,active,age,description
+#report.all.labels=ID,Project,Pri,Due,Active,Age,Description
+#report.all.sort=due+,priority-,active-,project+
+report.all.description=Lists all task, all data, matching the specified criteria
+report.all.columns=id,project,priority,entry,start,end,due,recur,countdown,age,tags,description
+report.all.labels=ID,Project,Pri,Added,Started,Complete,Due,Recur,Countdown,Age,Tags,Description
+report.all.sort=end-,start-,priority-,project+
 #report.all.dateformat=m/d/Y
 #report.all.annotations=full
 
