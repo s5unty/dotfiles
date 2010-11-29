@@ -111,7 +111,7 @@
 #
 ################################################################################
 
-my $DEBUG = 1;
+my $DEBUG = 0;
 my $DEBUG_FILE = '/tmp/urxvt_vim_scrollback.log';
 my $DEBUG_FH;
 
@@ -1091,6 +1091,7 @@ sub debug {
 # entry point for paste mode
 sub paste {
    my ($self, $selection) = @_;
+#   $self->enable(key_press => \&key_press_paste);
 
    my $text = $self->selection();
    if($text){
