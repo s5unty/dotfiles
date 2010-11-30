@@ -1,4 +1,45 @@
-## 定义变量 {{{
+# VARS {{{1
+export HISTFILE=~/.zsh_history
+export HISTSIZE=409600
+export SAVEHIST=409600
+export DEBIAN_DIR=""
+export REPREPRO_CONFIG_DIR=""
+export LANG="zh_CN.UTF-8"
+export TZ='Asia/Shanghai'
+export HOME="/sun/home"
+export EDITOR="/usr/bin/vim"
+export VISUAL="/usr/bin/vim"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:."
+export DEBEMAIL="s5unty@gmail.com"
+export DEBFULLNAME="Vern Sun"
+export JAVA_HOME="/usr/lib/jvm/java-6-sun/"
+export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/"
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# use the built in directory navigation via the directory stack {{{2
+# http://zsh.sourceforge.net/Doc/Release/zsh_15.html
+# keep a persistent dirstack in ~/.zsh_dirs, from Francisco Borges, on zsh.devel
+DIRSTACKSIZE=20
+if [[ -f ~/.zsh_dirs ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
+	dirstack=( ${(uf)"$(< ~/.zsh_dirs)"} )
+fi
+chpwd() { dirs -pl >! ~/.zsh_dirs }
+
+# turn off XON/XOFF, but only for a tty {{{2
+tty > /dev/null && stty -ixon -ixoff
+
+# don't ask me before menu selection {{{2
+LISTPROMPT=''
+
+# word delimiter characters in line editor {{{2
+WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
+
+# checks for new mail every 10 minutes {{{2
+MAILCHECK=600
+for i in /sun/mails/(company|personal)(/); do
+    mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
+done
+# {{{2
 if   [ -e "/usr/bin/zless" ]; then __LESS="zless -r"
 elif [ -e "/usr/bin/less"  ]; then __LESS="less -r"
 else __LESS="more" fi
@@ -7,17 +48,50 @@ if [ -e "/usr/bin/colordiff" ]; then __DIFF="colordiff" else __DIFF="diff" fi
 if [ -e "/usr/bin/sudo" ];      then __SUDO="sudo" fi
 
 __IP=`/sbin/ifconfig -v | grep 192.168.1 | tail -1 | cut -d'.' -f4 | cut -d' ' -f1`
-## }}}
 
-## 定义别名 {{{
+######################################################################## }}}1
 
-# 全局别名 {{{
+# OPTIONS {{{1
+autoload zsh/terminfo
+autoload history-search-end
+autoload -U zmv
+autoload -U compinit && compinit
+autoload -U zed
+autoload -U insert-files && zle -N insert-files
+zmodload -i zsh/complist
+zmodload -i zsh/deltochar
+zmodload -i zsh/mathfunc
+zmodload -a zsh/stat stat
+zmodload -a zsh/zpty zpty
+zmodload -a zsh/zprof zprof
+zmodload -a zsh/mapfile mapfile
+
+setopt AUTO_PUSHD
+setopt AUTO_CD
+setopt CDABLE_VARS
+setopt PROMPT_SUBST
+setopt PUSHD_MINUS
+setopt PUSHD_SILENT
+setopt PUSHD_TO_HOME
+setopt PUSHD_IGNOREDUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt SHARE_HISTORY
+setopt FLOW_CONTROL         # don't ignore ^S/^Q
+setopt LONGLISTJOBS         # display PID when suspending processes as well
+setopt NOTIFY               # report the status of backgrounds jobs immediately
+setopt COMPLETEINWORD       # not just at the end
+
+zle_highlight=(region:bg=blue     #选中区域
+               special:bold       #特殊字符
+               isearch:underline) #搜索时使用的关键字
+
+######################################################################## }}}1
+
+# ALIAS {{{1
 alias -g G="| grep"
 alias -g M="| $__LESS"
 alias -g Y="| xsel"
-# }}}
-
-# 普通别名 {{{
 alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
 alias ll="ls -hl"
@@ -37,9 +111,8 @@ alias vi="/usr/bin/vim -n"
 alias vim="/usr/bin/vim --noplugin"
 alias tig="tig --all"
 #alias make="/usr/bin/make -j2"
-# }}}
 
-# apt-get 别名 {{{
+# apt-get {{{2
 alias api="$__SUDO apt-get install"
 alias apo="apt-get source"
 alias ape="$__SUDO vi /etc/apt/sources.list"
@@ -49,9 +122,8 @@ alias app="$__SUDO apt-get purge"
 alias apg="apt-cache search"
 alias aps="apt-cache show"
 alias apv="apt-cache policy"
-# }}}
 
-# dpkg 别名 {{{
+# dpkg {{{2
 alias dpi="$__SUDO dpkg -i"
 alias dpp="$__SUDO dpkg -P"
 alias dpc="dpkg -c"
@@ -63,16 +135,15 @@ alias dpG="dpkg -S"
 alias dpL="dpkg -L"
 dpH() { echo "$1 hold" | $__SUDO dpkg --set-selections }
 dpI() { echo "$1 install" | $__SUDO dpkg --set-selections }
-# }}}
 
-# task 别名 {{{
+# task {{{2
+alias td="task summary && print && task history && rem"
 alias tda="task add"
 alias tde="task edit"
 alias tdu="task undo"
 alias tdg="task long"
 alias tdc="task info"
 alias tdi="task annotate"
-alias tdL="task timesheet && task history.annual && task summary"
 alias tdS="task start"
 alias tdP="task stop"
 alias tdD="task done"
@@ -100,9 +171,8 @@ tdr() {
     UUID=`task info ${1} | grep ^UUID | cut -b30-`
     sed -i '/'${UUID}'/d' ~/.reminders
 }
-# }}}
 
-# tar 别名 {{{
+# tar {{{2
 tgz() {
     name=`echo $1 | sed 's/\/*$//g'`
     tar -zcf "$name.tgz" $@
@@ -111,8 +181,12 @@ tgzz() {
     name=`echo $1 | sed 's/\/*$//g'`
     tar -zcf "$name.tgz" $@ --exclude=.cscope --exclude-vcs
 }
-tgx() { $__SUDO tar -zxvf $@ }
-tgg() { tar -tf $@ }
+tgx() {
+    $__SUDO tar -zxvf $@
+}
+tgg() {
+    tar -tf $@
+}
 
 tjz() {
     name=`echo $1 | sed 's/\/*$//g'`
@@ -122,11 +196,14 @@ tjzz() {
     name=`echo $1 | sed 's/\/*$//g'`
     tar -jcf "$name.tbz" $@ --exclude=.cscope --exclude-vcs
 }
-tjx() { $__SUDO tar -jxvf $@ }
-tjg() { tar -tf $@ }
-# }}}
+tjx() {
+    $__SUDO tar -jxvf $@
+}
+tjg() {
+    tar -tf $@
+}
 
-# 文件类型别名 {{{
+# file {{{2
 alias -s png="qiv -p"
 alias -s PNG="qiv -p"
 alias -s gif="qiv -p"
@@ -149,9 +226,8 @@ alias -s pdf=FoxitReader
 alias -s html=firefox
 alias -s chm=kchmviewer
 alias -s planner=planner
-# }}}
 
-# 目录别名 {{{
+# fold {{{2
 # unhash -dm '*'
 zstyle ':completion:*:*:*:users' ignored-patterns _dhcp _pflogd adm apache \
 	avahi avahi-autoipd backup bin bind clamav cupsys cyrusdaemon daemon \
@@ -162,9 +238,8 @@ zstyle ':completion:*:*:*:users' ignored-patterns _dhcp _pflogd adm apache \
 	rpc rpcuser rpm saned shutdown smmsp spamd squid sshd statd stunnel sync \
 	sys syslog toor tty uucp vcsa varnish vmail vde2-net www www-data xfs \
 	bitlbee debian-tor minbif root usbmux canna fetchmail privoxy
-# }}}
 
-# 其它别名 {{{ 
+# OTHERS {{{2
 cd() {
     if builtin cd "$@"; then
         ls
@@ -178,18 +253,23 @@ T() { # tail
         $__SUDO tail $*
     fi
 }
+
 K() { # kill
     killall -u $USER $1
 }
+
 P() { # ps
     ps -ef | grep "$1" | grep -v "grep"
 }
+
 F() { # find
     find ./ -iname "*$1*" ${(@)argv[2,$#]}
 }
+
 R() { # find in files
     ack-grep -r $1 . ${(@)argv[2,$#]}
 }
+
 CS() { # gen cscope.files
     mkdir -p .cscope
     find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' -o -iname '*.cxx' \
@@ -197,9 +277,6 @@ CS() { # gen cscope.files
         -o -iname '*.java' > .cscope/cscope.files
     cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
     ctags --c++-kinds=+p --fields=-fst --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
-}
-O() { # chown
-	$__SUDO chown -R s5unty:s5unty $*
 }
 
 dup() { # dupload
@@ -211,81 +288,10 @@ dup() { # dupload
         /usr/bin/dupload -t "$1" ${(@)argv[2,$#]}
     fi
 }
-# }}}
 
-## }}}
+######################################################################## }}}1
 
-## 导出环境变量 {{{
-export HISTFILE=~/.zsh_history
-export HISTSIZE=409600
-export SAVEHIST=409600
-export DEBIAN_DIR=""
-export REPREPRO_CONFIG_DIR=""
-export LANG="zh_CN.UTF-8"
-export TZ='Asia/Shanghai'
-export HOME="/sun/home"
-export EDITOR="/usr/bin/vim"
-export VISUAL="/usr/bin/vim"
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:."
-export DEBEMAIL="s5unty@gmail.com"
-export DEBFULLNAME="Vern Sun"
-export JAVA_HOME="/usr/lib/jvm/java-6-sun/"
-export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/"
-export XDG_CONFIG_HOME="$HOME/.config"
-## }}}
-
-## 个性化提示符 {{{
-
-# define colours {{{
-#Text Foreground Colors
-fg_black=$'%{\e[0;30m%}'
-fg_red=$'%{\e[0;31m%}'
-fg_green=$'%{\e[0;32m%}'
-fg_brown=$'%{\e[0;33m%}'
-fg_blue=$'%{\e[0;34m%}'
-fg_purple=$'%{\e[0;35m%}'
-fg_cyan=$'%{\e[0;36m%}'
-fg_lgray=$'%{\e[0;37m%}'
-fg_dgray=$'%{\e[1;30m%}'
-fg_lred=$'%{\e[1;31m%}'
-fg_lgreen=$'%{\e[1;32m%}'
-fg_yellow=$'%{\e[1;33m%}'
-fg_lblue=$'%{\e[1;34m%}'
-fg_pink=$'%{\e[1;35m%}'
-fg_lcyan=$'%{\e[1;36m%}'
-fg_white=$'%{\e[1;37m%}'
-#Text Background Colors
-bg_red=$'%{\e[0;41m%}'
-bg_green=$'%{\e[0;42m%}'
-bg_brown=$'%{\e[0;43m%}'
-bg_blue=$'%{\e[0;44m%}'
-bg_purple=$'%{\e[0;45m%}'
-bg_cyan=$'%{\e[0;46m%}'
-bg_gray=$'%{\e[0;47m%}'
-#Attributes
-at_none="%{$terminfo[sgr0]%}"
-at_bold=$'%{\e[1m%}'
-at_italics=$'%{\e[3m%}'
-at_underl=$'%{\e[4m%}'
-at_blink=$'%{\e[5m%}'
-at_reverse=$'%{\e[7m%}'
-# }}}
-
-# define prompt {{{
-parse_git_branch() {
-    git diff --quiet 2> /dev/null
-    if [ $? -eq 1 ]; then # branch is not clear
-        echo -n " $at_underl"
-        echo "`git branch --no-color 2> /dev/null | \
-        sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`"
-        # |master|                       | no space here
-    else
-        echo "`git branch --no-color 2> /dev/null | \
-        sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
-        # | master|                      | space here
-    fi
-}
-
+# PROMPT {{{1
 set_prompt() {
     MAXMID="$(($COLUMNS / 2 - 5))" # truncate to this value
     myjobs=()
@@ -312,58 +318,124 @@ case `tty` in
         precmd() { set_prompt; }
         ;;
 esac
-## }}}
 
-# }}}
+# colours and attributes {{{2
+# Text Foreground Colors {{{3
+fg_black=$'%{\e[0;30m%}'
+fg_red=$'%{\e[0;31m%}'
+fg_green=$'%{\e[0;32m%}'
+fg_brown=$'%{\e[0;33m%}'
+fg_blue=$'%{\e[0;34m%}'
+fg_purple=$'%{\e[0;35m%}'
+fg_cyan=$'%{\e[0;36m%}'
+fg_lgray=$'%{\e[0;37m%}'
+fg_dgray=$'%{\e[1;30m%}'
+fg_lred=$'%{\e[1;31m%}'
+fg_lgreen=$'%{\e[1;32m%}'
+fg_yellow=$'%{\e[1;33m%}'
+fg_lblue=$'%{\e[1;34m%}'
+fg_pink=$'%{\e[1;35m%}'
+fg_lcyan=$'%{\e[1;36m%}'
+fg_white=$'%{\e[1;37m%}'
+# Text Background Colors {{{3
+bg_red=$'%{\e[0;41m%}'
+bg_green=$'%{\e[0;42m%}'
+bg_brown=$'%{\e[0;43m%}'
+bg_blue=$'%{\e[0;44m%}'
+bg_purple=$'%{\e[0;45m%}'
+bg_cyan=$'%{\e[0;46m%}'
+bg_gray=$'%{\e[0;47m%}'
+# Attributes {{{3
+at_none="%{$terminfo[sgr0]%}"
+at_bold=$'%{\e[1m%}'
+at_italics=$'%{\e[3m%}'
+at_underl=$'%{\e[4m%}'
+at_blink=$'%{\e[5m%}'
+at_reverse=$'%{\e[7m%}'
 
-## 自动补全功能 {{{
-autoload -U compinit
-compinit
+# Git function {{{3 
+parse_git_branch() {
+    git diff --quiet 2> /dev/null
+    if [ $? -eq 1 ]; then # branch is not clear
+        echo -n " $at_underl"
+        echo "`git branch --no-color 2> /dev/null | \
+        sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`"
+        # |master|                       | no space here
+    else
+        echo "`git branch --no-color 2> /dev/null | \
+        sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
+        # | master|                      | space here
+    fi
+}
 
-# highlight {{{
+######################################################################## }}}1
+
+# COMPLETAION {{{1
 zstyle ':completion:*' menu select
-# }}}
+zstyle ':completion:*' expand true
+zstyle ':completion:*' file-sort name
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# correct {{{
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ${fg_lred}${at_italics}'%d (%e errors)'${at_none}
+zstyle ':completion:*:descriptions' format ${fg_lgreen}${at_italics}'%d'${at_none}
+zstyle ':completion:*:messages' format ${fg_lgreen}${at_italics}'%d'${at_none}
+zstyle ':completion:*:warnings' format ${at_blink}'No matches for: %d'${at_none}
+
+# correct {{{2
 zstyle ':completion:::::' completer _complete _approximate
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
-# }}}
 
-# caching {{{
+# caching {{{2
 zstyle ':completion::complete:*' use-cache on
 zstyle ':completion::complete:*' cache-path .zcache
-# }}}
 
-# kill {{{
-compdef pkill=kill
+# kill {{{2
 compdef pkill=killall
-zstyle ':completion:*:*:kill:*' menu select
-zstyle ':completion:*:processes' command 'ps -au$USER'
-# }}}
+zstyle ':completion:*:processes' command 'ps --forest -au$USER -o pid,time,cmd|grep -v "ps -au$USER -o pid,time,cmd"'
+zstyle ':completion:*:processes' list-colors '=(#b) #([0-9]#)[ 0-9:]#([^ ]#)*=01;30=01;31=01;38'
+zstyle ':completion:*:processes-names' command 'ps -au$USER -o comm|grep -v "ps -au$USER -o comm"'
 
-# ping|ssh|scp {{{
+# ping|ssh|scp {{{2
 zstyle ':completion:*:(ping|ssh|scp|sftp):*' hosts \
     du1abadd.org \
     192.168.1.{1,2}
-# }}}
-
 zstyle ':completion:*' special-dirs true
-## }}}
 
-## 快捷键绑定 {{{
-bindkey '\e;'   vi-cmd-mode
-bindkey '\e'    vi-cmd-mode
-bindkey '^l'    vi-forward-char
-bindkey '^f'    _vi-forward-blank
-bindkey '^b'    _vi-backward-blank
-bindkey '^d'    delete-word
-bindkey '^u'    undo
-bindkey '^h'    vi-backward-char
-bindkey '^j'    down-line-or-search
-bindkey '^k'    up-line-or-search
+######################################################################## }}}1
+
+# KEY BINDINGS {{{1
 bindkey '^n'    history-search-forward
 bindkey '^p'    history-search-backward
-bindkey '\e2'   quote-region
+bindkey "^[e"   edit_command_line          # ALT-E
+bindkey "^[h"   backward-char              # ALT-H
+bindkey "^[l"   forward-char               # ALT-H
+bindkey "^[b"   vi-backward-blank-word     # ALT-B
+bindkey "^[f"   _vi-forward-blank          # ALT-F
+bindkey "^[x"   delete-char                # ALT-X
+bindkey "^[,"   insert-last-typed-word     # ALT-,
+bindkey "^[1"   jump_arg1
+# bindkey "^[2"   jump_arg2 ...
+bindkey "\t"    powertab
+bindkey " "     magic-space                # ' ' (Space)
+
+bindkey -s            "^q"  "run-ranger\r"
+bindkey -M menuselect "i"   accept-and-menu-complete
+bindkey -M menuselect "^o"  accept-and-infer-next-history
+
+bindkey "$terminfo[kf1]"    run-help       # F1
+bindkey "$terminfo[kf2]"    which-command  # F2
+bindkey "$terminfo[kf11]"   run-netstat    # F11
+bindkey "$terminfo[kf12]"   run-ps         # F12
+
+# functions {{{2
+insert-last-typed-word() {
+    zle insert-last-word -- 0 -1
+}
+zle -N insert-last-typed-word
 
 _vi-forward-blank() {
     # <ESC>Ea
@@ -373,98 +445,77 @@ _vi-forward-blank() {
 }
 zle -N _vi-forward-blank
 
-_vi-backward-blank() {
-    # <ESC>B
-    zle vi-backward-blank-word
-#    zle vi-backward-char
-}
-zle -N _vi-backward-blank
-
 # what's ranger?
 # http://ranger.nongnu.org/
 # https://github.com/hut/ranger
-ranger() {
-  before="$(pwd)"
-  python /usr/local/bin/ranger --fail-unless-cd "$@" || return 0
-  after="$(grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
-  if [[ "$before" != "$after" ]]; then
-    cd "$after"
-  fi
+run-ranger() {
+    before="$(pwd)"
+    python /usr/local/bin/ranger --fail-unless-cd "$@" || return 0
+    after="$(grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
+    if [[ "$before" != "$after" ]]; then
+        cd "$after"
+    fi
 }
-bindkey -s '^o' 'ranger\r'
 
 # what's autojump?
 # @joelthelion: https://github.com/joelthelion/autojump
 powertab(){
-  if [[ -z $BUFFER ]] ; then
-    BUFFER="j "
-    zle end-of-line
+    if [[ -z $BUFFER ]] ; then
+        BUFFER="j "
+        zle end-of-line
+        zle expand-or-complete
+    fi
     zle expand-or-complete
-  fi
-  zle expand-or-complete
 }
 zle -N powertab
-bindkey "\t" powertab
 
-## mark #
-# if [[ -z $BUFFER ]]; then
-#     zle up-history
-# fi
-# LBUFFER="echo \"scale=2;$BUFFER"
-# RBUFFER="\" | bc"
-########
+run-ps () {
+    zle -I
+    ps x --forest -u$USER -wwwA -o pid,user,cmd | less
+}
+zle -N run-ps
 
-## }}}
+run-netstat () {
+    zle -I
+    netstat -ltupn
+}
+zle -N run-netstat
 
-## 杂七杂八选项 {{{
-setopt AUTO_PUSHD
-setopt AUTO_CD
-setopt CDABLE_VARS
-setopt PROMPT_SUBST
-setopt PUSHD_MINUS
-setopt PUSHD_SILENT
-setopt PUSHD_TO_HOME
-setopt PUSHD_IGNOREDUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt SHARE_HISTORY
+edit_command_line () {
+    # edit current line in $EDITOR
+    local tmpfile=${TMPPREFIX:-/tmp/zsh}ecl$$
 
-# Umask of 022
-umask 022
+    print -R - "$PREBUFFER$BUFFER" >$tmpfile
+    exec </dev/tty
+    ${VISUAL:-${EDITOR:-vi}} $tmpfile
+    zle kill-buffer
+    BUFFER=${"$(<$tmpfile)"/$PREBUFFER/}
+    CURSOR=$#BUFFER
 
-# use the built in directory navigation via the directory stack
-# http://zsh.sourceforge.net/Doc/Release/zsh_15.html
-# keep a persistent dirstack in ~/.zsh_dirs, from Francisco Borges, on zsh.devel
-DIRSTACKSIZE=20
-if [[ -f ~/.zsh_dirs ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
-	dirstack=( ${(uf)"$(< ~/.zsh_dirs)"} )
+    command rm -f $tmpfile
+    zle redisplay
+}
+zle -N edit_command_line
+
+# jump behind the first word on the cmdline.
+# useful to add options.
+# TODO jump_arg2, arg3 ...
+jump_arg1 () {
+    local words
+    words=(${(z)BUFFER})
+
+    if (( ${#words} <= 1 )) ; then
+        CURSOR=${#BUFFER}
+    else
+        CURSOR=${#${words[1]}}
+    fi
+}
+zle -N jump_arg1
+
+######################################################################## }}}1
+
+# Load specific stuff
+if [ -e /etc/profile.d/autojump.zsh ]; then
+    source /etc/profile.d/autojump.zsh;
 fi
-chpwd() { dirs -pl >! ~/.zsh_dirs }
 
-# turn off XON/XOFF, but only for a tty
-tty > /dev/null && stty -ixon -ixoff
-
-# terminfo module
-autoload zsh/terminfo
-
-# don't ask me 'do you wish to see all XX possibilities' before menu selection
-LISTPROMPT=''
-
-WORDCHARS='*?_-‘’[]~=&;!#$%^(){}<>'
-
-zle_highlight=(region:bg=blue     #选中区域
-               special:bold       #特殊字符
-               isearch:underline) #搜索时使用的关键字
-
-# 检查邮件 {{{
-for i in /sun/mails/(company|personal)(/); do
-    mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
-done
-# }}}
-
-# Load specific local stuff.
-# (find-fline "~/.zshrc.local")
-if [ -e ~/.zshrc.local   ]; then . ~/.zshrc.local; fi
-
-source /etc/profile.d/autojump.zsh
-## }}}
