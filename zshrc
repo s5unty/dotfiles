@@ -53,11 +53,12 @@ __IP=`/sbin/ifconfig -v | grep 192.168.1 | tail -1 | cut -d'.' -f4 | cut -d' ' -
 
 # OPTIONS {{{1
 autoload zsh/terminfo
-autoload history-search-end
-autoload -U zmv
-autoload -U compinit && compinit
 autoload -U zed
+autoload -U compinit && compinit
 autoload -U insert-files && zle -N insert-files
+autoload -U copy-earlier-word && zle -N copy-earlier-word
+autoload -U edit-command-line && zle -N edit-command-line
+
 zmodload -i zsh/complist
 zmodload -i zsh/deltochar
 zmodload -i zsh/mathfunc
@@ -408,15 +409,18 @@ zstyle ':completion:*' special-dirs true
 ######################################################################## }}}1
 
 # KEY BINDINGS {{{1
+
 bindkey '^n'    history-search-forward
 bindkey '^p'    history-search-backward
-bindkey "^[e"   edit_command_line          # ALT-E
+bindkey "^[e"   edit-command-line          # ALT-E
 bindkey "^[h"   backward-char              # ALT-H
 bindkey "^[l"   forward-char               # ALT-H
 bindkey "^[b"   vi-backward-blank-word     # ALT-B
 bindkey "^[f"   _vi-forward-blank          # ALT-F
 bindkey "^[x"   delete-char                # ALT-X
-bindkey "^[,"   insert-last-typed-word     # ALT-,
+#bindkey "^[,"   insert-last-typed-word     # ALT-,
+bindkey "^[,"   copy-earlier-word          # ALT-,
+
 bindkey "^[1"   jump_arg1
 # bindkey "^[2"   jump_arg2 ...
 bindkey "\t"    powertab
@@ -480,22 +484,6 @@ run-netstat () {
     netstat -ltupn
 }
 zle -N run-netstat
-
-edit_command_line () {
-    # edit current line in $EDITOR
-    local tmpfile=${TMPPREFIX:-/tmp/zsh}ecl$$
-
-    print -R - "$PREBUFFER$BUFFER" >$tmpfile
-    exec </dev/tty
-    ${VISUAL:-${EDITOR:-vi}} $tmpfile
-    zle kill-buffer
-    BUFFER=${"$(<$tmpfile)"/$PREBUFFER/}
-    CURSOR=$#BUFFER
-
-    command rm -f $tmpfile
-    zle redisplay
-}
-zle -N edit_command_line
 
 # jump behind the first word on the cmdline.
 # useful to add options.
