@@ -512,8 +512,6 @@ if [ -e /etc/profile.d/autojump.zsh ]; then
     source /etc/profile.d/autojump.zsh;
 fi
 
-=======
-
 run-ps () {
     zle -I
     ps x --forest -u$USER -wwwA -o pid,user,cmd | less
