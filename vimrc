@@ -196,6 +196,12 @@ function! G_FindInFiles(range, quick)
 
     call G_QFixToggle(1)
 endfunction
+
+" jekyll blog
+function! G_Jekyll()
+
+endfunction
+
 " }}}
 
 " Key bindings {{{1
@@ -244,7 +250,7 @@ vmap <silent> <unique> + :Align =<CR>
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
-nmap <silent> <unique> W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
+nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :q<CR>
 nmap          <unique> <S-F8> :make! install DESTDIR=<UP>
 nmap <silent> <unique> <S-F9> q:<UP>

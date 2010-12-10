@@ -36,9 +36,11 @@ WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
 
 # checks for new mail every 10 minutes {{{2
 MAILCHECK=600
-for i in /sun/mails/(company|personal)(/); do
-    mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
-done
+if [ -z /sun/mails ]; then
+    for i in /sun/mails/(company|personal)(/); do
+        mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
+    done
+fi
 # {{{2
 if   [ -e "/usr/bin/zless" ]; then __LESS="zless -r"
 elif [ -e "/usr/bin/less"  ]; then __LESS="less -r"
@@ -99,6 +101,9 @@ alias ll="ls -hl"
 alias la="ls -hlA"
 alias ls="ls --color=always -F -h"
 alias cp="cp -a"
+alias ..="cd ../.."
+alias ...="cd ../../../"
+alias ....="cd ../../../../"
 alias rm="rm -r"
 alias at="at -m"
 alias gh="ditz html ~/issues/html/"
@@ -300,12 +305,12 @@ set_prompt() {
         j=$jobstates[$a];i="${${(@s,:,)j}[2]}"
         myjobs+=($a${i//[^+-]/})
     }
-    myjobs="$at_none$fg_cyan%(1j/[${(j/,/)myjobs}] /)"
+    myjobs="$at_none$fg_cyan$at_blink%(1j/[${(j/,/)myjobs}] /)"
     mypath="$at_none$fg_green$at_italics%~"
-    myerrs="$at_none$fg_lred%(0?.. (%?%))"
+    myerrs="$at_none$fg_lred%(0?..(%?%) )"
     mygitb="$at_none$fg_white$at_bold$(parse_git_branch)"
        PS1="$at_none$at_bold%!%#$at_none "
-      RPS1="$myjobs$fg_green%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
+      RPS1="$myjobs$myerrs%$MAXMID<...<$mypath$mygitb$at_none"
     rehash
 }
 
@@ -354,17 +359,17 @@ at_underl=$'%{\e[4m%}'
 at_blink=$'%{\e[5m%}'
 at_reverse=$'%{\e[7m%}'
 
-# Git function {{{3 
+# git function {{{2 
 parse_git_branch() {
     git diff --quiet 2> /dev/null
     if [ $? -eq 1 ]; then # branch is not clear
         echo -n " $at_underl"
         echo "`git branch --no-color 2> /dev/null | \
-        sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`"
+        /bin/sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`"
         # |master|                       | no space here
     else
         echo "`git branch --no-color 2> /dev/null | \
-        sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
+        /bin/sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
         # | master|                      | space here
     fi
 }
@@ -506,4 +511,39 @@ zle -N jump_arg1
 if [ -e /etc/profile.d/autojump.zsh ]; then
     source /etc/profile.d/autojump.zsh;
 fi
+
+=======
+
+run-ps () {
+    zle -I
+    ps x --forest -u$USER -wwwA -o pid,user,cmd | less
+}
+zle -N run-ps
+
+run-netstat () {
+    zle -I
+    netstat -ltupn
+}
+zle -N run-netstat
+
+# jump behind the first word on the cmdline.
+# useful to add options.
+# TODO jump_arg2, arg3 ...
+jump_arg1 () {
+    local words
+    words=(${(z)BUFFER})
+
+    if (( ${#words} <= 1 )) ; then
+        CURSOR=${#BUFFER}
+    else
+        CURSOR=${#${words[1]}}
+    fi
+}
+zle -N jump_arg1
+
+######################################################################## }}}1
+
+# Load specific stuff
+eval AutoJump="/etc/profile.d/autojump.zsh"
+[ -e "$AutoJump" ] && source $AutoJump || /bin/cat /dev/null
 
