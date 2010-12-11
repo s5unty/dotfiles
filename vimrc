@@ -33,7 +33,8 @@ set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
 set wildmode=longest:full,list:full
- 
+set listchars=tab:>-,trail:- 
+
 if has("gui_running")
     set guioptions-=m
     set guioptions-=T
@@ -252,7 +253,7 @@ vmap <silent> <unique> + :Align =<CR>
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :q<CR>
-nmap          <unique> <S-F8> :make! install DESTDIR=<UP>
+nmap                   <S-F8> :make! install DESTDIR=<UP>
 nmap <silent> <unique> <S-F9> q:<UP>
 
 " Ctrl+ {{{2
