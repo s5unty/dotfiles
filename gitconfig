@@ -3,6 +3,7 @@
     email = s5unty@gmail.com
 [core]
     excludesfile = /sun/home/.gitignore
+    quotepath = false
 [format]
     headers = ""
     subjectprefix = ""
