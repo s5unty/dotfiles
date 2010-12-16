@@ -81,7 +81,7 @@
     di  = diff --no-prefix -p --stat # show difference between working tree and the index
     dc  = diff --no-prefix -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
     da  = diff --no-prefix -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
-    df  = diff --no-prefix --stat HEAD # show different files between working tree and the index
+    df  = diff --no-prefix --stat=200,78 HEAD # show different files between working tree and the index
     dt  = difftool
     dp  = !sh -c 'git diff HEAD "$0" | git apply --whitespace=nowarn --index -' # fast apply the patch against "$0" commit or branch
 
