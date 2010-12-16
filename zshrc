@@ -354,17 +354,25 @@ at_reverse=$'%{\e[7m%}'
 
 # Git function {{{3 
 parse_git_branch() {
-    git diff --quiet 2> /dev/null
+    branch="$(git branch --no-color 2> /dev/null | \
+        sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+
+    git diff --no-ext-diff --quiet 2> /dev/null
     if [ $? -eq 1 ]; then # branch is not clear
-        echo -n " $at_underl"
-        echo "`git branch --no-color 2> /dev/null | \
-        sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`"
-        # |master|                       | no space here
+        _branch=" ${at_underl}${branch}"
     else
-        echo "`git branch --no-color 2> /dev/null | \
-        sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'`"
-        # | master|                      | space here
+        _branch=" ${branch}"
     fi
+
+    stash="$(git stash list 2> /dev/null | \
+        grep -q "${branch}")"
+    if [ $? -eq 0 ]; then # branch has stash
+        _stash=" ${fg_purple}${at_blink}WIP"
+    else
+        _stash=""
+    fi
+
+    echo "${_branch}${_stash}"
 }
 
 ######################################################################## }}}1
