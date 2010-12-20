@@ -8,7 +8,8 @@ FORMAIL="/usr/bin/formail"
 # 使用简单日志
 VERBOSE=off
 
-# 本地化邮件日期，既显示发送者所在时区的时间，也显示接收者所在时区的时间
+# 本地化邮件日期 {{{1
+# 既显示发送者所在时区的时间，也显示接收者所在时区的时间
 # 邮件日期 Tue, 31 Oct 2006 20:24:16 -0600 (CST)
 # 本地化后 Wed, 2006-11-01 10:24 +0800 | Tue, 20:24 -0600
 :0
@@ -20,9 +21,28 @@ VERBOSE=off
     loc_date = `date +'%a, %F %R %z' -d "$MATCH"`
     :0 fhw
     | $FORMAIL -I "X-LDate: ${loc_date} | ${org_date} ${zone}"
-}
+} # }}}1
 
-# 自定义邮件标签
+# 签名/加密邮件 {{{1
+# Convert old-style PGP messages to MIME
+# http://lists.debian.org/debian-security/2001/08/msg00078.html
+:0
+* !^Content-Type: multipart/
+* !^Content-Type: application/pgp
+{
+    :0 fBw
+        * ^-----BEGIN PGP MESSAGE-----
+        * ^-----END PGP MESSAGE-----
+        | formail -i "Content-Type: application/pgp; format=text; x-action=encrypt"
+
+    :0 fBw
+        * ^-----BEGIN PGP SIGNED MESSAGE-----
+        * ^-----BEGIN PGP SIGNATURE-----
+        * ^-----END PGP SIGNATURE-----
+        | formail -i "Content-Type: application/pgp; format=text; x-action=sign"
+} # }}}1
+
+# 处理公司邮件 {{{1
 :0
 * ^(List-Id|To|CC|BCC|From):.*(e6-1170|trac)@mid-fun.com
 {
@@ -32,10 +52,21 @@ VERBOSE=off
     company/
 }
 
+:0 h
+* ^X-Git-Refname:.*refs/heads/master
+{
+    :0 fhw
+    | $FORMAIL -I "X-Label: scm"
+    :0:
+    company/
+}
+
 :0
 * ^(List-Id|To|CC|BCC):.*(mid-fun.com)
 company/
+# }}}1
 
+# 关注的邮件列表 {{{1
 :0
 * ^(List-Id|To|CC|BCC):.*(debian-l10n-chinese)
 {
@@ -81,10 +112,17 @@ szlug/
 * ^From:.*(amazon.cn|taobao.com|alipay.com)
 shopping/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*fcitx.*@googlegroups.com
-fcitx-dev/
+fcitx/
 
+:0
+* ^(List-Id|To|CC|BCC):.*<python-cn.googlegroups.com>
+python-cn/
+
+# }}}1
+
+# 其他的邮件列表 {{{1
 :0 h
 * ^(List-Id|To|CC|Bcc):.*pkg-mono-devel.lists.alioth.debian.org
 /dev/null
@@ -140,6 +178,7 @@ fcitx-dev/
 :0
 * ^(List-Id|To|CC|BCC):.*xfce-i18n.xfce.org
 /dev/null
+# }}}1
 
 :0
 * .*
