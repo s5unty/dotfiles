@@ -19,7 +19,7 @@ theme    = awful.util.getdir("config") .. "/theme.lua"
 beautiful.init (theme)
 
 toggletags = {
-    ["x-terminal-emulator"] = { screen = 1, tag = 8 },
+    ["x-terminal-emulator"] = { screen = 1, tag = 9 },
 }
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -31,17 +31,18 @@ layouts =
 
 tags = { }
 mytags = {
-    { layout = layouts[2], mwfact = 0.668, nmaster=1 },
+    { layout = layouts[1], mwfact = 0.668, nmaster=1 },
     { layout = layouts[2], mwfact = 0.618, nmaster=1 },
     { layout = layouts[1], mwfact = 0.500, nmaster=1 },
-    { layout = layouts[2], mwfact = 0.668, nmaster=1 },
+    { layout = layouts[1], mwfact = 0.668, nmaster=1 },
+    { layout = layouts[1], mwfact = 0.668, nmaster=1 },
+    { layout = layouts[1], mwfact = 0.668, nmaster=1 },
     { layout = layouts[1], mwfact = 0.618, nmaster=1 },
-    { layout = layouts[1], mwfact = 0.618, nmaster=1 },
-    { layout = layouts[2], mwfact = 0.500, nmaster=2 },
+    { layout = layouts[2], mwfact = 0.618, nmaster=1 },
     { layout = awful.layout.suit.fair },
 }
 for s = 1, screen.count() do
-    tags[s] = awful.tag({ "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }, s)
+    tags[s] = awful.tag({ "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰", "卍" }, s) -- 太极图案 "☯"
     for i, v in ipairs(mytags) do
         awful.tag.setproperty(tags[s][i], "layout",   v.layout)
         awful.tag.setproperty(tags[s][i], "mwfact",   v.mwfact)
@@ -187,7 +188,7 @@ globalkeys = awful.util.table.join (
 -- {{{ Screen
 awful.key({ modkey, "Control" }, "h",   function () awful.screen.focus_relative (-1) end),
 awful.key({ modkey, "Control" }, "l",   function () awful.screen.focus_relative ( 1) end),
-awful.key({ modkey }, "Escape", function () mymainmenu:show(true)  end),
+-- awful.key({ modkey }, "Escape", function () mymainmenu:show(true)  end),
 -- }}}
 
 -- {{{ Tag
@@ -358,6 +359,7 @@ awful.key({ modkey, "Control" }, "d", function ()
         elseif i == 6 then j = "e"
         elseif i == 7 then j = "a"
         elseif i == 8 then j = "s"
+        elseif i == 9 then j = "Escape"
         else   j = i
         end
 
