@@ -32,7 +32,7 @@ tty > /dev/null && stty -ixon -ixoff
 LISTPROMPT=''
 
 # word delimiter characters in line editor {{{2
-WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
+WORDCHARS='*?_-[]~=&:;!#$%^(){}<>'
 
 # checks for new mail every 10 minutes {{{2
 MAILCHECK=600
@@ -461,7 +461,7 @@ zle -N _vi-forward-blank
 run-ranger() {
     before="$(pwd)"
     python /usr/local/bin/ranger --fail-unless-cd "$@" || return 0
-    after="$(grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
+    after="$(/bin/grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
     if [[ "$before" != "$after" ]]; then
         cd "$after"
     fi
@@ -514,3 +514,4 @@ if [ -e /etc/profile.d/autojump.zsh ]; then
 fi
 
 export PATH=$PATH:/var/lib/gems/1.8/bin/
+export PATH=$PATH:/sun/open/android-sdk/tools/
