@@ -292,19 +292,10 @@ awful.key({ modkey, "Control" }, "d", function ()
     -- {{{ sdcv/stardict
     awful.key({ modkey }, "d", function ()
         local f = io.popen("xsel -o")
-        local new_word = f:read("*a")
+        local word = f:read("*a")
         f:close()
-
-        if frame ~= nil then
-            naughty.destroy(frame)
-            frame = nil
-            if old_word == new_word then
-                return
-            end
-        end
-        old_word = new_word
-        -- 从这里开始是为了删除末尾的空行和换行符，这样显示在 naughty 的效果会更紧凑一些
-        local f = io.popen("sdcv -n --utf8-output -u 'XDICT英汉辞典' "..new_word.." | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+                                                                                             --| 从这里开始是为了删除末尾的空行和换行符，这样显示在 naughty 的效果会更紧凑一些
+        local f = io.popen("sdcv -n --utf8-output -u 'XDICT英汉辞典' "..word.." | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
         local c = f:read("*a")
         f:close()
 
@@ -317,7 +308,7 @@ awful.key({ modkey, "Control" }, "d", function ()
             if cin_word == "" then
                 return
             end
-            -- 从这里开始是为了删除末尾的空行和换行符，这样显示在 naughty 的效果会更紧凑一些
+                                                                                                 --| 从这里开始是为了删除末尾的空行和换行符，这样显示在 naughty 的效果会更紧凑一些
             local f = io.popen("sdcv -n --utf8-output -u 'XDICT英汉辞典' "..cin_word.." | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
             local c = f:read("*a")
             f:close()
