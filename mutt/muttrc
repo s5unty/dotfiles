@@ -7,6 +7,8 @@ source ~/.mutt/colours                    # 定义 Mutt 颜色
 source ~/.mutt/auto_views                 # 定义支持自动浏览的文件格式
 #source ~/.mutt/imap                       # 使用 IMAP 服务
 source ~/.mutt/pop3                       # 使用 POP3 服务
+source '~/.mutt/qgc.rb --groups|'         # 同步 groups
+source '~/.mutt/qgc.rb --subscribes|'     # 同步 subscribes
 
 # 终端的编码
 set charset="UTF-8"
@@ -127,3 +129,6 @@ set reply_to=yes
 # 签名邮件的公钥信息附件名
 set pgp_mime_signature_filename="signature.asc"
 set pgp_mime_signature_description="Digital signature"
+# 集成 Google 联系人名单
+set query_command ="~/.mutt/google_contact.rb --mutt %s"
+set query_format="%4c %t %-40.40a %-40.40n %?e?(%e)?"

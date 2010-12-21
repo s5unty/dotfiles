@@ -26,7 +26,7 @@ set nowrap " 不自动折行
 set updatetime=1000
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set winaltkeys=no
-set cinoptions=:0,g0,t0,(0
+"set cinoptions=:0,g0,t0,(0
 set timeoutlen=500
 set autoread
 set autowrite
@@ -223,8 +223,7 @@ imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 set pastetoggle=<F4>
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
 nmap <silent> <unique> <F6> :ConqueTermSplit zsh<CR>
-nmap          <unique> <F7> :set formatoptions+=2mM<CR>
-imap          <unique> <F7> <Esc>:set formatoptions+=2mM<CR><CR>
+nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
 nmap <silent>          <F8> :make!<CR>:call G_QFixToggle(1)<CR>
 imap <silent>          <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
 nmap          <unique> <F9> :!<UP>
@@ -253,6 +252,7 @@ vmap <silent> <unique> + :Align =<CR>
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :q<CR>
+nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
 nmap                   <S-F8> :make! install DESTDIR=<UP>
 nmap <silent> <unique> <S-F9> q:<UP>
 
@@ -346,6 +346,10 @@ if has("autocmd")
 
   autocmd BufWritePost *
     \ call <SID>AC_ChmodExecutable()
+
+  autocmd Filetype java
+    \ setlocal omnifunc=javacomplete#Complete
+
 endif
 " }}}
 
@@ -412,7 +416,10 @@ let SuperTabMappingBackward="<S-Tab>"
 
 " Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
-set tag=.cscope/cscope.tags,~/.tags;
+autocmd Filetype java
+    \ set tag=.cscope/cscope.tags,~/.tags.android,~/.tags.java;
+autocmd Filetype c,cpp
+    \ set tag=.cscope/cscope.tags,~/.tags.c;
 if has("cscope")
     set csto=1
     set nocsverb
@@ -688,3 +695,4 @@ map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
 
 " }}}1
+

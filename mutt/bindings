@@ -23,3 +23,5 @@ bind browser    l           select-entry
 bind browser    <space>     select-entry
 # 查看附件时
 bind attach     i           exit
+# 使用 Google 联系人
+bind editor     <Tab>       complete-query

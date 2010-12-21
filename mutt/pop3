@@ -13,10 +13,12 @@ mailboxes =debian-zh
 mailboxes =shlug
 mailboxes =szlug
 mailboxes =ubuntu-zh
+mailboxes =python-cn
 mailboxes =vim-zh
 mailboxes =fcitx-dev
 # }}}
 
+# TODO 改用 ~/.mutt/qgc.rb --subscribes 实现
 # 邮件列表选项 {{{
 #
 # debian
@@ -31,6 +33,7 @@ subscribe debian-chinese-gb@lists.debian.org
 subscribe debian-chinese-big5@lists.debian.org
 subscribe \d*@bugs.debian.org
 # other
+subscribe vp10-android@mid-fun.com
 subscribe e6-1170-staff@mid-fun.com
 subscribe e6-1170-sw@mid-fun.com
 subscribe staff@mid-fun.com
@@ -44,4 +47,5 @@ subscribe ubuntu-zh@lists.ubuntu.com
 subscribe fcitx-dev@googlegroups.com
 subscribe shlug@googlegroups.com
 subscribe szlug@googlegroups.com
+subscribe python-cn@googlegroups.com
 # }}}

@@ -12,8 +12,8 @@ export VISUAL="/usr/bin/vim"
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:."
 export DEBEMAIL="s5unty@gmail.com"
 export DEBFULLNAME="Vern Sun"
-export JAVA_HOME="/usr/lib/jvm/java-6-sun/"
-export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/"
+export JAVA_HOME="/usr/lib/jvm/java-6-sun"
+export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 # use the built in directory navigation via the directory stack {{{2
