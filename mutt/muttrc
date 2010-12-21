@@ -130,5 +130,5 @@ set reply_to=yes
 set pgp_mime_signature_filename="signature.asc"
 set pgp_mime_signature_description="Digital signature"
 # 集成 Google 联系人名单
-set query_command ="~/.mutt/google_contact.rb --mutt %s | sort -r -t '	' -k3" # -t 后面要输入一个硬 <TAB>
+set query_command ="~/.mutt/google_contact.rb --mutt %s"
 set query_format="%4c %t %-40.40a %-40.40n %?e?(%e)?"
