@@ -367,7 +367,7 @@ parse_git_branch() {
     stash="$(git stash list 2> /dev/null | \
         grep -q "${branch}")"
     if [ $? -eq 0 ]; then # branch has stash
-        _stash=" ${fg_purple}${at_blink}WIP"
+        _stash="${at_none} ${fg_purple}${at_blink}WIP"
     else
         _stash=""
     fi

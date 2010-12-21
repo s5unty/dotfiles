@@ -7,8 +7,6 @@ source ~/.mutt/colours                    # 定义 Mutt 颜色
 source ~/.mutt/auto_views                 # 定义支持自动浏览的文件格式
 #source ~/.mutt/imap                       # 使用 IMAP 服务
 source ~/.mutt/pop3                       # 使用 POP3 服务
-source '~/.mutt/google_contact.rb --groups|'         # 同步 groups
-source '~/.mutt/google_contact.rb --subscribes|'     # 同步 subscribes
 
 # 终端的编码
 set charset="UTF-8"
