@@ -21,9 +21,10 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # keep a persistent dirstack in ~/.zsh_dirs, from Francisco Borges, on zsh.devel
 DIRSTACKSIZE=20
 if [[ -f ~/.zsh_dirs ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
-	dirstack=( ${(uf)"$(< ~/.zsh_dirs)"} )
+    dirstack=( ${(uf)"$(< ~/.zsh_dirs)"} )
+    builtin cd $(head -1 ~/.zsh_dirs)
 fi
-chpwd() { dirs -pl >! ~/.zsh_dirs }
+chpwd() { dirs -pl | uniq >! ~/.zsh_dirs }
 
 # turn off XON/XOFF, but only for a tty {{{2
 tty > /dev/null && stty -ixon -ixoff
@@ -157,17 +158,17 @@ tds() { # 每隔 20 分钟由 remind 服务调用 naughty 弹窗通知
 }
 tdp() {
     task stop ${1}
-    UUID=`task info ${1} | grep ^UUID | cut -b30-`
+    UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
     sed -i '/'${UUID}'/d' ~/.reminders
 }
 tdd() {
     task done ${1}
-    UUID=`task info ${1} | grep ^UUID | cut -b30-`
+    UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
     sed -i '/'${UUID}'/d' ~/.reminders
 }
 tdr() {
     task delete ${1}
-    UUID=`task info ${1} | grep ^UUID | cut -b30-`
+    UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
     sed -i '/'${UUID}'/d' ~/.reminders
 }
 
@@ -243,6 +244,10 @@ cd() {
     if builtin cd "$@"; then
         ls
     fi
+}
+
+ca() {
+    tar cpf - ${(@)argv[1, -2]} | tar xvf - -C ${argv[-1]}
 }
 
 T() { # tail
@@ -467,18 +472,6 @@ run-ranger() {
     fi
 }
 
-# what's autojump?
-# @joelthelion: https://github.com/joelthelion/autojump
-powertab(){
-    if [[ -z $BUFFER ]] ; then
-        BUFFER="j "
-        zle end-of-line
-        zle expand-or-complete
-    fi
-    zle expand-or-complete
-}
-zle -N powertab
-
 run-ps () {
     zle -I
     ps x --forest -u$USER -wwwA -o pid,user,cmd | less
@@ -509,9 +502,6 @@ zle -N jump_arg1
 ######################################################################## }}}1
 
 # Load specific stuff
-if [ -e /etc/profile.d/autojump.zsh ]; then
-    source /etc/profile.d/autojump.zsh;
-fi
 
 export PATH=$PATH:/var/lib/gems/1.8/bin/
 export PATH=$PATH:/sun/open/android-sdk/tools/
