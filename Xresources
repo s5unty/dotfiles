@@ -17,7 +17,7 @@ URxvt.scrollTtyOutput:   False
 URxvt.scrollWithBuffer:  True
 URxvt.secondaryScreen:   True
 URxvt.secondaryScroll:   True
-URxvt.perl-ext-common:   default,matcher,mark-yank-urls,vim-scrollback,-searchable-scrollback
+URxvt.perl-ext-common:   default,matcher,mark-yank-urls,vim-scrollback,-searchable-scrollback,previous-command-output
 URxvt.intensityStyles:   False
 ! }}}
 
@@ -68,7 +68,7 @@ URxvt.colorIT:       chocolate4
 *color15:   white
 
 !!icon path
-URxvt.iconFile:     $HOME/.config/awesome/terminator.png
+URxvt.iconFile:     /usr/share/pixmaps/urxvt.xpm
 Mutt.iconFile:      /usr/share/pixmaps/mutt.xpm
 Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm
 ! }}}
@@ -87,6 +87,8 @@ URxvt.keysym.C-minus: cd -\011
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
-URxvt.vim-scrollback-paste: M-r
+!! URxvt.vim-scrollback-paste: M-r
 URxvt.vim-scrollback: M-0xff1b
+!! paste previous command output
+URxvt.previous-command-output: M-r
 ! }}}
