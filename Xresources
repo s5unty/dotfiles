@@ -87,8 +87,6 @@ URxvt.keysym.C-minus: cd -\011
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
-!! URxvt.vim-scrollback-paste: M-r
+URxvt.vim-scrollback-paste: M-r
 URxvt.vim-scrollback: M-0xff1b
-!! paste previous command output
-URxvt.previous-command-output: M-r
 ! }}}

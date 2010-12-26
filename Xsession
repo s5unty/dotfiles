@@ -35,12 +35,13 @@
 # 客户端，由服务器端的键鼠控制
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
 
-# 同步任务 TODO 如果同步失败，邮件通知自己
-/usr/bin/rsync -azu du1abadd.org:/sun/home/.reminders /sun/home/.reminders &
-/usr/bin/remind -z -k'/sun/home/.notify-send %s &' /sun/home/.reminders &
-while /usr/bin/inotifywait -e modify,attrib /sun/home/.reminders; do
-rsync -azu /sun/home/.reminders du1abadd.org:/sun/home/.reminders
-done &
+# pull, monitor, push TODO 如果同步失败，邮件通知自己
+/usr/bin/rsync -azu du1abadd.org:~/.task/ ~/.task/ &
+/usr/bin/remind -z -k'~/.task/notify-wm %s &' ~/.task/reminders &
+/usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.task/ | \
+    while read file; do
+        rsync -azu ~/.task/ du1abadd.org:~/.task/ &
+    done &
 
 # 启动窗口管理器
 /usr/bin/awesome
