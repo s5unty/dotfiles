@@ -50,3 +50,5 @@ set editor="urxvt -e vim -f"
 " 使用 Delicious 搜索
 " delicious_search.js @ http://www.mozdev.org/pipermail/vimperator/2009-March/003865.html
 autocmd VimperatorEnter ".*" :set complete=Dl
+
+" vim: ft=vimperator

@@ -15,6 +15,9 @@ export DEBFULLNAME="Vern Sun"
 export JAVA_HOME="/usr/lib/jvm/java-6-sun"
 export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
 export XDG_CONFIG_HOME="$HOME/.config"
+export PATH=$PATH:/var/lib/gems/1.8/bin/
+export PATH=$PATH:/sun/open/android-sdk/tools/
+export DOTREMINDERS=~/.task/reminders
 
 # use the built in directory navigation via the directory stack {{{2
 # http://zsh.sourceforge.net/Doc/Release/zsh_15.html
@@ -498,6 +501,3 @@ zle -N jump_arg1
 ######################################################################## }}}1
 
 # Load specific stuff
-
-export PATH=$PATH:/var/lib/gems/1.8/bin/
-export PATH=$PATH:/sun/open/android-sdk/tools/
