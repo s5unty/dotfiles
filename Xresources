@@ -10,15 +10,16 @@ URxvt.saveLines:    2048
 URxvt.modifier:     Alt
 URxvt.urlLauncher:  x-www-browser
 URxvt.cutchars:     ()<>[]{}|:;!#$%^?
-URxvt.perl-lib:     /sun/home/.urxvt/
 URxvt.matcher.button:    1
 URxvt.scrollTtyKeypress: True
 URxvt.scrollTtyOutput:   False
 URxvt.scrollWithBuffer:  True
 URxvt.secondaryScreen:   True
 URxvt.secondaryScroll:   True
-URxvt.perl-ext-common:   default,matcher,mark-yank-urls,vim-scrollback,-searchable-scrollback,previous-command-output
 URxvt.intensityStyles:   False
+
+URxvt.perl-lib:          /sun/home/.urxvt/
+URxvt.perl-ext-common:   default,matcher,mark-yank-urls,mark-yank-line,vim-scrollback,-searchable-scrollback
 ! }}}
 
 ! @@ FONTS @@ {{{
@@ -74,19 +75,16 @@ Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm
 ! }}}
 
 ! @@ Shortkeys @@ {{{
-!! scroll_up
+!! scroll_up, scroll_down
 URxvt.keysym.M-minus:command:\033]720;5\007
-!! scroll_down
 URxvt.keysym.M-space:command:\033]721;5\007
-!! rot13
-URxvt.keysym.C-M-r: perl:selection:rot13
-!! sudo !!
-URxvt.keysym.C-1: \020\001sudo \005
-URxvt.keysym.C-minus: cd -\011
 !! mouseless url yanking
+!! mouseless line yanking, base on mark-yank-urls
+!! http://www.jukie.net/~bart/blog/urxvt-url-yank
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
+URxvt.keysym.M-l: perl:mark-yank-line:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
-URxvt.vim-scrollback-paste: M-r
 URxvt.vim-scrollback: M-0xff1b
 ! }}}
+

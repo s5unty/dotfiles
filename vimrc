@@ -259,15 +259,16 @@ nmap <silent> <unique> <S-F9> q:<UP>
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
 imap <silent> <unique> <C-Q> <ESC>;
+imap <silent> <unique> <C-A> <C-O>^
 imap <silent> <unique> <C-W> <SPACE><ESC>dbs
 imap <silent> <unique> <C-F> <ESC>ea
 imap <silent> <unique> <C-B> <C-O>b
-imap <silent> <unique> <C-D> <C-O>de
+imap <silent> <unique> <C-D> <C-O>x
 imap <silent> <unique> <C-H> <Left>
 imap <silent> <unique> <C-J> <Down>
 imap <silent> <unique> <C-K> <Up>
 imap <silent> <unique> <C-L> <Right>
-imap <silent> <unique> <C-U> <C-O>u
+imap <silent> <unique> <C-U> <C-O>d^
 nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 nmap <silent> <unique> <C-F8> :make! clean<CR>
@@ -354,7 +355,29 @@ endif
 " }}}
 
 " 12# Plugins {{{1
-" mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
+" * Life Changing 
+" + Helpful
+" - Unfulfilling 
+
+" * TabBar 0.7-p2 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
+" http://www.vim.org/scripts/script.php?script_id=1338
+"
+" p1: Bf_SwitchTo
+"     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
+" p2: g:Tb_StatusLine
+"     添加变量用户调整 TabBar 的状态栏信息
+let Tb_UseSingleClick = 1 " 单击切换
+let Tb_TabWrap = 1 " 禁止跨行显示
+let Tb_MaxSize = 0 "
+let Tb_ModSelTarget = 1 " 跳转至编辑窗口
+let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
+if has("autocmd")
+  autocmd BufWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
+    \ exec ":TbAup"
+endif
+
+
+" * mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
 " http://www.vim.org/scripts/script.php?script_id=521
 "
 " p1: @@529@@
@@ -366,7 +389,7 @@ let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
 let MRU_Window_Height=18
 let MRU_Add_Menu=0
 
-" taglist.vim 4.5-p1 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
+" * taglist.vim 4.5-p1 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
 " http://www.vim.org/scripts/script.php?script_id=273
 "
 " p1: let win_dir = 'aboveleft vertical'
@@ -389,24 +412,7 @@ function! <SID>ShowTaglist()
     endif
 endfunction
 
-" TabBar 0.7-p2 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
-" http://www.vim.org/scripts/script.php?script_id=1338
-"
-" p1: Bf_SwitchTo
-"     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
-" p2: g:Tb_StatusLine
-"     添加变量用户调整 TabBar 的状态栏信息
-let Tb_UseSingleClick = 1 " 单击切换
-let Tb_TabWrap = 1 " 禁止跨行显示
-let Tb_MaxSize = 0 "
-let Tb_ModSelTarget = 1 " 跳转至编辑窗口
-let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
-if has("autocmd")
-  autocmd BufWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
-    \ exec ":TbAup"
-endif
-
-" SuperTab 0.41 : Do all your insert-mode completion with Tab {{{2
+" * SuperTab 1.1 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
 let SuperTabRetainCompletionType=1
 let SuperTabDefaultCompletionType="<C-X><C-N>"
@@ -414,7 +420,7 @@ let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
 
-" Cscope : Interactively examine a C program source {{{2
+" + Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
 autocmd Filetype java
     \ set tag=.cscope/cscope.tags,~/.tags.android,~/.tags.java;
@@ -478,7 +484,54 @@ function! <SID>CscopeFind(mask, quick)
     call G_QFixToggle(1)
 endfunction
 
-" vimwiki 1.1.1: Personal Wiki for Vim {{{2
+" * snipMate 0.83 : TextMate-style snippets for Vim 
+" http://www.vim.org/scripts/script.php?script_id=2540
+" nothing
+
+
+" * quickfixsigns 0.11 : Mark quickfix & location list items with signs {{{2
+" http://www.vim.org/scripts/script.php?script_id=2584
+set lazyredraw
+
+
+" + sessionman.vim 1.04-p1 : Vim session manager {{{2
+" http://www.vim.org/scripts/script.php?script_id=2010
+"
+" p1: s:OpenSession
+"     打开 Session 前 TbStop, 之后 TbStart. 否则布局大乱
+"     打开 Session 后使用 color pattern 自定义的颜色方案
+
+
+" * delimitMate.vim 2.5.1 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
+" http://www.vim.org/scripts/script.php?script_id=2754
+let delimitMate_autoclose = 0
+let delimitMate_matchpairs = "(:),[:],{:},<:>"
+let delimitMate_expand_cr = 1
+
+
+" - surround.vim 1.90 : Delete/change/add parentheses/quotes/XML-tags/much more with ease {{{2
+" http://www.vim.org/scripts/script.php?script_id=1697
+" nothing
+"
+" 在 normal mode 下按 ysiwb 或者 cs@1@2
+" 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ] 
+
+" - Conque Shell 1.1 : Run interactive commands inside a Vim buffer {{{2
+" http://www.vim.org/scripts/script.php?script_id=2771
+let ConqueTerm_EscKey = '<Esc>'
+let ConqueTerm_Color = 1
+let ConqueTerm_TERM = 'rxvt-unicode'
+let ConqueTerm_ReadUnfocused = 1
+let ConqueTerm_CWInsert = 0
+
+" - calendar.vim 2.2 : Calendar {{{2
+" http://www.vim.org/scripts/script.php?script_id=52
+let g:calendar_monday = 1
+let g:calendar_mark = 'left-fit'
+let g:calendar_focus_today = 1
+
+
+" - vimwiki 1.1.1: Personal Wiki for Vim {{{2
 " http://code.google.com/p/vimwiki/
 let vw_home = '/sun/wiki/'
 "let vw_home = 'scp://www-data@du1abadd.org//sun/dokuwiki/data/pages/'
@@ -502,43 +555,6 @@ let vw_android.syntax = 'doku'
 let vw_android.index = 'android'
 let vw_android.ext = '.txt'
 let vw_android.path = vw_home.'android'
-
-" snipMate 0.83 : TextMate-style snippets for Vim {{{2
-" http://www.vim.org/scripts/script.php?script_id=2540
-" nothing
-
-" quickfixsigns 0.5 : Mark quickfix & location list items with signs {{{2
-" http://www.vim.org/scripts/script.php?script_id=2584
-set lazyredraw
-
-" sessionman.vim 1.04-p1 : Vim session manager {{{2
-" http://www.vim.org/scripts/script.php?script_id=2010
-"
-" p1: s:OpenSession
-"     打开 Session 前 TbStop, 之后 TbStart. 否则布局大乱
-"     打开 Session 后使用 color pattern 自定义的颜色方案
-
-" surround.vim 1.90 : Delete/change/add parentheses/quotes/XML-tags/much more with ease {{{2
-" http://www.vim.org/scripts/script.php?script_id=1697
-" nothing
-"
-" 在 normal mode 下按 ysiwb 或者 cs@1@2
-" 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ] 
-
-" Conque Shell 1.1 : Run interactive commands inside a Vim buffer {{{2
-" http://www.vim.org/scripts/script.php?script_id=2771
-let ConqueTerm_EscKey = '<Esc>'
-let ConqueTerm_Color = 1
-let ConqueTerm_TERM = 'rxvt-unicode'
-let ConqueTerm_ReadUnfocused = 1
-let ConqueTerm_CWInsert = 0
-
-" calendar.vim 2.2 : Calendar {{{2
-" http://www.vim.org/scripts/script.php?script_id=52
-let g:calendar_monday = 1
-let g:calendar_mark = 'left-fit'
-let g:calendar_focus_today = 1
-
 
 " }}}1
 

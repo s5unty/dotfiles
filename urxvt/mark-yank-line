@@ -7,10 +7,9 @@ use strict;
 use warnings;
 
 my $url_matcher = qr{(
-        (?:https?://|ftp://|news://|mailto:|file://|www\.)[ab-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27(),~#]+
+        .+
         [ab-zA-Z0-9\-\@;\/?&=%\$_+!*\x27()~]   # exclude some trailing characters (heuristic)
 )}x;
-
 
 sub on_start {
     my ($term) = @_;
@@ -137,7 +136,7 @@ sub do_scan_for_urls {
 sub on_user_command {
     my ($term, $cmd) = @_;
 
-	activate_mark_mode($term) if $cmd eq 'mark-yank-urls:activate_mark_mode';
+	activate_mark_mode($term) if $cmd eq 'mark-yank-line:activate_mark_mode';
 
     ()
 }
@@ -170,8 +169,8 @@ sub on_key_release {
             return 1;
 
         } elsif ($keysym == 65293) {                # <enter>
-            my $url = get_active_url($term);
-            $term->exec_async($term->{browser}, $url);
+            do_copy ($term);
+            do_paste ($term);
             deactivate_mark_mode ($term);
             return 1;
 
@@ -217,13 +216,23 @@ sub do_copy {
     my ($term) = @_;
 
     my $text = get_active_url ($term);
+    $text=~ s/\x{ffff}//g;
 
     if ($term->{have_Clipboard}) {
         Clipboard->copy($text);
     } else {
-        $text =~ s/\(["|><&()]\)/\\$1/;
         system ("echo -n \"$text\" | xsel -i");
     }
+}
+
+sub do_paste {
+    my ($term) = @_;
+
+    my $text = get_active_url ($term);
+    $text=~ s/\x{ffff}//g;
+
+    my $output = $term->locale_encode($text);
+    $term->tt_write($output);
 }
 
 sub move_highlight {
@@ -280,7 +289,7 @@ sub activate_mark_mode {
 
         $term->{save_view_start} = $term->view_start;
 
-        move_highlight ($term, 0);
+        move_highlight ($term, -1);
 
         $mark_mode_active=1 if ($url_selected > -1);
     }
