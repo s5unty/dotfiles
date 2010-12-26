@@ -11,6 +11,8 @@ require("debian.menu")
 
 require("vicious")
 
+os.setlocale("zh_CN.UTF-8")
+
 -- {{{ General
 modkey   = "Mod4"
 terminal = "x-terminal-emulator"
@@ -66,8 +68,8 @@ mylauncher = awful.widget.launcher({
 -- Cpu Graph {{{2
 mycpugraph = awful.widget.graph({ layout = awful.widget.layout.horizontal.rightleft })
 mycpugraph:set_width(80)
-mycpugraph:set_background_color('#535d6c')
-mycpugraph:set_color('#FF5656')
+mycpugraph:set_background_color('#333333')
+mycpugraph:set_color('#cccccc')
 mycpugraph:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
 vicious.register(mycpugraph, vicious.widgets.cpu, '$1', 3)
 
@@ -80,7 +82,7 @@ myseparator.text = "|"
 -- Others {{{2
 --mytextclock = awful.widget.textclock({ align = "right" })
 mytextclock = widget({ type = 'textbox' })
-vicious.register(mytextclock, vicious.widgets.date, ' %b %d, %R ', 60)
+vicious.register(mytextclock, vicious.widgets.date, ' 周%a %p%l:%M ', 60)
 
 mysystray = widget({ type = "systray" })
 mytasklist = {}
@@ -155,9 +157,8 @@ for s = 1, screen.count() do
             mypromptbox[s],
             ["layout"] = awful.widget.layout.horizontal.leftright
         },
-        s == 1 and mysystray or nil,
-        mylayoutbox[s],
         mytextclock,
+        s == 1 and mysystray or nil,
         mycpugraph,
         mytasklist[s],
         ["layout"] = awful.widget.layout.horizontal.rightleft
