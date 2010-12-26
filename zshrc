@@ -151,8 +151,8 @@ alias tdR="task delete"
 tds() { # 每隔 20 分钟由 remind 服务调用 naughty 弹窗通知
     # XXX 不支持逗号，一次只跟踪一项任务
     task start ${1}
-    DESC=`task info ${1} | grep ^Desc | cut -b30-`
-    UUID=`task info ${1} | grep ^UUID | cut -b30-`
+    DESC=`task info ${1} | /bin/grep ^Desc | cut -b13-`
+    UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
     REM=`date -d"today" +"REM %d AT 23:00 +1440 *20 TAG ${UUID} MSG ${DESC}"`
     echo ${REM} >> ~/.reminders
 }
@@ -429,12 +429,8 @@ bindkey "^[l"   forward-char               # ALT-H
 bindkey "^[b"   vi-backward-blank-word     # ALT-B
 bindkey "^[f"   _vi-forward-blank          # ALT-F
 bindkey "^[x"   delete-char                # ALT-X
-#bindkey "^[,"   insert-last-typed-word     # ALT-,
 bindkey "^[,"   copy-earlier-word          # ALT-,
-
-bindkey "^[1"   jump_arg1
-# bindkey "^[2"   jump_arg2 ...
-bindkey "\t"    powertab
+bindkey "\t"    expand-or-complete
 bindkey " "     magic-space                # ' ' (Space)
 
 bindkey -s            "^q"  "run-ranger\r"
