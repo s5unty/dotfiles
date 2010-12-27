@@ -22,7 +22,7 @@ export DOTREMINDERS=~/.task/reminders
 # use the built in directory navigation via the directory stack {{{2
 # http://zsh.sourceforge.net/Doc/Release/zsh_15.html
 # keep a persistent dirstack in ~/.zsh_dirs, from Francisco Borges, on zsh.devel
-DIRSTACKSIZE=20
+DIRSTACKSIZE=10
 if [[ -f ~/.zsh_dirs ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
     dirstack=( ${(uf)"$(< ~/.zsh_dirs)"} )
     builtin cd $(head -1 ~/.zsh_dirs)
@@ -157,22 +157,22 @@ tds() { # 每隔 20 分钟由 remind 服务调用 naughty 弹窗通知
     DESC=`task info ${1} | /bin/grep ^Desc | cut -b13-`
     UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
     REM=`date -d"today" +"REM %d AT 23:30 +1440 *15 TAG ${UUID} MSG ${DESC}"`
-    echo ${REM} >> ~/.reminders
+    echo ${REM} >> ~/.task/reminders
 }
 tdp() {
     task stop ${1}
     UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
-    sed -i '/'${UUID}'/d' ~/.reminders
+    sed -i '/'${UUID}'/d' ~/.task/reminders
 }
 tdd() {
     task done ${1}
     UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
-    sed -i '/'${UUID}'/d' ~/.reminders
+    sed -i '/'${UUID}'/d' ~/.task/reminders
 }
 tdr() {
     task delete ${1}
     UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
-    sed -i '/'${UUID}'/d' ~/.reminders
+    sed -i '/'${UUID}'/d' ~/.task/reminders
 }
 
 # tar {{{2
@@ -402,6 +402,9 @@ zstyle ':completion:*:corrections' format ${fg_lred}${at_italics}'%d (%e errors)
 zstyle ':completion:*:descriptions' format ${fg_lgreen}${at_italics}'%d'${at_none}
 zstyle ':completion:*:messages' format ${fg_lgreen}${at_italics}'%d'${at_none}
 zstyle ':completion:*:warnings' format ${at_blink}'No matches for: %d'${at_none}
+
+# cd - {{{2
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
 
 # correct {{{2
 zstyle ':completion:::::' completer _complete _approximate

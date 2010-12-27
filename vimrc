@@ -33,7 +33,7 @@ set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
 set wildmode=longest:full,list:full
-set listchars=tab:>-,trail:- 
+set listchars=tab:>-,trail:-
 
 if has("gui_running")
     set guioptions-=m
@@ -259,18 +259,18 @@ nmap <silent> <unique> <S-F9> q:<UP>
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
 imap <silent> <unique> <C-Q> <ESC>;
+imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
 imap <silent> <unique> <C-W> <SPACE><ESC>dbs
-imap <silent> <unique> <C-F> <ESC>ea
-imap <silent> <unique> <C-B> <C-O>b
+imap <silent> <unique> <C-F> <Right>
+imap <silent> <unique> <C-B> <Left>
+imap <silent> <unique> <C-N> <Down>
+imap <silent> <unique> <C-P> <Up>
 imap <silent> <unique> <C-D> <C-O>x
-imap <silent> <unique> <C-H> <Left>
-imap <silent> <unique> <C-J> <Down>
-imap <silent> <unique> <C-K> <Up>
-imap <silent> <unique> <C-L> <Right>
-imap <silent> <unique> <C-U> <C-O>d^
-nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
-nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
+imap <silent> <unique> <C-K> <C-O>d$
+imap <silent> <unique> <C-U> <C-O>v^x
+imap <silent> <unique> <C-Y> <C-O>u<C-O>$
+imap <silent> <unique> <C-H> <Backspace>
 nmap <silent> <unique> <C-F8> :make! clean<CR>
 
 " Alt+ {{{2
@@ -279,6 +279,10 @@ nmap <silent> <unique> <A-h> <C-W>h
 nmap <silent> <unique> <A-j> <C-W>j
 nmap <silent> <unique> <A-k> <C-W>k
 nmap <silent> <unique> <A-l> <C-W>l
+nmap <silent> <unique> <A-n> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
+nmap <silent> <unique> <A-p> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
+imap <silent> <unique> <A-b> <C-O>b
+imap <silent> <unique> <A-f> <C-O>w
 nmap <silent> <unique> <A-d> :CalendarH<CR>
 else
 nmap <silent> <unique> <ESC><ESC> :<CR>
@@ -290,6 +294,10 @@ nmap <silent> <unique> <ESC>h <C-W>h
 nmap <silent> <unique> <ESC>j <C-W>j
 nmap <silent> <unique> <ESC>k <C-W>k
 nmap <silent> <unique> <ESC>l <C-W>l
+nmap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
+nmap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
+imap <silent> <unique> <ESC>b <C-O>b
+imap <silent> <unique> <ESC>f <C-O>w
 nmap <silent> <unique> <ESC>d :CalendarH<CR>
 endif
 
@@ -355,9 +363,9 @@ endif
 " }}}
 
 " 12# Plugins {{{1
-" * Life Changing 
+" * Life Changing
 " + Helpful
-" - Unfulfilling 
+" - Unfulfilling
 
 " * TabBar 0.7-p2 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
 " http://www.vim.org/scripts/script.php?script_id=1338
@@ -385,7 +393,7 @@ endif
 " p2: @@575@@
 "             let fnames = reverse(fnames)
 let MRU_Max_Entries=256
-let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*'
+let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*\|^/sun/home/\..*'
 let MRU_Window_Height=18
 let MRU_Add_Menu=0
 
@@ -484,7 +492,7 @@ function! <SID>CscopeFind(mask, quick)
     call G_QFixToggle(1)
 endfunction
 
-" * snipMate 0.83 : TextMate-style snippets for Vim 
+" * snipMate 0.83 : TextMate-style snippets for Vim
 " http://www.vim.org/scripts/script.php?script_id=2540
 " nothing
 
@@ -514,7 +522,7 @@ let delimitMate_expand_cr = 1
 " nothing
 "
 " 在 normal mode 下按 ysiwb 或者 cs@1@2
-" 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ] 
+" 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ]
 
 " - Conque Shell 1.1 : Run interactive commands inside a Vim buffer {{{2
 " http://www.vim.org/scripts/script.php?script_id=2771
