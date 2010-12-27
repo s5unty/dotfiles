@@ -15,13 +15,13 @@ os.setlocale("zh_CN.UTF-8")
 
 -- {{{ General
 modkey   = "Mod4"
-terminal = "x-terminal-emulator"
+terminal = "urxvtcd"
 editor   = os.getenv("EDITOR") or "editor"
 theme    = awful.util.getdir("config") .. "/theme.lua"
 beautiful.init (theme)
 
 toggletags = {
-    ["x-terminal-emulator"] = { screen = 1, tag = 9 },
+    ["urxvt"] = { screen = 1, tag = 9 },
 }
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -252,16 +252,14 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 -- }}}
 
 -- {{{ Program
-awful.key({ modkey }, "F1", function () awful.util.spawn("x-terminal-emulator -name Weechat -T Weechat -e weechat-curses") end),
+awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Weechat -T Weechat -e weechat-curses") end),
 awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
-awful.key({ modkey }, "F3", function () awful.util.spawn("x-terminal-emulator -name Mutt -T Mutt -e mutt") end),
+awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e mutt") end),
 awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'WindowsXP'") end),
--- awful.key({ modkey }, "i",  function () awful.util.spawn("x-terminal-emulator -e zsh -c 'stty -ixon; vim'") end),
-awful.key({ modkey }, "space", function () awful.util.spawn("x-terminal-emulator") end),
-awful.key({ modkey, "Shift" }, "space", function () awful.util.spawn("x-terminal-emulator -e ranger") end),
+awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
-awful.key({        }, "XF86Mail", function () awful.util.spawn("x-terminal-emulator -name Mutt -T Mutt -e mutt") end),
+awful.key({        }, "XF86Mail", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e mutt") end),
 awful.key({        }, "XF86MyComputer", function () awful.tag.viewonly(tags[1][1]) end),
 awful.key({        }, "XF86AudioPlay",        function () awful.util.spawn("mocp.sh") end),
 awful.key({        }, "XF86AudioStop",        function () awful.util.spawn("mocp -s") end),
