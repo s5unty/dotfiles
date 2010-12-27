@@ -271,6 +271,8 @@ imap <silent> <unique> <C-K> <C-O>d$
 imap <silent> <unique> <C-U> <C-O>v^x
 imap <silent> <unique> <C-Y> <C-O>u<C-O>$
 imap <silent> <unique> <C-H> <Backspace>
+nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
+nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 nmap <silent> <unique> <C-F8> :make! clean<CR>
 
 " Alt+ {{{2
@@ -279,8 +281,6 @@ nmap <silent> <unique> <A-h> <C-W>h
 nmap <silent> <unique> <A-j> <C-W>j
 nmap <silent> <unique> <A-k> <C-W>k
 nmap <silent> <unique> <A-l> <C-W>l
-nmap <silent> <unique> <A-n> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
-nmap <silent> <unique> <A-p> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 nmap <silent> <unique> <A-d> :CalendarH<CR>
@@ -294,8 +294,6 @@ nmap <silent> <unique> <ESC>h <C-W>h
 nmap <silent> <unique> <ESC>j <C-W>j
 nmap <silent> <unique> <ESC>k <C-W>k
 nmap <silent> <unique> <ESC>l <C-W>l
-nmap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
-nmap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 imap <silent> <unique> <ESC>b <C-O>b
 imap <silent> <unique> <ESC>f <C-O>w
 nmap <silent> <unique> <ESC>d :CalendarH<CR>
@@ -512,7 +510,7 @@ set lazyredraw
 
 " * delimitMate.vim 2.5.1 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
-let delimitMate_autoclose = 0
+let delimitMate_autoclose = 1
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 let delimitMate_expand_cr = 1
 

@@ -144,19 +144,19 @@ alias td="task summary && print && task history && rem"
 alias tda="task add"
 alias tde="task edit"
 alias tdu="task undo"
-alias tdg="task long"
+alias tdg="task ls"
+alias tdl="task long"
 alias tdc="task info"
 alias tdi="task annotate"
 alias tdS="task start"
 alias tdP="task stop"
 alias tdD="task done"
 alias tdR="task delete"
-tds() { # 每隔 20 分钟由 remind 服务调用 naughty 弹窗通知
-    # XXX 不支持逗号，一次只跟踪一项任务，
+tds() {
     task start ${1}
     DESC=`task info ${1} | /bin/grep ^Desc | cut -b13-`
     UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
-    REM=`date -d"today" +"REM %d AT 23:30 +1440 *15 TAG ${UUID} MSG ${DESC}"`
+    REM=`date -d"today" +"REM AT 23:30 +900 *15 TAG ${UUID} MSG ${DESC}"`
     echo ${REM} >> ~/.task/reminders
 }
 tdp() {

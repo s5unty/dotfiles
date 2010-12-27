@@ -82,7 +82,7 @@ URxvt.keysym.M-space:command:\033]721;5\007
 !! mouseless line yanking, base on mark-yank-urls
 !! http://www.jukie.net/~bart/blog/urxvt-url-yank
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
-URxvt.keysym.M-l: perl:mark-yank-line:activate_mark_mode
+URxvt.keysym.M-y: perl:mark-yank-line:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
 URxvt.vim-scrollback: M-0xff1b
