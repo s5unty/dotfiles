@@ -366,10 +366,13 @@ parse_git_branch() {
         sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
 
     git diff --no-ext-diff --quiet 2> /dev/null
-    if [ $? -eq 1 ]; then # branch is not clear
+    flag=$?
+    if [ $flag -eq 1 ]; then # branch is not clear
         _branch=" ${at_underl}${branch}"
-    else
+    elif [ $flag -eq 0 ]; then # branch is clear
         _branch=" ${branch}"
+    else # there is not git repository == 129
+        _branch=""
     fi
 
     stash="$(git stash list 2> /dev/null | \
