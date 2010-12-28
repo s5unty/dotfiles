@@ -1,4 +1,12 @@
 #!/bin/sh
+# % apt-get install xserver-xorg xdm iceweasel sudo vim zsh git awesome rxvt-unicode
+# % apt-get install ttf-wqy-microhei ttf-wqy-zenhei ttf-dejavu ruby1.8 rubygems1.8
+# % apt-get install autossh mailleds* xscreensaver autocutsel moc synergy remind inotify-tools
+# % apt-get install mutt msmtp fetchmail procmail sdcv xsel weechat bitlbee python-simplejson
+# % apt-get install devscripts dupload ctags cscope ack-grep
+#
+# FF: AutoPager, AutoProxy, Delicious, Download Statusbar, FlagFox, Organize Status Bar, Tab Utilitise, TinyURL, Vimperator, rein
+
 
 # ssh 翻墙隧道 0:PORT 的写法使得局域网(虚拟机)可以共享此隧道
 /usr/bin/autossh -f -N -D 0:9527 du1abadd.org
