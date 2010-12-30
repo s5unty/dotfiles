@@ -249,8 +249,12 @@ cd() {
     fi
 }
 
-ca() {
+tcp() {
     tar cpf - ${(@)argv[1, -2]} | tar xvf - -C ${argv[-1]}
+}
+
+man() {
+    /usr/bin/man $* | /usr/bin/view -c 'set ft=man nonumber nomod nolist' -
 }
 
 T() { # tail
@@ -507,3 +511,4 @@ zle -N jump_arg1
 ######################################################################## }}}1
 
 # Load specific stuff
+export PATH=$PATH:~/vp10-android-2.1_r2/out/host/linux-x86/bin

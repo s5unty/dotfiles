@@ -258,14 +258,13 @@ nmap <silent> <unique> <S-F9> q:<UP>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
-imap <silent> <unique> <C-Q> <ESC>;
+imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
-imap <silent> <unique> <C-W> <SPACE><ESC>dbs
+imap <silent> <unique> <C-W> <ESC><ESC>bcw
 imap <silent> <unique> <C-F> <Right>
 imap <silent> <unique> <C-B> <Left>
-imap <silent> <unique> <C-N> <Down>
-imap <silent> <unique> <C-P> <Up>
+imap <silent> <unique> <C-J> <Down>
 imap <silent> <unique> <C-D> <C-O>x
 imap <silent> <unique> <C-K> <C-O>d$
 imap <silent> <unique> <C-U> <C-O>v^x
@@ -283,7 +282,7 @@ nmap <silent> <unique> <A-k> <C-W>k
 nmap <silent> <unique> <A-l> <C-W>l
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
-nmap <silent> <unique> <A-d> :CalendarH<CR>
+imap <silent> <unique> <A-d> <C-O>dw
 else
 nmap <silent> <unique> <ESC><ESC> :<CR>
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
@@ -296,7 +295,7 @@ nmap <silent> <unique> <ESC>k <C-W>k
 nmap <silent> <unique> <ESC>l <C-W>l
 imap <silent> <unique> <ESC>b <C-O>b
 imap <silent> <unique> <ESC>f <C-O>w
-nmap <silent> <unique> <ESC>d :CalendarH<CR>
+imap <silent> <unique> <ESC>d <C-O>dw
 endif
 
 " Leader+ , Leader char is ',' {{{2
