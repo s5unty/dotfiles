@@ -236,14 +236,14 @@ awful.key({ modkey }, "b", awful.client.togglemarked),
 awful.key({ modkey }, ".",      function () awful.client.swap.byidx( 1) end),
 awful.key({ modkey }, ",",      function () awful.client.swap.byidx(-1) end),
 
-awful.key({ modkey }, "Up",     function () awful.client.focus.bydirection("up")    end),
-awful.key({ modkey }, "k",      function () awful.client.focus.bydirection("up")    end),
-awful.key({ modkey }, "Down",   function () awful.client.focus.bydirection("down")  end),
-awful.key({ modkey }, "j",      function () awful.client.focus.bydirection("down")  end),
-awful.key({ modkey }, "Left",   function () awful.client.focus.bydirection("left")  end),
-awful.key({ modkey }, "h",      function () awful.client.focus.bydirection("left")  end),
-awful.key({ modkey }, "Right",  function () awful.client.focus.bydirection("right") end),
-awful.key({ modkey }, "l",      function () awful.client.focus.bydirection("right") end),
+awful.key({ modkey }, "Up",     function () awful.client.focus.bydirection("up")    client.focus:raise() end),
+awful.key({ modkey }, "k",      function () awful.client.focus.bydirection("up")    client.focus:raise() end),
+awful.key({ modkey }, "Down",   function () awful.client.focus.bydirection("down")  client.focus:raise() end),
+awful.key({ modkey }, "j",      function () awful.client.focus.bydirection("down")  client.focus:raise() end),
+awful.key({ modkey }, "Left",   function () awful.client.focus.bydirection("left")  client.focus:raise() end),
+awful.key({ modkey }, "h",      function () awful.client.focus.bydirection("left")  client.focus:raise() end),
+awful.key({ modkey }, "Right",  function () awful.client.focus.bydirection("right") client.focus:raise() end),
+awful.key({ modkey }, "l",      function () awful.client.focus.bydirection("right") client.focus:raise() end),
 -- }}}
 
 -- {{{ Layout
@@ -255,7 +255,7 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Weechat -T Weechat -e weechat-curses") end),
 awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
 awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e mutt") end),
-awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'WindowsXP'") end),
+awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'W7'") end),
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
@@ -465,18 +465,16 @@ awful.key({ modkey, "Control" }, "d", function ()
         properties = { floating = true }, callback = awful.placement.under_mouse },
         { rule = { class = "Android" },
         properties = { floating = true } },
+        { rule = { class = "GNUstep" },
+        properties = { floating = true } },
 
         -- Set Firefox to always map on tags number 2 of screen 1.
         { rule = { instance = "Navigator" },
         properties = { tag = tags[1][2], floating = false, border_width = 0 } },
-        { rule = { instance = "Mutt" },
-        properties = { tag = tags[1][3] } },
         { rule = { instance = "Weechat" },
         properties = { tag = tags[1][3] } },
         { rule = { class = "VirtualBox" },
-        properties = { tag = tags[1][6] } },
-        { rule = { instance = "ssh-askpass" },
-        properties = { tag = tags[1][2] } },
+        properties = { tag = tags[1][8] } },
     }
     -- }}}
 
@@ -490,7 +488,7 @@ awful.key({ modkey, "Control" }, "d", function ()
         c:add_signal("mouse::enter", function(c)
             if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
                 and awful.client.focus.filter(c) then
-                -- client.focus = c
+                client.focus = c
             end
         end)
 
