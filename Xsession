@@ -52,7 +52,7 @@
     done &
 
 # 使用渐隐、阴影特效
-/usr/bin/xcompmgr -c -f -D10 -I -r5 -o.5 &
+/usr/bin/xcompmgr -f -D15 &
 
 # 启动窗口管理器
 /usr/bin/awesome
