@@ -105,7 +105,6 @@ alias ls="ls --color=always -F -h"
 alias cp="cp -a"
 alias rm="rm -r"
 alias at="at -m"
-alias grep='GREP_COLOR=$(echo 3$[$(date +%N)%6+1]'\'';1;7'\'') grep --color=always --exclude-dir=.git -rin'
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="tree -C"
@@ -154,24 +153,24 @@ alias tdD="task done"
 alias tdR="task delete"
 tds() {
     task start ${1}
-    DESC=`task info ${1} | /bin/grep ^Desc | cut -b13-`
-    UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
+    DESC=`task info ${1} | grep ^Desc | cut -b13-`
+    UUID=`task info ${1} | grep ^UUID | cut -b13-`
     REM=`date -d"today" +"REM AT 23:30 +900 *15 TAG ${UUID} MSG ${DESC}"`
     echo ${REM} >> ~/.task/reminders
 }
 tdp() {
     task stop ${1}
-    UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
+    UUID=`task info ${1} | grep ^UUID | cut -b13-`
     sed -i '/'${UUID}'/d' ~/.task/reminders
 }
 tdd() {
     task done ${1}
-    UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
+    UUID=`task info ${1} | grep ^UUID | cut -b13-`
     sed -i '/'${UUID}'/d' ~/.task/reminders
 }
 tdr() {
     task delete ${1}
-    UUID=`task info ${1} | /bin/grep ^UUID | cut -b13-`
+    UUID=`task info ${1} | grep ^UUID | cut -b13-`
     sed -i '/'${UUID}'/d' ~/.task/reminders
 }
 
@@ -427,7 +426,7 @@ zstyle ':completion:*:processes-names' command 'ps -au$USER -o comm|grep -v "ps 
 # ping|ssh|scp {{{2
 zstyle ':completion:*:(ping|ssh|scp|sftp):*' hosts \
     du1abadd.org \
-    192.168.1.{1,2}
+    192.168.2.{1,2}
 zstyle ':completion:*' special-dirs true
 
 ######################################################################## }}}1
@@ -475,7 +474,7 @@ zle -N _vi-forward-blank
 run-ranger() {
     before="$(pwd)"
     python /usr/local/bin/ranger --fail-unless-cd "$@" || return 0
-    after="$(/bin/grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
+    after="$(grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
     if [[ "$before" != "$after" ]]; then
         cd "$after"
     fi
