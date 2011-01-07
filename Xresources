@@ -18,8 +18,8 @@ URxvt.secondaryScreen:   True
 URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
 
-URxvt.perl-lib:          /sun/home/.urxvt/
-URxvt.perl-ext-common:   default,matcher,mark-yank-urls,mark-yank-line,vim-scrollback,-searchable-scrollback
+URxvt.perl-lib:          /sun/.urxvt/
+URxvt.perl-ext-common:   default,matcher,mark-yank-urls,vim-scrollback,-searchable-scrollback
 ! }}}
 
 ! @@ FONTS @@ {{{
@@ -68,7 +68,7 @@ URxvt.colorIT:       chocolate4
 *color14:   cyan1
 *color15:   white
 
-!!icon path
+! icon path
 URxvt.iconFile:     /usr/share/pixmaps/urxvt.xpm
 Mutt.iconFile:      /usr/share/pixmaps/mutt.xpm
 Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm

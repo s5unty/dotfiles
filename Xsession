@@ -1,7 +1,7 @@
 #!/bin/sh
 # % apt-get install xserver-xorg xdm iceweasel sudo vim zsh git awesome rxvt-unicode
 # % apt-get install ttf-wqy-microhei ttf-wqy-zenhei ttf-dejavu ruby1.8 rubygems1.8
-# % apt-get install autossh mailleds* xscreensaver autocutsel moc synergy remind inotify-tools
+# % apt-get install autossh xscreensaver autocutsel moc synergy remind inotify-tools
 # % apt-get install mutt msmtp fetchmail procmail sdcv xsel weechat bitlbee python-simplejson
 # % apt-get install devscripts dupload ctags cscope ack-grep
 #
@@ -19,10 +19,6 @@
 
 # 加载自定义的特殊的键盘功能键
 /usr/bin/xmodmap ~/.Xmodmaprc
-
-# 使用 Scroll Lock 键盘灯指示有新的邮件
-/usr/bin/xmailleds -ls -M -m /sun/mails/company
-/usr/bin/xmailleds -ls -M -m /sun/mails/personal
 
 # 设置屏保
 /usr/bin/xscreensaver -no-splash &

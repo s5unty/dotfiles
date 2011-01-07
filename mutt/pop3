@@ -1,7 +1,7 @@
 # 信箱类型
 set mbox_type="Maildir"
 # 信箱目录
-set folder="/sun/mails/"
+set folder="/sun/maildir/"
 # 默认使用的信箱
 set spoolfile="=personal"
 

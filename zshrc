@@ -6,7 +6,7 @@ export DEBIAN_DIR=""
 export REPREPRO_CONFIG_DIR=""
 export LANG="zh_CN.UTF-8"
 export TZ='Asia/Shanghai'
-export HOME="/sun/home"
+export HOME="/sun"
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:."
@@ -15,8 +15,6 @@ export DEBFULLNAME="Vern Sun"
 export JAVA_HOME="/usr/lib/jvm/java-6-sun"
 export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
 export XDG_CONFIG_HOME="$HOME/.config"
-export PATH=$PATH:/var/lib/gems/1.8/bin/
-export PATH=$PATH:/sun/open/android-sdk/tools/
 export DOTREMINDERS=~/.task/reminders
 
 # use the built in directory navigation via the directory stack {{{2
@@ -40,7 +38,7 @@ WORDCHARS='*?_-[]~=&:;!#$%^(){}<>'
 
 # checks for new mail every 10 minutes {{{2
 MAILCHECK=600
-for i in /sun/mails/(company|personal)(/); do
+for i in /sun/maildir/(company|personal)(/); do
     mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
 done
 # {{{2
@@ -97,6 +95,7 @@ zle_highlight=(region:bg=blue     #选中区域
 alias -g G='|GREP_COLOR=$(echo 3$[$(date +%N)%6+1]'\'';1;7'\'') egrep -i --color=always'
 alias -g M="| $__LESS"
 alias -g Y="| xsel"
+alias -g iy="| xsel"
 alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
 alias ll="ls -hl"
@@ -248,6 +247,11 @@ cd() {
     fi
 }
 
+md() {
+    mkdir $*
+    cd $1
+}
+
 tcp() {
     tar cpf - ${(@)argv[1, -2]} | tar xvf - -C ${argv[-1]}
 }
@@ -272,7 +276,7 @@ P() { # ps
     ps -ef | grep "$1" | grep -v "grep"
 }
 
-F() { # find
+/() { # find
     find ./ -iname "*$1*" ${(@)argv[2,$#]}
 }
 
@@ -426,7 +430,7 @@ zstyle ':completion:*:processes-names' command 'ps -au$USER -o comm|grep -v "ps 
 # ping|ssh|scp {{{2
 zstyle ':completion:*:(ping|ssh|scp|sftp):*' hosts \
     du1abadd.org \
-    192.168.2.{1,2}
+    192.168.{1,2}.{1,2}
 zstyle ':completion:*' special-dirs true
 
 ######################################################################## }}}1
@@ -510,4 +514,5 @@ zle -N jump_arg1
 ######################################################################## }}}1
 
 # Load specific stuff
+export PATH=$PATH:/var/lib/gems/1.8/bin/
 export PATH=$PATH:~/vp10-android-2.1_r2/out/host/linux-x86/bin
