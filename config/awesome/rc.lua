@@ -21,7 +21,7 @@ theme    = awful.util.getdir("config") .. "/theme.lua"
 beautiful.init (theme)
 
 toggletags = {
-    ["URxvt"] = { screen = 1, tag = 9 },
+    [terminal] = { screen = 1, tag = 9 },
 }
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -67,7 +67,7 @@ mylauncher = awful.widget.launcher({
 
 -- Widgets {{{2
 mytextclock = widget({ type = 'textbox' })
-vicious.register(mytextclock, vicious.widgets.date, " <span color='#FFFFFF'>%d, %a %l:%M</span>", 60)
+vicious.register(mytextclock, vicious.widgets.date, " <span color='#FFFFFF'>%a, %d %l:%M</span>", 60)
 
 mycpuwidget = widget({ type = "textbox" })
 vicious.register(mycpuwidget, vicious.widgets.cpu, " <span color='#00C5CD'>$1%</span>", 2)
@@ -77,12 +77,48 @@ vicious.register(mydiskio, vicious.widgets.dio, " <span color='#458B00'>${read_m
 
 mysystray = widget({ type = "systray" })
 
--- Install {{{2
 mytasklist = {}
+mytasklist.buttons = awful.util.table.join(
+awful.button({ }, 1, function (c)
+    if not c:isvisible() then
+        awful.tag.viewonly(c:tags()[1])
+    end
+    client.focus = c
+    c:raise()
+end),
+awful.button({ }, 3, function ()
+    if instance then
+        instance:hide()
+        instance = nil
+    else
+        instance = awful.menu.clients({ width=250 })
+    end
+end),
+awful.button({ }, 4, function ()
+    awful.client.focus.byidx(-1)
+    if client.focus then client.focus:raise() end
+end),
+awful.button({ }, 5, function ()
+    awful.client.focus.byidx(1)
+    if client.focus then client.focus:raise() end
+end)
+)
+
 mytaglist = {}
+mytaglist.buttons = awful.util.table.join(
+awful.button({ }, 1, awful.tag.viewonly),
+awful.button({ modkey }, 1, awful.client.movetotag),
+awful.button({ }, 3, awful.tag.viewtoggle),
+awful.button({ modkey }, 3, awful.client.toggletag),
+awful.button({ }, 4, awful.tag.viewprev),
+awful.button({ }, 5, awful.tag.viewnext)
+)
+
 mywibox = {}
 mypromptbox = {}
 mylayoutbox = {}
+
+-- Install {{{2
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
@@ -122,41 +158,6 @@ for s = 1, screen.count() do
     }
 
 end
-
--- Mouse bindings {{{2
-mytasklist.buttons = awful.util.table.join(
-awful.button({ }, 1, function (c)
-    if not c:isvisible() then
-        awful.tag.viewonly(c:tags()[1])
-    end
-    client.focus = c
-    c:raise()
-end),
-awful.button({ }, 3, function ()
-    if instance then
-        instance:hide()
-        instance = nil
-    else
-        instance = awful.menu.clients({ width=250 })
-    end
-end),
-awful.button({ }, 4, function ()
-    awful.client.focus.byidx(-1)
-    if client.focus then client.focus:raise() end
-end),
-awful.button({ }, 5, function ()
-    awful.client.focus.byidx(1)
-    if client.focus then client.focus:raise() end
-end)
-)
-mytaglist.buttons = awful.util.table.join(
-awful.button({ }, 1, awful.tag.viewonly),
-awful.button({ modkey }, 1, awful.client.movetotag),
-awful.button({ }, 3, awful.tag.viewtoggle),
-awful.button({ modkey }, 3, awful.client.toggletag),
-awful.button({ }, 4, awful.tag.viewprev),
-awful.button({ }, 5, awful.tag.viewnext)
-)
 
 -- }}}1
 

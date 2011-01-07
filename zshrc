@@ -16,6 +16,8 @@ export JAVA_HOME="/usr/lib/jvm/java-6-sun"
 export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
 export XDG_CONFIG_HOME="$HOME/.config"
 export DOTREMINDERS=~/.task/reminders
+export PATH=$PATH:/var/lib/gems/1.8/bin/
+export PATH=$PATH:~/vp10-android-2.1_r2/out/host/linux-x86/bin
 
 # use the built in directory navigation via the directory stack {{{2
 # http://zsh.sourceforge.net/Doc/Release/zsh_15.html
@@ -107,6 +109,7 @@ alias at="at -m"
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="tree -C"
+alias sudo="sudo env PATH=${PATH} env HOME=${HOME}"
 alias scp="scp -p"
 alias lintian="lintian -viI"
 alias vi="/usr/bin/vim -n"
@@ -514,5 +517,3 @@ zle -N jump_arg1
 ######################################################################## }}}1
 
 # Load specific stuff
-export PATH=$PATH:/var/lib/gems/1.8/bin/
-export PATH=$PATH:~/vp10-android-2.1_r2/out/host/linux-x86/bin
