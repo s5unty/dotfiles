@@ -9,29 +9,32 @@ auto eth0
 iface eth0 inet static
     address 192.168.1.5
     netmask 255.255.255.0
-    gateway 192.168.1.1 # hom
-    mtu 1492
+    gateway 192.168.2.1 # hom
 
-auto eth0:1 
-iface eth0:1 inet static
+auto eth0:0
+iface eth0:0 inet static
     address 192.168.1.61
     netmask 255.255.255.0
     gateway 192.168.1.2 # com
-    mtu 1492
+
+auto eth0:1
+iface eth0:1 inet static
+    address 192.168.1.62
+    netmask 255.255.255.0
+    gateway 192.168.1.2 # com
 
 allow-hotplug wlan0
 iface wlan0 inet manual
     wpa-driver wext
     wpa-roam /etc/wpa_supplicant/wpa.conf
-    
+
 iface house inet dhcp
-    pre-up /sbin/ifconfig $IFACE mtu 1492
-    
+    pre-up /sbin/ifconfig $IFACE
+
 iface office inet static
     address 192.168.1.61
     netmask 255.255.255.0
     gateway 192.168.1.2
-    mtu 1492
-    
+
 iface default inet dhcp
 
