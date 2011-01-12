@@ -1,11 +1,12 @@
 #!/bin/sh
-# % apt-get install xserver-xorg xdm iceweasel sudo vim zsh git awesome rxvt-unicode
+# % apt-get install xserver-xorg xdm iceweasel sudo vim zsh git awesome awesome-extra
 # % apt-get install ttf-wqy-microhei ttf-wqy-zenhei ttf-dejavu ruby1.8 rubygems1.8
 # % apt-get install autossh xscreensaver autocutsel moc synergy remind inotify-tools
-# % apt-get install mutt msmtp fetchmail procmail sdcv xsel weechat bitlbee python-simplejson
-# % apt-get install devscripts dupload ctags cscope ack-grep
+# % apt-get install mutt msmtp fetchmail procmail weechat bitlbee python-simplejson
+# % apt-get install devscripts dupload ctags cscope ack-grep feh xcompmgr rxvt-unicode
+# % apt-get install sdcv xsel xdg-user-dirs
 #
-# FF: AutoPager, AutoProxy, Delicious, Download Statusbar, FlagFox, Organize Status Bar, Tab Utilitise, TinyURL, Vimperator, rein
+# FF: AutoPager, AutoProxy, Delicious, Download Statusbar, FlagFox, Organize Status Bar, Tab Utilities, TinyURL, Vimperator, rein
 
 
 # ssh 翻墙隧道 0:PORT 的写法使得局域网(虚拟机)可以共享此隧道
@@ -49,6 +50,9 @@
 
 # 使用渐隐、阴影特效
 /usr/bin/xcompmgr -f &
+
+# 输入法
+/usr/bin/fcitx
 
 # 启动窗口管理器
 /usr/bin/awesome

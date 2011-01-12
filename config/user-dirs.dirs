@@ -1,0 +1,10 @@
+# This file is written by xdg-user-dirs-update
+# 
+XDG_DESKTOP_DIR="$HOME/desktop"
+XDG_DOWNLOAD_DIR="$HOME/desktop"
+XDG_TEMPLATES_DIR="$HOME/desktop"
+XDG_PUBLICSHARE_DIR="$HOME/desktop"
+XDG_DOCUMENTS_DIR="$HOME/desktop"
+XDG_MUSIC_DIR="$HOME/desktop"
+XDG_PICTURES_DIR="$HOME/desktop"
+XDG_VIDEOS_DIR="$HOME/desktop"

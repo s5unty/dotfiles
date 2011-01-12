@@ -259,10 +259,6 @@ tcp() {
     tar cpf - ${(@)argv[1, -2]} | tar xvf - -C ${argv[-1]}
 }
 
-man() {
-    /usr/bin/man $* | /usr/bin/view -c 'set ft=man nonumber nomod nolist' -
-}
-
 T() { # tail
     if [ -r $*[$#] ]; then
         tail $*
@@ -480,7 +476,7 @@ zle -N _vi-forward-blank
 # https://github.com/hut/ranger
 run-ranger() {
     before="$(pwd)"
-    python /usr/local/bin/ranger --fail-unless-cd "$@" || return 0
+    ranger --fail-unless-cd "$@" || return 0
     after="$(grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
     if [[ "$before" != "$after" ]]; then
         cd "$after"
