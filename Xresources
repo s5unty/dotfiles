@@ -44,12 +44,12 @@ URxvt.keysym.M-Down: command: \
 ! http://sedition.com/perl/rgb.html
 ! http://web.njit.edu/~kevin/rgb.txt.html
 URxvt.background:    black
-URxvt.foreground:    yellow3
+URxvt.foreground:    gainsboro
 URxvt.cursorColor:   tan4
 URxvt.cursorColor2:  green1
-URxvt.colorBD:       chocolate1
-URxvt.colorUL:       yellow3
-URxvt.colorIT:       chocolate4
+URxvt.colorBD:       gainsboro
+URxvt.colorUL:       gainsboro
+URxvt.colorIT:       gainsboro
 
 *color0:    black
 *color1:    firebrick2

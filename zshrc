@@ -91,6 +91,7 @@ zle_highlight=(region:bg=blue     #选中区域
                special:bold       #特殊字符
                isearch:underline) #搜索时使用的关键字
 
+eval $(dircolors -b ~/.dircolors) #自定义颜色
 ######################################################################## }}}1
 
 # ALIAS {{{1
@@ -407,7 +408,7 @@ zstyle ':completion:*:options' auto-description '%d'
 zstyle ':completion:*:corrections' format ${fg_lred}${at_italics}'%d (%e errors)'${at_none}
 zstyle ':completion:*:descriptions' format ${fg_lgreen}${at_italics}'%d'${at_none}
 zstyle ':completion:*:messages' format ${fg_lgreen}${at_italics}'%d'${at_none}
-zstyle ':completion:*:warnings' format ${at_blink}'No matches for: %d'${at_none}
+zstyle ':completion:*:warnings' format ${fg_white}${at_italics}'No matches for: %d'${at_none}
 
 # cd - {{{2
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
@@ -513,3 +514,7 @@ zle -N jump_arg1
 ######################################################################## }}}1
 
 # Load specific stuff
+
+# poky {{{1 
+. /usr/local/poky/eabi-glibc/arm/environment-setup
+alias -g XX='--host=arm-poky-linux-gnueabi'
