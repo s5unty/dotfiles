@@ -327,8 +327,9 @@ case `tty` in
         export TERM="rxvt-unicode"
         precmd() { set_prompt; print -Pn "\a\e]0;%n@$__IP:%l\a" }
         ;;
-    /dev/tty*)
+    *)
         export TERM="xterm"
+        export LANG="C"
         precmd() { set_prompt; }
         ;;
 esac
@@ -513,8 +514,16 @@ zle -N jump_arg1
 
 ######################################################################## }}}1
 
-# Load specific stuff
+# Load specific stuff {{{1
+if [ s`hostname` = s"verns-worktop" ]; then
+    . /usr/local/poky/eabi-glibc/arm/environment-setup
+    alias -g XX='--host=arm-poky-linux-gnueabi'
+fi
 
-# poky {{{1 
-. /usr/local/poky/eabi-glibc/arm/environment-setup
-alias -g XX='--host=arm-poky-linux-gnueabi'
+if [ s`hostname` = s"verns-desktop" ]; then
+
+fi
+
+if [ s`hostname` = s"verns-laptop" ]; then
+
+fi
