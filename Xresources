@@ -10,6 +10,7 @@ URxvt.saveLines:    2048
 URxvt.modifier:     Alt
 URxvt.urlLauncher:  x-www-browser
 URxvt.cutchars:     ()<>[]{}|:;!#$%^?
+URxvt.cursorUnderline:   True
 URxvt.matcher.button:    1
 URxvt.scrollTtyKeypress: True
 URxvt.scrollTtyOutput:   False
@@ -45,11 +46,11 @@ URxvt.keysym.M-Down: command: \
 ! http://web.njit.edu/~kevin/rgb.txt.html
 URxvt.background:    black
 URxvt.foreground:    grey68
-URxvt.cursorColor:   grey68
+URxvt.cursorColor:   white
 URxvt.cursorColor2:  black
-URxvt.colorBD:       grey68
+URxvt.colorBD:       ivory3
 URxvt.colorUL:       grey68
-URxvt.colorIT:       grey68
+URxvt.colorIT:       ivory3
 
 *color0:    black
 *color1:    firebrick2

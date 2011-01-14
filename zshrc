@@ -281,7 +281,16 @@ P() { # ps
 }
 
 R() { # find in files
-    ack-grep -r $1 . ${(@)argv[2,$#]}
+    export GREP_COLOR=$(echo 3$[$(date +%N)%6+1]';1;7')
+    egrep -ri --color=always \
+        --exclude="*.old" --exclude="*.bak" --exclude="*.BAK" --exclude="*.orig" \
+        --exclude="*.rej" --exclude="*.a" --exclude="*.olb" --exclude="*.o" \
+        --exclude="*.obj" --exclude="*.so" --exclude="*.exe" --exclude="*.gz" \
+        --exclude="*.tar" --exclude="*.zip" --exclude="*.tgz" --exclude="*.bz2" \
+        --exclude="*.deb" --exclude="*.jar" --exclude="*.cab" --exclude="*.tbz" \
+        --exclude="*.jpg" --exclude="*.jpeg" --exclude="*.png" --exclude="*.gif" \
+        --exclude="*.pdf" --exclude-dir=".cscope" --exclude-dir=".svn" --exclude-dir=".git" \
+        "$*" .
 }
 
 CS() { # gen cscope.files
@@ -316,8 +325,8 @@ set_prompt() {
     myjobs="$at_none$fg_cyan%(1j/[${(j/,/)myjobs}] /)"
     mypath="$at_none$fg_green$at_italics%~"
     myerrs="$at_none$fg_lred%(0?.. (%?%))"
-    mygitb="$at_none$fg_white$at_bold$(parse_git_branch)"
-       PS1="$at_none$at_bold%!%#$at_none "
+    mygitb="$at_none$fg_white$(parse_git_branch)"
+       PS1="$at_none$fg_lgray%!%#$at_none "
       RPS1="$myjobs$fg_green%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
     rehash
 }
