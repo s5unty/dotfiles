@@ -20,15 +20,13 @@ URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
 
 URxvt.perl-lib:          /sun/.urxvt/
-URxvt.perl-ext-common:   default,matcher,mark-yank-urls,vim-scrollback,-searchable-scrollback
+URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback
 ! }}}
 
 ! @@ FONTS @@ {{{
 Xft.dpi:          96
-!URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Zen Hei Sharp
-!URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-10
 URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Micro Hei-10
-URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-11
+URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-10
 URxvt.italicFont:xft:Envy Code R-10:italic, xft:Liberation Mono-10:italic, xft:AR PL UKai CN-11
 URxvt.keysym.M-Up: command: \
         \033]710;xft:DejaVu Sans Mono-13, xft:WenQuanYi Micro Hei-13\007 \
@@ -36,7 +34,7 @@ URxvt.keysym.M-Up: command: \
         \033]712;xft:DejaVu Sans Mono-13:italic, xft:AR PL UKai CN-14\007
 URxvt.keysym.M-Down: command: \
         \033]710;xft:Envy Code R-10, xft:WenQuanYi Micro Hei-10\007 \
-        \033]711;xft:Envy Code R-10:bold, xft:WenQuanYi Micro Hei-11\007 \
+        \033]711;xft:Envy Code R-10:bold, xft:WenQuanYi Micro Hei-10\007 \
         \033]712;xft:Envy Code R-10:italic, xft:AR PL UKai CN-11\007
 ! }}}
 
