@@ -208,8 +208,9 @@ endfunction
 " Key bindings {{{1
 " Mouse Bindings {{{2
 map <silent> <unique> <2-LeftMouse> <C-]>zz
-map <silent> <unique> <RightMouse> :call G_GotoEditor()<CR><C-O>zz
+map <silent> <unique> <RightRelease> :call G_GotoEditor()<CR><C-O>zz
 map <silent> <unique> <MiddleMouse> :call G_GotoEditor()<CR><C-I>zz
+map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
 nmap <silent> <unique> <F1> :set cursorline!<CR>:set nocursorline?<CR>
@@ -280,6 +281,7 @@ nmap <silent> <unique> <A-h> <C-W>h
 nmap <silent> <unique> <A-j> <C-W>j
 nmap <silent> <unique> <A-k> <C-W>k
 nmap <silent> <unique> <A-l> <C-W>l
+nmap <silent> <unique> <A-d> :bw<CR>
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
@@ -293,6 +295,7 @@ nmap <silent> <unique> <ESC>h <C-W>h
 nmap <silent> <unique> <ESC>j <C-W>j
 nmap <silent> <unique> <ESC>k <C-W>k
 nmap <silent> <unique> <ESC>l <C-W>l
+nmap <silent> <unique> <ESC>d :bw<CR>
 imap <silent> <unique> <ESC>b <C-O>b
 imap <silent> <unique> <ESC>f <C-O>w
 imap <silent> <unique> <ESC>d <C-O>dw
@@ -428,7 +431,7 @@ let SuperTabMappingBackward="<S-Tab>"
 " + Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
 autocmd Filetype java
-    \ set tag=.cscope/cscope.tags,~/.tags.android,~/.tags.java;
+    \ set tag=.cscope/cscope.tags,~/.tags_android,~/.tags_java6;
 autocmd Filetype c,cpp
     \ set tag=.cscope/cscope.tags,~/.tags.c;
 if has("cscope")
@@ -509,7 +512,7 @@ set lazyredraw
 
 " * delimitMate.vim 2.5.1 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
-let delimitMate_autoclose = 1
+let delimitMate_autoclose = 0
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 let delimitMate_expand_cr = 1
 
@@ -534,32 +537,6 @@ let ConqueTerm_CWInsert = 0
 let g:calendar_monday = 1
 let g:calendar_mark = 'left-fit'
 let g:calendar_focus_today = 1
-
-
-" - vimwiki 1.1.1: Personal Wiki for Vim {{{2
-" http://code.google.com/p/vimwiki/
-let vw_home = '/sun/wiki/'
-"let vw_home = 'scp://www-data@du1abadd.org//sun/dokuwiki/data/pages/'
-let vw_journal = {}
-let vw_android = {}
-let g:vimwiki_list = [vw_journal, vw_android]
-let g:vimwiki_stripsym = '_' " 非法符号转换为空格
-let g:vimwiki_badsyms = ' '  " 删除文件名中的空格
-let g:vimwiki_camel_case = 0 " 禁用驼峰格式
-let g:vimwiki_use_calendar = 1
-
-let vw_journal.syntax = 'doku'
-let vw_journal.index = 'journal'
-let vw_journal.ext = '.txt'
-let vw_journal.path = vw_home.'journal'
-let vw_journal.diary_index = 'journal'
-let vw_journal.diary_rel_path = ''
-let vw_journal.diary_link_count = 10
-
-let vw_android.syntax = 'doku'
-let vw_android.index = 'android'
-let vw_android.ext = '.txt'
-let vw_android.path = vw_home.'android'
 
 " }}}1
 

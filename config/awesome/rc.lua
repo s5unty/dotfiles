@@ -67,7 +67,7 @@ mylauncher = awful.widget.launcher({
 
 -- Widgets {{{2
 mytextclock = widget({ type = 'textbox' })
-vicious.register(mytextclock, vicious.widgets.date, " <span color='#CDCD00'>%a,%d</span> <span color='#FFFFFF'>%l:%M</span>", 60)
+vicious.register(mytextclock, vicious.widgets.date, " <span color='#FFFFFF'>%l:%M</span>", 60)
 
 mycpuwidget = widget({ type = "textbox" })
 vicious.register(mycpuwidget, vicious.widgets.cpu, " <span color='#00C5CD'>$1%</span>", 2)
@@ -149,8 +149,8 @@ for s = 1, screen.count() do
             mypromptbox[s],
             ["layout"] = awful.widget.layout.horizontal.leftright
         },
-        mytextclock,
         s == 1 and mysystray or nil,
+        mytextclock,
         mydiskio,
         mycpuwidget,
         mytasklist[s],
@@ -508,7 +508,7 @@ client.add_signal("manage", function (c, startup)
         -- Put windows in a smart way, only if they does not set an initial position.
         if not c.size_hints.user_position and not c.size_hints.program_position then
             awful.placement.no_overlap(c)
-            awful.placement.no_offscreen(c)
+            -- awful.placement.no_offscreen(c)
         end
     end
 
