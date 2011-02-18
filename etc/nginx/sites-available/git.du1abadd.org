@@ -1,0 +1,17 @@
+server {
+    listen       80;  # your server's public IP address
+    server_name  git.du1abadd.org;    # your domain name
+	access_log   /var/log/nginx/du1abadd.org.access.log;
+
+    location / {
+		root   /sun/git;  # absolute path to your WordPress installation
+		index  index.php index.html index.htm;
+		autoindex on;
+
+		# this serves static files that exist without running other rewrite tests
+		if (-f $request_filename) {
+			expires 30d;
+			break;
+		}
+	}
+}

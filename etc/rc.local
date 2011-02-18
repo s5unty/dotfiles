@@ -1,3 +1,16 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
 # 清空 iptables
 /sbin/iptables -F
 /sbin/iptables -X
@@ -9,11 +22,28 @@
 /sbin/iptables -A INPUT -p icmp --icmp-type echo-request -i eth0 -j DROP
 
 # 禁止 SSH Attack @http://dwm.me.uk/articles/2008/mitigating-ssh-attacks
-/sbin/iptables -N SSHATTACK
-/sbin/iptables -A INPUT -i eth0 -p tcp -m tcp -m state --state NEW --dport 22 -m recent --set --name ssh-clients --rsource
-/sbin/iptables -A INPUT -i eth0 -p tcp -m tcp -m state --state NEW --dport 22 -m recent --update --seconds 60 --hitcount 5 --name ssh-clients --rsource -j SSHATTACK
-/sbin/iptables -A SSHATTACK -m limit --limit 1/minute --limit-burst 1 -j LOG --log-prefix "SSHATTACK: "
-/sbin/iptables -A SSHATTACK -j REJECT --reject-with icmp-port-unreachable
+# /sbin/iptables -N SSHATTACK
+# /sbin/iptables -A INPUT -i eth0 -p tcp -m tcp -m state --state NEW --dport 22 -m recent --set --name ssh-clients --rsource
+# /sbin/iptables -A INPUT -i eth0 -p tcp -m tcp -m state --state NEW --dport 22 -m recent --update --seconds 30 --hitcount 5 --name ssh-clients --rsource -j SSHATTACK
+# /sbin/iptables -A SSHATTACK -m limit --limit 1/minute --limit-burst 1 -j REJECT
+# /sbin/iptables -A SSHATTACK -j REJECT --reject-with icmp-port-unreachable 
+# 仅允许 sshkey 登录，禁止口令登录的方式可以忽略
 
-/usr/bin/spawn-fcgi.standalone -u www-data -g www-data -C 4 -f /usr/bin/php-cgi -a 127.0.0.1 -p 3721 -P /var/run/fastcgi-php.pid
+# php-cgi
+# /usr/bin/spawn-fcgi.standalone -u www-data -g www-data -C 4 -f /usr/bin/php-cgi -a 127.0.0.1 -p 3721 -P /var/run/fastcgi-php.pid
 
+# gollum - wiki 服务，配合 nginx 反向代理
+/var/lib/gems/1.8/bin/gollum /sun/wiki & 
+
+# 未知的，用于测试 vpn 的配置
+# iptables --table net --append POSTROUTING --jump MASQUERADE
+# echo 1 > /proc/sys/net/ipv4/ip_forward
+# for each in /proc/sys/net/ipv4/conf/*
+# do
+# 	echo 0 > $each/accept_redirects
+# 	echo 0 > $each/send_redirects
+# done
+# /etc/init.d/ipsec restart
+
+
+exit 0
