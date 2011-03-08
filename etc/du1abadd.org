@@ -1,0 +1,17 @@
+#!/bin/sh
+
+apt-get install git zsh sudo nginx procmail msmtp curl \
+        ruby rubygems python-pygemts \
+        php5-cgi php5-curl php5-mysql spawn-fcgi \
+
+# 博客系统
+/var/lib/gems/1.8/bin/gem install jekyll
+# 解释 Markdown 语言，基于 c，比基于 ruby 的 maruku 效率高
+/var/lib/gems/1.8/bin/gem install rdiscount
+
+# 维基系统
+apt-get install libxml2-dev libxslt1-dev
+/var/lib/gems/1.8/bin/gem install gollum
+
+useradd -m -d /sun -s /bin/zsh vern
+useradd -m -d /dey -s /bin/zsh dey

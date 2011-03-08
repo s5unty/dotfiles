@@ -3,7 +3,7 @@
 set guioptions=bn
 " 不自动跳转到新打开标签页中的输入框
 set focuscontent
-" 新建标签页显示这些命令 :addons :downloads :extoptions :help :javascript :prefs
+" 新建标签页显示这些命令 :addons :downloads :extoptions :help :javascript :prefs 
 set newtab=all
 " Shell
 set shell="/usr/bin/zsh"
@@ -37,7 +37,7 @@ map                     <C-,>       :tabm -1<CR>
 " 切换之前选择的标签页
 map                     <A-`>       <C-^>
 " 切换标签页 {{{2
-map                <A-0><A-9>       g$
+map                <A-0><A-0>       g$
 map                     <A-9>       9gt
 map           <A-0><A-1><A-0>       10gt
 map           <A-0><A-1><A-1>       11gt
@@ -59,13 +59,36 @@ map           <A-0><A-2><A-6>       26gt
 map           <A-0><A-2><A-7>       27gt
 map           <A-0><A-2><A-8>       28gt
 map           <A-0><A-2><A-9>       29gt
+map           <A-0><A-3><A-0>       30gt
+map           <A-0><A-3><A-1>       31gt
+map           <A-0><A-3><A-2>       32gt
+map           <A-0><A-3><A-3>       33gt
+map           <A-0><A-3><A-4>       34gt
+map           <A-0><A-3><A-5>       35gt
+map           <A-0><A-3><A-6>       36gt
+map           <A-0><A-3><A-7>       37gt
+map           <A-0><A-3><A-8>       38gt
+map           <A-0><A-3><A-9>       39gt
 " }}}2
 " 切换当前页面编码
 map <silent>            <F2>        :set encoding=GB2312<CR>
 map <silent>            <S-F2>      :set encoding=UTF-8<CR>
 " }}}
 
-" 2# Vimperator Plugins {{{1
+" QuickMarks {{{1
+qmark m https://mail.google.com/
+qmark r https://www.google.com/reader/
+qmark c https://www.google.com/calendar
+qmark g https://github.com/
+qmark t https://twitter.com/
+qmark d http://dict.cn
+qmark q http://web.qq.com/
+qmark k http://kaixin001.com/
+qmark y http://www.youku.com/
+qmark w http://wiki.du1abadd.org/
+" }}} 
+
+" 2# Vimperator Plugins {{{1 
 " delicious_search.js {{{2
 " http://www.mozdev.org/pipermail/vimperator/2009-March/003865.html
 autocmd VimperatorEnter ".*" :set complete=Dl
@@ -106,4 +129,5 @@ map <silent>            <C-F12>     :set! extensions.autoproxy.proxyMode=disable
 
 " }}}1
 
+echo "o_o"
 " vim: ft=vimperator

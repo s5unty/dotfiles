@@ -66,6 +66,15 @@ VERBOSE=off
 company/
 # }}}1
 
+# 处理 QQ 邮箱 {{{1
+:0
+* ^(List-Id|To|CC|BCC|From):.*s5unty@qq\.com
+{
+    :0 fhw
+    | $FORMAIL -I "X-Label: qq"
+}
+# }}}
+
 # 关注的邮件列表 {{{1
 :0
 * ^(List-Id|To|CC|BCC):.*(debian-l10n-chinese)

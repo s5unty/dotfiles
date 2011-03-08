@@ -1,19 +1,10 @@
 #!/bin/sh -e
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
 
 # 清空 iptables
 /sbin/iptables -F
 /sbin/iptables -X
+/sbin/iptables -t nat -F
+/sbin/iptables -t nat -X
 /sbin/iptables -P INPUT ACCEPT
 /sbin/iptables -P OUTPUT ACCEPT
 /sbin/iptables -P FORWARD ACCEPT
@@ -35,15 +26,8 @@
 # gollum - wiki 服务，配合 nginx 反向代理
 /var/lib/gems/1.8/bin/gollum /sun/wiki & 
 
-# 未知的，用于测试 vpn 的配置
-# iptables --table net --append POSTROUTING --jump MASQUERADE
-# echo 1 > /proc/sys/net/ipv4/ip_forward
-# for each in /proc/sys/net/ipv4/conf/*
-# do
-# 	echo 0 > $each/accept_redirects
-# 	echo 0 > $each/send_redirects
-# done
-# /etc/init.d/ipsec restart
-
+# vpn 转发
+/sbin/iptables -t nat -A POSTROUTING -s 10.8.0.0/255.255.255.0 -j SNAT --to-source 64.120.96.91
+echo 1 > /proc/sys/net/ipv4/ip_forward
 
 exit 0
