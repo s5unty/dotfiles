@@ -5,9 +5,10 @@ apt-get install git zsh sudo nginx procmail msmtp curl \
         php5-cgi php5-curl php5-mysql spawn-fcgi \
 
 # 博客系统
-/var/lib/gems/1.8/bin/gem install jekyll
+/var/lib/gems/1.8/bin/gem install jekyll activesupport
 # 解释 Markdown 语言，基于 c，比基于 ruby 的 maruku 效率高
 /var/lib/gems/1.8/bin/gem install rdiscount
+# 解释 Markdown 语言，基于 c，比基于 ruby 的 maruku 效率高
 
 # 维基系统
 apt-get install libxml2-dev libxslt1-dev
