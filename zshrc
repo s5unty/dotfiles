@@ -17,7 +17,6 @@ export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools
 export XDG_CONFIG_HOME="$HOME/.config"
 export DOTREMINDERS=~/.task/reminders
 export PATH=$PATH:/var/lib/gems/1.8/bin/
-export PATH=$PATH:~/vp10-android-2.1_r2/out/host/linux-x86/bin
 
 # use the built in directory navigation via the directory stack {{{2
 # http://zsh.sourceforge.net/Doc/Release/zsh_15.html
@@ -326,7 +325,7 @@ set_prompt() {
     mypath="$at_none$fg_green$at_italics%~"
     myerrs="$at_none$fg_lred%(0?.. (%?%))"
     mygitb="$at_none$fg_white$(parse_git_branch)"
-       PS1="$at_none$fg_lgray%!%#$at_none "
+       PS1="$at_none$at_bold%!%#$at_none "
       RPS1="$myjobs$fg_green%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
     rehash
 }
@@ -527,6 +526,8 @@ zle -N jump_arg1
 if [ s`hostname` = s"verns-worktop" ]; then
     . /usr/local/poky/eabi-glibc/arm/environment-setup
     alias -g XX='--host=arm-poky-linux-gnueabi'
+
+    export PATH=$PATH:~/android-sdk/tools/
 fi
 
 if [ s`hostname` = s"verns-desktop" ]; then
