@@ -33,12 +33,12 @@ layouts =
 
 tags = { }
 mytags = {
-    { layout = layouts[1], mwfact = 0.668, nmaster=1 },
-    { layout = layouts[2], mwfact = 0.618, nmaster=1 },
     { layout = layouts[1], mwfact = 0.500, nmaster=1 },
+    { layout = layouts[1], mwfact = 0.500, nmaster=1 },
+    { layout = layouts[2], mwfact = 0.500, nmaster=1 },
     { layout = layouts[1], mwfact = 0.668, nmaster=1 },
     { layout = layouts[1], mwfact = 0.668, nmaster=1 },
-    { layout = layouts[1], mwfact = 0.668, nmaster=1 },
+    { layout = layouts[2], mwfact = 0.668, nmaster=1 },
     { layout = layouts[1], mwfact = 0.618, nmaster=1 },
     { layout = layouts[2], mwfact = 0.618, nmaster=1 },
     { layout = awful.layout.suit.fair },
@@ -464,9 +464,9 @@ awful.rules.rules = {
 
     -- Set Firefox to always map on tags number 2 of screen 1.
     { rule = { instance = "Navigator" },
-    properties = { tag = tags[1][2], floating = false, border_width = 0 } },
+    properties = { tag = tags[1][8], floating = false, border_width = 0 } },
     { rule = { instance = "Weechat" },
-    properties = { tag = tags[1][3] } },
+    properties = { tag = tags[1][7] } },
     { rule = { class = "VirtualBox" },
     properties = { tag = tags[1][8] } },
 }
