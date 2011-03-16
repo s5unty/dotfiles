@@ -26,7 +26,7 @@ set nowrap " 不自动折行
 set updatetime=1000
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set winaltkeys=no
-"set cinoptions=:0,g0,t0,(0
+set cinoptions=:0
 set timeoutlen=500
 set autoread
 set autowrite
@@ -349,10 +349,6 @@ if has("autocmd")
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ set path+=./
 
-  augroup markdown
-      au! BufRead,BufNewFile *.asciidoc setfiletype asciidoc
-  augroup END
-
   autocmd BufWritePost *
     \ call <SID>AC_ChmodExecutable()
 
@@ -434,6 +430,8 @@ autocmd Filetype java
     \ set tag=.cscope/cscope.tags,~/.tags_android,~/.tags_java6;
 autocmd Filetype c,cpp
     \ set tag=.cscope/cscope.tags,~/.tags.c;
+autocmd Filetype python
+    \ set tag=.cscope/cscope.tags,/tmp/.tags_python;
 if has("cscope")
     set csto=1
     set nocsverb
@@ -512,7 +510,7 @@ set lazyredraw
 
 " * delimitMate.vim 2.5.1 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
-let delimitMate_autoclose = 0
+let delimitMate_autoclose = 1
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 let delimitMate_expand_cr = 1
 
@@ -537,6 +535,11 @@ let ConqueTerm_CWInsert = 0
 let g:calendar_monday = 1
 let g:calendar_mark = 'left-fit'
 let g:calendar_focus_today = 1
+
+
+" + Pydiction 1.2 : Tab-complete your Python code {{{2
+" http://www.vim.org/scripts/script.php?script_id=850
+let g:pydiction_location = '~/.tags_python'
 
 " }}}1
 
