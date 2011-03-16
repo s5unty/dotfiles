@@ -23,12 +23,13 @@ LogLevel INFO
 
 # Authentication:
 LoginGraceTime 120
-PermitRootLogin no
+PermitRootLogin without-password
+PermitTunnel yes
 StrictModes yes
 
 RSAAuthentication yes
 PubkeyAuthentication yes
-# AuthorizedKeysFile	/sun/home/.ssh/authorized_keys
+#AuthorizedKeysFile	%h/.ssh/authorized_keys
 
 # Don't read the user's ~/.rhosts and ~/.shosts files
 IgnoreRhosts yes
@@ -37,7 +38,7 @@ RhostsRSAAuthentication no
 # similar for protocol version 2
 HostbasedAuthentication no
 # Uncomment if you don't trust ~/.ssh/known_hosts for RhostsRSAAuthentication
-IgnoreUserKnownHosts yes
+#IgnoreUserKnownHosts yes
 
 # To enable empty passwords, change to yes (NOT RECOMMENDED)
 PermitEmptyPasswords no

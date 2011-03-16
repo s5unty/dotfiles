@@ -1,17 +1,11 @@
 server {
-    listen       80;  # your server's public IP address
-    server_name  du1abadd.org www.du1abadd.org;    # your domain name
+    listen       80;
+    server_name  du1abadd.org www.du1abadd.org;
     access_log   /var/log/nginx/du1abadd.org.access.log;
 
     location / {
-        root   /sun/blog/site;  # absolute path to your WordPress installation
+        root   /sun/blog/site;
         index  index.html index.htm;
-
-        # this serves static files that exist without running other rewrite tests
-        if (-f $request_filename) {
-            expires 30d;
-            break;
-        }
     }
 
     location ^~ /feed {
@@ -22,16 +16,16 @@ server {
     location ^~ /images {
         alias /sun/images;
         autoindex on;
-		autoindex_exact_size off;
-		autoindex_localtime on;
+        autoindex_exact_size off;
+        autoindex_localtime on;
         expires 10d;
     }
 
     location ^~ /debian {
         alias /sun/debian;
         autoindex on;
-		autoindex_exact_size off;
-		autoindex_localtime on;
+        autoindex_exact_size off;
+        autoindex_localtime on;
     }
 }
 

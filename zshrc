@@ -37,11 +37,6 @@ LISTPROMPT=''
 # word delimiter characters in line editor {{{2
 WORDCHARS='*?_-[]~=&:;!#$%^(){}<>'
 
-# checks for new mail every 10 minutes {{{2
-MAILCHECK=600
-for i in /sun/maildir/(company|personal)(/); do
-    mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
-done
 # {{{2
 if   [ -e "/usr/bin/zless" ]; then __LESS="zless -r"
 elif [ -e "/usr/bin/less"  ]; then __LESS="less -r"
@@ -110,7 +105,6 @@ alias at="at -m"
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="tree -C"
-alias sudo="sudo env PATH=${PATH} env HOME=${HOME}"
 alias scp="scp -p"
 alias lintian="lintian -viI"
 alias vi="/usr/bin/vim -n"
