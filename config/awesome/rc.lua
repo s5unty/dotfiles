@@ -467,8 +467,6 @@ awful.rules.rules = {
     properties = { tag = tags[1][8], floating = false, border_width = 0 } },
     { rule = { instance = "Weechat" },
     properties = { tag = tags[1][7] } },
-    { rule = { class = "VirtualBox" },
-    properties = { tag = tags[1][8] } },
 }
 -- }}}
 
