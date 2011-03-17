@@ -51,6 +51,7 @@ if [ -e "/usr/bin/colordiff" ]; then __DIFF="colordiff" else __DIFF="diff" fi
 if [ -e "/usr/bin/sudo" ];      then __SUDO="sudo" fi
 
 __IP=`/sbin/ifconfig -v | grep 192.168.1 | tail -1 | cut -d'.' -f4 | cut -d' ' -f1`
+__HOSTNAME=`hostname`
 
 ######################################################################## }}}1
 
@@ -333,7 +334,7 @@ set_prompt() {
 case `tty` in
     /dev/pts/*)
         export TERM="rxvt-unicode"
-        precmd() { set_prompt; print -Pn "\a\e]0;%n@$__IP:%l\a" }
+        precmd() { set_prompt; print -Pn "\a\e]0;%n@$__HOSTNAME:%l\a" }
         ;;
     *)
         export TERM="xterm"
