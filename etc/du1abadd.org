@@ -17,5 +17,7 @@ apt-get install libxml2-dev libxslt1-dev
 useradd -m -d /sun -s /bin/zsh vern
 useradd -m -d /dey -s /bin/zsh dey
 
-echo '* */1 * * * /sun/offward/ssh/of-traffic-log' >> /var/spool/cron/root
+echo '0 * * * * /sun/offward/ssh/of-traffic-log' >> /var/spool/cron/root
+echo '0 * * * * /sun/blog/_scripts/tweets.sh' >> /var/spool/cron/vern
+
 echo 'Defaults    env_keep += "HOME PATH"' >> /etc/sudoers
