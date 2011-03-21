@@ -24,7 +24,7 @@ URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selecti
 ! }}}
 
 ! @@ FONTS @@ {{{
-Xft.dpi:          96
+Xft.dpi:          98
 URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Micro Hei-10
 URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-10
 URxvt.italicFont:xft:Envy Code R-10:italic, xft:Liberation Mono-10:italic, xft:AR PL UKai CN-11

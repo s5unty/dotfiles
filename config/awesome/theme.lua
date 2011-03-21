@@ -17,9 +17,9 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.border_width  = "1"
-theme.border_normal = "#222222"
-theme.border_focus  = "#555555"
-theme.border_marked = "#91231c"
+theme.border_normal = "#f3f3f3"
+theme.border_focus  = "#faebd7"
+theme.border_marked = "#ff7f24"
 
 -- There are other variable sets
 -- overriding the default one when
@@ -75,7 +75,8 @@ theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/defau
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
 -- You can use your own command to set your wallpaper
-theme.wallpaper_cmd = { "feh --bg-tile /sun/.config/awesome/wallpaper.png" }
+theme.wallpaper_cmd = { "feh /sun/.config/awesome/light_bg.jpg" }
+theme.wallpaper_cmd = { "feh --bg-tile /sun/.config/awesome/dark.png" }
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
