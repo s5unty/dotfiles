@@ -12,7 +12,7 @@ color hdrdefault cyan        default # 信头
 color signature  cyan        default # 签名
 
 # 特殊状态
-color index      white       default "~d `date +%d/%m`-"  # 当天的邮件
+color index      yellow      default "~d `date +%d/%m`-"  # 当天的邮件
 color index      cyan        default "~f 'Vern Sun'"  # 自己的外发邮件
 color index      blue        default "~T"  # 短期标记
 color index      magenta     default "~F"  # 长期标记

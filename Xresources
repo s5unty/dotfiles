@@ -20,7 +20,7 @@ URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
 
 URxvt.perl-lib:          /sun/.urxvt/
-URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,selection-dict
+URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selection
 ! }}}
 
 ! @@ FONTS @@ {{{
@@ -42,13 +42,26 @@ URxvt.keysym.M-Down: command: \
 ! man urxvt
 ! http://sedition.com/perl/rgb.html
 ! http://web.njit.edu/~kevin/rgb.txt.html
-URxvt.background:    black
-URxvt.foreground:    grey68
-URxvt.cursorColor:   white
-URxvt.cursorColor2:  black
-URxvt.colorBD:       ivory3
-URxvt.colorUL:       grey68
-URxvt.colorIT:       ivory3
+
+! @@ D A R K -- theme {{{
+! URxvt.background:    black
+! URxvt.foreground:    grey68
+! URxvt.cursorColor:   white
+! URxvt.cursorColor2:  black
+! URxvt.colorBD:       ivory3
+! URxvt.colorUL:       grey68
+! URxvt.colorIT:       ivory3
+! }}}
+
+! @@ L I G H T -- theme {{{
+URxvt.background:    white
+URxvt.foreground:    black
+URxvt.cursorColor:   grey15
+URxvt.cursorColor2:  white
+URxvt.colorBD:       grey15
+URxvt.colorUL:       grey15
+URxvt.colorIT:       grey15
+! }}}
 
 *color0:    black
 *color1:    firebrick2
@@ -81,7 +94,6 @@ URxvt.keysym.M-space:command:\033]721;5\007
 !! mouseless line yanking, base on mark-yank-urls
 !! http://www.jukie.net/~bart/blog/urxvt-url-yank
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
-URxvt.keysym.M-y: perl:mark-yank-line:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
 URxvt.vim-scrollback: M-0xff1b

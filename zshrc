@@ -105,6 +105,7 @@ alias at="at -m"
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="tree -C"
+alias sudo="sudo env PATH=${PATH} env HOME=${HOME}"
 alias scp="scp -p"
 alias lintian="lintian -viI"
 alias vi="/usr/bin/vim -n"
@@ -319,7 +320,7 @@ set_prompt() {
     myjobs="$at_none$fg_cyan%(1j/[${(j/,/)myjobs}] /)"
     mypath="$at_none$fg_green$at_italics%~"
     myerrs="$at_none$fg_lred%(0?.. (%?%))"
-    mygitb="$at_none$fg_white$(parse_git_branch)"
+    mygitb="$at_none$at_bold$(parse_git_branch)"
        PS1="$at_none$at_bold%!%#$at_none "
       RPS1="$myjobs$fg_green%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
     rehash
@@ -523,6 +524,12 @@ if [ s`hostname` = s"verns-worktop" ]; then
     alias -g XX='--host=arm-poky-linux-gnueabi'
 
     export PATH=$PATH:~/android-sdk/tools/
+
+    # checks for new mail every 10 minutes {{{2
+    MAILCHECK=600
+    for i in /sun/maildir/(company|personal)(/); do
+        mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
+    done
 fi
 
 if [ s`hostname` = s"verns-desktop" ]; then
