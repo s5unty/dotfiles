@@ -44,9 +44,9 @@ hi Directory        ctermfg=darkblue    ctermbg=NONE                            
 hi ErrorMsg         ctermfg=darkred     ctermbg=NONE                            guifg=#ee2c2c       guibg=NONE
 hi WarningMsg       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
 hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        guifg=black         guibg=#00ffff       gui=italic
-hi VertSplit        ctermfg=lightgrey   ctermbg=black                           guifg=white         guibg=NONE          gui=bold
-hi StatusLine       ctermfg=lightgrey   ctermbg=black                           guifg=white         guibg=black
-hi StatusLineNC     ctermfg=lightgrey   ctermbg=black                           guifg=white         guibg=black
+hi VertSplit        ctermfg=darkgrey    ctermbg=black                           guifg=white         guibg=NONE          gui=bold
+hi StatusLine       ctermfg=darkgrey    ctermbg=black                           guifg=white         guibg=black
+hi StatusLineNC     ctermfg=darkgrey    ctermbg=black                           guifg=white         guibg=black
 hi IncSearch        ctermfg=darkblue    ctermbg=white                           guifg=#6495ed       guibg=white
 hi Search           ctermfg=red         ctermbg=NONE        cterm=bold          guifg=#ff4040       guibg=NONE          gui=bold
 hi Question         ctermfg=magenta                                             guifg=#ff69b4
@@ -74,14 +74,14 @@ hi VimwikiItalic        ctermfg=darkyellow                  cterm=italic        
 hi VimwikiDelText       ctermfg=darkgray                                        guifg=black
 hi VimwikiList          ctermfg=green                                           guifg=#00ee00
 " taglist
-hi MyTagListTagName     ctermfg=lightgrey   ctermbg=black   cterm=reverse       guifg=NONE          guibg=NONE          gui=reverse
+hi MyTagListTagName     ctermfg=darkgrey    ctermbg=white   cterm=reverse       guifg=NONE          guibg=NONE          gui=reverse
 hi MyTagListFileName    ctermfg=darkgreen   ctermbg=NONE    cterm=italic        guifg=#458b00       guibg=NONE          gui=italic
 hi MyTagListTitle       ctermfg=black       ctermbg=NONE    cterm=bold          guifg=#404040       guibg=NONE          gui=bold
 hi MyTagListTagScope    ctermfg=NONE        ctermbg=NONE                        guifg=NONE          guibg=NONE
 " tabbar
 hi Tb_Normal            ctermfg=darkgreen   ctermbg=NONE                        guifg=#458b00       guibg=NONE
 hi Tb_Changed           ctermfg=black       ctermbg=red                         guifg=#ff4040       guibg=NONE
-hi Tb_VisibleNormal     ctermfg=black       ctermbg=lightgrey                   guifg=black         guibg=white
+hi Tb_VisibleNormal     ctermfg=white       ctermbg=darkgrey                   guifg=black         guibg=white
 hi Tb_VisibleChanged    ctermfg=red         ctermbg=white                       guifg=#ff4040       guibg=white
 hi Tb_Readonly          ctermfg=green       ctermbg=NONE                        guifg=#00ee00       guibg=NONE
 hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green                       guifg=black         guibg=#00ee00

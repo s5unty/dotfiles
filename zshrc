@@ -410,10 +410,10 @@ zstyle ':completion:*:matches' group 'yes'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d'
-zstyle ':completion:*:corrections' format ${fg_lred}${at_italics}'%d (%e errors)'${at_none}
-zstyle ':completion:*:descriptions' format ${fg_lgreen}${at_italics}'%d'${at_none}
-zstyle ':completion:*:messages' format ${fg_lgreen}${at_italics}'%d'${at_none}
-zstyle ':completion:*:warnings' format ${fg_white}${at_italics}'No matches for: %d'${at_none}
+zstyle ':completion:*:corrections' format ${fg_red}${at_italics}'%d (%e errors)'${at_none}
+zstyle ':completion:*:descriptions' format ${fg_green}${at_italics}'%d'${at_none}
+zstyle ':completion:*:messages' format ${fg_green}${at_italics}'%d'${at_none}
+zstyle ':completion:*:warnings' format ${fg_cyan}${at_italics}'No matches for: %d'${at_none}
 
 # cd - {{{2
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
