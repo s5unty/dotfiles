@@ -62,7 +62,7 @@ let c_space_errors=1
 let sh_minlines = 500
 syn enable " 语法高亮
 filetype plugin indent on
-color pattern
+color light
 
 if v:version >= 703
     set undodir=~/.vimundo/

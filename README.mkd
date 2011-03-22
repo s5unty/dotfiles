@@ -1,10 +1,6 @@
 Screenshot
 ==========
 
-[![](http://lh5.ggpht.com/_oKL9t7fM3TU/TLWGYwJE7wI/AAAAAAAABL8/XjatfMEq3dE/vim.png?imgmax=288)](http://lh5.ggpht.com/_oKL9t7fM3TU/TLWGYwJE7wI/AAAAAAAABL8/XjatfMEq3dE/vim.png?imgmax=1440)
-[![](http://lh4.ggpht.com/_oKL9t7fM3TU/TLWGZXf145I/AAAAAAAABMI/1pC_uR9u2wQ/mail.png?imgmax=288)](http://lh4.ggpht.com/_oKL9t7fM3TU/TLWGZXf145I/AAAAAAAABMI/1pC_uR9u2wQ/mail.png?imgmax=1440)
-[![](http://lh6.ggpht.com/_oKL9t7fM3TU/TLWGfHxMxxI/AAAAAAAABMQ/FmcfT_zoS0s/6.png?imgmax=288)](http://lh6.ggpht.com/_oKL9t7fM3TU/TLWGfHxMxxI/AAAAAAAABMQ/FmcfT_zoS0s/6.png?imgmax=1440)
-[![](http://lh4.ggpht.com/_oKL9t7fM3TU/TLWGfWl5d8I/AAAAAAAABMU/GIPGw1_7X3c/7.png?imgmax=288)](http://lh4.ggpht.com/_oKL9t7fM3TU/TLWGfWl5d8I/AAAAAAAABMU/GIPGw1_7X3c/7.png?imgmax=1440)
-[![](http://lh5.ggpht.com/_oKL9t7fM3TU/TLW4xqEJdxI/AAAAAAAABM0/5jwk3Yjrmww/browser.png?imgmax=288)](http://lh5.ggpht.com/_oKL9t7fM3TU/TLW4xqEJdxI/AAAAAAAABM0/5jwk3Yjrmww/browser.png?imgmax=1440)
-[![](http://lh4.ggpht.com/_oKL9t7fM3TU/TLW4yPnyISI/AAAAAAAABM4/ioYY45xLQCU/irc.png?imgmax=288)](http://lh4.ggpht.com/_oKL9t7fM3TU/TLW4yPnyISI/AAAAAAAABM4/ioYY45xLQCU/irc.png?imgmax=1440)
-
+[![](https://lh6.googleusercontent.com/_oKL9t7fM3TU/TYdRntgIKOI/AAAAAAAABRc/LxaTzhePE-8/s288/vim.png)](https://lh6.googleusercontent.com/_oKL9t7fM3TU/TYdRntgIKOI/AAAAAAAABRc/LxaTzhePE-8/s1440/vim.png)
+[![](https://lh5.googleusercontent.com/_oKL9t7fM3TU/TYdRnnPz20I/AAAAAAAABRg/YTrodqUYC1U/s288/mutt.png)](https://lh5.googleusercontent.com/_oKL9t7fM3TU/TYdRnnPz20I/AAAAAAAABRg/YTrodqUYC1U/s1440/mutt.png)
+[![](https://lh5.googleusercontent.com/_oKL9t7fM3TU/TYdRmhWH8bI/AAAAAAAABRk/j2NSIfHpgMY/s288/im.png)](https://lh5.googleusercontent.com/_oKL9t7fM3TU/TYdRmhWH8bI/AAAAAAAABRk/j2NSIfHpgMY/s1440/im.png)
