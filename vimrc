@@ -203,6 +203,15 @@ function! G_Jekyll()
 
 endfunction
 
+" Ranger file manager
+function Ranger()
+  silent !ranger --choosefile=/tmp/chosen
+  if filereadable('/tmp/chosen')
+    exec 'edit ' . system('cat /tmp/chosen')
+    call system('rm /tmp/chosen')
+  endif
+  redraw!
+endfunction
 " }}}
 
 " Key bindings {{{1
@@ -323,6 +332,7 @@ nmap <silent> <unique> <Leader>. :call <SID>VimwikiGoMain()<CR>
 
 " Colon+, Colon char is ':' {{{2
 command W :w !sudo tee %
+command E :call Ranger()
 
 " }}}1
 
