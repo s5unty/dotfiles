@@ -19,7 +19,7 @@
 
 # gollum - wiki 服务，配合 nginx 反向代理
 su - vern -c "export TZ=Asia/Shanghai && /var/lib/gems/1.8/bin/gollum /sun/wiki &"
-su - dey  -c "export TZ=Asia/Shanghai && /var/lib/gems/1.8/bin/gollum --port 7654 /yong/rainlotus/wiki &"
+su - yong  -c "export TZ=Asia/Shanghai && /var/lib/gems/1.8/bin/gollum --port 7654 /yong/rainlotus/wiki &"
 
 # ssh 转发
 iptables -N SSH_INET_OUT
