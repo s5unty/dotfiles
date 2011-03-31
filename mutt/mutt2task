@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/task add +email E-mail: $(grep '^Subject:' $* | cut -d: -f 2-)

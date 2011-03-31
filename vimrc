@@ -25,6 +25,7 @@ set noincsearch " 非渐进搜索
 set nowrap " 不自动折行
 set updatetime=1000
 set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
+set showcmd " 右下方显示按键序列
 set winaltkeys=no
 set cinoptions=:0
 set timeoutlen=500

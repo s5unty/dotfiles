@@ -76,6 +76,7 @@
     co  = checkout
     cd  = checkout -b
     cp  = cherry-pick --no-commit # 复制一个 commit 所做的修改
+    cco = reset HEAD -- # 撤消已提交到 local repos 的修改
     touch = branch -M
 
     di  = diff --no-prefix -p --stat # show difference between working tree and the index

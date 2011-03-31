@@ -72,9 +72,9 @@ LegendSwitchKey=CTRL_ALT_L
 # 快捷键: 反查拼音
 LookupPinyinKey=CTRL_ALT_E
 # 快捷键: 切换全角
-FullWidthSwitchKey=SHIFT_SPACE
+FullWidthSwitchKey=CTRL_SHIFT_SPACE
 # 快捷键: 切换中英文标点
-ChnPuncSwitchKey=ALT_SPACE
+ChnPuncSwitchKey=CTRL_ALT_SPACE
 # 快捷键: 前一页
 PrevPageKey=,
 # 快捷键: 后一页

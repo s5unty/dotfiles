@@ -246,8 +246,8 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 -- }}}
 
 -- {{{ Program
-awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Weechat -T Weechat -e weechat-curses") end),
-awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
+awful.key({ modkey }, "F1", function () awful.util.spawn("x-www-browser") end),
+awful.key({ modkey }, "F2", function () awful.util.spawn(terminal.." -name Weechat -T Weechat -e weechat-curses") end),
 awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e mutt") end),
 awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'W7'") end),
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
@@ -448,12 +448,6 @@ awful.rules.rules = {
     properties = { floating = true } },
     { rule = { instance = "gimp" },
     properties = { floating = true } },
-    { rule = { instance = "Download" },
-    properties = { floating = true } },
-    { rule = { instance = "Browser" },
-    properties = { floating = true } },
-    { rule = { instance = "Extension" },
-    properties = { floating = true } },
     { rule = { class = "Screenkey" },
     properties = { floating = true }, switchtotag = true },
     { rule = { instance = "feh" },
@@ -463,7 +457,9 @@ awful.rules.rules = {
     { rule = { class = "GNUstep" },
     properties = { floating = true } },
 
-    -- Set Firefox to always map on tags number 2 of screen 1.
+    -- Set Firefox to always map on tag 7 of screen 1.
+    { rule = { class = "Firefox" },
+    properties = { tag = tags[1][7], floating = true, border_width = 0 } },
     { rule = { instance = "Navigator" },
     properties = { tag = tags[1][7], floating = false, border_width = 0 } },
     { rule = { instance = "Weechat" },

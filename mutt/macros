@@ -22,3 +22,4 @@ macro index \cr "<collapse-all><tag-pattern>~(~N)<enter><tag-prefix><clear-flag>
 macro browser h "<first-entry><select-entry>"
 macro attach s "<save-entry><kill-line>/tmp/<enter>a"
 
+macro index "<esc>t" "<pipe-message>mutt2task<enter>"
