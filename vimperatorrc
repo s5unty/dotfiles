@@ -5,7 +5,7 @@ set tabnumbers
 " 不自动补全，除非我按 TAB
 set noautocomplete
 " 不自动跳转到新打开标签页中的输入框
-set focuscontent
+set nofocuscontent
 " 新建标签页显示这些命令 :addons :downloads :extoptions :help :javascript :prefs 
 set newtab=all
 " Shell
@@ -96,7 +96,6 @@ qmark w http://wiki.du1abadd.org/
 " 2# Vimperator Plugins {{{1 
 " http://vimpr.github.com/plugins-en.html
 "
-
 " goo.gl.js {{{2
 map <silent> ! :googl<CR>
 
