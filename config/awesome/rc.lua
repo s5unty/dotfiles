@@ -39,8 +39,8 @@ mytags = {
     { layout = layouts[1], mwfact = 0.668, nmaster=1 },
     { layout = layouts[1], mwfact = 0.668, nmaster=1 },
     { layout = layouts[2], mwfact = 0.668, nmaster=1 },
-    { layout = layouts[1], mwfact = 0.618, nmaster=1 },
     { layout = layouts[2], mwfact = 0.618, nmaster=1 },
+    { layout = layouts[1], mwfact = 0.618, nmaster=1 },
     { layout = awful.layout.suit.fair },
 }
 for s = 1, screen.count() do

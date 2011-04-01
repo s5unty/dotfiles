@@ -2,6 +2,7 @@
 " 只显示底部可能存在的滚动条，以及标签栏的编号
 set gui=none,tabs
 set tabnumbers
+set noscrollbars
 " 不自动补全，除非我按 TAB
 set noautocomplete
 " 不自动跳转到新打开标签页中的输入框
@@ -21,6 +22,10 @@ hi StatusLine background: #DFDFDF;
 map                     .           <C-PageDown>
 " 上一个标签页
 map                     ,           <C-PageUp>
+" 下一个标签组
+map                     <C-.>       <C-S-n>
+" 上一个标签组
+map                     <C-,>       <C-S-p>
 " 向上翻页
 map --                  -           <C-b>
 " 前进
@@ -34,9 +39,9 @@ map                     k           2<C-y>
 " 关闭窗口
 map                     <C-q>       :winclose<CR>
 " 右移当前标签页
-map                     <C-.>       :tabm +1<CR>
+map                     <A-.>       :tabm +1<CR>
 " 左移当前标签页
-map                     <C-,>       :tabm -1<CR>
+map                     <A-,>       :tabm -1<CR>
 " 切换之前选择的标签页
 map                     <A-`>       <C-^>
 " 避免和 diigo 冲突
