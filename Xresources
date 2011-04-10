@@ -24,7 +24,7 @@ URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selecti
 ! }}}
 
 ! @@ FONTS @@ {{{
-Xft.dpi:          96
+Xft.dpi:          98
 URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Micro Hei-10
 URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-10
 URxvt.italicFont:xft:Envy Code R-10:italic, xft:Liberation Mono-10:italic, xft:WenQuanYi Micro Hei-10
@@ -87,15 +87,12 @@ Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm
 ! }}}
 
 ! @@ Shortkeys @@ {{{
-!! scroll_up, scroll_down
-URxvt.keysym.M-minus:command:\033]720;5\007
-URxvt.keysym.M-space:command:\033]721;5\007
 !! mouseless url yanking
 !! mouseless line yanking, base on mark-yank-urls
 !! http://www.jukie.net/~bart/blog/urxvt-url-yank
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
-URxvt.vim-scrollback: M-0xff1b
+URxvt.vim-scrollback: M-space
 ! }}}
 

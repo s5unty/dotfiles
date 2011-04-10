@@ -4,7 +4,7 @@
 # % apt-get install autossh xscreensaver autocutsel moc synergy remind inotify-tools
 # % apt-get install mutt msmtp fetchmail procmail weechat bitlbee python-simplejson
 # % apt-get install devscripts dupload ctags cscope ack-grep feh xcompmgr rxvt-unicode
-# % apt-get install sdcv xsel xdg-user-dirs
+# % apt-get install sdcv xsel xdg-user-dirs wpasupplicant
 #
 # FF: AutoPager, AutoProxy, Delicious, Download Statusbar, FlagFox, Organize Status Bar, Tab Utilities, TinyURL, Vimperator, rein
 

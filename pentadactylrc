@@ -1,8 +1,6 @@
 " General {{{1
 " 只显示底部可能存在的滚动条，以及标签栏的编号
-set gui=none,tabs
-set tabnumbers
-set noscrollbars
+set guioptions=bncsM
 " 不自动补全，除非我按 TAB
 set noautocomplete
 " 不自动跳转到新打开标签页中的输入框
@@ -104,37 +102,13 @@ qmark w http://wiki.du1abadd.org/
 " goo.gl.js {{{2
 map <silent> ! :googl<CR>
 
-" read cat later {{{2
-" map <silent> a :rcl<CR>
-
-" word select mode {{{2
-"
-
 " pinyin-hints.js {{{2
 " http://code.google.com/p/pinyin-hints-vimperator/
 
-" }}}1
-
-" Firefox Plugins {{{1
 " AutoProxy {{{2
 " 切换 AutoProxy 的代理模式：智能、全局、禁用
 map <silent>            <F12>       :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
 map <silent>            <S-F12>     :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
 map <silent>            <C-F12>     :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
 
-" AutoPager {{{2
-
-" Delicious Bookmarks {{{2
-
-" Diigo toolbar {{{2
-
-" Tab Utilities {{{2
-
-" Vimperator {{{2
-
-" Theme: rein {{{2
-
 " }}}1
-
-echo "~"
-" vim: ft=vimperator
