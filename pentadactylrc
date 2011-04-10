@@ -1,10 +1,6 @@
 " General {{{1
 " 只显示底部可能存在的滚动条，以及标签栏的编号
 set guioptions=bncsM
-" 不自动补全，除非我按 TAB
-set noautocomplete
-" 不自动跳转到新打开标签页中的输入框
-set focuscontent
 " 新建标签页显示这些命令 :addons :downloads :extoptions :help :javascript :prefs 
 set newtab=all
 " Shell
@@ -84,16 +80,16 @@ map <silent>            <S-F2>      :set encoding=UTF-8<CR>
 " }}}
 
 " QuickMarks {{{1
-qmark m https://mail.google.com/
-qmark r https://www.google.com/reader/
-qmark c https://www.google.com/calendar
-qmark g https://github.com/
-qmark t https://twitter.com/
-qmark d http://diigo.com/
-qmark q http://web.qq.com/
-qmark k http://kaixin001.com/
-qmark y http://www.youku.com/
-qmark w http://wiki.du1abadd.org/
+silent qmark m https://mail.google.com/
+silent qmark r https://www.google.com/reader/
+silent qmark c https://www.google.com/calendar
+silent qmark g https://github.com/
+silent qmark t https://twitter.com/
+silent qmark d http://diigo.com/
+silent qmark q http://web.qq.com/
+silent qmark k http://kaixin001.com/
+silent qmark y http://www.youku.com/
+silent qmark w http://wiki.du1abadd.org/
 " }}} 
 
 " 2# Vimperator Plugins {{{1 
