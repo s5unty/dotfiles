@@ -329,10 +329,9 @@ nmap <silent> <unique> <Leader>e :call <SID>CscopeFind('e', 'y')<CR>
 nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <Leader>E :call <SID>CscopeFind('e', 'n')<CR>
-nmap <silent> <unique> <Leader>. :call <SID>VimwikiGoMain()<CR>
+nmap <silent> <unique> <Leader>. :GundoToggle<CR>
 
 " Colon+, Colon char is ':' {{{2
-command W :w !sudo tee %
 command E :call Ranger()
 
 " }}}1

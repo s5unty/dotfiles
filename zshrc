@@ -107,8 +107,6 @@ alias more="$__LESS"
 alias tree="tree -C"
 alias scp="scp -p"
 alias lintian="lintian -viI"
-alias vi="/usr/bin/vim -n"
-alias vim="/usr/bin/vim --noplugin"
 alias tig="tig --all"
 
 # apt-get {{{2
@@ -158,17 +156,17 @@ tds() {
 tdp() {
     task stop ${1}
     UUID=`task info ${1} | grep ^UUID | cut -b13-`
-    sed -i '/'${UUID}'/d' ~/.task/reminders
+    sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdd() {
     task done ${1}
     UUID=`task info ${1} | grep ^UUID | cut -b13-`
-    sed -i '/'${UUID}'/d' ~/.task/reminders
+    sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdr() {
     task delete ${1}
     UUID=`task info ${1} | grep ^UUID | cut -b13-`
-    sed -i '/'${UUID}'/d' ~/.task/reminders
+    sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 
 # tar {{{2
@@ -243,6 +241,16 @@ cd() {
     if builtin cd "$@"; then
         ls
     fi
+}
+
+vi() {
+    # 使用 :w !sudo tee % 虽然可以写入，但是会缺少 undolist
+    precommand=
+    for i in "$@" ; do
+        if [ -f "$i" -a ! -w "$i" ] ; then precommand=$__SUDO ; break ; fi
+    done
+
+    ${precommand} vim "$@"
 }
 
 md() {
