@@ -42,7 +42,7 @@ hi SpecialKey       ctermfg=white       ctermbg=red         cterm=underline     
 hi NonText          ctermfg=magenta     ctermbg=NONE                            guifg=#ff69b4       guibg=NONE
 hi Directory        ctermfg=darkblue    ctermbg=NONE                            guifg=#1874cd       guibg=NONE
 hi ErrorMsg         ctermfg=darkred     ctermbg=NONE                            guifg=#ee2c2c       guibg=NONE
-hi WarningMsg       ctermfg=yellow      ctermbg=NONE                            guifg=white         guibg=NONE
+hi WarningMsg       ctermfg=darkblue    ctermbg=NONE                            guifg=white         guibg=NONE
 hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        guifg=black         guibg=#00ffff       gui=italic
 hi VertSplit        ctermfg=darkgrey    ctermbg=black                           guifg=white         guibg=NONE          gui=bold
 hi StatusLine       ctermfg=darkgrey    ctermbg=black                           guifg=white         guibg=black
@@ -52,9 +52,9 @@ hi Search           ctermfg=red         ctermbg=NONE        cterm=bold          
 hi Question         ctermfg=magenta                                             guifg=#ff69b4
 hi LineNr           ctermfg=darkgreen                       cterm=italic        guifg=#458b00       guibg=NONE          gui=italic
 hi DiffAdd          ctermfg=darkgreen   ctermbg=NONE        cterm=bold          guifg=#458b00       guibg=NONE          gui=bold
-hi DiffChange       ctermfg=NONE        ctermbg=NONE                            guifg=NONE          guibg=NONE
+hi DiffChange       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
 hi DiffDelete       ctermfg=darkred     ctermbg=NONE                            guifg=#ee2c2c       guibg=NONE
-hi DiffText         ctermfg=NONE        ctermbg=lightred    cterm=bold          guifg=NONE          guibg=lightred      gui=bold
+hi DiffText         ctermfg=NONE        ctermbg=NONE        cterm=bold          guifg=NONE          guibg=NONE          gui=bold
 hi Folded           ctermfg=green       ctermbg=NONE        cterm=italic        guifg=#00ee00       guibg=NONE          gui=italic
 hi FoldColumn       ctermfg=darkgreen   ctermbg=NONE                            guifg=#458b00       guibg=NONE
 hi SignColumn       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
