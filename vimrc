@@ -532,13 +532,11 @@ let delimitMate_expand_cr = 1
 " 在 normal mode 下按 ysiwb 或者 cs@1@2
 " 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ]
 
-" - Conque Shell 1.1 : Run interactive commands inside a Vim buffer {{{2
-" http://www.vim.org/scripts/script.php?script_id=2771
-let ConqueTerm_EscKey = '<Esc>'
-let ConqueTerm_Color = 1
-let ConqueTerm_TERM = 'rxvt-unicode'
-let ConqueTerm_ReadUnfocused = 1
-let ConqueTerm_CWInsert = 0
+
+" * Gundo 2.1.1 : Visualize your undo tree {{{2
+" http://www.vim.org/scripts/script.php?script_id=3304
+let g:gundo_preview_height = 28
+
 
 " - calendar.vim 2.2 : Calendar {{{2
 " http://www.vim.org/scripts/script.php?script_id=52
@@ -550,6 +548,7 @@ let g:calendar_focus_today = 1
 " + Pydiction 1.2 : Tab-complete your Python code {{{2
 " http://www.vim.org/scripts/script.php?script_id=850
 let g:pydiction_location = '~/.tags_python'
+
 
 " }}}1
 
