@@ -1,14 +1,14 @@
 " General {{{1
 " 只显示底部可能存在的滚动条，以及标签栏的编号
-set guioptions=bncsM
-" 新建标签页显示这些命令 :addons :downloads :extoptions :help :javascript :prefs 
-set newtab=all
+set guioptions=bscN
+" 不要自动补全，除非 b 显示 buffer
+set autocomplete=/ex/buffer,^(/|/ex/?)$
 " Shell
 set shell="/usr/bin/zsh"
 " 编辑器
 set editor="urxvt -e vim -f"
 " 状态栏的背景色
-hi StatusLine background: #DFDFDF;
+hi StatusLineNormal color: white !important; background: #222222 !important;
 " }}}
 
 " Key bindings {{{1
@@ -22,6 +22,11 @@ map                     <C-.>       <C-S-n>
 map                     <C-,>       <C-S-p>
 " 向上翻页
 map --                  -           <C-b>
+" 向下翻页
+map                     <Space>     <C-d>
+" 交换 d/D
+map -builtin            d           D
+map -builtin            D           d
 " 前进
 map                     \\          <C-i>
 " 后退
@@ -41,7 +46,8 @@ map                     <A-`>       <C-^>
 " 避免和 diigo 冲突
 map                     <C-a>       <Nop>
 " 切换标签页 {{{2
-map                <A-0><A-0>       g$
+map                <A-0><A-0>       g0
+map                <A-0><A-9>       g$
 map                     <A-9>       9gt
 map           <A-0><A-1><A-0>       10gt
 map           <A-0><A-1><A-1>       11gt
@@ -92,14 +98,8 @@ silent qmark y http://www.youku.com/
 silent qmark w http://wiki.du1abadd.org/
 " }}} 
 
-" 2# Vimperator Plugins {{{1 
-" http://vimpr.github.com/plugins-en.html
-"
 " goo.gl.js {{{2
 map <silent> ! :googl<CR>
-
-" pinyin-hints.js {{{2
-" http://code.google.com/p/pinyin-hints-vimperator/
 
 " AutoProxy {{{2
 " 切换 AutoProxy 的代理模式：智能、全局、禁用
@@ -107,4 +107,3 @@ map <silent>            <F12>       :set! extensions.autoproxy.proxyMode=auto<CR
 map <silent>            <S-F12>     :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
 map <silent>            <C-F12>     :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
 
-" }}}1
