@@ -19,6 +19,6 @@ useradd -m -d /dey -s /bin/zsh dey
 
 echo '0 * * * * /sun/offward/ssh/of-traffic-log' >> /var/spool/cron/root
 echo '0 * * * * /sun/blog/_scripts/tweets.sh' >> /var/spool/cron/vern
-echo '*/10 * * * * /sun/.friendfeed.py' >> /var/spool/cron/vern
+echo '*/15 * * * * /sun/.friendfeed.py' >> /var/spool/cron/vern
 
 echo 'Defaults    env_keep += "HOME PATH"' >> /etc/sudoers
