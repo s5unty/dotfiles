@@ -141,11 +141,8 @@ alias tdu="task undo"
 alias tdg="task ls"
 alias tdl="task long"
 alias tdc="task info"
-alias tdi="task annotate"
-alias tdS="task start"
-alias tdP="task stop"
-alias tdD="task done"
-alias tdR="task delete"
+alias tdci="task annotate"
+alias tdco="task denotate"
 tds() {
     task start ${1}
     DESC=`task info ${1} | grep ^Desc | cut -b13-`

@@ -1,6 +1,6 @@
 " General {{{1
 " 只显示底部可能存在的滚动条，以及标签栏的编号
-set guioptions=bscN
+set guioptions=bscn
 " 不要自动补全，除非 b 显示 buffer
 set autocomplete=/ex/buffer,^(/|/ex/?)$
 " Shell

@@ -3,3 +3,4 @@ nmap <F9> :!cd ~/jekyll; git add <C-R>=strftime('%F')<CR>-<C-R>=tolower(substitu
 
 nmap <F12> :!rdiscount % > %.html; x-www-browser %.html<CR>
 
+set foldmethod=indent
