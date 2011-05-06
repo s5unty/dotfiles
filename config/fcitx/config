@@ -28,7 +28,7 @@ ConvertPunc=True
 # 联想模式禁用翻页
 LegendModeDisablePaging=True
 # 快速切换英文模式时上屏
-SendTextWhenSwitchEng=False
+SendTextWhenSwitchEng=True
 
 [Appearance]
 # 候选词个数
@@ -72,9 +72,9 @@ LegendSwitchKey=CTRL_ALT_L
 # 快捷键: 反查拼音
 LookupPinyinKey=CTRL_ALT_E
 # 快捷键: 切换全角
-FullWidthSwitchKey=CTRL_SHIFT_SPACE
+FullWidthSwitchKey=SHIFT_SPACE
 # 快捷键: 切换中英文标点
-ChnPuncSwitchKey=CTRL_ALT_SPACE
+ChnPuncSwitchKey=ALT_SPACE
 # 快捷键: 前一页
 PrevPageKey=,
 # 快捷键: 后一页
