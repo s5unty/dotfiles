@@ -24,7 +24,7 @@ URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selecti
 ! }}}
 
 ! @@ FONTS @@ {{{
-Xft.dpi:          98
+Xft.dpi:          96
 URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Micro Hei-10
 URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-10
 URxvt.italicFont:xft:Envy Code R-10:italic, xft:Liberation Mono-10:italic, xft:WenQuanYi Micro Hei-10
@@ -69,11 +69,11 @@ URxvt.colorIT:       grey15
 *color3:    chocolate1
 *color4:    DodgerBlue3
 *color5:    VioletRed3
-*color6:    turquoise3
+*color6:    DarkSlateGray4
 *color7:    AntiqueWhite
 *color8:    grey45
 *color9:    brown1
-*color10:   green2
+*color10:   green3
 *color11:   khaki1
 *color12:   cornflower blue
 *color13:   hot pink
