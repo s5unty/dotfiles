@@ -124,6 +124,8 @@ set pager_index_lines=5
 set uncollapse_jump=yes
 # 使用 Reply-to 字段作回复地址
 set reply_to=yes
+# 解码后传递给管道解决中文问题
+set pipe_decode=yes
 # 签名邮件的公钥信息附件名
 set pgp_mime_signature_filename="signature.asc"
 set pgp_mime_signature_description="Digital signature"
