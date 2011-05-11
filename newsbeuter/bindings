@@ -1,0 +1,18 @@
+bind-key	k	up
+bind-key 	j 	down
+bind-key 	- 	pageup
+bind-key 	i 	quit
+bind-key	SPACE	open
+
+# Feed List
+unbind-key	i	feedlist
+
+# Article List
+bind-key	,	prev-feed	articlelist
+bind-key 	. 	next-feed	articlelist
+
+# Article View
+bind-key	SPACE	pagedown	article
+
+# Macros
+macro		F	edit-flags

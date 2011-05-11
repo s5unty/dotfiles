@@ -7,16 +7,15 @@ copiousoutput
 image/*; qiv %s
 text/* ; source-highlight --failsafe -t8 -fesc -i %s | less -r
 
-application/x-diff-gzip; zcat %s; copiousoutput
-application/x-gtar; tar tvf %s; copiousoutput
-application/x-tar; tar tvf %s; copiousoutput
-application/x-tar-gz; tar tvfz %s; copiousoutput
-application/x-rar-compressed; rar v %s; copiousoutput
-application/x-zip-compressed; unzip -v %s; copiousoutput
-application/zip; unzip -v %s; copiousoutput
+application/x-diff-gzip; atool -l %s; copiousoutput
+application/x-gtar; atool -l %s; copiousoutput
+application/x-tar; atool -l %s; copiousoutput
+application/x-tar-gz; atool -l %s; copiousoutput
+application/x-rar-compressed; atool -l %s; copiousoutput
+application/x-zip-compressed; atool -l %s; copiousoutput
+application/zip; atool -l %s; copiousoutput
 
 application/pdf; xpdf %s; copiousoutput
-application/msword; ooffice %s; test=test -n "$DISPLAY"
 application/excel; ooffice %s; test=test -n "$DISPLAY"
 application/powerpoint; ooimpress %s; test=test -n "$DISPLAY"
 application/vnd.ms-excel; ooffice %s; test=test -n "$DISPLAY"

@@ -1,7 +1,7 @@
-urls-source "googlereader"
-googlereader-login "s5unty@gmail.com"
-googlereader-password "<PASSWORD>"
+include ~/.newsbeuter/bindings
+include ~/.newsbeuter/googlereader
+include ~/.newsbeuter/color
+
 proxy 10.167.129.20:8080 # in company
+confirm-exit yes
 browser x-www-browser
-color info default default
-color listfocus default color7
