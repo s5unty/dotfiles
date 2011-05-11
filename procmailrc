@@ -43,26 +43,26 @@ VERBOSE=off
 } # }}}1
 
 # 处理公司邮件 {{{1
-:0
-* ^(List-Id|To|CC|BCC|From):.*(e6-1170|trac)@mid-fun.com
-{
-    :0 fhw 
-    | $FORMAIL -I "X-Label: qa"
-    :0:
-    company/
-}
+# :0
+# * ^(List-Id|To|CC|BCC|From):.*
+# {
+#     :0 fhw
+#     | $FORMAIL -I "X-Label: "
+#     :0:
+#     company/
+# }
+#
+# :0 h
+# * ^X-Git-Refname:.*refs/heads/master
+# {
+#     :0 fhw
+#     | $FORMAIL -I "X-Label: scm"
+#     :0:
+#     company/
+# }
 
-:0 h
-* ^X-Git-Refname:.*refs/heads/master
-{
-    :0 fhw
-    | $FORMAIL -I "X-Label: scm"
-    :0:
-    company/
-}
-
 :0
-* ^(List-Id|To|CC|BCC):.*(mid-fun.com)
+* ^(List-Id|To|CC|BCC):.*(fujitsu.com)
 company/
 # }}}1
 

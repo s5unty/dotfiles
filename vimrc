@@ -439,7 +439,7 @@ let SuperTabMappingBackward="<S-Tab>"
 autocmd Filetype java
     \ set tag=.cscope/cscope.tags,~/.tags_android,~/.tags_java6;
 autocmd Filetype c,cpp
-    \ set tag=.cscope/cscope.tags,~/.tags.c;
+    \ set tag=.cscope/cscope.tags,~/.tags.c,~/.gtk-tags.c;
 autocmd Filetype python
     \ set tag=.cscope/cscope.tags,/tmp/.tags_python;
 if has("cscope")
@@ -549,6 +549,14 @@ let g:calendar_focus_today = 1
 " http://www.vim.org/scripts/script.php?script_id=850
 let g:pydiction_location = '~/.tags_python'
 
+
+" + OmniCppComplete 0.41 : C/C++ omni-completion with ctags database {{{2
+" http://www.vim.org/scripts/script.php?script_id=1520
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 
 " }}}1
 

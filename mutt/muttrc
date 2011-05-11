@@ -53,7 +53,7 @@ set use_from=yes
 # 此选项确保从真正的邮送域发送信件
 set envelope_from=yes
 # 默认使用的的邮送域
-set from='Vern Sun <s5unty@gmail.com>'
+set from='孙武安 <sunwuan@cn.fujitsu.com>'
 # 把状态栏放在页眉
 set status_on_top
 # 认为所有未读邮件都是新邮件
@@ -128,5 +128,5 @@ set reply_to=yes
 set pgp_mime_signature_filename="signature.asc"
 set pgp_mime_signature_description="Digital signature"
 # 集成 Google 联系人名单
-set query_command ="~/.mutt/gcontacts.rb --mutt %s"
-set query_format="%4c %t %-40.40a %-40.40n %?e?(%e)?"
+# set query_command ="~/.mutt/gcontacts.rb --mutt %s"
+# set query_format="%4c %t %-40.40a %-40.40n %?e?(%e)?"

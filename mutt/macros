@@ -1,8 +1,8 @@
-macro generic "<esc>1" ":set from='孙武安 <wuan.sun@mid-fun.com>'"
+macro generic "<esc>1" ":set from='孙武安 <sunwuan@cn.fujitsu.com>'"
 macro generic "<esc>2" ":set from='Vern Sun <s5unty@gmail.com>'"
 macro generic S "<shell-escape>nmzmail<return><esc>c~/.nmzmail/result<return>" "Search via nmzmail"
 
-macro compose "<esc>1" ":push <edit-from><enter><kill-line>孙武安 <wuan.sun@mid-fun.com><enter>"
+macro compose "<esc>1" ":push <edit-from><enter><kill-line>孙武安 <sunwuan@cn.fujitsu.com><enter>"
 macro compose "<esc>2" ":push <edit-from><enter><kill-line>Vern Sun <s5unty@gmail.com><enter>"
 
 macro index "c" "<change-folder>?<toggle-mailboxes>"

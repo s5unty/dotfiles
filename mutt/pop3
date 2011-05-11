@@ -3,7 +3,7 @@ set mbox_type="Maildir"
 # 信箱目录
 set folder="/sun/maildir/"
 # 默认使用的信箱
-set spoolfile="=personal"
+set spoolfile="=company"
 
 # 邮箱列表 {{{
 mailboxes !
@@ -33,10 +33,6 @@ subscribe debian-chinese-gb@lists.debian.org
 subscribe debian-chinese-big5@lists.debian.org
 subscribe \d*@bugs.debian.org
 # other
-subscribe vp10-android@mid-fun.com
-subscribe e6-1170-staff@mid-fun.com
-subscribe e6-1170-sw@mid-fun.com
-subscribe staff@mid-fun.com
 subscribe vidalia-users@lists.vidalia-project.net
 subscribe awesome-devel@naquadah.org
 subscribe openrays@openrays.org

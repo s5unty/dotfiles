@@ -3,7 +3,7 @@
 # 1. 启动后立即使用折叠方式显示邮件
 folder-hook . push "<collapse-all><first-entry><last-entry><next-unread>"
 # 2. 进入公司邮箱后自动切换邮送域，保存已发邮件，不自动签名
-folder-hook company set "from='孙武安 <wuan.sun@mid-fun.com>'"
+folder-hook company set "from='孙武安 <sunwuan@cn.fujitsu.com>'"
 folder-hook company set "record='=company'"
 folder-hook company set "crypt_autosign=no"
 # 3. 私人邮箱，切换邮送域，不保存已发邮件，自动签名
