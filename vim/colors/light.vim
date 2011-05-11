@@ -44,9 +44,9 @@ hi Directory        ctermfg=darkblue    ctermbg=NONE                            
 hi ErrorMsg         ctermfg=darkred     ctermbg=NONE                            guifg=#ee2c2c       guibg=NONE
 hi WarningMsg       ctermfg=darkblue    ctermbg=NONE                            guifg=darkblue      guibg=NONE
 hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        guifg=black         guibg=#00ffff       gui=italic
-hi VertSplit        ctermfg=darkgrey    ctermbg=black                           guifg=white         guibg=NONE          gui=bold
-hi StatusLine       ctermfg=darkgrey    ctermbg=black                           guifg=white         guibg=black
-hi StatusLineNC     ctermfg=darkgrey    ctermbg=black                           guifg=white         guibg=black
+hi VertSplit        ctermfg=lightgrey   ctermbg=black                           guifg=white         guibg=NONE          gui=bold
+hi StatusLine       ctermfg=lightgrey   ctermbg=black                           guifg=white         guibg=black
+hi StatusLineNC     ctermfg=lightgrey   ctermbg=black                           guifg=white         guibg=black
 hi IncSearch        ctermfg=darkblue    ctermbg=white                           guifg=#6495ed       guibg=white
 hi Search           ctermfg=red         ctermbg=NONE        cterm=bold          guifg=#ff4040       guibg=NONE          gui=bold
 hi Question         ctermfg=magenta                                             guifg=#ff69b4

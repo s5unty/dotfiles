@@ -524,11 +524,6 @@ zle -N jump_arg1
 
 # Load specific stuff {{{1
 if [ s`hostname` = s"verns-worktop" ]; then
-    . /usr/local/poky/eabi-glibc/arm/environment-setup
-    alias -g XX='--host=arm-poky-linux-gnueabi'
-
-    export PATH=$PATH:~/android-sdk/tools/
-
     # checks for new mail every 10 minutes {{{2
     MAILCHECK=600
     for i in /sun/maildir/(company|personal)(/); do
@@ -543,3 +538,6 @@ fi
 if [ s`hostname` = s"verns-laptop" ]; then
 
 fi
+
+export http_proxy=http://10.167.129.21:8080
+export https_proxy=http://10.167.129.21:8080

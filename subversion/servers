@@ -1,0 +1,3 @@
+[global]
+http-proxy-host = 10.167.129.21
+http-proxy-port = 8080

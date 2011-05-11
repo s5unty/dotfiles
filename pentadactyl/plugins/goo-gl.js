@@ -26,7 +26,8 @@ var INFO =
     req.addEventListener("load",function(){
       let response=JSON.parse(req.responseText);
       dactyl.echo(response.short_url);
-      util.copyToClipboard(response.short_url,true);
+      // util.copyToClipboard(response.short_url,true); // Vimperator
+      dactyl.clipboardWrite(response.short_url); // Pentadactyl
     },false);
     req.addEventListener("error",function(){
       liberator.echo("Responce errror status from goo.gl. Status Code:" + req.status);
