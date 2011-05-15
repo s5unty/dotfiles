@@ -21,7 +21,7 @@ export PATH=$PATH:/var/lib/gems/1.8/bin/
 # use the built in directory navigation via the directory stack {{{2
 # http://zsh.sourceforge.net/Doc/Release/zsh_15.html
 # keep a persistent dirstack in ~/.zsh_dirs, from Francisco Borges, on zsh.devel
-DIRSTACKSIZE=10
+DIRSTACKSIZE=30
 if [[ -f ~/.zsh_dirs ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
     dirstack=( ${(uf)"$(< ~/.zsh_dirs)"} )
     builtin cd $(head -1 ~/.zsh_dirs)
@@ -450,7 +450,7 @@ bindkey '^p'    history-search-backward
 bindkey "^[e"   edit-command-line          # ALT-E
 bindkey "^[h"   backward-char              # ALT-H
 bindkey "^[l"   forward-char               # ALT-H
-bindkey "^[b"   vi-backward-blank-word     # ALT-B
+bindkey "^[b"   _vi-backward-blank-word    # ALT-B
 bindkey "^[f"   _vi-forward-blank          # ALT-F
 bindkey "^[x"   delete-char                # ALT-X
 bindkey "^[,"   copy-earlier-word          # ALT-,
@@ -479,6 +479,12 @@ _vi-forward-blank() {
     zle vi-add-next
 }
 zle -N _vi-forward-blank
+
+_vi-backward-blank-word() {
+    zle vi-backward-blank-word
+    zle vi-backward-char
+}
+zle -N _vi-backward-blank-word
 
 # what's ranger?
 # http://ranger.nongnu.org/
@@ -518,7 +524,6 @@ jump_arg1 () {
     fi
 }
 zle -N jump_arg1
-
 ######################################################################## }}}1
 
 # Load specific stuff {{{1
