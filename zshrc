@@ -314,7 +314,7 @@ dup() { # dupload
 ######################################################################## }}}1
 
 # PROMPT {{{1
-set_prompt() {
+precmd() {
     MAXMID="$(($COLUMNS / 2 - 5))" # truncate to this value
     myjobs=()
     for a (${(k)jobstates}) {
@@ -333,12 +333,11 @@ set_prompt() {
 case `tty` in
     /dev/pts/*)
         export TERM="rxvt-unicode"
-        precmd() { set_prompt; print -Pn "\a\e]0;%n@$__HOSTNAME:%l\a" }
+        preexec () { print -Pn "\a\e]0;%# $history[$((HISTCMD))] (%1~) - %l\a" }
         ;;
     *)
         export TERM="xterm"
         export LANG="C"
-        precmd() { set_prompt; }
         ;;
 esac
 
@@ -394,7 +393,7 @@ parse_git_branch() {
     stash="$(git stash list 2> /dev/null | \
         grep -q "${branch}")"
     if [ $? -eq 0 ]; then # branch has stash
-        _stash="${at_none} ${fg_purple}${at_blink}WIP"
+        _stash="${at_none} ${at_reverse}${at_blink}WIP"
     else
         _stash=""
     fi
@@ -525,10 +524,12 @@ zle -N jump_arg1
 # Load specific stuff {{{1
 if [ s`hostname` = s"verns-worktop" ]; then
     # checks for new mail every 10 minutes {{{2
-    MAILCHECK=600
+    MAILCHECK=300
     for i in /sun/maildir/(company|personal)(/); do
         mailpath[$#mailpath+1]="${i}?You have new mail in ${i:t}."
     done
+
+    export http_proxy=http://10.167.129.21:8080
 fi
 
 if [ s`hostname` = s"verns-desktop" ]; then
@@ -539,5 +540,3 @@ if [ s`hostname` = s"verns-laptop" ]; then
 
 fi
 
-export http_proxy=http://10.167.129.21:8080
-export https_proxy=http://10.167.129.21:8080
