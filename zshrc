@@ -406,7 +406,7 @@ parse_git_branch() {
 # COMPLETAION {{{1
 zstyle ':completion:*' menu select
 zstyle ':completion:*' expand true
-zstyle ':completion:*' file-sort name
+zstyle ':completion:*' file-sort date
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 zstyle ':completion:*:matches' group 'yes'
@@ -420,6 +420,7 @@ zstyle ':completion:*:warnings' format ${fg_cyan}${at_italics}'No matches for: %
 
 # cd - {{{2
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+
 
 # correct {{{2
 zstyle ':completion:::::' completer _complete _approximate
@@ -438,7 +439,11 @@ zstyle ':completion:*:processes-names' command 'ps -au$USER -o comm|grep -v "ps 
 # ping|ssh|scp {{{2
 zstyle ':completion:*:(ping|ssh|scp|sftp):*' hosts \
     du1abadd.org \
-    192.168.{1,2}.{1,2}
+    192.168.{1,2}.{1,2} \
+    10.167.226.{1,2} \
+    10.167.225.{1,2} \
+    10.33.135.{1,2}
+
 zstyle ':completion:*' special-dirs true
 
 ######################################################################## }}}1
@@ -449,7 +454,7 @@ bindkey '^n'    history-search-forward
 bindkey '^p'    history-search-backward
 bindkey "^[e"   edit-command-line          # ALT-E
 bindkey "^[h"   backward-char              # ALT-H
-bindkey "^[l"   forward-char               # ALT-H
+bindkey "^[l"   forward-char               # ALT-L
 bindkey "^[b"   _vi-backward-blank-word    # ALT-B
 bindkey "^[f"   _vi-forward-blank          # ALT-F
 bindkey "^[x"   delete-char                # ALT-X
