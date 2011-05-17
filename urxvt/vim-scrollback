@@ -234,6 +234,10 @@ sub enter {
    }
    $self->{matchers} = \@matchers;
 
+   my $row = $lnum - 20;
+   $row = $row > $self->top_row ? $row : $self->top_row;
+   $self->move_cursor(0, $row, $cnum);
+
    $self->msg("");
 }
 
@@ -319,7 +323,7 @@ sub key_press_normal {
    my ($self, $event, $keysym, $string) =  @_;
 
    $self->msg("");
-   if ($keysym == 0xff1b ||
+   if ($keysym == 0xff1b || # Esc
       $string =~ /^\cC$/ ||
       ($self->{key_buffer} =~ /^:qa?$/ && $keysym == 0xff0d))
    { # esc, ctrl-c, :q<enter>, :qa<enter>
@@ -431,6 +435,31 @@ sub key_press_normal {
    } elsif ($string eq "p") {
       $self->set_mark("'");
       $self->term_write($event, $self->{registers}{'"'});
+
+   # quick paste current line
+   } elsif ($string eq "P") {
+      # 移动到行首
+      my ($lnum, $cnum) = $self->screen_cur();
+      my $line = $self->line($lnum);
+      $self->move_cursor($event, $line->coord_of(0));
+
+      # 切换到选择模式
+      $self->{mode} = "visual";
+      $self->{mode_info} = "-- VISUAL -- ";
+      ($self->{visual_lnum}, $self->{visual_cnum}) = $self->screen_cur();
+      $self->{registers}{'"'} = $self->selection();
+
+      # 选至行尾
+      $self->move_cursor($event, $line->coord_of($line->l - 1));
+      # 执行复制
+      $self->{registers}{'"'} = $self->selection();
+      $self->normal_mode($event, 1);
+      # 执行粘贴
+      $self->set_mark("'");
+      $self->term_write($event, $self->{registers}{'"'});
+
+      $self->leave($event);
+      return 1;
 
    # motions
    } elsif ($string eq "j") {
