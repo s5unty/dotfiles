@@ -1,0 +1,5 @@
+METHODS="m_muttalias m_gpg"
+MUTT_DIRECTORY="$HOME/.mutt"
+MUTTALIAS_FILES="aliases"
+SORT_OUTPUT=name
+KEEP_DUPES=yes

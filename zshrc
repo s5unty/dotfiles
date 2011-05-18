@@ -333,7 +333,7 @@ precmd() {
 case `tty` in
     /dev/pts/*)
         export TERM="rxvt-unicode"
-        preexec () { print -Pn "\a\e]0;%# $history[$((HISTCMD))] (%1~) - %l\a" }
+        preexec () { print -Pn "\a\e]0;%# $1 (%1~) - %l\a" }
         ;;
     *)
         export TERM="xterm"

@@ -15,7 +15,7 @@ set send_charset="UTF-8"
 # 用中文格式显示日期
 set locale=`echo "${LC_ALL:-${LC_TIME:-${LANG}}}"`
 # 解决未经过MIME编码的信件显示为乱码的问题
-set assumed_charset="GB2312:UTF-8"
+set assumed_charset="GB18030:UTF-8"
 # 解决中文附件名为乱码的问题
 set rfc2047_parameters=yes
 # 回信时自动包含原文
@@ -31,7 +31,7 @@ alternates s5unty@gmail.com
 # 在mutt提示To:时，按tab显示通讯录
 # 在mutt按a，把发件人添加到通讯录
 set alias_file="~/.mutt/aliases"
-# 借助 lbdb 快速查询通讯录
+# 第三方通讯录工具
 set query_command="lbdbq %s"
 # 自定义显示界面
 set index_format="%S %?X?%%& ? %?M?%-20.20F (%-2.2M)&%-25.25F? %T %-128.128s %> %?Y?‹%.9Y›? %[%b%d] - %4c"
@@ -39,6 +39,7 @@ set index_format="%S %?X?%%& ? %?M?%-20.20F (%-2.2M)&%-25.25F? %T %-128.128s %> 
 set pager_format=""
 # 自定义通讯录界面
 set alias_format="%3n %f %t %-38a %r"
+set query_format="%4c %t %-40.40a %-40.40n %> %?e?%e?"
 # 信箱列表格式
 set folder_format="%2C %t %4N %F %6s %f "
 # 信件按话题/时间排序
@@ -131,4 +132,3 @@ set pgp_mime_signature_filename="signature.asc"
 set pgp_mime_signature_description="Digital signature"
 # 集成 Google 联系人名单
 # set query_command ="~/.mutt/gcontacts.rb --mutt %s"
-# set query_format="%4c %t %-40.40a %-40.40n %?e?(%e)?"
