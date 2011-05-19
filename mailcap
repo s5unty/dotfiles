@@ -1,11 +1,7 @@
-text/html ;\
-w3m -T text/html -I %{charset} -dump %s ;\
-nametemplate=%s.html ;\
-needsterminal;\
-copiousoutput
+text/html; w3m -T text/html -I %{charset} -dump %s; copiousoutput; nametemplate=%s.html; needsterminal;
 
-image/*; qiv %s
-text/* ; source-highlight --failsafe -t8 -fesc -i %s | less -r
+image/*; qiv %s;
+text/*; source-highlight --failsafe -t8 -fesc -i %s; copiousoutput;
 
 application/x-diff-gzip; atool -l %s; copiousoutput
 application/x-gtar; atool -l %s; copiousoutput
@@ -15,10 +11,23 @@ application/x-rar-compressed; atool -l %s; copiousoutput
 application/x-zip-compressed; atool -l %s; copiousoutput
 application/zip; atool -l %s; copiousoutput
 
-application/pdf; xpdf %s; copiousoutput
-application/excel; ooffice %s; test=test -n "$DISPLAY"
-application/powerpoint; ooimpress %s; test=test -n "$DISPLAY"
-application/vnd.ms-excel; ooffice %s; test=test -n "$DISPLAY"
+application/vnd.ms-excel; xlhtml %s | elinks -dump; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
+application/ms-excel; xlhtml %s | elinks -dump; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
+application/msexcel; xlhtml %s | elinks -dump; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
+
+# antiword 能搞定大部分 doc，搞不定的 wv* 可以搞定
+# mutt 的 auto_view 中用 antiword，其他地方用 wv*
+application/vnd.ms-word; antiword %s; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
+application/msword; antiword %s; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
+application/word; antiword %s; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
+# application/vnd.ms-word; wvHtml %s - | elinks -dump; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
+# application/msword; wvHtml %s - | elinks -dump; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
+# application/word; wvHtml %s - | elinks -dump; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
+
+application/x-pdf; pdftotext -q %s -; copiousoutput; description=Portable Document Format; nametemplate=%s.pdf
+application/pdf; pdftotext -q %s -; copiousoutput; description=Portable Document Format; nametemplate=%s.pdf
+
 application/vnd.ms-powerpoint; ooimpress %s; test=test -n "$DISPLAY"
 application/mspowerpoint;ooimpress %s; test=test -n "$DISPLAY"
+application/powerpoint; ooimpress %s; test=test -n "$DISPLAY"
 

@@ -1,1 +1,14 @@
 auto_view text/html
+auto_view application/vnd.ms-word
+auto_view application/ms-word
+auto_view application/msword
+auto_view application/vnd.ms-excel
+auto_view application/ms-excel
+auto_view application/msexcel
+auto_view application/x-diff-gzip
+auto_view application/x-gtar
+auto_view application/x-tar
+auto_view application/x-tar-gz
+auto_view application/x-rar-compressed
+auto_view application/x-zip-compressed
+auto_view application/zip

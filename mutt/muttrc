@@ -44,7 +44,8 @@ set query_format="%4c %t %-40.40a %-40.40n %> %?e?%e?"
 set folder_format="%2C %t %4N %F %6s %f "
 # 信件按话题/时间排序
 set sort=threads
-set sort_aux=date-sent
+# 旧话题有新回复时靠前显示
+set sort_aux=last-date-received
 # 使用通讯录显示发件人
 set reverse_alias=yes
 # 邮件正文折行时不要显示前导加号

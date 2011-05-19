@@ -11,6 +11,7 @@ bind pager      b           previous-page
 bind pager      <BackTab>   previous-new-then-unread
 bind pager      <Backspace> parent-message
 # 浏览首页时的光标行为
+bind index      z           collapse-thread
 bind index      P           recall-message # 'R'ecall-message move to 'P'
 bind index      R           group-reply    # reply to all
 bind index      N           search-opposite

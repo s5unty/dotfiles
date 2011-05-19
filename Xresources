@@ -4,7 +4,8 @@ URxvt.scrollBar:    False
 URxvt.cursorBlink:  True
 URxvt.urgentOnBell: True
 URxvt.preeditType:  OverTheSpot
-URxvt.imFont:       -*-medium-r-*-20-*
+! 这个...和光标跟随有关
+! URxvt.imFont:       -*-medium-r-*-20-*
 URxvt.transparent:  On
 URxvt.shading:      100
 URxvt.saveLines:    2048
@@ -70,7 +71,7 @@ URxvt.colorIT:       grey15
 *color4:    DodgerBlue3
 *color5:    VioletRed3
 *color6:    DarkSlateGray4
-*color7:    AntiqueWhite
+*color7:    grey90
 *color8:    grey45
 *color9:    brown1
 *color10:   green3
@@ -93,6 +94,6 @@ Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
-URxvt.vim-scrollback: M-space
+URxvt.vim-scrollback: M-minus
 ! }}}
 

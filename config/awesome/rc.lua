@@ -33,9 +33,9 @@ layouts =
 
 tags = { }
 mytags = {
-    { layout = layouts[1], mwfact = 0.500, nmaster=1 },
-    { layout = layouts[1], mwfact = 0.500, nmaster=1 },
-    { layout = layouts[2], mwfact = 0.500, nmaster=1 },
+    { layout = layouts[1], mwfact = 0.500, nmaster=2 },
+    { layout = layouts[1], mwfact = 0.500, nmaster=2 },
+    { layout = layouts[2], mwfact = 0.500, nmaster=2 },
     { layout = layouts[1], mwfact = 0.668, nmaster=1 },
     { layout = layouts[1], mwfact = 0.668, nmaster=1 },
     { layout = layouts[2], mwfact = 0.668, nmaster=1 },
@@ -67,7 +67,7 @@ mylauncher = awful.widget.launcher({
 
 -- Widgets {{{2
 mytextclock = widget({ type = 'textbox' })
-vicious.register(mytextclock, vicious.widgets.date, " <span color='#FFFFFF'>%l:%M</span>", 60)
+vicious.register(mytextclock, vicious.widgets.date, " <span color='#FFFFFF'>%l:%M</span> ", 60)
 
 mycpuwidget = widget({ type = "textbox" })
 vicious.register(mycpuwidget, vicious.widgets.cpu, " <span color='#00C5CD'>$1%</span>", 2)
@@ -249,7 +249,7 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 awful.key({ modkey }, "F1", function () awful.util.spawn("x-www-browser") end),
 awful.key({ modkey }, "F2", function () awful.util.spawn(terminal.." -name Weechat -T Weechat -e weechat-curses") end),
 awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e mutt") end),
-awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'W7'") end),
+awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'XP'") end),
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
@@ -364,17 +364,17 @@ for i = 1, keynumber do
     awful.key({ modkey, "Control" }, j, function ()
         local screen = mouse.screen
         if tags[screen][i] then
-            awful.tag.viewtoggle(tags[screen][i])
+            awful.client.movetotag(tags[client.focus.screen][i])
         end
     end),
     awful.key({ modkey, "Shift" }, j, function ()
         if client.focus and tags[client.focus.screen][i] then
-            awful.client.movetotag(tags[client.focus.screen][i])
+            awful.client.toggletag(tags[client.focus.screen][i])
         end
     end),
     awful.key({ modkey, "Control", "Shift" }, j, function ()
         if client.focus and tags[client.focus.screen][i] then
-            awful.client.toggletag(tags[client.focus.screen][i])
+            awful.tag.viewtoggle(tags[screen][i])
         end
     end)
     )
@@ -442,7 +442,7 @@ awful.rules.rules = {
     focus = true,
     keys = clientkeys,
     buttons = clientbuttons } },
-    { rule = { class = "Qq" },
+    { rule = { class = "Iptux" },
     properties = { floating = true } },
     { rule = { instance = "MPlayer" },
     properties = { floating = true } },
@@ -464,6 +464,9 @@ awful.rules.rules = {
     properties = { tag = tags[1][7], floating = false, border_width = 0 } },
     { rule = { instance = "Weechat" },
     properties = { tag = tags[1][8] } },
+    { rule = { instance = "Mutt" },
+    properties = { tag = tags[1][8] } },
+
 }
 -- }}}
 
@@ -516,5 +519,6 @@ client.add_signal("marked", function(c) c.border_color = beautiful.border_marked
 -- }}}
 
 -- {{{ Autorun
--- awful.util.spawn("")
+awful.util.spawn("/usr/bin/gdlinux")
+awful.util.spawn("/usr/bin/iptux")
 -- }}}
