@@ -8,21 +8,6 @@ if exists("syntax_on")
   syntax reset
 endif
 
-" colorname  dark
-" yellow #cdcd00
-" darkgreen #458b00
-" darkcyan #00c5cd
-" darkred #ee2c2c
-" darkmagenta #cd3278
-" darkblue #1874cd
-" darkgrey #404040
-"
-" magenta #ff69b4
-" red #ff4040
-" cyan #00ffff
-" blue #6495ed
-" green #00ee00
-
 hi Comment          ctermfg=darkgreen                       cterm=italic        guifg=#458b00                           gui=italic
 hi Constant         ctermfg=darkcyan                                            guifg=#00c5cd
 hi Special          ctermfg=darkred                                             guifg=#ee2c2c
@@ -44,17 +29,17 @@ hi Directory        ctermfg=darkblue    ctermbg=NONE                            
 hi ErrorMsg         ctermfg=darkred     ctermbg=NONE                            guifg=#ee2c2c       guibg=NONE
 hi WarningMsg       ctermfg=darkblue    ctermbg=NONE                            guifg=darkblue      guibg=NONE
 hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        guifg=black         guibg=#00ffff       gui=italic
-hi VertSplit        ctermfg=lightgrey   ctermbg=black                           guifg=white         guibg=NONE          gui=bold
-hi StatusLine       ctermfg=lightgrey   ctermbg=black                           guifg=white         guibg=black
-hi StatusLineNC     ctermfg=lightgrey   ctermbg=black                           guifg=white         guibg=black
+hi VertSplit        ctermfg=black       ctermbg=lightgrey   cterm=none          guifg=black         guibg=lightgrey     gui=none
+hi StatusLine       ctermfg=black       ctermbg=lightgrey   cterm=none          guifg=black         guibg=lightgrey     gui=none
+hi StatusLineNC     ctermfg=black       ctermbg=lightgrey   cterm=none          guifg=black         guibg=lightgrey     gui=none
 hi IncSearch        ctermfg=darkblue    ctermbg=white                           guifg=#6495ed       guibg=white
-hi Search           ctermfg=red         ctermbg=NONE        cterm=bold          guifg=#ff4040       guibg=NONE          gui=bold
+hi Search           ctermfg=red         ctermbg=lightgrey   cterm=bold          guifg=#ff4040       guibg=NONE          gui=bold
 hi Question         ctermfg=magenta                                             guifg=#ff69b4
 hi LineNr           ctermfg=darkgreen                       cterm=italic        guifg=#458b00       guibg=NONE          gui=italic
-hi DiffAdd          ctermfg=darkgreen   ctermbg=NONE        cterm=bold          guifg=#458b00       guibg=NONE          gui=bold
-hi DiffChange       ctermfg=NONE        ctermbg=NONE                            guifg=NONE          guibg=NONE
-hi DiffDelete       ctermfg=darkred     ctermbg=NONE                            guifg=#ee2c2c       guibg=NONE
-hi DiffText         ctermfg=NONE        ctermbg=lightred    cterm=bold          guifg=NONE          guibg=lightred      gui=bold
+hi DiffAdd          ctermfg=darkgreen   ctermbg=lightgrey   cterm=none          guifg=#458b00       guibg=NONE          gui=bold
+hi DiffChange       ctermfg=NONE        ctermbg=lightgrey   cterm=none          guifg=NONE          guibg=NONE
+hi DiffDelete       ctermfg=darkred     ctermbg=lightgrey   cterm=none          guifg=#ee2c2c       guibg=NONE
+hi DiffText         ctermfg=NONE        ctermbg=yellow      cterm=none          guifg=NONE          guibg=lightred      gui=bold
 hi Folded           ctermfg=green       ctermbg=NONE        cterm=italic        guifg=#00ee00       guibg=NONE          gui=italic
 hi FoldColumn       ctermfg=darkgreen   ctermbg=NONE                            guifg=#458b00       guibg=NONE
 hi SignColumn       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
@@ -80,9 +65,9 @@ hi MyTagListTitle       ctermfg=black       ctermbg=NONE    cterm=bold          
 hi MyTagListTagScope    ctermfg=NONE        ctermbg=NONE                        guifg=NONE          guibg=NONE
 " tabbar
 hi Tb_Normal            ctermfg=darkgreen   ctermbg=NONE                        guifg=#458b00       guibg=NONE
-hi Tb_Changed           ctermfg=black       ctermbg=red                         guifg=#ff4040       guibg=NONE
-hi Tb_VisibleNormal     ctermfg=white       ctermbg=darkgrey                   guifg=black         guibg=white
-hi Tb_VisibleChanged    ctermfg=red         ctermbg=white                       guifg=#ff4040       guibg=white
+hi Tb_Changed           ctermfg=red         ctermbg=NONE                        guifg=#ff4040       guibg=NONE
 hi Tb_Readonly          ctermfg=green       ctermbg=NONE                        guifg=#00ee00       guibg=NONE
+hi Tb_VisibleNormal     ctermfg=white       ctermbg=darkgrey                    guifg=black         guibg=white
+hi Tb_VisibleChanged    ctermfg=black       ctermbg=red                         guifg=#ff4040       guibg=white
 hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green                       guifg=black         guibg=#00ee00
 " }}}
