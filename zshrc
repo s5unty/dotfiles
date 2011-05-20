@@ -81,6 +81,7 @@ setopt FLOW_CONTROL         # don't ignore ^S/^Q
 setopt LONGLISTJOBS         # display PID when suspending processes as well
 setopt NOTIFY               # report the status of backgrounds jobs immediately
 setopt COMPLETEINWORD       # not just at the end
+setopt EXTENDEDGLOB         # 扩展文件名匹配功能
 
 zle_highlight=(region:bg=blue     #选中区域
                special:bold       #特殊字符
@@ -212,14 +213,16 @@ alias -s jpeg="qiv -p"
 alias -s JPEG="qiv -p"
 alias -s icon="qiv -p"
 alias -s ICON="qiv -p"
-alias -s odt="ooffice -writer"
-alias -s doc="ooffice -writer"
-alias -s ods="ooffice -calc"
-alias -s xls="ooffice -calc"
-alias -s pdf=FoxitReader
-alias -s html=firefox
-alias -s chm=kchmviewer
-alias -s planner=planner
+
+alias -s doc=c_doc
+alias -s xls=c_xls
+alias -s pdf=c_pdf
+alias -s html=c_htm
+
+c_doc() { antiword $1 | less }
+c_xls() { xlhtml $1 | w3m -T text/html }
+c_pdf() { pdftotext -q $1 - | less }
+c_htm() { w3m -T text/html $1 }
 
 # fold {{{2
 # unhash -dm '*'
@@ -441,7 +444,7 @@ zstyle ':completion:*:(ping|ssh|scp|sftp):*' hosts \
     du1abadd.org \
     192.168.{1,2}.{1,2} \
     10.167.226.{1,2} \
-    10.167.225.{1,2} \
+    10.167.225.216 \
     10.33.135.{1,2}
 
 zstyle ':completion:*' special-dirs true
@@ -549,4 +552,3 @@ fi
 if [ s`hostname` = s"verns-laptop" ]; then
 
 fi
-

@@ -1,22 +1,22 @@
 # 自定义界面颜色
 # --   --        前景色      背景色
-color indicator  black       color7  # 当前行
+color indicator  default     color11 # 当前行
 color normal     default     default # 普通文字
 color status     default     default # 状态栏
-color tree       cyan        default # 线索
+color tree       default     default # 线索
 color tilde      default     default # 信件末尾后终端最下方的留白
-color attachment magenta     default # 附件
+color attachment color8      color7  # 附件
 color message    blue        default # 提示信息
-color quoted     green       default # 引用
-color hdrdefault cyan        default # 信头
-color signature  cyan        default # 签名
+color quoted     color8      default # 引用
+color hdrdefault black       default # 信头
+color signature  color8      default # 签名
 
 # 特殊状态
 color index      color8      default "!(~d `date +%d/%m`)"  # 以往的邮件
-color index      cyan        default "~f 'Vern Sun'"  # 自己的外发邮件
-color index      blue        default "~T"  # 短期标记
-color index      magenta     default "~F"  # 长期标记
-color index      green       default "~D"  # 删除
+color index      black       default "~Q | ~P" # 我回复过的邮件(~Q)，我的回复(~P)
+color index      blue        color7  "~T"  # 选中
+color index      black       color7  "~F"  # 标记
+color index      red         color7  "~D"  # 删除
 
 # 醒目签名
 color body       red         black   "^(gpg: )?Bad signature"

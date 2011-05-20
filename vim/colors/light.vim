@@ -33,7 +33,7 @@ hi VertSplit        ctermfg=black       ctermbg=lightgrey   cterm=none          
 hi StatusLine       ctermfg=black       ctermbg=lightgrey   cterm=none          guifg=black         guibg=lightgrey     gui=none
 hi StatusLineNC     ctermfg=black       ctermbg=lightgrey   cterm=none          guifg=black         guibg=lightgrey     gui=none
 hi IncSearch        ctermfg=darkblue    ctermbg=white                           guifg=#6495ed       guibg=white
-hi Search           ctermfg=red         ctermbg=lightgrey   cterm=bold          guifg=#ff4040       guibg=NONE          gui=bold
+hi Search           ctermfg=black       ctermbg=yellow      cterm=bold          guifg=#ff4040       guibg=NONE          gui=bold
 hi Question         ctermfg=magenta                                             guifg=#ff69b4
 hi LineNr           ctermfg=darkgreen                       cterm=italic        guifg=#458b00       guibg=NONE          gui=italic
 hi DiffAdd          ctermfg=darkgreen   ctermbg=lightgrey   cterm=none          guifg=#458b00       guibg=NONE          gui=bold
@@ -48,6 +48,7 @@ hi ModeMsg          ctermfg=darkred                                             
 hi Title            ctermfg=darkblue                                            guifg=#1874cd
 hi Visual           ctermfg=white       ctermbg=darkblue                        guifg=white         guibg=#1874cd
 hi WildMenu         ctermfg=white       ctermbg=black                           guifg=white         guibg=#cdcd00
+hi Cursorline       ctermfg=NONE        ctermbg=yellow      cterm=none
 " link - diff/patch
 hi def link diffAdded   DiffAdd
 hi def link diffRemoved DiffDelete

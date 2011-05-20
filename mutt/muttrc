@@ -96,12 +96,12 @@ set menu_scroll
 set askcc=yes
 # 签名文件，最后竖线|表示该文件是一段脚本
 set signature=~/.mutt/signature|
-# 禁止在签名前自动添加 "-- ",由签名脚本负责
+# 签名前插入 "-- "
 set sig_dashes=yes
 # 设定回信的模板
 set date_format="%a, %F at %R %z"
 set attribution="on %D, %n wrote:"
-# 设定编辑器在宽度76处自动折行
+# 设定编辑器在宽度78处自动折行
 set editor="vim \"+set textwidth=78\" \"+set formatoptions+=mM\""
 # 采用作为附件而非作为引用的方式转发邮件
 # 为了在转发邮件时自动包含待转发邮件本身的附件，似乎暂时只有这个办法。
@@ -133,3 +133,8 @@ set pgp_mime_signature_filename="signature.asc"
 set pgp_mime_signature_description="Digital signature"
 # 集成 Google 联系人名单
 # set query_command ="~/.mutt/gcontacts.rb --mutt %s"
+# 在标题栏显示邮件数量
+set xterm_set_titles=yes
+# 右边据 7 个字符处折行
+set wrap=-7
+

@@ -1,25 +1,42 @@
+# Alt-1, Alt-2 快速选择发件箱
 macro generic "<esc>1" ":set from='孙武安 <sunwuan@cn.fujitsu.com>'"
 macro generic "<esc>2" ":set from='Vern Sun <s5unty@gmail.com>'"
-macro generic S "<shell-escape>nmzmail<return><esc>c~/.nmzmail/result<return>" "Search via nmzmail"
-
 macro compose "<esc>1" ":push <edit-from><enter><kill-line>孙武安 <sunwuan@cn.fujitsu.com><enter>"
 macro compose "<esc>2" ":push <edit-from><enter><kill-line>Vern Sun <s5unty@gmail.com><enter>"
 
+# http://wiki.mutt.org/?UserStory/SearchingMail
+# nmzmail/mairix 都不支持中文
+macro generic S "<shell-escape>nmzmail<return><esc>c~/.nmzmail/result<return>" "Search via nmzmail"
+
+# 切换邮箱和发送邮件的默认快捷键都是 y，容易误发邮件
 macro index "c" "<change-folder>?<toggle-mailboxes>"
 macro pager "c" "<change-folder>?<toggle-mailboxes>"
 
+# 通知 fetchmail 立刻检查新邮件
 macro index G "<shell-escape>fetchmail<enter>" 'retrieve mail from POP server'
 macro pager G "<shell-escape>fetchmail<enter>" 'retrieve mail from POP server'
 
-macro index \cb |urlview\n 'call urlview to extract URLs out of a message'
-macro pager \cb |urlview\n 'call urlview to extract URLs out of a message'
+# 被 rxvt 插件 mark-yank-urls 替代
+# macro index \cb |urlview\n 'call urlview to extract URLs out of a message'
+# macro pager \cb |urlview\n 'call urlview to extract URLs out of a message'
 
+# 下载/签名 gpg 公钥
 macro pager J "!gpg --keyserver pgp.mit.edu --recv-key " "Get PGP Key"
 macro pager K "!gpg --lsign-key " "Sign PGP Key"
 
+# 标记所有新邮件为已读(测试和新建邮箱时)
 macro index \cr "<collapse-all><tag-pattern>~(~N)<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter><collapse-all>"
 
 macro browser h "<first-entry><select-entry>"
+
+# 快速保存附件
 macro attach s "<save-entry><kill-line>/tmp/<enter>a"
 
+# http://www.nixternal.com/mark-e-mails-in-mutt-as-tasks-in-taskwarrior/
 macro index "<esc>t" "<pipe-message>~/.mutt/mutt2task<enter>"
+
+# 显示曾经被我回复过的邮件(~Q)，包括我的回复(~P)
+macro index "<F12>" "<limit>~Q | ~P<enter>"
+# 只显示这两天的邮件
+macro index "<F11>" "<limit>~d `date -d '1 days ago' +%d/%m`-<enter>"
+
