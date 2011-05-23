@@ -1,4 +1,4 @@
-source ~/.mutt/aliases                    # 指定通讯录
+#source ~/.mutt/aliases                    # 指定通讯录
 source ~/.mutt/headers                    # 定义邮件头显示格式
 source ~/.mutt/bindings                   # 定义快捷键
 source ~/.mutt/macros                     # 定义宏(快捷键)
@@ -32,7 +32,7 @@ alternates s5unty@gmail.com
 # 在mutt按a，把发件人添加到通讯录
 set alias_file="~/.mutt/aliases"
 # 第三方通讯录工具
-set query_command="lbdbq %s"
+set query_command="/usr/bin/abook --mutt-query %s"
 # 自定义显示界面
 set index_format="%S %?X?%%& ? %?M?%-20.20F (%-2.2M)&%-25.25F? %T %-128.128s %> %?Y?‹%.9Y›? %[%b%d] - %4c"
 # 隐藏标题界面，在迷你索引和邮件正文之间留一空行

@@ -68,7 +68,6 @@ P() { # ps
 }
 
 R() { # find in files
-    export GREP_COLOR=$(echo 3$[$(date +%N)%6+1]';1;7')
     egrep -ri --color=always \
         --exclude="*.old" --exclude="*.bak" --exclude="*.BAK" --exclude="*.orig" \
         --exclude="*.rej" --exclude="*.a" --exclude="*.olb" --exclude="*.o" \

@@ -17,8 +17,12 @@ bindkey "\t"    expand-or-complete
 bindkey " "     magic-space                # ' ' (Space)
 
 bindkey -s            "^q"  "run-ranger\r"
-bindkey -M menuselect "i"   accept-and-menu-complete
-bindkey -M menuselect "^o"  accept-and-infer-next-history
+bindkey -M menuselect "i"   accept-line
+bindkey -M menuselect "o"   accept-and-infer-next-history
+bindkey -M menuselect "^[h" backward-char
+bindkey -M menuselect "^[l" forward-char
+bindkey -M menuselect "^[j" down-history
+bindkey -M menuselect "^[k" up-history
 
 bindkey "$terminfo[kf1]"    run-help       # F1
 bindkey "$terminfo[kf2]"    which-command  # F2

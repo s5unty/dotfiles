@@ -8,6 +8,8 @@
 #
 # FF: AutoPager, AutoProxy, Delicious, Download Statusbar, FlagFox, Organize Status Bar, Tab Utilities, TinyURL, Vimperator, rein
 
+# ln -sf /tmp/.xsession-errors ~/.xsession-errors
+/usr/bin/touch /tmp/.xsession-errors
 
 # ssh 翻墙隧道 0:PORT 的写法使得局域网(虚拟机)可以共享此隧道
 /usr/bin/autossh -f -N -D 0:9527 du1abadd.org
@@ -29,16 +31,17 @@
 
 # 启动应用程序
 /usr/bin/x-www-browser & #浏览器
-/usr/bin/fetchmail -d 600 #邮件
-/usr/bin/mocp -S #音乐服务
-/usr/local/bin/lrcdis & # 歌词
+
+/usr/bin/fetchmail -d 300 #邮件
 #/usr/bin/gdlinux # Google Desktop
+#/usr/bin/mocp -S #音乐服务
+#/usr/local/bin/lrcdis & # 歌词
 #/usr/local/bin/eclimd & # eclimd
 
 # 一套键鼠控制多台机器，服务器端
-if [ s`hostname` != s"verns-laptop" ]; then
-/usr/bin/synergys # synergy server
-fi
+# if [ s`hostname` != s"verns-laptop" ]; then
+# /usr/bin/synergys # synergy server
+# fi
 # 客户端，由服务器端的键鼠控制
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
 
@@ -52,6 +55,7 @@ fi
 
 # 使用渐隐、阴影特效
 /usr/bin/xcompmgr -f &
+/usr/bin/unclutter -idle 5 -noevents &
 
 # 输入法
 /usr/bin/fcitx
