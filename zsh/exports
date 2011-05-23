@@ -1,0 +1,58 @@
+# vim:set syntax=zsh:
+
+if   [ -e "/usr/bin/zless" ]; then __LESS="zless -r"
+elif [ -e "/usr/bin/less"  ]; then __LESS="less -r"
+else __LESS="more" fi
+
+if [ -e "/usr/bin/colordiff" ]; then __DIFF="colordiff" else __DIFF="diff" fi
+if [ -e "/usr/bin/sudo" ];      then __SUDO="sudo" fi
+
+export HISTFILE=$HOME/.zsh/cache/HISTFILE
+export HISTSIZE=409600
+export SAVEHIST=409600
+export DIRSTACK=$HOME/.zsh/cache/DIRSTACK
+export DIRSTACKSIZE=30
+export WORDCHARS='*?_-[]~=&:;!#$%^(){}<>'
+export LISTPROMPT=""
+export DEBIAN_DIR=""
+export REPREPRO_CONFIG_DIR=""
+export LANG="zh_CN.UTF-8"
+export TZ='Asia/Shanghai'
+export HOME="/sun"
+export MAILDIR="/sun/maildir"
+export MAILCHECK=200
+export EDITOR="/usr/bin/vim"
+export VISUAL="/usr/bin/vim"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:."
+export DEBEMAIL="s5unty@gmail.com"
+export DEBFULLNAME="Vern Sun"
+export JAVA_HOME="/usr/lib/jvm/java-6-sun"
+export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
+export XDG_CONFIG_HOME="$HOME/.config"
+export DOTREMINDERS=~/.task/reminders
+export PATH=$PATH:/var/lib/gems/1.8/bin/
+
+case `tty` in
+    /dev/pts/*)
+        export TERM="rxvt-unicode"
+        /bin/stty -ixon -ixoff # 关闭 C-Q, C-S 流控制
+        ;;
+    *)
+        export TERM="xterm"
+        export LANG="C"
+        ;;
+esac
+
+if [[ -f $DIRSTACK ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
+    dirstack=( ${(uf)"$(< $DIRSTACK)"} )
+    builtin cd $(head -1 $DIRSTACK) # 打开终端时进入最近目录
+else
+    mkdir -p ${DIRSTACK:h}
+fi
+chpwd() { dirs -pl | uniq >! $DIRSTACK }
+
+
+for i in $MAILDIR/(company|personal)(/); do
+    mailpath[$#mailpath+1]="${i}?<(￣3￣)> You have new mail in ${i:t}"
+done
+

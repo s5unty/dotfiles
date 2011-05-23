@@ -1,0 +1,48 @@
+# vim:set syntax=zsh:
+
+source $HOME/.zsh/colour
+
+parse_git_branch() {
+    branch="$(git branch --no-color 2> /dev/null | \
+        sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+
+    git diff --no-ext-diff --quiet 2> /dev/null
+    flag=$?
+    if [ $flag -eq 1 ]; then # branch is not clear
+        _branch=" ${at_underl}${branch}"
+    elif [ $flag -eq 0 ]; then # branch is clear
+        _branch=" ${branch}"
+    else # there is not git repository == 129
+        _branch=""
+    fi
+
+    stash="$(git stash list 2> /dev/null | \
+        grep -q "${branch}")"
+    if [ $? -eq 0 ]; then # branch has stash
+        _stash=" ${fg_brown}${at_reverse}${at_blink}WIP"
+    else
+        _stash=""
+    fi
+
+    echo "${_branch}${_stash}"
+}
+
+precmd() {
+    MAXMID="$(($COLUMNS / 2 - 5))" # truncate to this value
+    myjobs=()
+    for a (${(k)jobstates}) {
+        j=$jobstates[$a];i="${${(@s,:,)j}[2]}"
+        myjobs+=($a${i//[^+-]/})
+    }
+    myjobs="$fg_cyan%(1j/[${(j/,/)myjobs}] /)$fg_green"
+    mypath="$at_italic%~$at_none"
+    myerrs="$fg_lred%(0?.. (%?%))$at_none"
+    mygitb="$at_bold$(parse_git_branch)$at_none"
+    RPS1="$myjobs%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
+    PS1="$at_bold%!%#$at_none "
+    rehash
+}
+
+preexec () {
+    print -Pn "\a\e]0;%# $1 (%1~) - %l\a"
+}

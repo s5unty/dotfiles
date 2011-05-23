@@ -1,0 +1,218 @@
+# vim:set syntax=zsh:
+
+alias -g G='|GREP_COLOR=$(echo 3$[$(date +%N)%6+1]'\'';1;7'\'') egrep -i --color=always'
+alias -g M="| $__LESS"
+alias -g Y="| xsel"
+alias -g iy="| xsel"
+
+alias ds="dirs -v | head -30 | sort -nr"
+alias cs="history 0"
+alias ll="ls -trl"
+alias la="ls -trlA"
+alias ls="ls --color=always -F -h"
+alias cp="cp -a"
+alias rm="rm -r"
+alias at="at -m"
+alias diff="$__DIFF"
+alias more="$__LESS"
+alias tree="tree -C"
+alias scp="scp -p"
+alias lintian="lintian -viI"
+alias tig="tig --all"
+
+cd() {
+    if builtin cd "$@"; then
+        ls
+    fi
+}
+
+vi() {
+    # 使用 :w !sudo tee % 虽然可以写入，但是会缺少 undolist
+    precommand=
+    for i in "$@" ; do
+        if [ -f "$i" -a ! -w "$i" ] ; then precommand=$__SUDO ; break ; fi
+    done
+
+    ${precommand} vim "$@"
+}
+
+md() {
+    mkdir $*
+    cd $1
+}
+
+tcp() {
+    tar cpf - ${(@)argv[1, -2]} | tar xvf - -C ${argv[-1]}
+}
+
+T() { # tail
+    if [ -r $*[$#] ]; then
+        tail $*
+    else
+        $__SUDO tail $*
+    fi
+}
+
+K() { # kill
+    killall -u $USER $1
+}
+
+P() { # ps
+    ps -ef | grep "$1" | grep -v "grep"
+}
+
+/() { # find
+    find ./ -iname "*$1*" ${(@)argv[2,$#]}
+}
+
+R() { # find in files
+    export GREP_COLOR=$(echo 3$[$(date +%N)%6+1]';1;7')
+    egrep -ri --color=always \
+        --exclude="*.old" --exclude="*.bak" --exclude="*.BAK" --exclude="*.orig" \
+        --exclude="*.rej" --exclude="*.a" --exclude="*.olb" --exclude="*.o" \
+        --exclude="*.obj" --exclude="*.so" --exclude="*.exe" --exclude="*.gz" \
+        --exclude="*.tar" --exclude="*.zip" --exclude="*.tgz" --exclude="*.bz2" \
+        --exclude="*.deb" --exclude="*.jar" --exclude="*.cab" --exclude="*.tbz" \
+        --exclude="*.jpg" --exclude="*.jpeg" --exclude="*.png" --exclude="*.gif" \
+        --exclude="*.pdf" --exclude-dir=".cscope" --exclude-dir=".svn" --exclude-dir=".git" \
+        "$*" .
+}
+
+CS() { # gen cscope.files
+    mkdir -p .cscope
+    find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' -o -iname '*.cxx' \
+        -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' \
+        -o -iname '*.java' > .cscope/cscope.files
+    cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
+    ctags --c++-kinds=+p --fields=-fst --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
+}
+
+dup() { # dupload
+    if echo "$1" | grep -q '\.changes$' ; then
+        # dup *.changes
+        /usr/bin/dupload $@
+    else
+        # dup 127 *.changes
+        /usr/bin/dupload -t "$1" ${(@)argv[2,$#]}
+    fi
+}
+
+# apt-get {{{
+alias api="$__SUDO apt-get install"
+alias apo="apt-get source"
+alias ape="$__SUDO vi /etc/apt/sources.list"
+alias apr="$__SUDO apt-get remove"
+alias apu="$__SUDO apt-get update"
+alias app="$__SUDO apt-get purge"
+alias apg="apt-cache search"
+alias aps="apt-cache show"
+alias apv="apt-cache policy"
+# }}}
+
+# dpkg {{{
+alias dpi="$__SUDO dpkg -i"
+alias dpp="$__SUDO dpkg -P"
+alias dpc="dpkg -c"
+alias dps="dpkg -I"
+alias dpo="dpkg -e"
+alias dpx="dpkg -x"
+alias dpg="dpkg -l | grep"
+alias dpG="dpkg -S"
+alias dpL="dpkg -L"
+dpH() { echo "$1 hold" | $__SUDO dpkg --set-selections }
+dpI() { echo "$1 install" | $__SUDO dpkg --set-selections }
+# }}}
+
+# task {{{
+alias td="task summary && print && task history && rem"
+alias tda="task add"
+alias tde="task edit"
+alias tdu="task undo"
+alias tdg="task ls"
+alias tdl="task long"
+alias tdc="task info"
+alias tdci="task annotate"
+alias tdco="task denotate"
+tds() {
+    task start ${1}
+    DESC=`task info ${1} | grep ^Desc | cut -b13-`
+    UUID=`task info ${1} | grep ^UUID | cut -b13-`
+    REM=`date -d"today" +"REM AT 23:30 +900 *15 TAG ${UUID} MSG ${DESC}"`
+    echo ${REM} >> ~/.task/reminders
+}
+tdp() {
+    task stop ${1}
+    UUID=`task info ${1} | grep ^UUID | cut -b13-`
+    sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
+}
+tdd() {
+    task done ${1}
+    UUID=`task info ${1} | grep ^UUID | cut -b13-`
+    sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
+}
+tdr() {
+    task delete ${1}
+    UUID=`task info ${1} | grep ^UUID | cut -b13-`
+    sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
+}
+# }}}
+
+# archive {{{
+tgz() {
+    name=`echo $1 | sed 's/\/*$//g'`
+    tar -zcf "$name.tgz" $@
+}
+tgzz() {
+    name=`echo $1 | sed 's/\/*$//g'`
+    tar -zcf "$name.tgz" $@ --exclude=.cscope --exclude-vcs
+}
+tgx() {
+    $__SUDO tar -zxvf $@
+}
+tgg() {
+    tar -tf $@
+}
+
+tjz() {
+    name=`echo $1 | sed 's/\/*$//g'`
+    tar -jcf "$name.tbz" $@
+}
+tjzz() {
+    name=`echo $1 | sed 's/\/*$//g'`
+    tar -jcf "$name.tbz" $@ --exclude=.cscope --exclude-vcs
+}
+tjx() {
+    $__SUDO tar -jxvf $@
+}
+tjg() {
+    tar -tf $@
+}
+# }}}
+
+# file {{{
+alias -s png="qiv -p"
+alias -s PNG="qiv -p"
+alias -s gif="qiv -p"
+alias -s GIF="qiv -p"
+alias -s jpg="qiv -p"
+alias -s JPG="qiv -p"
+alias -s bmp="qiv -p"
+alias -s BMP="qiv -p"
+alias -s xpm="qiv -p"
+alias -s XPM="qiv -p"
+alias -s jpeg="qiv -p"
+alias -s JPEG="qiv -p"
+alias -s icon="qiv -p"
+alias -s ICON="qiv -p"
+
+alias -s doc=c_doc
+alias -s xls=c_xls
+alias -s pdf=c_pdf
+alias -s html=c_htm
+
+c_doc() { antiword $1 | less }
+c_xls() { xlhtml $1 | w3m -T text/html }
+c_pdf() { pdftotext -q $1 - | less }
+c_htm() { w3m -T text/html $1 }
+# }}}
+

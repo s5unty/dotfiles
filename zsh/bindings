@@ -1,0 +1,84 @@
+# vim:set syntax=zsh:
+
+# https://github.com/sunaku/zsh-history-substring-search
+bindkey "^[\t"  zsh-history-substring-search-backward # ALT-Tab
+bindkey "^[[Z"  zsh-history-substring-search-forward  # Shift-Tab
+
+bindkey '^n'    history-search-forward
+bindkey '^p'    history-search-backward
+bindkey "^[e"   edit-command-line          # ALT-E
+bindkey "^[h"   backward-char              # ALT-H
+bindkey "^[l"   forward-char               # ALT-L
+bindkey "^[b"   _vi-backward-blank-word    # ALT-B
+bindkey "^[f"   _vi-forward-blank          # ALT-F
+bindkey "^[x"   delete-char                # ALT-X
+bindkey "^[,"   copy-earlier-word          # ALT-,
+bindkey "\t"    expand-or-complete
+bindkey " "     magic-space                # ' ' (Space)
+
+bindkey -s            "^q"  "run-ranger\r"
+bindkey -M menuselect "i"   accept-and-menu-complete
+bindkey -M menuselect "^o"  accept-and-infer-next-history
+
+bindkey "$terminfo[kf1]"    run-help       # F1
+bindkey "$terminfo[kf2]"    which-command  # F2
+bindkey "$terminfo[kf11]"   run-netstat    # F11
+bindkey "$terminfo[kf12]"   run-ps         # F12
+
+insert-last-typed-word() {
+    zle insert-last-word -- 0 -1
+}
+zle -N insert-last-typed-word
+
+_vi-forward-blank() {
+    # <ESC>Ea
+    zle vi-cmd-mode
+    zle vi-forward-blank-word-end
+    zle vi-add-next
+}
+zle -N _vi-forward-blank
+
+_vi-backward-blank-word() {
+    zle vi-backward-blank-word
+    zle vi-backward-char
+}
+zle -N _vi-backward-blank-word
+
+# what's ranger?
+# http://ranger.nongnu.org/
+# https://github.com/hut/ranger
+run-ranger() {
+    before="$(pwd)"
+    ranger --fail-unless-cd "$@" || return 0
+    after="$(grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
+    if [[ "$before" != "$after" ]]; then
+        cd "$after"
+    fi
+}
+
+run-ps () {
+    zle -I
+    ps x --forest -u$USER -wwwA -o pid,user,cmd | less
+}
+zle -N run-ps
+
+run-netstat () {
+    zle -I
+    netstat -ltupn
+}
+zle -N run-netstat
+
+# jump behind the first word on the cmdline.
+# useful to add options.
+# TODO jump_arg2, arg3 ...
+jump_arg1 () {
+    local words
+    words=(${(z)BUFFER})
+
+    if (( ${#words} <= 1 )) ; then
+        CURSOR=${#BUFFER}
+    else
+        CURSOR=${#${words[1]}}
+    fi
+}
+zle -N jump_arg1
