@@ -234,10 +234,6 @@ sub enter {
    }
    $self->{matchers} = \@matchers;
 
-   my $row = $lnum - 20;
-   $row = $row > $self->top_row ? $row : $self->top_row;
-   $self->move_cursor(0, $row, $cnum);
-
    $self->msg("");
 }
 
@@ -511,16 +507,19 @@ sub key_press_normal {
    } elsif ($string eq "G") {
       $self->set_mark("'");
       $self->move_cursor($event, $self->{orig_lnum}, $self->{orig_cnum});
+   } elsif ($string eq ";") {
+      my ($lnum, $cnum) = $self->screen_cur();
+      $self->scroll_cursor($event, $lnum, $cnum);
    } elsif ($string eq ' ' or $string =~ /^\cD$/) {
       my ($lnum, $cnum) = $self->screen_cur();
       my $row = $lnum + 20;
       $row = $row < $self->{orig_lnum} ? $row : $self->{orig_lnum};
-      $self->move_cursor($event, $row, $cnum);
+      $self->scroll_cursor($event, $row, $cnum);
    } elsif ($string eq '-' or $string =~ /^\cU$/) {
       my ($lnum, $cnum) = $self->screen_cur();
       my $row = $lnum - 20;
       $row = $row > $self->top_row ? $row : $self->top_row;
-      $self->move_cursor($event, $row, $cnum);
+      $self->scroll_cursor($event, $row, $cnum);
    } elsif ($string eq "w" or $string eq "e") {
       my $pattern = $string eq "w" ? '\W\w' : '\w\W';
       my $adj = $string eq "w" ? 0 : -1;
@@ -918,7 +917,12 @@ sub move_cursor {
 
       $self->make_selection($event, $sl, $sc, $el, $ec, 1);
    }
-   $self->view_start(List::Util::min 0, $lnum - ($self->nrow >> 1));
+
+   if ($lnum < $self->view_start()) {
+      $self->view_start(List::Util::min 0, $lnum);
+   } elsif ($lnum >= $self->view_start() + $self->nrow - 1) {
+      $self->view_start(List::Util::min 0, $lnum - $self->nrow + 2);
+   }
    $self->want_refresh;
 }
 
@@ -1162,4 +1166,12 @@ sub key_press_paste {
    }
 }
 
+sub scroll_cursor {
+   my ($self, $event, $lnum, $cnum) = @_;
+   $self->screen_cur($lnum, $cnum);
+   $self->view_start(List::Util::min 0, $lnum - ($self->nrow >> 1));
+   $self->want_refresh;
+}
+
 # vim:shiftwidth=3:tabstop=3
+
