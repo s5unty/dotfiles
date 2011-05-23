@@ -1,6 +1,6 @@
 # vim:set syntax=zsh:
 
-alias -g G='|GREP_COLOR=$(echo 3$[$(date +%N)%6+1]'\'';1;7'\'') egrep -i --color=always'
+alias -g G='| egrep -i --color=always'
 alias -g M="| $__LESS"
 alias -g Y="| xsel"
 alias -g iy="| xsel"
@@ -16,6 +16,8 @@ alias at="at -m"
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="tree -C"
+alias grep="grep --color=always"
+alias egrep="egrep --color=always"
 alias scp="scp -p"
 alias lintian="lintian -viI"
 alias tig="tig --all"
