@@ -1,6 +1,7 @@
 ! @@ General @@ {{{
 URxvt.termName:     rxvt-unicode
 URxvt.scrollBar:    False
+URxvt.iso14755:     False
 URxvt.cursorBlink:  True
 URxvt.urgentOnBell: True
 URxvt.preeditType:  OverTheSpot

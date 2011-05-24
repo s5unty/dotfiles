@@ -34,8 +34,8 @@ undo.style=side                               # Undo style - can be 'side', or '
 # Dates
 dateformat=Y-m-d                              # Preferred input and display date format
 dateformat.holiday=yMD                        # Preferred input date format for holidays
-dateformat.report=a, Y-m-d                    # Preferred display date format for reports
-dateformat.annotation=a, H:N                  # Preferred display date format for reports
+dateformat.report=a,Y-m-d                     # Preferred display date format for reports
+dateformat.annotation=a,H:N                   # Preferred display date format for reports
 weekstart=Monday                              # Sunday or Monday only
 displayweeknumber=yes                         # Show week numbers on calendar
 due=7                                         # Task is considered due in 7 days

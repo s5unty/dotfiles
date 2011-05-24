@@ -1,6 +1,8 @@
 [Program]
 # 字体
 Font=
+# 菜单字体
+MenuFont=
 # 字体区域
 FontLocale=zh_CN.UTF-8
 # 记录文件
@@ -54,7 +56,11 @@ SkinType=classic
 # 快捷键: 切换输入法
 TriggerKey=CTRL_SPACE
 # 快捷键: 切换中英文输入
-ChnEngSwitchKey=L_SHIFT
+# TODO L_SHIFT 和 Ctrl_Shift 冲突
+# 假设当前是日文输入模式，按下 Ctrl_Shift 应该切换到中文输入
+# 如果用较快速度按 Ctrl_Shift，会导致最后执行一次 Shift 操作
+# 即——从日文切换到中文，之后再快速切换到英文(最后一次 Shift)
+ChnEngSwitchKey=R_SHIFT
 # 双击中英文切换键时切换
 DoubleSwitchKey=False
 # 输入间隔
@@ -72,9 +78,9 @@ LegendSwitchKey=CTRL_ALT_L
 # 快捷键: 反查拼音
 LookupPinyinKey=CTRL_ALT_E
 # 快捷键: 切换全角
-FullWidthSwitchKey=SHIFT_SPACE
+FullWidthSwitchKey=CTRL_SHIFT_SPACE
 # 快捷键: 切换中英文标点
-ChnPuncSwitchKey=ALT_SPACE
+ChnPuncSwitchKey=CTRL_ALT_SPACE
 # 快捷键: 前一页
 PrevPageKey=,
 # 快捷键: 后一页
@@ -90,7 +96,7 @@ ResetRecordingKey=CTRL_ALT_A
 
 [InputMethod]
 # 拼音输入法优先级，0为禁用
-PinyinOrder=1
+PinyinOrder=0
 # 双拼输入法优先级，0为禁用
 ShuangpinOrder=1
 # 默认双拼方案
@@ -98,7 +104,7 @@ DefaultShuangpinSchema=微软
 # 区位输入法优先级，0为禁用
 QuweiOrder=0
 # 码表输入法优先级，0为禁用
-TableOrder=0
+TableOrder=1
 # 提示词库中词组
 PhraseTips=True
 
