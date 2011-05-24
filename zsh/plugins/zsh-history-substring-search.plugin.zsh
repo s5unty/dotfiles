@@ -35,7 +35,7 @@ zsh-history-substring-search-backward() {
     (${WIDGET/backward/forward} = ${LASTWIDGET/backward/forward}) ||
     (${WIDGET/forward/backward} = ${LASTWIDGET/forward/backward})
   ) ]]; then
-    ordinary_highlight="bg=black,fg=white,bold"
+    ordinary_highlight="bg=yellow,fg=white,bold"
     out_of_matches_highlight="bg=red,fg=white,bold"
     # set the type of highlighting
     search=${BUFFER//(#m)[\][()\\*?#<>~^]/\\$MATCH}

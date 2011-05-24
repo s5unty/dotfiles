@@ -89,11 +89,11 @@ Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm
 
 ! @@ Shortkeys @@ {{{
 !! mouseless url yanking
-!! mouseless line yanking, base on mark-yank-urls
 !! http://www.jukie.net/~bart/blog/urxvt-url-yank
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
-URxvt.vim-scrollback: M-minus
+URxvt.keysym.M-s: perl:vim-scrollback:start
+URxvt.keysym.M-p: perl:vim-scrollback:paste
 ! }}}
 

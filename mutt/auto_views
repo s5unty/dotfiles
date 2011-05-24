@@ -1,3 +1,5 @@
+# 不同类型在 $HOME/.mailcap 中定义，在这里声明使用
+
 auto_view text/html
 auto_view application/vnd.ms-word
 auto_view application/ms-word
