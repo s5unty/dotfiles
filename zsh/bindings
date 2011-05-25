@@ -9,9 +9,8 @@ bindkey -rpM vicmd '^['
 # https://github.com/sunaku/zsh-history-substring-search
 bindkey -M viins "^[\t" zsh-history-substring-search-backward # ALT-Tab
 bindkey -M viins "^[[Z" zsh-history-substring-search-forward  # Shift-Tab
-bindkey -M viins "^[r"  history-incremental-search-backward   # ALT-r
+bindkey -M viins "^[/"  history-incremental-search-backward   # ALT-r
 
-bindkey -M viins "^R"   history-incremental-search-backward
 bindkey -M viins "^A"   vi-digit-or-beginning-of-line
 bindkey -M viins "^E"   vi-end-of-line
 bindkey -M viins "^S"   list-expand
@@ -34,9 +33,17 @@ bindkey -M viins "^[f"  vi-forward-blank-word      # ALT-f
 bindkey -M viins "^[F"  _vi-forward-blank          # ALT-Shift-f
 bindkey -M viins "^[q"  push-line                  # ALT-q
 bindkey -M viins "^[."  insert-last-word           # Alt-.
-bindkey -M viins "^[,"  copy-earlier-word          # ALT-,
+bindkey -M viins "^[,"  insert-early-word          # Alt-,
+bindkey -M viins "^[;"  copy-earlier-word          # ALT-,
 bindkey -M viins "\t"   expand-or-complete
 bindkey -M viins " "    magic-space                # ' ' (Space)
+
+bindkey -M viins "^[1"  digit-argument
+bindkey -M viins "^[2"  digit-argument
+bindkey -M viins "^[3"  digit-argument
+bindkey -M viins "^[4"  digit-argument
+bindkey -M viins "^[5"  digit-argument
+bindkey -M viins "^[-"  neg-argument
 
 bindkey -M vicmd "K"    run-help
 bindkey -M vicmd "J"    which-command
