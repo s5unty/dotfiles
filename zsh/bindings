@@ -2,31 +2,45 @@
 
 bindkey -v # viins / vicmd
 
+# no escape timeout viins/vicmd
+bindkey -rpM viins '^['
+bindkey -rpM vicmd '^['
+
 # https://github.com/sunaku/zsh-history-substring-search
 bindkey -M viins "^[\t" zsh-history-substring-search-backward # ALT-Tab
 bindkey -M viins "^[[Z" zsh-history-substring-search-forward  # Shift-Tab
+bindkey -M viins "^[r"  history-incremental-search-backward   # ALT-r
 
-bindkey -M viins "^r"   history-incremental-search-backward
-bindkey -M viins "\e."  insert-last-word
+bindkey -M viins "^R"   history-incremental-search-backward
+bindkey -M viins "^A"   vi-digit-or-beginning-of-line
+bindkey -M viins "^E"   vi-end-of-line
+bindkey -M viins "^S"   list-expand
+bindkey -M viins "^X"   vi-delete-char
+bindkey -M viins "^N"   history-search-forward
+bindkey -M viins "^P"   history-search-backward
+bindkey -M viins "^F"   forward-char
+bindkey -M viins "^B"   backward-char
+bindkey -M viins "^H"   backward-delete-char
+bindkey -M viins "^D"   delete-char
+bindkey -M viins "^W"   backward-kill-word
+bindkey -M viins "^Q"   backward-kill-line
+bindkey -M viins "^U"   undo
+bindkey -M viins "^R"   redo
+bindkey -M viins "^K"   run-help
 
-bindkey -M viins "^a"   vi-digit-or-beginning-of-line
-bindkey -M viins "^e"   vi-end-of-line
-bindkey -M viins "^n"   history-search-forward
-bindkey -M viins "^p"   history-search-backward
-bindkey -M viins "^[e"  edit-command-line          # ALT-e
-bindkey -M viins "^[h"  backward-char              # ALT-h
-bindkey -M viins "^[l"  forward-char               # ALT-l
+bindkey -M viins "^[a"  _beginning-of-args         # ALT-a
 bindkey -M viins "^[b"  _vi-backward-blank         # ALT-b
-bindkey -M viins "^[f"  _vi-forward-blank          # ALT-F
-bindkey -M viins "^[B"  vi-backward-blank-word     # ALT-B
-bindkey -M viins "^[F"  _vi-forward-blank          # ALT-f
-
-bindkey -M viins "^[x"  delete-char                # ALT-x
+bindkey -M viins "^[f"  vi-forward-blank-word      # ALT-f
+bindkey -M viins "^[F"  _vi-forward-blank          # ALT-Shift-f
+bindkey -M viins "^[q"  push-line                  # ALT-q
+bindkey -M viins "^[."  insert-last-word           # Alt-.
 bindkey -M viins "^[,"  copy-earlier-word          # ALT-,
 bindkey -M viins "\t"   expand-or-complete
 bindkey -M viins " "    magic-space                # ' ' (Space)
 
-bindkey -s            "^q"  "run-ranger\r"
+bindkey -M vicmd "K"    run-help
+bindkey -M vicmd "J"    which-command
+
 bindkey -M menuselect "i"   accept-line
 bindkey -M menuselect "o"   accept-and-infer-next-history
 bindkey -M menuselect "^[h" backward-char
@@ -34,28 +48,9 @@ bindkey -M menuselect "^[l" forward-char
 bindkey -M menuselect "^[j" down-history
 bindkey -M menuselect "^[k" up-history
 
-bindkey "$terminfo[kf1]"    run-help       # F1
-bindkey "$terminfo[kf2]"    which-command  # F2
-bindkey "$terminfo[kf11]"   run-netstat    # F11
-bindkey "$terminfo[kf12]"   run-ps         # F12
-
-insert-last-typed-word() {
-    zle insert-last-word -- 0 -1
-}
-zle -N insert-last-typed-word
-
-_vi-forward-blank() {
-    zle vi-forward-blank-word-end
-    zle vi-forward-blank-word-end
-    zle vi-backward-blank-word
-}
-zle -N _vi-forward-blank
-
 _vi-backward-blank() {
     zle vi-backward-blank-word
-    zle vi-backward-blank-word
-    zle vi-forward-blank-word-end
-    zle vi-add-next
+    zle vi-backward-char
 }
 zle -N _vi-backward-blank
 
@@ -65,41 +60,31 @@ _vi-forward-blank() {
 }
 zle -N _vi-forward-blank
 
-# what's ranger?
-# http://ranger.nongnu.org/
-# https://github.com/hut/ranger
-run-ranger() {
-    before="$(pwd)"
-    ranger --fail-unless-cd "$@" || return 0
-    after="$(grep \^\' ~/.config/ranger/bookmarks | cut -d':' -f2)"
-    if [[ "$before" != "$after" ]]; then
-        cd "$after"
-    fi
+_beginning-of-args() {
+    zle vi-beginning-of-line
+    zle _vi-forward-blank
 }
+zle -N _beginning-of-args
 
-run-ps () {
-    zle -I
-    ps x --forest -u$USER -wwwA -o pid,user,cmd | less
-}
-zle -N run-ps
+# @ zkbd @ ~/.zsh/options {{{1
+[[ -n "${key[Backspace]}" ]]  && bindkey -M viins "${key[Backspace]}" backward-delete-char
+[[ -n "${key[Home]}"      ]]  && bindkey -M viins "${key[Home]}"      beginning-of-line
+[[ -n "${key[End]}"       ]]  && bindkey -M viins "${key[End]}"       end-of-line
+[[ -n "${key[Insert]}"    ]]  && bindkey -M viins "${key[Insert]}"    overwrite-mode
+[[ -n "${key[Delete]}"    ]]  && bindkey -M viins "${key[Delete]}"    delete-char
+[[ -n "${key[Up]}"        ]]  && bindkey -M viins "${key[Up]}"        up-line-or-history
+[[ -n "${key[Down]}"      ]]  && bindkey -M viins "${key[Down]}"      down-line-or-history
+[[ -n "${key[Left]}"      ]]  && bindkey -M viins "${key[Left]}"      backward-char
+[[ -n "${key[Right]}"     ]]  && bindkey -M viins "${key[Right]}"     forward-char
 
-run-netstat () {
-    zle -I
-    netstat -ltupn
-}
-zle -N run-netstat
+[[ -n "${key[Backspace]}" ]]  && bindkey -M vicmd "${key[Backspace]}" backward-delete-char
+[[ -n "${key[Home]}"      ]]  && bindkey -M vicmd "${key[Home]}"      beginning-of-line
+[[ -n "${key[End]}"       ]]  && bindkey -M vicmd "${key[End]}"       end-of-line
+[[ -n "${key[Insert]}"    ]]  && bindkey -M vicmd "${key[Insert]}"    overwrite-mode
+[[ -n "${key[Delete]}"    ]]  && bindkey -M vicmd "${key[Delete]}"    delete-char
+[[ -n "${key[Up]}"        ]]  && bindkey -M vicmd "${key[Up]}"        up-line-or-history
+[[ -n "${key[Down]}"      ]]  && bindkey -M vicmd "${key[Down]}"      down-line-or-history
+[[ -n "${key[Left]}"      ]]  && bindkey -M vicmd "${key[Left]}"      backward-char
+[[ -n "${key[Right]}"     ]]  && bindkey -M vicmd "${key[Right]}"     forward-char
+# }}}1
 
-# jump behind the first word on the cmdline.
-# useful to add options.
-# TODO jump_arg2, arg3 ...
-jump_arg1 () {
-    local words
-    words=(${(z)BUFFER})
-
-    if (( ${#words} <= 1 )) ; then
-        CURSOR=${#BUFFER}
-    else
-        CURSOR=${#${words[1]}}
-    fi
-}
-zle -N jump_arg1
