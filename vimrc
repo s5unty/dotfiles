@@ -1,10 +1,11 @@
 " General {{{1
 set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,chinese,taiwan,japan,korea,latin1
+" 
+set fileencodings=ucs-bom,utf-8,sjis,gbk,big5,default
 set termencoding=utf-8
 set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
-set noexpandtab " TAB is hard
+set expandtab " TAB is soft
 set tabstop=4 " TAB 的宽度
 set shiftwidth=4 " 缩进的宽度
 set softtabstop=4
@@ -12,7 +13,6 @@ set clipboard=unnamed " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
-set expandtab
 set autoindent " 自动缩进
 set cindent
 set number " 显示行数

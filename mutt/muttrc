@@ -15,7 +15,7 @@ set send_charset="UTF-8"
 # 用中文格式显示日期
 set locale=`echo "${LC_ALL:-${LC_TIME:-${LANG}}}"`
 # 解决未经过MIME编码的信件显示为乱码的问题
-set assumed_charset="GB18030:UTF-8"
+set assumed_charset="GBK"
 # 解决中文附件名为乱码的问题
 set rfc2047_parameters=yes
 # 回信时自动包含原文

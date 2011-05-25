@@ -247,8 +247,8 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 
 -- {{{ Program
 awful.key({ modkey }, "F1", function () awful.util.spawn("x-www-browser") end),
-awful.key({ modkey }, "F2", function () awful.util.spawn(terminal.." -name Weechat -T Weechat -e weechat-curses") end),
-awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e mutt") end),
+awful.key({ modkey }, "F2", function () awful.util.spawn(terminal.." -name Weechat -T Weechat -e sh -c weechat-curses") end),
+awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e sh -c mutt") end),
 awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'XP'") end),
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
@@ -455,6 +455,8 @@ awful.rules.rules = {
     { rule = { class = "Android" },
     properties = { floating = true } },
     { rule = { class = "GNUstep" },
+    properties = { floating = true } },
+    { rule = { class = "Virt-manager.py" },
     properties = { floating = true } },
 
     -- Set Firefox to always map on tag 7 of screen 1.
