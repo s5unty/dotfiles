@@ -13,7 +13,7 @@ bindkey -rpM vicmd '^['
 # https://github.com/sunaku/zsh-history-substring-search
 bindkey -M viins "^[\t" zsh-history-substring-search-backward # ALT-Tab
 bindkey -M viins "^[[Z" zsh-history-substring-search-forward  # Shift-Tab
-bindkey -M viins "^[/"  history-incremental-search-backward   # ALT-r
+bindkey -M viins "^[r"  history-incremental-search-backward   # ALT-r
 
 bindkey -M viins "^A"   vi-digit-or-beginning-of-line
 bindkey -M viins "^E"   vi-end-of-line
@@ -31,35 +31,72 @@ bindkey -M viins "^U"   undo
 bindkey -M viins "^R"   redo
 bindkey -M viins "^K"   run-help
 
-bindkey -M viins "^[a"  _beginning-of-args         # ALT-a
-bindkey -M viins "^[b"  _vi-backward-blank         # ALT-b
-bindkey -M viins "^[f"  vi-forward-blank-word      # ALT-f
-bindkey -M viins "^[F"  _vi-forward-blank          # ALT-Shift-f
-bindkey -M viins "^[q"  push-line                  # ALT-q
-bindkey -M viins "^[."  insert-last-word           # Alt-.
-bindkey -M viins "^[,"  insert-last-word-prior     # Alt-,
-bindkey -M viins "^[;"  copy-earlier-word          # ALT-,
-bindkey -M viins "\t"   expand-or-complete
-bindkey -M viins " "    magic-space                # ' ' (Space)
+bindkey -M viins "\ea"  _beginning-of-args         # Alt-a
+bindkey -M viins "\eb"  _vi-backward-blank         # Alt-b
+bindkey -M viins "\ef"  vi-forward-blank-word      # Alt-f
+bindkey -M viins "\eF"  _vi-forward-blank          # Alt-Shift-f
+bindkey -M viins "\eq"  push-line                  # Alt-q
+bindkey -M viins "\ek"  run-help                   # Alt-k
+bindkey -M viins "\eK"  which-command              # Alt-Shift-k
+bindkey -M viins "\e."  insert-last-word           # Alt-.
+bindkey -M viins "\e,"  insert-last-word-prior     # Alt-,
+bindkey -M viins "\e/"  jump-around-directory      # Alt-/
+bindkey -M viins "\e?"  list-directory-stack       # Alt-Shift-/
+bindkey -M viins "\e;"  copy-earlier-word          # Alt-;
+bindkey -M viins "\t"   expand-or-complete         # Tab
+bindkey -M viins " "    magic-space                # Space
 
-bindkey -M viins "^[1"  digit-argument
-bindkey -M viins "^[2"  digit-argument
-bindkey -M viins "^[3"  digit-argument
-bindkey -M viins "^[4"  digit-argument
-bindkey -M viins "^[5"  digit-argument
-bindkey -M viins "^[-"  neg-argument
+bindkey -M viins "\e1"  digit-argument
+bindkey -M viins "\e2"  digit-argument
+bindkey -M viins "\e3"  digit-argument
+bindkey -M viins "\e4"  digit-argument
+bindkey -M viins "\e5"  digit-argument
+bindkey -M viins "\e6"  digit-argument
+bindkey -M viins "\e7"  digit-argument
+bindkey -M viins "\e8"  digit-argument
+bindkey -M viins "\e9"  digit-argument
+bindkey -M viins "\e-"  neg-argument
 
-bindkey -M vicmd "K"    run-help
-bindkey -M vicmd "J"    which-command
+bindkey -M menuselect " "   accept-line
+bindkey -M menuselect "\eh" backward-char
+bindkey -M menuselect "\el" forward-char
+bindkey -M menuselect "\ej" down-history
+bindkey -M menuselect "\ek" up-history
 
-bindkey -M menuselect "i"   accept-line
-bindkey -M menuselect "o"   accept-and-infer-next-history
-bindkey -M menuselect "^[h" backward-char
-bindkey -M menuselect "^[l" forward-char
-bindkey -M menuselect "^[j" down-history
-bindkey -M menuselect "^[k" up-history
+list-directory-stack() {
+    zle -I
+    dirs -v | head -10 | sort -nr | head -n +9
+}
+zle -N list-directory-stack
 
-insert-last-word-prior() { # 上一条命令的倒数第二个参数
+# 不带参数表示执行 cd -
+#   直接按快捷键相当于执行 cd -
+#
+# 带正参数表示执行 cd -n
+#   按 Alt-5 再按快捷键相当于执行 cd -5
+#
+# 带负参数表示执行 cd .. (n-1 次)
+#   按 Alt-- 再按 Alt-3 再按快捷键相当于执行 3-1=2 次 cd ..
+jump-around-directory() {
+    zle -I
+    integer count=${NUMERIC:-0}
+    upper=""
+    if (( count < 0 )); then
+        while (( ++count < 0 )); do
+            upper+="../"
+        done
+    elif (( count == 0)); then
+        upper="-"
+    else
+        upper="-$count"
+    fi
+
+    cd ${upper}
+}
+zle -N jump-around-directory
+
+# 上一条命令的倒数第二个参数
+insert-last-word-prior() {
     zle insert-last-word -- -1 -2
 }
 zle -N insert-last-word-prior

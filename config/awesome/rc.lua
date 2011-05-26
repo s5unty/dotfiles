@@ -482,7 +482,9 @@ client.add_signal("manage", function (c, startup)
     c:add_signal("mouse::enter", function(c)
         if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
             and awful.client.focus.filter(c) then
-            client.focus = c
+            -- 用了鼠标自动隐藏程序 unclutter 以后经常出现
+            -- 窗口焦点切换不能的情况，所以还是注掉下面这行
+            -- client.focus = c
         end
     end)
 
