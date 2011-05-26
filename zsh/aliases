@@ -208,7 +208,7 @@ alias -s ICON="qiv -p"
 
 alias -s doc=c_doc
 alias -s xls=c_xls
-alias -s pdf=c_pdf
+alias -s pdf="zathura"
 alias -s html=c_htm
 
 c_doc() { antiword $1 | less }

@@ -32,25 +32,3 @@ setopt NOTIFY               # report the status of backgrounds jobs immediately
 setopt COMPLETEINWORD       # not just at the end
 setopt EXTENDEDGLOB         # 扩展文件名匹配功能
 
-autoload zkbd
-function zkbd_file() {
-    [[ -f ~/.zsh/zkbd/${TERM}-${VENDOR}-${OSTYPE} ]] && printf '%s' ~/".zsh/zkbd/${TERM}-${VENDOR}-${OSTYPE}" && return 0
-    [[ -f ~/.zsh/zkbd/${TERM}-${DISPLAY}          ]] && printf '%s' ~/".zsh/zkbd/${TERM}-${DISPLAY}"          && return 0
-    return 1
-}
-
-[[ ! -d ~/.zsh/zkbd ]] && mkdir -p ~/.zsh/zkbd
-keyfile=$(zkbd_file)
-ret=$?
-if [[ ${ret} -ne 0 ]]; then
-    zkbd
-    keyfile=$(zkbd_file)
-    ret=$?
-fi
-if [[ ${ret} -eq 0 ]] ; then
-    source "${keyfile}"
-else
-    printf 'Failed to setup keys using zkbd.\n'
-fi
-unfunction zkbd_file; unset keyfile ret
-

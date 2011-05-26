@@ -1,6 +1,10 @@
 # vim:set syntax=zsh:
 
-bindkey -v # viins / vicmd
+if [ `tty | grep -c pts` -eq 1 ]; then
+    bindkey -v
+else
+    bindkey -e
+fi
 
 # no escape timeout viins/vicmd
 bindkey -rpM viins '^['
@@ -33,7 +37,7 @@ bindkey -M viins "^[f"  vi-forward-blank-word      # ALT-f
 bindkey -M viins "^[F"  _vi-forward-blank          # ALT-Shift-f
 bindkey -M viins "^[q"  push-line                  # ALT-q
 bindkey -M viins "^[."  insert-last-word           # Alt-.
-bindkey -M viins "^[,"  insert-early-word          # Alt-,
+bindkey -M viins "^[,"  insert-last-word-prior     # Alt-,
 bindkey -M viins "^[;"  copy-earlier-word          # ALT-,
 bindkey -M viins "\t"   expand-or-complete
 bindkey -M viins " "    magic-space                # ' ' (Space)
@@ -55,6 +59,11 @@ bindkey -M menuselect "^[l" forward-char
 bindkey -M menuselect "^[j" down-history
 bindkey -M menuselect "^[k" up-history
 
+insert-last-word-prior() { # 上一条命令的倒数第二个参数
+    zle insert-last-word -- -1 -2
+}
+zle -N insert-last-word-prior
+
 _vi-backward-blank() {
     zle vi-backward-blank-word
     zle vi-backward-char
@@ -73,7 +82,34 @@ _beginning-of-args() {
 }
 zle -N _beginning-of-args
 
-# @ zkbd @ ~/.zsh/options {{{1
+# {{{1
+typeset -g -A key
+
+key[F1]='^[[11~'
+key[F2]='^[[12~'
+key[F3]='^[[13~'
+key[F4]='^[[14~'
+key[F5]='^[[15~'
+key[F6]='^[[17~'
+key[F7]='^[[18~'
+key[F8]='^[[19~'
+key[F9]='^[[20~'
+key[F10]='^[[21~'
+key[F11]='^[[23~'
+key[F12]='^[[24~'
+key[Backspace]='^?'
+key[Insert]='^[[2~'
+key[Home]='^[[7~'
+key[PageUp]='^[[5~'
+key[Delete]='^[[3~'
+key[End]='^[[8~'
+key[PageDown]='^[[6~'
+key[Up]='^[[A'
+key[Left]='^[[D'
+key[Down]='^[[B'
+key[Right]='^[[C'
+key[Menu]='^[[29~'
+
 [[ -n "${key[Backspace]}" ]]  && bindkey -M viins "${key[Backspace]}" backward-delete-char
 [[ -n "${key[Home]}"      ]]  && bindkey -M viins "${key[Home]}"      beginning-of-line
 [[ -n "${key[End]}"       ]]  && bindkey -M viins "${key[End]}"       end-of-line
