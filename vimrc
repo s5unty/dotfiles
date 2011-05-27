@@ -399,7 +399,7 @@ endif
 " p2: @@575@@
 "             let fnames = reverse(fnames)
 let MRU_Max_Entries=256
-let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*\|^/sun/home/\..*'
+let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*\|^/sun/\..*'
 let MRU_Window_Height=18
 let MRU_Add_Menu=0
 

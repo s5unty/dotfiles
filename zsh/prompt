@@ -9,9 +9,9 @@ parse_git_branch() {
     git diff --no-ext-diff --quiet 2> /dev/null
     flag=$?
     if [ $flag -eq 1 ]; then # branch is not clear
-        _branch=" ${at_underl}${branch}"
+        _branch="${at_underl}${branch}"
     elif [ $flag -eq 0 ]; then # branch is clear
-        _branch=" ${branch}"
+        _branch="${branch}"
     else # there is not git repository == 129
         _branch=""
     fi
@@ -19,12 +19,12 @@ parse_git_branch() {
     stash="$(git stash list 2> /dev/null | \
         grep -q "${branch}")"
     if [ $? -eq 0 ]; then # branch has stash
-        _stash=" ${fg_brown}${at_reverse}${at_blink}WIP"
+        _stash="${fg_brown}${at_reverse}${at_blink}WIP"
     else
-        _stash=""
+        _stash=" "
     fi
 
-    echo "${_branch}${_stash}"
+    echo "${_stash}${at_none}${_branch}"
 }
 
 precmd() {

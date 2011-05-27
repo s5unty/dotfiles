@@ -60,7 +60,7 @@ TriggerKey=CTRL_SPACE
 # 假设当前是日文输入模式，按下 Ctrl_Shift 应该切换到中文输入
 # 如果用较快速度按 Ctrl_Shift，会导致最后执行一次 Shift 操作
 # 即——从日文切换到中文，之后再快速切换到英文(最后一次 Shift)
-ChnEngSwitchKey=R_SHIFT
+ChnEngSwitchKey=L_SHIFT
 # 双击中英文切换键时切换
 DoubleSwitchKey=False
 # 输入间隔

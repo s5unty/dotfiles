@@ -2,7 +2,7 @@
     name = Vern Sun
     email = s5unty@gmail.com
 [core]
-    excludesfile = /sun/home/.gitignore
+    excludesfile = ~/.gitignore
     quotepath = false
 [format]
     headers = ""
