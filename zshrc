@@ -7,6 +7,10 @@ source $HOME/.zsh/bindings
 source $HOME/.zsh/completion
 source $HOME/.zsh/plugins/*.zsh
 
+if ! hostname | grep "^verns-" > /dev/null 2>&1; then
+    return # 不是我的机器
+fi
+
 export HOME="/sun"
 export DEBEMAIL="s5unty@gmail.com"
 export DEBFULLNAME="Vern Sun"
@@ -16,11 +20,12 @@ for i in $MAILDIR/(company|personal)(/); do
     mailpath[$#mailpath+1]="${i}?<(￣3￣)> You have new mail in ${i:t}"
 done
 
-if [ m"verns-worktop" = m`hostname` ]; then # {{{1
-export http_proxy=http://10.167.129.20:8080
+if hostname | grep "worktop" > /dev/null 2>&1; then
+export http_proxy=http://10.167.129.21:8080
 
-# export http_proxy=http://10.167.129.21:8080
-# 129.21 没有设置名单过滤，可下载超过 10M 的文件
+# 已知两台代理：10.167.129.20 和 10.167.129.21
+# 20 有白名单和下载限制
+# 21 没有名单限制，可以下载超过 10M 的文件
 # 重装系统时可以找 IT 临时开通
 
 zstyle ':completion:*' users vern root Administrator
@@ -32,10 +37,10 @@ zstyle ':completion:*:(ping|ssh|scp|sftp|rsync):*' hosts \
     10.167.226.154 10.167.225.120 10.167.129.20 10.167.129.21 10.167.225.216 10.33.135.10 10.33.135.13 10.33.135.15
 fi
 
-if [ m"verns-desktop" = m`hostname` ]; then # {{{1
+if hostname | grep "desktop" > /dev/null 2>&1; then
 
 fi
 
-if [ m"verns-laptop" = m`hostname` ]; then # {{{1
+if hostname | grep "laptop" > /dev/null 2>&1; then
 
 fi
