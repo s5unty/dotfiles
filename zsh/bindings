@@ -1,18 +1,10 @@
 # vim:set syntax=zsh:
 
-if [ `tty | grep -c pts` -eq 1 ]; then
-    bindkey -v
-else
-    bindkey -e
-fi
+bindkey -v
 
 # no escape timeout viins/vicmd
 bindkey -rpM viins '^['
 bindkey -rpM vicmd '^['
-
-# https://github.com/sunaku/zsh-history-substring-search
-bindkey -M viins "^[\t" zsh-history-substring-search-backward # ALT-Tab
-bindkey -M viins "^[[Z" zsh-history-substring-search-forward  # Shift-Tab
 
 # Ctrl - Key
 bindkey -M viins "^A"   vi-digit-or-beginning-of-line
@@ -37,6 +29,8 @@ bindkey -M viins "\ew"  _vi-backward-blank
 bindkey -M viins "\ee"  _vi-forward-blank
 bindkey -M viins "\eb"  vi-backward-blank-word
 bindkey -M viins "\ef"  vi-forward-blank-word
+bindkey -M viins "\en"  zsh-history-substring-search-forward
+bindkey -M viins "\ep"  zsh-history-substring-search-backward
 bindkey -M viins "\eq"  push-line
 bindkey -M viins "\ek"  run-help
 bindkey -M viins "\eK"  which-command
@@ -46,6 +40,7 @@ bindkey -M viins "\e/"  jump-around-directory
 bindkey -M viins "\e?"  list-directory-stack
 bindkey -M viins "\e;"  copy-earlier-word
 bindkey -M viins "\t"   expand-or-complete
+bindkey -M viins "\e\t" _history-complete-newer
 bindkey -M viins " "    magic-space
 bindkey -M viins "\e1"  digit-argument
 bindkey -M viins "\e2"  digit-argument

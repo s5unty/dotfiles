@@ -1,11 +1,11 @@
-source $HOME/.zsh/exports
-source $HOME/.zsh/options
-source $HOME/.zsh/aliases
-source $HOME/.zsh/colour
-source $HOME/.zsh/prompt
-source $HOME/.zsh/bindings
-source $HOME/.zsh/completion
-source $HOME/.zsh/plugins/*.zsh
+[ -e $HOME/.zsh/exports       ] && source $HOME/.zsh/exports
+[ -e $HOME/.zsh/options       ] && source $HOME/.zsh/options
+[ -e $HOME/.zsh/aliases       ] && source $HOME/.zsh/aliases
+[ -e $HOME/.zsh/colour        ] && source $HOME/.zsh/colour
+[ -e $HOME/.zsh/prompt        ] && source $HOME/.zsh/prompt
+[ -e $HOME/.zsh/bindings      ] && source $HOME/.zsh/bindings
+[ -e $HOME/.zsh/completion    ] && source $HOME/.zsh/completion
+[ -e $HOME/.zsh/plugins/*.zsh ] && source $HOME/.zsh/plugins/*.zsh
 
 if ! hostname | grep "^verns-" > /dev/null 2>&1; then
     return # 不是我的机器

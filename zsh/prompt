@@ -24,7 +24,7 @@ parse_git_branch() {
         _stash=" "
     fi
 
-    echo "${_stash}${at_none}${_branch}"
+    echo "${_stash}${at_bold}${_branch}"
 }
 
 precmd() {

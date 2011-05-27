@@ -14,6 +14,11 @@ zstyle ':completion:*:descriptions' format ${bg_gray}${at_bold}'%d'${at_none}
 zstyle ':completion:*:messages' format ${bg_gray}${at_bold}'%d'${at_none}
 zstyle ':completion:*:warnings' format ${bg_gray}${at_bold}'No matches for: %d'${at_none}
 
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:history-words' remove-all-dups yes
+zstyle ':completion:*:history-words' list false
+zstyle ':completion:*:history-words' menu yes
+
 # cd - {{{1
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
 
