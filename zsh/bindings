@@ -2,10 +2,6 @@
 
 bindkey -v
 
-# no escape timeout viins/vicmd
-bindkey -rpM viins '^['
-bindkey -rpM vicmd '^['
-
 # Ctrl - Key
 bindkey -M viins "^A"   vi-digit-or-beginning-of-line
 bindkey -M viins "^E"   vi-end-of-line

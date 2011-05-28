@@ -98,30 +98,41 @@ dup() { # dupload
     fi
 }
 
-# apt-get {{{
-alias api="$__SUDO apt-get install"
-alias apo="apt-get source"
-alias ape="$__SUDO vi /etc/apt/sources.list"
-alias apr="$__SUDO apt-get remove"
-alias apu="$__SUDO apt-get update"
-alias app="$__SUDO apt-get purge"
-alias apg="apt-cache search"
-alias aps="apt-cache show"
-alias apv="apt-cache policy"
-# }}}
+# package {{{
+DISTRO=`awk '/[:alpha:]/ { print $1; exit }' /etc/issue`
+if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" ]]; then
+    alias api="$__SUDO apt-get install"
+    alias apo="apt-get source"
+    alias ape="$__SUDO vi /etc/apt/sources.list"
+    alias apr="$__SUDO apt-get remove"
+    alias apR="$__SUDO apt-get autoremove"
+    alias apu="$__SUDO apt-get update"
+    alias app="$__SUDO apt-get purge"
+    alias apg="apt-cache search"
+    alias aps="apt-cache show"
+    alias apv="apt-cache policy"
 
-# dpkg {{{
-alias dpi="$__SUDO dpkg -i"
-alias dpp="$__SUDO dpkg -P"
-alias dpc="dpkg -c"
-alias dps="dpkg -I"
-alias dpo="dpkg -e"
-alias dpx="dpkg -x"
-alias dpg="dpkg -l | grep"
-alias dpG="dpkg -S"
-alias dpL="dpkg -L"
-dpH() { echo "$1 hold" | $__SUDO dpkg --set-selections }
-dpI() { echo "$1 install" | $__SUDO dpkg --set-selections }
+    alias dpi="$__SUDO dpkg -i"
+    alias dpp="$__SUDO dpkg -P"
+    alias dpc="dpkg -c"
+    alias dps="dpkg -I"
+    alias dpo="dpkg -e"
+    alias dpx="dpkg -x"
+    alias dpg="dpkg -l | grep"
+    alias dpG="dpkg -S"
+    alias dpL="dpkg -L"
+    dpH() { echo "$1 hold" | $__SUDO dpkg --set-selections }
+    dpI() { echo "$1 install" | $__SUDO dpkg --set-selections }
+
+elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
+	alias api="$__SUDO yum install"
+	alias apa="$__SUDO yum clean all"
+	alias apr="$__SUDO yum remove"
+	alias apg="yum search"
+	alias aps="yum info"
+
+	alias dpg="yum list installed | grep"
+fi
 # }}}
 
 # task {{{

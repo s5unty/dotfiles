@@ -19,12 +19,12 @@ parse_git_branch() {
     stash="$(git stash list 2> /dev/null | \
         grep -q "${branch}")"
     if [ $? -eq 0 ]; then # branch has stash
-        _stash="${fg_brown}${at_reverse}${at_blink}WIP"
+        _stash=" ${at_reverse}"
     else
         _stash=" "
     fi
 
-    echo "${_stash}${at_bold}${_branch}"
+    echo "${_stash}${_branch}"
 }
 
 precmd() {
@@ -40,13 +40,14 @@ precmd() {
     mygitb="$at_bold$(parse_git_branch)$at_none"
     RPS1="$myjobs%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
     PS1="$at_bold%!%#$at_none "
+    print -Pn "\a"
     rehash
 }
 
 preexec () {
     if [ `tty | grep -c pts` -eq 1 ]; then
         # 当前执行的命令输出到终端标题栏
-        print -Pn "\a\e]0;%# $1 (%1~) - %l\a"
+        print -Pn "\e]0;%# $1 (%1~) - %l\a"
     fi
     # 基于时间随机使用一种颜色高亮 grep 内容
     export GREP_COLOR="3$[$(date +%N)%6+1];1;7"

@@ -1,6 +1,4 @@
 Screenshot
 ==========
 
-[![](https://lh6.googleusercontent.com/_oKL9t7fM3TU/TYdRntgIKOI/AAAAAAAABRc/LxaTzhePE-8/s288/vim.png)](https://lh6.googleusercontent.com/_oKL9t7fM3TU/TYdRntgIKOI/AAAAAAAABRc/LxaTzhePE-8/s1440/vim.png)
-[![](https://lh5.googleusercontent.com/_oKL9t7fM3TU/TYdRnnPz20I/AAAAAAAABRg/YTrodqUYC1U/s288/mutt.png)](https://lh5.googleusercontent.com/_oKL9t7fM3TU/TYdRnnPz20I/AAAAAAAABRg/YTrodqUYC1U/s1440/mutt.png)
-[![](https://lh5.googleusercontent.com/_oKL9t7fM3TU/TYdRmhWH8bI/AAAAAAAABRk/j2NSIfHpgMY/s288/im.png)](https://lh5.googleusercontent.com/_oKL9t7fM3TU/TYdRmhWH8bI/AAAAAAAABRk/j2NSIfHpgMY/s1440/im.png)
+[![](https://lh5.googleusercontent.com/-87IbABoHknI/TeBGaBfA-UI/AAAAAAAABVM/m7eBwGDpaJ8/s400/1.png)](https://lh5.googleusercontent.com/-87IbABoHknI/TeBGaBfA-UI/AAAAAAAABVM/m7eBwGDpaJ8/s1440/1.png)
