@@ -8,7 +8,7 @@ set shell="/usr/bin/zsh"
 " 编辑器
 set editor="urxvt -e vim -f"
 " 状态栏的背景色
-hi StatusLineNormal color: white !important; background: #222222 !important;
+hi StatusLineNormal color: black !important; background: transparent !important;
 " }}}
 
 " Key bindings {{{1
@@ -87,7 +87,7 @@ map <silent>            <S-F2>      :set encoding=UTF-8<CR>
 
 " QuickMarks {{{1
 silent qmark m https://mail.google.com/
-silent qmark r https://www.google.com/reader/
+silent qmark r http://reader.google.com/
 silent qmark c https://www.google.com/calendar
 silent qmark g https://github.com/
 silent qmark t https://twitter.com/
@@ -95,6 +95,7 @@ silent qmark d http://diigo.com/
 silent qmark q http://web.qq.com/
 silent qmark k http://kaixin001.com/
 silent qmark y http://www.youku.com/
+silent qmark j http://dict.hjenglish.com/jp/
 silent qmark w http://wiki.du1abadd.org/
 " }}} 
 
@@ -106,4 +107,3 @@ map <silent> ! :googl<CR>
 map <silent>            <F12>       :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
 map <silent>            <S-F12>     :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
 map <silent>            <C-F12>     :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
-

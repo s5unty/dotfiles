@@ -27,17 +27,18 @@ URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selecti
 
 ! @@ FONTS @@ {{{
 Xft.dpi:          96
-URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Micro Hei-10
-URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei-10
-URxvt.italicFont:xft:Envy Code R-10:italic, xft:Liberation Mono-10:italic, xft:WenQuanYi Micro Hei-10
+URxvt.font:      xft:Envy Code R-10, xft:Liberation Mono-10, xft:WenQuanYi Micro Hei:regular
+URxvt.boldFont:  xft:Envy Code R-10:bold, xft:Liberation Mono-10:bold, xft:WenQuanYi Micro Hei:bold
+URxvt.italicFont:xft:Envy Code R-10:italic, xft:Liberation Mono-10:italic, xft:WenQuanYi Micro Hei:italic
+
 URxvt.keysym.M-Up: command: \
-        \033]710;xft:DejaVu Sans Mono-13, xft:WenQuanYi Micro Hei-13\007 \
-        \033]711;xft:DejaVu Sans Mono-13:bold, xft:WenQuanYi Micro Hei-13\007 \
-        \033]712;xft:DejaVu Sans Mono-13:italic, xft:WenQuanYi Micro Hei-13\007
+        \033]710;xft:DejaVu Sans Mono-13, xft:WenQuanYi Micro Hei-13:regular\007 \
+        \033]711;xft:DejaVu Sans Mono-13:bold, xft:WenQuanYi Micro Hei-13:bold\007 \
+        \033]712;xft:DejaVu Sans Mono-13:italic, xft:WenQuanYi Micro Hei-13:italic\007
 URxvt.keysym.M-Down: command: \
-        \033]710;xft:Envy Code R-10, xft:WenQuanYi Micro Hei-10\007 \
-        \033]711;xft:Envy Code R-10:bold, xft:WenQuanYi Micro Hei-10\007 \
-        \033]712;xft:Envy Code R-10:italic, xft:WenQuanYi Micro Hei-10\007
+        \033]710;xft:Envy Code R-10, xft:WenQuanYi Micro Hei:regular\007 \
+        \033]711;xft:Envy Code R-10:bold, xft:WenQuanYi Micro Hei:bold\007 \
+        \033]712;xft:Envy Code R-10:italic, xft:WenQuanYi Micro Hei:italic\007
 ! }}}
 
 ! @@ COLORS AND GRAPHICS @@ {{{
@@ -94,7 +95,5 @@ Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! vim-scrollback
 !! http://github.com/ervandew/vimfiles
-URxvt.keysym.M-s: perl:vim-scrollback:start
-URxvt.keysym.M-p: perl:vim-scrollback:paste
 ! }}}
 

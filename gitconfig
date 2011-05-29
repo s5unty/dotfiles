@@ -107,7 +107,8 @@
     zd  = stash drop
 
     dci = svn dcommit
-    dco = svn clone
+    dco = svn clone -r HEAD
+    dca = svn clone
     dup = svn rebase
     dll = svn log --oneline --limit=20
     dls = svn log
