@@ -16,17 +16,19 @@ export DEBEMAIL="s5unty@gmail.com"
 export DEBFULLNAME="Vern Sun"
 export TZ='Asia/Shanghai'
 
+if [ `tty | grep -c pts` -eq 1 ]; then
+    stty -ixon -ixoff # 关闭 C-Q, C-S 流控制
+    export TERM="rxvt-unicode"
+    export LANG="zh_CN.UTF-8"
+fi
+
 for i in $MAILDIR/(company|personal)(/); do
     mailpath[$#mailpath+1]="${i}?<(￣3￣)> You have new mail in ${i:t}"
 done
 
 if hostname | grep "worktop" > /dev/null 2>&1; then
+## export http_proxy=http://10.167.129.20:8080 ## whitelist
 export http_proxy=http://10.167.129.21:8080
-
-# 已知两台代理：10.167.129.20 和 10.167.129.21
-# 20 有白名单和下载限制
-# 21 没有名单限制，可以下载超过 10M 的文件
-# 重装系统时可以找 IT 临时开通
 
 zstyle ':completion:*' users vern root Administrator
 zstyle ':completion:*' users-hosts \

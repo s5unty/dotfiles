@@ -29,12 +29,6 @@ export PATH="$PATH:/var/lib/gems/1.8/bin/"
 export TERM="xterm"
 export LANG="C"
 
-if [ `tty | grep -c pts` -eq 1 ]; then
-    stty -ixon -ixoff # 关闭 C-Q, C-S 流控制
-    export TERM="rxvt-unicode"
-    export LANG="zh_CN.UTF-8"
-fi
-
 if [[ -f $DIRSTACK ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
     dirstack=( ${(uf)"$(< $DIRSTACK)"} )
     builtin cd $(head -1 $DIRSTACK) # 打开终端时进入最近目录

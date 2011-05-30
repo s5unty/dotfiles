@@ -65,26 +65,26 @@ zle -N list-directory-stack
 # 不带参数表示执行 cd -
 #   直接按快捷键相当于执行 cd -
 #
-# 带正参数表示执行 cd -n
-#   按 Alt-5 再按快捷键相当于执行 cd -5
+# 带正参数表示执行 cd .. (n-1 次)
+#   按 Alt-3 再按快捷键相当于执行 3-1=2 次 cd ..
 #
-# 带负参数表示执行 cd .. (n-1 次)
-#   按 Alt-- 再按 Alt-3 再按快捷键相当于执行 3-1=2 次 cd ..
+# 带负参数表示执行 cd -n
+#   按 Alt-- 再按 Alt-5 再按快捷键相当于执行 cd -5
 jump-around-directory() {
     zle -I
     integer count=${NUMERIC:-0}
     upper=""
-    if (( count < 0 )); then
-        while (( ++count < 0 )); do
+    if (( count > 0 )); then
+        while (( --count > 0 )); do
             upper+="../"
         done
     elif (( count == 0)); then
         upper="-"
     else
-        upper="-$count"
+        upper="$count"
     fi
 
-    cd ${upper}
+    builtin cd ${upper} > /dev/null
 }
 zle -N jump-around-directory
 
