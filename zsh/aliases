@@ -35,7 +35,7 @@ vi() {
         if [ -f "$i" -a ! -w "$i" ] ; then precommand=$__SUDO ; break ; fi
     done
 
-    ${precommand} vim "$@"
+    ${precommand} vim -n "$@"
 }
 
 md() {

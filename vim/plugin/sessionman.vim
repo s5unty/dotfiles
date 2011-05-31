@@ -112,7 +112,7 @@ function! s:OpenSession(name)
 		let n = bufnr('%')
 		execute 'silent! so ' . s:sessions_path . '/' . a:name
 		execute 'silent! bwipeout! ' . n
-		execute 'color pattern'
+		execute 'color light'
 		execute 'TbStart'
 		if has('cscope')
 			silent! cscope kill -1

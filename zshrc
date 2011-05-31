@@ -30,13 +30,28 @@ if hostname | grep "worktop" > /dev/null 2>&1; then
 ## export http_proxy=http://10.167.129.20:8080 ## whitelist
 export http_proxy=http://10.167.129.21:8080
 
-zstyle ':completion:*' users vern root Administrator
+zstyle ':completion:*' users \
+    vern \
+    root \
+    Administrator
 zstyle ':completion:*' users-hosts \
-    vern@du1abadd.org root@10.167.225.216 root@10.33.135.13 root@10.33.135.15
+    vern@du1abadd.org \
+    root@10.167.225.216 \
+    root@10.33.135.13 \
+    root@10.33.135.15 \
+    root@10.167.225.171
 zstyle ':completion:*' users-hosts-ports \
-    Administrator@10.33.135.10:7000 Administrator@10.33.135.10:7001
+    Administrator@10.33.135.10:7000 \
+    Administrator@10.33.135.10:7001
 zstyle ':completion:*:(ping|ssh|scp|sftp|rsync):*' hosts \
-    10.167.226.154 10.167.225.120 10.167.129.20 10.167.129.21 10.167.225.216 10.33.135.10 10.33.135.13 10.33.135.15
+    10.167.226.154 \
+    10.167.225.120 \
+    10.167.129.20 \
+    10.167.129.21 \
+    10.167.225.216 \
+    10.33.135.10 \
+    10.33.135.13 \
+    10.33.135.15
 fi
 
 if hostname | grep "desktop" > /dev/null 2>&1; then

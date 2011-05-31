@@ -217,9 +217,9 @@ endfunction
 
 " Key bindings {{{1
 " Mouse Bindings {{{2
-map <silent> <unique> <2-LeftMouse> <C-]>zz
-map <silent> <unique> <RightRelease> :call G_GotoEditor()<CR><C-O>zz
-map <silent> <unique> <MiddleMouse> :call G_GotoEditor()<CR><C-I>zz
+map <silent> <unique> <2-LeftMouse> :call G_GotoEditor()<CR><C-O>zz
+map <silent> <unique> <2-RightMouse> :call G_GotoEditor()<CR><C-I>zz
+map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
@@ -284,6 +284,7 @@ imap <silent> <unique> <C-H> <Backspace>
 nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 nmap <silent> <unique> <C-F8> :make! clean<CR>
+nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR><C-L>
 
 " Alt+ {{{2
 if has("gui_running")
@@ -333,6 +334,8 @@ nmap <silent> <unique> <Leader>. :GundoToggle<CR>
 
 " Colon+, Colon char is ':' {{{2
 command E :call Ranger()
+command SS :SessionSave
+command S :SessionList
 
 " }}}1
 
@@ -515,7 +518,7 @@ set lazyredraw
 "
 " p1: s:OpenSession
 "     打开 Session 前 TbStop, 之后 TbStart. 否则布局大乱
-"     打开 Session 后使用 color pattern 自定义的颜色方案
+"     打开 Session 后使用 color light 自定义的颜色方案
 
 
 " * delimitMate.vim 2.5.1 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2

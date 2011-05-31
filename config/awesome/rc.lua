@@ -238,6 +238,17 @@ awful.key({ modkey }, "Left",   function () awful.client.focus.bydirection("left
 awful.key({ modkey }, "h",      function () awful.client.focus.bydirection("left")  client.focus:raise() end),
 awful.key({ modkey }, "Right",  function () awful.client.focus.bydirection("right") client.focus:raise() end),
 awful.key({ modkey }, "l",      function () awful.client.focus.bydirection("right") client.focus:raise() end),
+
+-- How can I make a minimized client visible again?
+-- https://bbs.archlinux.org/viewtopic.php?pid=838211
+awful.key({ modkey, "Shift" }, "i", function ()
+    local tag = awful.tag.selected()
+    for i=1, #tag:clients() do
+        tag:clients()[i].minimized=false
+        tag:clients()[i]:redraw()
+    end
+end),
+
 -- }}}
 
 -- {{{ Layout
@@ -287,8 +298,7 @@ awful.key({ modkey }, "d", function ()
     local f = io.popen("xsel -o")
     local word = f:read("*a")
     f:close()
-                                                                          --| 美化显示结果
-    local f = io.popen("sdcv -n --utf8-output -u 'XDICT英汉辞典' "..word.." | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+    local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u 'xdict-en-zh' "..word.." | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
     local c = f:read("*a")
     f:close()
 
@@ -301,8 +311,8 @@ awful.key({ modkey, "Shift" }, "d", function ()
         if cin_word == "" then
             return
         end
-                                                                                           --| 有些字典的翻译结果包含尖括号，会导致 naughty 无法正常显示。这里替换所有的尖括号，并同时美化显示结果
-        local f = io.popen("sdcv -n --utf8-output -u '21世纪英汉汉英双向词典' "..cin_word.." | tail -n +5 | sed -s 's/<</[/g' | sed -s 's/>>/]/g' | sed -s 's/</[/g' | sed -s 's/>/]/g' | sed -s 's/《/[/g' | sed -s 's/》/]/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+        -- 有些字典的翻译结果包含尖括号，会导致 naughty 无法正常显示。这里替换所有的尖括号，并同时美化显示结果
+        local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '21-enzh-zhen' "..cin_word.." | tail -n +5 | sed -s 's/<</[/g' | sed -s 's/>>/]/g' | sed -s 's/</[/g' | sed -s 's/>/]/g' | sed -s 's/《/[/g' | sed -s 's/》/]/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
         
         local c = f:read("*a")
         f:close()
