@@ -97,6 +97,12 @@ silent qmark k http://kaixin001.com/
 silent qmark y http://www.youku.com/
 silent qmark j http://dict.hjenglish.com/jp/
 silent qmark w http://wiki.du1abadd.org/
+
+silent qmark o http://10.167.129.55/ioffice/logon.do
+silent qmark O http://info.fnst.cn.fujitsu.com
+silent qmark 0 http://campus.fnst.cn.fujitsu.com
+silent qmark p http://ltech.fnst.cn.fujitsu.com/mediawiki
+silent qmark p http://ltech.fnst.cn.fujitsu.com/tsd/index.php
 " }}} 
 
 " goo.gl.js {{{2

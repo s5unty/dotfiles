@@ -11,7 +11,7 @@ bindkey -M viins "^P"   history-search-backward
 bindkey -M viins "^F"   forward-char
 bindkey -M viins "^B"   backward-char
 bindkey -M viins "^H"   backward-delete-char
-bindkey -M viins "^D"   delete-char
+bindkey -M viins "^D"   list-choices
 bindkey -M viins "^W"   backward-kill-word
 bindkey -M viins "^Q"   backward-kill-line
 bindkey -M viins "^K"   kill-line
@@ -35,9 +35,8 @@ bindkey -M viins "\e,"  insert-last-word-prior
 bindkey -M viins "\e/"  jump-around-directory
 bindkey -M viins "\e?"  list-directory-stack
 bindkey -M viins "\e;"  copy-earlier-word
-bindkey -M viins "\t"   expand-or-complete
+bindkey -M viins "\t"   menu-expand-or-complete
 bindkey -M viins "\e\t" _history-complete-newer
-bindkey -M viins " "    magic-space
 bindkey -M viins "\e1"  digit-argument
 bindkey -M viins "\e2"  digit-argument
 bindkey -M viins "\e3"  digit-argument
@@ -49,11 +48,18 @@ bindkey -M viins "\e8"  digit-argument
 bindkey -M viins "\e9"  digit-argument
 bindkey -M viins "\e-"  neg-argument
 
-bindkey -M menuselect " "   accept-line
-bindkey -M menuselect "\eh" backward-char
-bindkey -M menuselect "\el" forward-char
-bindkey -M menuselect "\ej" down-history
-bindkey -M menuselect "\ek" up-history
+bindkey -M menuselect "\e" send-break
+bindkey -M menuselect "\-" undo
+bindkey -M menuselect " "  magic-space
+bindkey -M menuselect "t"  accept-and-menu-complete
+bindkey -M menuselect "/"  accept-and-infer-next-history
+bindkey -M menuselect "h"  backward-char
+bindkey -M menuselect "l"  forward-char
+bindkey -M menuselect "j"  down-history
+bindkey -M menuselect "k"  up-history
+bindkey -M menuselect "0"  beginning-of-buffer-or-history
+bindkey -M menuselect "$"  end-of-buffer-or-history
+
 
 # Zle function
 list-directory-stack() {

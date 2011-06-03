@@ -35,11 +35,11 @@ vi() {
         if [ -f "$i" -a ! -w "$i" ] ; then precommand=$__SUDO ; break ; fi
     done
 
-    ${precommand} vim -n "$@"
+    ${precommand} /usr/bin/vim -n "$@"
 }
 
 md() {
-    mkdir $*
+    /bin/mkdir $*
     cd $1
 }
 
@@ -155,17 +155,17 @@ tds() {
 tdp() {
     task stop ${1}
     UUID=`task info ${1} | grep ^UUID | cut -b13-`
-    sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
+    [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdd() {
     task done ${1}
     UUID=`task info ${1} | grep ^UUID | cut -b13-`
-    sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
+    [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdr() {
     task delete ${1}
     UUID=`task info ${1} | grep ^UUID | cut -b13-`
-    sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
+    [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 # }}}
 

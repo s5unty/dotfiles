@@ -7,6 +7,7 @@
 #   variable=foo   -- By specifying a value, this overrides the default
 #   variable=      -- By specifying no value, this means no default
 #   #variable=foo  -- By commenting out the line, this uses the default
+include /usr/share/task/light-256.theme
 
 # Files
 data.location=~/.task
@@ -47,55 +48,55 @@ calendar.details.report=list                  # Report to use when showing task 
 calendar.holidays=none                        # Show public holidays on calendar:full, sparse or none
 #monthsperline=3                              # Number of calendar months on a line
 
-# Color controls.
-color=on                                      # Enable color
-color.header=color3                           # Color of header messages
-color.footnote=color3                         # Color of footnote messages
-color.debug=color3                            # Color of diagnostic output
-
-color.summary.bar=on rgb141                   # Color of summary report progress bar
-color.summary.background=on color0            # Color of summary report background
-
-color.history.add=color0 on color2            # Color of added tasks in ghistory report
-color.history.done=color0 on color15          # Color of completed tasks in ghistory report
-color.history.delete=color0 on color1         # Color of deleted tasks in ghistory report
-
-color.undo.before=color1                      # Color of values before a change
-color.undo.after=color2                       # Color of values after a change
-
-color.calendar.today=color0 on rgb013         # Color of today in calendar
-color.calendar.due=color0 on color1           # Color of days  with due tasks in calendar
-color.calendar.due.today=color15 on color1    # Color of today with due tasks in calendar
-color.calendar.overdue=color0 on color9       # Color of days  with overdue tasks in calendar
-color.calendar.weekend=color235               # Color of weekend days in calendar
-color.calendar.holiday=color0 on color11      # Color of public holidays in calendar
-color.calendar.weeknumber=rgb013              # Color of the weeknumbers in calendar
-
-# The following rules are presented in their order of precedence.
-# The higher the color rule is up this list, the higher precedence
-# it has in determining the color for the task.  Precedence is shown
-# in brackets [1]
-color.recurring=rgb013                        # [1]  Color of recur.any: tasks
-color.overdue=color9                          # [2]  Color of overdue tasks
-color.due.today=rgb400                        # [3]  Color of tasks due today
-color.due=color1                              # [4]  Color of due tasks
-#color.keyword.car=on blue                    # [5]  Color of description.contains:car tasks
-#color.project.garden=on green                # [6]  Color of project:garden tasks
-#color.tag.bug=yellow                         # [7]  Color of +bug tasks
-color.active=                                 # [8]  Color of active tasks
-color.pri.none=                               # [9]  Color of priority:  tasks
-color.pri.H=yellow                            # [9]  Color of priority:H tasks
-color.pri.M=                                  # [9]  Color of priority:M tasks
-color.pri.L=                                  # [9]  Color of priority:L tasks
-color.tagged=                                 # [10]  Color of tagged tasks
-color.alternate=on color233                   # [11] Alternate color for line coloring
+# # Color controls.
+# color=on                                      # Enable color
+# color.header=color3                           # Color of header messages
+# color.footnote=color3                         # Color of footnote messages
+# color.debug=color3                            # Color of diagnostic output
+# 
+# color.summary.bar=on rgb141                   # Color of summary report progress bar
+# color.summary.background=on color0            # Color of summary report background
+# 
+# color.history.add=color0 on color2            # Color of added tasks in ghistory report
+# color.history.done=color0 on color15          # Color of completed tasks in ghistory report
+# color.history.delete=color0 on color1         # Color of deleted tasks in ghistory report
+# 
+# color.undo.before=color1                      # Color of values before a change
+# color.undo.after=color2                       # Color of values after a change
+# 
+# color.calendar.today=color0 on rgb013         # Color of today in calendar
+# color.calendar.due=color0 on color1           # Color of days  with due tasks in calendar
+# color.calendar.due.today=color15 on color1    # Color of today with due tasks in calendar
+# color.calendar.overdue=color0 on color9       # Color of days  with overdue tasks in calendar
+# color.calendar.weekend=color235               # Color of weekend days in calendar
+# color.calendar.holiday=color0 on color11      # Color of public holidays in calendar
+# color.calendar.weeknumber=rgb013              # Color of the weeknumbers in calendar
+# 
+# # The following rules are presented in their order of precedence.
+# # The higher the color rule is up this list, the higher precedence
+# # it has in determining the color for the task.  Precedence is shown
+# # in brackets [1]
+# color.recurring=rgb013                        # [1]  Color of recur.any: tasks
+# color.overdue=color9                          # [2]  Color of overdue tasks
+# color.due.today=rgb400                        # [3]  Color of tasks due today
+# color.due=color1                              # [4]  Color of due tasks
+# #color.keyword.car=on blue                    # [5]  Color of description.contains:car tasks
+# #color.project.garden=on green                # [6]  Color of project:garden tasks
+# #color.tag.bug=yellow                         # [7]  Color of +bug tasks
+# color.active=                                 # [8]  Color of active tasks
+# color.pri.none=                               # [9]  Color of priority:  tasks
+# color.pri.H=yellow                            # [9]  Color of priority:H tasks
+# color.pri.M=                                  # [9]  Color of priority:M tasks
+# color.pri.L=                                  # [9]  Color of priority:L tasks
+# color.tagged=                                 # [10]  Color of tagged tasks
+# color.alternate=on color233                   # [11] Alternate color for line coloring
 
 # Shadow file support
 #shadow.file=/tmp/shadow.txt                  # Location of shadow file
 #shadow.command=list                          # Task command for shadow file
 #shadow.notify=on                             # Footnote when updated
 
-default.project=                              # Default project for 'add' command
+default.project=job                           # Default project for 'add' command
 default.priority=M                            # Default priority for 'add' command
 default.command=list                          # When no arguments are specified
 
