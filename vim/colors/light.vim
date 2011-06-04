@@ -1,5 +1,5 @@
 " Colour {{{
-let g:colors_name="pattern"
+let g:colors_name="light"
 set background=light
 if exists("syntax_on")
   syntax reset
@@ -13,47 +13,80 @@ endif
 
 hi clear
 
-hi Comment          ctermfg=darkgreen                       cterm=italic        guifg=#458b00                           gui=italic
-hi Constant         ctermfg=darkcyan                                            guifg=#00c5cd
-hi Special          ctermfg=darkred                                             guifg=#ee2c2c
-hi PreProc          ctermfg=black                                               guifg=#cd3278
-hi Statement        ctermfg=darkgrey                                            guifg=#1874cd                           gui=none
-hi Operator         ctermfg=darkgrey                                            guifg=#1874cd                           gui=none
-hi Type             ctermfg=darkgrey                                            guifg=#1874cd                           gui=none
-hi Underlined       ctermfg=NONE        ctermbg=NONE        cterm=underline     guifg=NONE          guibg=NONE          gui=underline
-hi Ignore           ctermfg=lightgrey   ctermbg=NONE                            guifg=#404040       guibg=NONE
-hi Error            ctermfg=black       ctermbg=darkred     cterm=bold          guifg=black         guibg=#ee2c2c       gui=bold
-hi Todo             ctermfg=black       ctermbg=yellow      cterm=bold          guifg=white         guibg=#458b00       gui=bold
-hi Identifier       ctermfg=black       ctermbg=NONE                            guifg=grey          guibg=NONE
-hi Function         ctermfg=black       ctermbg=NONE        cterm=bold          guifg=grey          guibg=NONE
-hi Normal           ctermfg=black       ctermbg=NONE                            guifg=#cdcd00       guibg=#222222
-hi Pmenu            ctermfg=black       ctermbg=magenta                         guifg=black         guibg=#ff69b4
-hi PmenuSel         ctermfg=yellow      ctermbg=darkblue    cterm=bold          guifg=#cdcd00       guibg=#1874cd       gui=bold
-hi SpecialKey       ctermfg=white       ctermbg=red         cterm=underline     guifg=white         guibg=#ff4040       gui=underline
-hi NonText          ctermfg=magenta     ctermbg=NONE                            guifg=#ff69b4       guibg=NONE
-hi Directory        ctermfg=darkblue    ctermbg=NONE                            guifg=#1874cd       guibg=NONE
-hi ErrorMsg         ctermfg=darkred     ctermbg=NONE                            guifg=#ee2c2c       guibg=NONE
-hi WarningMsg       ctermfg=darkblue    ctermbg=NONE                            guifg=darkblue      guibg=NONE
-hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic        guifg=black         guibg=#00ffff       gui=italic
-hi VertSplit        ctermfg=black       ctermbg=lightgrey   cterm=none          guifg=black         guibg=lightgrey     gui=none
-hi StatusLine       ctermfg=black       ctermbg=lightgrey   cterm=none          guifg=black         guibg=lightgrey     gui=none
-hi StatusLineNC     ctermfg=black       ctermbg=lightgrey   cterm=none          guifg=black         guibg=lightgrey     gui=none
-hi IncSearch        ctermfg=darkblue    ctermbg=white                           guifg=#6495ed       guibg=white
-hi Search           ctermfg=black       ctermbg=yellow      cterm=bold          guifg=#ff4040       guibg=NONE          gui=bold
-hi Question         ctermfg=magenta                                             guifg=#ff69b4
-hi LineNr           ctermfg=grey                            cterm=italic        guifg=#458b00       guibg=NONE          gui=italic
-hi DiffAdd          ctermfg=darkgreen   ctermbg=lightgrey   cterm=none          guifg=#458b00       guibg=NONE          gui=bold
-hi DiffChange       ctermfg=NONE        ctermbg=lightgrey   cterm=none          guifg=NONE          guibg=NONE
-hi DiffDelete       ctermfg=darkred     ctermbg=lightgrey   cterm=none          guifg=#ee2c2c       guibg=NONE
-hi DiffText         ctermfg=NONE        ctermbg=yellow      cterm=none          guifg=NONE          guibg=lightred      gui=bold
-hi Folded           ctermfg=green       ctermbg=NONE        cterm=italic        guifg=#00ee00       guibg=NONE          gui=italic
-hi FoldColumn       ctermfg=darkgreen   ctermbg=NONE                            guifg=#458b00       guibg=NONE
-hi SignColumn       ctermfg=white       ctermbg=NONE                            guifg=white         guibg=NONE
-hi MoreMsg          ctermfg=darkgreen                                           guifg=#458b00
-hi ModeMsg          ctermfg=darkred                                             guifg=#ee2c2c
-hi Title            ctermfg=darkblue                                            guifg=#1874cd
-hi Visual           ctermfg=white       ctermbg=darkblue                        guifg=white         guibg=#1874cd
-hi WildMenu         ctermfg=white       ctermbg=black                           guifg=white         guibg=#cdcd00
+hi Normal           ctermfg=black
+
+hi Comment          ctermfg=darkgreen                       cterm=italic
+
+hi Constant         ctermfg=black
+hi String           ctermfg=darkcyan
+hi Character        ctermfg=darkcyan
+hi Number           ctermfg=darkcyan
+hi Boolean          ctermfg=darkcyan
+hi Float            ctermfg=darkcyan
+
+hi Identifier       ctermfg=black
+hi Function         ctermfg=darkgrey                        cterm=bold
+
+hi Statement        ctermfg=darkgrey                        cterm=bold
+hi Conditional	    ctermfg=darkgrey                        cterm=bold
+hi Repeat		    ctermfg=darkgrey                        cterm=bold
+hi Label		    ctermfg=darkgrey                        cterm=bold
+hi Operator         ctermfg=darkgrey                        cterm=bold
+hi Keyword	        ctermfg=darkgrey                        cterm=bold
+hi Exception	    ctermfg=black                           cterm=bold
+
+hi PreProc          ctermfg=darkyellow
+hi Include	        ctermfg=darkmagenta
+hi Define		    ctermfg=darkmagenta
+hi Macro		    ctermfg=darkmagenta
+hi PreCondit	    ctermfg=darkmagenta
+
+hi Type             ctermfg=darkgrey                        cterm=bold
+hi StorageClass	    ctermfg=black                           cterm=bold
+hi Structure	    ctermfg=black                           cterm=bold
+hi Typedef	        ctermfg=black                           cterm=bold
+
+hi Special          ctermfg=darkyellow
+hi SpecialChar      ctermfg=darkyellow
+hi Tag              ctermfg=darkred                         cterm=bold,underline
+hi Delimiter        ctermfg=darkyellow
+hi SpecialComment   ctermfg=darkgreen                       cterm=bold,underline
+hi Debug            ctermfg=darkred
+
+hi Underlined       ctermfg=NONE                            cterm=underline
+
+hi Ignore           ctermfg=lightgrey
+
+hi Error            ctermfg=white       ctermbg=darkred     cterm=bold
+
+hi Todo             ctermfg=black       ctermbg=yellow      cterm=bold
+
+hi Pmenu            ctermfg=black       ctermbg=magenta
+hi PmenuSel         ctermfg=yellow      ctermbg=darkblue    cterm=bold
+hi NonText          ctermfg=magenta
+hi Directory        ctermfg=darkblue
+hi ErrorMsg         ctermfg=white       ctermbg=darkred     cterm=none
+hi WarningMsg       ctermfg=white       ctermbg=black       cterm=none
+hi MatchParen       ctermfg=black       ctermbg=cyan        cterm=italic
+hi VertSplit        ctermfg=black       ctermbg=lightgrey   cterm=none
+hi StatusLine       ctermfg=black       ctermbg=lightgrey   cterm=none
+hi StatusLineNC     ctermfg=black       ctermbg=lightgrey   cterm=none
+hi IncSearch        ctermfg=white       ctermbg=darkblue    cterm=none
+hi Search           ctermfg=black       ctermbg=yellow      cterm=none
+hi Question         ctermfg=white       ctermbg=darkgrey
+hi LineNr           ctermfg=grey                            cterm=italic
+hi DiffAdd          ctermfg=darkgreen   ctermbg=lightgrey   cterm=none
+hi DiffChange       ctermfg=NONE        ctermbg=lightgrey   cterm=none
+hi DiffDelete       ctermfg=darkred     ctermbg=lightgrey   cterm=none
+hi DiffText         ctermfg=NONE        ctermbg=yellow      cterm=none
+hi Folded           ctermfg=grey        ctermbg=NONE        cterm=bold,italic
+hi FoldColumn       ctermfg=darkgrey    ctermbg=NONE
+hi SignColumn       ctermfg=white       ctermbg=NONE
+hi MoreMsg          ctermfg=white       ctermbg=darkgrey
+hi ModeMsg          ctermfg=white       ctermbg=darkgrey    cterm=none
+hi Title            ctermfg=black       ctermbg=yellow
+hi Visual           ctermfg=white       ctermbg=darkblue
+hi WildMenu         ctermfg=white       ctermbg=black
 hi Cursorline       ctermfg=NONE        ctermbg=yellow      cterm=none
 " link - diff/patch
 hi def link diffAdded   DiffAdd
@@ -62,19 +95,19 @@ hi def link diffFile    DiffText
 hi def link diffSubname String
 hi def link diffLine    String
 " vimwiki
-hi VimwikiItalic        ctermfg=darkyellow                  cterm=italic                                                gui=italic
-hi VimwikiDelText       ctermfg=darkgray                                        guifg=black
-hi VimwikiList          ctermfg=green                                           guifg=#00ee00
+hi VimwikiItalic        ctermfg=darkyellow                  cterm=italic
+hi VimwikiDelText       ctermfg=darkgray
+hi VimwikiList          ctermfg=green
 " taglist
-hi MyTagListTagName     ctermfg=darkgrey    ctermbg=white   cterm=reverse       guifg=NONE          guibg=NONE          gui=reverse
-hi MyTagListFileName    ctermfg=darkgreen   ctermbg=NONE    cterm=italic        guifg=#458b00       guibg=NONE          gui=italic
-hi MyTagListTitle       ctermfg=black       ctermbg=NONE    cterm=bold          guifg=#404040       guibg=NONE          gui=bold
-hi MyTagListTagScope    ctermfg=NONE        ctermbg=NONE                        guifg=NONE          guibg=NONE
+hi MyTagListTagName     ctermfg=darkgrey    ctermbg=white   cterm=reverse
+hi MyTagListFileName    ctermfg=darkgrey    ctermbg=NONE    cterm=italic
+hi MyTagListTitle       ctermfg=black       ctermbg=NONE    cterm=bold
+hi MyTagListTagScope    ctermfg=NONE        ctermbg=NONE
 " tabbar
-hi Tb_Normal            ctermfg=darkgreen   ctermbg=NONE                        guifg=#458b00       guibg=NONE
-hi Tb_Changed           ctermfg=red         ctermbg=NONE                        guifg=#ff4040       guibg=NONE
-hi Tb_Readonly          ctermfg=green       ctermbg=NONE                        guifg=#00ee00       guibg=NONE
-hi Tb_VisibleNormal     ctermfg=white       ctermbg=darkgrey                    guifg=black         guibg=white
-hi Tb_VisibleChanged    ctermfg=black       ctermbg=red                         guifg=#ff4040       guibg=white
-hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green                       guifg=black         guibg=#00ee00
+hi Tb_Normal            ctermfg=darkgrey    ctermbg=NONE
+hi Tb_Changed           ctermfg=red         ctermbg=NONE
+hi Tb_Readonly          ctermfg=green       ctermbg=NONE
+hi Tb_VisibleNormal     ctermfg=white       ctermbg=darkgrey
+hi Tb_VisibleChanged    ctermfg=black       ctermbg=red
+hi Tb_VisibleReadonly   ctermfg=black       ctermbg=green
 " }}}
