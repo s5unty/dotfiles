@@ -34,7 +34,7 @@ set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
 set wildmode=longest:full,list:full
-set listchars=tab:>-,trail:-
+set listchars=tab:\ \ ,trail:\ 
 
 if has("gui_running")
     set guioptions-=m
@@ -57,13 +57,18 @@ else
     set shell=bash\ -x\ -c
 endif
 
+if &term =~ "rxvt-unicode"
+    color light
+else
+    color delek
+endif
+
 let mapleader=","
 let html_dynamic_folds=1
 let c_space_errors=1
 let sh_minlines = 500
 syn enable " 语法高亮
 filetype plugin indent on
-color light
 
 if v:version >= 703
     set undodir=~/.vimundo/
