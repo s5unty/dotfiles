@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2010-03-19.
-" @Last Change: 2010-11-13.
-" @Revision:    0.0.35
+" @Last Change: 2011-04-20.
+" @Revision:    0.0.48
 
 
 if !exists('g:quickfixsigns#use_relativenumber')
@@ -36,11 +36,18 @@ function! quickfixsigns#RelNumbersOnce() "{{{3
     if !has_key(g:quickfixsigns_lists, 'rel2')
         if v:version >= 703 && g:quickfixsigns#use_relativenumber
             if !&relativenumber
-                setlocal relativenumber
                 augroup QuickFixSignsRelNumbersOnce
                     autocmd!
-                    autocmd CursorMoved,CursorMovedI * set norelativenumber | autocmd! QuickFixSignsRelNumbersOnce
+                    autocmd CursorMoved,CursorMovedI,TabLeave,WinLeave * setlocal norelativenumber
+                    if ! &cul
+                        autocmd CursorMoved,CursorMovedI,TabLeave,WinLeave * setlocal nocul
+                    endif
+                    if ! &cuc
+                        autocmd CursorMoved,CursorMovedI,TabLeave,WinLeave * setlocal nocuc
+                    endif
+                    autocmd CursorMoved,CursorMovedI,TabLeave,WinLeave * autocmd! QuickFixSignsRelNumbersOnce
                 augroup END
+                setlocal relativenumber cul cuc
             endif
         else
             let s:list = keys(g:quickfixsigns_lists)
@@ -48,7 +55,7 @@ function! quickfixsigns#RelNumbersOnce() "{{{3
             call QuickfixsignsUpdate("rel2")
             augroup QuickFixSignsRelNumbersOnce
                 autocmd!
-                autocmd CursorMoved,CursorMovedI * call QuickfixsignsSelect(s:list) | call QuickfixsignsClear('rel2') | autocmd! QuickFixSignsRelNumbersOnce
+                autocmd CursorMoved,CursorMovedI,TabLeave,WinLeave * call QuickfixsignsSelect(s:list) | call QuickfixsignsClear('rel2') | autocmd! QuickFixSignsRelNumbersOnce
             augroup END
         endif
     endif

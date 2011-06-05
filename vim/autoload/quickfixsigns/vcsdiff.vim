@@ -3,8 +3,14 @@
 " @vcs:         http://vcshub.com/tomtom/quickfixsigns_vim/
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2010-05-08.
-" @Last Change: 2010-11-11.
-" @Revision:    174
+" @Last Change: 2011-05-18.
+" @Revision:    224
+
+if exists('g:quickfixsigns#vcsdiff#loaded')
+    finish
+endif
+let g:quickfixsigns#vcsdiff#loaded = 1
+
 
 if index(g:quickfixsigns_classes, 'vcsdiff') == -1
     finish
@@ -12,7 +18,7 @@ endif
 
 
 if !exists('g:quickfixsigns_class_vcsdiff')
-    let g:quickfixsigns_class_vcsdiff = {'sign': '*quickfixsigns#vcsdiff#Signs', 'get': 'quickfixsigns#vcsdiff#GetList()', 'event': ['BufEnter,BufWritePost']}   "{{{2
+    let g:quickfixsigns_class_vcsdiff = {'sign': '*quickfixsigns#vcsdiff#Signs', 'get': 'quickfixsigns#vcsdiff#GetList(%s)', 'event': ['BufEnter,BufWritePost'], 'always_new': 1}   "{{{2
 endif
 
 
@@ -74,12 +80,30 @@ endf
 
 " quickfixsigns#vcsdiff#GuessType() must return the name of a supported 
 " VCS (see |g:quickfixsigns#vcsdiff#cmds|).
-function! quickfixsigns#vcsdiff#GetList() "{{{3
+function! quickfixsigns#vcsdiff#GetList(filename) "{{{3
+    if &buftype =~ '\<\(nofile\|quickfix\|help\)\>' || &previewwindow || exists('b:fugitive_type')
+        return []
+    endif
     let vcs_type = quickfixsigns#vcsdiff#GuessType()
-    if has_key(g:quickfixsigns#vcsdiff#cmds, vcs_type)
+    " TLogVAR a:filename, vcs_type
+    " Ignore files that are not readable
+    if has_key(g:quickfixsigns#vcsdiff#cmds, vcs_type) && filereadable(a:filename)
         let cmdt = g:quickfixsigns#vcsdiff#cmds[vcs_type]
-        let cmds = printf(cmdt, shellescape(expand('%')))
-        let diff = system(cmds)
+        let dir  = fnamemodify(a:filename, ':h')
+        let file = fnamemodify(a:filename, ':t')
+        let cmds = printf(cmdt, shellescape(file))
+        " TLogVAR cmds
+        let oldCwd = getcwd()
+        let cdcommand = 'cd'
+        if exists("*haslocaldir") && haslocaldir()
+          let cdcommand = 'lcd'
+        endif
+        exec cdcommand fnameescape(dir)
+        try
+            let diff = system(cmds)
+        finally
+            exec cdcommand fnameescape(oldCwd)
+        endtry
         " TLogVAR diff
         if !empty(diff)
             let lines = split(diff, '\n')
@@ -88,10 +112,16 @@ function! quickfixsigns#vcsdiff#GetList() "{{{3
             let to = 0
             for line in lines
                 " TLogVAR from, line
-                if line =~ '^@@'
+                if line =~ '^@@\s'
                     let m = matchlist(line, '^@@ -\(\d\+\)\(,\d\+\)\? +\(\d\+\)\(,\d\+\)\? @@')
                     " TLogVAR line, m
                     let to = m[3]
+                    " let change_lnum = m[1]
+                    let from = to
+                elseif line =~ '^@@@\s'
+                    let m = matchlist(line, '^@@@ -\(\d\+\)\(,\d\+\)\? -\(\d\+\)\(,\d\+\)\? +\(\d\+\)\(,\d\+\)\? @@@')
+                    " TLogVAR line, m
+                    let to = m[5]
                     " let change_lnum = m[1]
                     let from = to
                 elseif from == 0

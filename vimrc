@@ -335,7 +335,7 @@ nmap <silent> <unique> <Leader>e :call <SID>CscopeFind('e', 'y')<CR>
 nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <Leader>E :call <SID>CscopeFind('e', 'n')<CR>
-nmap <silent> <unique> <Leader>. :GundoToggle<CR>
+nmap <silent> <unique> <Leader>. :call G_QFixToggle(0)<CR>:GundoToggle<CR>
 
 " Colon+, Colon char is ':' {{{2
 command E :call Ranger()
@@ -512,20 +512,15 @@ endfunction
 " nothing
 
 
-" * quickfixsigns 0.11 : Mark quickfix & location list items with signs {{{2
+" * quickfixsigns 0.14 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
-set lazyredraw
 
 
-" + sessionman.vim 1.04-p1 : Vim session manager {{{2
+" + sessionman.vim 1.06 : Vim session manager {{{2
 " http://www.vim.org/scripts/script.php?script_id=2010
-"
-" p1: s:OpenSession
-"     打开 Session 前 TbStop, 之后 TbStart. 否则布局大乱
-"     打开 Session 后使用 color light 自定义的颜色方案
 
 
-" * delimitMate.vim 2.5.1 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
+" * delimitMate.vim 2.6 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
 let delimitMate_autoclose = 1
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
@@ -540,9 +535,11 @@ let delimitMate_expand_cr = 1
 " 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ]
 
 
-" * Gundo 2.1.1 : Visualize your undo tree {{{2
+" * Gundo 2.2.0 : Visualize your undo tree {{{2
 " http://www.vim.org/scripts/script.php?script_id=3304
-let g:gundo_preview_height = 28
+let g:gundo_preview_height = 50
+let g:gundo_preview_bottom = 1
+let g:gundo_right = 1
 
 
 " - calendar.vim 2.2 : Calendar {{{2

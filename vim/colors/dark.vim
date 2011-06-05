@@ -1,5 +1,5 @@
 " Colour {{{
-let g:colors_name="pattern"
+let g:colors_name="dark"
 set background=dark
 
 " First remove all existing highlighting.
