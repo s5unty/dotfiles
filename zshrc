@@ -7,7 +7,7 @@
 [ -e $HOME/.zsh/completion    ] && source $HOME/.zsh/completion
 [ -e $HOME/.zsh/plugins/*.zsh ] && source $HOME/.zsh/plugins/*.zsh
 
-if ! hostname | grep "^verns-" > /dev/null 2>&1; then
+if ! hostname | grep "^verns-\|vps6309259" > /dev/null 2>&1; then
     return # 不是我的机器
 fi
 
@@ -22,9 +22,12 @@ if [ `tty | grep -c pts` -eq 1 ]; then
     export LANG="zh_CN.UTF-8"
 fi
 
-for i in $MAILDIR/(company|personal)(/); do
-    mailpath[$#mailpath+1]="${i}?<(￣3￣)> You have new mail in ${i:t}"
-done
+
+if hostname | grep "^verns-" > /dev/null 2>&1; then
+    for i in $MAILDIR/(company|personal)(/); do
+        mailpath[$#mailpath+1]="${i}?<(￣3￣)> You have new mail in ${i:t}"
+    done
+fi
 
 if hostname | grep "worktop" > /dev/null 2>&1; then
 ## export http_proxy=http://10.167.129.20:8080 ## whitelist
