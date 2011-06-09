@@ -22,7 +22,7 @@ URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
 
 URxvt.perl-lib:          /sun/.urxvt/
-URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selection
+URxvt.perl-ext-common:   matcher,overlay-osc,mark-yank-urls,vim-scrollback,translate-selection
 ! }}}
 
 ! @@ FONTS @@ {{{

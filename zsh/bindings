@@ -8,6 +8,7 @@ bindkey -M viins "^E"   vi-end-of-line
 bindkey -M viins "^S"   list-expand
 bindkey -M viins "^N"   history-search-forward
 bindkey -M viins "^P"   history-search-backward
+bindkey -M viins "^X"   delete-char
 bindkey -M viins "^F"   forward-char
 bindkey -M viins "^B"   backward-char
 bindkey -M viins "^H"   backward-delete-char
@@ -29,6 +30,7 @@ bindkey -M viins "\en"  zsh-history-substring-search-forward
 bindkey -M viins "\ep"  zsh-history-substring-search-backward
 bindkey -M viins "\eq"  push-line
 bindkey -M viins "\ek"  run-help
+bindkey -M viins "\ei"  osc-ipaddr
 bindkey -M viins "\eK"  which-command
 bindkey -M viins "\e."  insert-last-word
 bindkey -M viins "\e,"  insert-last-word-prior
@@ -117,6 +119,13 @@ _beginning-of-args() {
     zle _vi-forward-blank
 }
 zle -N _beginning-of-args
+
+osc-ipaddr() {
+    zle -I
+    __IP=`/sbin/ifconfig -v | egrep 'inet addr:.*Bcast:.*Mask:.*' | uniq | tail -1 | cut -d'.' -f4 | cut -d' ' -f1`
+    printf "\033]777;overlay;simple;ov1;8;-1;0;t;$__IP\007"
+}
+zle -N osc-ipaddr
 
 # {{{1
 typeset -g -A key

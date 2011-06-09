@@ -102,7 +102,7 @@ silent qmark o http://10.167.129.55/ioffice/logon.do
 silent qmark O http://info.fnst.cn.fujitsu.com
 silent qmark 0 http://campus.fnst.cn.fujitsu.com
 silent qmark p http://ltech.fnst.cn.fujitsu.com/mediawiki
-silent qmark p http://ltech.fnst.cn.fujitsu.com/tsd/index.php
+silent qmark P http://ltech.fnst.cn.fujitsu.com/tsd/index.php
 " }}} 
 
 " goo.gl.js {{{2
@@ -110,6 +110,6 @@ map <silent> ! :googl<CR>
 
 " AutoProxy {{{2
 " 切换 AutoProxy 的代理模式：智能、全局、禁用
-map <silent>            <F12>       :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
-map <silent>            <S-F12>     :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
-map <silent>            <C-F12>     :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
+map <silent> <F2> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
+map <silent> <F3> :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
+map <silent> <F4> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>

@@ -97,8 +97,8 @@
 # ; configure alt-s as the keybinding to enter vim scrollback mode.
 # urxvt*vim-scrollback: M-s
 #
-# ; configure alt-p as the keybinding to paste mode.
-# urxvt*vim-scrollback-paste: M-p
+# ; configure shift-insert as the keybinding to paste mode.
+# urxvt*vim-scrollback-paste: S-Insert
 #
 # ; configure the background and foreground colors used for the status bar while
 # ; in scrollback mode.
@@ -133,7 +133,7 @@ sub on_init {
    $self->parse_keysym($hotkey, "perl:vim-scrollback:start")
       or warn "unable to register '$hotkey' as vim scrollback start hotkey\n";
 
-   $hotkey = $self->x_resource("vim-scrollback-paste") || "M-v";
+   $hotkey = $self->x_resource("vim-scrollback-paste") || "S-Insert";
    $self->parse_keysym($hotkey, "perl:vim-scrollback:paste")
       or warn "unable to register '$hotkey' as vim paste hotkey\n";
 
