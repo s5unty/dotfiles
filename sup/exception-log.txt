@@ -1,0 +1,30 @@
+--- NoMethodError from thread: poll after loading inbox
+undefined method `resize' for nil:NilClass
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/buffer.rb:338:in `draw_screen'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/buffer.rb:753:in `flash'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/util.rb:609:in `send'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/util.rb:609:in `method_missing'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/poll.rb:48:in `poll_with_sources'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/poll.rb:68:in `poll'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/util.rb:609:in `send'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/util.rb:609:in `method_missing'
+/var/lib/gems/1.8/gems/sup-0.12.1/bin/sup:212
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup.rb:78:in `reporting_thread'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup.rb:76:in `initialize'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup.rb:76:in `new'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup.rb:76:in `reporting_thread'
+/var/lib/gems/1.8/gems/sup-0.12.1/bin/sup:212
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/modes/thread-index-mode.rb:684:in `call'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/modes/thread-index-mode.rb:684:in `__unprotected_load_threads'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/modes/thread-index-mode.rb:625:in `call'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/modes/thread-index-mode.rb:625:in `load_n_threads_background'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup.rb:78:in `reporting_thread'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup.rb:76:in `initialize'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup.rb:76:in `new'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup.rb:76:in `reporting_thread'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/modes/thread-index-mode.rb:623:in `load_n_threads_background'
+/var/lib/gems/1.8/gems/sup-0.12.1/lib/sup/modes/thread-index-mode.rb:694:in `__unprotected_load_threads'
+(eval):12:in `load_threads'
+/var/lib/gems/1.8/gems/sup-0.12.1/bin/sup:212
+/var/lib/gems/1.8/bin//sup:19:in `load'
+/var/lib/gems/1.8/bin//sup:19

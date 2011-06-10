@@ -1,0 +1,141 @@
+---
+:search_highlight:
+  :attrs:
+  - bold
+  :fg: white
+  :bg: blue
+:generic_notice_patina:
+  :fg: red
+  :bg: default
+:attachment:
+  :fg: red
+  :bg: default
+:index_starcyan:
+  :attrs:
+  - bold
+  :fg: blue
+  :bg: default
+:status:
+  :attrs:
+  - bold
+  :fg: black
+  :bg: yellow
+:tagged:
+  :attrs:
+  - bold
+  :fg: blue
+  :bg: default
+:alternate_patina:
+  :fg: white
+  :bg: yellow
+:system_buf:
+  :fg: yellow
+  :bg: default
+:snippet:
+  :fg: cyan
+  :bg: default
+:quote_patina:
+  :fg: blue
+  :bg: default
+:label:
+  :fg: blue
+  :bg: default
+:index_draft:
+  :attrs:
+  - bold
+  :fg: cyan
+  :bg: default
+:draft_notification:
+  :attrs:
+  - bold
+  :fg: cyan
+  :bg: default
+:missing_message:
+  :fg: white
+  :bg: cyan
+:regular_buf:
+  :fg: black
+  :bg: default
+:option:
+  :fg: black
+  :bg: default
+:sig_patina:
+  :fg: blue
+  :bg: default
+:labellist_old:
+  :fg: black
+  :bg: default
+:completion_character:
+  :attrs:
+  - bold
+  :fg: black
+  :bg: default
+:quote:
+  :fg: blue
+  :bg: default
+:cryptosig_valid:
+  :attrs:
+  - bold
+  :fg: blue
+  :bg: default
+:modified_buffer:
+  :attrs:
+  - bold
+  :fg: blue
+  :bg: default
+:starcyan:
+  :attrs:
+  - bold
+  :fg: blue
+  :bg: default
+:to_me:
+  :fg: magenta
+  :bg: default
+:labellist_new:
+  :attrs:
+  - bold
+  :fg: black
+  :bg: default
+:horizontal_selector_selected:
+  :attrs:
+  - bold
+  :fg: blue
+  :bg: default
+:cryptosig_unknown:
+  :fg: red
+  :bg: default
+:index_old:
+  :fg: black
+  :bg: default
+:starcyan_patina:
+  :attrs:
+  - bold
+  :fg: blue
+  :bg: magenta
+:twiddle:
+  :fg: yellow
+  :bg: default
+:horizontal_selector_unselected:
+  :fg: red
+  :bg: default
+:sig:
+  :fg: blue
+  :bg: default
+:cryptosig_invalid:
+  :attrs:
+  - bold
+  :fg: blue
+  :bg: cyan
+:index_new:
+  :attrs:
+  - bold
+  :fg: black
+  :bg: default
+:alternate_starcyan_patina:
+  :attrs:
+  - bold
+  :fg: blue
+  :bg: yellow
+:message_patina:
+  :fg: white
+  :bg: magenta

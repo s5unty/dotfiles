@@ -1,0 +1,29 @@
+--- 
+:ask_for_subject: true
+:poll_interval: 60
+:edit_signature: false
+:confirm_no_attachments: true
+:wrap_width: 0
+:ask_for_from: false
+:editor: /usr/bin/vim
+:confirm_top_posting: true
+:accounts: 
+  :default: 
+    :signature: /sun/maildir/.signature
+    :sendmail: /usr/bin/msmtp -t
+    :gpgkey: "97174991"
+    :alternates: []
+
+    :email: sunwuan@cn.fujitsu.com
+    :name: !binary |
+      5a2Z5q2m5a6J
+
+:slip_rows: 0
+:sent_source: maildir:/sun/maildir/sent
+:ask_for_to: true
+:jump_to_open_message: true
+:ask_for_cc: false
+:discard_snippets_from_encrypted_messages: false
+:ask_for_bcc: false
+:default_attachment_save_dir: "~/desktop"
+:thread_by_subject: false
