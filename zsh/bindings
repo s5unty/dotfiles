@@ -70,6 +70,27 @@ list-directory-stack() {
 }
 zle -N list-directory-stack
 
+# 插入模式光标黑色
+# 命令模式光标红色
+zle-keymap-select () {
+    if [ "$TERM" = "rxvt-unicode" ]; then
+        if [ $KEYMAP = vicmd ]; then
+            echo -ne "\033]12;Red\007"
+        else
+            echo -ne "\033]12;Black\007"
+        fi
+    fi
+}
+zle -N zle-keymap-select
+
+zle-line-init () {
+    zle -K viins
+    if [ $TERM = "rxvt-unicode" ]; then
+        echo -ne "\033]12;Black\007"
+    fi
+}
+zle -N zle-line-init
+
 # 不带参数表示执行 cd -
 #   直接按快捷键相当于执行 cd -
 #

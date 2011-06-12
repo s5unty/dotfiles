@@ -58,6 +58,10 @@ endif
 
 if &term =~ "rxvt-unicode"
     color light256
+    " 区别普通/插入模式的光标颜色
+    let &t_SI = "\033]12;black\007"
+    let &t_EI = "\033]12;red\007"
+    autocmd VimLeave * :!echo -ne "\033]12;black\007"
 else
     color delek
 endif
@@ -371,6 +375,7 @@ if has("autocmd")
 
   autocmd Filetype java
     \ setlocal omnifunc=javacomplete#Complete
+
 endif
 " }}}
 

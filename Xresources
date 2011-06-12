@@ -61,7 +61,7 @@ URxvt.keysym.M-Down: command: \
 ! }}}
 
 ! @@ L I G H T -- theme {{{
-URxvt.background:    white
+URxvt.background:    grey89
 URxvt.foreground:    black
 URxvt.cursorColor:   grey15
 URxvt.cursorColor2:  white
@@ -77,8 +77,8 @@ URxvt.colorIT:       grey15
 *color4:    DodgerBlue3
 *color5:    VioletRed3
 *color6:    DarkSlateGray4
-*color7:    grey90
-*color8:    grey45
+*color7:    grey45
+*color8:    grey30
 *color9:    brown1
 *color10:   green3
 *color11:   khaki1

@@ -36,7 +36,7 @@ hi FoldColumn    ctermfg=124    guifg=#af0000  ctermbg=250    guibg=#bcbcbc  cte
 hi Pmenu         ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
 hi PmenuSel      ctermfg=16     guifg=#000000  ctermbg=244    guibg=#808080  cterm=none       gui=none
 hi PmenuSbar     ctermfg=NONE   guifg=NONE     ctermbg=244    guibg=#808080  cterm=none       gui=none
-hi PmenuThumb    ctermfg=251    guifg=#c6c6c6  ctermbg=NONE   guibg=NONE     cterm=none       gui=none
+hi PmenuThumb    ctermfg=251    guifg=#c6c6c6  ctermbg=255    guibg=#eeeeee  cterm=none       gui=none
 hi LineNr        ctermfg=238    guifg=#444444  ctermbg=NONE   guibg=NONE     cterm=italic     gui=none
 hi NonText       ctermfg=238    guifg=#444444  ctermbg=NONE   guibg=NONE     cterm=bold       gui=bold
 hi SpecialKey    ctermfg=239    guifg=#4e4e4e  ctermbg=250    guibg=#bcbcbc  cterm=bold       gui=bold
