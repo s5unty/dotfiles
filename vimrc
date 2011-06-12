@@ -1,6 +1,5 @@
 " General {{{1
 set encoding=utf-8
-" 
 set fileencodings=ucs-bom,utf-8,sjis,gbk,big5,default
 set termencoding=utf-8
 set fileformats=unix,dos
@@ -58,7 +57,7 @@ else
 endif
 
 if &term =~ "rxvt-unicode"
-    color light
+    color light256
 else
     color delek
 endif
