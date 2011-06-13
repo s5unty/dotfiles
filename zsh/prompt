@@ -20,6 +20,8 @@ parse_git_branch() {
         grep -q "${branch}")"
     if [ $? -eq 0 ]; then # branch has stash
         _stash=" ${at_reverse}"
+    elif [ -z ${_branch} ]; then
+        _stash=""
     else
         _stash=" "
     fi
