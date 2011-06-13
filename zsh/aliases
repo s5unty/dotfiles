@@ -22,6 +22,12 @@ alias scp="scp -p"
 alias lintian="lintian -viI"
 alias tig="tig --all"
 
+hash -d dotfiles=~/dotfiles
+hash -d desktop=~/desktop 
+hash -d hacking=~/hacking
+hash -d archive=~/archive
+hash -d document=~/document
+
 cd() {
     if builtin cd "$@"; then
         ls

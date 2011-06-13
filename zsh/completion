@@ -1,7 +1,7 @@
 # vim:set syntax=zsh:
 
-zstyle ':completion:*' menu select
-zstyle ':completion:*' expand true
+zstyle ':completion:*' menu search select=5
+zstyle ':completion:*' expand prefix
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' special-dirs true

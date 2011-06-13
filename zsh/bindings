@@ -37,7 +37,7 @@ bindkey -M viins "\e,"  insert-last-word-prior
 bindkey -M viins "\e/"  jump-around-directory
 bindkey -M viins "\e?"  list-directory-stack
 bindkey -M viins "\e;"  copy-earlier-word
-bindkey -M viins "\t"   menu-expand-or-complete
+bindkey -M viins "\t"   expand-or-complete
 bindkey -M viins "\e\t" _history-complete-newer
 bindkey -M viins "\e1"  digit-argument
 bindkey -M viins "\e2"  digit-argument
@@ -50,17 +50,18 @@ bindkey -M viins "\e8"  digit-argument
 bindkey -M viins "\e9"  digit-argument
 bindkey -M viins "\e-"  neg-argument
 
-bindkey -M menuselect "\e" send-break
-bindkey -M menuselect "\-" undo
-bindkey -M menuselect " "  magic-space
-bindkey -M menuselect "t"  accept-and-menu-complete
-bindkey -M menuselect "/"  accept-and-infer-next-history
-bindkey -M menuselect "h"  backward-char
-bindkey -M menuselect "l"  forward-char
-bindkey -M menuselect "j"  down-history
-bindkey -M menuselect "k"  up-history
-bindkey -M menuselect "0"  beginning-of-buffer-or-history
-bindkey -M menuselect "$"  end-of-buffer-or-history
+bindkey -M menuselect "^D"   send-break
+bindkey -M menuselect "\e"   send-break
+bindkey -M menuselect "\e\-" undo
+bindkey -M menuselect " "    magic-space
+bindkey -M menuselect "\e "  accept-and-menu-complete
+bindkey -M menuselect "\r"   accept-search
+bindkey -M menuselect "\eh"  backward-char
+bindkey -M menuselect "\el"  forward-char
+bindkey -M menuselect "\ej"  down-history
+bindkey -M menuselect "\ek"  up-history
+bindkey -M menuselect "\e0"  beginning-of-buffer-or-history
+bindkey -M menuselect "\e$"  end-of-buffer-or-history
 
 
 # Zle function
