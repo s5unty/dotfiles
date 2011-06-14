@@ -9,7 +9,7 @@ alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
 alias ll="/bin/ls --color=always -hFxtrl"
 alias la="/bin/ls --color=always -hFXA"
-alias ls="/bin/ls --color=always -hFxt"
+alias ls="/bin/ls --color=always -hFv"
 alias cp="cp -a"
 alias rm="rm -r"
 alias at="at -m"
@@ -26,7 +26,7 @@ hash -d dotfiles=~/dotfiles
 hash -d desktop=~/desktop 
 hash -d hacking=~/hacking
 hash -d archive=~/archive
-hash -d document=~/document
+hash -d documents=~/documents
 
 cd() {
     if builtin cd "$@"; then
@@ -137,6 +137,7 @@ elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
 	alias apg="yum search"
 	alias aps="yum info"
 
+	alias dpi="$__SUDO rpm -i"
 	alias dpg="yum list installed | grep"
 fi
 # }}}
@@ -153,24 +154,24 @@ alias tdci="task annotate"
 alias tdco="task denotate"
 tds() {
     task start ${1}
-    DESC=`task info ${1} | grep ^Desc | cut -b13-`
-    UUID=`task info ${1} | grep ^UUID | cut -b13-`
+    DESC=`task info ${1} | /bin/grep "^Desc" | cut -b13-`
+    UUID=`task info ${1} | /bin/grep "^UUID" | cut -b13-`
     REM=`date -d"today" +"REM AT 23:30 +900 *15 TAG ${UUID} MSG ${DESC}"`
     echo ${REM} >> ~/.task/reminders
 }
 tdp() {
     task stop ${1}
-    UUID=`task info ${1} | grep ^UUID | cut -b13-`
+    UUID=`task info ${1} | /bin/grep "^UUID" | cut -b13-`
     [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdd() {
     task done ${1}
-    UUID=`task info ${1} | grep ^UUID | cut -b13-`
+    UUID=`task info ${1} | /bin/grep "^UUID" | cut -b13-`
     [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdr() {
     task delete ${1}
-    UUID=`task info ${1} | grep ^UUID | cut -b13-`
+    UUID=`task info ${1} | /bin/grep "^UUID" | cut -b13-`
     [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 # }}}
