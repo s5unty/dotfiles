@@ -1,6 +1,6 @@
 " General {{{1
 set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,sjis,gbk,big5,default
+set fileencodings=ucs-bom,utf-8,sjis,euc-jp,gbk,big5,default
 set termencoding=utf-8
 set fileformats=unix,dos
 set mouse=a " 开启鼠标支持

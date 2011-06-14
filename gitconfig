@@ -9,6 +9,8 @@
     subjectprefix = ""
 [diff]
     tool = vimdiff
+[difftool "normal"] # http://goo.gl/c8Xok
+	cmd = diff $LOCAL $REMOTE
 [push]
     default = current
 [gui]
@@ -83,7 +85,8 @@
     dc  = diff --no-prefix -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
     da  = diff --no-prefix -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
     df  = diff --no-prefix --stat=200,78 HEAD # show different files between working tree and the index
-    dt  = difftool
+    dt  = difftool -y
+    do  = difftool -y -t normal
     dp  = !sh -c 'git diff HEAD "$0" | git apply --whitespace=nowarn --index -' # fast apply the patch against "$0" commit or branch
 
     fp  = format-patch -s
