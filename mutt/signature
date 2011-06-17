@@ -1,4 +1,15 @@
 #! /bin/sh
 
-echo 'Vern'
-echo 'vim -c ":s(^(ZnQr8va1puvan.(|:s)\d\(\S\)) \\U\\1)g|:1 normal g??"'
+if ! hostname | grep "^verns-worktop" > /dev/null 2>&1; then
+    echo 'Vern'
+    echo 'vim -c ":s(^(ZnQr8va1puvan.(|:s)\d\(\S\)) \\U\\1)g|:1 normal g??"'
+else
+    case "$1" in
+    jp)
+        echo -n '孫武安'; LANG=ja_JP.UTF-8 && date +" %Y.%m.%d (%a)";;
+    *)
+        echo -n '孙武安'; LANG=zh_CN.UTF-8 && date +" %Y.%m.%d (%a)";;
+    esac
+    echo 'Development Dept. #1, FNST'
+    echo '+86+25-86630566-8515, 7998-8515'
+fi

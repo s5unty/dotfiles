@@ -37,7 +37,7 @@ hi Pmenu         ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cte
 hi PmenuSel      ctermfg=16     guifg=#000000  ctermbg=244    guibg=#808080  cterm=none       gui=none
 hi PmenuSbar     ctermfg=NONE   guifg=NONE     ctermbg=244    guibg=#808080  cterm=none       gui=none
 hi PmenuThumb    ctermfg=251    guifg=#c6c6c6  ctermbg=255    guibg=#eeeeee  cterm=none       gui=none
-hi LineNr        ctermfg=238    guifg=#444444  ctermbg=NONE   guibg=NONE     cterm=italic     gui=none
+hi LineNr        ctermfg=250    guifg=#bcbcbc  ctermbg=NONE   guibg=NONE     cterm=italic     gui=none
 hi NonText       ctermfg=238    guifg=#444444  ctermbg=NONE   guibg=NONE     cterm=bold       gui=bold
 hi SpecialKey    ctermfg=239    guifg=#4e4e4e  ctermbg=250    guibg=#bcbcbc  cterm=bold       gui=bold
 hi Title         ctermfg=254    guifg=#e4e4e4  ctermbg=167    guibg=#df5f5f  cterm=none       gui=none
@@ -80,4 +80,10 @@ hi MyTagListTagName  ctermfg=244  guifg=#808080  ctermbg=15   guibg=#ffffff  cte
 hi MyTagListFileName ctermfg=244  guifg=#808080  ctermbg=NONE guibg=NONE     cterm=italic     gui=italic
 hi MyTagListTitle    ctermfg=0    guifg=#000000  ctermbg=NONE guibg=NONE     cterm=bold       gui=bold
 hi MyTagListTagScope ctermfg=NONE guifg=NONE     ctermbg=NONE guibg=NONE     cterm=NONE       gui=NONE
+
+" mail
+hi def link mailSignature	Comment
+hi mailQuoted1		ctermfg=237
+hi mailQuoted2		ctermfg=243
+hi mailQuoted3		ctermfg=249
 

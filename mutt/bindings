@@ -11,7 +11,6 @@ bind pager      <BackTab>   previous-new-then-unread
 bind pager      <Backspace> parent-message
 # 浏览首页时
 bind index      0           collapse-thread
-bind index      z           collapse-all
 bind index     \;           current-middle
 bind index     \\           last-entry
 bind index      P           recall-message # 'R'ecall-message move to 'P'

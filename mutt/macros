@@ -40,3 +40,7 @@ macro index "<F12>" "<limit>~Q | ~P<enter>"
 # 只显示这两天的邮件
 macro index "<F11>" "<limit>~d `date -d '1 days ago' +%d/%m`-<enter>"
 
+macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
+
+# 避免切换折叠后导致底部留白的问题
+macro index z "<collapse-all><current-bottom>

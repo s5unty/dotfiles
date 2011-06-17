@@ -226,7 +226,7 @@ endfunction
 " Key bindings {{{1
 " Mouse Bindings {{{2
 map <silent> <unique> <2-LeftMouse> :call G_GotoEditor()<CR><C-O>zz
-map <silent> <unique> <2-RightMouse> :call G_GotoEditor()<CR><C-I>zz
+map <silent> <unique> <2-RightMouse> :call G_GotoEditor()<CR><C-I>g`"zz
 map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
@@ -256,7 +256,7 @@ vmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
-nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
+nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>g`"zz
 nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
@@ -392,7 +392,7 @@ endif
 " p2: g:Tb_StatusLine
 "     添加变量用户调整 TabBar 的状态栏信息
 let Tb_UseSingleClick = 1 " 单击切换
-let Tb_TabWrap = 1 " 禁止跨行显示
+let Tb_TabWrap = 0 " 允许跨行显示
 let Tb_MaxSize = 0 "
 let Tb_ModSelTarget = 1 " 跳转至编辑窗口
 let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口

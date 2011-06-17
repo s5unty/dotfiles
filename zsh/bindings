@@ -48,6 +48,7 @@ bindkey -M viins "\e6"  digit-argument
 bindkey -M viins "\e7"  digit-argument
 bindkey -M viins "\e8"  digit-argument
 bindkey -M viins "\e9"  digit-argument
+bindkey -M viins "\e0"  digit-argument
 bindkey -M viins "\e-"  neg-argument
 
 bindkey -M menuselect "^D"   send-break
@@ -60,8 +61,6 @@ bindkey -M menuselect "\eh"  backward-char
 bindkey -M menuselect "\el"  forward-char
 bindkey -M menuselect "\ej"  down-history
 bindkey -M menuselect "\ek"  up-history
-bindkey -M menuselect "\e0"  beginning-of-buffer-or-history
-bindkey -M menuselect "\e$"  end-of-buffer-or-history
 
 
 # Zle function
