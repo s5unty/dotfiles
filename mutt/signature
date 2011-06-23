@@ -12,6 +12,6 @@ else
     *)
         echo -n 'Sun Wuan (孙武安)'; LANG=zh_CN.UTF-8 && date +" %m.%d (%A)";;
     esac
-    echo 'Development Dept. #1, FNST.(7998-8515)'
-    echo '+86+25-86630566-8515, sunwuan@cn.fujitsu.com'
+    echo 'Development Dept. #1, FNST.(7998-8513)'
+    echo '+86+25-86630566-8513, sunwuan@cn.fujitsu.com'
 fi
