@@ -9,6 +9,10 @@
     subjectprefix = ""
 [diff]
     tool = vimdiff
+[diff "msword"] # http://progit.org/book/zh/ch7-2.html
+	textconv = antiword
+[diff "msexcel"]
+	textconv = xlhtml -fw -asc -te -xp:0-10 -xc:0-100
 [difftool "normal"] # http://goo.gl/c8Xok
 	cmd = diff $LOCAL $REMOTE
 [push]
