@@ -55,7 +55,7 @@ set use_from=yes
 # 此选项确保从真正的邮送域发送信件
 set envelope_from=yes
 # 默认使用的的邮送域
-set from='Vern Sun <sunwuan@cn.fujitsu.com>'
+set from='Vern Sun <s5unty@gmail.com>'
 # 把状态栏放在页眉
 set status_on_top
 # 认为所有未读邮件都是新邮件
@@ -96,8 +96,8 @@ set menu_scroll
 set askcc=yes
 # 签名文件，最后竖线|表示该文件是一段脚本
 set signature=~/.mutt/signature|
-# 签名前插入 "-- "
-set sig_dashes=yes
+# 签名前不自动插入 "-- "，由签名脚本负责
+set sig_dashes=no
 # 设定回信的模板
 set date_format="%a, %F at %R %z"
 set attribution="on %D, %n wrote:"

@@ -1,17 +1,20 @@
 #! /bin/sh
 
+echo ''
 if ! hostname | grep "^verns-worktop" > /dev/null 2>&1; then
-    echo 'Vern'
+    echo 'Cheers,\n-- \nVern'
     echo 'vim -c ":s(^(ZnQr8va1puvan.(|:s)\d\(\S\)) \\U\\1)g|:1 normal g??"'
 else
     case "$1" in
-    jp)
-        echo -n 'Sun Wuan (孫武安)'; LANG=ja_JP.UTF-8 && date +" %m.%d (%A)";;
     en)
-        echo -n 'Sun Wuan (孙武安)'; LANG=en_US.UTF-8 && date +" %m.%d (%A)";;
+        echo 'Regards,\n-- '
+        LANG=en_US.UTF-8 && date +"Sun Wuan (Vern Sun) | %m.%d (%a.) | Development Dept.#1 | FNST";;
+    ja)
+        echo 'よろしくお願いいたします。\n-- '
+        LANG=ja_JP.UTF-8 && date +"Sun Wuan (孫武安) | %m.%d (%A) | Development Dept.#1 | FNST";;
     *)
-        echo -n 'Sun Wuan (孙武安)'; LANG=zh_CN.UTF-8 && date +" %m.%d (%A)";;
+        echo '祝身体健康、工作顺利。\n-- '
+        LANG=zh_CN.UTF-8 && date +"Sun Wuan (孙武安) | %m.%d (%A) | Development Dept.#1 | FNST";;
     esac
-    echo 'Development Dept. #1, FNST.(7998-8513)'
-    echo '+86+25-86630566-8513, sunwuan@cn.fujitsu.com'
+    echo 'sunwuan@cn.fujitsu.com | T: +86+25-86630566-8515 | I: 7998-8515'
 fi
