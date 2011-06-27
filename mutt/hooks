@@ -18,6 +18,6 @@ folder-hook  (company|personal) "bind pager r reply; bind index r reply"
 folder-hook !(company|personal) "bind pager r list-reply; bind index r list-reply"
 # 6. 给日本人的邮件用日文签名，其他的用中文签名
 send-hook     @cn.fujitsu.com "set signature='~/.mutt/signature zh|'"
-send-hook    .*jp.fujitsu.com "set signature='~/.mutt/signature jp|'"
+send-hook    .*jp.fujitsu.com "set signature='~/.mutt/signature ja|'"
 reply-hook    @cn.fujitsu.com "set signature='~/.mutt/signature zh|'"
-reply-hook   .*jp.fujitsu.com "set signature='~/.mutt/signature jp|'"
+reply-hook   .*jp.fujitsu.com "set signature='~/.mutt/signature ja|'"
