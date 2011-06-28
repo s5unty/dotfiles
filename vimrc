@@ -33,6 +33,7 @@ set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
 set wildmode=longest:full,list:full
+set viminfo+=! " 为了 mark 能保存高亮信息
 set listchars=tab:\ \ ,trail:\ 
 
 if has("gui_running")
@@ -565,6 +566,12 @@ let OmniCpp_MayCompleteDot = 1 " autocomplete after .
 let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
 let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+
+" * Mark 2.5.1 : Highlight several words in different colors simultaneously. {{{2
+" http://www.vim.org/scripts/script.php?script_id=2666
+let g:mwAutoLoadMarks = 1 " 自动加载高亮的 Mark
+nmap <Plug>IgnoreMarkSearchAnyNext <Plug>MarkSearchAnyNext
+nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 
 " }}}1
 

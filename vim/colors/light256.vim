@@ -87,3 +87,11 @@ hi mailQuoted1		ctermfg=237
 hi mailQuoted2		ctermfg=243
 hi mailQuoted3		ctermfg=249
 
+" mark
+hi MarkWord1     ctermfg=Black  guifg=Black    ctermbg=228    guibg=#ffff87
+hi MarkWord2     ctermfg=Black  guifg=Black    ctermbg=153    guibg=#afdfff
+hi MarkWord3     ctermfg=Black  guifg=Black    ctermbg=225    guibg=#ffdfff
+hi MarkWord4     ctermfg=Black  guifg=Black    ctermbg=114    guibg=#87df87
+hi MarkWord5     ctermfg=Black  guifg=Black    ctermbg=116    guibg=#87dfdf
+hi MarkWord6     ctermfg=Black  guifg=Black    ctermbg=249    guibg=#b2b2b2
+
