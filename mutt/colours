@@ -21,3 +21,8 @@ color index      red         color7  "~D"  # 删除
 # 醒目签名
 color body       red         black   "^(gpg: )?Bad signature"
 color body       red         black   "^(gpg: )?warning"
+
+# 特殊邮件头
+color header    yellow      default "^X-Label:"
+color header    color8      color7  "^X-Mailer:"
+color header    color8      color7  "^User-Agent:"

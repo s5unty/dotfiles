@@ -26,12 +26,12 @@
 # 设置屏保
 /usr/bin/xscreensaver -no-splash &
 
-# 统一剪贴板
-/usr/bin/autocutsel -s PRIMARY -f
+# 统一剪贴板，parcellite 比 autocutsel 好用 :)
+/usr/bin/parcellite -n &
 
 # 启动应用程序
 /usr/bin/x-www-browser & #浏览器
-
+/usr/bin/x-terminal-emulator -name Mutt -T Mutt -e sh -c mutt &
 /usr/bin/fetchmail -d 300 #邮件
 #/usr/bin/gdlinux # Google Desktop
 #/usr/bin/mocp -S #音乐服务

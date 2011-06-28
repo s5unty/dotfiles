@@ -7,8 +7,7 @@ unignore BCC:
 unignore X-LDate:
 unignore Subject:
 unignore X-Label:
+unignore X-Mailer:
+unignore User-Agent:
 
-hdr_order From: To: CC: BCC: X-LDate: Subject: X-Label:
-
-# 特殊邮件头
-color header yellow default "^X-Label:"
+hdr_order From: To: CC: BCC: Subject: X-LDate: X-Label: X-Mailer: User-Agent:
