@@ -22,11 +22,12 @@ alias scp="scp -p"
 alias lintian="lintian -viI"
 alias tig="tig --all"
 
-hash -d dotfiles=~/dotfiles
-hash -d desktop=~/desktop 
-hash -d hacking=~/hacking
 hash -d archive=~/archive
-hash -d documents=~/documents
+hash -d desktop=~/desktop
+hash -d dotfile=~/dotfiles
+hash -d hacking=~/hacking
+hash -d worktop=~/worktop
+hash -d samba=~/samba
 
 cd() {
     if builtin cd "$@"; then
@@ -91,7 +92,7 @@ CS() { # gen cscope.files
         -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' \
         -o -iname '*.java' > .cscope/cscope.files
     cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
-    ctags --c++-kinds=+p --fields=-fst --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
+    ctags --c++-kinds=+p --fields=+iaS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
 }
 
 dup() { # dupload

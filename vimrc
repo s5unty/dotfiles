@@ -8,7 +8,7 @@ set expandtab " TAB is soft
 set tabstop=4 " TAB 的宽度
 set shiftwidth=4 " 缩进的宽度
 set softtabstop=4
-set clipboard^=unnamed " 使用系统剪贴板
+set clipboard=unnamed " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
@@ -480,7 +480,7 @@ if has("cscope")
             " 由于频繁保存引发的多个 ctags 间的互斥，可能会导致以下错误:
             " ctags: ".cscope/cscope.tags" doesn't look like a tag file; I refuse to overwrite it.
             " http://www.lslnet.com/linux/dosc1/55/linux-369438.htm
-            call system("ps -e | grep ctags || ctags --c++-kinds=+p --fields=-fst+aS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags &")
+            call system("ps -e | grep ctags || ctags --c++-kinds=+p --fields=+iaS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags &")
             exec "cscope add .cscope/cscope.out"
             exec "cscope reset"
         endif
@@ -562,10 +562,12 @@ let g:pydiction_location = '~/.tags_python'
 " + OmniCppComplete 0.41 : C/C++ omni-completion with ctags database {{{2
 " http://www.vim.org/scripts/script.php?script_id=1520
 let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_ShowAccess = 1 " show member access information
 let OmniCpp_MayCompleteDot = 1 " autocomplete after .
 let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
 let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+let OmniCpp_GlobalScopeSearch = 0 " 0 or 1
 
 " * Mark 2.5.1 : Highlight several words in different colors simultaneously. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2666
