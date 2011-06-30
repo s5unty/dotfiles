@@ -33,37 +33,39 @@ VERBOSE=off
     :0 fBw
         * ^-----BEGIN PGP MESSAGE-----
         * ^-----END PGP MESSAGE-----
-        | formail -i "Content-Type: application/pgp; format=text; x-action=encrypt"
+        | $FORMAIL -i "Content-Type: application/pgp; format=text; x-action=encrypt"
 
     :0 fBw
         * ^-----BEGIN PGP SIGNED MESSAGE-----
         * ^-----BEGIN PGP SIGNATURE-----
         * ^-----END PGP SIGNATURE-----
-        | formail -i "Content-Type: application/pgp; format=text; x-action=sign"
+        | $FORMAIL -i "Content-Type: application/pgp; format=text; x-action=sign"
 } # }}}1
 
 # 处理公司邮件 {{{1
-# :0
-# * ^(List-Id|To|CC|BCC|From):.*
-# {
-#     :0 fhw
-#     | $FORMAIL -I "X-Label: "
-#     :0:
-#     company/
-# }
-#
-# :0 h
-# * ^X-Git-Refname:.*refs/heads/master
-# {
-#     :0 fhw
-#     | $FORMAIL -I "X-Label: scm"
-#     :0:
-#     company/
-# }
+:0
+* ^(List-Id|To|CC|BCC):.*sunwuan@cn.fujitsu.com
+fnst-inbox/
+
+:0
+* ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
+fnst-cluster/
+
+:0
+* ^(List-Id|To|CC|BCC):.*fnst-basesoft@cn.fujitsu.com
+fnst-dept_1-6/
+
+:0
+* ^(List-Id|To|CC|BCC):.*fnst-ssg@cn.fujitsu.com
+fnst-dept_1/
+
+:0
+* ^(List-Id|To|CC|BCC):.*fnst@cn.fujitsu.com
+fnst-whole/
 
 :0
 * ^(List-Id|To|CC|BCC):.*(fujitsu.com)
-company/
+fnst-inbox/
 # }}}1
 
 # 处理 QQ 邮箱 {{{1

@@ -3,24 +3,34 @@ set mbox_type="Maildir"
 # 信箱目录
 set folder="/sun/maildir/"
 # 默认使用的信箱
-set spoolfile="=company"
+set spoolfile="=fnst-inbox"
+### set spoolfile="=personal"
 
 # 邮箱列表 {{{
 mailboxes !
-mailboxes =personal
-mailboxes =company
-mailboxes =debian-zh
-mailboxes =shlug
-mailboxes =szlug
-mailboxes =ubuntu-zh
-mailboxes =python-cn
-mailboxes =vim-zh
-mailboxes =fcitx-dev
+mailboxes =fnst-inbox
+mailboxes =fnst-cluster
+mailboxes =fnst-dept_1-6
+mailboxes =fnst-dept_1
+mailboxes =fnst-whole
+### mailboxes =personal
+### mailboxes =debian-zh
+### mailboxes =shlug
+### mailboxes =szlug
+### mailboxes =ubuntu-zh
+### mailboxes =python-cn
+### mailboxes =vim-zh
+### mailboxes =fcitx-dev
 # }}}
 
 # TODO 改用 ~/.mutt/qgc.rb --subscribes 实现
 # 邮件列表选项 {{{
-#
+# company
+subscribe fnst@cn.fujitsu.com
+subscribe fnst-ssg@cn.fujitsu.com
+subscribe fnst-basesoft@cn.fujitsu.com
+subscribe fnst-cluster@cn.fujitsu.com
+subscribe fnst-ulinux@cn.fujitsu.com
 # debian
 subscribe debian-news@lists.debian.org
 subscribe debian-announce@lists.debian.org
