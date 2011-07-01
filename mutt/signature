@@ -16,5 +16,5 @@ else
         echo '祝身体健康、工作顺利。\n-- '
         LANG=zh_CN.UTF-8 && date +"Sun Wuan (孙武安) | %m.%d (%A) | Development Dept.#1 | FNST";;
     esac
-    echo 'sunwuan@cn.fujitsu.com | T: +86+25-86630566-8515 | I: 7998-8515'
+    echo 'sunwuan@cn.fujitsu.com | T: +86+25-86630566-8513 | I: 7998-8513'
 fi
