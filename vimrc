@@ -250,10 +250,8 @@ nmap          <unique> <F9> :!<UP>
 imap          <unique> <F9> <ESC>:!<UP>
 nmap <silent> <unique> <F10> :Mru<CR>
 imap <silent> <unique> <F10> <ESC>:Mru<CR>
-nmap <silent> <unique> <F11> g]
-vmap <silent> <unique> <F11> g]
+nmap <silent> <unique> <F11> :pts <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
-vmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz

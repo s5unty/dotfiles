@@ -4,7 +4,7 @@
 folder-hook . push "<collapse-all><first-entry><last-entry><next-unread>"
 # 2. 进入公司邮箱后自动切换邮送域，保存已发邮件，不自动签名
 folder-hook fnst- set "from='Vern Sun <sunwuan@cn.fujitsu.com>'"
-folder-hook fnst- set "record='=fnst-inbox'"
+folder-hook fnst- set "record='=^'"
 folder-hook fnst- set "crypt_autosign=no"
 # 3. 私人邮箱，切换邮送域，不保存已发邮件，自动签名
 folder-hook !fnst- set "from='Vern Sun <s5unty@gmail.com>'"
