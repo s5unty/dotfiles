@@ -7,14 +7,24 @@ if ! hostname | grep "^verns-worktop" > /dev/null 2>&1; then
 else
     case "$1" in
     en)
-        echo 'Regards,\n-- '
-        LANG=en_US.UTF-8 && date +"Sun Wuan (Vern Sun) | %m.%d (%a.) | Development Dept.#1 | FNST";;
+        echo 'Cheers,'
+        LANG=en_US.UTF-8 && echo "`date +"%Y.%m.%d(%a)"`\n-- ";;
     ja)
-        echo 'よろしくお願いいたします。\n-- '
-        LANG=ja_JP.UTF-8 && date +"Sun Wuan (孫武安) | %m.%d (%A) | Development Dept.#1 | FNST";;
+        echo '以上、よろしくお願いいたします。'
+        LANG=ja_JP.UTF-8 && echo "`date +"%Y.%m.%d(%a)"`\n-- ";;
     *)
-        echo '祝身体健康、工作顺利。\n-- '
-        LANG=zh_CN.UTF-8 && date +"Sun Wuan (孙武安) | %m.%d (%A) | Development Dept.#1 | FNST";;
+        LANG=zh_CN.UTF-8 && echo "`date +"%Y.%m.%d(%a)"`\n-- ";;
     esac
-    echo 'sunwuan@cn.fujitsu.com | I: 7998-8513 | T: +86+25-86630566-8513'
+    echo '----------------------------------------------------'
+    echo 'Sun Wuan'
+    echo 'Development Dept.I'
+    echo 'Nanjing Fujitsu Nanda Software Tech. Co., Ltd.(FNST)'
+    echo 'No. 6 Wenzhu Road, Nanjing, 210012, China'
+    echo 'TEL: +86+25-86630566-8513'
+    echo 'COINS: 79988513'
+    echo 'FAX: +86+25-83317685'
+    echo 'MAIL: sunwuan@cn.fujitsu.com'
+    echo 'http://www.fujitsu.com/cn/fnst/'
+    echo '----------------------------------------------------'
 fi
+

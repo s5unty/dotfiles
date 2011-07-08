@@ -250,14 +250,16 @@ nmap          <unique> <F9> :!<UP>
 imap          <unique> <F9> <ESC>:!<UP>
 nmap <silent> <unique> <F10> :Mru<CR>
 imap <silent> <unique> <F10> <ESC>:Mru<CR>
-nmap <silent> <unique> <F11> :pts <C-R>=expand('<cword>')<CR><CR>
+nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
-nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>g`"zz
+nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
+nmap <silent> <unique> q, :colder<CR>
+nmap <silent> <unique> q. :cnewer<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
@@ -273,6 +275,7 @@ nmap <silent> <unique> Q :q<CR>
 nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
 nmap                   <S-F8> :make! install DESTDIR=<UP>
 nmap <silent> <unique> <S-F9> q:<UP>
+nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
@@ -349,7 +352,7 @@ command S :SessionList
 " Autocmd {{{1
 if has("autocmd")
   function! <SID>AC_ResetCursorPosition()
-      if line("'\"") > 0 && line("'\"") <= line("$")
+      if line("'\"") > 1 && line("'\"") <= line("$")
           exec "normal g`\"zz"
       endif
   endfunction
@@ -362,7 +365,7 @@ if has("autocmd")
   endfunction
 
   " 每次访问文件时都把光标放置在上次离开的位置
-  autocmd BufWinEnter *
+  autocmd BufReadPost *
     \ call <SID>AC_ResetCursorPosition()
 
   " 让 checkpath 找到相关文件，便于 [I 正常工作
