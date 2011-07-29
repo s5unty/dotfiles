@@ -98,11 +98,15 @@ silent qmark y http://www.youku.com/
 silent qmark j http://dict.hjenglish.com/jp/
 silent qmark w http://wiki.du1abadd.org/
 
-silent qmark o http://10.167.129.55/ioffice/logon.do
-silent qmark O http://info.fnst.cn.fujitsu.com
-silent qmark 0 http://campus.fnst.cn.fujitsu.com
-silent qmark p http://ltech.fnst.cn.fujitsu.com/mediawiki
-silent qmark P http://ltech.fnst.cn.fujitsu.com/tsd/index.php
+silent qmark o http://ioffice.fnst.cn.fujitsu.com/
+silent qmark i http://info.fnst.cn.fujitsu.com
+silent qmark c http://campus.fnst.cn.fujitsu.com
+silent qmark b http://ltech.fnst.cn.fujitsu.com/tsd
+silent qmark B http://kaeru.fnst.cn.fujitsu.com/bbs
+silent qmark l http://10.167.225.196/
+
+silent qmark 1 http://10.167.225.189/wiki/index.php/PRIMECLUSTER
+
 " }}} 
 
 " goo.gl.js {{{2
@@ -113,3 +117,6 @@ map <silent> ! :googl<CR>
 map <silent> <F2> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
 map <silent> <F3> :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
 map <silent> <F4> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
+
+" Translate {{{2
+map L :set ds=l<CR>P:set ds=google<CR>
