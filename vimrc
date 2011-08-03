@@ -381,7 +381,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 12# Plugins {{{1
+" 15# Plugins {{{1
 " * Life Changing
 " + Helpful
 " - Unfulfilling
@@ -416,6 +416,7 @@ let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*\|^/sun/\..*'
 let MRU_Window_Height=18
 let MRU_Add_Menu=0
 
+
 " * taglist.vim 4.5-p1 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
 " http://www.vim.org/scripts/script.php?script_id=273
 "
@@ -438,6 +439,7 @@ function! <SID>ShowTaglist()
         exec "TlistToggle"
     endif
 endfunction
+
 
 " * SuperTab 1.1 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
@@ -513,17 +515,20 @@ function! <SID>CscopeFind(mask, quick)
     call G_QFixToggle(1)
 endfunction
 
-" * snipMate 0.83 : TextMate-style snippets for Vim
+
+" * snipMate 0.83 : TextMate-style snippets for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2540
 " nothing
 
 
 " * quickfixsigns 0.14 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
+" nothing
 
 
 " + sessionman.vim 1.06 : Vim session manager {{{2
 " http://www.vim.org/scripts/script.php?script_id=2010
+" nothing
 
 
 " * delimitMate.vim 2.6 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
@@ -548,13 +553,6 @@ let g:gundo_preview_bottom = 1
 let g:gundo_right = 1
 
 
-" - calendar.vim 2.2 : Calendar {{{2
-" http://www.vim.org/scripts/script.php?script_id=52
-let g:calendar_monday = 1
-let g:calendar_mark = 'left-fit'
-let g:calendar_focus_today = 1
-
-
 " + Pydiction 1.2 : Tab-complete your Python code {{{2
 " http://www.vim.org/scripts/script.php?script_id=850
 let g:pydiction_location = '~/.tags_python'
@@ -570,11 +568,19 @@ let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 let OmniCpp_GlobalScopeSearch = 0 " 0 or 1
 
+
 " * Mark 2.5.1 : Highlight several words in different colors simultaneously. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2666
 let g:mwAutoLoadMarks = 1 " 自动加载高亮的 Mark
 nmap <Plug>IgnoreMarkSearchAnyNext <Plug>MarkSearchAnyNext
 nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
+
+
+" + NrrwRgn 21 : A Narrow Region Plugin similar to Emacs {{{2
+" http://www.vim.org/scripts/script.php?script_id=3075
+let g:nrrw_topbot_leftright = 'aboveleft'
+let g:nrrw_rgn_wdth = 50
+
 
 " }}}1
 
