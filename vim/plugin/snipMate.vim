@@ -1,7 +1,6 @@
 " File:          snipMate.vim
 " Author:        Michael Sanders
-" Last Updated:  July 13, 2009
-" Version:       0.83
+" Version:       0.84
 " Description:   snipMate.vim implements some of TextMate's snippets features in
 "                Vim. A snippet is a piece of often-typed text that you can
 "                insert into your document using a trigger word followed by a "<tab>".
@@ -92,8 +91,33 @@ fun! ExtractSnipsFile(file, ft)
 	endfor
 endf
 
-fun! ResetSnippets()
+" Reset snippets for filetype.
+fun! ResetSnippets(ft)
+	let ft = a:ft == '' ? '_' : a:ft
+	for dict in [s:snippets, s:multi_snips, g:did_ft]
+		if has_key(dict, ft)
+			unlet dict[ft]
+		endif
+	endfor
+endf
+
+" Reset snippets for all filetypes.
+fun! ResetAllSnippets()
 	let s:snippets = {} | let s:multi_snips = {} | let g:did_ft = {}
+endf
+
+" Reload snippets for filetype.
+fun! ReloadSnippets(ft)
+	let ft = a:ft == '' ? '_' : a:ft
+	call ResetSnippets(ft)
+	call GetSnippets(g:snippets_dir, ft)
+endf
+
+" Reload snippets for all filetypes.
+fun! ReloadAllSnippets()
+	for ft in keys(g:did_ft)
+		call ReloadSnippets(ft)
+	endfor
 endf
 
 let g:did_ft = {}
@@ -122,7 +146,7 @@ fun s:DefineSnips(dir, aliasft, realft)
 	endfor
 endf
 
-fun! TriggerSnippet()
+fun! TriggerSnippet(is_space)
 	if exists('g:SuperTabMappingForward')
 		if g:SuperTabMappingForward == "<tab>"
 			let SuperTabKey = "\<c-n>"
@@ -131,7 +155,7 @@ fun! TriggerSnippet()
 		endif
 	endif
 
-	if pumvisible() " Update snippet if completion is used, or deal with supertab
+	if pumvisible() && a:is_space == 0 " Update snippet if completion is used, or deal with supertab
 		if exists('SuperTabKey')
 			call feedkeys(SuperTabKey) | return ''
 		endif
@@ -139,7 +163,7 @@ fun! TriggerSnippet()
 		call feedkeys("\<tab>") | return ''
 	endif
 
-	if exists('g:snipPos') | return snipMate#jumpTabStop(0) | endif
+	if exists('g:snipPos') && a:is_space == 0 | return snipMate#jumpTabStop(0) | endif
 
 	let word = matchstr(getline('.'), '\S\+\%'.col('.').'c')
 	for scope in [bufnr('%')] + split(&ft, '\.') + ['_']
@@ -153,12 +177,16 @@ fun! TriggerSnippet()
 		endif
 	endfor
 
-	if exists('SuperTabKey')
+	if exists('SuperTabKey') && a:is_space == 0
 		call feedkeys(SuperTabKey)
 		return ''
 	endif
 
-	return "\<tab>"
+	if a:is_space == 0
+		return "\<tab>"
+	else
+		return "\<space>"
+	endif
 endf
 
 fun! BackwardsSnippet()

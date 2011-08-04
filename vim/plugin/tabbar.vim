@@ -580,6 +580,7 @@ function! <SID>Tb_Start(sticky, delBufNum)
     " to open the selected buffer in the previous window.
     nnoremap <buffer> <2-LEFTMOUSE> :call <SID>Bf_DblClkSel()<CR>:<BS>
 
+
     " delete the selected buffer.
     nnoremap <buffer> d :call <SID>Bf_DelWithD()<CR>:<BS>
 
@@ -598,6 +599,7 @@ function! <SID>Tb_Start(sticky, delBufNum)
 
     if (l:curBuf != -1)
         call search('\['.l:curBuf.':'.expand('#'.l:curBuf.':t').'\]')
+        normal m`
     else
         call <SID>DEBUG('Tb_Start: No current buffer to search for',9)
     endif

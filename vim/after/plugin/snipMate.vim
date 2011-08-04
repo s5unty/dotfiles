@@ -5,8 +5,18 @@ if !exists('loaded_snips') || exists('s:did_snips_mappings')
 endif
 let s:did_snips_mappings = 1
 
-ino <silent> <tab> <c-r>=TriggerSnippet()<cr>
-snor <silent> <tab> <esc>i<right><c-r>=TriggerSnippet()<cr>
+ino <silent> <space> <c-r>=TriggerSnippet(1)<cr>
+snor <silent> <space> <esc>i<right><c-r>=TriggerSnippet(1)<cr>
+ino <silent> <esc><space> <space>
+snor <silent> <esc><space> <space>
+
+" This is put here in the 'after' directory in order for snipMate to override
+" other plugin mappings (e.g., supertab).
+"
+" You can safely adjust these mappings to your preferences (as explained in
+" :help snipMate-remap).
+ino <silent> <tab> <c-r>=TriggerSnippet(0)<cr>
+snor <silent> <tab> <esc>i<right><c-r>=TriggerSnippet(0)<cr>
 ino <silent> <s-tab> <c-r>=BackwardsSnippet()<cr>
 snor <silent> <s-tab> <esc>i<right><c-r>=BackwardsSnippet()<cr>
 ino <silent> <c-r><tab> <c-r>=ShowAvailableSnips()<cr>

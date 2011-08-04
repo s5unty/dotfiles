@@ -153,13 +153,13 @@ if index(g:quickfixsigns_signs, 'QFS_QFL') == -1
     if exists('g:quickfixsigns_icons.qfl')
         exec 'sign define QFS_QFL text=* texthl=WarningMsg icon='. escape(g:quickfixsigns_icons.qfl, ' \')
     else
-        sign define QFS_QFL text=* texthl=WarningMsg
+        sign define QFS_QFL text=◼ texthl=WarningMsg
     endif
 endif
 
 if index(g:quickfixsigns_signs, 'QFS_LOC') == -1
     if exists('g:quickfixsigns_icons.loc')
-        exec 'sign define QFS_LOC text=> texthl=Special icon='. escape(g:quickfixsigns_icons.loc, ' \')
+        exec 'sign define QFS_LOC text=→ texthl=Special icon='. escape(g:quickfixsigns_icons.loc, ' \')
     else
         sign define QFS_LOC text=> texthl=Special
     endif
