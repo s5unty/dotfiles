@@ -5,6 +5,7 @@ source ~/.mutt/macros                     # 定义宏(快捷键)
 source ~/.mutt/hooks                      # 定义事件钩子
 source ~/.mutt/colours                    # 定义 Mutt 颜色
 source ~/.mutt/auto_views                 # 定义支持自动浏览的文件格式
+source ~/.mutt/scores                     # 定义评分等级
 #source ~/.mutt/imap                       # 使用 IMAP 服务
 source ~/.mutt/pop3                       # 使用 POP3 服务
 
@@ -34,7 +35,7 @@ set alias_file="~/.mutt/aliases"
 # 第三方通讯录工具
 set query_command="/usr/bin/abook --mutt-query %s"
 # 自定义显示界面
-set index_format="%T %?X?%%& ? %?M?%-20.20F (%-2.2M)&%-25.25F? %S %-128.128s %> %?Y?‹%.9Y›? %[%b%d] - %4c"
+set index_format="%T %?X?%%& ? %?M?%-20.20F (%-2.2M)&%-25.25F? %S %-128.128s %> %?Y?‹%.9Y›? %?N?%2N& ? %[%b%d] - %4c"
 # 隐藏标题界面，在迷你索引和邮件正文之间留一空行
 set pager_format=""
 # 自定义通讯录界面
@@ -136,4 +137,5 @@ set pgp_mime_signature_description="Digital signature"
 set xterm_set_titles=yes
 # 右边据 7 个字符处折行
 set wrap=-7
-
+# 每一分钟检查/报告一次新邮件
+set timeout=60

@@ -12,7 +12,7 @@
 /usr/bin/touch /tmp/.xsession-errors
 
 # ssh 翻墙隧道 0:PORT 的写法使得局域网(虚拟机)可以共享此隧道
-/usr/bin/autossh -f -N -D 0:9527 du1abadd.org
+# /usr/bin/autossh -f -N -D 0:9527 du1abadd.org
 
 # 强制启用 Ctrl-Alt-Backspace(重启图形界面) 组合键
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
@@ -32,7 +32,9 @@
 # 启动应用程序
 /usr/bin/x-www-browser & #浏览器
 /usr/bin/x-terminal-emulator -name Mutt -T Mutt -e sh -c mutt &
-/usr/bin/fetchmail -d 300 #邮件
+/usr/bin/fetchmail -d 60 #邮件，邮件通知
+/usr/bin/mailleds -u vern -a -x -q -M -m ~/maildir/fnst-inbox/
+
 #/usr/bin/gdlinux # Google Desktop
 #/usr/bin/mocp -S #音乐服务
 #/usr/local/bin/lrcdis & # 歌词
@@ -50,7 +52,7 @@
 /usr/bin/remind -z -k'~/.task/notify-wm %s &' ~/.task/reminders &
 /usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.task/ | \
     while read file; do
-        rsync -azu ~/.task/ du1abadd.org:~/.task/ &
+        rsync -azu --delete ~/.task/ du1abadd.org:~/.task/ &
     done &
 
 # 使用渐隐、阴影特效
