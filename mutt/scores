@@ -1,10 +1,10 @@
 unscore *
 score ~O =0
-score ~G +1
+score ~G +8
 
-score "(~s 日语|~s 活动|~s 要求)" +10
-score "(~s 通知|~s 讲座|~s 培训|~s 报名)" +20
-score "(~s 会[议議]?|~s 開催|~s 確認)" +30
+score "(~s 日语|~s 活动|~s 要求)" +1
+score "(~s 通知|~s 讲座|~s 培训|~s 报名)" +2
+score "(~s 会[议議]?|~s 開催|~s 確認)" +3
 
 score "~f fnst-hr@cn.fujitsu.com" +1
 score "~f zhangtie@cn.fujitsu.com" +1
