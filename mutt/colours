@@ -9,7 +9,7 @@ color attachment color8      color7  # 附件
 color message    black       default # 提示信息
 color quoted     color8      default # 引用
 color hdrdefault black       default # 信头
-color signature  color7      default # 签名
+color signature  color250    default # 签名
 
 # 特殊状态
 color index      color8      default   "!(~d `date +'%d/%m' -d '3 days ago'`-)"
@@ -21,12 +21,13 @@ color index      color7      color255  "~D"  # 删除
 # 重要程度评分
 color index      black       default   "~n 2-"
 color index      black       color252  "~n 3-"
-color index      black       color250  "~n 4-"
-color index      black       color248  "~n 5-"
-color index      black       color246  "~n 6-"
-color index      black       color244  "~n 7-"
-color index      white       color242  "~n 8-"
-color index      white       color240  "~n 9-"
+color index      black       color249  "~n 4-"
+color index      black       color246  "~n 5-"
+color index      white       color243  "~n 6-"
+color index      white       color240  "~n 7-"
+color index      white       color237  "~n 8-"
+color index      white       color234  "~n 9-"
+color index      white       black     "~n 10-"
 
 # 醒目签名
 color body       red         black   "^(gpg: )?Bad signature"

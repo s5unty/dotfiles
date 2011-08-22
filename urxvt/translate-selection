@@ -3,6 +3,8 @@
 my $DEBUG = 1;
 my $DEBUG_FILE = '/tmp/urxvt_dict.log';
 my $DEBUG_FH;
+our $DICT = '/sun/.urxvt/dict.sh';
+our $PROC;
 
 sub on_start {
     my ($self) = @_;
@@ -18,11 +20,15 @@ sub on_start {
 
 
 sub leave {
-   my ($self, $event) = @_;
+    my ($self, $event) = @_;
 
-   if ($DEBUG){
-      close($DEBUG_FH);
-   }
+    if ($DEBUG) {
+        close($DEBUG_FH);
+    }
+
+    if ($PROC) {
+        close ($PROC)
+    }
 }
 
 sub on_button_press {
@@ -36,8 +42,11 @@ sub on_button_press {
         print $DEBUG_FH "2======\n";
         my $title = $self->selection;
         utf8::encode($title);
-        if (open(my $process, "export LANG=zh_CN.UTF-8; /usr/bin/sdcv -n --utf8-output -u 'jmdict-ja-en' -u 'xdict-en-zh' '$title' 2>&1 |")) {
-            $title = join('', <$process>);
+        # XXX 9.11 - don't swap perl env with real env, save and restore it ....
+        # http://cvs.schmorp.de/rxvt-unicode/Changes
+        # 只有 9.11 之后的版本可以直接执行 sdcv 命令，否则要提前执行 export LANG=zh_CN.UTF-8;
+        if (open($PROC, "export SDCV_HISTSIZE=512; /usr/bin/sdcv -n --utf8-output -u 'jmdict-ja-en' -u 'xdict-en-zh' '$title' 2>&1 |")) {
+            $title = join('', <$PROC>);
         } else {
             print $DEBUG_FH "?======\n";
         }
