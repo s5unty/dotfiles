@@ -4,8 +4,8 @@
 <os:InputEncoding>UTF-8</os:InputEncoding>
 <os:Image width="16" height="16">data:image/x-icon;base64,AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAQAMAAAAAAAAAAAAAAAAAAAAAAAD////////////+///////4+fotNS/x6vH////49/b39vb39vb49vb49vb39vX////+///+///+//////////+ckpwAZwoALwBkREe0n5yolI+lko2mko2mmJepnqCOcWn+///+//////////89UUIAiBQcsTIXqy4AahKenZr7///y9vfw+f/tzajspl2lj4r///////////9RYFUOtykNgiAYnCwDjB43NAnfnmLz/v/w9v3w+//hjjvrr2qjkpPYy8iXcGR+VlsKgR0RqitYN0YAIwBzdXz8zqjkgRT04rbz3LDv0Z7bbwn16dSijoqxlo7v8PR5hIERwi0XSyH/9//JvL/Ovbz79uzcex3bdhjadBPbdhbjkTz6//+ijIW7n5oeNiNTr2Iq1EQZtDEAFACvpK/MubL////fijjvyJT7///hijXmt4f8//+ijIS8oZi3s8tXi2VM6GUTmRlHO40AALnbyLH////txqDkjSP39/babwj07eX8//+jjIXEqZRTU+1VT4ogixsMEFX///+/t8zKt67////39vTeeRPln1XlnE72///8//+ljoa+pJKFiOxsbOiAe6cAAM1cX+H/+tzFs6/////9///lnVXYaADv1bX1+//8//+kjISzmZD///8vL9QAANCKjOQAAM57cbrVwrT////8///66s70wnn4/P/2+fv///+lj4ixl4////////9VVtpFRd5FR+QLA7DNuqH18fD08fDs6+7r7fTo5eTm4+Lp5+eTdGm0mpDl6P93eOQQD84/P9Zqbd7Ex/DEs6+5p56DW1DHtK/BrKbCrafCrae/qaPh1tO0mpH7///h4fhcXN1QUNqSlOYlJdIsL97///+rkIf///////////////////////+qjoX////////1+f/e4v/////////u9f/y8u+cfHP////////////////////////7/PutkYewlY6zmI+ymY6wl4+vlY6zmY6rj4f5+Pf///////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</os:Image>
 <UpdateUrl>http://mycroft.mozdev.org/updateos.php/id0/google_trans_det2cn.xml</UpdateUrl>
-<SearchForm>http://translate.google.com/translate_t#auto|zh-CN</SearchForm>
-<os:Url type="text/html" method="GET" template="http://translate.google.com/translate_t#auto|zh-CN|{searchTerms}">
+<SearchForm>http://translate.google.cn/translate_t#auto|zh-CN</SearchForm>
+<os:Url type="text/html" method="GET" template="http://translate.google.cn/translate_t#auto|zh-CN|{searchTerms}">
 </os:Url><os:Url type="application/opensearchdescription+xml" method="GET" template="http://mycroft.mozdev.org/updateos.php/id0/google_trans_det2cn.xml" rel="self">
 </os:Url>
 </SearchPlugin>
