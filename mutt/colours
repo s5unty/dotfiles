@@ -30,10 +30,17 @@ color index      white       color234  "~n 9-"
 color index      white       black     "~n 10-"
 
 # 醒目签名
-color body       red         black   "^(gpg: )?Bad signature"
-color body       red         black   "^(gpg: )?warning"
+color body       red         black     "^(gpg: )?Bad signature"
+color body       red         black     "^(gpg: )?warning"
 
 # 特殊邮件头
-color header     yellow      default "^X-Label:"
-color header     color8      color7  "^X-Mailer:"
-color header     color8      color7  "^User-Agent:"
+color header     yellow      default   "^X-Label:"
+color header     color8      color7    "^X-Mailer:"
+color header     color8      color7    "^User-Agent:"
+
+# 关键内容高亮
+color body       black       color228  "[孫|孙](殿|武安|さん|[Ss]an)"
+#color body       black       color153  ""
+#color body       black       color225  ""
+#color body       black       color114  ""
+#color body       black       color116  ""
