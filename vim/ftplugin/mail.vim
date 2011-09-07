@@ -20,3 +20,5 @@ function! CheckAttachments()
   echo
 endfunction
 
+set textwidth=78
+set formatoptions+=mM

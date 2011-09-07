@@ -1,0 +1,35 @@
+#!/bin/bash
+
+FOLDER="/sun/maildir/NOTES/"
+EDITOR='vim'
+EXT=".mkd"
+
+ACTION=$1
+FNAME="$2"
+NFNAME="/tmp/tag-`basename "$2"`.$$"
+if [ "$ACTION" == "" ]; then
+    # <pipe-message> 编辑 note 文件
+    MID=`/bin/grep -i '^message-id' $* | sed -e 's/.*<\(.*\)>/\1/g'`
+    TARGET=${FOLDER}${MID}${EXT}
+    vim - "+edit ${TARGET}" "+set ft=markdown"
+
+elif [ "$ACTION" == "tag" ]; then
+    # <edit> 邮件 tag 标签
+	formail -a "X-Label: note" < "$FNAME" > "$NFNAME"
+
+elif [ "$ACTION" == "rm" ]; then
+    # <edit> 删除 tag 标签
+	ACT=`formail -c -X X-Label < "$FNAME"`
+	NEW=`echo $ACT | sed "s/, note//g" | sed "s/note, //g" | sed "s/: note/:/g"`
+	formail -I "$NEW" < "$FNAME" > "$NFNAME"
+    # <edit> 删除 note 文件
+    MID=`/bin/grep -i '^message-id' $2 | sed -e 's/.*<\(.*\)>/\1/g'`
+    TARGET=${FOLDER}${MID}${EXT}
+    mv "$TARGET" "$TARGET.out"
+
+fi
+
+# if we created a new file, step over the old one
+if [ -f "$NFNAME" ]; then
+    mv "$NFNAME" "$FNAME"
+fi
