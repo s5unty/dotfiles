@@ -7,7 +7,8 @@
 #   variable=foo   -- By specifying a value, this overrides the default
 #   variable=      -- By specifying no value, this means no default
 #   #variable=foo  -- By commenting out the line, this uses the default
-include /usr/share/task/light-256.theme
+# include /usr/share/task/light-256.theme
+include ~/.task/light256.theme
 
 # Files
 data.location=~/.task
@@ -17,17 +18,18 @@ locking=on                                    # Use file-level locking
 curses=on                                     # Use ncurses library to determine terminal width
 defaultwidth=200                              # Without ncurses, assumed width
 editor=vim                                    # Preferred text editor
+edit.verbose=off
 
 # Miscellaneous
-confirmation=yes                              # Confirmation on delete, big changes
+confirmation=no                               # Confirmation on delete, big changes
 echo.command=yes                              # Details on command just run
-annotations=full                              # Level of verbosity for annotations: full, sparse or none
+annotations=none                              # Level of verbosity for annotations: full, sparse or none
 next=2                                        # How many tasks per project in next report
 bulk=2                                        # > 2 tasks considered 'a lot', for confirmation
 nag=You have higher priority tasks.           # Nag message to keep you honest
 search.case.sensitive=no                      # Setting to no allows case insensitive searches
 active.indicator=@                            # What to show as an active task indicator
-tag.indicator=#                               # What to show as a tag indicator
+tag.indicator=+                               # What to show as a tag indicator
 recurrence.indicator=R                        # What to show as a task recurrence indicator
 recurrence.limit=1                            # Number of future recurring pending tasks
 undo.style=side                               # Undo style - can be 'side', or 'diff'
@@ -36,7 +38,7 @@ undo.style=side                               # Undo style - can be 'side', or '
 dateformat=Y-m-d                              # Preferred input and display date format
 dateformat.holiday=yMD                        # Preferred input date format for holidays
 dateformat.report=a,Y-m-d                     # Preferred display date format for reports
-dateformat.annotation=a,H:N                   # Preferred display date format for reports
+dateformat.annotation=m-d                       # Preferred display date format for reports
 weekstart=Monday                              # Sunday or Monday only
 displayweeknumber=yes                         # Show week numbers on calendar
 due=7                                         # Task is considered due in 7 days
@@ -48,49 +50,6 @@ calendar.details.report=list                  # Report to use when showing task 
 calendar.holidays=none                        # Show public holidays on calendar:full, sparse or none
 #monthsperline=3                              # Number of calendar months on a line
 
-# # Color controls.
-# color=on                                      # Enable color
-# color.header=color3                           # Color of header messages
-# color.footnote=color3                         # Color of footnote messages
-# color.debug=color3                            # Color of diagnostic output
-# 
-# color.summary.bar=on rgb141                   # Color of summary report progress bar
-# color.summary.background=on color0            # Color of summary report background
-# 
-# color.history.add=color0 on color2            # Color of added tasks in ghistory report
-# color.history.done=color0 on color15          # Color of completed tasks in ghistory report
-# color.history.delete=color0 on color1         # Color of deleted tasks in ghistory report
-# 
-# color.undo.before=color1                      # Color of values before a change
-# color.undo.after=color2                       # Color of values after a change
-# 
-# color.calendar.today=color0 on rgb013         # Color of today in calendar
-# color.calendar.due=color0 on color1           # Color of days  with due tasks in calendar
-# color.calendar.due.today=color15 on color1    # Color of today with due tasks in calendar
-# color.calendar.overdue=color0 on color9       # Color of days  with overdue tasks in calendar
-# color.calendar.weekend=color235               # Color of weekend days in calendar
-# color.calendar.holiday=color0 on color11      # Color of public holidays in calendar
-# color.calendar.weeknumber=rgb013              # Color of the weeknumbers in calendar
-# 
-# # The following rules are presented in their order of precedence.
-# # The higher the color rule is up this list, the higher precedence
-# # it has in determining the color for the task.  Precedence is shown
-# # in brackets [1]
-# color.recurring=rgb013                        # [1]  Color of recur.any: tasks
-# color.overdue=color9                          # [2]  Color of overdue tasks
-# color.due.today=rgb400                        # [3]  Color of tasks due today
-# color.due=color1                              # [4]  Color of due tasks
-# #color.keyword.car=on blue                    # [5]  Color of description.contains:car tasks
-# #color.project.garden=on green                # [6]  Color of project:garden tasks
-# #color.tag.bug=yellow                         # [7]  Color of +bug tasks
-# color.active=                                 # [8]  Color of active tasks
-# color.pri.none=                               # [9]  Color of priority:  tasks
-# color.pri.H=yellow                            # [9]  Color of priority:H tasks
-# color.pri.M=                                  # [9]  Color of priority:M tasks
-# color.pri.L=                                  # [9]  Color of priority:L tasks
-# color.tagged=                                 # [10]  Color of tagged tasks
-# color.alternate=on color233                   # [11] Alternate color for line coloring
-
 # Shadow file support
 #shadow.file=/tmp/shadow.txt                  # Location of shadow file
 #shadow.command=list                          # Task command for shadow file
@@ -98,9 +57,9 @@ calendar.holidays=none                        # Show public holidays on calendar
 
 default.project=job                           # Default project for 'add' command
 default.priority=M                            # Default priority for 'add' command
-default.command=list                          # When no arguments are specified
+default.command=minimal                       # When no arguments are specified
 
-_forcecolor=no                                # Forces color to be on, even for non TTY output
+_forcecolor=yes                               # Forces color to be on, even for non TTY output
 blanklines=false                              # Use more whitespace in output
 complete.all.projects=no                      # Include old project names in '_projects' command
 complete.all.tags=no                          # Include old tag names in '_ags' command
@@ -175,9 +134,9 @@ report.ls.filter=status:pending
 
 # task minimal
 report.minimal.description=A really minimal listing
-report.minimal.columns=id,priority,description
-report.minimal.labels=ID,Pri,Description
-report.minimal.sort=priority-
+report.minimal.columns=id,description
+report.minimal.labels=ID,Description
+report.minimal.sort=id+
 report.minimal.filter=status:pending
 #report.minimal.dateformat=m/d/Y
 #report.minimal.annotations=full

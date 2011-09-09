@@ -30,7 +30,12 @@ macro attach s "<save-entry><kill-line>/tmp/<enter>a"
 
 # http://www.nixternal.com/mark-e-mails-in-mutt-as-tasks-in-taskwarrior/
 # https://github.com/ValiValpas/taskopen
-macro index "<esc>t" "<pipe-message>~/.mutt/mutt2task<enter>"
+macro index "<esc>t" "<pipe-message>~/.mutt/mutt2task<enter>\
+          :set wait_key=no<enter>\
+          :set pipe_decode=no<enter>\
+          <pipe-message>~/.mutt/mess2task<enter>\
+          :set wait_key=yes<enter>\
+          :set pipe_decode=yes<enter>" "Task"
 
 # 显示曾经被我回复过的邮件(~Q)，包括我的回复(~P)
 macro index "<F12>" "<limit>~Q | ~P<enter>"
@@ -40,28 +45,15 @@ macro index "<F11>" "<limit>~d `date -d '1 days ago' +%d/%m`-<enter>"
 macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
 
 # 避免切换折叠后导致底部留白的问题
-macro index z "<collapse-all><current-bottom>
+macro index Z "<collapse-all><current-bottom>"
+macro index z "<collapse-thread>"
 
 # 邮件备注
-macro index "<Return>" ":set pipe_decode=no<enter>\
+macro index,pager "<Return>" "\
+          :set pipe_decode=no<enter>\
           :set wait_key=no<enter>\
           <pipe-message>~/.mutt/mutt2note<enter>\
           :set wait_key=yes<enter>\
           :set pipe_decode=yes<enter>\
-          :exec exit<enter>" "Note"
-macro pager "<Return>" ":set pipe_decode=no<enter>\
-          :set wait_key=no<enter>\
-          <pipe-message>~/.mutt/mutt2note<enter>\
-          :set wait_key=yes<enter>\
-          :set pipe_decode=yes<enter>\
-          :set editor=\"~/.mutt/mutt2note tag\"<enter>\
-          <edit>\
-          <sync-mailbox>\
-          :set editor=vim<enter>" "Note"
-macro index,pager "<Backspace>" ":set pipe_decode=no<enter>\
-          :set editor=\"~/.mutt/mutt2note rm\"<enter>\
-          <edit>\
-          :set pipe_decode=yes<enter>\
-          <sync-mailbox>\
-          :set editor=vim<enter>" "Note"
+          :set <enter>" "Note"
 

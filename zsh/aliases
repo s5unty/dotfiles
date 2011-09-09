@@ -88,9 +88,9 @@ R() { # find in files
 
 CS() { # gen cscope.files
     mkdir -p .cscope
-    find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' -o -iname '*.cxx' \
-        -o -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' \
-        -o -iname '*.java' > .cscope/cscope.files
+    find . -iname '*.java' > .cscope/cscope.files
+    find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' -o -iname '*.cxx' >> .cscope/cscope.files
+    find . -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' >> .cscope/cscope.files
     cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
     ctags --c++-kinds=+p --fields=+iaS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
 }
@@ -148,11 +148,12 @@ alias td="task summary && print && task history && rem"
 alias tda="task add"
 alias tde="task edit"
 alias tdu="task undo"
-alias tdg="task ls"
+alias tdg="task minimal"
 alias tdl="task long"
 alias tdc="task info"
-alias tdci="task annotate"
-alias tdco="task denotate"
+alias tdi="task annotate"
+alias tdo="task denotate"
+alias tdm="~/.task/taskopen"
 tds() {
     task start ${1}
     DESC=`task info ${1} | /bin/grep "^Desc" | cut -b13-`

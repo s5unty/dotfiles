@@ -59,8 +59,8 @@ set envelope_from=yes
 set from='Vern Sun <s5unty@gmail.com>'
 # 把状态栏放在页眉
 set status_on_top
-# 认为所有未读邮件都是新邮件
-set mark_old=no
+# 上次收到的未读邮件这次认为是旧邮件
+set mark_old=yes
 # 转发邮件时默认使用的主题
 set forward_format="Fwd: %s"
 # 转移信件时不必确认
