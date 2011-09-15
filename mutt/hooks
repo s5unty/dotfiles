@@ -4,14 +4,14 @@
 folder-hook . push "<collapse-all><first-entry><last-entry><next-unread>"
 # 2. 进入公司邮箱后自动切换邮送域，保存已发邮件，不自动签名
 folder-hook fnst- set "from='Sun Wuan <sunwuan@cn.fujitsu.com>'"
-folder-hook fnst- set "record='^'"
+folder-hook fnst- set "record='+fnst-inbox'"
 folder-hook fnst- set "crypt_autosign=no"
 # 3. 私人邮箱，切换邮送域，不保存已发邮件，自动签名
 folder-hook !fnst- set "from='Vern Sun <s5unty@gmail.com>'"
 folder-hook !fnst- set "record=''"
 folder-hook !fnst- set "crypt_autosign=yes"
-# 4. 默认只显示最近一个月的邮件
-folder-hook !(fnst-|personal) push "<limit>~d\"*30d\"<enter>"
+# 4. 除了显示搜索结果的临时邮箱，其余邮箱只显示最近一个月的邮件
+folder-hook !(bingo) push "<limit>~d\"*30d\"<enter>"
 # 5. 按键     邮件列表                普通邮箱
 #    r        回复给当前邮件列表      回复给发件人
 folder-hook  (fnst-|personal) "bind pager r reply; bind index r reply"

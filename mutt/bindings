@@ -2,7 +2,6 @@
 bind pager      k           previous-line
 bind pager      j           next-line
 bind pager      P           recall-message # 'R'ecall-message move to 'P'
-bind pager      R           group-reply    # reply to all
 bind pager      .           next-entry
 bind pager      ,           previous-entry
 bind pager     \;           next-new-then-unread
@@ -14,7 +13,6 @@ bind index      0           collapse-thread
 bind index     \;           current-middle
 bind index     \\           last-entry
 bind index      P           recall-message # 'R'ecall-message move to 'P'
-bind index      R           group-reply    # reply to all
 bind index      N           search-opposite
 bind index      -           half-up
 bind index      <BackTab>   previous-new-then-unread
@@ -26,5 +24,5 @@ bind browser    <space>     select-entry
 # 查看附件时
 bind attach     i           exit
 bind attach     <space>     view-attach
-# 使用 Google 联系人
+# 使用自定义查询
 bind editor     <Tab>       complete-query
