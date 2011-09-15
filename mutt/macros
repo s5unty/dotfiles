@@ -54,5 +54,5 @@ macro index "<F8>" "<limit>~d `date -d '1 days ago' +%d/%m`-<enter>"
 # http://wiki.mutt.org/?UserStory/SearchingMail
 # http://www.zsh.org/mla/users/2007/msg01187.html
 # mu-0.9.7 with wrapper
-macro index,pager ? "<enter-command>set my_cmd = \`mutt-mu\`<return><enter-command>push \$my_cmd<return>" "mu find"
+macro index,pager ~ "<enter-command>set my_cmd = \`~/.mutt/mutt-mu\`<return><enter-command>push \$my_cmd<return>" "mu find"
 

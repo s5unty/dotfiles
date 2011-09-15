@@ -151,29 +151,29 @@ alias tdu="task undo"
 alias tdg="task minimal"
 alias tdl="task long"
 alias tdc="task info"
-alias tdi="task annotate"
-alias tdo="task denotate"
-alias tdm="~/.task/taskopen"
+alias tdan="task annotate"
+alias tdde="task denotate"
+alias tdo="~/.task/taskopen"
 tds() {
     task start ${1}
-    DESC=`task info ${1} | /bin/grep "^Desc" | cut -b13-`
-    UUID=`task info ${1} | /bin/grep "^UUID" | cut -b13-`
+    DESC=`task info ${1} | /bin/grep "Desc" | cut -b13-`
+    UUID=`task info ${1} | /bin/grep "UUID" | cut -b13-`
     REM=`date -d"today" +"REM AT 23:30 +900 *15 TAG ${UUID} MSG ${DESC}"`
     echo ${REM} >> ~/.task/reminders
 }
 tdp() {
     task stop ${1}
-    UUID=`task info ${1} | /bin/grep "^UUID" | cut -b13-`
+    UUID=`task info ${1} | /bin/grep "UUID" | cut -b13-`
     [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdd() {
     task done ${1}
-    UUID=`task info ${1} | /bin/grep "^UUID" | cut -b13-`
+    UUID=`task info ${1} | /bin/grep "UUID" | cut -b13-`
     [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdr() {
     task delete ${1}
-    UUID=`task info ${1} | /bin/grep "^UUID" | cut -b13-`
+    UUID=`task info ${1} | /bin/grep "UUID" | cut -b13-`
     [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 # }}}

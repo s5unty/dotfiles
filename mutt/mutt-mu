@@ -17,7 +17,6 @@ cmdhist=$mu_base/cmdhist
 
 # mu result folder in mutt folder syntax:
 mfolder=bingo
-export mfolder
 
 set -f
 
@@ -70,6 +69,8 @@ search=$(
 )
 
 args=
+args_find="--format=links --linksdir=$MAILDIR/$mfolder --clearlinks"
+export args_find
 
 case $search in
   ("<BREAK>") ;;
@@ -77,6 +78,60 @@ case $search in
     # rebuild the index
     args="index --autoupgrade"
     cmd="<refresh>"
+    ;;
+  ("~F")
+    args="find 'g:f' $args_find"
+    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    ;;
+  ("~N")
+    args="find 'g:n' $args_find"
+    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    ;;
+  (~f*)
+    args=$(echo "$search" | sed 's/\s*~f\s\+//g' | sed 's/|/\n/g' | awk '\
+      {
+        if (NR==1) {
+          str = sprintf("f:%s*", $1)
+        } else {
+          str = sprintf("%s OR f:%s*", str, $1)
+        }
+      }
+      END {
+        printf("find \"%s\" %s", str, ENVIRON["args_find"])
+      }
+    ')
+    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    ;;
+  (~t*)
+    args=$(echo "$search" | sed 's/\s*~t\s\+//g' | sed 's/|/\n/g' | awk '\
+      {
+        if (NR==1) {
+          str = sprintf("t:%s*", $1)
+        } else {
+          str = sprintf("%s OR t:%s*", str, $1)
+        }
+      }
+      END {
+        printf("find \"%s\" %s", str, ENVIRON["args_find"])
+      }
+    ')
+    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    ;;
+  (~d*)
+    args=$(echo "$search" | sed 's/\s*~d\s\+\([<>=]\?[^-+*]*\)\?\([-+*]\?\)\(.*$\)/\1\n\2\n\3/g' | sed '/^$/d' | awk '\
+      {
+        if (NR==1) {
+          str = sprintf("d:%s", $1)
+        }
+      }
+      END {
+        if (NR==1) {
+          str = sprintf("%s..now", str)
+        }
+        printf("find \"%s\" %s", str, ENVIRON["args_find"])
+      }
+    ')
+    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
     ;;
   (*)
     # 空格隔开的多个参数，表示逻辑或的关系
@@ -91,14 +146,14 @@ case $search in
         }
       }
       END {
-        printf("find %s --format=links --linksdir=%s/%s --clearlinks", str, ENVIRON["MAILDIR"], ENVIRON["mfolder"])
+        printf("find \"%s\" %s", str, ENVIRON["args_find"])
       }
     ')
     cmd="<refresh><change-folder-readonly>=$mfolder<return>"
     ;;
 esac
-
-mu $args > /dev/null 3>&- &
+# 不能识别 now/today 的问题，奇怪
+sh -c "mu $args > /dev/null 3>&- &"
 
 # clear our mess
 printf '\r'; tput ed
