@@ -10,7 +10,7 @@
 [diff]
     tool = vimdiff
 [diff "msword"] # http://progit.org/book/zh/ch7-2.html
-	textconv = antiword
+	textconv = antiword -w0
 [diff "msexcel"]
 	textconv = xlhtml -fw -asc -te -xp:0-10 -xc:0-100
 [difftool "normal"] # http://goo.gl/c8Xok
@@ -88,14 +88,14 @@
     di  = diff --no-prefix -p --stat # show difference between working tree and the index
     dc  = diff --no-prefix -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
     da  = diff --no-prefix -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
-    df  = diff --no-prefix --stat=200,78 HEAD # show different files between working tree and the index
+    df  = diff --no-prefix --stat=200,78 # show different files between working tree and the index
     dt  = difftool -y
     do  = difftool -y -t normal
     dp  = !sh -c 'git diff HEAD "$0" | git apply --whitespace=nowarn --index -' # fast apply the patch against "$0" commit or branch
 
     fp  = format-patch -s
 
-    ll  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%cr%Creset %C(bold)%d%Creset' --branches --graph --since='1 months ago'
+    ll  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%cr%Creset %C(bold)%d%Creset' --branches --graph --since='2 weeks ago'
     ls  = log --pretty=format:'%C(blue)%h%Creset %ce %m %s %C(green)%C(dim)%ci%Creset %C(bold)%d%Creset' --all --graph
 
     ms  = merge --squash
