@@ -1126,16 +1126,16 @@ sub paste {
    my ($self, $selection) = @_;
 #   $self->enable(key_press => \&key_press_paste);
 
-#   my $text = $self->selection();
-#   if($text){
-#      $self->tt_write($text);
-#   }else{
+   my $text = $self->selection();
+   if($text){
+      $self->tt_write($text);
+   }else{
 #      if(open(my $process, "xclip -o |")){
       if(open(my $process, "parcellite -c |")){
          $text = join('', <$process>);
          $self->tt_write($text);
       }
-#   }
+   }
 }
 
 sub key_press_paste {

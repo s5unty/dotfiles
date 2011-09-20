@@ -236,7 +236,7 @@ nmap <silent> <unique> <F1> :set cursorline!<CR>:set nocursorline?<CR>
 imap <silent> <unique> <F1> <ESC>:set cursorline!<CR><ESC>:set nocursorline?<CR>a
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
 imap <silent> <unique> <F2> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
-nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
+nmap <silent> <unique> <F3> :set list!<CR>:set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
@@ -365,6 +365,7 @@ if has("autocmd")
   endfunction
 
   " 每次访问文件时都把光标放置在上次离开的位置
+  " 显示 listchars 变量定义的特殊字符: 行内tab，行尾space
   autocmd BufReadPost *
     \ call <SID>AC_ResetCursorPosition()
 
@@ -394,8 +395,8 @@ endif
 " p2: g:Tb_StatusLine
 "     添加变量用户调整 TabBar 的状态栏信息
 let Tb_UseSingleClick = 1 " 单击切换
-let Tb_TabWrap = 0 " 允许跨行显示
-let Tb_MaxSize = 0 "
+let Tb_TabWrap = 1 " 允许跨行显示
+let Tb_MaxSize = 3 "
 let Tb_ModSelTarget = 1 " 跳转至编辑窗口
 let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
 if has("autocmd")
@@ -523,7 +524,7 @@ endfunction
 
 " * quickfixsigns 0.14 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
-" nothing
+let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 __Tag_List__ 和 -TabBar- 这两个 Buffer
 
 
 " + sessionman.vim 1.06 : Vim session manager {{{2
@@ -533,9 +534,12 @@ endfunction
 
 " * delimitMate.vim 2.6 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
-let delimitMate_autoclose = 1
+let delimitMate_autoclose = 0
+let delimitMate_nesting_quotes = ['"','`']
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 let delimitMate_expand_cr = 1
+let delimitMate_smart_quotes = 1
+let delimitMate_balance_matchpairs = 1
 
 
 " - surround.vim 1.90 : Delete/change/add parentheses/quotes/XML-tags/much more with ease {{{2

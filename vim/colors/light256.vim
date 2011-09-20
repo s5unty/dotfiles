@@ -95,3 +95,6 @@ hi MarkWord4     ctermfg=Black  guifg=Black    ctermbg=114    guibg=#87df87
 hi MarkWord5     ctermfg=Black  guifg=Black    ctermbg=116    guibg=#87dfdf
 hi MarkWord6     ctermfg=Black  guifg=Black    ctermbg=249    guibg=#b2b2b2
 
+" easymotion
+hi EasyMotionTarget ctermfg=Black ctermbg=228  guifg=Black    guibg=#ffff87
+hi EasyMotionShade  ctermfg=249   ctermbg=none guifg=#b2b2b2  guibg=none
