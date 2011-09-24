@@ -365,7 +365,6 @@ if has("autocmd")
   endfunction
 
   " 每次访问文件时都把光标放置在上次离开的位置
-  " 显示 listchars 变量定义的特殊字符: 行内tab，行尾space
   autocmd BufReadPost *
     \ call <SID>AC_ResetCursorPosition()
 
@@ -453,9 +452,9 @@ let SuperTabMappingBackward="<S-Tab>"
 " + Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
 autocmd Filetype java
-    \ set tag=.cscope/cscope.tags,~/.tags_android,~/.tags_java6;
+    \ set tag=.cscope/cscope_java.tags,~/.tags_android,~/.tags_java6;
 autocmd Filetype c,cpp
-    \ set tag=.cscope/cscope.tags,~/.tags.c,~/.gtk-tags.c;
+    \ set tag=.cscope/cscope_c.tags,.cscope/cscope_h.tags,~/.tags.c,~/.gtk-tags.c;
 autocmd Filetype python
     \ set tag=.cscope/cscope.tags,/tmp/.tags_python;
 if has("cscope")

@@ -88,11 +88,14 @@ R() { # find in files
 
 CS() { # gen cscope.files
     mkdir -p .cscope
-    find . -iname '*.java' > .cscope/cscope.files
-    find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' -o -iname '*.cxx' >> .cscope/cscope.files
-    find . -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' >> .cscope/cscope.files
+    find . -iname '*.java' > .cscope/cscope_java.files
+    find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.cc' -o -iname '*.cxx' > .cscope/cscope_c.files
+    find . -iname '*.h' -o -iname '*.hpp' -o -iname '*.hh' -o -iname '*.hxx' > .cscope/cscope_h.files
+    cat .cscope/cscope_java.files .cscope/cscope_c.files .cscope/cscope_h.files > .cscope/cscope.files
     cscope -kbq -i.cscope/cscope.files -f.cscope/cscope.out
-    ctags --c++-kinds=+p --fields=+iaS --extra=+q --tag-relative -L.cscope/cscope.files -f.cscope/cscope.tags
+    ctags --c++-kinds=+p --fields=+iaS --extra=+q --tag-relative -L.cscope/cscope_java.files -f.cscope/cscope_java.tags
+    ctags --c++-kinds=+p --fields=+iaS --extra=+q --tag-relative -L.cscope/cscope_c.files -f.cscope/cscope_c.tags
+    ctags --c++-kinds=+p --fields=+iaS --extra=+q --tag-relative -L.cscope/cscope_h.files -f.cscope/cscope_h.tags
 }
 
 dup() { # dupload
@@ -138,8 +141,11 @@ elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
 	alias apg="yum search"
 	alias aps="yum info"
 
-	alias dpi="$__SUDO rpm -i"
-	alias dpg="yum list installed | grep"
+	alias dpi="$__SUDO rpm -iUfvh --replacepkgs --replacepkgs"
+	alias dpg="rpm -qa | grep"
+    alias dpL="rpm -ql"
+    alias dps="rpm -qi"
+    alias dpr="$__SUDO rpm -e"
 fi
 # }}}
 

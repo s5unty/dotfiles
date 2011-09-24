@@ -12,10 +12,13 @@ folder-hook !fnst- set "record=''"
 folder-hook !fnst- set "crypt_autosign=yes"
 # 4. 除了显示搜索结果的临时邮箱，其余邮箱只显示最近一个月的邮件
 folder-hook !(bingo) push "<limit>~d\"*30d\"<enter>"
-# 5. 按键     邮件列表                普通邮箱
-#    r        回复给当前邮件列表      回复给发件人
-folder-hook  (fnst-|personal) "bind pager r reply; bind index r reply"
-folder-hook !(fnst-|personal) "bind pager r list-reply; bind index r list-reply"
+# 5. 按键     邮件列表                      普通邮箱
+#    ----     --------                      --------
+#    r        回复到邮件列表                回复所有人(发件人和收件人)
+#    R        回复发件人(唯一的)            回复给发件人(唯一的)
+#    g        回复所有人(发件人和收件人)    回复所有人(发件人和收件人)
+folder-hook !(fnst-inbox|personal|bingo) "bind index,pager R reply; bind index,pager r list-reply"
+folder-hook  (fnst-inbox|personal|bingo) "bind index,pager R reply; bind index,pager r group-reply"
 # 6. 给日本人的邮件用日文签名，其他的用中文签名
 send-hook     @cn.fujitsu.com "set signature='~/.mutt/signature zh|'"
 send-hook    .*jp.fujitsu.com "set signature='~/.mutt/signature ja|'"
