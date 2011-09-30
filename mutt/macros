@@ -24,12 +24,14 @@ macro attach s "<save-entry><kill-line>/tmp/<enter>a"
 
 # http://www.nixternal.com/mark-e-mails-in-mutt-as-tasks-in-taskwarrior/
 # https://github.com/ValiValpas/taskopen
-macro index,pager "<esc>t" "<pipe-message>~/.mutt/mutt2task<enter>\
-          :set wait_key=no<enter>\
-          :set pipe_decode=no<enter>\
-          <pipe-message>~/.mutt/mess2task<enter>\
-          :set wait_key=yes<enter>\
-          :set pipe_decode=yes<enter>" "Task"
+#macro index,pager "<esc>t" "<pipe-message>~/.mutt/mutt2task<enter>\
+#          :set wait_key=no<enter>\
+#          :set pipe_decode=no<enter>\
+#          <pipe-message>~/.mutt/mess2task<enter>\
+#          :set wait_key=yes<enter>\
+#          :set pipe_decode=yes<enter>" "Task"
+macro index,pager "<esc>t" "<pipe-message>~/.mutt/mess2task<enter>"
+
 
 # 添加到通讯录
 macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"

@@ -141,7 +141,7 @@ elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
 	alias apg="yum search"
 	alias aps="yum info"
 
-	alias dpi="$__SUDO rpm -iUfvh --replacefiles --replacepkgs"
+	alias dpi="$__SUDO rpm -iUfvh --replacefiles --replacepkgs --oldpackage"
 	alias dpg="rpm -qa | grep"
     alias dpL="rpm -ql"
     alias dps="rpm -qi"
