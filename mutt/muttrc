@@ -83,8 +83,8 @@ set simple_search="~f %s | ~s %s"
 set thorough_search=yes
 # 退出mutt前提示
 set quit=ask-no
-# mutt用纯ascii表示树状列表
-set ascii_chars=yes
+# mutt用制表符表示线索
+set ascii_chars=no
 # 禁止PAGE键切换到下一封信件
 set pager_stop=yes
 # 快速回复，不用确认回复地址和主题
@@ -100,8 +100,8 @@ set signature=~/.mutt/signature|
 # 签名前不自动插入 "-- "，由签名脚本负责
 set sig_dashes=no
 # 设定回信的模板
-set date_format="%a, %F at %R %z"
-set attribution="on %D, %n wrote:"
+set date_format="%F(%a) at %R(%Z)"
+set attribution="on %d, %n wrote:"
 # 设定编辑器
 set editor="vim"
 # 采用作为附件而非作为引用的方式转发邮件

@@ -22,6 +22,6 @@ folder-hook  (fnst-inbox|personal|bingo) "bind index,pager R reply; bind index,p
 # 6. 给日本人的邮件用日文签名，其他的用中文签名
 send-hook     @cn.fujitsu.com "set signature='~/.mutt/signature zh|'"
 send-hook    .*jp.fujitsu.com "set signature='~/.mutt/signature ja|'"
-reply-hook    @cn.fujitsu.com "set signature='~/.mutt/signature zh|'"
-reply-hook   .*jp.fujitsu.com "set signature='~/.mutt/signature ja|'"
+reply-hook    @cn.fujitsu.com "set locale='zh_CN.UTF-8'; set signature='~/.mutt/signature zh|'"
+reply-hook   .*jp.fujitsu.com "set locale='ja_JP.UTF-8'; set signature='~/.mutt/signature ja|'"
 
