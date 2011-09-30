@@ -141,7 +141,7 @@ elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
 	alias apg="yum search"
 	alias aps="yum info"
 
-	alias dpi="$__SUDO rpm -iUfvh --replacepkgs --replacepkgs"
+	alias dpi="$__SUDO rpm -iUfvh --replacefiles --replacepkgs"
 	alias dpg="rpm -qa | grep"
     alias dpL="rpm -ql"
     alias dps="rpm -qi"
@@ -150,36 +150,38 @@ fi
 # }}}
 
 # task {{{
-alias td="task summary && print && task history && rem"
-alias tda="task add"
-alias tde="task edit"
-alias tdu="task undo"
-alias tdg="task minimal"
-alias tdl="task long"
-alias tdc="task info"
-alias tdan="task annotate"
-alias tdde="task denotate"
+alias td="task"
 alias tdo="~/.task/taskopen"
-tds() {
-    task start ${1}
-    DESC=`task info ${1} | /bin/grep "Desc" | cut -b13-`
-    UUID=`task info ${1} | /bin/grep "UUID" | cut -b13-`
-    REM=`date -d"today" +"REM AT 23:30 +900 *15 TAG ${UUID} MSG ${DESC}"`
+tda() { task $1 add }
+tde() { task $1 edit }
+tdu() { task $1 undo }
+tdg() { task $1 minimal }
+tdl() { task $1 long }
+tds() { task $1 info }
+tdan() { task $1 annotate }
+tdde() { task $1 denotate }
+tdT() { task tags }
+tdP() { task projects }
+tdt() {
+    task ${1} start
+    DESC=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "Desc" | cut -b13-`
+    UUID=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "UUID" | cut -b13-`
+    REM=`date -d"today" +"REM AT 23:30 +900 *5 TAG ${UUID} MSG ${DESC}"`
     echo ${REM} >> ~/.task/reminders
 }
 tdp() {
-    task stop ${1}
-    UUID=`task info ${1} | /bin/grep "UUID" | cut -b13-`
+    task ${1} stop
+    UUID=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "UUID" | cut -b13-`
     [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdd() {
-    task done ${1}
-    UUID=`task info ${1} | /bin/grep "UUID" | cut -b13-`
+    task ${1} done
+    UUID=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "UUID" | cut -b13-`
     [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 tdr() {
-    task delete ${1}
-    UUID=`task info ${1} | /bin/grep "UUID" | cut -b13-`
+    task ${1} delete
+    UUID=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "UUID" | cut -b13-`
     [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
 }
 # }}}
