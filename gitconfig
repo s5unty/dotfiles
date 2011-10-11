@@ -3,6 +3,7 @@
     email = s5unty@gmail.com
 [core]
     excludesfile = ~/.gitignore
+    whitespace = cr-at-eol
     quotepath = false
 [format]
     headers = ""
@@ -56,6 +57,9 @@
 [color "diff"]
     frag = magenta
 #}}}
+
+[diff "jp"]
+	textconv = "iconv -f sjis -t utf-8"
 
 [branch "master"] # {{{
     remote = origin

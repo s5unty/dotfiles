@@ -65,7 +65,7 @@ search=$(
   zle -N accept-line
   zle -N send-break
   fc -p -a "$cmdhist" 100
-  a=; vared -p "搜寻(所有)：" -eh a'
+  a=; vared -p "搜寻(所有)：~s " -eh a'
 )
 
 args=
@@ -97,7 +97,11 @@ case $search in
         }
       }
       END {
-        printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        if (NR==0) {
+          printf("find . %s", ENVIRON["args_find"])
+        } else {
+          printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        }
       }
     ')
     cmd="<refresh><change-folder-readonly>=$mfolder<return>"
@@ -112,7 +116,11 @@ case $search in
         }
       }
       END {
-        printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        if (NR==0) {
+          printf("find . %s", ENVIRON["args_find"])
+        } else {
+          printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        }
       }
     ')
     cmd="<refresh><change-folder-readonly>=$mfolder<return>"
@@ -146,14 +154,18 @@ case $search in
         }
       }
       END {
-        printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        if (NR==0) {
+          printf("find . %s", ENVIRON["args_find"])
+        } else {
+          printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        }
       }
     ')
     cmd="<refresh><change-folder-readonly>=$mfolder<return>"
     ;;
 esac
 # 不能识别 now/today 的问题，奇怪
-sh -c "mu $args > /dev/null 3>&- &"
+sh -c "mu $args > /dev/null 2>&1 3>&- &"
 
 # clear our mess
 printf '\r'; tput ed
