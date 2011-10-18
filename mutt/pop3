@@ -8,6 +8,7 @@ set spoolfile="=fnst-inbox"
 
 # 邮箱列表 {{{
 mailboxes !
+mailboxes =bingo
 mailboxes =fnst-inbox
 mailboxes =fnst-cluster
 mailboxes =fnst-dept_1-6
@@ -31,6 +32,7 @@ subscribe fnst-ssg@cn.fujitsu.com
 subscribe fnst-basesoft@cn.fujitsu.com
 subscribe fnst-cluster@cn.fujitsu.com
 subscribe fnst-ulinux@cn.fujitsu.com
+subscribe fjh-pcl-fnst@ml.jp.fujitsu.com
 # debian
 subscribe debian-news@lists.debian.org
 subscribe debian-announce@lists.debian.org

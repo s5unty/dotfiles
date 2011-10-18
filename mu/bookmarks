@@ -1,0 +1,11 @@
+[mu]
+# 一个月以来我写过的邮件
+m=(from:sunwuan* OR flag:r) AND (date:1m..now)
+# 所有我写过的邮件
+mm=(from:sunwuan* OR flag:r)
+# 一个月来所有打过标记的邮件
+f=flag:f AND date:1m..now
+# 所有打过标记的邮件
+ff=flag:f
+# 这两天的所有邮件
+0=date:1d..now

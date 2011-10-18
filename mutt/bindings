@@ -8,6 +8,8 @@ bind pager     \;           next-new-then-unread
 bind pager      b           previous-page
 bind pager      <BackTab>   previous-new-then-unread
 bind pager      <Backspace> parent-message
+bind index      r           group-reply
+bind pager      R           reply
 # 浏览首页时
 bind index      0           collapse-thread
 bind index     \;           current-middle
@@ -16,6 +18,8 @@ bind index      P           recall-message # 'R'ecall-message move to 'P'
 bind index      N           search-opposite
 bind index      -           half-up
 bind index      <BackTab>   previous-new-then-unread
+bind index      r           group-reply
+bind index      R           reply
 # 浏览通讯录时
 bind alias      N           search-opposite
 # 切换邮箱/查看目录时
@@ -26,3 +30,4 @@ bind attach     i           exit
 bind attach     <space>     view-attach
 # 使用自定义查询
 bind editor     <Tab>       complete-query
+

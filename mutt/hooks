@@ -2,26 +2,21 @@
 #
 # 1. 启动后立即使用折叠方式显示邮件
 folder-hook . push "<collapse-all><first-entry><last-entry><next-unread>"
-# 2. 进入公司邮箱后自动切换邮送域，保存已发邮件，不自动签名
+# 2. 进入公司邮箱后自动切换邮送域，不自动签名
 folder-hook fnst- set "from='Sun Wuan <sunwuan@cn.fujitsu.com>'"
-folder-hook fnst- set "record='+fnst-inbox'"
 folder-hook fnst- set "crypt_autosign=no"
-# 3. 私人邮箱，切换邮送域，不保存已发邮件，自动签名
-folder-hook !fnst- set "from='Vern Sun <s5unty@gmail.com>'"
-folder-hook !fnst- set "record=''"
-folder-hook !fnst- set "crypt_autosign=yes"
+# 3. 私人邮箱，切换邮送域，自动签名
+folder-hook personal set "from='Vern Sun <s5unty@gmail.com>'"
+folder-hook personal set "crypt_autosign=yes"
 # 4. 除了显示搜索结果的临时邮箱，其余邮箱只显示最近一个月的邮件
 folder-hook !(bingo) push "<limit>~d\"*30d\"<enter>"
-# 5. 按键     邮件列表                      普通邮箱
-#    ----     --------                      --------
-#    r        回复到邮件列表                回复所有人(发件人和收件人)
-#    R        回复发件人(唯一的)            回复给发件人(唯一的)
-#    g        回复所有人(发件人和收件人)    回复所有人(发件人和收件人)
-folder-hook !(fnst-inbox|personal|bingo) "bind index,pager R reply; bind index,pager r list-reply"
-folder-hook  (fnst-inbox|personal|bingo) "bind index,pager R reply; bind index,pager r group-reply"
-# 6. 给日本人的邮件用日文签名，其他的用中文签名
-send-hook     @cn.fujitsu.com "set signature='~/.mutt/signature zh|'"
-send-hook    .*jp.fujitsu.com "set signature='~/.mutt/signature ja|'"
-reply-hook    @cn.fujitsu.com "set locale='zh_CN.UTF-8'; set signature='~/.mutt/signature zh|'"
-reply-hook   .*jp.fujitsu.com "set locale='ja_JP.UTF-8'; set signature='~/.mutt/signature ja|'"
-
+# 5. 给日本人的邮件用日文签名，其他的用中文签名
+send-hook    @cn.fujitsu.com "set signature='~/.mutt/signature zh|'"
+send-hook   .*jp.fujitsu.com "set signature='~/.mutt/signature ja|'"
+reply-hook   @cn.fujitsu.com "set locale='zh_CN.UTF-8'; set signature='~/.mutt/signature zh|'"
+reply-hook  .*jp.fujitsu.com "set locale='ja_JP.UTF-8'; set signature='~/.mutt/signature ja|'"
+# 6. 给邮件列表的邮件不要保存已发邮件，私人邮箱就地保存
+send-hook    (fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record=''"
+send-hook   !(fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record='^'"
+reply-hook   (fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record=''"
+reply-hook  !(fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record='^'"

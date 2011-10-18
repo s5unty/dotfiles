@@ -16,6 +16,7 @@ mu_base=~/.mu
 cmdhist=$mu_base/cmdhist
 
 # mu result folder in mutt folder syntax:
+MAILDIR=/sun/maildir
 mfolder=bingo
 
 set -f
@@ -65,7 +66,7 @@ search=$(
   zle -N accept-line
   zle -N send-break
   fc -p -a "$cmdhist" 100
-  a=; vared -p "搜寻(所有)：~s " -eh a'
+  a=; vared -p "搜寻(所有)：" -eh a'
 )
 
 args=
@@ -83,8 +84,8 @@ case $search in
     args="find 'g:f' $args_find"
     cmd="<refresh><change-folder-readonly>=$mfolder<return>"
     ;;
-  ("~N")
-    args="find 'g:n' $args_find"
+  ("~Q")
+    args="find 'g:r' $args_find"
     cmd="<refresh><change-folder-readonly>=$mfolder<return>"
     ;;
   (~f*)
@@ -134,14 +135,14 @@ case $search in
       }
       END {
         if (NR==1) {
-          str = sprintf("%s..now", str)
+          str = sprintf("%s", str)
         }
         printf("find \"%s\" %s", str, ENVIRON["args_find"])
       }
     ')
     cmd="<refresh><change-folder-readonly>=$mfolder<return>"
     ;;
-  (*)
+  (~s*)
     # 空格隔开的多个参数，表示逻辑或的关系
     key=$(echo "$search" | sed 's/ /\\\|/g')
     # 把搜到的邮件作成待搜索的 message-id 列表
@@ -161,6 +162,10 @@ case $search in
         }
       }
     ')
+    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    ;;
+  (*)
+    args="find -b $search $args_find"
     cmd="<refresh><change-folder-readonly>=$mfolder<return>"
     ;;
 esac
