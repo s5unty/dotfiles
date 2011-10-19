@@ -152,7 +152,7 @@ fi
 # task {{{
 alias td="task"
 alias tdo="~/.task/taskopen"
-tda() { task $1 add }
+tda() { task add $* }
 tde() { task $1 edit }
 tdu() { task $1 undo }
 tdg() { task $1 minimal }
