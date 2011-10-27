@@ -8,7 +8,7 @@ bind pager     \;           next-new-then-unread
 bind pager      b           previous-page
 bind pager      <BackTab>   previous-new-then-unread
 bind pager      <Backspace> parent-message
-bind index      r           group-reply
+bind pager      r           group-reply
 bind pager      R           reply
 # 浏览首页时
 bind index      0           collapse-thread

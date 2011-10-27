@@ -1,18 +1,44 @@
 include ~/.task/light256.theme
+#include ~/.task/holidays-2011-cn.rc
 
+# 编辑时不显示注释
 edit.verbose=off
-verbose=off
+# 备注信息，full全部、sparse最近、none加号
 annotations=none
-indent.annotation=0
+# 不要多余空行
 blanklines=no
-verbose=label
+# 每周从周一算开始
 weekstart=Monday
+# 未来几天被考虑
 due=7
-calendar.holidays=full
+# 日历不显示节日
+calendar.holidays=none
+# 日历不显示图例
+calendar.legend=no
+# 日历高亮显示未来几天的标记，并列表
+calendar.details=full
+# 日历列表使用 list 报表格式
 calendar.details.report=list
+# 日历的起始月可以偏移
+calendar.offset=yes
+# 日历的起始月从上个月开始
+calendar.offset.value=-1
+# 日历只显示 3 个月
+monthsperline=3
+# 可补全所有项目
 complete.all.projects=yes
-list.all.projects=yes
+# 可补全所有标签
 complete.all.tags=yes
-list.all.tags=yes
-
-alias.-=long
+# 可显示所有项目
+list.all.projects=no
+# 可显示所有标签
+list.all.tags=no
+# 日期格式，如 2011-10-21
+dateformat=Y-m-d
+# 添加任务的默认日期是当天
+default.due=today
+# 开启正则支持
+regex=yes
+# v2.0.0
+indent.annotation=0
+verbose=label
