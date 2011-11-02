@@ -17,7 +17,6 @@ cmdhist=$mu_base/cmdhist
 
 # mu result folder in mutt folder syntax:
 MAILDIR=/sun/maildir
-mfolder=bingo
 
 set -f
 
@@ -69,10 +68,10 @@ search=$(
   a=; vared -p "搜寻(所有)：" -eh a'
 )
 
-args=
-args_find="--format=links --linksdir=$MAILDIR/$mfolder --clearlinks"
-export args_find
+MFOLDER=$(echo "$search" | sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g')
+export MFOLDER
 
+args=
 case $search in
   ("<BREAK>") ;;
   ("")
@@ -81,12 +80,12 @@ case $search in
     cmd="<refresh>"
     ;;
   ("~F")
-    args="find 'g:f' $args_find"
-    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    args="find 'g:f' --format=links --clearlinks --linksdir=\"$MAILDIR/$MFOLDER\""
+    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   ("~Q")
-    args="find 'g:r' $args_find"
-    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    args="find 'g:f' --format=links --clearlinks --linksdir=\"$MAILDIR/$MFOLDER\""
+    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (~f*)
     args=$(echo "$search" | sed 's/\s*~f\s\+//g' | sed 's/|/\n/g' | awk '\
@@ -98,14 +97,12 @@ case $search in
         }
       }
       END {
-        if (NR==0) {
-          printf("find . %s", ENVIRON["args_find"])
-        } else {
-          printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        if (NR!=0) {
+          printf("find \"%s\" --format=links --clearlinks --linksdir=\"%s/%s\"", str, ENVIRON["MAILDIR"], ENVIRON["MFOLDER"])
         }
       }
     ')
-    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (~t*)
     args=$(echo "$search" | sed 's/\s*~t\s\+//g' | sed 's/|/\n/g' | awk '\
@@ -117,14 +114,12 @@ case $search in
         }
       }
       END {
-        if (NR==0) {
-          printf("find . %s", ENVIRON["args_find"])
-        } else {
-          printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        if (NR!=0) {
+          printf("find \"%s\" --format=links --clearlinks --linksdir=\"%s/%s\"", str, ENVIRON["MAILDIR"], ENVIRON["MFOLDER"])
         }
       }
     ')
-    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (~d*)
     args=$(echo "$search" | sed 's/\s*~d\s\+\([<>=]\?[^-+*]*\)\?\([-+*]\?\)\(.*$\)/\1\n\2\n\3/g' | sed '/^$/d' | awk '\
@@ -137,10 +132,10 @@ case $search in
         if (NR==1) {
           str = sprintf("%s", str)
         }
-        printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        printf("find \"%s\" --format=links --clearlinks --linksdir=\"%s/%s\"", str, ENVIRON["MAILDIR"], ENVIRON["MFOLDER"])
       }
     ')
-    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (~s*)
     # 空格隔开的多个参数，表示逻辑或的关系
@@ -155,18 +150,16 @@ case $search in
         }
       }
       END {
-        if (NR==0) {
-          printf("find . %s", ENVIRON["args_find"])
-        } else {
-          printf("find \"%s\" %s", str, ENVIRON["args_find"])
+        if (NR!=0) {
+          printf("find \"%s\" --format=links --clearlinks --linksdir=\"%s/%s\"", str, ENVIRON["MAILDIR"], ENVIRON["MFOLDER"])
         }
       }
     ')
-    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (*)
-    args="find -b $search $args_find"
-    cmd="<refresh><change-folder-readonly>=$mfolder<return>"
+    #args="find -b $search $args_find"
+    #cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
 esac
 # 不能识别 now/today 的问题，奇怪
