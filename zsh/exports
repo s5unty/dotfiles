@@ -16,6 +16,8 @@ export WORDCHARS='*?_-[]~=&:;!#$%^(){}<>'
 export MAILDIR="$HOME/maildir"
 export LISTPROMPT=""
 export DEBIAN_DIR=""
+export QUILT_PATCHES=debian/patches
+export QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index"
 export REPREPRO_CONFIG_DIR=""
 export MAILCHECK=600
 export EDITOR="/usr/bin/vim"
