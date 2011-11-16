@@ -1,0 +1,12 @@
+<SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
+<os:ShortName>Excite ja&gt;cn</os:ShortName>
+<os:Description>Excite Japanese-&gt;Chinese</os:Description>
+<os:InputEncoding>UTF-8</os:InputEncoding>
+<os:Image width="16" height="16">data:image/x-icon;base64,AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAwMDAAICAgAAAAP8AAP8AAAD//wD/AAAA/wD/AP//AAD///8AAAAIiAgICIgAAAgICHgIAAAACAgIgAgAAAAIeHgICAAAAAh4eIgIAAAAABAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAkAAAAAAAEAmZAAAAAJMAAJADAAAJkAMAAAAwAAkACQCTAJAAAACZAJkAOQAAAJAAOQAJAAAAAAAJAAAAD4qLOB+ou1gfKbAADwKyoA+AsBAPx/AAD8f4AE+z8CAPa/YAPsX4AEnt8CADfvXQN2b1ME5mezge53s4H/f4AE</os:Image>
+<SearchForm>http://www.excite.co.jp/world/chinese/</SearchForm>
+<os:Url type="text/html" method="POST" template="http://www.excite.co.jp/world/chinese/">
+ <os:Param name="before" value="{searchTerms}"/>
+ <os:Param name="wb_lp" value="JACH"/>
+ <os:Param name="reverse_option" value=""/>
+</os:Url>
+</SearchPlugin>

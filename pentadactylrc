@@ -102,8 +102,9 @@ silent qmark o http://ioffice.fnst.cn.fujitsu.com/
 silent qmark i http://info.fnst.cn.fujitsu.com
 silent qmark c http://campus.fnst.cn.fujitsu.com
 silent qmark b http://ltech.fnst.cn.fujitsu.com/tsd
+silent qmark t http://10.167.157.130/t/s5unty
 silent qmark B http://kaeru.fnst.cn.fujitsu.com/bbs
-silent qmark l http://10.167.225.196/
+silent qmark l http://10.167.225.205/
 
 silent qmark 1 http://10.167.225.189/wiki/index.php/PRIMECLUSTER
 
@@ -120,3 +121,4 @@ map <silent> <F4> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
 
 " Translate {{{2
 map L :set ds=l<CR>P:set ds=google<CR>
+map J :set ds=j<CR>P:set ds=google<CR>
