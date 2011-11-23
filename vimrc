@@ -1,6 +1,6 @@
 " General {{{1
 set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,sjis,euc-jp,gbk,big5,default
+set fileencodings=ucs-bom,utf-8,sjis,eucjp,gbk,big5,default
 set termencoding=utf-8
 set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
@@ -53,7 +53,7 @@ else
     set guifont=Envy\ Code\ R\ 10
     set guifontwide=WenQuanYi\ Zen\ Hei\ Sharp\ 10
     set makeprg=make\ -j2
-    set grepprg=ack-grep
+    set grepprg=ack-grep\ -a
     set shell=bash\ -x\ -c
 endif
 
@@ -347,6 +347,8 @@ command E :call Ranger()
 command SS :SessionSave
 command S :SessionList
 
+command PP :!paps --landscape --font='Envy Code R 8' --header --columns=2 % | ps2pdf - - | zathura -
+command PPP :!paps --landscape --font='Envy Code R 8' --header --columns=2 % | lp -o landscape -o sites=two-sided-long-edge -
 " }}}1
 
 " Autocmd {{{1
@@ -740,4 +742,5 @@ map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
 
 " }}}1
+
 
