@@ -347,8 +347,8 @@ command E :call Ranger()
 command SS :SessionSave
 command S :SessionList
 
-command PP :!paps --landscape --font='Envy Code R 8' --header --columns=2 % | ps2pdf - - | zathura -
-command PPP :!paps --landscape --font='Envy Code R 8' --header --columns=2 % | lp -o landscape -o sites=two-sided-long-edge -
+command PP :!paps --landscape --font='monospace 8' --header --columns=2 % | ps2pdf - - | zathura -
+command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp -o landscape -o sites=two-sided-long-edge -
 " }}}1
 
 " Autocmd {{{1

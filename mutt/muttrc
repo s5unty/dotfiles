@@ -140,4 +140,4 @@ set wrap=-7
 # 每一分钟检查/报告一次新邮件
 set timeout=60
 # CJK由paps正确处理后再转给lp打印
-set print_command="paps --landscape --font='Envy Code R 8' --header --columns=2 | lp -o landscape -o sites=two-sided-long-edge -"
+set print_command="paps --landscape --font='monospace 8' --header --columns=2 | lp -o landscape -o sites=two-sided-long-edge -"

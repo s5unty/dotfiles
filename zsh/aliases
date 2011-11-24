@@ -72,11 +72,11 @@ P() { # ps
 }
 
 PP() { # printer preview
-    paps --landscape --font="Envy Code R 8" --header --columns=2 $1 | ps2pdf - - | zathura -
+    paps --landscape --font="monospace 8" --header --columns=2 $1 | ps2pdf - - | zathura -
 }
 
 PPP() {
-    paps --landscape --font="Envy Code R 8" --header --columns=2 $1 | lp -o landscape -o sites=two-sided-long-edge
+    paps --landscape --font="monospace 8" --header --columns=2 $1 | lp -o landscape -o sites=two-sided-long-edge
 }
 
 /() { # find
