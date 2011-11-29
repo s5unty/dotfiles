@@ -23,6 +23,14 @@ VERBOSE=off
     | $FORMAIL -I "X-LDate: ${loc_date} | ${org_date} ${zone}"
 } # }}}1
 
+# 本地化邮件标题 {{{1
+# 先由 MIME(B or Q) 解码，再由 UTF-8 编码
+# ref@http://comments.gmane.org/gmane.mail.procmail/47940
+# ref@http://comments.gmane.org/gmane.mail.procmail/47948
+:0
+X-Subject=| $FORMAIL -fXSubject | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))'
+# }}}1
+
 # 签名/加密邮件 {{{1
 # Convert old-style PGP messages to MIME
 # http://lists.debian.org/debian-security/2001/08/msg00078.html
@@ -43,13 +51,8 @@ VERBOSE=off
 } # }}}1
 
 # 处理公司邮件 {{{1
-#
-# 获得经过 UTF-8 编码的邮件标题
-:0 H
-_SUBJECT=| $FORMAIL -fXSubject | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))'
-
-:0 H
-* _SUBJECT ?? Subject:\/.*(中.*日|日.*中|翻译).*
+:0
+* X-Subject ?? Subject:\/.*(中.*日|日.*中|翻译).*
 * ^To:.*chenqing2010@cn.fujitsu.com
 planet-chenqing/
 
@@ -58,16 +61,19 @@ planet-chenqing/
 * ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
 planet-chenqing/
 
-:0 H
-* _SUBJECT ?? Subject:\/.*(\[日报\]|日报_).*
+:0
+* X-Subject ?? Subject:\/.*(\[日报\]|日报_).*
+* ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
 planet-new/
 
-:0 H
-* _SUBJECT ?? Subject:\/.*(技術検討会|PCL工程会議).*
+:0
+* X-Subject ?? Subject:\/.*(技術検討会|PCL工程会議).*
+* ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
 pcl-meeting/
 
-:0 H
-* _SUBJECT ?? Subject:\/.*(\[SF\]).*
+:0
+* X-Subject ?? Subject:\/.*(\[SF\]).*
+* ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
 pcl-sf/
 
 :0
