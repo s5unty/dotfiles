@@ -14,7 +14,13 @@ mailboxes =fnst-cluster
 mailboxes =fnst-dept_1-6
 mailboxes =fnst-dept_1
 mailboxes =fnst-whole
-### mailboxes =personal
+mailboxes =fnst-cycling
+mailboxes =planet-chenqing
+mailboxes =planet-new
+mailboxes =pcl-sf
+mailboxes =pcl-meeting
+
+mailboxes =personal
 ### mailboxes =debian-zh
 ### mailboxes =shlug
 ### mailboxes =szlug

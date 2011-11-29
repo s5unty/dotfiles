@@ -227,20 +227,20 @@ tjg() {
 # }}}
 
 # file {{{
-alias -s png="qiv -p"
-alias -s PNG="qiv -p"
-alias -s gif="qiv -p"
-alias -s GIF="qiv -p"
-alias -s jpg="qiv -p"
-alias -s JPG="qiv -p"
-alias -s bmp="qiv -p"
-alias -s BMP="qiv -p"
-alias -s xpm="qiv -p"
-alias -s XPM="qiv -p"
-alias -s jpeg="qiv -p"
-alias -s JPEG="qiv -p"
-alias -s icon="qiv -p"
-alias -s ICON="qiv -p"
+alias -s png="qiv -p -l"
+alias -s PNG="qiv -p -l"
+alias -s gif="qiv -p -l"
+alias -s GIF="qiv -p -l"
+alias -s jpg="qiv -p -l"
+alias -s JPG="qiv -p -l"
+alias -s bmp="qiv -p -l"
+alias -s BMP="qiv -p -l"
+alias -s xpm="qiv -p -l"
+alias -s XPM="qiv -p -l"
+alias -s jpeg="qiv -p -l"
+alias -s JPEG="qiv -p -l"
+alias -s icon="qiv -p -l"
+alias -s ICON="qiv -p -l"
 
 alias -s doc=c_doc
 alias -s xls=c_xls
