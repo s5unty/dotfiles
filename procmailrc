@@ -43,6 +43,18 @@ VERBOSE=off
 } # }}}1
 
 # 处理公司邮件 {{{1
+# 按邮件主题过滤邮件 {{{2
+# 获得经过 UTF-8 编码的邮件标题
+:0 H
+_SUBJECT=| $FORMAIL -fXSubject | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))'
+
+#
+# :0 H
+# * _SUBJECT ?? Subject: .*关于.*
+# * ^FROM:.*some\.body.*
+# temp-subj-sb/
+# }}}
+
 :0
 * ^(List-Id|To|CC|BCC):.*sunwuan@cn.fujitsu.com
 fnst-inbox/
