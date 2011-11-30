@@ -25,34 +25,24 @@ VERBOSE=off
 
 # 本地化邮件标题 {{{1
 # 先由 MIME(B or Q) 解码，再由 UTF-8 编码
-# ref@http://comments.gmane.org/gmane.mail.procmail/47940
-# ref@http://comments.gmane.org/gmane.mail.procmail/47948
-:0
-X-Subject=| $FORMAIL -fXSubject | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))'
+#   ref@http://comments.gmane.org/gmane.mail.procmail/47948
+#
+# 原始邮件的Subject字段可能跨行
+#
+# formail 参数 (假设原始邮件的标题内容是: "Subject:_ABC")
+#   -zX 确认字段名(Subject:)和内容(ABC)之间有空格(_)
+#   -zx 确认内容(ABC)之前没有空格
+#
+# procmail 标记
+#   i   忽略传给管道的 Shell 命令的执行错误
+#
+:0 i
+X_Subject=| $FORMAIL -zfxSubject | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))' | tr -d '\n'
 # }}}1
-
-# 签名/加密邮件 {{{1
-# Convert old-style PGP messages to MIME
-# http://lists.debian.org/debian-security/2001/08/msg00078.html
-:0
-* !^Content-Type: multipart/
-* !^Content-Type: application/pgp
-{
-    :0 fBw
-        * ^-----BEGIN PGP MESSAGE-----
-        * ^-----END PGP MESSAGE-----
-        | $FORMAIL -i "Content-Type: application/pgp; format=text; x-action=encrypt"
-
-    :0 fBw
-        * ^-----BEGIN PGP SIGNED MESSAGE-----
-        * ^-----BEGIN PGP SIGNATURE-----
-        * ^-----END PGP SIGNATURE-----
-        | $FORMAIL -i "Content-Type: application/pgp; format=text; x-action=sign"
-} # }}}1
 
 # 处理公司邮件 {{{1
 :0
-* X-Subject ?? Subject:\/.*(中.*日|日.*中|翻译).*
+* X_Subject ?? .*(中.*日|日.*中|翻译).*
 * ^To:.*chenqing2010@cn.fujitsu.com
 planet-chenqing/
 
@@ -62,17 +52,17 @@ planet-chenqing/
 planet-chenqing/
 
 :0
-* X-Subject ?? Subject:\/.*(\[日报\]|日报_).*
+* X_Subject ?? .*(\[日报\]|日报_).*
 * ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
 planet-new/
 
 :0
-* X-Subject ?? Subject:\/.*(技術検討会|PCL工程会議).*
+* X_Subject ?? .*(技[術术][検检][討讨]会|工程会[議议])
 * ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
 pcl-meeting/
 
 :0
-* X-Subject ?? Subject:\/.*(\[SF\]).*
+* X_Subject ?? .*(\[SF\]).*
 * ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
 pcl-sf/
 
