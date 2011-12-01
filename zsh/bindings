@@ -18,6 +18,7 @@ bindkey -M viins "^Q"   backward-kill-line
 bindkey -M viins "^K"   kill-line
 bindkey -M viins "^U"   undo
 bindkey -M viins "^R"   redo
+bindkey -M viins "^O"   ranger-cd
 
 # Alt - Key
 bindkey -M viins "\er"  history-incremental-search-backward
@@ -147,6 +148,17 @@ osc-ipaddr() {
     printf "\033]777;overlay;simple;ov1;8;-1;0;t;$__IP\007"
 }
 zle -N osc-ipaddr
+
+ranger-cd() {
+    tempfile='/tmp/chosendir'
+    /usr/bin/ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+    test -f "$tempfile" &&
+    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    rm -f -- "$tempfile"
+}
+zle -N ranger-cd
 
 # {{{1
 typeset -g -A key

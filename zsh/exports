@@ -16,10 +16,8 @@ export WORDCHARS='*?_-[]~=&:;!#$%^(){}<>'
 export MAILDIR="$HOME/maildir"
 export LISTPROMPT=""
 export DEBIAN_DIR=""
-export QUILT_PATCHES=debian/patches
-export QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index"
 export REPREPRO_CONFIG_DIR=""
-export MAILCHECK=600
+export MAILCHECK=150
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:."
@@ -30,6 +28,7 @@ export DOTREMINDERS="$HOME/.task/reminders"
 export PATH="$PATH:/var/lib/gems/1.8/bin/"
 export TERM="xterm"
 export LANG="C"
+export SDCV_HISTSIZE=32
 
 if [[ -f $DIRSTACK ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
     dirstack=( ${(uf)"$(< $DIRSTACK)"} )

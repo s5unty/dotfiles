@@ -9,7 +9,8 @@ folder-hook fnst- set "crypt_autosign=no"
 folder-hook personal set "from='Vern Sun <s5unty@gmail.com>'"
 folder-hook personal set "crypt_autosign=yes"
 # 4. 除了显示搜索结果的临时邮箱，其余邮箱只显示最近一个月的邮件
-folder-hook !(bingo) push "<limit>~d\"*30d\"<enter>"
+# folder-hook !(bingo) push "<limit>~d\"*30d\"<enter>"
+folder-hook fnst-cluster push "<limit>\"!(~s 日报)\"<enter>"
 # 5. 给日本人的邮件用日文签名，其他的用中文签名
 send-hook    @cn.fujitsu.com "set signature='~/.mutt/signature zh|'"
 send-hook   .*jp.fujitsu.com "set signature='~/.mutt/signature ja|'"
@@ -17,6 +18,6 @@ reply-hook   @cn.fujitsu.com "set locale='zh_CN.UTF-8'; set signature='~/.mutt/s
 reply-hook  .*jp.fujitsu.com "set locale='ja_JP.UTF-8'; set signature='~/.mutt/signature ja|'"
 # 6. 给邮件列表的邮件不要保存已发邮件，私人邮箱就地保存
 send-hook    (fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record=''"
-send-hook   !(fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record='^'"
+send-hook   !(fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record='=fnst-inbox'"
 reply-hook   (fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record=''"
-reply-hook  !(fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record='^'"
+reply-hook  !(fnst-cluster|fjh-pcl-fnst|fnst-ssg|fnst-basesoft|fnst-ulinux)  "set record='=fnst-inbox'"

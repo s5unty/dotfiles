@@ -49,7 +49,7 @@ precmd() {
 preexec () {
     if [ `tty | grep -c pts` -eq 1 ]; then
         # 当前执行的命令输出到终端标题栏
-        print -Pn "\e]0;%# $1 (%1~) - %l\a"
+        print -Pn '\e]0;%# $1 (%1~) - %l\a'
     fi
     # 基于时间随机使用一种颜色高亮 grep 内容
     export GREP_COLOR="01;48;5;$[$(date +%N)%255]"

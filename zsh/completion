@@ -1,6 +1,6 @@
 # vim:set syntax=zsh:
 
-zstyle ':completion:*' menu search select=5
+zstyle ':completion:*' menu
 zstyle ':completion:*' expand prefix
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' group-name ''
@@ -37,7 +37,8 @@ zstyle ':completion:*:processes' list-colors '=(#b) #([0-9]#)[ 0-9:]#([^ ]#)*=01
 zstyle ':completion:*:processes-names' command 'ps -au$USER -o comm|grep -v "ps -au$USER -o comm"'
 
 # hosts {{{1
-[[ -f ~/.ssh/known_hosts ]] && hosts=(`awk '{print $1}' ~/.ssh/known_hosts | tr ',' '\n' `)
+#[[ -f ~/.ssh/known_hosts ]] && hosts=(`awk '{print $1}' ~/.ssh/known_hosts | tr ',' '\n' `)
+[[ -f ~/.ssh/config ]] && hosts=($hosts `grep '^Host' ~/.ssh/config | sed 's/Host\ //' | egrep -v '^\*$'`)
 zstyle ':completion:*' hosts $hosts
 
 # users {{{1

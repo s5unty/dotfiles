@@ -30,6 +30,11 @@ hash -d hacking=~/hacking
 hash -d worktop=~/worktop
 hash -d samba=~/samba
 
+ranger() {
+    command ranger $@ &&
+    cd "$(/bin/grep \^\' ~/.config/ranger/bookmarks | cut -b3-)"
+}
+
 cd() {
     if builtin cd "$@"; then
         ls
