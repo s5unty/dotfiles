@@ -22,6 +22,7 @@ alias scp="scp -p"
 alias lintian="lintian -viI"
 alias tig="tig --all"
 alias rsync="rsync -C"
+alias g256="gpg --digest-algo sha256 --clearsign"
 
 hash -d archive=~/archive
 hash -d desktop=~/desktop

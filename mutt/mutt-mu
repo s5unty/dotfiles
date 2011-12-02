@@ -17,6 +17,7 @@ cmdhist=$mu_base/cmdhist
 
 # mu result folder in mutt folder syntax:
 MAILDIR=/sun/maildir
+export MAILDIR
 
 set -f
 
@@ -45,7 +46,6 @@ tput cup "$1" 0
 # Clear.
 tput ed
 
-
 # run zsh in interactive mode (for history to work and .zshrc to
 # be read).
 search=$(
@@ -68,7 +68,8 @@ search=$(
   a=; vared -p "搜寻(所有)：" -eh a'
 )
 
-MFOLDER=$(echo "$search" | sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g')
+# MFOLDER=$(echo "$search" | sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g')
+MFOLDER=bingo
 export MFOLDER
 
 args=
@@ -158,8 +159,22 @@ case $search in
     cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (*)
-    #args="find -b $search $args_find"
-    #cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
+    # 把搜到的邮件作成待搜索的 message-id 列表
+    args=$(mu find $search -f 'i s' | awk '\
+      {
+        if (NR==1) {
+          str = sprintf("i:%s", $1)
+        } else {
+          str = sprintf("%s OR i:%s", str, $1)
+        }
+      }
+      END {
+        if (NR!=0) {
+          printf("find \"%s\" --format=links --clearlinks --linksdir=\"%s/%s\"", str, ENVIRON["MAILDIR"], ENVIRON["MFOLDER"])
+        }
+      }
+    ')
+    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
 esac
 # 不能识别 now/today 的问题，奇怪

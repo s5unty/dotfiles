@@ -82,6 +82,7 @@ hi MyTagListTitle    ctermfg=0    guifg=#000000  ctermbg=NONE guibg=NONE     cte
 hi MyTagListTagScope ctermfg=NONE guifg=NONE     ctermbg=NONE guibg=NONE     cterm=NONE       gui=NONE
 
 " mail
+hi def link mailSubject     MatchParen
 hi def link mailSignature	Comment
 hi mailQuoted1		ctermfg=237
 hi mailQuoted2		ctermfg=243

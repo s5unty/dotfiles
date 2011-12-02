@@ -24,12 +24,15 @@ bind index      <BackTab>   previous-new-then-unread
 bind index      r           group-reply
 bind index      R           reply
 bind index      S           decode-save
+bind index      i           collapse-thread
+bind index      z           collapse-thread
 # 编辑邮件头、命令行时
 bind editor     <Esc>p      history-up
 bind editor     <Esc>n      history-down
 # 浏览通讯录时
 bind alias      N           search-opposite
 # 切换邮箱/查看目录时
+bind browser    i           exit
 bind browser    l           select-entry
 bind browser    <space>     select-entry
 # 查看附件时

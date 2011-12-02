@@ -359,6 +359,11 @@ if has("autocmd")
       endif
   endfunction
 
+  function! <SID>AC_HighlightDirtySpace()
+      syn match wtfSpace '　'
+      hi link wtfSpace   SpecialKey
+  endfunction
+
   function! <SID>AC_ChmodExecutable()
       if getline(1) =~ "^#!" && getline(1) =~ "/bin/"
           silent !chmod u+x %
@@ -369,6 +374,10 @@ if has("autocmd")
   " 每次访问文件时都把光标放置在上次离开的位置
   autocmd BufReadPost *
     \ call <SID>AC_ResetCursorPosition()
+
+  " 每次加载文件时都把全角空格'　'高亮显示出来
+  autocmd BufReadPost *
+    \ call <SID>AC_HighlightDirtySpace()
 
   " 让 checkpath 找到相关文件，便于 [I 正常工作
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
@@ -742,5 +751,4 @@ map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
 
 " }}}1
-
 

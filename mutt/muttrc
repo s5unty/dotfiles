@@ -143,7 +143,7 @@ set timeout=60
 set print_command="paps --landscape --font='monospace 8' --header --columns=2 | lp -o landscape -o sites=two-sided-long-edge -"
 # 编辑邮件的临时目录
 set tmpdir="~/maildir/draft/tmp"
-# 保存发件人、主题的历史记录
+# 保存撰写邮件头的编辑历史记录
 set save_history=10
 set history_file="~/.mutt/cache/history"
 

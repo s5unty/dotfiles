@@ -42,7 +42,6 @@ macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender ad
 
 # 避免切换折叠后导致底部留白的问题
 macro index Z "<collapse-all><current-bottom>"
-macro index z "<collapse-thread>"
 
 # 邮件备注
 # macro index,pager "<Return>" "\
