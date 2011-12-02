@@ -70,11 +70,11 @@ set collapse_unread=yes
 # 撰写新邮件时不再提示是否使用草稿箱
 set recall=no
 # 开启邮件标题缓存功能，加快载入速度 disappear from 1.5.21
-set header_cache="~/.mutt/cache/"
+set header_cache="~/.mutt/cache"
 # 开启 POP/IMAP 缓存功能 disappear from 1.5.21
-set message_cachedir="~/.mutt/cache/"
+set message_cachedir="~/.mutt/cache"
 # 保存草稿的位置
-set postponed="~/.mutt/cache/postponed"
+set postponed="~/maildir/draft"
 # 中断发送的邮件自动保存在草稿箱
 set postpone=yes
 # 默认用主题内容和发件人作搜索关键字
@@ -121,7 +121,7 @@ set crypt_autosign=yes
 # 有新邮件时提醒
 set beep_new=yes
 # 查看邮件同时显示迷你线索
-set pager_index_lines=8
+set pager_index_lines=4
 # 允许跳到被折叠了的未读邮件
 set uncollapse_jump=yes
 # 使用 Reply-to 字段作回复地址
@@ -141,3 +141,9 @@ set wrap=-7
 set timeout=60
 # CJK由paps正确处理后再转给lp打印
 set print_command="paps --landscape --font='monospace 8' --header --columns=2 | lp -o landscape -o sites=two-sided-long-edge -"
+# 编辑邮件的临时目录
+set tmpdir="~/maildir/draft/tmp"
+# 保存发件人、主题的历史记录
+set save_history=10
+set history_file="~/.mutt/cache/history"
+
