@@ -12,13 +12,6 @@
 # we're not using <shell-escape> because we want to prompt the user in
 # mutt's prompt area and still have mutt's index visible.
 
-mu_base=~/.mu
-cmdhist=$mu_base/cmdhist
-
-# mu result folder in mutt folder syntax:
-MAILDIR=/sun/maildir
-export MAILDIR
-
 set -f
 
 # restore stdin/stdout to the terminal, fd 3 goes to mutt's backticks.
@@ -46,6 +39,9 @@ tput cup "$1" 0
 # Clear.
 tput ed
 
+mu_base=~/.mu
+cmdhist=$mu_base/cmdhist
+lastcmd=
 # run zsh in interactive mode (for history to work and .zshrc to
 # be read).
 search=$(
@@ -68,11 +64,14 @@ search=$(
   a=; vared -p "搜寻(所有)：" -eh a'
 )
 
+# mu result folder in mutt folder syntax:
+MAILDIR=/sun/maildir
+# 用每次搜索的关键字作一个虚拟邮箱？就像 sup 那样？
 # MFOLDER=$(echo "$search" | sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g')
 MFOLDER=bingo
+export MAILDIR
 export MFOLDER
 
-args=
 case $search in
   ("<BREAK>") ;;
   ("")
@@ -159,26 +158,23 @@ case $search in
     cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (*)
-    # 把搜到的邮件作成待搜索的 message-id 列表
-    args=$(mu find $search -f 'i s' | awk '\
-      {
-        if (NR==1) {
-          str = sprintf("i:%s", $1)
-        } else {
-          str = sprintf("%s OR i:%s", str, $1)
-        }
-      }
-      END {
-        if (NR!=0) {
-          printf("find \"%s\" --format=links --clearlinks --linksdir=\"%s/%s\"", str, ENVIRON["MAILDIR"], ENVIRON["MFOLDER"])
-        }
-      }
-    ')
-    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
+    # 挖哈哈，mutt 也能全邮箱正文搜索拉，速度杠杠的
+    key=$(echo "$search")
+    sh -c "find $MAILDIR/$MFOLDER -type l -exec rm {} \;" # 清空虚拟邮箱
+    sh -c "recoll -t -q '${key}' | grep message/rfc822 | sed -s 's,^.*\('$MAILDIR'[^]]*\)\].*$,\"\1\",' | xargs ln -sft $MAILDIR/$MFOLDER/cur/ > /dev/null 2>&1"
+    args=
     ;;
 esac
-# 不能识别 now/today 的问题，奇怪
-sh -c "mu $args > /dev/null 2>&1 3>&- &"
+
+if [ -z ${args} ]; then
+    # recoll
+    key=$(echo "${key}" | sed 's,\s*\(.*\)\s*,(\1),g' | sed 's,\s\+,|,g')
+    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
+    cmd=${cmd}"<enter-command>color\ body\ white\ blue\ ${key}<return>"
+else
+    # mu
+    sh -c "mu $args > /dev/null 2>&1 3>&- &"
+fi
 
 # clear our mess
 printf '\r'; tput ed
