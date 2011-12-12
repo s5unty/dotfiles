@@ -8,13 +8,22 @@ else
     case "$1" in
     en)
         echo 'Cheers,'
-        LANG=en_US.UTF-8 && echo "-- \nSun Wuan\n`date +"%Y.%m.%d(%a)"`";;
+        LANG=en_US.UTF-8 && echo "`date +"%Y.%m.%d(%a)"`\n-- ";;
     ja)
         echo '以上、よろしくお願いいたします。'
-        LANG=ja_JP.UTF-8 && echo "-- \n`echo "0x5B6B0x6B660x5B89" | ascii2uni -q`\n`date +"%Y.%m.%d(%a)"`";;
+        LANG=ja_JP.UTF-8 && echo "`date +"%Y.%m.%d(%a)"`\n-- ";;
     *)
-        LANG=zh_CN.UTF-8 && echo "-- \n`echo "0x5B590x6B660x5B89" | ascii2uni -q`\n`date +"%Y.%m.%d(%a)"`";;
+        LANG=zh_CN.UTF-8 && echo "`date +"%Y.%m.%d(%a)"`\n-- ";;
     esac
-    echo 'TEL: 7998-8513'
+    echo '----------------------------------------------------'
+    echo 'Fha Jhna' | tr a-zA-Z n-za-mN-ZA-M
+    echo 'Development Dept. I'
+    echo 'Nanjing Fujitsu Nanda Software Tech. Co., Ltd.(FNST)'
+    echo 'No. 6 Wenzhu Road, Nanjing, 210012, China'
+    echo 'TEL: +86+25-86630566-8513'
+    echo 'COINS: 7998-8513'
+    echo 'FAX: +86+25-83317685'
+    echo 'ZNVY: fhajhna@pa.shwvgfh.pbz' | tr a-zA-Z n-za-mN-ZA-M
+    echo '----------------------------------------------------'
 fi
 
