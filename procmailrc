@@ -36,8 +36,8 @@ VERBOSE=off
 # procmail 标记
 #   i   忽略传给管道的 Shell 命令的执行错误
 #
-:0 i
-X_Subject=| $FORMAIL -zfxSubject | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))' | tr -d '\n'
+:0 Hi
+X_Subject=| $FORMAIL -zfxSubject | sed 's/^[\s\t]*//' | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))' | tr -d '\n'
 # }}}1
 
 # 处理公司邮件 {{{1
@@ -57,7 +57,7 @@ planet-chenqing/
 planet-new/
 
 :0
-* X_Subject ?? .*(技[術术][検检][討讨]会|工程会[議议])
+* X_Subject ?? .*(技(术|術)(检|検)(讨|討)会|工程会(议|議)).*
 * ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
 pcl-meeting/
 
