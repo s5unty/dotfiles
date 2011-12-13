@@ -15,7 +15,7 @@ macro pager J "!gpg --keyserver pgp.mit.edu --recv-key " "Get PGP Key"
 macro pager K "!gpg --lsign-key " "Sign PGP Key"
 
 # 标记所有新邮件为已读(测试和新建邮箱时)
-macro index \cr "<collapse-all><tag-pattern>~(~N)<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter><collapse-all><current-bottom>"
+macro index \cr "<collapse-all><tag-pattern>~(~N|~O)<enter><tag-prefix><read-subthread><untag-pattern>.<enter><collapse-all><current-bottom>"
 
 macro browser h "<first-entry><select-entry>"
 

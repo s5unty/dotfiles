@@ -15,7 +15,7 @@ bind pager      S           decode-save
 bind index      0           collapse-thread
 bind index     \;           current-middle
 bind index     \'           tag-prefix
-bind index      ,           next-unread-mailbox
+bind index      <Esc>.      next-unread-mailbox
 bind index     \\           last-entry
 bind index      P           recall-message # 'R'ecall-message move to 'P'
 bind index      N           search-opposite
