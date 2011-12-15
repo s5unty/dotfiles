@@ -41,54 +41,7 @@ X_Subject=| $FORMAIL -zfxSubject | sed 's/^[\s\t]*//' | perl -MEncode -ne 'print
 # }}}1
 
 # 处理公司邮件 {{{1
-:0
-* X_Subject ?? .*(中.*日|日.*中|翻译).*
-* ^To:.*chenqing2010@cn.fujitsu.com
-planet-chenqing/
-
-:0
-* ^From:.*chenqing2010@cn.fujitsu.com
-* ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
-planet-chenqing/
-
-:0
-* X_Subject ?? .*(\[日报\]|日报_).*
-* ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
-planet-new/
-
-:0
-* X_Subject ?? .*(技(术|術)(检|検)(讨|討)会|工程会(议|議)).*
-* ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
-pcl-meeting/
-
-:0
-* X_Subject ?? .*(\[SF\]).*
-* ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
-pcl-sf/
-
-:0
-* ^(List-Id|To|CC|BCC):.*sunwuan@cn.fujitsu.com
-fnst-inbox/
-
-:0
-* ^(List-Id|To|CC|BCC):.*fnst-cluster@cn.fujitsu.com
-fnst-cluster/
-
-:0
-* ^(List-Id|To|CC|BCC):.*fnst-basesoft@cn.fujitsu.com
-fnst-dept_1-6/
-
-:0
-* ^(List-Id|To|CC|BCC):.*fnst-ssg@cn.fujitsu.com
-fnst-dept_1/
-
-:0
-* ^(List-Id|To|CC|BCC):.*fnst@cn.fujitsu.com
-fnst-whole/
-
-:0
-* ^(List-Id|To|CC|BCC):.*(fujitsu.com)
-fnst-inbox/
+INCLUDERC=$MAILDIR".procmailrc.fnst"
 # }}}1
 
 # 处理 QQ 邮箱 {{{1

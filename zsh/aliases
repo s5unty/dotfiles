@@ -22,7 +22,6 @@ alias scp="scp -p"
 alias lintian="lintian -viI"
 alias tig="tig --all"
 alias rsync="rsync -C"
-alias g256="gpg --digest-algo sha256 --clearsign"
 alias rot13="tr a-zA-Z n-za-mN-ZA-M"
 
 hash -d archive=~/archive
@@ -260,3 +259,8 @@ c_pdf() { pdftotext -q $1 - | less }
 c_htm() { w3m -T text/html $1 }
 # }}}
 
+# md5sum {{{
+g256() {
+    md5sum $* | gpg --digest-algo sha256 --clearsign
+}
+# }}}
