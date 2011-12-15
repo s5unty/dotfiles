@@ -257,8 +257,8 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 -- }}}
 
 -- {{{ Program
-awful.key({ modkey }, "F1", function () awful.util.spawn("x-www-browser") end),
-awful.key({ modkey }, "F2", function () awful.util.spawn(terminal.." -name Weechat -T Weechat -e sh -c weechat-curses") end),
+awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Ranger -T Ranger -e sh -c ranger") end),
+awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
 awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e sh -c mutt") end),
 awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'XP'") end),
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
@@ -322,8 +322,33 @@ awful.key({ modkey, "Shift" }, "d", function ()
 end),
 -- }}}
 
+-- {{{ run in terminal
+-- ref@http://awesome.naquadah.org/wiki/Launch_In_Terminal_Keyword
+awful.key({ modkey }, "r", function ()
+    awful.prompt.run({prompt="Run: "},
+    mypromptbox[mouse.screen].widget, function(command)
+        if command:sub(1,1) == ":" then
+            command = terminal .. ' -e ' .. command:sub(2)
+        end
+        awful.util.spawn(command)
+    end, function(command, cur_pos, ncomp, shell)
+        local term = false
+        if command:sub(1,1) == ":" then
+            term = true
+            command = command:sub(2)
+            cur_pos = cur_pos - 1
+        end
+        command, cur_pos =  awful.completion.shell(command, cur_pos,ncomp,shell)
+        if term == true then
+            command = ':' .. command
+            cur_pos = cur_pos + 1
+        end
+        return command, cur_pos
+    end, awful.util.getdir("cache") .. "/history")
+end),
+-- }}}
+
 -- {{{ Others
-awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end),
 awful.key({ modkey, "Control" }, "r", awesome.restart)
 -- }}}
 

@@ -32,6 +32,7 @@ export SDCV_HISTSIZE=32
 
 if [[ -f $DIRSTACK ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
     dirstack=( ${(uf)"$(< $DIRSTACK)"} )
+    builtin cd ${PWD} # 保留来自ranger的目录信息
     builtin cd $(head -1 $DIRSTACK) # 打开终端时进入最近目录
 else
     mkdir -p ${DIRSTACK:h}
