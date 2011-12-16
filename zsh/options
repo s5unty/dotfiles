@@ -23,12 +23,22 @@ setopt PUSHD_MINUS
 setopt PUSHD_SILENT
 setopt PUSHD_TO_HOME
 setopt PUSHD_IGNOREDUPS
+
+setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
-setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FCNTL_LOCK
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_NO_STORE
+setopt HIST_VERIFY
+setopt HIST_REDUCE_BLANKS
+setopt HIST_LEX_WORDS
+
 setopt FLOW_CONTROL         # don't ignore ^S/^Q
 setopt LONGLISTJOBS         # display PID when suspending processes as well
 setopt NOTIFY               # report the status of backgrounds jobs immediately
 setopt COMPLETEINWORD       # not just at the end
 setopt EXTENDEDGLOB         # 扩展文件名匹配功能
-

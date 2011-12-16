@@ -8,8 +8,8 @@ if [ -e "/usr/bin/colordiff" ]; then __DIFF="colordiff" else __DIFF="diff" fi
 if [ -e "/usr/bin/sudo" ];      then __SUDO="sudo" fi
 
 export HISTFILE=$HOME/.zsh/cache/HISTFILE
-export HISTSIZE=40960
-export SAVEHIST=40960
+export HISTSIZE=20480
+export SAVEHIST=102400
 export DIRSTACK=$HOME/.zsh/cache/DIRSTACK
 export DIRSTACKSIZE=30
 export WORDCHARS='*?_-[]~=&:;!#$%^(){}<>'
