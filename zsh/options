@@ -37,6 +37,7 @@ setopt HIST_VERIFY
 setopt HIST_REDUCE_BLANKS
 setopt HIST_LEX_WORDS
 
+setopt RM_STAR_WAIT         # `rm *` 或者 `rm path/*` 会等待10秒
 setopt FLOW_CONTROL         # don't ignore ^S/^Q
 setopt LONGLISTJOBS         # display PID when suspending processes as well
 setopt NOTIFY               # report the status of backgrounds jobs immediately
