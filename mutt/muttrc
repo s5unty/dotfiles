@@ -12,7 +12,7 @@ source ~/.mutt/pop3                       # 使用 POP3 服务
 # 终端的编码
 set charset="UTF-8"
 # 外发邮件使用的编码
-set send_charset="us-ascii:utf-8"
+set send_charset="us-ascii:iso-2022-jp:utf-8"
 # 用中文格式显示日期
 set locale=`echo "${LC_ALL:-${LC_TIME:-${LANG}}}"`
 # 解决未经过MIME编码的信件显示为乱码的问题

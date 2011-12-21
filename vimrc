@@ -57,13 +57,19 @@ else
     set shell=bash\ -x\ -c
 endif
 
-if &term =~ "rxvt-unicode"
+if &term =~ "rxvt-unicode-256color"
     color light256
     " 区别普通/插入模式的光标颜色
     let &t_SI = "\033]12;black\007"
     let &t_EI = "\033]12;red\007"
     autocmd VimLeave * :!echo -ne "\033]12;black\007"
 else
+    " rxvt 暂不支持
+    " https://wiki.ubuntulinux.jp/hito/WIP-ambiwidth
+    " http://sourceware.org/bugzilla/show_bug.cgi?id=4335
+    " http://lists.debian.or.jp/debian-devel/200703/msg00038.html
+    " http://unicode.org/Public/UNIDATA/EastAsianWidth.txt
+    set ambiwidth=double
     color delek
 endif
 
