@@ -64,14 +64,16 @@ if &term =~ "rxvt-unicode-256color"
     let &t_EI = "\033]12;red\007"
     autocmd VimLeave * :!echo -ne "\033]12;black\007"
 else
-    " rxvt 暂不支持
-    " https://wiki.ubuntulinux.jp/hito/WIP-ambiwidth
-    " http://sourceware.org/bugzilla/show_bug.cgi?id=4335
-    " http://lists.debian.or.jp/debian-devel/200703/msg00038.html
-    " http://unicode.org/Public/UNIDATA/EastAsianWidth.txt
-    set ambiwidth=double
     color delek
 endif
+
+" 用全角显示『○』、『△』、『□』这样的特殊字符
+" East Asian Ambiguous Width:
+" http://www.unicode.org/reports/tr11/
+" http://lists.debian.or.jp/debian-devel/200703/msg00038.html
+" http://sakurapup.browserloadofcoolness.com/viewtopic.php?f=13&t=2027
+" http://du1abadd.org/debian/UTF-8-EAW-FULLWIDTH.gz
+set ambiwidth=double
 
 let mapleader=","
 let html_dynamic_folds=1

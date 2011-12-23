@@ -84,7 +84,7 @@ set thorough_search=yes
 # 退出mutt前提示
 set quit=ask-no
 # mutt用制表符表示线索
-set ascii_chars=no
+set ascii_chars=yes
 # 禁止PAGE键切换到下一封信件
 set pager_stop=yes
 # 快速回复，不用确认回复地址和主题
