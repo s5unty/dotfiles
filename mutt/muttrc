@@ -145,5 +145,6 @@ set print_command="paps --landscape --font='monospace 8' --header --columns=2 | 
 set tmpdir="~/maildir/draft/tmp"
 # 保存撰写邮件头的编辑历史记录
 set history=100
+set save_history=100
 set history_file="~/.mutt/cache/history"
 
