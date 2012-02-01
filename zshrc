@@ -6,7 +6,9 @@
 [ -e $HOME/.zsh/bindings      ] && source $HOME/.zsh/bindings
 [ -e $HOME/.zsh/completion    ] && source $HOME/.zsh/completion
 [ -e $HOME/.zsh/local.host    ] && source $HOME/.zsh/local.host
-[ -e $HOME/.zsh/plugins/*.zsh ] && source $HOME/.zsh/plugins/*.zsh
+for plugin in $(find $HOME/.zsh/plugins/*.zsh); do
+    source $plugin
+done
 
 if ! hostname | grep "^verns-\|li380-170" > /dev/null 2>&1; then
     return # 不是我的机器
