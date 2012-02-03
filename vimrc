@@ -397,6 +397,9 @@ if has("autocmd")
   autocmd Filetype java
     \ setlocal omnifunc=javacomplete#Complete
 
+  autocmd BufEnter,WinEnter *.page
+    \ set filetype=rst
+
 endif
 " }}}
 
@@ -711,6 +714,8 @@ map! <Esc>[24;5~ <C-F12>
 " rxvt keys {{{2
 " <Esc>[23~ confilict between <S-F1> and <F11>
 " <Esc>[24~ confilict between <S-F2> and <F12>
+map  <Esc>[a   <S-Up>
+map  <Esc>[b   <S-Down>
 map  <Esc>[25~ <S-F3>
 map  <Esc>[26~ <S-F4>
 map  <Esc>[28~ <S-F5>
