@@ -260,18 +260,11 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Ranger -T Ranger -e sh -c ranger") end),
 awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
 awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e sh -c mutt") end),
-awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'XP'") end),
+awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'WinXP'") end),
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
-awful.key({        }, "XF86Mail", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e mutt") end),
-awful.key({        }, "XF86MyComputer", function () awful.tag.viewonly(tags[1][1]) end),
-awful.key({        }, "XF86AudioPlay",        function () awful.util.spawn("mocp.sh") end),
-awful.key({        }, "XF86AudioStop",        function () awful.util.spawn("mocp -s") end),
-awful.key({        }, "XF86AudioPrev",        function () awful.util.spawn("mocp -r") end),
-awful.key({        }, "XF86AudioNext",        function () awful.util.spawn("mocp -f") end),
-awful.key({        }, "XF86AudioLowerVolume", function () awful.util.spawn("mocp -v -1") end),
-awful.key({        }, "XF86AudioRaiseVolume", function () awful.util.spawn("mocp -v +1") end),
+awful.key({ modkey }, "Scroll_Lock",    function () awful.util.spawn("xscreensaver-command -lock") end),
 -- }}}
 
 -- {{{ calendar
@@ -298,7 +291,7 @@ awful.key({ modkey }, "d", function ()
     local f = io.popen("xsel -o")
     local word = f:read("*a")
     f:close()
-    local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u 'xdict-en-zh' "..word.." | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+    local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
     local c = f:read("*a")
     f:close()
 
@@ -558,6 +551,5 @@ client.add_signal("marked", function(c) c.border_color = beautiful.border_marked
 -- }}}
 
 -- {{{ Autorun
-awful.util.spawn("/usr/bin/gdlinux")
 awful.util.spawn("/usr/bin/iptux")
 -- }}}

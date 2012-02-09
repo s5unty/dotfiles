@@ -6,9 +6,7 @@ keycode 153 = XF86AudioNext
 keycode 174 = XF86AudioLowerVolume
 keycode 176 = XF86AudioRaiseVolume
 
-! Swap CapsLock <=> Escape
+! Make <CapsLock> to be <Escape>
 remove Lock = Caps_Lock
 keysym Caps_Lock = Escape
-keysym Escape = Caps_Lock
 add Lock = Caps_Lock
-
