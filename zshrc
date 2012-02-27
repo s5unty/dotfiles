@@ -21,7 +21,7 @@ export TZ='Asia/Shanghai'
 
 if [ `tty | grep -c pts` -eq 1 ]; then
     stty -ixon -ixoff # 关闭 C-Q, C-S 流控制
-    export TERM="rxvt-unicode"
+    export TERM="rxvt-unicode-256color"
     export LANG="zh_CN.UTF-8"
 fi
 
