@@ -3,18 +3,19 @@ folder-hook . "push '<collapse-all><current-bottom>'"
 # 真实邮箱，每次初始化高亮，只显示最近一个月的邮件
 folder-hook !(bingo) "source ~/.mutt/colours"
 folder-hook !(bingo) "push <limit>~d\"*30d\"<enter>"
-# 私人邮箱，切换邮送域，自动gpg签名，外发邮件不存档
+# 私人邮箱，切换邮送域，自动gpg签名
 folder-hook personal "set from='Vern Sun <s5unty@gmail.com>'"
 folder-hook personal "set crypt_autosign=yes"
-# 公司邮箱，切换邮送域，不用gpg签名，外发邮件存档
+# 公司邮箱，切换邮送域，不用gpg签名
 folder-hook fnst- "set from='Sun Wuan <sunwuan@cn.fujitsu.com>'"
 folder-hook fnst- "set crypt_autosign=no"
-folder-hook fnst- "set record='=fnst-inbox'"
-# 公司邮箱，自动选择合适的中日签名
-send-hook    @cn\.f.j.t..\.com "set send_charset='us-ascii:utf-8';       set editor='vim -c \"set fileencoding=utf-8\"';       set signature='~/.mutt/signature zh|'"
-send-hook   .*jp\.f.j.t..\.com "set send_charset='us-ascii:iso-2022-jp'; set editor='vim -c \"set fileencoding=iso-2022-jp\"'; set signature='~/.mutt/signature ja|'"
-reply-hook   @cn\.f.j.t..\.com "set locale=zh_CN.UTF-8; set send_charset='us-ascii:utf-8';       set editor='vim -c \"set fileencoding=utf-8\"';       set signature='~/.mutt/signature zh|'"
-reply-hook  .*jp\.f.j.t..\.com "set locale=ja_JP.UTF-8; set send_charset='us-ascii:iso-2022-jp'; set editor='vim -c \"set fileencoding=iso-2022-jp\"'; set signature='~/.mutt/signature ja|'"
+# 外发邮件，智能签名及切换编码
+send-hook   "~C @cn\.f.j.t..\.com" "set signature='~/.mutt/signature zh|'; set send_charset='utf-8';"
+reply-hook  "~C @cn\.f.j.t..\.com" "set signature='~/.mutt/signature zh|'; set send_charset='utf-8'; set locale=zh_CN.UTF-8"
+# 在外发编码错误的情况下，发件箱中的已发邮件的标题，显示异常的问题
+# 给y.yang发中文私信时，用的是日文编码。追加~l后，可以避免这个问题
+send-hook   "~C.*jp\.f.j.t..\.com ~l" "set signature='~/.mutt/signature ja|'; set send_charset='iso-2022-jp';"
+reply-hook  "~C.*jp\.f.j.t..\.com ~l" "set signature='~/.mutt/signature ja|'; set send_charset='iso-2022-jp'; set locale=ja_JP.UTF-8"
 # 公司列表，外发邮件智能存档
 send-hook   "~u" "set record=''"
 reply-hook  "~u" "set record=''"
