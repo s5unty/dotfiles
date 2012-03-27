@@ -1310,11 +1310,13 @@ function! <SID>Bf_BuildList(delBufNum, updateBufList)
                         let l:shortBufName = substitute(l:shortBufName, '[][()]', '', 'g')
                         let l:y =l:y +1
                         let g:Tb_BufferMap=g:Tb_BufferMap . l:y . "-" . l:i . "\r"
-                        let l:tab = '['.l:y.':'.l:shortBufName." ]"
+                        "let l:tab = '['.l:y.':'.l:shortBufName." ]"
+                        let l:tab = '['.l:y."]"
 
                         " If the buffer is open in a window mark it
                         if bufwinnr(l:i) != -1
-                            let l:tab = "[".l:y.':'.l:shortBufName."]*"
+                            "let l:tab = "[".l:y.':'.l:shortBufName."]*"
+                            let l:tab = "[".l:y."]*"
                         endif
 
                         " If the buffer is modified then mark it

@@ -20,5 +20,22 @@ function! CheckAttachments()
   echo
 endfunction
 
+" Vern Sun <s5unty@gmail.com> - 2011-10-17
+" autocmd BufUnload mutt* call CheckBlabla()
+" function! CheckAttachments()
+"   let l:keyword = '生産物'
+"   let l:ic = &ignorecase
+"   if (l:ic == 0)
+"     set ignorecase
+"   endif
+"   if (search('^\([^>|].*\)\?\(re-\?\)\?\(' . l:english . '\|' . l:chinese . '\)', "w") != 0)
+"     let l:temp = inputdialog("Do not forget to attach a file [Hit return] ")
+"   endif
+"   if (l:ic == 0)
+"     set noignorecase
+"   endif
+"   echo
+" endfunction
+
 set textwidth=78
 set formatoptions+=mM

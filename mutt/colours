@@ -1,15 +1,18 @@
 # 自定义界面颜色
 # --   --        前景色      背景色
-color indicator  default     color11 # 当前行
-color normal     default     default # 普通文字
-color status     default     default # 状态栏
-color tree       default     default # 线索
-color tilde      default     default # 信件末尾后终端最下方的留白
-color attachment color8      color7  # 附件
-color message    black       default # 提示信息
-color quoted     color8      default # 引用
-color hdrdefault black       default # 信头
-color signature  color250    default # 签名
+color indicator  default     color11  # 当前行
+color normal     default     default  # 普通文字
+color status     default     default  # 状态栏
+color tree       default     default  # 线索
+color tilde      default     default  # 信件末尾后终端最下方的留白
+color attachment color8      color7   # 附件
+color message    black       default  # 提示信息
+color quoted     black       color252 # 引用
+color quoted1    black       color251 # 引用
+color quoted2    black       color249 # 引用
+color quoted3    black       color248 # 引用
+color hdrdefault black       default  # 信头
+color signature  color250    default  # 签名
 
 # 特殊状态
 color index      color8      default   "!(~d `date +'%d/%m' -d '3 days ago'`-)"
@@ -30,14 +33,17 @@ color index      white       color237  "~n 8-"
 color index      white       color234  "~n 9-"
 color index      white       black     "~n 10-"
 
-# 醒目签名
-color body       red         black     "^(gpg: )?Bad signature"
-color body       red         black     "^(gpg: )?warning"
-
 # 特殊邮件头
 color header     yellow      default   "^X-Label:"
 color header     color8      color7    "^X-Mailer:"
 color header     color8      color7    "^User-Agent:"
+
+# 清空内容高亮
+uncolor body *
+
+# 高亮gpg签名
+color body       red         black     "^(gpg: )?Bad signature"
+color body       red         black     "^(gpg: )?warning"
 
 # 关键内容高亮
 color body       black       color228  "[孫|孙](殿|武安|さん|[Ss]an)"

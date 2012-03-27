@@ -1,6 +1,6 @@
 " General {{{1
 set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,sjis,eucjp,gbk,big5,default
+set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,euc-cn,cp936,euc-tw,big5
 set termencoding=utf-8
 set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
@@ -42,19 +42,21 @@ if has("gui_running")
     set imactivatekey=C-space " GVim 中文无缝输入
 endif
 
-if has("win32")
+if has("win32") || has("win64")
     au GUIEnter * simalt ~x
     language messages zh_CN.UTF-8
     set grepprg=findstr\ /n
     set guifont=Envy_Code_R:h10
     set guifontwide=NSimsun:h10.5
     set shell=cmd.exe
+    set directory=$TMP
 else
     set guifont=Envy\ Code\ R\ 10
     set guifontwide=WenQuanYi\ Zen\ Hei\ Sharp\ 10
     set makeprg=make\ -j2
     set grepprg=ack-grep\ -a
     set shell=bash\ -x\ -c
+    set directory=/tmp
 endif
 
 if &term =~ "rxvt-unicode-256color"
@@ -290,7 +292,6 @@ nmap <silent> <unique> <C-Q> :qa!<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
-imap <silent> <unique> <C-W> <ESC><ESC>bcw
 imap <silent> <unique> <C-F> <Right>
 imap <silent> <unique> <C-B> <Left>
 imap <silent> <unique> <C-J> <Down>
@@ -397,8 +398,8 @@ if has("autocmd")
   autocmd Filetype java
     \ setlocal omnifunc=javacomplete#Complete
 
-  autocmd BufEnter,WinEnter *.page
-    \ set filetype=rst
+  autocmd BufEnter,WinEnter *.t2t
+    \ set filetype=txt2tags
 
 endif
 " }}}
@@ -463,8 +464,9 @@ function! <SID>ShowTaglist()
 endfunction
 
 
-" * SuperTab 1.1 : Do all your insert-mode completion with Tab {{{2
+" * SuperTab 1.6 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
+let SuperTabCrMapping=0 " 该项和delimitMate的expand_cr选项冲突
 let SuperTabRetainCompletionType=1
 let SuperTabDefaultCompletionType="<C-X><C-N>"
 let SuperTabMappingForward="<Tab>"
@@ -543,7 +545,7 @@ endfunction
 " nothing
 
 
-" * quickfixsigns 0.14 : Mark quickfix & location list items with signs {{{2
+" * quickfixsigns 1.00 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
 let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 __Tag_List__ 和 -TabBar- 这两个 Buffer
 
@@ -555,32 +557,20 @@ let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 __Tag_List__ 和 -Ta
 
 " * delimitMate.vim 2.6 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
-let delimitMate_autoclose = 0
-let delimitMate_nesting_quotes = ['"','`']
+let delimitMate_autoclose = 1
+let delimitMate_quotes = "\" ' `"
+let delimitMate_nesting_quotes = []
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
-let delimitMate_expand_cr = 1
-let delimitMate_smart_quotes = 1
+let delimitMate_expand_cr = 1 " 该项和SuperTab的CrMapping选项冲突
+let delimitMate_smart_quotes = 0
 let delimitMate_balance_matchpairs = 1
 
 
-" - surround.vim 1.90 : Delete/change/add parentheses/quotes/XML-tags/much more with ease {{{2
-" http://www.vim.org/scripts/script.php?script_id=1697
-" nothing
-"
-" 在 normal mode 下按 ysiwb 或者 cs@1@2
-" 在 visual mode 下选中一个字符串按 sb, b | B | " | ' | { | > | [ | ]
-
-
-" * Gundo 2.2.0 : Visualize your undo tree {{{2
+" * Gundo 2.3.0 : Visualize your undo tree {{{2
 " http://www.vim.org/scripts/script.php?script_id=3304
 let g:gundo_preview_height = 50
 let g:gundo_preview_bottom = 1
 let g:gundo_right = 1
-
-
-" + Pydiction 1.2 : Tab-complete your Python code {{{2
-" http://www.vim.org/scripts/script.php?script_id=850
-let g:pydiction_location = '~/.tags_python'
 
 
 " + OmniCppComplete 0.41 : C/C++ omni-completion with ctags database {{{2
@@ -594,17 +584,22 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 let OmniCpp_GlobalScopeSearch = 0 " 0 or 1
 
 
-" * Mark 2.5.1 : Highlight several words in different colors simultaneously. {{{2
+" * Mark 2.6.2 : Highlight several words in different colors simultaneously. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2666
 let g:mwAutoLoadMarks = 1 " 自动加载高亮的 Mark
 nmap <Plug>IgnoreMarkSearchAnyNext <Plug>MarkSearchAnyNext
 nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 
 
-" + NrrwRgn 21 : A Narrow Region Plugin similar to Emacs {{{2
+" + NrrwRgn 26 : A Narrow Region Plugin similar to Emacs {{{2
 " http://www.vim.org/scripts/script.php?script_id=3075
 let g:nrrw_topbot_leftright = 'aboveleft'
 let g:nrrw_rgn_wdth = 50
+
+
+" + echofunc.vim 2.0 : Echo the function declaration in the command line for C/C++. {{{2
+" http://www.vim.org/scripts/script.php?script_id=1735
+
 
 
 " }}}1

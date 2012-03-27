@@ -3,8 +3,8 @@
 " @vcs:         http://vcshub.com/tomtom/quickfixsigns_vim/
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2010-05-08.
-" @Last Change: 2011-05-18.
-" @Revision:    224
+" @Last Change: 2012-02-02.
+" @Revision:    387
 
 if exists('g:quickfixsigns#vcsdiff#loaded')
     finish
@@ -17,20 +17,52 @@ if index(g:quickfixsigns_classes, 'vcsdiff') == -1
 endif
 
 
-if !exists('g:quickfixsigns_class_vcsdiff')
-    let g:quickfixsigns_class_vcsdiff = {'sign': '*quickfixsigns#vcsdiff#Signs', 'get': 'quickfixsigns#vcsdiff#GetList(%s)', 'event': ['BufEnter,BufWritePost'], 'always_new': 1}   "{{{2
+if !exists('g:quickfixsigns#vcsdiff#vcs')
+    " Show signs for new (+), changed (=), or deleted (-) lines.
+    "
+    " The signs for deleted lines are shown on the line before the 
+    " deleted one. I.e. if line 20 was deleted, the "-" sign will be put 
+    " on line 19.
+    "
+    " A dictionary of supported VCS names. Its values are dictionaries 
+    " with the following keys:
+    "     cmd ... command templates that generate a unified diff file. 
+    "     "%s" is replaced with the filename.
+    "     dir ... the directory name
+    " Currently supported vcs: git, hg, svn, bzr
+    " :read: let g:quickfixsigns#vcsdiff#vcs = {...}  "{{{2
+    let g:quickfixsigns#vcsdiff#vcs = {
+                \ 'git': {'cmd': 'git diff --no-ext-diff -U0 %s', 'dir': '.git'}
+                \ , 'hg': {'cmd': 'hg diff -U0 %s', 'dir': '.hg'}
+                \ , 'svn': {'cmd': 'svn diff --diff-cmd diff --extensions -U0 %s', 'dir': '.svn'}
+                \ , 'bzr': {'cmd': 'bzr diff --diff-options=-U0 %s', 'dir': '.bzr'}
+                \ }
 endif
 
 
-" A dictionary of supported VCS names and command templates that 
-" generate a unified diff file. "%s" is replaced with the filename.
-" Supported vcs: git, hg, svn
-" :read: let g:quickfixsigns#vcsdiff#cmds = {...} {{{2
-let g:quickfixsigns#vcsdiff#cmds = {
-            \ 'git': 'git diff -U0 %s',
-            \ 'hg': 'hg diff -U0 %s',
-            \ 'svn': 'svn diff -x -u %s',
-            \ }
+if !exists('g:quickfixsigns_class_vcsdiff')
+    let g:quickfixsigns_class_vcsdiff = {'sign': '*quickfixsigns#vcsdiff#Signs', 'get': 'quickfixsigns#vcsdiff#GetList(%s)', 'event': ['BufEnter', 'BufWritePost'], 'level': 6}   "{{{2
+endif
+
+
+if !exists('g:quickfixsigns#vcsdiff#cd')
+    let g:quickfixsigns#vcsdiff#cd = 'cd'   "{{{2
+endif
+
+
+if !exists('g:quickfixsigns#vcsdiff#cmd_separator')
+    " Command to join two shell commands.
+    let g:quickfixsigns#vcsdiff#cmd_separator = &sh =~ 'sh' ? '&&' : ';'  "{{{2
+endif
+
+
+if !exists('g:quickfixsigns#vcsdiff#guess_type')
+    " If true, guess the vcs type by searching for the repo directory on 
+    " the hard disk (i.e., this will result in disk accesses for new 
+    " buffers).
+    " Can also be buffer-local.
+    let g:quickfixsigns#vcsdiff#guess_type = 1   "{{{2
+endif
 
 
 if !exists('g:quickfixsigns#vcsdiff#highlight')
@@ -56,21 +88,45 @@ endf
 
 " Return the name of a VCS system based on the values of the following 
 " variables:
+"
+"   - b:git_dir
 "   - b:vcs_type
 "   - b:VCSCommandVCSType
+"
+" If none of these variables is defined, try to guess the vcs type.
 function! quickfixsigns#vcsdiff#GuessType() "{{{3
     if exists('b:vcs_type')
         let type = b:vcs_type
-    elseif exists('b:VCSCommandVCSType')
-        " vcscommand
-        let type = tolower(b:VCSCommandVCSType)
-    elseif exists('b:git_dir')
-        " fugitive
-        let type = 'git'
     else
-        let type = ''
+        if exists('b:VCSCommandVCSType')
+            " vcscommand
+            let type = tolower(b:VCSCommandVCSType)
+        elseif exists('b:git_dir')
+            " fugitive
+            let type = 'git'
+        else
+            let type = ''
+        endif
+        if (exists('b:quickfixsigns#vcsdiff#guess_type') ? b:quickfixsigns#vcsdiff#guess_type : g:quickfixsigns#vcsdiff#guess_type) && empty(type)
+            let path = escape(expand('%:p'), ',:') .';'
+            let depth = -1
+            for vcs in keys(g:quickfixsigns#vcsdiff#vcs)
+                let dir = g:quickfixsigns#vcsdiff#vcs[vcs].dir
+                " TLogVAR dir
+                let vcsdir = finddir(dir, path)
+                if !empty(vcsdir)
+                    let vcsdir_depth = len(split(fnamemodify(vcsdir, ':p'), '\/'))
+                    if vcsdir_depth > depth
+                        let depth = vcsdir_depth
+                        let type = vcs
+                        " TLogVAR type, depth
+                    endif
+                endif
+            endfor
+        endif
+        let b:vcs_type = type
     endif
-    if has_key(g:quickfixsigns#vcsdiff#cmds, type)
+    if has_key(g:quickfixsigns#vcsdiff#vcs, type)
         return type
     else
         return ''
@@ -79,7 +135,7 @@ endf
 
 
 " quickfixsigns#vcsdiff#GuessType() must return the name of a supported 
-" VCS (see |g:quickfixsigns#vcsdiff#cmds|).
+" VCS (see |g:quickfixsigns#vcsdiff#vcs|).
 function! quickfixsigns#vcsdiff#GetList(filename) "{{{3
     if &buftype =~ '\<\(nofile\|quickfix\|help\)\>' || &previewwindow || exists('b:fugitive_type')
         return []
@@ -87,44 +143,46 @@ function! quickfixsigns#vcsdiff#GetList(filename) "{{{3
     let vcs_type = quickfixsigns#vcsdiff#GuessType()
     " TLogVAR a:filename, vcs_type
     " Ignore files that are not readable
-    if has_key(g:quickfixsigns#vcsdiff#cmds, vcs_type) && filereadable(a:filename)
-        let cmdt = g:quickfixsigns#vcsdiff#cmds[vcs_type]
+    if has_key(g:quickfixsigns#vcsdiff#vcs, vcs_type) && filereadable(a:filename)
+        let cmdt = g:quickfixsigns#vcsdiff#vcs[vcs_type].cmd
         let dir  = fnamemodify(a:filename, ':h')
         let file = fnamemodify(a:filename, ':t')
-        let cmds = printf(cmdt, shellescape(file))
+        let cmds = join([
+                    \ printf("%s %s", g:quickfixsigns#vcsdiff#cd, shellescape(dir)),
+                    \ printf(cmdt, shellescape(file))
+                    \ ], g:quickfixsigns#vcsdiff#cmd_separator)
         " TLogVAR cmds
-        let oldCwd = getcwd()
-        let cdcommand = 'cd'
-        if exists("*haslocaldir") && haslocaldir()
-          let cdcommand = 'lcd'
-        endif
-        exec cdcommand fnameescape(dir)
-        try
-            let diff = system(cmds)
-        finally
-            exec cdcommand fnameescape(oldCwd)
-        endtry
+        let diff = system(cmds)
         " TLogVAR diff
         if !empty(diff)
+            let bufnr = bufnr('%')
+            if g:quickfixsigns_debug && bufnr != bufnr(a:filename)
+                echom "QuickFixSigns DEBUG: bufnr mismatch:" a:filename bufnr bufnr(a:filename)
+            endif
+            let lastlnum = line('$')
             let lines = split(diff, '\n')
             let change_defs = {}
-            let from = 0
-            let to = 0
+            let from = -1
+            let to = -1
+            let last_change_lnum = 0
+            let last_del = 0
             for line in lines
                 " TLogVAR from, line
                 if line =~ '^@@\s'
                     let m = matchlist(line, '^@@ -\(\d\+\)\(,\d\+\)\? +\(\d\+\)\(,\d\+\)\? @@')
                     " TLogVAR line, m
-                    let to = m[3]
+                    let to = str2nr(m[3])
+                    " TLogVAR "@@", to
                     " let change_lnum = m[1]
                     let from = to
                 elseif line =~ '^@@@\s'
                     let m = matchlist(line, '^@@@ -\(\d\+\)\(,\d\+\)\? -\(\d\+\)\(,\d\+\)\? +\(\d\+\)\(,\d\+\)\? @@@')
                     " TLogVAR line, m
-                    let to = m[5]
+                    let to = str2nr(m[5])
+                    " TLogVAR "@@@", to
                     " let change_lnum = m[1]
                     let from = to
-                elseif from == 0
+                elseif from < 0
                     continue
                 else
                     if line[0] == '-'
@@ -144,33 +202,38 @@ function! quickfixsigns#vcsdiff#GetList(filename) "{{{3
                         continue
                     endif
                     " TLogVAR change_lnum, change
+                    if change_lnum < 1
+                        let change_lnum = 1
+                    elseif change_lnum > lastlnum
+                        let change_lnum = lastlnum
+                    endif
                     if !empty(change) && has_key(change_defs, change_lnum)
                         if change_defs[change_lnum].change == 'CHANGE' || change_defs[change_lnum].change != change
                             let change = 'CHANGE'
                         endif
-                        if has('balloon_multiline')
-                            let text = change_defs[change_lnum].text ."\n". line
-                        else
-                            let text = line
-                        endif
+                        let text = s:BalloonJoin(change_defs[change_lnum].text, line)
                     endif
-                    let change_defs[change_lnum] = {'change': change, 'text': text}
+                    if last_change_lnum > 0 && last_del > 0 && change_lnum == last_del + 1 && change == 'DEL' && change_defs[last_change_lnum].change == 'DEL'
+                        let change_defs[last_change_lnum].text = s:BalloonJoin(change_defs[last_change_lnum].text, text)
+                    else
+                        let change_defs[change_lnum] = {'change': change, 'text': text}
+                        let last_change_lnum = change_lnum
+                    endif
+                    if change == 'DEL' || change == 'CHANGE'
+                        let last_del = change_lnum
+                    endif
                 endif
             endfor
-            let bufnr = bufnr('%')
             let signs = []
             for [lnum, change_def] in items(change_defs)
                 if !has_key(g:quickfixsigns#vcsdiff#highlight, change_def.change)
                     continue
                 endif
-                if change_def.change == 'DEL' && lnum < line('$') && !has_key(change_defs, lnum + 1)
-                    let lnum += 1
-                endif
-                if has('balloon_multiline')
-                    let text = change_def.change .":\n". change_def.text
-                else
-                    let text = change_def.change .": ". change_def.text
-                endif
+                " if change_def.change == 'DEL' && lnum < line('$') && !has_key(change_defs, lnum + 1)
+                "     let lnum += 1
+                " endif
+                let text = s:BalloonJoin(change_def.change .":", change_def.text)
+                " TLogVAR bufnr, lnum, change_def.change, text
                 call add(signs, {"bufnr": bufnr, "lnum": lnum,
                             \ "change": change_def.change, "text": text})
             endfor
@@ -181,4 +244,12 @@ function! quickfixsigns#vcsdiff#GetList(filename) "{{{3
     return []
 endf
 
+
+function! s:BalloonJoin(...) "{{{3
+    if has('balloon_multiline')
+        return join(a:000, "\n")
+    else
+        return join(a:000, " ")
+    endif
+endf
 

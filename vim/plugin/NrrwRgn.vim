@@ -1,8 +1,8 @@
 " NrrwRgn.vim - Narrow Region plugin for Vim
 " -------------------------------------------------------------
-" Version:	   0.20
+" Version:	   0.26
 " Maintainer:  Christian Brabandt <cb@256bit.org>
-" Last Change: Mon, 25 Jul 2011 20:18:06 +0200
+" Last Change: Mon, 02 Jan 2012 21:33:50 +0100
 "
 " Script: http://www.vim.org/scripts/script.php?script_id=3075 
 " Copyright:   (c) 2009, 2010 by Christian Brabandt
@@ -11,7 +11,7 @@
 "			   instead of "Vim".
 "			   No warranty, express or implied.
 "	 *** ***   Use At-Your-Own-Risk!   *** ***
-" GetLatestVimScripts: 3075 20 :AutoInstall: NrrwRgn.vim
+" GetLatestVimScripts: 3075 26 :AutoInstall: NrrwRgn.vim
 "
 " Init: {{{1
 let s:cpo= &cpo
@@ -27,7 +27,7 @@ if s:debug
 	call nrrwrgn#Debug(1)
 endif
 
-" ------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " Public Interface: {{{1
 
 " Define the Command aliases "{{{2
@@ -46,7 +46,7 @@ com! NRM :call nrrwrgn#NrrwRgnDoPrepare()
 
 " Define the Mapping: "{{{2
 if !hasmapto('<Plug>NrrwrgnDo')
-	xmap <unique> <Leader>nr <Plug>NrrwrgnDo
+	xmap <unique> <Enter> <Plug>NrrwrgnDo
 endif
 xnoremap <unique> <script> <Plug>NrrwrgnDo <sid>VisualNrrwRgn
 xnoremap <sid>VisualNrrwRgn :<c-u>call nrrwrgn#VisualNrrwRgn(visualmode())<cr>

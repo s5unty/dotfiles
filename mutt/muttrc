@@ -11,16 +11,18 @@ source ~/.mutt/pop3                       # 使用 POP3 服务
 
 # 终端的编码
 set charset="UTF-8"
-# 外发邮件使用的编码
-set send_charset="us-ascii:iso-2022-jp:utf-8"
+# 外发邮件使用的编码，改为由hooks智能设定
+#set send_charset="us-ascii:iso-2022-jp:utf-8"
 # 用中文格式显示日期
 set locale=`echo "${LC_ALL:-${LC_TIME:-${LANG}}}"`
 # 解决未经过MIME编码的信件显示为乱码的问题
-set assumed_charset="GBK"
+set assumed_charset="gb2312:iso-2022-jp:utf-8"
 # 解决中文附件名为乱码的问题
 set rfc2047_parameters=yes
 # 回信时自动包含原文
 set include
+# 回信时只包含原文(autoview的附件除外)
+set include_onlyfirst
 # 回信引文之前的符号
 set indent_str="> " 
 # 回信引文不用包含原文的信头
@@ -35,7 +37,7 @@ set alias_file="~/.mutt/aliases"
 # 第三方通讯录工具
 set query_command="/usr/bin/abook --mutt-query %s"
 # 自定义显示界面
-set index_format="%T %?X?%%& ? %?M?%-20.20n (%-2.2M)&%-25.25n? %S %-108.108s %> %?Y?‹%.9Y›? %?N?%2N$&   ? %[%b%d] - %4c"
+set index_format="%?X?%%& ? %?M?%-12.12n %-18.18t (%-2.2M)&%-12.12n %-23.23t? %S %-108.108s %> %?Y?‹%.9Y›? %?N?%2N$&   ? %[%b%d]┆%4c"
 # 隐藏标题界面，在迷你索引和邮件正文之间留一空行
 set pager_format=""
 # 自定义通讯录界面
@@ -83,7 +85,7 @@ set simple_search="~f %s | ~s %s"
 set thorough_search=yes
 # 退出mutt前提示
 set quit=ask-no
-# mutt用制表符表示线索
+# 用常见字符表示线索
 set ascii_chars=yes
 # 禁止PAGE键切换到下一封信件
 set pager_stop=yes
@@ -140,11 +142,12 @@ set wrap=-7
 # 每一分钟检查/报告一次新邮件
 set timeout=60
 # CJK由paps正确处理后再转给lp打印
-set print_command="paps --landscape --font='monospace 8' --header --columns=2 | lp -o landscape -o sites=two-sided-long-edge -"
+set print_command="paps --landscape --font='monospace 7' --header --columns=2 | lp -o landscape -o sites=two-sided-long-edge -"
+#set print_command="paps --landscape --font='monospace 7' --header --columns=2 | ps2pdf - - | zathura -"
 # 编辑邮件的临时目录
 set tmpdir="~/maildir/draft/tmp"
 # 保存撰写邮件头的编辑历史记录
-set history=100
-set save_history=100
+set history=20
+set save_history=20
 set history_file="~/.mutt/cache/history"
 
