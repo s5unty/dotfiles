@@ -32,9 +32,9 @@ set autoread
 set autowrite
 set wildignore=*.o,*.obj,*.orig
 set wildmenu
-set wildmode=longest:full,list:full
+set wildmode=list:longest,full
 set viminfo+=! " 为了 mark 能保存高亮信息
-set listchars=tab:\ \ ,trail:\ 
+set listchars=tab:\ \ ,trail:\
 
 if has("gui_running")
     set guioptions-=m
@@ -281,14 +281,18 @@ vmap <silent> <unique> + :Align =<CR>
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
-nmap <silent> <unique> Q :q<CR>
+nmap <silent> <unique> Q :qa!<CR>
 nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
 nmap                   <S-F8> :make! install DESTDIR=<UP>
 nmap <silent> <unique> <S-F9> q:<UP>
 nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
 
 " Ctrl+ {{{2
-nmap <silent> <unique> <C-Q> :qa!<CR>
+nmap <silent> <unique> <C-Q> :q!<CR>
+nmap <silent> <unique> <C-J> :call EasyMotion#JK(0, 0)<CR>
+nmap <silent> <unique> <C-K> :call EasyMotion#JK(0, 1)<CR>
+nmap <silent> <unique> <C-H> :call EasyMotion#Search(0, 1)<CR>
+nmap <silent> <unique> <C-L> :call EasyMotion#Search(0, 0)<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
@@ -473,6 +477,11 @@ let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
 
+" * Powerline : The ultimate vim statusline utility.  {{{2
+" http://www.vim.org/scripts/script.php?script_id=3881
+let g:Powerline_symbols = 'fancy'
+set laststatus=2
+
 " + Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
 autocmd Filetype java
@@ -562,7 +571,7 @@ let delimitMate_quotes = "\" ' `"
 let delimitMate_nesting_quotes = []
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 let delimitMate_expand_cr = 1 " 该项和SuperTab的CrMapping选项冲突
-let delimitMate_smart_quotes = 0
+let delimitMate_smart_quotes = 1
 let delimitMate_balance_matchpairs = 1
 
 

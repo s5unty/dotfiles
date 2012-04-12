@@ -930,7 +930,7 @@ function! <SID>Win_FindOrCreate(bufName, forceEdge, isExplorer)
   " Restore the user's split setting.
   let &splitbelow = l:saveSplitBelow
 
-  exec('setlocal statusline='.g:Tb_StatusLine)
+  "exec('setlocal statusline='.g:Tb_StatusLine)
 endfunction " %%
 
 
