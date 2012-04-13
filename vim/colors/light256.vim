@@ -20,23 +20,23 @@ hi Search        ctermfg=253    guifg=#dadada  ctermbg=25     guibg=#005faf  cte
 hi IncSearch     ctermfg=253    guifg=#dadada  ctermbg=130    guibg=#af5f00  cterm=none       gui=none
 hi MatchParen    ctermfg=NONE   guifg=NONE     ctermbg=249    guibg=#b2b2b2  cterm=none       gui=none
 hi ErrorMsg      ctermfg=254    guifg=#e4e4e4  ctermbg=160    guibg=#df0000  cterm=none       gui=none
-hi WarningMsg    ctermfg=196    guifg=#ff0000  ctermbg=NONE   guibg=NONE     cterm=bold       gui=bold
-hi ModeMsg       ctermfg=254    guifg=#e4e4e4  ctermbg=28     guibg=#008700  cterm=bold       gui=bold
-hi MoreMsg       ctermfg=254    guifg=#e4e4e4  ctermbg=28     guibg=#008700  cterm=bold       gui=bold
-hi Question      ctermfg=52     guifg=#5f0000  ctermbg=NONE   guibg=NONE     cterm=bold       gui=bold
-" PowerLine will handle this two `highlight' perfectly.
-" hi StatusLine    ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
-" hi StatusLineNC  ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
-hi VertSplit     ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
+hi WarningMsg    ctermfg=196    guifg=#ff0000  ctermbg=NONE   guibg=NONE     cterm=none       gui=none
+hi ModeMsg       ctermfg=16     guifg=#000000  ctermbg=NONE   guibg=NONE     cterm=none       gui=none
+hi MoreMsg       ctermfg=16     guifg=#000000  ctermbg=NONE   guibg=NONE     cterm=none       gui=none
+hi Question      ctermfg=52     guifg=#5f0000  ctermbg=NONE   guibg=NONE     cterm=none       gui=none
+" PowerLine will handle this perfectly.
+"hi StatusLineNC  ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
+hi VertSplit     ctermfg=16     guifg=#000000  ctermbg=NONE   guibg=NONE     cterm=none       gui=none
 hi SignColumn    ctermfg=16     guifg=#000000  ctermbg=NONE   guibg=NONE     cterm=none       gui=none
 hi TabLine       ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
 hi TabLineFill   ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
 hi TabLineSel    ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=bold       gui=bold
-hi WildMenu      ctermfg=250    guifg=#bcbcbc  ctermbg=236    guibg=#303030  cterm=none       gui=none
+hi StatusLine    ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
+hi WildMenu      ctermfg=254    guifg=#e4e4e4  ctermbg=236    guibg=#303030  cterm=none       gui=none
 hi Folded        ctermfg=NONE   guifg=NONE     ctermbg=250    guibg=#bcbcbc  cterm=none       gui=none
 hi FoldColumn    ctermfg=124    guifg=#af0000  ctermbg=250    guibg=#bcbcbc  cterm=bold       gui=bold
 hi Pmenu         ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
-hi PmenuSel      ctermfg=16     guifg=#000000  ctermbg=244    guibg=#808080  cterm=none       gui=none
+hi PmenuSel      ctermfg=254    guifg=#e4e4e4  ctermbg=236    guibg=#303030  cterm=bold       gui=bold
 hi PmenuSbar     ctermfg=NONE   guifg=NONE     ctermbg=244    guibg=#808080  cterm=none       gui=none
 hi PmenuThumb    ctermfg=251    guifg=#c6c6c6  ctermbg=255    guibg=#eeeeee  cterm=none       gui=none
 hi LineNr        ctermfg=250    guifg=#bcbcbc  ctermbg=NONE   guibg=NONE     cterm=italic     gui=none
@@ -73,7 +73,7 @@ hi diffFile      ctermfg=25     guifg=#005faf  ctermbg=NONE   guibg=NONE     cte
 hi diffLine      ctermfg=25     guifg=#005faf  ctermbg=NONE   guibg=NONE     cterm=bold       gui=bold
 hi diffSubname   ctermfg=29     guifg=#00875f  ctermbg=NONE   guibg=NONE     cterm=bold       gui=bold
 
-" tabbar
+" PowerLine will handle tabbar perfectly.
 hi Tb_Changed    ctermfg=196    guifg=#ff0000  ctermbg=NONE   guibg=NONE     cterm=bold       gui=bold
 hi def link Tb_VisibleChanged Tb_VisibleNormal
 
@@ -100,4 +100,5 @@ hi MarkWord6     ctermfg=Black  guifg=Black    ctermbg=249    guibg=#b2b2b2
 
 " easymotion
 hi EasyMotionTarget ctermfg=Black ctermbg=228  guifg=Black    guibg=#ffff87
-hi EasyMotionShade  ctermfg=249   ctermbg=none guifg=#b2b2b2  guibg=none
+hi EasyMotionShade  ctermfg=249   ctermbg=none guifg=#b2b2b2  guibg=NONE
+

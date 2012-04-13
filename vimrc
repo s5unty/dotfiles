@@ -30,7 +30,7 @@ set cinoptions=:0
 set timeoutlen=500
 set autoread
 set autowrite
-set wildignore=*.o,*.obj,*.orig
+set wildignore=*/*.o,*/*.so,*/*.obj,*/*.orig,*/.git/*,*/.hg/*,*/.svn/*
 set wildmenu
 set wildmode=list:longest,full
 set viminfo+=! " 为了 mark 能保存高亮信息
@@ -39,7 +39,6 @@ set listchars=tab:\ \ ,trail:\
 if has("gui_running")
     set guioptions-=m
     set guioptions-=T
-    set imactivatekey=C-space " GVim 中文无缝输入
 endif
 
 if has("win32") || has("win64")
@@ -52,7 +51,7 @@ if has("win32") || has("win64")
     set directory=$TMP
 else
     set guifont=Envy\ Code\ R\ 10
-    set guifontwide=WenQuanYi\ Zen\ Hei\ Sharp\ 10
+    set guifontwide=WenQuanYi\ Micro\ Hei\ 10
     set makeprg=make\ -j2
     set grepprg=ack-grep\ -a
     set shell=bash\ -x\ -c
@@ -80,7 +79,7 @@ set ambiwidth=double
 let mapleader=","
 let html_dynamic_folds=1
 let c_space_errors=1
-let sh_minlines = 500
+let sh_minlines = 100
 syn enable " 语法高亮
 filetype plugin indent on
 
@@ -291,8 +290,6 @@ nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <C-Q> :q!<CR>
 nmap <silent> <unique> <C-J> :call EasyMotion#JK(0, 0)<CR>
 nmap <silent> <unique> <C-K> :call EasyMotion#JK(0, 1)<CR>
-nmap <silent> <unique> <C-H> :call EasyMotion#Search(0, 1)<CR>
-nmap <silent> <unique> <C-L> :call EasyMotion#Search(0, 0)<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
@@ -402,9 +399,6 @@ if has("autocmd")
   autocmd Filetype java
     \ setlocal omnifunc=javacomplete#Complete
 
-  autocmd BufEnter,WinEnter *.t2t
-    \ set filetype=txt2tags
-
 endif
 " }}}
 
@@ -413,13 +407,15 @@ endif
 " + Helpful
 " - Unfulfilling
 
-" * TabBar 0.7-p2 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
+" * TabBar 0.7-p3 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
 " http://www.vim.org/scripts/script.php?script_id=1338
 "
 " p1: Bf_SwitchTo
 "     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
 " p2: g:Tb_StatusLine
 "     添加变量用户调整 TabBar 的状态栏信息
+" p3: setlocal statusline
+"     使用 PowerLine 替换 TabBar 原生的 statusline 栏
 let Tb_UseSingleClick = 1 " 单击切换
 let Tb_TabWrap = 1 " 允许跨行显示
 let Tb_MaxSize = 3 "
@@ -431,23 +427,26 @@ if has("autocmd")
 endif
 
 
-" * mru.vim 3.3-p2 : Plugin to manage Most Recently Used (MRU) files {{{2
-" http://www.vim.org/scripts/script.php?script_id=521
-"
-" p1: @@529@@
-"             let split_window = 0
-" p2: @@575@@
-"             let fnames = reverse(fnames)
-let MRU_Max_Entries=256
-let MRU_Exclude_Files='^/tmp/.*\|^/var/tmp/.*\|^/sun/\..*'
-let MRU_Window_Height=18
-let MRU_Add_Menu=0
+" * ctrlp.vim 1.74 : Fuzzy file, buffer, MRU, and tag finder with regexp support. {{{2
+" replace mru.vim
+" http://www.vim.org/scripts/script.php?script_id=3736
+let g:ctrlp_map = '<c-h>'
+let g:ctrlp_max_height = 25
+let g:ctrlp_reuse_window = 'netrw\|help\|quickfix'
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_mruf_exclude = '^/tmp/.*\|^/var/tmp/.*\|^/sun/\..*'
+let g:ctrlp_mruf_last_entered = 1
+let g:ctrlp_max_files = 1000
+let g:ctrlp_lazy_update = 1
+let g:ctrlp_use_migemo = 1
+let g:ctrlp_open_multiple_files = '1vr'
 
 
 " * taglist.vim 4.5-p1 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
 " http://www.vim.org/scripts/script.php?script_id=273
 "
 " p1: let win_dir = 'aboveleft vertical'
+"     忘记为什么要这么改了
 let Tlist_Ctags_Cmd = "/usr/bin/ctags-exuberant"
 let Tlist_WinWidth = 35
 let Tlist_Show_One_File = 1
@@ -477,10 +476,14 @@ let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
 
-" * Powerline : The ultimate vim statusline utility.  {{{2
+" * Powerline 2012-02-29 : The ultimate vim statusline utility.  {{{2
 " http://www.vim.org/scripts/script.php?script_id=3881
+" 
+" 'fancy'符号依赖定制字体，详情参考
+" https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
 let g:Powerline_symbols = 'fancy'
 set laststatus=2
+
 
 " + Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/

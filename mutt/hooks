@@ -1,5 +1,5 @@
 # 邮箱默认使用折叠方式显示
-folder-hook . "push '<collapse-all><current-bottom>'"
+folder-hook . "push '<collapse-all><last-entry><next-new-then-unread><current-bottom>'"
 # 真实邮箱，每次初始化高亮，只显示最近一个月的邮件
 folder-hook !(bingo) "source ~/.mutt/colours"
 folder-hook !(bingo) "push <limit>~d\"*30d\"<enter>"

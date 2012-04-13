@@ -14,14 +14,6 @@ color quoted3    black       color248 # 引用
 color hdrdefault black       default  # 信头
 color signature  color250    default  # 签名
 
-# 特殊状态
-color index      color8      default   "!(~d `date +'%d/%m' -d '3 days ago'`-)"
-color index      yellow      default   "~y note"
-color index      black       default   "~Q"  # 我回复过的邮件(~Q)
-color index      black       color255  "~T"  # 选中
-color index      white       color234  "~F"  # 标记
-color index      color7      color255  "~D"  # 删除
-
 # 重要程度评分
 color index      black       default   "~n 2-"
 color index      black       color252  "~n 3-"
@@ -32,6 +24,14 @@ color index      white       color240  "~n 7-"
 color index      white       color237  "~n 8-"
 color index      white       color234  "~n 9-"
 color index      white       black     "~n 10-"
+
+# 特殊状态
+color index      color8      default   "!(~d `date +'%d/%m' -d '3 days ago'`-)"
+color index      yellow      default   "~y note"
+color index      black       default   "~Q"  # 我回复过的邮件(~Q)
+color index      black       color255  "~T"  # 选中
+color index      white       color234  "~F"  # 标记
+color index      color7      color255  "~D"  # 删除
 
 # 特殊邮件头
 color header     yellow      default   "^X-Label:"

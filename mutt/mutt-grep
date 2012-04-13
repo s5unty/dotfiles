@@ -158,10 +158,10 @@ case $search in
     cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (*)
-    # 挖哈哈，mutt 也能全邮箱正文搜索拉，速度杠杠的
+    # 全邮箱正文搜索(含附件)，关键字高亮
     key=$(echo "$search")
     sh -c "find $MAILDIR/$MFOLDER -type l -exec rm {} \;" # 清空虚拟邮箱
-    sh -c "recoll -t -q '${key}' | grep message/rfc822 | sed -s 's,^.*\('$MAILDIR'[^]]*\)\].*$,\"\1\",' | xargs ln -sft $MAILDIR/$MFOLDER/cur/ > /dev/null 2>&1"
+    sh -c "recoll -t -q '${key}' | grep /sun/maildir/ | sed -s 's,^.*\('$MAILDIR'[^]]*\)\].*$,\"\1\",' | xargs ln -sft $MAILDIR/$MFOLDER/cur/ > /dev/null 2>&1"
     args=
     ;;
 esac
