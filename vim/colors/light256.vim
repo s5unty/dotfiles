@@ -15,7 +15,7 @@ let g:colors_name="light256"
 hi Normal        ctermfg=232    guifg=#080808  ctermbg=NONE   guibg=#d0d0d0  cterm=none       gui=none
 hi Visual        ctermfg=16     guifg=#000000  ctermbg=74     guibg=#5fafdf  cterm=none       gui=none
 hi VisualNOS     ctermfg=52     guifg=#5f0000  ctermbg=137    guibg=#af875f  cterm=none       gui=none
-hi CursorLine    ctermfg=NONE   guifg=NONE     ctermbg=254    guibg=NONE     cterm=none       gui=none
+hi CursorLine    ctermfg=NONE   guifg=NONE     ctermbg=NONE   guibg=NONE     cterm=reverse    gui=reverse
 hi Search        ctermfg=253    guifg=#dadada  ctermbg=25     guibg=#005faf  cterm=none       gui=none
 hi IncSearch     ctermfg=253    guifg=#dadada  ctermbg=130    guibg=#af5f00  cterm=none       gui=none
 hi MatchParen    ctermfg=NONE   guifg=NONE     ctermbg=249    guibg=#b2b2b2  cterm=none       gui=none
@@ -102,3 +102,5 @@ hi MarkWord6     ctermfg=Black  guifg=Black    ctermbg=249    guibg=#b2b2b2
 hi EasyMotionTarget ctermfg=Black ctermbg=228  guifg=Black    guibg=#ffff87
 hi EasyMotionShade  ctermfg=249   ctermbg=none guifg=#b2b2b2  guibg=NONE
 
+" Tagbar
+hi def link TagbarSignature  Comment
