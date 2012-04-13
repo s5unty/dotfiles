@@ -120,7 +120,7 @@ let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
 		\ 'N': ['white', 'darkestred'],
 		\ }),
 	\
-	\ Pl#Hi#Segments(['lustyexplorer:static_str.name', 'minibufexplorer.static_str.name', 'nerdtree:raw.name', 'tagbar:static_str.name'], {
+	\ Pl#Hi#Segments(['lustyexplorer:static_str.name', 'minibufexplorer.static_str.name', 'tabbar:raw.name', 'nerdtree:raw.name', 'tagbar:static_str.name'], {
 		\ 'n': ['white', 'mediumgreen', ['bold']],
 		\ 'N': ['mediumgreen', 'darkestgreen', ['bold']],
 		\ }),
@@ -130,7 +130,7 @@ let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
 		\ 'N': ['mediumgreen', 'darkestgreen'],
 		\ }),
 	\
-	\ Pl#Hi#Segments(['lustyexplorer:SPLIT', 'minibufexplorer:SPLIT', 'nerdtree:SPLIT', 'tagbar:SPLIT'], {
+	\ Pl#Hi#Segments(['lustyexplorer:SPLIT', 'minibufexplorer:SPLIT', 'tabbar:SPLIT', 'nerdtree:SPLIT', 'tagbar:SPLIT'], {
 		\ 'n': ['white', 'darkgreen'],
 		\ 'N': ['white', 'darkestgreen'],
 		\ }),

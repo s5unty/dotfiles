@@ -123,11 +123,7 @@ function! G_GoodP()
     if &buftype == "quickfix"
         exec "normal \<Return>"
         normal zz
-        exec ":silent TlistSync"
         wincmd w
-    elseif bufname('%') == "__MRU_Files__"
-        exec "normal \<Return>"
-        exec ":MRU"
     else
         unmap p
         normal p
@@ -257,8 +253,6 @@ nmap <silent>          <F8> :make!<CR>:call G_QFixToggle(1)<CR>
 imap <silent>          <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
 nmap          <unique> <F9> :!<UP>
 imap          <unique> <F9> <ESC>:!<UP>
-nmap <silent> <unique> <F10> :Mru<CR>
-imap <silent> <unique> <F10> <ESC>:Mru<CR>
 nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
 
@@ -343,7 +337,7 @@ nmap <silent> <unique> <Leader>g :call G_FindInFiles('golbal', 'y')<CR>
 vmap <silent> <unique> <Leader>g y:call G_FindInFiles('golbal', 'v')<CR>
 nmap <silent> <unique> <Leader>G :call G_FindInFiles('golbal', 'n')<CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
-nmap <silent> <unique> <Leader>l :call <SID>ShowTaglist()<CR>
+nmap <silent> <unique> <Leader>l :call <SID>ShowTabbar()<CR>
 nmap <silent> <unique> <Leader>s :call <SID>CscopeFind('s', 'y')<CR>
 nmap <silent> <unique> <Leader>c :call <SID>CscopeFind('c', 'y')<CR>
 nmap <silent> <unique> <Leader>e :call <SID>CscopeFind('e', 'y')<CR>
@@ -402,10 +396,9 @@ if has("autocmd")
 endif
 " }}}
 
-" 15# Plugins {{{1
+" 14# Plugins {{{1
 " * Life Changing
 " + Helpful
-" - Unfulfilling
 
 " * TabBar 0.7-p3 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
 " http://www.vim.org/scripts/script.php?script_id=1338
@@ -414,13 +407,15 @@ endif
 "     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
 " p2: g:Tb_StatusLine
 "     添加变量用户调整 TabBar 的状态栏信息
-" p3: setlocal statusline
-"     使用 PowerLine 替换 TabBar 原生的 statusline 栏
 let Tb_UseSingleClick = 1 " 单击切换
 let Tb_TabWrap = 1 " 允许跨行显示
 let Tb_MaxSize = 3 "
 let Tb_ModSelTarget = 1 " 跳转至编辑窗口
-let Tb_SplitToEdge = 1 " 顶端，超越TagList窗口
+let Tb_SplitToEdge = 1 " 顶端，超越TabBar窗口
+" 依赖 Powerline
+"     第一个参数表示 Powerline/Matches.vim 中定义的列表序号(起始0)
+"     第二个参数表示状态栏拥有焦点(1)还是没有焦点(0)
+let Tb_StatusLine = '%!Pl#Statusline(9,0)'
 if has("autocmd")
   autocmd BufWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ exec ":TbAup"
@@ -433,37 +428,26 @@ endif
 let g:ctrlp_map = '<c-h>'
 let g:ctrlp_max_height = 25
 let g:ctrlp_reuse_window = 'netrw\|help\|quickfix'
+let g:ctrlp_working_path_mode = 2
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_exclude = '^/tmp/.*\|^/var/tmp/.*\|^/sun/\..*'
 let g:ctrlp_mruf_last_entered = 1
-let g:ctrlp_max_files = 1000
+let g:ctrlp_max_files = 10000
 let g:ctrlp_lazy_update = 1
 let g:ctrlp_use_migemo = 1
 let g:ctrlp_open_multiple_files = '1vr'
 
 
-" * taglist.vim 4.5-p1 : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) {{{2
-" http://www.vim.org/scripts/script.php?script_id=273
-"
-" p1: let win_dir = 'aboveleft vertical'
-"     忘记为什么要这么改了
-let Tlist_Ctags_Cmd = "/usr/bin/ctags-exuberant"
-let Tlist_WinWidth = 35
-let Tlist_Show_One_File = 1
-let Tlist_Compact_Format = 1 " 紧凑显示，无空行
-let Tlist_Enable_Fold_Column = 0 " 不显示竖线
-let Tlist_GainFocus_On_ToggleOpen = 1
-let Tlist_Process_File_Always = 0
-let Tlist_Use_Horiz_Window = 0
-let Tlist_Sort_Type = "name"
-let tlist_c_settings = 'c;p:prototype;f:implementation'
-let tlist_cpp_settings = 'c++;c:object;p:prototype;f:implementation'
 
-function! <SID>ShowTaglist()
-    if exists("g:loaded_taglist")
-        call G_GotoEditor()
-        exec "TlistToggle"
-    endif
+" * Tagbar eab0e : Display tags of the current file ordered by scope {{{2
+" http://www.vim.org/scripts/script.php?script_id=3465
+" https://github.com/majutsushi/tagbar
+let g:tagbar_left = 1
+let g:tagbar_width = 35
+let g:tagbar_autofocus = 1
+function! <SID>ShowTabbar()
+    call G_GotoEditor()
+    exec ":TagbarToggle"
 endfunction
 
 
@@ -476,11 +460,14 @@ let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
 
-" * Powerline 2012-02-29 : The ultimate vim statusline utility.  {{{2
+" * Powerline 2012-02-29-p1 : The ultimate vim statusline utility.  {{{2
 " http://www.vim.org/scripts/script.php?script_id=3881
 " 
 " 'fancy'符号依赖定制字体，详情参考
 " https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
+"
+" p1: matches \-TabBar\-
+"     添加了一个匹配 -TabBar- 的主题
 let g:Powerline_symbols = 'fancy'
 set laststatus=2
 
@@ -559,7 +546,7 @@ endfunction
 
 " * quickfixsigns 1.00 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
-let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 __Tag_List__ 和 -TabBar- 这两个 Buffer
+let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 TabBar 和 -TabBar- 这两个 Buffer
 
 
 " + sessionman.vim 1.06 : Vim session manager {{{2
@@ -607,11 +594,6 @@ nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 " http://www.vim.org/scripts/script.php?script_id=3075
 let g:nrrw_topbot_leftright = 'aboveleft'
 let g:nrrw_rgn_wdth = 50
-
-
-" + echofunc.vim 2.0 : Echo the function declaration in the command line for C/C++. {{{2
-" http://www.vim.org/scripts/script.php?script_id=1735
-
 
 
 " }}}1
