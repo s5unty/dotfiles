@@ -407,6 +407,8 @@ endif
 "     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
 " p2: g:Tb_StatusLine
 "     添加变量用户调整 TabBar 的状态栏信息
+" p3: exec "cd ".expand('%:p:h')
+"     即时更新当前目录
 let Tb_UseSingleClick = 1 " 单击切换
 let Tb_TabWrap = 1 " 允许跨行显示
 let Tb_MaxSize = 3 "
