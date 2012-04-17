@@ -61,9 +61,10 @@ endif
 if &term =~ "rxvt-unicode-256color"
     color light256
     " 区别普通/插入模式的光标颜色
-    let &t_SI = "\033]12;black\007"
-    let &t_EI = "\033]12;red\007"
-    autocmd VimLeave * :!echo -ne "\033]12;black\007"
+    " C: 改由PowerLine实现
+    " let &t_SI = "\033]12;black\007"
+    " let &t_EI = "\033]12;red\007"
+    " autocmd VimLeave * :!echo -ne "\033]12;black\007"
 else
     color delek
 endif
@@ -383,12 +384,13 @@ if has("autocmd")
   autocmd BufReadPost *
     \ call <SID>AC_HighlightDirtySpace()
 
+  " 写测试脚本的时候自动更新为可执行格式
+  autocmd BufWritePost *
+    \ call <SID>AC_ChmodExecutable()
+
   " 让 checkpath 找到相关文件，便于 [I 正常工作
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
     \ set path+=./
-
-  autocmd BufWritePost *
-    \ call <SID>AC_ChmodExecutable()
 
   autocmd Filetype java
     \ setlocal omnifunc=javacomplete#Complete
@@ -440,7 +442,6 @@ let g:ctrlp_use_migemo = 1
 let g:ctrlp_open_multiple_files = '1vr'
 
 
-
 " * Tagbar eab0e : Display tags of the current file ordered by scope {{{2
 " http://www.vim.org/scripts/script.php?script_id=3465
 " https://github.com/majutsushi/tagbar
@@ -462,7 +463,7 @@ let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
 
-" * Powerline 2012-02-29-p1 : The ultimate vim statusline utility.  {{{2
+" * Powerline 2012-02-29-p2 : The ultimate vim statusline utility.  {{{2
 " http://www.vim.org/scripts/script.php?script_id=3881
 " 
 " 'fancy'符号依赖定制字体，详情参考
@@ -470,6 +471,9 @@ let SuperTabMappingBackward="<S-Tab>"
 "
 " p1: matches \-TabBar\-
 "     添加了一个匹配 -TabBar- 的主题
+" p2: 'line.tot', '$COL %-2v'
+"     使用可视列号
+"     :help statusline
 let g:Powerline_symbols = 'fancy'
 set laststatus=2
 

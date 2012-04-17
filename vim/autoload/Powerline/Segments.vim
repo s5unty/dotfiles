@@ -20,7 +20,7 @@ let g:Powerline#Segments#segments = Pl#Segment#Init(
 	\ Pl#Segment#Create('scrollpercent'   , '%3p%%'),
 	\ Pl#Segment#Create('lineinfo',
 		\ Pl#Segment#Create('line.cur'    , '$LINE %3l'),
-		\ Pl#Segment#Create('line.tot'    , '$COL %-2c'),
+		\ Pl#Segment#Create('line.tot'    , '$COL %-2v'),
 	\ ),
 	\ Pl#Segment#Create('charcode'        , '%{Powerline#Functions#GetCharCode()}', Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('currhigroup'     , '%{synIDattr(synID(line("."), col("."), 1), "name")}', Pl#Segment#Modes('!N')),
