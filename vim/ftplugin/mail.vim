@@ -37,5 +37,6 @@ endfunction
 "   echo
 " endfunction
 
-set textwidth=78
-set formatoptions+=mM
+set textwidth=70
+set colorcolumn=80
+set formatoptions+=12mnM

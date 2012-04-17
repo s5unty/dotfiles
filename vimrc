@@ -238,8 +238,8 @@ map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
-nmap <silent> <unique> <F1> :set cursorline!<CR>:set nocursorline?<CR>
-imap <silent> <unique> <F1> <ESC>:set cursorline!<CR><ESC>:set nocursorline?<CR>a
+nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>
+imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>a
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
 imap <silent> <unique> <F2> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
 nmap <silent> <unique> <F3> :set list!<CR>:set nohls!<CR>:set nohls?<CR>
@@ -600,6 +600,11 @@ nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 " http://www.vim.org/scripts/script.php?script_id=3075
 let g:nrrw_topbot_leftright = 'aboveleft'
 let g:nrrw_rgn_wdth = 50
+
+
+" autofmt 1.6 (2011-11-03): text formatting plugin {{{2
+" http://www.vim.org/scripts/script.php?script_id=1939
+set formatexpr=autofmt#japanese#formatexpr()
 
 
 " }}}1

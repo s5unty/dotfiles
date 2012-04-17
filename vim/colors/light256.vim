@@ -15,7 +15,7 @@ let g:colors_name="light256"
 hi Normal        ctermfg=232    guifg=#080808  ctermbg=NONE   guibg=#d0d0d0  cterm=none       gui=none
 hi Visual        ctermfg=16     guifg=#000000  ctermbg=74     guibg=#5fafdf  cterm=none       gui=none
 hi VisualNOS     ctermfg=52     guifg=#5f0000  ctermbg=137    guibg=#af875f  cterm=none       gui=none
-hi CursorLine    ctermfg=NONE   guifg=NONE     ctermbg=NONE   guibg=NONE     cterm=reverse    gui=reverse
+hi CursorLine    ctermfg=NONE   guifg=NONE     ctermbg=250    guibg=#bcbcbc  cterm=none       gui=none
 hi Search        ctermfg=253    guifg=#dadada  ctermbg=25     guibg=#005faf  cterm=none       gui=none
 hi IncSearch     ctermfg=253    guifg=#dadada  ctermbg=130    guibg=#af5f00  cterm=none       gui=none
 hi MatchParen    ctermfg=NONE   guifg=NONE     ctermbg=249    guibg=#b2b2b2  cterm=none       gui=none
@@ -28,6 +28,7 @@ hi Question      ctermfg=52     guifg=#5f0000  ctermbg=NONE   guibg=NONE     cte
 "hi StatusLineNC  ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
 hi VertSplit     ctermfg=16     guifg=#000000  ctermbg=NONE   guibg=NONE     cterm=none       gui=none
 hi SignColumn    ctermfg=16     guifg=#000000  ctermbg=NONE   guibg=NONE     cterm=none       gui=none
+hi ColorColumn   ctermfg=NONE   guifg=NONE     ctermbg=250    guibg=#bcbcbc  cterm=none       gui=none
 hi TabLine       ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
 hi TabLineFill   ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=none       gui=none
 hi TabLineSel    ctermfg=16     guifg=#000000  ctermbg=248    guibg=#a8a8a8  cterm=bold       gui=bold
