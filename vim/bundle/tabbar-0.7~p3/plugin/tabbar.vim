@@ -784,6 +784,7 @@ function! <SID>Tb_AutoUpdt(delBufNum)
         call <SID>DEBUG('EXIT : Tb_AutoUpdt()'     ,10)
     endif
 
+    exec "cd ".expand('%:p:h')
 let g:Tb_UpdtMutex = 0
 endfunction " %%
 
@@ -930,8 +931,7 @@ function! <SID>Win_FindOrCreate(bufName, forceEdge, isExplorer)
   " Restore the user's split setting.
   let &splitbelow = l:saveSplitBelow
 
-  " PowerLine is amazing.
-  exec('setlocal statusline=%!Pl#Statusline(0,0)')
+  exec('setlocal statusline='.g:Tb_StatusLine)
 endfunction " %%
 
 
