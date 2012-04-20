@@ -398,11 +398,11 @@ if has("autocmd")
 endif
 " }}}
 
-" 14# Plugins {{{1
-" * Life Changing
-" + Helpful
+" 15# Plugins {{{1
+call pathogen#infect('bundle')
+call pathogen#helptags()
 
-" * TabBar 0.7-p3 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
+" TabBar 0.7-p3 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
 " http://www.vim.org/scripts/script.php?script_id=1338
 "
 " p1: Bf_SwitchTo
@@ -426,23 +426,7 @@ if has("autocmd")
 endif
 
 
-" * ctrlp.vim 1.74 : Fuzzy file, buffer, MRU, and tag finder with regexp support. {{{2
-" replace mru.vim
-" http://www.vim.org/scripts/script.php?script_id=3736
-let g:ctrlp_map = '<c-h>'
-let g:ctrlp_max_height = 25
-let g:ctrlp_reuse_window = 'netrw\|help\|quickfix'
-let g:ctrlp_working_path_mode = 2
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_mruf_exclude = '^/tmp/.*\|^/var/tmp/.*\|^/sun/\..*'
-let g:ctrlp_mruf_last_entered = 1
-let g:ctrlp_max_files = 10000
-let g:ctrlp_lazy_update = 1
-let g:ctrlp_use_migemo = 1
-let g:ctrlp_open_multiple_files = '1vr'
-
-
-" * Tagbar eab0e : Display tags of the current file ordered by scope {{{2
+" Tagbar eab0e : Display tags of the current file ordered by scope {{{2
 " http://www.vim.org/scripts/script.php?script_id=3465
 " https://github.com/majutsushi/tagbar
 let g:tagbar_left = 1
@@ -454,8 +438,9 @@ function! <SID>ShowTabbar()
 endfunction
 
 
-" * SuperTab 1.6 : Do all your insert-mode completion with Tab {{{2
+" SuperTab 1.6 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
+" https://github.com/ervandew/supertab
 let SuperTabCrMapping=0 " 该项和delimitMate的expand_cr选项冲突
 let SuperTabRetainCompletionType=1
 let SuperTabDefaultCompletionType="<C-X><C-N>"
@@ -463,9 +448,10 @@ let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
 
-" * Powerline 2012-02-29-p2 : The ultimate vim statusline utility.  {{{2
+" Powerline @38bbfb8: The ultimate vim statusline utility.  {{{2
 " http://www.vim.org/scripts/script.php?script_id=3881
-" 
+" https://github.com/Lokaltog/vim-powerline
+"
 " 'fancy'符号依赖定制字体，详情参考
 " https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
 "
@@ -478,7 +464,18 @@ let g:Powerline_symbols = 'fancy'
 set laststatus=2
 
 
-" + Cscope : Interactively examine a C program source {{{2
+" unite.vim 3.0 : Unite all sources {{{2
+" http://www.vim.org/scripts/script.php?script_id=3396
+" https://github.com/Shougo/unite.vim
+let g:unite_source_file_mru_limit = 1000
+let g:unite_cursor_line_highlight = 'TabLineSel'
+if executable('ack-grep')
+    let g:unite_source_grep_command = 'ack-grep'
+    let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
+    let g:unite_source_grep_recursive_opt = ''
+endif
+
+" Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
 autocmd Filetype java
     \ set tag=.cscope/cscope_java.tags,~/.tags_android,~/.tags_java6;
@@ -545,23 +542,21 @@ function! <SID>CscopeFind(mask, quick)
 endfunction
 
 
-" * snipMate 0.83 : TextMate-style snippets for Vim {{{2
+" snipMate 0.83 : TextMate-style snippets for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2540
+" https://github.com/msanders/snipmate.vim
 " nothing
 
 
-" * quickfixsigns 1.00 : Mark quickfix & location list items with signs {{{2
+" quickfixsigns 1.00 : Mark quickfix & location list items with signs {{{2
 " http://www.vim.org/scripts/script.php?script_id=2584
+" https://github.com/tomtom/quickfixsigns_vim
 let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 TabBar 和 -TabBar- 这两个 Buffer
 
 
-" + sessionman.vim 1.06 : Vim session manager {{{2
-" http://www.vim.org/scripts/script.php?script_id=2010
-" nothing
-
-
-" * delimitMate.vim 2.6 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
+" delimitMate.vim 2.6 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
+" https://github.com/Raimondi/delimitMate
 let delimitMate_autoclose = 1
 let delimitMate_quotes = "\" ' `"
 let delimitMate_nesting_quotes = []
@@ -571,14 +566,15 @@ let delimitMate_smart_quotes = 1
 let delimitMate_balance_matchpairs = 1
 
 
-" * Gundo 2.3.0 : Visualize your undo tree {{{2
+" Gundo 2.3.0 : Visualize your undo tree {{{2
 " http://www.vim.org/scripts/script.php?script_id=3304
+" https://github.com/sjl/gundo.vim
 let g:gundo_preview_height = 50
 let g:gundo_preview_bottom = 1
 let g:gundo_right = 1
 
 
-" + OmniCppComplete 0.41 : C/C++ omni-completion with ctags database {{{2
+" OmniCppComplete 0.41 : C/C++ omni-completion with ctags database {{{2
 " http://www.vim.org/scripts/script.php?script_id=1520
 let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
 let OmniCpp_ShowAccess = 1 " show member access information
@@ -589,15 +585,21 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 let OmniCpp_GlobalScopeSearch = 0 " 0 or 1
 
 
-" * Mark 2.6.2 : Highlight several words in different colors simultaneously. {{{2
+" pythoncomplete 0.9 : Python Omni Completion {{{2
+" http://www.vim.org/scripts/script.php?script_id=1542
+" nothing
+
+
+" Mark 2.6.2 : Highlight several words in different colors simultaneously. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2666
 let g:mwAutoLoadMarks = 1 " 自动加载高亮的 Mark
 nmap <Plug>IgnoreMarkSearchAnyNext <Plug>MarkSearchAnyNext
 nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 
 
-" + NrrwRgn 26 : A Narrow Region Plugin similar to Emacs {{{2
+" NrrwRgn 26 : A Narrow Region Plugin similar to Emacs {{{2
 " http://www.vim.org/scripts/script.php?script_id=3075
+" https://github.com/chrisbra/NrrwRgn
 let g:nrrw_topbot_leftright = 'aboveleft'
 let g:nrrw_rgn_wdth = 50
 
