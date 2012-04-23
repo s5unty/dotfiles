@@ -3,7 +3,6 @@
     email = s5unty@gmail.com
 [core]
     excludesfile = ~/.gitignore
-    whitespace = cr-at-eol
     quotepath = false
 [format]
     headers = ""
@@ -11,11 +10,11 @@
 [diff]
     tool = vimdiff
 [diff "msword"] # http://progit.org/book/zh/ch7-2.html
-	textconv = antiword -w0
+    textconv = antiword -w0
 [diff "msexcel"]
-	textconv = xlhtml -fw -asc -te -xp:0-10 -xc:0-100
+    textconv = xlhtml -fw -asc -te -xp:0-10 -xc:0-100
 [difftool "normal"] # http://goo.gl/c8Xok
-	cmd = diff $LOCAL $REMOTE
+    cmd = diff $LOCAL $REMOTE
 [push]
     default = current
 [gui]
@@ -58,9 +57,6 @@
     frag = magenta
 #}}}
 
-[diff "jp"]
-	textconv = "iconv -f sjis -t utf-8"
-
 [branch "master"] # {{{
     remote = origin
     merge = refs/heads/master
@@ -87,12 +83,18 @@
     cd  = checkout -b
     cp  = cherry-pick --no-commit # 复制一个 commit 所做的修改
     coo = reset HEAD -- # 撤消已提交到 local repos 的修改
-    touch = branch -M
 
-    di  = diff --no-prefix -p --stat # show difference between working tree and the index
-    dc  = diff --no-prefix -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
-    da  = diff --no-prefix -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
-    df  = diff --no-prefix --stat=200,78 # show different files between working tree and the index
+    br  = branch
+    bmv = branch -m
+    bMv = branch -M
+    brm = branch -d
+    brM = branch -D
+    brr = branch -r
+
+    di  = diff --ignore-submodules=dirty --no-prefix -p --stat # show difference between working tree and the index
+    dc  = diff --ignore-submodules=dirty --no-prefix -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
+    da  = diff --ignore-submodules=dirty --no-prefix -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
+    df  = diff --ignore-submodules=dirty --no-prefix --stat=200,78 # show different files between working tree and the index
     dt  = difftool -y
     do  = difftool -y -t normal
     dp  = !sh -c 'git diff HEAD "$0" | git apply --whitespace=nowarn --index -' # fast apply the patch against "$0" commit or branch
@@ -110,7 +112,13 @@
     # http://progit.org/book/zh/ch6-4.html
     nc = filter-branch -f --tree-filter
 
-    st  = status -s
+    st  = status -s --ignore-submodules=dirty
+
+    sma = submodule add
+    smi = submodule init
+    smu = submodule update
+    sms = submodule status
+    smy = submodule sync
 
     zc  = stash save
     zl  = stash list
