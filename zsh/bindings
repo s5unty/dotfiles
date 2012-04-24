@@ -39,8 +39,9 @@ bindkey -M viins "\e/"  jump-around-directory
 bindkey -M viins "\e?"  list-directory-stack
 bindkey -M viins "\e;"  copy-earlier-word
 bindkey -M viins "\t"   expand-or-complete
-bindkey -M viins "\e\t" _history-complete-newer
-bindkey -M viins "\e'"  _quote_unquote_word # amazing: alt-1&alt-' alt-2&alt-' alt-3&alt-' alt-4&alt-'
+bindkey -M viins "\e\t" urxvt-scrollback-buffer-words-prefix
+bindkey -M viins "^[[Z" urxvt-scrollback-buffer-words-anywhere
+
 bindkey -M viins "\e1"  digit-argument
 bindkey -M viins "\e2"  digit-argument
 bindkey -M viins "\e3"  digit-argument
@@ -201,3 +202,4 @@ key[Menu]='^[[29~'
 [[ -n "${key[Left]}"      ]]  && bindkey -M vicmd "${key[Left]}"      backward-char
 [[ -n "${key[Right]}"     ]]  && bindkey -M vicmd "${key[Right]}"     forward-char
 # }}}1
+
