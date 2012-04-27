@@ -8,7 +8,7 @@ if [ -e "/usr/bin/colordiff" ]; then __DIFF="colordiff" else __DIFF="diff" fi
 if [ -e "/usr/bin/sudo" ];      then __SUDO="sudo" fi
 
 export HISTFILE=$HOME/.zsh/cache/HISTFILE
-export HISTSIZE=20480
+export HISTSIZE=100000
 export SAVEHIST=102400
 export DIRSTACK=$HOME/.zsh/cache/DIRSTACK
 export DIRSTACKSIZE=30
@@ -20,7 +20,7 @@ export REPREPRO_CONFIG_DIR=""
 export MAILCHECK=150
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:."
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:/opt/atf/bin:."
 export JAVA_HOME="/usr/lib/jvm/java-6-sun"
 export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
 export XDG_CONFIG_HOME="$HOME/.config"

@@ -1,12 +1,14 @@
 # vim:set syntax=zsh:
 
 autoload zsh/terminfo
+autoload -U is-at-least
 autoload -U zed
 autoload -U compinit && compinit
 autoload -U insert-files && zle -N insert-files
 autoload -U copy-earlier-word && zle -N copy-earlier-word
 autoload -U edit-command-line && zle -N edit-command-line
 autoload -U url-quote-magic && zle -N self-insert url-quote-magic
+
 zmodload -i zsh/complist
 zmodload -i zsh/deltochar
 zmodload -i zsh/mathfunc
@@ -25,17 +27,12 @@ setopt PUSHD_TO_HOME
 setopt PUSHD_IGNOREDUPS
 
 setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_FCNTL_LOCK
-setopt HIST_IGNORE_DUPS
+setopt EXTENDED_HISTORY
+setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_NO_STORE
 setopt HIST_VERIFY
 setopt HIST_REDUCE_BLANKS
-setopt HIST_LEX_WORDS
 
 setopt RM_STAR_WAIT         # `rm *` 或者 `rm path/*` 会等待10秒
 setopt FLOW_CONTROL         # don't ignore ^S/^Q
@@ -43,3 +40,9 @@ setopt LONGLISTJOBS         # display PID when suspending processes as well
 setopt NOTIFY               # report the status of backgrounds jobs immediately
 setopt COMPLETEINWORD       # not just at the end
 setopt EXTENDEDGLOB         # 扩展文件名匹配功能
+
+if is-at-least 4.3.12; then
+    setopt HIST_LEX_WORDS
+    setopt HIST_FCNTL_LOCK
+fi
+

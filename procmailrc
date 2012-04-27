@@ -37,7 +37,7 @@ VERBOSE=off
 #   i   忽略传给管道的 Shell 命令的执行错误
 #
 :0 Hi
-X_Subject=| $FORMAIL -zfxSubject | sed 's/^[\s\t]*//' | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))' | tr -d '\n'
+X_Subject=| $FORMAIL -zfxSubject | perl -pe 's/(^\s*|\n$)//sg' | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))'
 # }}}1
 
 # 处理公司邮件 {{{1

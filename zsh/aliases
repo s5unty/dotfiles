@@ -13,6 +13,7 @@ alias ls="/bin/ls --color=always -hFv"
 alias cp="cp -a"
 alias rm="rm -r"
 alias at="at -m"
+alias ow="$__SUDO chown -R `whoami`:`whoami`"
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="tree -C"
@@ -23,13 +24,6 @@ alias lintian="lintian -viI"
 alias tig="tig --all"
 alias rsync="rsync -C"
 alias rot13="tr a-zA-Z n-za-mN-ZA-M"
-
-hash -d archive=~/archive
-hash -d desktop=~/desktop
-hash -d dotfile=~/dotfiles
-hash -d hacking=~/hacking
-hash -d worktop=~/worktop
-hash -d samba=~/samba
 
 ranger() {
     command ranger $@ &&
@@ -42,15 +36,16 @@ cd() {
     fi
 }
 
-vi() {
-    # 使用 :w !sudo tee % 虽然可以写入，但是会缺少 undolist
-    precommand=
-    for i in "$@" ; do
-        if [ -f "$i" -a ! -w "$i" ] ; then precommand=$__SUDO ; break ; fi
-    done
-
-    ${precommand} /usr/bin/vim -n "$@"
-}
+## 但是 sudo 会导致各种强大插件出现安全问题
+#vi() {
+#    # 使用 :w !sudo tee % 虽然可以写入，但是会缺少 undolist
+#    precommand=
+#    for i in "$@" ; do
+#        if [ -f "$i" -a ! -w "$i" ] ; then precommand=$__SUDO ; break ; fi
+#    done
+#
+#    ${precommand} /usr/bin/vim -n "$@"
+#}
 
 md() {
     /bin/mkdir $*
@@ -150,14 +145,16 @@ if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" ]]; then
     dpI() { echo "$1 install" | $__SUDO dpkg --set-selections }
 
 elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
-	alias api="$__SUDO yum install"
-	alias apa="$__SUDO yum clean all"
-	alias apr="$__SUDO yum remove"
-	alias apg="yum search"
-	alias aps="yum info"
+    alias api="$__SUDO yum install"
+    alias apa="$__SUDO yum clean all"
+    alias apr="$__SUDO yum remove"
+    alias apg="yum search"
+    alias aps="yum info"
 
-	alias dpi="$__SUDO rpm -iUfvh --replacefiles --replacepkgs --oldpackage"
-	alias dpg="rpm -qa | grep"
+    alias dpi="$__SUDO rpm -iUfvh --replacefiles --replacepkgs --oldpackage"
+    alias dpc="rpm -qpl"
+    alias dps="rpm -qpi"
+    alias dpg="rpm -qa | grep"
     alias dpL="rpm -ql"
     alias dps="rpm -qi"
     alias dpr="$__SUDO rpm -e"

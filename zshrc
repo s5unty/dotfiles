@@ -5,8 +5,7 @@
 [ -e $HOME/.zsh/prompt        ] && source $HOME/.zsh/prompt
 [ -e $HOME/.zsh/bindings      ] && source $HOME/.zsh/bindings
 [ -e $HOME/.zsh/completion    ] && source $HOME/.zsh/completion
-[ -e $HOME/.zsh/local.host    ] && source $HOME/.zsh/local.host
-for plugin in $(find $HOME/.zsh/plugins/*.zsh); do
+[ -d $HOME/.zsh/plugins/      ] && for plugin in $HOME/.zsh/plugins/*(.); do
     source $plugin
 done
 
