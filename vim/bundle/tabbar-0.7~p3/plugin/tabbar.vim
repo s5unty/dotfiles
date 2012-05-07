@@ -784,7 +784,6 @@ function! <SID>Tb_AutoUpdt(delBufNum)
         call <SID>DEBUG('EXIT : Tb_AutoUpdt()'     ,10)
     endif
 
-    exec "cd ".expand('%:p:h')
 let g:Tb_UpdtMutex = 0
 endfunction " %%
 

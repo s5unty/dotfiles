@@ -150,4 +150,5 @@ set tmpdir="~/maildir/draft/tmp"
 set history=20
 set save_history=20
 set history_file="~/.mutt/cache/history"
-
+# 隐藏线索中那些被过滤了的主题
+set hide_limited=yes
