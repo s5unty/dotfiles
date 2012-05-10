@@ -35,6 +35,7 @@ set wildmenu
 set wildmode=list:longest,full
 set viminfo+=! " 为了 mark 能保存高亮信息
 set listchars=tab:\ \ ,trail:\
+set noswapfile " 内存大、禁用swapfile
 
 if has("gui_running")
     set guioptions-=m
@@ -248,12 +249,10 @@ nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 set pastetoggle=<F4>
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
-nmap <silent> <unique> <F6> :ConqueTermSplit zsh<CR>
+nmap <silent> <unique> <F6> :Unite file_mru buffer bookmark change session<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
-nmap <silent>          <F8> :make!<CR>:call G_QFixToggle(1)<CR>
-imap <silent>          <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
-nmap          <unique> <F9> :!<UP>
-imap          <unique> <F9> <ESC>:!<UP>
+nmap <silent> <unique> <F8> :<CR>
+nmap <silent> <unique> <F9> :UniteResume<CR>
 nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
 
@@ -341,10 +340,8 @@ nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
 nmap <silent> <unique> <Leader>l :call <SID>ShowTabbar()<CR>
 nmap <silent> <unique> <Leader>s :call <SID>CscopeFind('s', 'y')<CR>
 nmap <silent> <unique> <Leader>c :call <SID>CscopeFind('c', 'y')<CR>
-nmap <silent> <unique> <Leader>e :call <SID>CscopeFind('e', 'y')<CR>
 nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
-nmap <silent> <unique> <Leader>E :call <SID>CscopeFind('e', 'n')<CR>
 nmap <silent> <unique> <Leader>. :call G_QFixToggle(0)<CR>:GundoToggle<CR>
 
 " Colon+, Colon char is ':' {{{2
@@ -467,8 +464,9 @@ set laststatus=2
 " unite.vim 3.0 : Unite all sources {{{2
 " http://www.vim.org/scripts/script.php?script_id=3396
 " https://github.com/Shougo/unite.vim
-let g:unite_source_file_mru_limit = 1000
-let g:unite_cursor_line_highlight = 'TabLineSel'
+let unite_source_file_mru_limit = 1000
+let unite_cursor_line_highlight = 'TabLineSel'
+let unite_split_rule = 'botright'
 if executable('ack-grep')
     let g:unite_source_grep_command = 'ack-grep'
     let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
