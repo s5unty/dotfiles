@@ -123,7 +123,7 @@ DISTRO=`awk '/[:alpha:]/ { print $1; exit }' /etc/issue`
 if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" ]]; then
     alias api="$__SUDO apt-get install"
     alias apo="apt-get source"
-    alias ape="$__SUDO vi /etc/apt/sources.list"
+    alias ape="vi /etc/apt/sources.list"
     alias apr="$__SUDO apt-get remove"
     alias apR="$__SUDO apt-get autoremove"
     alias apu="$__SUDO apt-get update"
@@ -162,38 +162,30 @@ fi
 # }}}
 
 # task {{{
-alias td="task"
-alias tdo="~/.task/taskopen"
-tda() { task add $* }
-tde() { task $1 modify ${(@)argv[2,$#]} }
-tdE() { task $1 edit }
-tdu() { task $1 undo }
-tdc() { task calendar }
-tdg() { task $* list }
-tdl() { task $* long }
-tdci() { task $1 annotate ${(@)argv[2,$#]} }
-tdco() { task $1 denotate ${(@)argv[2,$#]} }
+alias pu="python /usr/sbin/Punch.py"
+alias td="/usr/sbin/todo.sh"
+tda() { td add $* }
+tdr() { td del $1 }
+tde() { td replace $* }
+td0() { td prepend $1 ${(@)argv[2,$#]} }
+td\$(){ td append $1 ${(@)argv[2,$#]} }
+tdg() { td list $* }
+tdG() { td listall $* }
+tdp() { td pri $1 }
+tdP() { td depri $1 }
+tdn() { pu what }
+tdl() { pu report }
 tds() {
-    task ${1} start
-    DESC=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "Desc" | cut -b13-`
-    UUID=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "UUID" | cut -b13-`
-    REM=`date -d"today" +"REM AT 23:30 +900 *5 TAG ${UUID} MSG ${DESC}"`
-    echo ${REM} >> ~/.task/reminders
-}
-tdp() {
-    task ${1} stop
-    UUID=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "UUID" | cut -b13-`
-    [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
+    DESC=`pu in ${1} | tail -1 | sed -e 's/^Start timer on: //g'`
+    TDID=${1}
+    REM=`date -d"today" +"REM AT 23:30 +900 *5 TAG ${TDID} MSG ${DESC}"`
+    echo ${REM} >> ~/.todo/reminders
 }
 tdd() {
-    task ${1} done
-    UUID=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "UUID" | cut -b13-`
-    [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
-}
-tdr() {
-    task ${1} delete
-    UUID=`task rc.color=off rc.color.alternate=none info ${1} | /bin/grep "UUID" | cut -b13-`
-    [[ -n ${UUID} ]] && sed -i '/'${UUID}'/d' ~/.task/reminders 2>&1 > /dev/null
+    DESC=`pu out | sed -e 's/^Stop timer on: //g'`
+    TDID=`td ls ${DESC} | head -1 | cut -d' ' -f1`
+    sed -i "/TAG ${TDID}/d" ~/.todo/reminders
+    td do ${TDID} > /dev/null 2>&1
 }
 # }}}
 

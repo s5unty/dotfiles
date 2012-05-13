@@ -51,7 +51,7 @@
 
 # pull, monitor, push TODO 如果同步失败，邮件通知自己
 # /usr/bin/rsync -azu du1abadd.org:~/.task/ ~/.task/ &
-# /usr/bin/remind -z -k'~/.task/notify-wm %s &' ~/.task/reminders &
+/usr/bin/remind -z -k'~/.todo/notify-wm %s &' ~/.todo/reminders &
 # /usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.task/ | \
 #     while read file; do
 #         rsync -azu --delete ~/.task/ du1abadd.org:~/.task/ &
