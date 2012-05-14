@@ -83,6 +83,8 @@ map           <A-0><A-3><A-9>       39gt
 " 切换当前页面编码
 map <silent>            <F2>        :set encoding=GB2312<CR>
 map <silent>            <S-F2>      :set encoding=UTF-8<CR>
+" 显示当前内存使用情况
+map <silent>            <F12>       :tabopen about:memory<CR>
 " }}}
 
 " QuickMarks {{{1

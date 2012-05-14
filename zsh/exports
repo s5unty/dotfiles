@@ -24,11 +24,16 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/b
 export JAVA_HOME="/usr/lib/jvm/java-6-sun"
 export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
 export XDG_CONFIG_HOME="$HOME/.config"
-export DOTREMINDERS="$HOME/.task/reminders"
 export PATH="$PATH:/var/lib/gems/1.8/bin/"
 export TERM="xterm"
 export LANG="C"
 export SDCV_HISTSIZE=32
+
+# todo.txt
+# http://todotxt.com/
+export TODO_DIR="$HOME/.todo"
+export TODOTXT_CFG_FILE="$TODO_DIR/todo.cfg"
+export DOTREMINDERS="$TODO_DIR/reminders"
 
 if [[ -f $DIRSTACK ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
     dirstack=( ${(uf)"$(< $DIRSTACK)"} )

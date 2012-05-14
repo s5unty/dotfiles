@@ -163,29 +163,36 @@ fi
 
 # task {{{
 alias pu="python /usr/sbin/Punch.py"
-alias td="/usr/sbin/todo.sh"
-tda() { td add $* }
-tdr() { td del $1 }
-tde() { td replace $* }
-td0() { td prepend $1 ${(@)argv[2,$#]} }
-td\$(){ td append $1 ${(@)argv[2,$#]} }
-tdg() { td list $* }
-tdG() { td listall $* }
-tdp() { td pri $1 }
-tdP() { td depri $1 }
-tdn() { pu what }
-tdl() { pu report }
+alias td="todo.sh"
+alias tde="vi $TODO_DIR/reminders +\"normal zRGzz\" +\":sp $TODO_DIR/done.txt\" +\":vs $TODO_DIR/todo.txt\""
+alias tdE="vi $TODO_DIR/inbox.txt +\"set ft=asciidoc\""
+alias tda="td add"
+alias tdr="td del"
+alias tdR="td replace"
+alias td0="td prepend"
+alias td\$="td append"
+alias tdg="td list"
+alias tdG="td listall"
+alias tdp="td pri"
+alias tdP="td depri"
+alias tdn="pu what"
+alias tdl="pu report"
 tds() {
     DESC=`pu in ${1} | tail -1 | sed -e 's/^Start timer on: //g'`
     TDID=${1}
     REM=`date -d"today" +"REM AT 23:30 +900 *5 TAG ${TDID} MSG ${DESC}"`
+    sed -i "/TAG [0-9]\+ MSG/d" ~/.todo/reminders
     echo ${REM} >> ~/.todo/reminders
 }
 tdd() {
     DESC=`pu out | sed -e 's/^Stop timer on: //g'`
     TDID=`td ls ${DESC} | head -1 | cut -d' ' -f1`
     sed -i "/TAG ${TDID}/d" ~/.todo/reminders
-    td do ${TDID} > /dev/null 2>&1
+    if [[ ${1} == ${TDID} ]]; then
+        td do ${TDID} > /dev/null 2>&1
+    elif [[ ${TDID} == "--" ]]; then
+        td do ${1} > /dev/null 2>&1
+    fi
 }
 # }}}
 

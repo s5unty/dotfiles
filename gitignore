@@ -8,8 +8,10 @@ cvslog.*
 /tags
 /TAGS
 .cvsignore
+.gitattributes
 .make.state
 .nse_depinfo
+~*.tmp
 *~
 .#*
 ,*
@@ -20,6 +22,7 @@ _$*
 *.BAK
 *.orig
 *.rej
+*.swp
 .del-*
 *.a
 *.olb

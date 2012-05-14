@@ -4,7 +4,14 @@
 # sudo ln -sf ~/.Xlogout /etc/X11/Xreset.d/Xlogout
 # ############################################## XXX
 
+# 快速保存所有 Shell History
+pkill x-terminal-emulator
+
+# 快速保存虚拟机
+(vboxmanage controlvm XP savestate &)
+
 pkill autossh
 pkill inotifywait
 pkill sshfs
 pkill remind
+pkill iptux

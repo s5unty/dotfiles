@@ -7,7 +7,9 @@ use strict;
 use warnings;
 
 my $url_matcher = qr{(
-        (?:https?://|ftp://|news://|mailto:|file://|www\.)[ab-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27(),~#]+
+#        (?:https?://|ftp://|news://|mailto:|file://|www\.)[ab-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27(),~#]+
+        (?:https?://|ftp://|news://|mailto:|file://|www\.)\S+
+        #(?:https?://|ftp://|news://|mailto:|file://|www\.).+
         [ab-zA-Z0-9\-\@;\/?&=%\$_+!*\x27()~]   # exclude some trailing characters (heuristic)
 )}x;
 
