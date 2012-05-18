@@ -171,11 +171,12 @@ alias tdr="td del"
 alias tdR="td replace"
 alias td0="td prepend"
 alias td\$="td append"
-alias tdg="td list"
+alias tdg="td list; pu what"
 alias tdG="td listall"
 alias tdp="td pri"
 alias tdP="td depri"
-alias tdn="pu what"
+alias tdnl="td listnotes 2>/dev/null"
+alias tdne="td notesedit "
 alias tdl="pu report"
 tds() {
     DESC=`pu in ${1} | tail -1 | sed -e 's/^Start timer on: //g'`
@@ -186,13 +187,14 @@ tds() {
 }
 tdd() {
     DESC=`pu out | sed -e 's/^Stop timer on: //g'`
-    TDID=`td ls ${DESC} | head -1 | cut -d' ' -f1`
+    TDID=`td -p ls "${DESC}" | head -1 | cut -d' ' -f1`
     sed -i "/TAG ${TDID}/d" ~/.todo/reminders
     if [[ ${1} == ${TDID} ]]; then
         td do ${TDID} > /dev/null 2>&1
     elif [[ ${TDID} == "--" ]]; then
         td do ${1} > /dev/null 2>&1
     fi
+    pu in 1
 }
 # }}}
 

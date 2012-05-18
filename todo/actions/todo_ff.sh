@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export COLOR_PRIORITY=$RED
-export COLOR_CONTEXT=$GREEN
-export COLOR_PROJECT=$CYAN
-export COLOR_DATE=$PURPLE
+export COLOR_PRIORITY=$AT_BOLDIT
+export COLOR_CONTEXT=$AT_BOLD
+export COLOR_PROJECT=$AT_UNDERL
+export COLOR_DATE=$AT_UNDERL
 
 # Force gawk to behave posixly. Comment out if you get an error about
 # no such option -W.
@@ -22,7 +22,7 @@ if [ "$TODOTXT_PLAIN" -eq "0" ]; then
 	/\([D-Z]\)/ { color = "PRI_X" }
 	/ x / { color = "COLOR_DONE" }
 	{
-        gsub(/ \(.\) /, highlight("COLOR_PRIORITY") "&" highlight(color));
+        gsub(/ \([A-Z]\) /, highlight("COLOR_PRIORITY") "&" highlight(color));
 		gsub(/@[^ ]*/, highlight("COLOR_CONTEXT") "&" highlight(color));
 		gsub(/\+[^ ]*/, highlight("COLOR_PROJECT") "&" highlight(color));
         gsub(/([0-9]{4}(-[0-9]{2}){2}|[0-9]{1,2}[-/][0-9]{1,2})/, highlight("COLOR_DATE") "&" highlight(color));

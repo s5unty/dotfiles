@@ -40,6 +40,19 @@ VERBOSE=off
 X_Subject=| $FORMAIL -zfxSubject | perl -pe 's/(^\s*|\n$)//sg' | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))'
 # }}}1
 
+# 本地化邮件正文 (前5行) {{{1
+# 先处理 procmail 传给管道的内容(可由以下方式调试)
+#     X_Context=| tee > /tmp/debug.txt
+#
+# 再由 mailtextbody 工具取出中文，只取前 5 行
+#
+# procmail 标记
+#   r   禁止在文件末尾新增一空白行。否则 mailtextbody 不能正常工作
+#
+:0 HBrfw
+X_Context=| tail -n +2 | mailtextbody | head -5
+# }}}1
+
 # 处理公司邮件 {{{1
 INCLUDERC=$MAILDIR".procmailrc.fnst"
 # }}}1
@@ -63,47 +76,47 @@ INCLUDERC=$MAILDIR".procmailrc.fnst"
     debian-zh/
 }
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*(debian-chinese-|debian-l10n-chinese)
 debian-zh/
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*debian-www.lists.debian.org
 debian-www/
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*debian.*mentors.*(googlegroups.com|debian.org)
 debian-mentors/
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*ubuntu-zh
 ubuntu-zh/
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*(awesome-devel)
 awesome/
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*vim(im|-cn).googlegroups.com
 vim-zh/
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*shlug.googlegroups.com
 shlug/
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*szlug.googlegroups.com
 szlug/
 
-:0
+:0 h
 * ^From:.*(amazon.cn|taobao.com|alipay.com)
 shopping/
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*fcitx.*@googlegroups.com
 fcitx/
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*<python-cn.googlegroups.com>
 python-cn/
 
@@ -138,31 +151,31 @@ python-cn/
 * ^From:.*igs-adm@panda-igs.joyjoy.net
 /dev/null
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*kde-china.kde.org
 /dev/null
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*directfb.org
 /dev/null
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*debian-www.lists.debian.org
 /dev/null
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*debian-boot.lists.debian.org
 /dev/null
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*debian-mentors.lists.debian.org
 /dev/null
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*debian-mips.lists.debian.org
 /dev/null
 
-:0
+:0 h
 * ^(List-Id|To|CC|BCC):.*xfce-i18n.xfce.org
 /dev/null
 # }}}1
