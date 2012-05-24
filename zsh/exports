@@ -34,6 +34,7 @@ export SDCV_HISTSIZE=32
 export TODO_DIR="$HOME/.todo"
 export TODOTXT_CFG_FILE="$TODO_DIR/todo.cfg"
 export DOTREMINDERS="$TODO_DIR/reminders"
+# source ${TODOTXT_CFG_FILE}
 
 if [[ -f $DIRSTACK ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
     dirstack=( ${(uf)"$(< $DIRSTACK)"} )

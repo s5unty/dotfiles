@@ -257,14 +257,15 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 -- }}}
 
 -- {{{ Program
-awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Ranger -T Ranger -e sh -c ranger") end),
+awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Ranger -T Ranger -e zsh -c ranger") end),
 awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
-awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e sh -c mutt") end),
+awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
 awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'WinXP'") end),
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
-awful.key({ modkey }, "Scroll_Lock",    function () awful.util.spawn("xscreensaver-command -lock") end),
+awful.key({ modkey, "Control" }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
+awful.key({ modkey }, "Scroll_Lock",   function () awful.util.spawn("xscreensaver-command -lock") end),
 -- }}}
 
 -- {{{ calendar
@@ -471,7 +472,7 @@ awful.rules.rules = {
     keys = clientkeys,
     buttons = clientbuttons } },
     { rule = { class = "Iptux" },
-    properties = { floating = true } },
+    properties = { tag = tags[1][8], floating = true } },
     { rule = { instance = "MPlayer" },
     properties = { floating = true } },
     { rule = { instance = "gimp" },
