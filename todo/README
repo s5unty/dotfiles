@@ -1,8 +1,13 @@
 http://todotxt.com/
     - todo.sh
     - todo.cfg
+
 https://gist.github.com/1084259
-    - actions/todo_ff.sh
+    - todo_ff.sh (origin)
+
+https://gist.github.com/2782889
+    - todo_ff.sh (s5unty)
+
 http://code.google.com/p/punch-time-tracking/
     - Puncy.py
 

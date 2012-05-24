@@ -1,43 +1,4 @@
 # vi:ft=remind
-# {{{1 定义颜色
-SET Esc         CHAR(27)
-SET fg_black    Esc + "[30;1m"
-SET fg_red      Esc + "[31;1m"
-SET fg_green    Esc + "[32;1m"
-SET fg_yellow   Esc + "[33;1m"
-SET fg_blue     Esc + "[34;1m"
-SET fg_pink     Esc + "[35;1m"
-SET fg_cyan     Esc + "[36;1m"
-SET fg_white    Esc + "[37;1m"
-SET at_none     Esc + "[0m"
-SET at_bold     Esc + "[1m"
-SET at_italic   Esc + "[3m"
-SET at_underl   Esc + "[4m"
-SET at_blink    Esc + "[5m"
-SET at_reverse  Esc + "[7m"
+INCLUDE /sun/.todo/reminds/
+INCLUDE /sun/.todo/todo.txt
 
-# {{{1 纪念日
-# MSG [at_italic]纪念日: %"%" [at_none] %
-# 定义函数，显示是 n 年
-FSET HowOld(y) YEAR(TRIGDATE()) - y
-# 将显示离生日还有几天，到期 7 天内都有提醒
-REM Nov 28 +7 MSG 你自己 [HowOld(1981)] 岁生日，%b %
-
-# {{{1 备忘
-# MSG [at_italic]安排: %"%" [at_none] %
-# 单月 11 号交水电费
-IF monnum(today()) % 2 != 0
-REM 11 23:35 +1440 *60 MSG 交水电费
-ENDIF
-# 每月 11 号交固话费
-REM 11 AT 23:35 +1440 *60 MSG 交固话费
-# 双月 20 号抄水表
-IF monnum(today()) % 2 == 0
-REM 20 +7 MSG 离抄水表还有大约 [20 - day(today())] 天。
-ENDIF
-# 每周 1、3、4，17:00~19:00 日语培训
-# REM Mon, Wed, Thu AT 17:00 +20 *5 MSG あいうえお
-
-# {{{1 当前
-# MSG [at_italic]当前: %"%" [at_none] %
-# }}}1
