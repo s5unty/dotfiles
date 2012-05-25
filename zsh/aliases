@@ -162,9 +162,9 @@ fi
 # }}}
 
 # task {{{
-alias pu="python Punch.py"
+alias pu="python $TODO_DIR/Punch.py"
 alias td="todo.sh"
-alias tde="vi $TODO_DIR/reminders +\"normal gg\" +\":sp $TODO_DIR/done.txt\" +\":vs $TODO_DIR/todo.txt\""
+alias tde="vi +\"set ft=remind\" $HOME/.reminders +\"normal gg\" +\":sp $TODO_DIR/done.txt\" +\"set ft=remind\" +\":vs $TODO_DIR/todo.txt\" +\"set ft=remind\""
 alias tdE="vi $TODO_DIR/inbox.txt +\"set ft=asciidoc\""
 alias tda="td add"
 alias tdr="td del"
@@ -176,14 +176,14 @@ alias tdG="td listall"
 alias tdp="td pri"
 alias tdP="td depri"
 alias tdO="td listnotes 2>/dev/null"
-alias tdn="pu what"
+alias tdn="pu what 2>/dev/null; rem -n"
 alias tdl="pu report"
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})
-    if echo ${DESC} | egrep -q 'message-id:'; then
-        MAIL=`echo ${DESC} | sed -e 's/.*message-id:\([^@]*@[^ ]*\).*/\1/g'`
-        /sun/.todo/actions/mutt/muttjump "${MAIL}"
-    elif echo ${DESC} | egrep -q 'note:'; then
+    if echo ${DESC} | egrep -qi 'message-id:'; then
+        MAIL=`echo ${DESC} | sed -e 's/.*message-id:<\([^@]*@[^ ]*\)>.*/\1/gi'`
+        /sun/.todo/muttjump "${MAIL}"
+    elif echo ${DESC} | egrep -qi 'note:'; then
         NOTE=`echo ${DESC} | sed -e 's/.*note:\([^ ]*\).*/\1/g'`
         td notesedit ${NOTE} 2> /dev/null
     fi
@@ -192,13 +192,13 @@ tds() {
     DESC=`pu in ${1} | tail -1 | sed -e 's/^Start timer on: //g'`
     TDID=${1}
     REM=`date -d"today" +"REM AT 23:30 +900 *5 TAG ${TDID} MSG ${DESC}"`
-    sed -i "/TAG [0-9]\+ MSG/d" ~/.todo/reminders
-    echo ${REM} >> ~/.todo/reminders
+    sed -i "/TAG [0-9]\+ MSG/d" ~/.reminders
+    echo ${REM} >> ~/.reminders
 }
 tdd() {
     DESC=`pu out | sed -e 's/^Stop timer on: //g'`
     TDID=`td -p ls "${DESC}" | head -1 | cut -d' ' -f1`
-    sed -i "/TAG ${TDID}/d" ~/.todo/reminders
+    sed -i "/TAG ${TDID}/d" ~/.reminders
     if [[ ${1} == ${TDID} ]]; then
         td do ${TDID} > /dev/null 2>&1
     elif [[ ${TDID} == "--" ]]; then
