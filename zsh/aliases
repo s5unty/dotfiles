@@ -176,7 +176,7 @@ alias tdG="td listall"
 alias tdp="td pri"
 alias tdP="td depri"
 alias tdO="td listnotes 2>/dev/null"
-alias tdn="pu what 2>/dev/null; rem -n"
+alias tdn="pu what"
 alias tdl="pu report"
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})

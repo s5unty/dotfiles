@@ -1,6 +1,6 @@
 " General {{{1
 " 只显示底部可能存在的滚动条，以及标签栏的编号
-set guioptions=bscn
+set guioptions=bsCn
 " 不要自动补全，除非 b 显示 buffer
 set autocomplete=/ex/buffer,^(/|/ex/?)$
 " Shell
@@ -100,11 +100,11 @@ silent qmark y http://www.youku.com/
 silent qmark j http://dict.hjenglish.com/jp/
 silent qmark w http://wiki.du1abadd.org/
 
-silent qmark o http://ioffice.fnst.cn.fujitsu.com/
+silent qmark o http://oa.fnst.cn.fujitsu.com/oa/
+silent qmark p http://pdn.vpdc.sg.soft.fujitsu.com/pdn/platform-login.do
 silent qmark i http://info.fnst.cn.fujitsu.com
 silent qmark c http://campus.fnst.cn.fujitsu.com
 silent qmark b http://ltech.fnst.cn.fujitsu.com/tsd
-silent qmark t http://10.167.157.130/t/s5unty
 silent qmark B http://kaeru.fnst.cn.fujitsu.com/bbs
 silent qmark l http://10.167.225.205/
 
@@ -124,3 +124,7 @@ map <silent> <F4> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
 " Translate {{{2
 map L :set ds=l<CR>P:set ds=google<CR>
 map J :set ds=j<CR>P:set ds=google<CR>
+
+" HTTPS diigo {{{2
+map A :open javascript:javascript:(function(){var%20url%20=%20location.href;var%20title%20=%20document.title%20||%20url;var%20desc%20=%20(window.getSelection%20?%20window.getSelection().toString()%20:%20document.getSelection%20?%20document.getSelection()%20%20:%20document.selection.createRange().text);window.open('https://www.diigo.com/post?url='%20+%20encodeURIComponent(url)%20+%20'&title='%20+%20encodeURIComponent(title)%20+%20'&desc='%20+%20encodeURIComponent(desc)+'&client=simplelet#main','_blank','menubar=no,height=580,width=608,toolbar=no,scrollbars=no,status=no');})();<CR>
+

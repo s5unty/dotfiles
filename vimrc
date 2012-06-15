@@ -337,11 +337,11 @@ nmap <silent> <unique> <Leader>g :call G_FindInFiles('golbal', 'y')<CR>
 vmap <silent> <unique> <Leader>g y:call G_FindInFiles('golbal', 'v')<CR>
 nmap <silent> <unique> <Leader>G :call G_FindInFiles('golbal', 'n')<CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
-nmap <silent> <unique> <Leader>l :call <SID>ShowTabbar()<CR>
 nmap <silent> <unique> <Leader>s :call <SID>CscopeFind('s', 'y')<CR>
 nmap <silent> <unique> <Leader>c :call <SID>CscopeFind('c', 'y')<CR>
 nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
+nmap <silent> <unique> <Leader>l :call <SID>ShowTabbar()<CR>
 nmap <silent> <unique> <Leader>. :call G_QFixToggle(0)<CR>:GundoToggle<CR>
 
 " Colon+, Colon char is ':' {{{2
@@ -765,3 +765,6 @@ map! <Esc>[24^ <C-F12>
 
 " }}}1
 
+let vimwiki_list = [{'path': '~/vimwiki/',
+            \ 'syntax': 'markdown',
+            \ 'ext': '.mkd'}]

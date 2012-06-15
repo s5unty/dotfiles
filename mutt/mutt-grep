@@ -87,6 +87,21 @@ case $search in
     args="find 'g:f' --format=links --clearlinks --linksdir=\"$MAILDIR/$MFOLDER\""
     cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
+  (~i*)
+    args=$(echo "$search" | sed 's/\s*~i\s\+//g' | sed 's/|/\n/g' | awk '\
+      {
+        if (NR==1) {
+          str = sprintf("i:%s", $1)
+        }
+      }
+      END {
+        if (NR!=0) {
+          printf("find \"%s\" --format=links --clearlinks --linksdir=\"%s/%s\"", str, ENVIRON["MAILDIR"], ENVIRON["MFOLDER"])
+        }
+      }
+    ')
+    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
+    ;;
   (~f*)
     args=$(echo "$search" | sed 's/\s*~f\s\+//g' | sed 's/|/\n/g' | awk '\
       {

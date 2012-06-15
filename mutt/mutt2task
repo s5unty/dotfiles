@@ -1,2 +1,3 @@
 #!/bin/sh
-task add +email $(grep '^Subject:' $* | cut -d: -f 2-)
+# /usr/sbin/todo.sh -d $HOME/.todo/todo.cfg add $(grep '^Subject:' $* | cut -d: -f 2-)
+todo.sh add $(egrep -ri '^Subject:' $* | cut -d' ' -f 2-)

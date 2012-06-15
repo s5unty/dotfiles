@@ -13,5 +13,13 @@ score "(~s 通知|~s 讲座|~s 培训|~s 报名)" +1
 
 score "(~s 開催|~s 確認|~s 确认)" +2
 
+score "~f fnst-hr@cn.fujitsu.com" +1
+score "~f zhangtie@cn.fujitsu.com" +1
+score "~f kongyn@cn.fujitsu.com" +1
+score "~f maoyue@cn.fujitsu.com" +1
+score "~f sutao@cn.fujitsu.com" +1
+score "~f zhuyan2011@cn.fujitsu.com" +1
+score "~f chenqing2010@cn.fujitsu.com" =2
+
 score ~F =9
 score ~G =8

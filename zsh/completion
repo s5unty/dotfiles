@@ -38,6 +38,7 @@ zstyle ':completion:*:processes-names' command 'ps -au$USER -o comm|grep -v "ps 
 
 # hosts {{{1
 [[ -f ~/.ssh/known_hosts ]] && hosts=(`awk '{print $1}' ~/.ssh/known_hosts | tr ',' '\n' | sed 's/^\[\([^]]*\)]/\1/g'`)
+# [[ -f ~/.ssh/config ]] && hosts=($hosts `grep '^Host' ~/.ssh/config | sed 's/Host\ //' | egrep -v '^\*$'`)
 zstyle ':completion:*' hosts $hosts
 
 # users {{{1

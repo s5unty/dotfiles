@@ -4,8 +4,9 @@
 ANNO=$(egrep -A1 -i '^message-id' $* | paste -s |sed 's/[ \t][ \t]*//g' | sed -e 's/^\(M.*>\)[A-Z].*/\1/g')
 
 # 获取刚刚由 mutt2task 添加的 task id
-TASK=$(task rc._forcecolor=no newest | sed -n '3s/^\s\?\([^ ]\+\).*/\1/p')
+TASK=$(todo.sh list | tail -1 | cut -d' ' -f2)
 
 # 为最新的 task 添加 message-id
-task $TASK ann $ANNO
+todo.sh archive
+todo.sh append $TASK $ANNO
 
