@@ -36,8 +36,13 @@ VERBOSE=off
 # procmail 标记
 #   i   忽略传给管道的 Shell 命令的执行错误
 #
+# TODO 为什么先 encode UTF8 然后再 decode UTF8？
+#   MIME::EncWords::decode_mimewords 函数的返回值是字符串，问题是
+#   在脚本中能够正常 print 的字符串，在命令行中显示的值是 ARRAY(...)
 :0 Hi
-X_Subject=| $FORMAIL -zfxSubject | perl -pe 's/(^\s*|\n$)//sg' | perl -MEncode -ne 'print encode("UTF8", decode("MIME-Header",$_))'
+X_Subject=| $FORMAIL -zfxSubject \
+| perl -pe 's/(^\s*|\n$)//sg' \
+| perl -MEncode -MMIME::EncWords -ne 'print decode("UTF8", encode("UTF8", MIME::EncWords::decode_mimewords($_, Charset => "UTF8")))'
 # }}}1
 
 # 本地化邮件正文 (前5行) {{{1
@@ -50,7 +55,7 @@ X_Subject=| $FORMAIL -zfxSubject | perl -pe 's/(^\s*|\n$)//sg' | perl -MEncode -
 #   r   禁止在文件末尾新增一空白行。否则 mailtextbody 不能正常工作
 #
 :0 HBrfw
-X_Context=| tail -n +2 | mailtextbody | head -5
+X_Context=| tail -n +2 | mailtextbody | nkf -w | head -5
 # }}}1
 
 # 处理公司邮件 {{{1
