@@ -1,3 +1,14 @@
-Host *
-  ControlMaster auto
-  ControlPath ~/.ssh/master-%r@%h:%p
+HashKnownHosts no
+ControlMaster auto
+ControlPath /tmp/.ssh_%h_%p_%r
+ServerAliveInterval 60
+TCPKeepAlive yes
+
+Host vps
+    Hostname du1abadd.org
+
+Host iphone
+    User root
+    Hostname localhost
+    Port 2222
+    ProxyCommand /usr/bin/iproxy 2222 22 &; /usr/bin/ssh -p %p %h
