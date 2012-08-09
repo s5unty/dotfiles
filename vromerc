@@ -1,0 +1,9 @@
+map . gt
+map , gT
+map <Space> <C-d>
+map - <C-u>
+map d dc
+map <BackSpace> <C-o>
+map \ <C-i>
+
+set searchengines={"google":"http://www.google.com/search?q={{keyword}}", "wiki":"http://zh.wikipedia.org/wiki/{{keyword}}", "pkg":"http://packages.debian.org/search?keywords={{keyword}}", "pkgc":"http://packages.debian.org/search?searchon=contents&amp;keywords={{keyword}}&amp;mode=filename", "d":"http://dict.cn/mini.php?q={{keyword}}", "b":"http://www.diigo.com/search?what={{keyword}}"}
