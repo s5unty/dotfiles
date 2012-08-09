@@ -1,6 +1,6 @@
 text/html; w3m -T text/html %s; copiousoutput; nametemplate=%s.html; needsterminal;
 text/*; view '%s'; edit=vim '%s'; compose=vim '%s'; needsterminal
-image/*; qiv '%s'; needsterminal;
+image/*; /usr/bin/qiv '%s'; needsterminal;
 
 application/x-diff-gzip; atool -l %s; copiousoutput;
 application/x-gtar; atool -l %s; copiousoutput;
@@ -11,12 +11,9 @@ application/x-zip-compressed; atool -l %s; copiousoutput;
 application/x-gzip; atool -F tar+gzip -l %s; copiousoutput;
 application/zip; atool -l %s; copiousoutput;
 
-#application/vnd.ms-excel; xlhtml %s | elinks -dump -dump-width 200; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
-#application/ms-excel; xlhtml %s | elinks -dump -dump-width 200; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
-#application/msexcel; xlhtml %s | elinks -dump -dump-width 200; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
-# application/vnd.ms-excel; unoconv -f html --stdout %s | elinks -dump -dump-width 200; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
-# application/ms-excel; unoconv -f html --stdout %s | elinks -dump -dump-width 200; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
-# application/msexcel; unoconv -f htlm --stdout %s | elinks -dump -dump-width 200; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
+application/vnd.ms-excel; xlhtml -fw -nc -te -xp:0 -xr:0-200 %s 2>/dev/null | elinks -force-html -dump; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
+application/ms-excel; xlhtml -fw -nc -te -xp:0 -xr:0-200 %s 2>/dev/null | elinks -force-html -dump; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
+application/msexcel; xlhtml -fw -nc -te -xp:0 -xr:0-200 %s 2>/dev/null | elinks -force-html -dump; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
 
 application/vnd.ms-word; antiword -w 0 %s; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
 application/msword; antiword -w 0 %s; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;

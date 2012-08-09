@@ -128,7 +128,7 @@ function! G_GoodP()
         wincmd w
     else
         unmap p
-        normal p
+        normal p`[
         nnor <silent> <unique> p :call G_GoodP()<CR>
     endif
 endfunction
@@ -239,8 +239,8 @@ map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
-nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>
-imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>a
+nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set cul!<CR>:set cul?<CR>
+imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set cul!<CR>:set cul?<CR>a
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
 imap <silent> <unique> <F2> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
 nmap <silent> <unique> <F3> :set list!<CR>:set nohls!<CR>:set nohls?<CR>
@@ -264,6 +264,7 @@ nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
 nmap <silent> <unique> q, :colder<CR>
 nmap <silent> <unique> q. :cnewer<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
+nnor <silent> <unique> P P`[
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
@@ -765,6 +766,3 @@ map! <Esc>[24^ <C-F12>
 
 " }}}1
 
-let vimwiki_list = [{'path': '~/vimwiki/',
-            \ 'syntax': 'markdown',
-            \ 'ext': '.mkd'}]
