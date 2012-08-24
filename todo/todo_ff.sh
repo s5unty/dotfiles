@@ -41,8 +41,8 @@ if [ "$TODOTXT_PLAIN" -eq "0" ]; then
         {
             $0=gensub(/ ([A-Z]) /,              " " highlight("COLOR_PRIORITY") "\\1" highlight(color), "g", $0);
             $0=gensub(/ (@\w*)/,                " " highlight("COLOR_CONTEXT")  "\\1" highlight(color), "g", $0);
-            $0=gensub(/ (\+[[:alnum:]_-/]*)/,   " " highlight("COLOR_PROJECT")  "\\1" highlight(color), "g", $0);
-            $0=gensub(/ ([[:alnum:]_-/@#]+:[[:alnum:]=.<>_-/@#]+)/,
+            $0=gensub(/ (\+[[:alnum:]_\-/]*)/,   " " highlight("COLOR_PROJECT")  "\\1" highlight(color), "g", $0);
+            $0=gensub(/ ([[:alnum:]_\-/@#]+:[[:alnum:]=.<>_\-/@#]+)/,
                                                 " " highlight("COLOR_ADD_ONS")  "\\1" highlight(color), "g", $0);
             print
         }
