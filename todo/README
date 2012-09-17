@@ -22,5 +22,4 @@ http://code.google.com/p/punch-time-tracking/
 https://github.com/emilerl/emilerl.git
     - ./actions/lately*
     - ./actions/review*
-    - ./actions/mdown.py
 
