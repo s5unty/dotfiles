@@ -5,13 +5,22 @@ http://todotxt.com/
 https://gist.github.com/1084259
     - todo_ff.sh (origin)
 
-https://gist.github.com/2782889
-    - todo_ff.sh (s5unty)
+http://about:home/
+    - ./remind/notify-wm
+    - ./actions/todo_ff.sh
+
+https://github.com/weisslj/muttjump
+    - ./mutt/muttjump
+
+https://github.com/the1ts/todo.txt-plugins.git
+    - ./actions/notes*
 
 http://code.google.com/p/punch-time-tracking/
-    - Puncy.py
+    - ./actions/Puncy.py
+    - config -> todo.cfg
 
-http://about:home/
-    - notify-wm
-    - reminders
+https://github.com/emilerl/emilerl.git
+    - ./actions/lately*
+    - ./actions/review*
+    - ./actions/mdown.py
 

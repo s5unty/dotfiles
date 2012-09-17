@@ -1,4 +1,3 @@
 # vi:ft=remind
-INCLUDE /sun/.todo/reminds/
 INCLUDE /sun/.todo/todo.txt
-
+%

@@ -1,1 +1,55 @@
-/sun/.todo/actions/notes/notesedit
+#!/usr/bin/env bash
+# 2009 Paul Mansfield <paul.mansfield@mansteck.co.uk>
+# License:  GPL, http://www.gnu.org/copyleft/gpl.html
+
+# functions
+add () {
+    if [ -e $TODOTXT_ACTIONS_DIR/commit ]; then
+        git add $1 > /dev/null 2>&1
+    fi
+}
+
+commit () {
+    if [ -e $TODOTXT_ACTIONS_DIR/commit ]; then
+        git commit $1 -m "$(date +'%Y-%m-%d %H:%M:%S')" > /dev/null 2>&1
+    fi
+}
+
+case $1 in
+    "useage")
+        echo "  $(basename $0) [NOTESFILE]"
+        echo "    Edit NOTESFILE in \$EDITOR."
+        echo "    Use listnotes to show all notesfiles."
+        echo ""
+    ;;
+
+    *)
+        if [ $# -lt 2 ]; then
+            $0 useage
+            exit 1
+        fi
+        cd $TODO_DIR
+    
+        # construct file name
+        NOTE_FILE=$(echo $2 | sed 's/^note://g')
+        PRE=$(basename $TODO_FILE | sed 's/.txt$//g')
+    
+        # If file exists edit it else check lsnotes for pointer then edit 
+        # and add to git if commit action file exists
+        if [ -e $TODO_DIR/notes/${PRE}-${NOTE_FILE}.txt ]; then
+            editor $TODO_DIR/notes/${PRE}-${NOTE_FILE}.txt
+            add $TODO_DIR/notes/${PRE}-${NOTE_FILE}.txt
+            commit $TODO_DIR/notes/${PRE}-${NOTE_FILE}.txt
+        else
+        # If note link in todo.txt exists then edit
+        if [ $(grep -o '[^ ]*note:[^ ]\+' "$TODO_FILE" | grep '^note:' | grep "$2$" | sort -u| sed "s/^note://g"| grep -c $NOTE_FILE) -ge 1 ] ;then
+                editor $TODO_DIR/notes/${PRE}-${NOTE_FILE}.txt
+                add $TODO_DIR/notes/${PRE}-${NOTE_FILE}.txt
+                commit $TODO_DIR/notes/${PRE}-${NOTE_FILE}.txt
+            else
+                echo "No such Notes file, use lsnotes to find notes files"
+            fi
+        fi
+    ;;
+esac
+    
