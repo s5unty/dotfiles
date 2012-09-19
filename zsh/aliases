@@ -7,15 +7,13 @@ alias -g iy="| xsel"
 
 alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
-alias mv="/bin/mv -i"
-alias mj="/sun/.todo/muttjump"
 alias ll="/bin/ls --color=always -hFxtrl"
 alias la="/bin/ls --color=always -hFXA"
 alias ls="/bin/ls --color=always -hFv"
 alias cp="cp -a"
 alias rm="rm -r"
 alias at="at -m"
-#alias ow="$__SUDO chown -R `whoami`:`whoami`"
+alias ow="$__SUDO chown -R `whoami`:`whoami`"
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="tree -C"
@@ -121,7 +119,7 @@ dup() { # dupload
 }
 
 # package {{{
-DISTRO=`awk '/[:alpha:]/ { print $1; exit }' /etc/issue`
+DISTRO=`awk '/[[:alpha:]]/ { print $1; exit }' /etc/issue`
 if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" ]]; then
     alias api="$__SUDO apt-get install"
     alias apo="apt-get source"
@@ -164,7 +162,7 @@ fi
 # }}}
 
 # task {{{
-alias pu="python ~/.todo/actions/Punch.py"
+alias pu="python $TODO_DIR/opt/punch/Punch.py"
 alias td="todo.sh"
 alias tdE="vi $TODO_DIR/inbox.txt +\"set ft=asciidoc\""
 alias tda="td add"
@@ -186,9 +184,9 @@ tde() {
     else
         loc=":normal $1gg"
     fi
-    vi $TODO_DIR/remind/issue.rem +"normal gg" \
-        +":sp $TODO_DIR/done.txt" +":normal zz" \
-        +":vs $TODO_DIR/todo.txt" +"${loc}"
+    vi +":e $TODO_DIR/var/remind/index.rem" +"normal gg" \
+        +":sp $DONE_FILE" +":normal zz" \
+        +":vs $TODO_FILE" +"${loc}"
 }
 tdi() {
     tda "(I) ${(@)argv[2,$#]} by:${1}" > /dev/null 2>&1
@@ -198,7 +196,7 @@ tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})
     if echo ${DESC} | egrep -qi 'message-id:'; then
         MAIL=`echo ${DESC} | sed -e 's/.*message-id:<\([^@]*@[^ ]*\)>.*/\1/gi'`
-        /sun/.todo/mutt/muttjump "${MAIL}"
+        /sun/.todo/opt/mutt/muttjump "${MAIL}"
     elif echo ${DESC} | egrep -qi 'note:'; then
         NOTE=`echo ${DESC} | sed -e 's/.*note:\([^ ]*\).*/\1/g'`
         td notesedit ${NOTE} 2> /dev/null
@@ -208,14 +206,14 @@ tds() {
     DESC=`pu in ${1} | tail -1 | sed -e 's/^Start timer on: //g'`
     TDID=${1}
     REM=`date -d"today" +"REM AT 23:30 +900 *5 TAG ${TDID} MSG ${DESC}"`
-    sed -i "/TAG [0-9]\+ MSG/d" ~/.todo/remind/issue.rem
-    echo ${REM} >> ~/.todo/remind/issue.rem
+    sed -i "/TAG [0-9]\+ MSG/d" ~/.todo/var/remind/index.rem
+    echo ${REM} >> ~/.todo/var/remind/index.rem
 }
 tdd() {
     DESC=`pu out | sed -e 's/^Stop timer on: //g'`
     TDID=`td -p ls "${DESC}" | head -1 | cut -d' ' -f1`
-    sed -i "/TAG ${TDID}/d" ~/.todo/remind/issue.rem
-    if [[ ${1} == ${TDID} ]]; then # 
+    sed -i "/TAG ${TDID}/d" ~/.todo/var/remind/index.rem
+    if [[ ${1} == ${TDID} ]]; then
         td do ${TDID} > /dev/null 2>&1
     elif [[ ${TDID} == "--" ]]; then
         if td -p lsp C | egrep -qi "^${1}"; then # 周期性todo用repeat命令

@@ -170,7 +170,7 @@ class Punch(object):
             
     def open_punch_file(self,mode='a'):
         """Open the output file - punch.dat - in the user's TODO_DIR."""
-        name = self.resolve( self.propDict['TODO_DIR'] + "/punch.dat" )
+        name = self.resolve( self.propDict['TODO_DIR'] + "/var/punch.dat" )
         
         if not os.path.exists(name):
             open( name, 'w' ).close()

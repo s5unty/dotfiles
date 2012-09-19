@@ -50,11 +50,11 @@
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
 
 # pull, monitor, push TODO 如果同步失败，邮件通知自己
-/usr/bin/rsync -azu du1abadd.org:~/.todo/ ~/.todo/ &
-/usr/bin/remind -z -k'~/.todo/remind/notify-wm %s &' ~/.todo/remind/issue.rem &
-/usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.todo/ | \
+/usr/bin/rsync -azu du1abadd.org:~/.todo/var/ ~/.todo/var/ &
+/usr/bin/remind -z -k'~/.todo/opt/remind/notify-wm %s &' ~/.todo/var/remind/index.rem &
+/usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.todo/var/ | \
     while read file; do
-        rsync -azu --delete ~/.todo/ du1abadd.org:~/.todo/ &
+        rsync -azu --delete ~/.todo/var/ du1abadd.org:~/.todo/var/ &
     done &
 
 # 使用渐隐、阴影特效

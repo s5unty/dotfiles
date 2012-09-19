@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [ "$1" = "useage" ]; then
-    "$TODO_FULL_SH" listnotes useage
-else
-    "$TODO_FULL_SH" listnotes "$@"
-fi
