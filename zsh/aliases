@@ -7,13 +7,15 @@ alias -g iy="| xsel"
 
 alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
+alias mv="/bin/mv -i"
+alias mj="/sun/.todo/muttjump"
 alias ll="/bin/ls --color=always -hFxtrl"
 alias la="/bin/ls --color=always -hFXA"
 alias ls="/bin/ls --color=always -hFv"
 alias cp="cp -a"
 alias rm="rm -r"
 alias at="at -m"
-alias ow="$__SUDO chown -R `whoami`:`whoami`"
+#alias ow="$__SUDO chown -R `whoami`:`whoami`"
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="tree -C"
@@ -119,7 +121,7 @@ dup() { # dupload
 }
 
 # package {{{
-DISTRO=`awk '/[[:alpha:]]/ { print $1; exit }' /etc/issue`
+DISTRO=`awk '/[:alpha:]/ { print $1; exit }' /etc/issue`
 if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" ]]; then
     alias api="$__SUDO apt-get install"
     alias apo="apt-get source"
@@ -164,7 +166,6 @@ fi
 # task {{{
 alias pu="python ~/.todo/actions/Punch.py"
 alias td="todo.sh"
-alias tde="vi $TODO_DIR/remind/issue.rem +\"normal gg\" +\":sp $TODO_DIR/done.txt\" +\":normal zz\" +\":vs $TODO_DIR/todo.txt\""
 alias tdE="vi $TODO_DIR/inbox.txt +\"set ft=asciidoc\""
 alias tda="td add"
 alias tdr="td del"
@@ -172,12 +173,27 @@ alias tdR="td replace"
 alias td0="td prepend"
 alias td\$="td append"
 alias tdg="td list"
+alias tdgc="td archive"
 alias tdG="td listall"
 alias tdp="td pri"
 alias tdP="td depri"
 alias tdO="td listnotes 2>/dev/null"
+alias tdc="td repeat"
 alias tdn="pu what"
-alias tdl="pu report"
+tde() {
+    if [ -z ${1} ]; then
+        loc=":normal M"
+    else
+        loc=":normal $1gg"
+    fi
+    vi $TODO_DIR/remind/issue.rem +"normal gg" \
+        +":sp $TODO_DIR/done.txt" +":normal zz" \
+        +":vs $TODO_DIR/todo.txt" +"${loc}"
+}
+tdi() {
+    tda "(I) ${(@)argv[2,$#]} by:${1}" > /dev/null 2>&1
+    tdp ${1} B
+}
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})
     if echo ${DESC} | egrep -qi 'message-id:'; then
@@ -199,10 +215,23 @@ tdd() {
     DESC=`pu out | sed -e 's/^Stop timer on: //g'`
     TDID=`td -p ls "${DESC}" | head -1 | cut -d' ' -f1`
     sed -i "/TAG ${TDID}/d" ~/.todo/remind/issue.rem
-    if [[ ${1} == ${TDID} ]]; then
+    if [[ ${1} == ${TDID} ]]; then # 
         td do ${TDID} > /dev/null 2>&1
     elif [[ ${TDID} == "--" ]]; then
-        td do ${1} > /dev/null 2>&1
+        if td -p lsp C | egrep -qi "^${1}"; then # 周期性todo用repeat命令
+            td repeat ${1} > /dev/null 2>&1
+        else
+            if td -p ls " by:" | egrep -qi "^${1}"; then # 修复了的todo状态切换
+                TDID=$(sed -n "${1}p" ${TODO_FILE} | egrep --color=never -o 'by:[0-9]+' | cut -d':' -f2)
+                if [[ $(grep -c " by:${TDID}" ${TODO_FILE}) == 1 ]]; then
+                    tdp ${TDID} F
+                fi
+            fi
+            if [[ ${ARGC} > 1 ]]; then # 完成todo时允许添加简短的注释
+                td$ ${1} "// ${(@)argv[2,$#]}" > /dev/null 2>&1
+            fi
+            td do ${1} > /dev/null 2>&1
+        fi
     fi
 }
 # }}}

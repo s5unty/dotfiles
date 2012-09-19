@@ -40,6 +40,3 @@
 [submodule "vim/bundle/agtd"]
 	path = vim/bundle/agtd
 	url = git@github.com:s5unty/agtd.git
-[submodule "vim/bundle/vimtodo"]
-	path = vim/bundle/vimtodo
-	url = https://github.com/mivok/vimtodo.git
