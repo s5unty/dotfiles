@@ -7,6 +7,7 @@ alias -g iy="| xsel"
 
 alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
+alias mv="/bin/mv -i"
 alias ll="/bin/ls --color=always -hFxtrl"
 alias la="/bin/ls --color=always -hFXA"
 alias ls="/bin/ls --color=always -hFv"
@@ -185,7 +186,7 @@ tde() {
         loc=":normal $1gg"
     fi
     vi +":e $TODO_DIR/var/remind/index.rem" +"normal gg" \
-        +":sp $DONE_FILE" +":normal zz" \
+        +":sp $DONE_FILE" +":normal Gzz" \
         +":vs $TODO_FILE" +"${loc}"
 }
 tdi() {
@@ -221,7 +222,7 @@ tdd() {
         else
             if td -p ls " by:" | egrep -qi "^${1}"; then # 修复了的todo状态切换
                 TDID=$(sed -n "${1}p" ${TODO_FILE} | egrep --color=never -o 'by:[0-9]+' | cut -d':' -f2)
-                if [[ $(grep -c " by:${TDID}" ${TODO_FILE}) == 1 ]]; then
+                if [[ $(grep -c "(I).*by:${TDID}" ${TODO_FILE}) == 1 ]]; then
                     tdp ${TDID} F
                 fi
             fi
