@@ -1,10 +1,18 @@
 #!/bin/sh
+####################################################################
+##
+## 格式化符合 todo.txt 规范的字符串，传给 awesome 窗口管理器显示通知
+## 
+## "(C) @foo +test +test @foo +foo something blabla .."
+## 
+####################################################################
 
 DESC=${*}
 
 DESC=`echo ${DESC} | sed -e 's/</＜/' | sed -e 's/>/＞/'`                                                   # fix bug
 DESC=`echo ${DESC} | sed -e 's/\(^(.)\) /<span color=\\\\"#FF0000\\\\">\1<\/span> /'`                       # priority
-DESC=`echo ${DESC} | sed -e 's/\(\(^@[^ ]*\)\|\( @\)[^ ]*\)/<span color=\\\\"#00FF00\\\\">\1<\/span>/g'`    # context
-DESC=`echo ${DESC} | sed -e 's/\(\(^+[^ ]*\)\|\( +\)[^ ]*\)/<span color=\\\\"#00FFFF\\\\">\1<\/span>/g'`    # project
+DESC=`echo ${DESC} | sed -e 's/\(\(\(^@\)\|\( @\)\)[^ <]*\)/<span color=\\\\"#00FF00\\\\">\1<\/span>/g'`    # context
+DESC=`echo ${DESC} | sed -e 's/\(\(\(^+\)\|\( +\)\)[^ <]*\)/<span color=\\\\"#F0F000\\\\">\1<\/span>/g'`    # project
 DESC=`echo ${DESC} | sed -e 's/\(^.*\)$/<span color=\\\\"#FFFFFF\\\\">\1<\/span>/g'`                        # normal
-/bin/echo -E 'naughty.notify({opacity = 0.9, margin = 0, position = "bottom_right", text = '\"${DESC}\"', icon="/usr/share/pixmaps/gtk-chtheme.xpm", timeout=180, hover_timeout=0.5 })' | awesome-client -
+
+/bin/echo -E 'naughty.notify({opacity = 0.9, margin = 0, position = "bottom_right", text = '\"${DESC}\"', icon="/usr/share/pixmaps/gtk-chtheme.xpm", timeout=0})' | awesome-client -
