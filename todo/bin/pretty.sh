@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export COLOR_CONTEXT="$AT_ITALIC"
-export COLOR_PROJECT="$AT_BOLD"
+export COLOR_PROJECT="$AT_ITALIC"
 export COLOR_ADD_ONS="$AT_UNDERL"
 
 # Force gawk to behave posixly. Comment out if you get an error about
@@ -13,15 +13,8 @@ if [ "$TODOTXT_PLAIN" -eq "0" ]; then
     # 2. eval 对添加了 (*) 和 (x) 标记的内容重新排序
     # 3. gawk 高亮关键字
     gawk $AWK_OPTIONS '
-        function highlight(colorVar, color) {
-            color = ENVIRON[colorVar]
-            gsub(/\\+033/, "\033", color)
-            return color
-        }
-        { color = "RED" }
         {
             IGNORECASE = 1
-            $0=gensub(/^([0-9]+) REM.*MSG[ ]+(.*)/, highlight(color)  "\\1 (S) \\2" highlight("AT_NONE"), "g", $0);
             $0=gensub(/ x /,           " (X) ", "g", $0);
             print
         }
@@ -37,9 +30,10 @@ if [ "$TODOTXT_PLAIN" -eq "0" ]; then
         /\(A\)/ { color = "PRI_A" }
         /\(B\)/ { color = "PRI_B" }
         /\(C\)/ { color = "PRI_C" }
+        /\(D\)/ { color = "PRI_D" }
         /\(F\)/ { color = "PRI_F" }
         /\(I\)/ { color = "PRI_I" }
-        /\(S\)/ { color = "RED" }
+        /\(T\)/ { color = "PRI_T" }
         /\(X\)/ { color = "COLOR_DONE" }
         {
             IGNORECASE = 1

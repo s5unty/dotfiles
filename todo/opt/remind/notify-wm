@@ -12,7 +12,6 @@ DESC=${*}
 DESC=`echo ${DESC} | sed -e 's/</＜/' | sed -e 's/>/＞/'`                                                   # fix bug
 DESC=`echo ${DESC} | sed -e 's/\(^(.)\) /<span color=\\\\"#FF0000\\\\">\1<\/span> /'`                       # priority
 DESC=`echo ${DESC} | sed -e 's/\(\(\(^@\)\|\( @\)\)[^ <]*\)/<span color=\\\\"#00FF00\\\\">\1<\/span>/g'`    # context
-DESC=`echo ${DESC} | sed -e 's/\(\(\(^+\)\|\( +\)\)[^ <]*\)/<span color=\\\\"#F0F000\\\\">\1<\/span>/g'`    # project
+DESC=`echo ${DESC} | sed -e 's/\(\(\(^+\)\|\( +\)\)[^ <]*\)/<span color=\\\\"#00FFFF\\\\">\1<\/span>/g'`    # project
 DESC=`echo ${DESC} | sed -e 's/\(^.*\)$/<span color=\\\\"#FFFFFF\\\\">\1<\/span>/g'`                        # normal
-
 /bin/echo -E 'naughty.notify({opacity = 0.9, margin = 0, position = "bottom_right", text = '\"${DESC}\"', icon="/usr/share/pixmaps/gtk-chtheme.xpm", timeout=0})' | awesome-client -

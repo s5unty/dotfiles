@@ -1,16 +1,12 @@
-set statusbar_bgcolor #9E9A91
-set statusbar_fgcolor black
-set recolor true
-set show_inputbar false
-set font Envy Code R
-set browser x-www-browser
-set scroll_step 10
-set zoom_step 2
-set smooth_scrolling 10
+set page-padding 2
+set pages-per-row 2
+set guioptions ""
 
-map 0 zoom in
-map 9 zoom out
-map - scroll full_up
-map <Space> scroll full_down
-map q quit
-map <C-q> quit
+map - scroll half-up
+map <Space> scroll half-down
+map . navigate next
+map , navigate previous
+map d set "pages-per-row 2"
+map f set "pages-per-row 1"
+map Q quit
+

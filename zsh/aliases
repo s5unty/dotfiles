@@ -167,7 +167,7 @@ alias pu="python $TODO_DIR/opt/punch/Punch.py"
 alias td="todo.sh"
 alias tdE="vi $TODO_DIR/inbox.txt +\"set ft=asciidoc\""
 alias tda="td add"
-alias tdr="td del"
+#alias tdr="td del"
 alias tdR="td replace"
 alias td0="td prepend"
 alias td\$="td append"
@@ -177,16 +177,41 @@ alias tdG="td listall"
 alias tdp="td pri"
 alias tdP="td depri"
 alias tdO="td listnotes 2>/dev/null"
-alias tdc="td repeat"
+alias tdl="td lf =(remind -s+4 $TODO_DIR/var/remind/index.rem)"
 alias tdn="pu what"
+tdr() { # remember the milk
+# depends: http://www.davidwaring.net/projects/rtm.html
+# depends: http://www.rememberthemilk.com/
+    idx=${1}
+    if [[ ${idx} == "" ]]; then
+        return
+    fi
+    inbox="#富士通"
+
+    rem=$(remind -s+4 $TODO_DIR/var/remind/index.rem | sed -n "${idx}p")
+    rem_date=$(echo ${rem} | sed 's/\(^.\{10\}\).*/\1/' )
+    rem_time=$(echo ${rem} | sed 's/.* \([0-9]\{1,2\}:[0-9]\{1,2\}[ap]m\) .*/\1/')
+    rem_mesg=$(echo ${rem} | sed 's/.*\(\([ap]m\)\|\(\*\)\) \(.*\)/\4/g')
+
+    if [[ ${rem_time} == ${rem} ]]; then # 没有时间信息
+        rem_time=""
+    fi
+
+    if ! pgrep "python" | grep "rtm add"; then # todo
+        (rtm add ${inbox} "${rem_date} ${rem_time} ${rem_mesg}" > /dev/null &)
+    else
+        echo "rtm: there is another running instance."
+    fi
+}
 tde() {
     if [ -z ${1} ]; then
         loc=":normal M"
     else
         loc=":normal $1gg"
     fi
-    vi +":e $TODO_DIR/var/remind/index.rem" +"normal gg" \
-        +":sp $DONE_FILE" +":normal Gzz" \
+    REMD_FILE=$TODO_DIR/var/remind/index.rem
+    vi +":e $DONE_FILE" +"normal Gzz" \
+        +":sp $REMD_FILE" +":normal zz" \
         +":vs $TODO_FILE" +"${loc}"
 }
 tdi() {
@@ -217,20 +242,16 @@ tdd() {
     if [[ ${1} == ${TDID} ]]; then
         td do ${TDID} > /dev/null 2>&1
     elif [[ ${TDID} == "--" ]]; then
-        if td -p lsp C | egrep -qi "^${1}"; then # 周期性todo用repeat命令
-            td repeat ${1} > /dev/null 2>&1
-        else
-            if td -p ls " by:" | egrep -qi "^${1}"; then # 修复了的todo状态切换
-                TDID=$(sed -n "${1}p" ${TODO_FILE} | egrep --color=never -o 'by:[0-9]+' | cut -d':' -f2)
-                if [[ $(grep -c "(I).*by:${TDID}" ${TODO_FILE}) == 1 ]]; then
-                    tdp ${TDID} F
-                fi
+        if td -p ls " by:" | egrep -qi "^${1}"; then # 修复了的todo状态切换
+            TDID=$(sed -n "${1}p" ${TODO_FILE} | egrep --color=never -o 'by:[0-9]+' | cut -d':' -f2)
+            if [[ $(grep -c "(I).*by:${TDID}" ${TODO_FILE}) == 1 ]]; then
+                tdp ${TDID} F
             fi
-            if [[ ${ARGC} > 1 ]]; then # 完成todo时允许添加简短的注释
-                td$ ${1} "// ${(@)argv[2,$#]}" > /dev/null 2>&1
-            fi
-            td do ${1} > /dev/null 2>&1
         fi
+        if [[ ${ARGC} > 1 ]]; then # 完成todo时允许添加简短的注释
+            td$ ${1} "// ${(@)argv[2,$#]}" > /dev/null 2>&1
+        fi
+        td do ${1} > /dev/null 2>&1
     fi
 }
 # }}}
