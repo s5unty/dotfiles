@@ -39,7 +39,7 @@ map                     k           2<C-y>
 map                     <C-q>       :winclose<CR>
 " 右移当前标签页
 map                     <A-.>       :tabm +1<CR>
-" 左移当前标签页
+" 左移当前标>??页
 map                     <A-,>       :tabm -1<CR>
 " 切换之前选择的标签页
 map                     <A-`>       <C-^>
@@ -83,28 +83,24 @@ map           <A-0><A-3><A-9>       39gt
 " 切换当前页面编码
 map <silent>            <F2>        :set encoding=GB2312<CR>
 map <silent>            <S-F2>      :set encoding=UTF-8<CR>
-" 显示当前内存使用情况
-map <silent>            <F12>       :tabopen about:memory<CR>
 " }}}
 
 " QuickMarks {{{1
 silent qmark m https://mail.google.com/
-silent qmark r http://reader.google.com/
-silent qmark c https://www.google.com/calendar
 silent qmark g https://github.com/
 silent qmark t https://twitter.com/
+silent qmark f http://fm.douban.com/
 silent qmark d http://diigo.com/
-silent qmark q http://web.qq.com/
-silent qmark k http://kaixin001.com/
 silent qmark y http://www.youku.com/
 silent qmark j http://dict.hjenglish.com/jp/
-silent qmark w http://wiki.du1abadd.org/
+silent qmark w file:///sun/tiddlyw/index.html
+silent qmark r https://www.rememberthemilk.com/home/s5unty/
 
-silent qmark o http://oa.fnst.cn.fujitsu.com/oa/
-silent qmark p http://pdn.vpdc.sg.soft.fujitsu.com/pdn/platform-login.do
+silent qmark o http://ioffice.fnst.cn.fujitsu.com/
 silent qmark i http://info.fnst.cn.fujitsu.com
 silent qmark c http://campus.fnst.cn.fujitsu.com
 silent qmark b http://ltech.fnst.cn.fujitsu.com/tsd
+silent qmark t http://10.167.157.130/t/s5unty
 silent qmark B http://kaeru.fnst.cn.fujitsu.com/bbs
 silent qmark l http://10.167.225.205/
 
@@ -125,6 +121,22 @@ map <silent> <F4> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
 map L :set ds=l<CR>P:set ds=google<CR>
 map J :set ds=j<CR>P:set ds=google<CR>
 
-" HTTPS diigo {{{2
-map A :open javascript:javascript:(function(){var%20url%20=%20location.href;var%20title%20=%20document.title%20||%20url;var%20desc%20=%20(window.getSelection%20?%20window.getSelection().toString()%20:%20document.getSelection%20?%20document.getSelection()%20%20:%20document.selection.createRange().text);window.open('https://www.diigo.com/post?url='%20+%20encodeURIComponent(url)%20+%20'&title='%20+%20encodeURIComponent(title)%20+%20'&desc='%20+%20encodeURIComponent(desc)+'&client=simplelet#main','_blank','menubar=no,height=580,width=608,toolbar=no,scrollbars=no,status=no');})();<CR>
+javascript <<EOF
+    dactyl.searchWikis = function () {
+        var url = location.href;
+        var title = document.title || url;
+        var desc = (window.getSelection ? window.getSelection().toString() : document.getSelection ? document.getSelection()  : document.selection.createRange().text);
+        window.open('https://www.diigo.com/post?url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(title) + '&desc=' + encodeURIComponent(desc)+'&client=simplelet#main','_blank','menubar=no,height=580,width=608,toolbar=no,scrollbars=no,status=no');
+    }
+EOF
 
+map -g user A -js dactyl.searchWikis()
+
+
+javascript <<EOF
+    dactyl.searchWikis1 = function () {
+try{if(window.diigoToolbarVersion){alert("Diigolet will not run because Diigo Toolbar is installed.");return }var J=navigator.userAgent.toLowerCase();browser={version:(J.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/)||[])[1],safari:/webkit/.test(J),opera:/opera/.test(J),msie:/msie/.test(J)&&!/opera/.test(J),mozilla:/mozilla/.test(J)&&!/(compatible|webkit)/.test(J)};var H=!browser.msie||document.compatMode=="CSS1Compat";var F="http://www.diigo.com/javascripts/webtoolbar";function B(){var K=window;if(K.document.body.tagName.toLowerCase()=="body"){return K}if(K.document.getElementsByTagName("frameset").length>0){K=C(K.frames)}return K}function D(K){return browser.opera&&document.body["client"+K]||browser.safari&&window["inner"+K]||document.compatMode=="CSS1Compat"&&document.documentElement["client"+K]||document.body["client"+K]}function C(R){var P=null;for(var O=0;O<R.length;O++){var L=R[O];var N=false;try{N=!!(L.document&&L.document.body)}catch(Q){}if(!N){continue}if(L.document.getElementsByTagName("frameset").length>0){L=C(L.frames)}if(P==null){P=L}else{var M=D(P,"width")*D(P,"height");var K=D(L,"width")*D(L,"height");if(K>M){P=L}}}return P}function A(M,L,N){var K=M.getElementById(N);if(K&&K.tagName.toLowerCase()=="script"){K.parentNode.removeChild(K)}K=M.createElement("script");K.id=N;K.type="text/javascript";K.src=L;M.body.appendChild(K)}var I=B(),G=I.document;if(I.diigolet&&I.diigolet.loaded){I.diigolet.show()}else{I.diigoletLaunchMode=0;setTimeout(function(){if(I.diigoletLaunchMode!=5&&I.diigoletLaunchMode!=6){var L="diigoDivLoading";var K=G.getElementById(L)||G.createElement("div");K.id=L;K.innerHTML="Loading Diigolet...";K.style.cssText="width:150px;top:0;float:right;right:0;background-color:#B2E57E;color:#fff;font:bold 14px arial;padding:2px;padding-left:6px;z-index:99999;position:"+((browser.msie&&parseFloat(browser.version)<7)||(!H)?"absolute;":"fixed;");G.body.appendChild(K)}A(I.document,F+"/diigolet.js","diigoLoaderScript_2")},100)}}catch(E){alert(":( Diigolet doesn't support this page.")}
+    }
+EOF
+
+map -g user B -js dactyl.searchWikis1()
