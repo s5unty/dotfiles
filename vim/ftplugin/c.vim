@@ -23,7 +23,4 @@ let c_space_errors=1
 " to a larger number:
 let c_minlines = 500
 
-" key map {{{1
-nmap <silent> <F8> :make!<CR>:call G_QFixToggle(1)<CR>
-imap <silent> <F8> <ESC>:make!<CR>:call G_QFixToggle(1)<CR>
 

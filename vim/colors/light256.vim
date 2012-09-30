@@ -101,7 +101,7 @@ hi MarkWord6     ctermfg=Black  guifg=Black    ctermbg=249    guibg=#b2b2b2
 
 " easymotion
 hi EasyMotionTarget ctermfg=Black ctermbg=228  guifg=Black    guibg=#ffff87
-hi EasyMotionShade  ctermfg=249   ctermbg=none guifg=#b2b2b2  guibg=NONE
+hi EasyMotionShade  ctermfg=247   ctermbg=none guifg=#b2b2b2  guibg=NONE
 
 " Tagbar
 hi def link TagbarSignature  Comment

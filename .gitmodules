@@ -1,12 +1,12 @@
 [submodule "vim/bundle/tagbar"]
 	path = vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar
-[submodule "vim/bundle/powerline"]
-	path = vim/bundle/powerline
-	url = git@github.com:s5unty/vim-powerline.git
 [submodule "vim/bundle/supertab"]
 	path = vim/bundle/supertab
 	url = https://github.com/ervandew/supertab.git
+[submodule "vim/bundle/powerline"]
+	path = vim/bundle/powerline
+	url = git@github.com:s5unty/vim-powerline.git
 [submodule "vim/bundle/snipMate"]
 	path = vim/bundle/snipMate
 	url = https://github.com/msanders/snipmate.vim.git
@@ -28,3 +28,9 @@
 [submodule "vim/bundle/unite"]
 	path = vim/bundle/unite
 	url = https://github.com/Shougo/unite.vim.git
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "vim/bundle/easymotion"]
+	path = vim/bundle/easymotion
+	url = https://github.com/Lokaltog/vim-easymotion

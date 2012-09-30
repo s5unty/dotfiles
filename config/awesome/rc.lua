@@ -288,11 +288,12 @@ awful.key({ modkey, "Control" }, "d", function ()
 -- }}}
 
 -- {{{ sdcv/stardict
+-- 有些字典的翻译结果包含尖括号，会导致 naughty 无法正常显示。这里替换所有的尖括号，并同时美化显示结果
 awful.key({ modkey }, "d", function ()
     local f = io.popen("xsel -o")
     local word = f:read("*a")
     f:close()
-    local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+    local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
     local c = f:read("*a")
     f:close()
 
@@ -305,9 +306,7 @@ awful.key({ modkey, "Shift" }, "d", function ()
         if cin_word == "" then
             return
         end
-        -- 有些字典的翻译结果包含尖括号，会导致 naughty 无法正常显示。这里替换所有的尖括号，并同时美化显示结果
-        local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '21-enzh-zhen' "..cin_word.." | tail -n +5 | sed -s 's/<</[/g' | sed -s 's/>>/]/g' | sed -s 's/</[/g' | sed -s 's/>/]/g' | sed -s 's/《/[/g' | sed -s 's/》/]/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
-        
+        local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..cin_word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
         local c = f:read("*a")
         f:close()
 
@@ -491,7 +490,7 @@ awful.rules.rules = {
     -- Set Iceweasel/Firefox to always map on tag 7 of screen 1.
     { rule = { class = "Iceweasel" },
     properties = { tag = tags[1][7], border_width = 0 } },
-    { rule = { class = "Navigator" },
+    { rule = { class = "Firefox" },
     properties = { tag = tags[1][7], border_width = 0 } },
     { rule = { class = "Browser" },
     properties = { tag = tags[1][7], floating=true } },

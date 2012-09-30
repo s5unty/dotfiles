@@ -36,6 +36,7 @@ set wildmode=list:longest,full
 set viminfo+=! " 为了 mark 能保存高亮信息
 set listchars=tab:\ \ ,trail:\
 set noswapfile " 内存大、禁用swapfile
+set history=200 " 命令行历史记录
 
 if has("gui_running")
     set guioptions-=m
@@ -128,7 +129,7 @@ function! G_GoodP()
         wincmd w
     else
         unmap p
-        normal p`[
+        normal p
         nnor <silent> <unique> p :call G_GoodP()<CR>
     endif
 endfunction
@@ -239,8 +240,8 @@ map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
-nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set cul!<CR>:set cul?<CR>
-imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set cul!<CR>:set cul?<CR>a
+nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>
+imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>a
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
 imap <silent> <unique> <F2> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
 nmap <silent> <unique> <F3> :set list!<CR>:set nohls!<CR>:set nohls?<CR>
@@ -249,9 +250,9 @@ nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 set pastetoggle=<F4>
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
-nmap <silent> <unique> <F6> :Unite file_mru buffer bookmark change session<CR>
+nmap <silent> <unique> <F6> :Unite file_mru buffer bookmark change<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
-nmap <silent> <unique> <F8> :<CR>
+nmap <silent> <unique> <F8> :SyntasticCheck<CR>
 nmap <silent> <unique> <F9> :UniteResume<CR>
 nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
@@ -264,7 +265,6 @@ nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
 nmap <silent> <unique> q, :colder<CR>
 nmap <silent> <unique> q. :cnewer<CR>
 nnor <silent> <unique> p :call G_GoodP()<CR>
-nnor <silent> <unique> P P`[
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
@@ -338,11 +338,11 @@ nmap <silent> <unique> <Leader>g :call G_FindInFiles('golbal', 'y')<CR>
 vmap <silent> <unique> <Leader>g y:call G_FindInFiles('golbal', 'v')<CR>
 nmap <silent> <unique> <Leader>G :call G_FindInFiles('golbal', 'n')<CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
+nmap <silent> <unique> <Leader>l :call <SID>ShowTabbar()<CR>
 nmap <silent> <unique> <Leader>s :call <SID>CscopeFind('s', 'y')<CR>
 nmap <silent> <unique> <Leader>c :call <SID>CscopeFind('c', 'y')<CR>
 nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
-nmap <silent> <unique> <Leader>l :call <SID>ShowTabbar()<CR>
 nmap <silent> <unique> <Leader>. :call G_QFixToggle(0)<CR>:GundoToggle<CR>
 
 " Colon+, Colon char is ':' {{{2
@@ -396,84 +396,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 15# Plugins {{{1
-call pathogen#infect('bundle')
-call pathogen#helptags()
-
-" TabBar 0.7-p3 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
-" http://www.vim.org/scripts/script.php?script_id=1338
-"
-" p1: Bf_SwitchTo
-"     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
-" p2: g:Tb_StatusLine
-"     添加变量用户调整 TabBar 的状态栏信息
-" p3: exec "cd ".expand('%:p:h')
-"     即时更新当前目录
-let Tb_UseSingleClick = 1 " 单击切换
-let Tb_TabWrap = 1 " 允许跨行显示
-let Tb_MaxSize = 3 "
-let Tb_ModSelTarget = 1 " 跳转至编辑窗口
-let Tb_SplitToEdge = 1 " 顶端，超越TabBar窗口
-" 依赖 Powerline
-"     第一个参数表示 Powerline/Matches.vim 中定义的列表序号(起始0)
-"     第二个参数表示状态栏拥有焦点(1)还是没有焦点(0)
-let Tb_StatusLine = '%!Pl#Statusline(9,0)'
-if has("autocmd")
-  autocmd BufWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
-    \ exec ":TbAup"
-endif
-
-
-" Tagbar eab0e : Display tags of the current file ordered by scope {{{2
-" http://www.vim.org/scripts/script.php?script_id=3465
-" https://github.com/majutsushi/tagbar
-let g:tagbar_left = 1
-let g:tagbar_width = 35
-let g:tagbar_autofocus = 1
-function! <SID>ShowTabbar()
-    call G_GotoEditor()
-    exec ":TagbarToggle"
-endfunction
-
-
-" SuperTab 1.6 : Do all your insert-mode completion with Tab {{{2
-" http://www.vim.org/scripts/script.php?script_id=1643
-" https://github.com/ervandew/supertab
-let SuperTabCrMapping=0 " 该项和delimitMate的expand_cr选项冲突
-let SuperTabRetainCompletionType=1
-let SuperTabDefaultCompletionType="<C-X><C-N>"
-let SuperTabMappingForward="<Tab>"
-let SuperTabMappingBackward="<S-Tab>"
-
-
-" Powerline @38bbfb8: The ultimate vim statusline utility.  {{{2
-" http://www.vim.org/scripts/script.php?script_id=3881
-" https://github.com/Lokaltog/vim-powerline
-"
-" 'fancy'符号依赖定制字体，详情参考
-" https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
-"
-" p1: matches \-TabBar\-
-"     添加了一个匹配 -TabBar- 的主题
-" p2: 'line.tot', '$COL %-2v'
-"     使用可视列号
-"     :help statusline
-let g:Powerline_symbols = 'fancy'
-set laststatus=2
-
-
-" unite.vim 3.0 : Unite all sources {{{2
-" http://www.vim.org/scripts/script.php?script_id=3396
-" https://github.com/Shougo/unite.vim
-let unite_source_file_mru_limit = 1000
-let unite_cursor_line_highlight = 'TabLineSel'
-let unite_split_rule = 'botright'
-if executable('ack-grep')
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
-    let g:unite_source_grep_recursive_opt = ''
-endif
-
+" 17# Plugins {{{1
 " Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
 autocmd Filetype java
@@ -541,6 +464,99 @@ function! <SID>CscopeFind(mask, quick)
 endfunction
 
 
+" TabBar 0.7-p3 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
+" http://www.vim.org/scripts/script.php?script_id=1338
+"
+" p1: Bf_SwitchTo
+"     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
+" p2: g:Tb_StatusLine
+"     添加变量用户调整 TabBar 的状态栏信息
+" p3: exec "cd ".expand('%:p:h')
+"     即时更新当前目录
+let Tb_UseSingleClick = 1 " 单击切换
+let Tb_TabWrap = 1 " 允许跨行显示
+let Tb_MaxSize = 3 "
+let Tb_ModSelTarget = 1 " 跳转至编辑窗口
+let Tb_SplitToEdge = 1 " 顶端，超越TabBar窗口
+" 依赖 Powerline
+"     第一个参数表示 Powerline/Matches.vim 中定义的列表序号(起始0)
+"     第二个参数表示状态栏拥有焦点(1)还是没有焦点(0)
+let Tb_StatusLine = '%!Pl#Statusline(9,0)'
+if has("autocmd")
+  autocmd BufWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
+    \ exec ":TbAup"
+endif
+
+
+" OmniCppComplete 0.41 : C/C++ omni-completion with ctags database {{{2
+" http://www.vim.org/scripts/script.php?script_id=1520
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_ShowAccess = 1 " show member access information
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+let OmniCpp_GlobalScopeSearch = 0 " 0 or 1
+
+
+" pythoncomplete 0.9 : Python Omni Completion {{{2
+" http://www.vim.org/scripts/script.php?script_id=1542
+" nothing
+
+
+" Mark 2.6.2 : Highlight several words in different colors simultaneously. {{{2
+" http://www.vim.org/scripts/script.php?script_id=2666
+let g:mwAutoLoadMarks = 1 " 自动加载高亮的 Mark
+nmap <Plug>IgnoreMarkSearchAnyNext <Plug>MarkSearchAnyNext
+nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
+
+
+" autofmt 1.6 (2011-11-03): text formatting plugin {{{2
+" http://www.vim.org/scripts/script.php?script_id=1939
+set formatexpr=autofmt#japanese#formatexpr()
+"}}}
+
+call pathogen#infect('bundle')
+call pathogen#helptags()
+
+" Tagbar eab0e : Display tags of the current file ordered by scope {{{2
+" http://www.vim.org/scripts/script.php?script_id=3465
+" https://github.com/majutsushi/tagbar
+let g:tagbar_left = 1
+let g:tagbar_width = 35
+let g:tagbar_autofocus = 1
+function! <SID>ShowTabbar()
+    call G_GotoEditor()
+    exec ":TagbarToggle"
+endfunction
+
+
+" SuperTab 1.6 : Do all your insert-mode completion with Tab {{{2
+" http://www.vim.org/scripts/script.php?script_id=1643
+" https://github.com/ervandew/supertab
+let SuperTabCrMapping=0 " 该项和delimitMate的expand_cr选项冲突
+let SuperTabRetainCompletionType=1
+let SuperTabDefaultCompletionType="<C-X><C-N>"
+let SuperTabMappingForward="<Tab>"
+let SuperTabMappingBackward="<S-Tab>"
+
+
+" Powerline @38bbfb8: The ultimate vim statusline utility.  {{{2
+" http://www.vim.org/scripts/script.php?script_id=3881
+" https://github.com/Lokaltog/vim-powerline
+"
+" 'fancy'符号依赖定制字体，详情参考
+" https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
+"
+" p1: matches \-TabBar\-
+"     添加了一个匹配 -TabBar- 的主题
+" p2: 'line.tot', '$COL %-2v'
+"     使用可视列号
+"     :help statusline
+let g:Powerline_symbols = 'fancy'
+set laststatus=2
+
+
 " snipMate 0.83 : TextMate-style snippets for Vim {{{2
 " http://www.vim.org/scripts/script.php?script_id=2540
 " https://github.com/msanders/snipmate.vim
@@ -573,27 +589,8 @@ let g:gundo_preview_bottom = 1
 let g:gundo_right = 1
 
 
-" OmniCppComplete 0.41 : C/C++ omni-completion with ctags database {{{2
-" http://www.vim.org/scripts/script.php?script_id=1520
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_ShowAccess = 1 " show member access information
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-let OmniCpp_GlobalScopeSearch = 0 " 0 or 1
 
 
-" pythoncomplete 0.9 : Python Omni Completion {{{2
-" http://www.vim.org/scripts/script.php?script_id=1542
-" nothing
-
-
-" Mark 2.6.2 : Highlight several words in different colors simultaneously. {{{2
-" http://www.vim.org/scripts/script.php?script_id=2666
-let g:mwAutoLoadMarks = 1 " 自动加载高亮的 Mark
-nmap <Plug>IgnoreMarkSearchAnyNext <Plug>MarkSearchAnyNext
-nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 
 
 " NrrwRgn 26 : A Narrow Region Plugin similar to Emacs {{{2
@@ -603,11 +600,37 @@ let g:nrrw_topbot_leftright = 'aboveleft'
 let g:nrrw_rgn_wdth = 50
 
 
-" autofmt 1.6 (2011-11-03): text formatting plugin {{{2
-" http://www.vim.org/scripts/script.php?script_id=1939
-set formatexpr=autofmt#japanese#formatexpr()
 
 
+" unite.vim 4.0 : Unite all sources {{{2
+" http://www.vim.org/scripts/script.php?script_id=3396
+" https://github.com/Shougo/unite.vim
+let unite_source_file_mru_limit = 1000
+let unite_cursor_line_highlight = 'TabLineSel'
+let unite_split_rule = 'botright'
+if executable('ack-grep')
+    let g:unite_source_grep_command = 'ack-grep'
+    let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
+    let g:unite_source_grep_recursive_opt = ''
+endif
+
+
+" Syntastic 2.3.0 : Automatic syntax checking {{{2
+" http://www.vim.org/scripts/script.php?script_id=2736
+let g:syntastic_check_on_open=1
+let g:syntastic_quiet_warnings=1
+let g:syntastic_auto_loc_list=1
+let g:syntastic_mode_map = { 'mode': 'passive' }
+" TODO cpp
+" let g:syntastic_cpp_no_include_search = 1
+" let g:syntastic_cpp_check_header = 0
+
+
+" EasyMotion 1.3 : Vim motions on speed! {{{2
+" www.vim.org/scripts/script.php?script_id=3526
+let g:EasyMotion_leader_key = 'f'
+let g:EasyMotion_grouping = 1
+let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 " }}}1
 
 " 3# keys ref: http://tinyurl.com/2cae5vw {{{1
