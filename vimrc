@@ -15,7 +15,7 @@ set ignorecase " 搜索忽略大小写
 set autoindent " 自动缩进
 set cindent
 set number " 显示行数
-set completeopt=longest,menu " 显示补全预览菜单
+set completeopt=preview,menu " 显示补全预览菜单
 set smartcase
 set hidden " 用隐藏代替关闭从而保留 undo 列表等私有信息
 set nocompatible
@@ -232,7 +232,7 @@ function Ranger()
 endfunction
 " }}}
 
-" Key bindings {{{1
+" Key maps {{{1
 " Mouse Bindings {{{2
 map <silent> <unique> <2-LeftMouse> :call G_GotoEditor()<CR><C-O>zz
 map <silent> <unique> <2-RightMouse> :call G_GotoEditor()<CR><C-I>g`"zz
@@ -396,7 +396,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 17# Plugins {{{1
+" 6# Plugins {{{1
 " Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
 autocmd Filetype java
@@ -514,8 +514,9 @@ nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 " autofmt 1.6 (2011-11-03): text formatting plugin {{{2
 " http://www.vim.org/scripts/script.php?script_id=1939
 set formatexpr=autofmt#japanese#formatexpr()
-"}}}
+"}}}1
 
+" 13# bundle {{{1
 call pathogen#infect('bundle')
 call pathogen#helptags()
 
@@ -536,7 +537,7 @@ endfunction
 " https://github.com/ervandew/supertab
 let SuperTabCrMapping=0 " 该项和delimitMate的expand_cr选项冲突
 let SuperTabRetainCompletionType=1
-let SuperTabDefaultCompletionType="<C-X><C-N>"
+let SuperTabDefaultCompletionType="<C-X><C-U>" "配合neocomplcache使用时，单独使用时<C-X><C-N>局部补全
 let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
@@ -557,10 +558,6 @@ let g:Powerline_symbols = 'fancy'
 set laststatus=2
 
 
-" snipMate 0.83 : TextMate-style snippets for Vim {{{2
-" http://www.vim.org/scripts/script.php?script_id=2540
-" https://github.com/msanders/snipmate.vim
-" nothing
 
 
 " quickfixsigns 1.00 : Mark quickfix & location list items with signs {{{2
@@ -602,17 +599,6 @@ let g:nrrw_rgn_wdth = 50
 
 
 
-" unite.vim 4.0 : Unite all sources {{{2
-" http://www.vim.org/scripts/script.php?script_id=3396
-" https://github.com/Shougo/unite.vim
-let unite_source_file_mru_limit = 1000
-let unite_cursor_line_highlight = 'TabLineSel'
-let unite_split_rule = 'botright'
-if executable('ack-grep')
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
-    let g:unite_source_grep_recursive_opt = ''
-endif
 
 
 " Syntastic 2.3.0 : Automatic syntax checking {{{2
@@ -628,9 +614,42 @@ let g:syntastic_mode_map = { 'mode': 'passive' }
 
 " EasyMotion 1.3 : Vim motions on speed! {{{2
 " www.vim.org/scripts/script.php?script_id=3526
+" https://github.com/Lokaltog/vim-easymotion.git
 let g:EasyMotion_leader_key = 'f'
 let g:EasyMotion_grouping = 1
 let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
+
+
+" 4# Shougo's pack: https://github.com/Shougo/ {{{2
+
+" vimproc 7.0 : Asynchronous execution plugin for Vim {{{3
+" nothing
+
+" unite.vim 4.0 : Unite all sources {{{3
+let unite_source_file_mru_limit = 1000
+let unite_cursor_line_highlight = 'TabLineSel'
+let unite_split_rule = 'botright'
+if executable('ack-grep')
+    let g:unite_source_grep_command = 'ack-grep'
+    let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
+    let g:unite_source_grep_recursive_opt = ''
+endif
+ 
+" neocomplcache 7.1: Ultimate auto-completion system for Vim. {{{3
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_disable_auto_complete = 0
+let g:neocomplcache_enable_auto_select = 0
+let g:neocomplcache_enable_ignore_case = 0
+let g:neocomplCache_SmartCase = 1
+let g:neocomplcache_enable_underbar_completion = 1
+
+" neocomplcache-snippets-complete {{{3
+let g:neocomplcache_snippets_dir = "$HOME/.vim/snippets/"
+let g:neocomplcache_disable_select_mode_mappings = 1
+imap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
+    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<Enter>" : "\<Enter>"
+smap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
+    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-g>" : "\<Enter>"
 " }}}1
 
 " 3# keys ref: http://tinyurl.com/2cae5vw {{{1
@@ -788,4 +807,4 @@ map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
 
 " }}}1
-
+ 

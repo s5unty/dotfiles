@@ -5,6 +5,8 @@ alias -g M="| $__LESS"
 alias -g Y="| xsel"
 alias -g iy="| xsel"
 
+alias ...="../../"
+alias ....="../../../"
 alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
 alias mv="/bin/mv -i"
