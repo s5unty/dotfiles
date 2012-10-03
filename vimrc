@@ -55,7 +55,7 @@ else
     set guifont=Envy\ Code\ R\ 10
     set guifontwide=WenQuanYi\ Micro\ Hei\ 10
     set makeprg=make\ -j2
-    set grepprg=ack-grep\ -a
+    set grepprg=ack-grep
     set shell=bash\ -x\ -c
     set directory=/tmp
 endif
@@ -183,39 +183,6 @@ function! DevHelpCurrentWord()
     exe "!devhelp -s " . word . " &"
 endfunction
 
-" 在文件中查找
-function! G_FindInFiles(range, quick)
-    call G_QFixToggle(0)
-    call G_GotoEditor()
-
-    if a:quick == 'y'
-        let line = "-w ".expand('<cword>')
-	elseif a:quick == 'v'
-        let line = "-w ".@"
-		let @/ = line
-    elseif a:quick == 'n'
-        let line  = input('Search Pattern(g): ')
-        if line == ""
-            echo ""
-            return
-        endif
-    endif
-
-    let words = split(line)
-    for str in reverse(words)
-        let @/ = str
-        break
-    endfor
-
-    if a:range == 'single'
-        exec ":grep! -H ".line." %"
-    elseif a:range == 'golbal'
-        exec ":grep! ".line
-    endif
-
-    call G_QFixToggle(1)
-endfunction
-
 " jekyll blog
 function! G_Jekyll()
 
@@ -296,8 +263,6 @@ imap <silent> <unique> <C-K> <C-O>d$
 imap <silent> <unique> <C-U> <C-O>v^x
 imap <silent> <unique> <C-Y> <C-O>u<C-O>$
 imap <silent> <unique> <C-H> <Backspace>
-nmap <silent> <unique> <C-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
-nmap <silent> <unique> <C-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 nmap <silent> <unique> <C-F8> :make! clean<CR>
 nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR><C-L>
 
@@ -311,6 +276,8 @@ nmap <silent> <unique> <A-d> :bw<CR>
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
+imap <silent> <unique> <A-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
+imap <silent> <unique> <A-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 else
 nmap <silent> <unique> <ESC><ESC> :<CR>
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
@@ -325,18 +292,22 @@ nmap <silent> <unique> <ESC>d :bw<CR>
 imap <silent> <unique> <ESC>b <C-O>b
 imap <silent> <unique> <ESC>f <C-O>w
 imap <silent> <unique> <ESC>d <C-O>dw
+nmap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
+nmap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
+imap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
+imap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 endif
 
 " Leader+ , Leader char is ',' {{{2
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>/ :call G_FindInFiles('single', 'y')<CR>
-vmap <silent> <unique> <Leader>/ y:call G_FindInFiles('single', 'v')<CR>
-nmap <silent> <unique> <Leader>? :call G_FindInFiles('single', 'n')<CR>
-nmap <silent> <unique> <Leader>g :call G_FindInFiles('golbal', 'y')<CR>
-vmap <silent> <unique> <Leader>g y:call G_FindInFiles('golbal', 'v')<CR>
-nmap <silent> <unique> <Leader>G :call G_FindInFiles('golbal', 'n')<CR>
+nmap <silent> <unique> <Leader>/ :Unite grep:%::<C-R>=expand("<cword>")<CR><CR>
+nmap <silent> <unique> <Leader>? :Unite grep:%::<CR>
+nmap <silent> <unique> <Leader>g :Unite grep:.::<C-R>=expand("<cword>")<CR><CR>
+nmap <silent> <unique> <Leader>G :Unite grep:.::<CR>
+vmap <silent> <unique> <Leader>/ y:Unite grep:%::<C-R>=@"<CR><CR>
+vmap <silent> <unique> <Leader>g y:Unite grep:.::<C-R>=@"<CR><CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
 nmap <silent> <unique> <Leader>l :call <SID>ShowTabbar()<CR>
 nmap <silent> <unique> <Leader>s :call <SID>CscopeFind('s', 'y')<CR>
@@ -346,12 +317,17 @@ nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <Leader>. :call G_QFixToggle(0)<CR>:GundoToggle<CR>
 
 " Colon+, Colon char is ':' {{{2
-command E :call Ranger()
-command SS :SessionSave
-command S :SessionList
+command W :w !sudo tee %
 
 command PP :!paps --landscape --font='monospace 8' --header --columns=2 % | ps2pdf - - | zathura -
 command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp -o landscape -o sites=two-sided-long-edge -
+
+command U :Unite file_mru directory_mru
+command S :UniteSessionSave
+command L :UniteSessionLoad
+command O :Unite outline
+command M :Unite mark
+command E :Unite file_rec
 " }}}1
 
 " Autocmd {{{1
@@ -516,7 +492,7 @@ nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 set formatexpr=autofmt#japanese#formatexpr()
 "}}}1
 
-" 13# bundle {{{1
+" 10# bundle {{{1
 call pathogen#infect('bundle')
 call pathogen#helptags()
 
@@ -556,8 +532,6 @@ let SuperTabMappingBackward="<S-Tab>"
 "     :help statusline
 let g:Powerline_symbols = 'fancy'
 set laststatus=2
-
-
 
 
 " quickfixsigns 1.00 : Mark quickfix & location list items with signs {{{2
@@ -620,20 +594,45 @@ let g:EasyMotion_grouping = 1
 let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 
 
-" 4# Shougo's pack: https://github.com/Shougo/ {{{2
+" YankRing.vim 14.0 : Maintains a history of previous yanks, changes and deletes {{{2
+" http://www.vim.org/scripts/script.php?script_id=1234
+" https://github.com/vim-scripts/YankRing.vim
+let g:yankring_history_file = ".vim_yankring"
 
+
+" }}}
+
+" 4# Shougo's pack: https://github.com/Shougo/ {{{2
 " vimproc 7.0 : Asynchronous execution plugin for Vim {{{3
 " nothing
 
 " unite.vim 4.0 : Unite all sources {{{3
-let unite_source_file_mru_limit = 1000
-let unite_cursor_line_highlight = 'TabLineSel'
-let unite_split_rule = 'botright'
+"   unite-outline
+"   unite-session
+let g:unite_source_file_mru_limit = 1000
+let g:unite_source_history_yank_enable = 1
+let g:unite_source_history_yank_file = '/tmp/.history_yank'
+let g:unite_source_mark_marks = '1234ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+let g:unite_cursor_line_highlight = 'TabLineSel'
+let g:unite_split_rule = 'botright'
 if executable('ack-grep')
     let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
+    let g:unite_source_grep_default_opts = '--no-heading --no-color'
     let g:unite_source_grep_recursive_opt = ''
 endif
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()
+    nmap <silent><buffer> <Space> <C-D>
+    nmap <silent><buffer> t <Plug>(unite_toggle_mark_current_candidate)
+    nmap <silent><buffer> a <Plug>(unite_append_enter)
+    nmap <silent><buffer> x <Plug>(unite_choose_action)
+    nmap <silent><buffer> . <Plug>(unite_rotate_next_source)
+    nmap <silent><buffer> , <Plug>(unite_rotate_previous_source)
+    nmap <silent><buffer> <Tab> <Plug>(unite_quick_match_default_action)
+    imap <silent><buffer> <Tab> <Plug>(unite_select_next_line)
+    imap <silent><buffer> <S-Tab> <Plug>(unite_select_previous_line)
+    vmap <silent><buffer> t <Plug>(unite_toggle_mark_current_candidate)
+endfunction
  
 " neocomplcache 7.1: Ultimate auto-completion system for Vim. {{{3
 let g:neocomplcache_enable_at_startup = 1
@@ -650,6 +649,7 @@ imap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
     \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<Enter>" : "\<Enter>"
 smap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
     \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-g>" : "\<Enter>"
+
 " }}}1
 
 " 3# keys ref: http://tinyurl.com/2cae5vw {{{1
@@ -807,4 +807,4 @@ map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
 
 " }}}1
- 
+
