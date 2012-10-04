@@ -148,13 +148,13 @@ function! G_CloseBuffer()
 	call G_GotoEditor()
     let name = fnamemodify(expand('%'), ':t')
 
-	if bufname('%') != '-TabBar-'
+	if bufname('%') != '-MiniBufExplorer-'
 		wincmd k
-		if bufname('%') != '-TabBar-'
+		if bufname('%') != '-MiniBufExplorer-'
 			wincmd k
-			if bufname('%') != '-TabBar-'
+			if bufname('%') != '-MiniBufExplorer-'
 				wincmd k
-				if bufname('%') != '-TabBar-'
+				if bufname('%') != '-MiniBufExplorer-'
 					return
 				endif
 			endif
@@ -260,7 +260,6 @@ nmap <silent> <unique> <A-h> <C-W>h
 nmap <silent> <unique> <A-j> <C-W>j
 nmap <silent> <unique> <A-k> <C-W>k
 nmap <silent> <unique> <A-l> <C-W>l
-nmap <silent> <unique> <A-d> :bw<CR>
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
@@ -274,7 +273,6 @@ nmap <silent> <unique> <ESC>h <C-W>h
 nmap <silent> <unique> <ESC>j <C-W>j
 nmap <silent> <unique> <ESC>k <C-W>k
 nmap <silent> <unique> <ESC>l <C-W>l
-nmap <silent> <unique> <ESC>d :bw<CR>
 imap <silent> <unique> <ESC>b <C-O>b
 imap <silent> <unique> <ESC>f <C-O>w
 imap <silent> <unique> <ESC>d <C-O>dw
@@ -291,7 +289,7 @@ nmap <silent> <unique> <Leader>G :Unite grep:.::<CR>
 vmap <silent> <unique> <Leader>/ y:Unite grep:%::<C-R>=@"<CR><CR>
 vmap <silent> <unique> <Leader>g y:Unite grep:.::<C-R>=@"<CR><CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
-nmap <silent> <unique> <Leader>l :call <SID>ShowTabbar()<CR>
+nmap <silent> <unique> <Leader>l :call <SID>ShowTagbar()<CR>
 nmap <silent> <unique> <Leader>s :call <SID>CscopeFind('s', 'y')<CR>
 nmap <silent> <unique> <Leader>c :call <SID>CscopeFind('c', 'y')<CR>
 nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
@@ -351,7 +349,7 @@ if has("autocmd")
 endif
 " }}}
 
-" 6# Plugins {{{1
+" 5# Plugins {{{1
 " Cscope : Interactively examine a C program source {{{2
 " http://cscope.sourceforge.net/
 autocmd Filetype java
@@ -418,28 +416,6 @@ function! <SID>CscopeFind(mask, quick)
 endfunction
 
 
-" TabBar 0.7-p3 : Plugin to add tab bar (derived from miniBufExplorer) {{{2
-" http://www.vim.org/scripts/script.php?script_id=1338
-"
-" p1: Bf_SwitchTo
-"     使用 <Esc>1..9 快捷键切换buffer时,跳转至编辑窗口
-" p2: g:Tb_StatusLine
-"     添加变量用户调整 TabBar 的状态栏信息
-" p3: exec "cd ".expand('%:p:h')
-"     即时更新当前目录
-let Tb_UseSingleClick = 1 " 单击切换
-let Tb_TabWrap = 1 " 允许跨行显示
-let Tb_MaxSize = 3 "
-let Tb_ModSelTarget = 1 " 跳转至编辑窗口
-let Tb_SplitToEdge = 1 " 顶端，超越TabBar窗口
-" 依赖 Powerline
-"     第一个参数表示 Powerline/Matches.vim 中定义的列表序号(起始0)
-"     第二个参数表示状态栏拥有焦点(1)还是没有焦点(0)
-let Tb_StatusLine = '%!Pl#Statusline(9,0)'
-if has("autocmd")
-  autocmd BufWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
-    \ exec ":TbAup"
-endif
 
 
 " OmniCppComplete 0.41 : C/C++ omni-completion with ctags database {{{2
@@ -470,16 +446,33 @@ nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 set formatexpr=autofmt#japanese#formatexpr()
 "}}}1
 
-" 9# bundle {{{1
+" 10# bundle {{{1
 call pathogen#infect('bundle')
 call pathogen#helptags()
+
+" MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
+" http://www.vim.org/scripts/script.php?script_id=159 (origin)
+" https://github.com/fholgado/minibufexpl.vim (improved)
+"
+" ppa1:
+"     为了配合 Powerline 显示，修改了源文件
+let g:miniBufExplShowBufNumbers = 1
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplCheckDupeBufs = 0
+let g:miniBufExplMapWindowNavVim = 0
+" 依赖 Powerline
+"     第一个参数表示 Powerline/Matches.vim 中定义的列表序号(起始0)
+"     第二个参数表示状态栏拥有焦点(1)还是没有焦点(0)
+let g:statusLineText = 'Pl#Statusline(8,0)'
+
+
 
 " Tagbar v2.4.1: Display tags of the current file ordered by scope {{{2
 " http://www.vim.org/scripts/script.php?script_id=3465
 " https://github.com/majutsushi/tagbar
 let g:tagbar_width = 35
 let g:tagbar_autofocus = 1
-function! <SID>ShowTabbar()
+function! <SID>ShowTagbar()
     call G_GotoEditor()
     exec ":TagbarToggle"
 endfunction

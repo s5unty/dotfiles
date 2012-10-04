@@ -43,3 +43,6 @@
 [submodule "vim/bundle/unite-quickfix"]
 	path = vim/bundle/unite-quickfix
 	url = https://github.com/osyo-manga/unite-quickfix.git
+[submodule "vim/bundle/minibufexpl.vim"]
+	path = vim/bundle/minibufexpl.vim
+	url = https://github.com/fholgado/minibufexpl.vim.git

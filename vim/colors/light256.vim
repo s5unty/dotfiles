@@ -105,3 +105,12 @@ hi EasyMotionShade  ctermfg=247   ctermbg=none guifg=#b2b2b2  guibg=NONE
 
 " Tagbar
 hi def link TagbarSignature  Comment
+
+" MiniBufExpl (improved) Colors
+" http://fholgado.com/minibufexpl
+hi MBENormal                ctermfg=240     ctermbg=NONE    cterm=italic
+hi MBEChanged               ctermfg=196     ctermbg=NONE    cterm=italic
+hi MBEVisibleNormal         ctermfg=Black   ctermbg=NONE    cterm=bold
+hi MBEVisibleChanged        ctermfg=196     ctermbg=NONE    cterm=bold
+hi MBEVisibleChangedActive                  ctermbg=196     cterm=reverse,bold
+hi MBEVisibleActive                                         cterm=reverse,bold
