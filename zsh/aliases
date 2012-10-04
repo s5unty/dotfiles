@@ -28,11 +28,6 @@ alias tig="tig --all"
 alias rsync="rsync -C"
 alias rot13="tr a-zA-Z n-za-mN-ZA-M"
 
-ranger() {
-    command ranger $@ &&
-    cd "$(/bin/grep \^\' ~/.config/ranger/bookmarks | cut -b3-)"
-}
-
 cd() {
     if builtin cd "$@"; then
         ls

@@ -55,7 +55,7 @@ else
     set guifont=Envy\ Code\ R\ 10
     set guifontwide=WenQuanYi\ Micro\ Hei\ 10
     set makeprg=make\ -j2
-    set grepprg=ack-grep
+    set grepprg=ack-grep\ -a
     set shell=bash\ -x\ -c
     set directory=/tmp
 endif
@@ -98,41 +98,31 @@ endif
 "   1 always show qfix
 "   0 always hide qfix
 "  -1 switch show/hide
-function! G_QFixToggle(forced)
-    if bufname('%') == "[Command Line]"
-        " leave the command-line window: <C-\><C-N> is better then :quit
-        exec "normal \<C-\>\<C-N>"
-    elseif exists("g:qfix_win")
-        if a:forced == 1
-            return
-        endif
-
-        cclose
-        unlet g:qfix_win
-    else
-        if a:forced == 0
-            return
-        endif
-
-        copen
-        let g:qfix_win = bufnr("$")
-    endif
-
-    exec "redraw!"
-endfunction
+" function! G_QFixToggle(forced)
+"     if bufname('%') == "[Command Line]"
+"         " leave the command-line window: <C-\><C-N> is better then :quit
+"         exec "normal \<C-\>\<C-N>"
+"     elseif a:forced == 1
+"         UniteResume
+"     elseif a:forced == 0
+"         UniteClose default
+"     else
+"         Unite -toggle quickfix
+"     endif
+" endfunction
 
 " P键 预览
-function! G_GoodP()
-    if &buftype == "quickfix"
-        exec "normal \<Return>"
-        normal zz
-        wincmd w
-    else
-        unmap p
-        normal p
-        nnor <silent> <unique> p :call G_GoodP()<CR>
-    endif
-endfunction
+" function! G_GoodP()
+"     if &buftype == "quickfix"
+"         exec "normal \<Return>"
+"         normal zz
+"         wincmd w
+"     else
+"         unmap p
+"         normal p
+"         nnor <silent> <unique> p :call G_GoodP()<CR>
+"     endif
+" endfunction
 
 " 跳转至文件编辑窗口
 " 参照 tabbar.vim 插件的 <SID>Bf_CrSel() 函数
@@ -189,14 +179,14 @@ function! G_Jekyll()
 endfunction
 
 " Ranger file manager
-function Ranger()
-  silent !ranger --choosefile=/tmp/chosen
-  if filereadable('/tmp/chosen')
-    exec 'edit ' . system('cat /tmp/chosen')
-    call system('rm /tmp/chosen')
-  endif
-  redraw!
-endfunction
+" function Ranger()
+"   silent !ranger --choosefile=/tmp/chosen
+"   if filereadable('/tmp/chosen')
+"     exec 'edit ' . system('cat /tmp/chosen')
+"     call system('rm /tmp/chosen')
+"   endif
+"   redraw!
+" endfunction
 " }}}
 
 " Key maps {{{1
@@ -217,10 +207,11 @@ nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 set pastetoggle=<F4>
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
-nmap <silent> <unique> <F6> :Unite file_mru buffer bookmark change<CR>
+nmap <silent> <unique> <F6> :<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
 nmap <silent> <unique> <F8> :SyntasticCheck<CR>
-nmap <silent> <unique> <F9> :UniteResume<CR>
+nmap <silent> <unique> <F9> :Unite file_mru buffer bookmark directory_mru quickfix outline<CR>
+nmap <silent> <unique> <F10> :<CR>
 nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
 
@@ -228,16 +219,11 @@ nmap <silent> <unique> <F12> <C-]>zz
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> <C-D>
-nmap <silent> <unique> qq :call G_QFixToggle(-1)<CR>
-nmap <silent> <unique> q, :colder<CR>
-nmap <silent> <unique> q. :cnewer<CR>
-nnor <silent> <unique> p :call G_GoodP()<CR>
+nmap <silent> <unique> qq :UniteResume<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
 vmap <silent> <unique> + :Align =<CR>
-"nmap <silent> <unique> [ :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
-"nmap <silent> <unique> ] :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
@@ -252,6 +238,8 @@ nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <C-Q> :q!<CR>
 nmap <silent> <unique> <C-J> :call EasyMotion#JK(0, 0)<CR>
 nmap <silent> <unique> <C-K> :call EasyMotion#JK(0, 1)<CR>
+nmap <silent> <unique> <C-N> :call G_GotoEditor()<CR>:bn!<CR>
+nmap <silent> <unique> <C-P> :call G_GotoEditor()<CR>:bp!<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
@@ -276,8 +264,6 @@ nmap <silent> <unique> <A-d> :bw<CR>
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
-imap <silent> <unique> <A-N> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
-imap <silent> <unique> <A-P> :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 else
 nmap <silent> <unique> <ESC><ESC> :<CR>
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
@@ -292,10 +278,6 @@ nmap <silent> <unique> <ESC>d :bw<CR>
 imap <silent> <unique> <ESC>b <C-O>b
 imap <silent> <unique> <ESC>f <C-O>w
 imap <silent> <unique> <ESC>d <C-O>dw
-nmap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
-nmap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
-imap <silent> <unique> <ESC>n :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bn!<CR>
-imap <silent> <unique> <ESC>p :call G_QFixToggle(0)<CR>:call G_GotoEditor()<CR>:bp!<CR>
 endif
 
 " Leader+ , Leader char is ',' {{{2
@@ -314,20 +296,17 @@ nmap <silent> <unique> <Leader>s :call <SID>CscopeFind('s', 'y')<CR>
 nmap <silent> <unique> <Leader>c :call <SID>CscopeFind('c', 'y')<CR>
 nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
-nmap <silent> <unique> <Leader>. :call G_QFixToggle(0)<CR>:GundoToggle<CR>
+nmap <silent> <unique> <Leader>a :GundoToggle<CR>
 
 " Colon+, Colon char is ':' {{{2
 command W :w !sudo tee %
+command E :call Ranger()<CR>
 
 command PP :!paps --landscape --font='monospace 8' --header --columns=2 % | ps2pdf - - | zathura -
 command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp -o landscape -o sites=two-sided-long-edge -
 
-command U :Unite file_mru directory_mru
 command S :UniteSessionSave
 command L :UniteSessionLoad
-command O :Unite outline
-command M :Unite mark
-command E :Unite file_rec
 " }}}1
 
 " Autocmd {{{1
@@ -421,7 +400,6 @@ endif
 " cscope 似乎不支持正则表达式,无法实现精确匹配
 " https://bugzilla.redhat.com/show_bug.cgi?id=163330
 function! <SID>CscopeFind(mask, quick)
-    call G_QFixToggle(0)
     call G_GotoEditor()
     if a:quick == 'y'
         let str = expand('<cword>')
@@ -436,7 +414,7 @@ function! <SID>CscopeFind(mask, quick)
     exec ":cs find ".a:mask." ".str
 
     " 显示搜索结果窗口
-    call G_QFixToggle(1)
+    Unite quickfix
 endfunction
 
 
@@ -492,14 +470,13 @@ nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 set formatexpr=autofmt#japanese#formatexpr()
 "}}}1
 
-" 10# bundle {{{1
+" 9# bundle {{{1
 call pathogen#infect('bundle')
 call pathogen#helptags()
 
-" Tagbar eab0e : Display tags of the current file ordered by scope {{{2
+" Tagbar v2.4.1: Display tags of the current file ordered by scope {{{2
 " http://www.vim.org/scripts/script.php?script_id=3465
 " https://github.com/majutsushi/tagbar
-let g:tagbar_left = 1
 let g:tagbar_width = 35
 let g:tagbar_autofocus = 1
 function! <SID>ShowTabbar()
@@ -552,16 +529,12 @@ let delimitMate_smart_quotes = 1
 let delimitMate_balance_matchpairs = 1
 
 
-" Gundo 2.3.0 : Visualize your undo tree {{{2
+" Gundo 2.4.0 : Visualize your undo tree {{{2
 " http://www.vim.org/scripts/script.php?script_id=3304
 " https://github.com/sjl/gundo.vim
 let g:gundo_preview_height = 50
-let g:gundo_preview_bottom = 1
-let g:gundo_right = 1
-
-
-
-
+let g:gundo_preview_bottom = 0
+let g:gundo_right = 0
 
 
 " NrrwRgn 26 : A Narrow Region Plugin similar to Emacs {{{2
@@ -594,12 +567,6 @@ let g:EasyMotion_grouping = 1
 let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 
 
-" YankRing.vim 14.0 : Maintains a history of previous yanks, changes and deletes {{{2
-" http://www.vim.org/scripts/script.php?script_id=1234
-" https://github.com/vim-scripts/YankRing.vim
-let g:yankring_history_file = ".vim_yankring"
-
-
 " }}}
 
 " 4# Shougo's pack: https://github.com/Shougo/ {{{2
@@ -610,15 +577,13 @@ let g:yankring_history_file = ".vim_yankring"
 "   unite-outline
 "   unite-session
 let g:unite_source_file_mru_limit = 1000
-let g:unite_source_history_yank_enable = 1
-let g:unite_source_history_yank_file = '/tmp/.history_yank'
-let g:unite_source_mark_marks = '1234ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+let g:unite_source_history_yank_enable = 0
 let g:unite_cursor_line_highlight = 'TabLineSel'
 let g:unite_split_rule = 'botright'
 if executable('ack-grep')
     let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts = '--no-heading --no-color'
-    let g:unite_source_grep_recursive_opt = ''
+    let g:unite_source_grep_default_opts = '-iHn --no-heading --no-color --all'
+    let g:unite_source_grep_recursive_opt = '-R'
 endif
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()

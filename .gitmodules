@@ -40,6 +40,6 @@
 [submodule "vim/bundle/neocomplcache-snippets-complete"]
 	path = vim/bundle/neocomplcache-snippets-complete
 	url = https://github.com/Shougo/neocomplcache-snippets-complete.git
-[submodule "vim/bundle/YankRing.vim"]
-	path = vim/bundle/YankRing.vim
-	url = https://github.com/vim-scripts/YankRing.vim.git
+[submodule "vim/bundle/unite-quickfix"]
+	path = vim/bundle/unite-quickfix
+	url = https://github.com/osyo-manga/unite-quickfix.git
