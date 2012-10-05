@@ -416,8 +416,6 @@ function! <SID>CscopeFind(mask, quick)
 endfunction
 
 
-
-
 " OmniCppComplete 0.41 : C/C++ omni-completion with ctags database {{{2
 " http://www.vim.org/scripts/script.php?script_id=1520
 let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
@@ -444,6 +442,7 @@ nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 " autofmt 1.6 (2011-11-03): text formatting plugin {{{2
 " http://www.vim.org/scripts/script.php?script_id=1939
 set formatexpr=autofmt#japanese#formatexpr()
+
 "}}}1
 
 " 10# bundle {{{1
@@ -566,10 +565,28 @@ let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 " vimproc 7.0 : Asynchronous execution plugin for Vim {{{3
 " nothing
 
+" neocomplcache 7.1: Ultimate auto-completion system for Vim. {{{3
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_disable_auto_complete = 0
+let g:neocomplcache_enable_auto_select = 0
+let g:neocomplcache_enable_ignore_case = 0
+let g:neocomplCache_SmartCase = 1
+let g:neocomplcache_enable_underbar_completion = 1
+
+" neocomplcache-snippets-complete {{{3
+let g:neocomplcache_snippets_dir = "$HOME/.vim/snippets/"
+let g:neocomplcache_disable_select_mode_mappings = 1
+imap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
+    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<Enter>" : "\<Enter>"
+smap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
+    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-g>" : "\<Enter>"
+
 " unite.vim 4.0 : Unite all sources {{{3
-"   unite-outline
-"   unite-session
-let g:unite_source_file_mru_limit = 1000
+"   | unite-outline
+"   | unite-session
+"   | unite-quickfix
+"
+let g:unite_source_file_mru_limit = 100
 let g:unite_source_history_yank_enable = 0
 let g:unite_cursor_line_highlight = 'TabLineSel'
 let g:unite_split_rule = 'botright'
@@ -592,22 +609,6 @@ function! s:unite_my_settings()
     vmap <silent><buffer> t <Plug>(unite_toggle_mark_current_candidate)
 endfunction
  
-" neocomplcache 7.1: Ultimate auto-completion system for Vim. {{{3
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_disable_auto_complete = 0
-let g:neocomplcache_enable_auto_select = 0
-let g:neocomplcache_enable_ignore_case = 0
-let g:neocomplCache_SmartCase = 1
-let g:neocomplcache_enable_underbar_completion = 1
-
-" neocomplcache-snippets-complete {{{3
-let g:neocomplcache_snippets_dir = "$HOME/.vim/snippets/"
-let g:neocomplcache_disable_select_mode_mappings = 1
-imap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
-    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<Enter>" : "\<Enter>"
-smap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
-    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-g>" : "\<Enter>"
-
 " }}}1
 
 " 3# keys ref: http://tinyurl.com/2cae5vw {{{1

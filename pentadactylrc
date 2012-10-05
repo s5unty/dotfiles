@@ -39,7 +39,7 @@ map                     k           2<C-y>
 map                     <C-q>       :winclose<CR>
 " 右移当前标签页
 map                     <A-.>       :tabm +1<CR>
-" 左移当前标>??页
+" 左移当前标签页
 map                     <A-,>       :tabm -1<CR>
 " 切换之前选择的标签页
 map                     <A-`>       <C-^>
@@ -93,14 +93,14 @@ silent qmark f http://fm.douban.com/
 silent qmark d http://diigo.com/
 silent qmark y http://www.youku.com/
 silent qmark j http://dict.hjenglish.com/jp/
-silent qmark w file:///sun/tiddlyw/index.html
+silent qmark w file:///sun/wikipad/index.html
 silent qmark r https://www.rememberthemilk.com/home/s5unty/
 
-silent qmark o http://ioffice.fnst.cn.fujitsu.com/
+silent qmark o http://oa.fnst.cn.fujitsu.com/oa/
+silent qmark p http://pdn.vpdc.sg.soft.fujitsu.com/pdn/platform-login.do
 silent qmark i http://info.fnst.cn.fujitsu.com
 silent qmark c http://campus.fnst.cn.fujitsu.com
 silent qmark b http://ltech.fnst.cn.fujitsu.com/tsd
-silent qmark t http://10.167.157.130/t/s5unty
 silent qmark B http://kaeru.fnst.cn.fujitsu.com/bbs
 silent qmark l http://10.167.225.205/
 
