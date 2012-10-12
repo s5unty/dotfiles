@@ -1,6 +1,6 @@
-# snippet rem
-# 	REM ${1:`strftime("%Y/%m/%d")`} AT ${2:9:00} MSG ${3}
-# snippet tod
-# 	REM `strftime("%Y/%m/%d")` MSG ${1}
-# snippet tom
-# 	REM `strftime("%Y/%m/%d", localtime()+86400)` MSG ${1}
+snippet rem
+	REM ${1:`strftime("%Y")`}/${2:`strftime("%m")`}/${3:`strftime("%d")`} AT ${4:9}:${5:00} MSG ${6}
+snippet tod
+	REM `strftime("%Y/%m/%d")` MSG ${1}
+snippet tom
+	REM `strftime("%Y/%m/%d", localtime()+86400)` MSG ${1}

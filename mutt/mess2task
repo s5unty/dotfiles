@@ -7,6 +7,6 @@ ANNO=$(egrep -A1 -i '^message-id' $* | paste -s |sed 's/[ \t][ \t]*//g' | sed -e
 TASK=$(todo.sh list | tail -1 | cut -d' ' -f2)
 
 # 为最新的 task 添加 message-id
-todo.sh archive
+# todo.sh archive
 todo.sh append $TASK $ANNO
 
