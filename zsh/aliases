@@ -219,23 +219,25 @@ tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})
     if echo ${DESC} | egrep -qi 'message-id:'; then
         MAIL=`echo ${DESC} | sed -e 's/.*message-id:<\([^@]*@[^ ]*\)>.*/\1/gi'`
-        /sun/.todo/opt/mutt/muttjump "${MAIL}"
+        ${TODO_DIR}/opt/mutt/muttjump "${MAIL}"
     elif echo ${DESC} | egrep -qi 'note:'; then
         NOTE=`echo ${DESC} | sed -e 's/.*note:\([^ ]*\).*/\1/g'`
         td notesedit ${NOTE} 2> /dev/null
     fi
 }
-tds() {
-    DESC=`pu in ${1} | tail -1 | sed -e 's/^Start timer on: //g'`
+tds() { # 开始一项工作
     TDID=${1}
-    REM=`date -d"today" +"REM AT 23:30 +900 *5 TAG ${TDID} MSG ${DESC}"`
-    sed -i "/TAG [0-9]\+ MSG/d" ~/.todo/var/remind/index.rem
-    echo ${REM} >> ~/.todo/var/remind/index.rem
+    python $TODO_DIR/opt/punch/Punch.py in ${TDID} > /dev/null 2>&1
+    # 如果上一个工作周期还没结束，譬如前一项工作在周期内完成了，
+    # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
+    if ! pgrep "pomodoro.sh" > /dev/null 2>&1; then
+        DESC=$(sed -n "${TDID}p" ${TODO_FILE})
+        (${TODO_DIR}/opt/pomodoro/pomodoro.sh ${DESC} &) # 放到后台
+    fi
 }
-tdd() {
+tdd() { # 完成一项工作
     DESC=`pu out | sed -e 's/^Stop timer on: //g'`
     TDID=`td -p ls "${DESC}" | head -1 | cut -d' ' -f1`
-    sed -i "/TAG ${TDID}/d" ~/.todo/var/remind/index.rem
     if [[ ${1} == ${TDID} ]]; then
         td do ${TDID} > /dev/null 2>&1
     elif [[ ${TDID} == "--" ]]; then
