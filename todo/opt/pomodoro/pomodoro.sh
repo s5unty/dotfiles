@@ -4,11 +4,10 @@
 
 # 每个闹钟就固定为 25 分钟，不允许任意设定时间。
 # 配合 Punch.py 才能记录钟的使用情况，方便统计。
-doing=$1
 limit=$((25*60*1000))
 step=$((5*60*1000))
-#limit=$((25*1000)) # 25秒测试用
-#step=$((5*1000))
+# limit=$((25*1000)) # 25秒测试用
+# step=$((5*1000))
 
 #### 垂直递增
 # while [ $limit -gt 0 ]; do
@@ -41,6 +40,7 @@ sleep $(($expire / 1000))
 # 略 :)
 
 # 工作时间结束
+doing=$(python $TODO_DIR/opt/punch/Punch.py what | sed 's/Active task: \(.*\) (.*)/\1/g')
 notify-send -u critical -i appointment -t $step "Please stop this work and take short break. ☻" "$doing"
 
 # 结束 Punch.py 里面的计时，强迫自己手工重设每个工作闹钟
