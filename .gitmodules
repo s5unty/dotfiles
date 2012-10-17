@@ -49,3 +49,6 @@
 [submodule "vim/bundle/neocomplcache-snippets-complete"]
 	path = vim/bundle/neocomplcache-snippets-complete
 	url = https://github.com/Shougo/neocomplcache-snippets-complete.git
+[submodule "vim/bundle/vim-speeddating"]
+	path = vim/bundle/vim-speeddating
+	url = https://github.com/tpope/vim-speeddating.git
