@@ -248,7 +248,7 @@ tdd() { # 完成一项工作
             fi
         fi
         if [[ ${ARGC} > 1 ]]; then # 完成todo时允许添加简短的注释
-            td$ ${1} "// ${(@)argv[2,$#]}" > /dev/null 2>&1
+            td$ ${1} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
         fi
         td do ${1} > /dev/null 2>&1
     fi
