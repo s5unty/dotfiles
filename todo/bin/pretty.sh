@@ -37,7 +37,7 @@ if [ "$TODOTXT_PLAIN" -eq "0" ]; then
         /\(X\)/ { color = "COLOR_DONE" }
         {
             IGNORECASE = 1
-            $0=gensub(/ \/\* (.*) \*\//,        " " highlight("AT_REVERSE")     "\\1" highlight(color), "g", $0);
+            $0=gensub(/ \/\* ([^*]*) \*\//,     " " highlight("AT_REVERSE")     "\\1" highlight(color), "g", $0);
             $0=gensub(/ (@\w*)/,                " " highlight("COLOR_CONTEXT")  "\\1" highlight(color), "g", $0);
             $0=gensub(/ (\+[[:alnum:]_\-/]*)/,  " " highlight("COLOR_PROJECT")  "\\1" highlight(color), "g", $0);
             $0=gensub(/ (message-id:[[:alnum:]=.<>_\-/@#]+)/,

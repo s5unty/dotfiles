@@ -176,6 +176,11 @@ alias tdP="td depri"
 alias tdO="td listnotes 2>/dev/null"
 alias tdl="td lf =(remind -s+4 $TODO_DIR/var/remind/index.rem)"
 alias tdn="pu what"
+tdc() {
+    if [[ ${ARGC} > 1 ]]; then # 追加注释
+        td$ ${1} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
+    fi
+}
 tdr() { # remember the milk
 # depends: http://www.davidwaring.net/projects/rtm.html
 # depends: http://www.rememberthemilk.com/
