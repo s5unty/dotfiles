@@ -31,7 +31,7 @@ export SDCV_HISTSIZE=32
 
 # todo.txt
 # http://todotxt.com/
-source $HOME/.todo/config
+[ -e $HOME/.todo/config ] && source $HOME/.todo/config
 export DOTREMINDERS="$TODO_DIR/var/remind/index.rem"
 
 if [[ -f $DIRSTACK ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
