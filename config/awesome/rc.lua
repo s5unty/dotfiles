@@ -66,14 +66,14 @@ mylauncher = awful.widget.launcher({
 })
 
 -- Widgets {{{2
-mytextclock = widget({ type = 'textbox' })
-vicious.register(mytextclock, vicious.widgets.date, " <span color='#FFFFFF'>%l:%M</span> ", 60)
-
 mycpuwidget = widget({ type = "textbox" })
-vicious.register(mycpuwidget, vicious.widgets.cpu, " <span color='#00C5CD'>$1%</span>", 2)
+vicious.register(mycpuwidget, vicious.widgets.cpu, "<span color='#FFFFFF'> ║ </span>$1%", 2)
 
 mydiskio = widget({ type = "textbox" })
-vicious.register(mydiskio, vicious.widgets.dio, " <span color='#458B00'>${read_mb}</span> <span color='#FF5656'>${write_mb}</span>", 1, "sda")
+vicious.register(mydiskio, vicious.widgets.dio, "<span color='#FFFFFF'> ║ </span>${total_mb}", 1, "sda")
+
+mytextclock = widget({ type = 'textbox' })
+vicious.register(mytextclock, vicious.widgets.date, "<span color='#FFFFFF'> ║ </span>%m/%d(%a)%I:%M<span color='#FFFFFF'> ║ </span>", 60)
 
 mysystray = widget({ type = "systray" })
 
@@ -175,6 +175,19 @@ awful.button({ modkey }, 3, awful.mouse.client.resize)
 )
 -- }}}
 
+-- {{{ Quake3 console
+-- http://awesome.naquadah.org/wiki/Drop-down_terminal
+-- save as: ~/.config/awesome/quake.lua
+local quake = require("quake")
+
+local quakeconsole = {}
+for s = 1, screen.count() do
+   quakeconsole[s] = quake({ terminal = terminal,
+			     height = 0.3,
+			     screen = s })
+end
+-- }}}
+
 -- {{{ Key bindings
 
 -- {{{ Global
@@ -187,7 +200,6 @@ awful.key({ modkey, "Control" }, "l",   function () awful.screen.focus_relative 
 -- }}}
 
 -- {{{ Tag
-awful.key({ modkey            }, "grave",   awful.tag.history.restore),
 awful.key({ modkey            }, ";",       awful.tag.history.restore),
 awful.key({ modkey, "Control" }, ".",       awful.tag.viewnext),
 awful.key({ modkey, "Control" }, ",",       awful.tag.viewprev),
@@ -260,7 +272,7 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Ranger -T Ranger -e zsh -c ranger") end),
 awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
 awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
-awful.key({ modkey }, "F4", function () awful.util.spawn("VBoxSDL --startvm 'WinXP'") end),
+awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'WinXP'") end),
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
@@ -306,7 +318,7 @@ awful.key({ modkey, "Shift" }, "d", function ()
         if cin_word == "" then
             return
         end
-        local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..cin_word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+        local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '21世纪英汉汉英双向词典' "..cin_word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
         local c = f:read("*a")
         f:close()
 
@@ -342,6 +354,7 @@ end),
 -- }}}
 
 -- {{{ Others
+awful.key({ modkey            }, "grave", function () quakeconsole[mouse.screen]:toggle() end),
 awful.key({ modkey, "Control" }, "r", awesome.restart)
 -- }}}
 
@@ -497,8 +510,6 @@ awful.rules.rules = {
 
     { rule = { instance = "plugin-container" },
     properties = { tag = tags[1][7], floating = true, border_width = 0 } },
-    { rule = { instance = "Navigator" },
-    properties = { tag = tags[1][7], floating = false, border_width = 0 } },
     { rule = { instance = "Weechat" },
     properties = { tag = tags[1][8] } },
     { rule = { instance = "Mutt" },
@@ -560,3 +571,4 @@ client.add_signal("marked", function(c) c.border_color = beautiful.border_marked
 -- {{{ Autorun
 awful.util.spawn("/usr/bin/iptux")
 -- }}}
+
