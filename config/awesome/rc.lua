@@ -200,6 +200,7 @@ awful.key({ modkey, "Control" }, "l",   function () awful.screen.focus_relative 
 -- }}}
 
 -- {{{ Tag
+awful.key({ modkey            }, "Tab",     awful.tag.history.restore),
 awful.key({ modkey            }, ";",       awful.tag.history.restore),
 awful.key({ modkey, "Control" }, ".",       awful.tag.viewnext),
 awful.key({ modkey, "Control" }, ",",       awful.tag.viewprev),
@@ -220,7 +221,7 @@ awful.key({ modkey }, "p", function ()
     awful.client.focus.byidx(-1)
     client.focus:raise()
 end),
-awful.key({ modkey }, "Tab", function ()
+awful.key({ "Mod1" }, "Tab", function ()
     awful.client.focus.history.previous()
     client.focus:raise()
 end),
