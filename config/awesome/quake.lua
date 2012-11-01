@@ -1,3 +1,7 @@
+-- Quake like console on top
+-- Similar to:
+--   http://git.sysphere.org/awesome-configs/tree/scratch/drop.lua
+
 -- http://vincent.bernat.im/en/blog/2012-awesome-wm.html
 -- http://awesome.naquadah.org/wiki/Drop-down_terminal
 
@@ -8,6 +12,8 @@ local capi   = { mouse = mouse,
                  screen = screen,
                  client = client,
                  timer = timer }
+--@@ awesome-3.4.6
+local pairs  = pairs
 
 -- I use a namespace for my modules...
 module("quake")
@@ -19,24 +25,39 @@ function QuakeConsole:display()
    -- First, we locate the terminal
    local client = nil
    local i = 0
-   for c in awful.client.cycle(function (c)
-         -- c.name may be changed!
-         return c.instance == self.name
-      end,
-      nil, self.screen) do
-      i = i + 1
-      if i == 1 then
-          client = c
-      else
-          -- Additional matching clients, let's remove the sticky bit
-          -- which may persist between awesome restarts. We don't close
-          -- them as they may be valuable. They will just turn into a
-          -- classic terminal.
-          c.sticky = false
-          c.ontop = false
-          c.above = false
+--@@ awesome-3.4.6 doesn't support `awful.client.cycle` method
+--@   for c in awful.client.cycle(function (c)
+--@         -- c.name may be changed!
+--@         return c.instance == self.name
+--@      end,
+--@      nil, self.screen) do
+--@      i = i + 1
+--@      if i == 1 then
+--@          client = c
+--@      else
+--@          -- Additional matching clients, let's remove the sticky bit
+--@          -- which may persist between awesome restarts. We don't close
+--@          -- them as they may be valuable. They will just turn into a
+--@          -- classic terminal.
+--@          c.sticky = false
+--@          c.ontop = false
+--@          c.above = false
+--@      end
+--@   end
+   local tags = capi.screen[self.screen]:tags()
+   for k,tag in pairs(tags) do
+      for i=1, #tag:clients() do
+         local c = tag:clients()[i]
+         if c.instance == self.name then
+            client = c
+         else
+            c.sticky = false
+            c.ontop = false
+            c.above = false
+         end
       end
    end
+--@@
 
    if not client and not self.visible then
       -- The terminal is not here yet but we don't want it yet. Just do nothing.
@@ -65,7 +86,7 @@ function QuakeConsole:display()
 
    -- Resize
    awful.client.floating.set(client, true)
-   client.border_width = 2
+   client.border_width = 1
    client.size_hints_honor = false
    client:geometry({ x = x, y = y, width = width, height = height })
 
