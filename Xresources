@@ -37,6 +37,9 @@ URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R for Powerline:bold:size=10,\
                   [codeset=ISO10646]xft:WenQuanYi Micro Hei:bold
 URxvt.italicFont: [codeset=ASCII]xft:Envy Code R for Powerline:italic:size=10,\
                   [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic
+URxvt.boldItalicFont: \
+                  [codeset=ASCII]xft:Envy Code R for Powerline:bold:italic:size=10,\
+                  [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic
 
 URxvt.keysym.M-Up: command: \
         \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=13, [codeset=ISO10646]xft:WenQuanYi Micro Hei:regular\007 \
