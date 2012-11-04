@@ -8,29 +8,29 @@ require("beautiful")
 require("naughty")
 -- Load Debian menu entries
 require("debian.menu")
-
+-- Expose plugin-in
+require("revelation")
+-- Widget plugin-in
 require("vicious")
-
+-- awesome-client
+require("awful.remote")
 os.setlocale("zh_CN.UTF-8")
 
--- {{{ General
+-- General {{{1
 modkey   = "Mod4"
 terminal = "x-terminal-emulator"
 editor   = os.getenv("EDITOR") or "editor"
 theme    = awful.util.getdir("config") .. "/theme.lua"
 beautiful.init (theme)
 
-toggletags = {
-    [terminal] = { screen = 1, tag = 9 },
-}
+-- The name of the tag created for the 'exposed' view
+revelation.config.tag_name = '卍'
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-layouts =
-{
+layouts = {
     awful.layout.suit.tile.top,
     awful.layout.suit.tile.right,
 }
-
 tags = { }
 mytags = {
     { layout = layouts[1], mwfact = 0.500, nmaster=2 },
@@ -41,10 +41,9 @@ mytags = {
     { layout = layouts[2], mwfact = 0.668, nmaster=1 },
     { layout = layouts[2], mwfact = 0.618, nmaster=1 },
     { layout = layouts[1], mwfact = 0.618, nmaster=1 },
-    { layout = awful.layout.suit.fair },
 }
 for s = 1, screen.count() do
-    tags[s] = awful.tag({ "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰", "卍" }, s) -- 太极图案 "☯"
+    tags[s] = awful.tag({ "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }, s)
     for i, v in ipairs(mytags) do
         awful.tag.setproperty(tags[s][i], "layout",   v.layout)
         awful.tag.setproperty(tags[s][i], "mwfact",   v.mwfact)
@@ -53,30 +52,43 @@ for s = 1, screen.count() do
 end
 -- }}}
 
--- {{{ Wibox
--- Menu {{{2
+-- Statusbar {{{1
+pomodoro = awful.widget.progressbar()
+--pomodoro:set_height(20)
+--pomodoro:set_width(20)
+--pomodoro:set_vertical(true)
+--pomodoro:set_width(100)
+pomodoro:set_max_value(100)
+pomodoro:set_background_color('#494B4F')
+pomodoro:set_color('#AECF96')
+pomodoro:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
+pomodoro:set_ticks(true) -- false:平滑的整体，true:间隙的个体
+
+-- Plugin {{{2
+-- Debian {{{3
 mymainmenu = awful.menu.new({
     items = {
         { "Debian", debian.menu.Debian_menu.Debian }
     }
 })
+
 mylauncher = awful.widget.launcher({
     image = image(beautiful.awesome_icon),
     menu  = mymainmenu
 })
 
--- Widgets {{{2
-mycpuwidget = widget({ type = "textbox" })
-vicious.register(mycpuwidget, vicious.widgets.cpu, "<span color='#FFFFFF'> ║ </span>$1%", 2)
+-- Tags {{{3
+mytaglist = {}
+mytaglist.buttons = awful.util.table.join(
+awful.button({ }, 1, awful.tag.viewonly),
+awful.button({ modkey }, 1, awful.client.movetotag),
+awful.button({ }, 3, awful.tag.viewtoggle),
+awful.button({ modkey }, 3, awful.client.toggletag),
+awful.button({ }, 4, awful.tag.viewprev),
+awful.button({ }, 5, awful.tag.viewnext)
+)
 
-mydiskio = widget({ type = "textbox" })
-vicious.register(mydiskio, vicious.widgets.dio, "<span color='#FFFFFF'> ║ </span>${total_mb}", 1, "sda")
-
-mytextclock = widget({ type = 'textbox' })
-vicious.register(mytextclock, vicious.widgets.date, "<span color='#FFFFFF'> ║ </span>%m/%d(%a)%I:%M<span color='#FFFFFF'> ║ </span>", 60)
-
-mysystray = widget({ type = "systray" })
-
+-- Task {{{3
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
 awful.button({ }, 1, function (c)
@@ -104,21 +116,33 @@ awful.button({ }, 5, function ()
 end)
 )
 
-mytaglist = {}
-mytaglist.buttons = awful.util.table.join(
-awful.button({ }, 1, awful.tag.viewonly),
-awful.button({ modkey }, 1, awful.client.movetotag),
-awful.button({ }, 3, awful.tag.viewtoggle),
-awful.button({ modkey }, 3, awful.client.toggletag),
-awful.button({ }, 4, awful.tag.viewprev),
-awful.button({ }, 5, awful.tag.viewnext)
-)
+-- Disk IO {{{3
+diowidget = awful.widget.graph()
+diowidget:set_width(50)
+diowidget:set_gradient_colors({ "#AECF96", "#88A175", "#FF5656" })
+vicious.register(diowidget, vicious.widgets.dio, "${sda total_mb}")
 
+-- CPU widget {{{3
+cpuwidget = awful.widget.graph()
+cpuwidget:set_width(50)
+cpuwidget:set_gradient_colors({ "#AECF96", "#88A175", "#FF5656" })
+vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
+
+-- Clock {{{3
+mytextclock = widget({ type = 'textbox' })
+mytextclock.bg = "#292B2F"
+mytextclock:margin({ left = 5, right = 5 })
+vicious.register(mytextclock, vicious.widgets.date, "<span color='#FFFFFF'>%m/%d</span>(%a)<span color='#FFFFFF'>%l:%M</span>(%p)", 60)
+
+-- Systray {{{3
+mysystray = widget({ type = "systray" })
+
+--}}}2
+
+-- Plugin-IN {{{2
 mywibox = {}
 mypromptbox = {}
 mylayoutbox = {}
-
--- Install {{{2
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
@@ -146,18 +170,19 @@ for s = 1, screen.count() do
         {
             mylauncher,
             mytaglist[s],
+            pomodoro.widget,
             mypromptbox[s],
             ["layout"] = awful.widget.layout.horizontal.leftright
         },
         s == 1 and mysystray or nil,
         mytextclock,
-        mydiskio,
-        mycpuwidget,
+        cpuwidget.widget,
+        diowidget.widget,
         mytasklist[s],
         ["layout"] = awful.widget.layout.horizontal.rightleft
     }
-
 end
+-- }}}
 
 -- }}}1
 
@@ -192,10 +217,10 @@ end
 
 -- {{{ Global
 globalkeys = awful.util.table.join (
-
 -- {{{ Screen
 awful.key({ modkey, "Control" }, "h",   function () awful.screen.focus_relative (-1) end),
 awful.key({ modkey, "Control" }, "l",   function () awful.screen.focus_relative ( 1) end),
+awful.key({ modkey },       "Escape",   function () revelation({ class = "URxvt" }) end), -- TODO except_rule ={"Mutt"}
 -- awful.key({ modkey }, "Escape", function () mymainmenu:show(true)  end),
 -- }}}
 
@@ -515,6 +540,8 @@ awful.rules.rules = {
     properties = { tag = tags[1][8] } },
     { rule = { instance = "Mutt" },
     properties = { tag = tags[1][8] } },
+    { rule = { class = "Gtk-recordmydesktop" },
+    properties = { floating=true } },
 
 }
 -- }}}
@@ -534,20 +561,6 @@ client.add_signal("manage", function (c, startup)
             -- client.focus = c
         end
     end)
-
-    -- Check application->toggletag mappings.
-    local cls = c.class
-    local inst = c.instance
-    local target
-    if toggletags[cls] then
-        target = toggletags[cls]
-        awful.client.toggletag(tags[target.screen][target.tag], c)
-        client.focus = c
-    elseif toggletags[inst] then
-        target = toggletags[inst]
-        awful.client.toggletag(tags[target.screen][target.tag], c)
-        client.focus = c
-    end
 
     if not startup then
         -- Set the windows at the slave,
@@ -570,6 +583,6 @@ client.add_signal("marked", function(c) c.border_color = beautiful.border_marked
 -- }}}
 
 -- {{{ Autorun
-awful.util.spawn("/usr/bin/iptux")
+-- awful.util.spawn("/usr/bin/iptux")
 -- }}}
 
