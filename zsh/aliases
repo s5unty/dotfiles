@@ -188,7 +188,7 @@ tdr() { # remember the milk
     if [[ ${idx} == "" ]]; then
         return
     fi
-    inbox="#富士通"
+    inbox=$(echo "#0x5BCC0x58EB0x901A" | ascii2uni -q)
 
     rem=$(remind -s+4 $TODO_DIR/var/remind/index.rem | sed -n "${idx}p")
     rem_date=$(echo ${rem} | sed 's/\(^.\{10\}\).*/\1/' )
@@ -216,9 +216,9 @@ tde() {
         +":sp $REMD_FILE" +":normal zz" \
         +":vs $TODO_FILE" +"${loc}"
 }
-tdi() {
+tdb() { # 某项任务带来的突发问题 (I)ssue
     tda "(I) ${(@)argv[2,$#]} by:${1}" > /dev/null 2>&1
-    tdp ${1} B
+    tdp ${1} B # 该任务被切换到阻塞状态 (B)lock
 }
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})
@@ -231,8 +231,14 @@ tdo() {
     fi
 }
 tds() { # 开始一项工作
-    TDID=${1}
-    python $TODO_DIR/opt/punch/Punch.py in ${TDID} > /dev/null 2>&1
+    if [ -z ${1} ]; then # 如果没给参数，代表继续最近一次的任务
+        RECENT=$(tail -1 ${TODO_DIR}/var/punch.dat | cut -f1)
+        TDID=$(td list "$RECENT" | head -1 | cut -d' ' -f1)
+    else
+        TDID=${1}
+    fi
+
+    python $TODO_DIR/opt/punch/Punch.py in ${TDID} | tail -1
     # 如果上一个工作周期还没结束，譬如前一项工作在周期内完成了，
     # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
     if ! pgrep "pomodoro.sh" > /dev/null 2>&1; then
@@ -241,21 +247,31 @@ tds() { # 开始一项工作
     fi
 }
 tdd() { # 完成一项工作
-    DESC=`pu out | sed -e 's/^Stop timer on: //g'`
-    TDID=`td -p ls "${DESC}" | head -1 | cut -d' ' -f1`
-    if [[ ${1} == ${TDID} ]]; then
+    WHAT=$(pu what | sed "s/Active task: \(.*\) (.* .*)$/\1/") # 当前正在进行的任务描述
+    if [[ ${WHAT} != "No task is active." ]]; then
+        python $TODO_DIR/opt/punch/Punch.py out
+        TDID=$(td -p ls "${WHAT}" | head -1 | cut -d' ' -f1)
+    fi
+
+    if [[ ${ARGC} == 0 ]]; then # 如果没给参数，表示当前正在进行的任务被打断 [D]isturb
+        pkill pomodoro.sh
+        return
+    else # 否则处理由第一个参数代表的任务
+        TDID=${1}
         td do ${TDID} > /dev/null 2>&1
-    elif [[ ${TDID} == "--" ]]; then
-        if td -p ls " by:" | egrep -qi "^${1}"; then # 修复了的todo状态切换
-            TDID=$(sed -n "${1}p" ${TODO_FILE} | egrep --color=never -o 'by:[0-9]+' | cut -d':' -f2)
-            if [[ $(grep -c "(I).*by:${TDID}" ${TODO_FILE}) == 1 ]]; then
-                tdp ${TDID} F
-            fi
+        if [[ ${ARGC} > 1 ]]; then # 完成时允许添加简短的注释
+            td$ ${TDID} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
         fi
-        if [[ ${ARGC} > 1 ]]; then # 完成todo时允许添加简短的注释
-            td$ ${1} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
+    fi
+
+    # 对于被 issue 阻塞了的任务，当该 issue 解决时，自动切换父任务状态为 (F)ixed
+    if td -p ls " by:" | egrep -qi "^${TDID}"; then # 当前任务是 issue 类型(by:)的任务
+        # 找到被它阻塞的父任务
+        F_TDID=$(sed -n "${TDID}p" ${TODO_FILE} | egrep --color=never -o 'by:[0-9]+' | cut -d':' -f2)
+        # 当前解决的 issue 任务是导致父任务阻塞的唯一任务
+        if [[ $(grep -c "(I).*by:${F_TDID}" ${TODO_FILE}) == 1 ]]; then
+            tdp ${F_TDID} F # 父任务切换到已修复 (F)ixed 状态
         fi
-        td do ${1} > /dev/null 2>&1
     fi
 }
 # }}}
