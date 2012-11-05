@@ -28,16 +28,18 @@ revelation.config.tag_name = '卍'
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts = {
-    awful.layout.suit.tile.top,
-    awful.layout.suit.tile.right,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.magnifier
 }
 tags = { }
 mytags = {
     { layout = layouts[1], mwfact = 0.500, nmaster=2 },
-    { layout = layouts[1], mwfact = 0.500, nmaster=2 },
-    { layout = layouts[2], mwfact = 0.500, nmaster=2 },
-    { layout = layouts[1], mwfact = 0.668, nmaster=1 },
-    { layout = layouts[1], mwfact = 0.668, nmaster=1 },
+    { layout = layouts[3], mwfact = 0.500, nmaster=1 },
+    { layout = layouts[2], mwfact = 0.500, nmaster=1 },
+    { layout = layouts[1], mwfact = 0.382, nmaster=1 },
+    { layout = layouts[2], mwfact = 0.382, nmaster=2 },
     { layout = layouts[2], mwfact = 0.668, nmaster=1 },
     { layout = layouts[2], mwfact = 0.618, nmaster=1 },
     { layout = layouts[1], mwfact = 0.618, nmaster=1 },
@@ -57,9 +59,9 @@ pomodoro = awful.widget.progressbar()
 --pomodoro:set_height(20)
 --pomodoro:set_width(20)
 --pomodoro:set_vertical(true)
---pomodoro:set_width(100)
+pomodoro:set_width(1)
 pomodoro:set_max_value(100)
-pomodoro:set_background_color('#494B4F')
+pomodoro:set_background_color(theme.bg_normal)
 pomodoro:set_color('#AECF96')
 pomodoro:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
 pomodoro:set_ticks(true) -- false:平滑的整体，true:间隙的个体
@@ -174,6 +176,7 @@ for s = 1, screen.count() do
             mypromptbox[s],
             ["layout"] = awful.widget.layout.horizontal.leftright
         },
+        mylayoutbox[s],
         s == 1 and mysystray or nil,
         mytextclock,
         cpuwidget.widget,

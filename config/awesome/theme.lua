@@ -75,22 +75,23 @@ theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/defau
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
 -- You can use your own command to set your wallpaper
-theme.wallpaper_cmd = { "awsetbg -t /sun/.config/awesome/light_wp.png" }
--- theme.wallpaper_cmd = { "feh --bg-tile /sun/.config/awesome/dark_wp.png" }
+theme.wallpaper_cmd = { "awsetbg -t "..awful.util.getdir("config").."/light_wp.png" }
 
 -- You can use your own layout icons like this:
-theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
-theme.layout_fairv = "/usr/share/awesome/themes/default/layouts/fairvw.png"
-theme.layout_floating  = "/usr/share/awesome/themes/default/layouts/floatingw.png"
-theme.layout_magnifier = "/usr/share/awesome/themes/default/layouts/magnifierw.png"
-theme.layout_max = "/usr/share/awesome/themes/default/layouts/maxw.png"
-theme.layout_fullscreen = "/usr/share/awesome/themes/default/layouts/fullscreenw.png"
-theme.layout_tilebottom = "/usr/share/awesome/themes/default/layouts/tilebottomw.png"
-theme.layout_tileleft   = "/usr/share/awesome/themes/default/layouts/tileleftw.png"
-theme.layout_tile = "/usr/share/awesome/themes/default/layouts/tilew.png"
-theme.layout_tiletop = "/usr/share/awesome/themes/default/layouts/tiletopw.png"
-theme.layout_spiral  = "/usr/share/awesome/themes/default/layouts/spiralw.png"
-theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
+-- http://ni.fr.eu.org/blog/awesome_icons/ 直接用脚本画图
+-- mkicons --fg trans --bg '#222222' --fg '#aaaaaa' --size 20x20 --margin-top 2 --margin-bottom 2 --margin-left 2 --margin-right 2
+theme.layout_fairh      = awful.util.getdir("config").."/layouts/fairh.png"
+theme.layout_fairv      = awful.util.getdir("config").."/layouts/fairv.png"
+theme.layout_floating   = awful.util.getdir("config").."/layouts/floating.png"
+theme.layout_magnifier  = awful.util.getdir("config").."/layouts/magnifier.png"
+theme.layout_max        = awful.util.getdir("config").."/layouts/max.png"
+theme.layout_fullscreen = awful.util.getdir("config").."/layouts/fullscreen.png"
+theme.layout_tilebottom = awful.util.getdir("config").."/layouts/tilebottom.png"
+theme.layout_tileleft   = awful.util.getdir("config").."/layouts/tileleft.png"
+theme.layout_tile       = awful.util.getdir("config").."/layouts/tile.png"
+theme.layout_tiletop    = awful.util.getdir("config").."/layouts/tiletop.png"
+theme.layout_spiral     = awful.util.getdir("config").."/layouts/spiral.png"
+theme.layout_dwindle    = awful.util.getdir("config").."/layouts/dwindle.png"
 
 theme.awesome_icon = "/usr/share/pixmaps/debian-logo.png"
 
