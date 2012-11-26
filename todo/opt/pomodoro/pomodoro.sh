@@ -21,6 +21,9 @@
 #       ...
 #
 clean_up() {
+    # 结束 Punch.py 里面的计时，强迫自己手工重设每个工作闹钟
+    python $TODO_DIR/opt/punch/Punch.py out > /dev/null 2>&1
+
     echo "pomodoro:set_background_color(theme.bg_normal);pomodoro:set_value(0);pomodoro:set_width(1);" | awesome-client
 	exit 0
 }
@@ -28,25 +31,25 @@ trap clean_up HUP INT TERM KILL
 
 work=$((25*60))
 rest=$((5*60))
+turn=${2}
 
-# 工作时间开始
-echo "pomodoro:set_background_color('#494B4F');pomodoro:set_width(100);" | awesome-client
-for i in $(seq 100); do
-    echo "pomodoro:set_value(${i})" | awesome-client
-    sleep $(echo "scale=3;${work}/100" | bc)
-done
+for t in $(seq ${turn}); do
+    echo "pomodoro:set_background_color('#494B4F');pomodoro:set_width(100);" | awesome-client
+    # 工作时间开始
+    for i in $(seq 100); do
+        echo "pomodoro:set_value(${i})" | awesome-client
+        sleep $(echo "scale=3;${work}/100" | bc)
+    done
 
-# 工作时间结束
-doing=$(python $TODO_DIR/opt/punch/Punch.py what | sed 's/Active task: \(.*\) (.*)/\1/g')
-notify-send -u critical -i appointment -t $((15*1000)) "Please stop this work and take short break. ☻" "$doing"
+    # 工作时间结束
+    doing=$(python $TODO_DIR/opt/punch/Punch.py what | sed 's/Active task: \(.*\) (.*)/\1/g')
+    notify-send -u critical -i appointment -t $((30*1000)) "Please stop this work and take short break. ☻" "$doing"
 
-# 结束 Punch.py 里面的计时，强迫自己手工重设每个工作闹钟
-python $TODO_DIR/opt/punch/Punch.py out > /dev/null 2>&1
-
-# 休息时间开始
-for i in $(seq 100); do
-    j=$((100-i+1))
-    echo "pomodoro:set_width(${j})" | awesome-client
-    sleep $(echo "scale=3;${rest}/100" | bc)
+    # 休息时间开始
+    for i in $(seq 100); do
+        j=$((100-i+1))
+        echo "pomodoro:set_width(${j})" | awesome-client
+        sleep $(echo "scale=3;${rest}/100" | bc)
+    done
 done
 clean_up

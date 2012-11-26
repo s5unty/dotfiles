@@ -1,4 +1,4 @@
-# vim:set syntax=zsh:
+# vim:syntax=zsh:ft=zsh
 
 alias -g G='| egrep -i --color=always'
 alias -g M="| $__LESS"
@@ -67,7 +67,7 @@ K() { # kill
 }
 
 P() { # ps
-    ps -ef | grep "$1" | grep -v "grep"
+    ps xf | grep -v "grep" | grep -B2 "$1"
 }
 
 PP() { # printer preview
@@ -232,10 +232,16 @@ tdo() {
 }
 tds() { # 开始一项工作
     if [ -z ${1} ]; then # 如果没给参数，代表继续最近一次的任务
-        RECENT=$(tail -1 ${TODO_DIR}/var/punch.dat | cut -f1)
-        TDID=$(td list "$RECENT" | head -1 | cut -d' ' -f1)
+        RECENT=$(tail -1 ${TODO_DIR}/var/punch.dat | cut -f1 | sed "s/\*/\\\*/g") # 关照星号(*)
+        TDID=$(sed -n "\|${RECENT}|"= ${TODO_FILE})
     else
         TDID=${1}
+    fi
+
+    if [ -z ${2} ]; then # 如果有第二参数，表示持续多个蕃茄钟
+        TURN=${2}
+    else
+        TURN=1
     fi
 
     python $TODO_DIR/opt/punch/Punch.py in ${TDID} | tail -1
@@ -243,7 +249,7 @@ tds() { # 开始一项工作
     # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
     if ! pgrep "pomodoro.sh" > /dev/null 2>&1; then
         DESC=$(sed -n "${TDID}p" ${TODO_FILE})
-        (${TODO_DIR}/opt/pomodoro/pomodoro.sh ${DESC} &) # 放到后台
+        (${TODO_DIR}/opt/pomodoro/pomodoro.sh ${DESC} ${TURN} &) # 放到后台
     fi
 }
 tdd() { # 完成一项工作

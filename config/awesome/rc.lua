@@ -132,7 +132,6 @@ vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
 -- Clock {{{3
 mytextclock = widget({ type = 'textbox' })
-mytextclock.bg = "#292B2F"
 mytextclock:margin({ left = 5, right = 5 })
 vicious.register(mytextclock, vicious.widgets.date, "<span color='#FFFFFF'>%m/%d</span>(%a)<span color='#FFFFFF'>%l:%M</span>(%p)", 60)
 
@@ -249,7 +248,7 @@ awful.key({ modkey }, "p", function ()
     awful.client.focus.byidx(-1)
     client.focus:raise()
 end),
-awful.key({ "Mod1" }, "Tab", function ()
+awful.key({ "Control" }, "Tab", function ()
     awful.client.focus.history.previous()
     client.focus:raise()
 end),
@@ -305,8 +304,8 @@ awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm '
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
-awful.key({ modkey, "Control" }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
-awful.key({ modkey }, "Scroll_Lock",   function () awful.util.spawn("xscreensaver-command -lock") end),
+awful.key({"Shift" }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
+awful.key({        }, "Scroll_Lock", function () awful.util.spawn("xautolock -locknow") end),
 -- }}}
 
 -- {{{ calendar
