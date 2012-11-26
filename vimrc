@@ -327,6 +327,19 @@ if has("autocmd")
       endif
   endfunction
 
+  function! <SID>AC_IBusToggle()
+      if exists("b:ibustoggle") "上次从输入法状态离开
+          unlet b:ibustoggle
+          call ibus#enable()
+      elseif ibus#is_enabled() " 离开前处于输入法状态
+          let b:ibustoggle = ibus#is_enabled()
+          call ibus#disable()
+      endif
+  endfunction
+
+  autocmd InsertLeave,InsertEnter *
+    \ call <SID>AC_IBusToggle()
+
   " 每次访问文件时都把光标放置在上次离开的位置
   autocmd BufReadPost *
     \ call <SID>AC_ResetCursorPosition()
@@ -341,7 +354,7 @@ if has("autocmd")
 
   " 让 checkpath 找到相关文件，便于 [I 正常工作
   autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
-    \ set path+=./
+    \ set path+=./,/usr/include/
 
   autocmd Filetype java
     \ setlocal omnifunc=javacomplete#Complete
@@ -462,8 +475,7 @@ let g:miniBufExplMapWindowNavVim = 0
 " 依赖 Powerline
 "     第一个参数表示 Powerline/Matches.vim 中定义的列表序号(起始0)
 "     第二个参数表示状态栏拥有焦点(1)还是没有焦点(0)
-let g:statusLineText = 'Pl#Statusline(8,0)'
-
+let g:statusLineText = '%!Pl#Statusline(8,0)'
 
 
 " Tagbar v2.4.1: Display tags of the current file ordered by scope {{{2
@@ -512,7 +524,7 @@ let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 TabBar 和 -TabBar- 
 " delimitMate.vim 2.6 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
 " https://github.com/Raimondi/delimitMate
-let delimitMate_autoclose = 1
+let delimitMate_autoclose = 0
 let delimitMate_quotes = "\" ' `"
 let delimitMate_nesting_quotes = []
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
@@ -567,6 +579,7 @@ let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 
 " neocomplcache 7.1: Ultimate auto-completion system for Vim. {{{3
 let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_max_list = 20
 let g:neocomplcache_disable_auto_complete = 0
 let g:neocomplcache_enable_auto_select = 0
 let g:neocomplcache_enable_ignore_case = 0
