@@ -209,7 +209,7 @@ set pastetoggle=<F4>
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
 nmap <silent> <unique> <F6> :<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
-nmap <silent> <unique> <F8> :SyntasticCheck<CR>
+nmap <silent> <unique> <F8> :make!<CR>
 nmap <silent> <unique> <F9> :Unite file_mru buffer bookmark directory_mru quickfix outline<CR>
 nmap <silent> <unique> <F10> :<CR>
 nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
@@ -230,7 +230,7 @@ nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :qa!<CR>
 nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
-nmap                   <S-F8> :make! install DESTDIR=<UP>
+nmap          <unique> <S-F8> :SyntasticCheck<CR>
 nmap <silent> <unique> <S-F9> q:<UP>
 nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
 
@@ -336,6 +336,9 @@ if has("autocmd")
           call ibus#disable()
       endif
   endfunction
+
+  autocmd VimResized *
+    \ redrawstatus!
 
   autocmd InsertLeave,InsertEnter *
     \ call <SID>AC_IBusToggle()
@@ -556,11 +559,11 @@ let g:nrrw_rgn_wdth = 50
 " http://www.vim.org/scripts/script.php?script_id=2736
 let g:syntastic_check_on_open=1
 let g:syntastic_quiet_warnings=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_mode_map = { 'mode': 'passive' }
-" TODO cpp
-" let g:syntastic_cpp_no_include_search = 1
-" let g:syntastic_cpp_check_header = 0
+let g:syntastic_auto_loc_list=2
+let g:syntastic_mode_map = { 'mode': 'passive',
+                           \ 'active_filetypes': ['c', 'cpp'] }
+let g:syntastic_c_remove_include_errors=1
+let g:syntastic_cpp_remove_include_errors=1
 
 
 " EasyMotion 1.3 : Vim motions on speed! {{{2

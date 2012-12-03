@@ -142,6 +142,8 @@ if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" ]]; then
     dpH() { echo "$1 hold" | $__SUDO dpkg --set-selections }
     dpI() { echo "$1 install" | $__SUDO dpkg --set-selections }
 
+
+    alias sl="$__SUDO tail -f /var/log/syslog"
 elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
     alias api="$__SUDO yum install"
     alias apa="$__SUDO yum clean all"
@@ -156,6 +158,8 @@ elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
     alias dpL="rpm -ql"
     alias dps="rpm -qi"
     alias dpr="$__SUDO rpm -e"
+
+    alias sl="$__SUDO tail -f /var/log/messages"
 fi
 # }}}
 
