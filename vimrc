@@ -178,6 +178,16 @@ function! G_Jekyll()
 
 endfunction
 
+function! G_Good0()
+    if ! exists("b:is_pressed0")
+        normal g^
+        let b:is_pressed0 = 1
+    else
+        normal g0
+        unlet b:is_pressed0
+    endif
+endfunction
+
 " Ranger file manager
 " function Ranger()
 "   silent !ranger --choosefile=/tmp/chosen
@@ -224,6 +234,8 @@ nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
 vmap <silent> <unique> + :Align =<CR>
+nmap <silent> <unique> 0 :call G_Good0()<CR>
+nmap <silent> <unique> $ g$
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
@@ -594,9 +606,9 @@ let g:neocomplcache_enable_underbar_completion = 1
 let g:neocomplcache_snippets_dir = "$HOME/.vim/snippets/"
 let g:neocomplcache_disable_select_mode_mappings = 1
 imap <expr><Space> neocomplcache#sources#snippets_complete#expandable() ?
-    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-g>" : "\<Space>"
+    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<Space>" : "\<Space>"
 smap <expr><Space> neocomplcache#sources#snippets_complete#expandable() ?
-    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-g>" : "\<Space>"
+    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<Space>" : "\<Space>"
 
 " unite.vim 4.0 : Unite all sources {{{3
 "   | unite-outline
