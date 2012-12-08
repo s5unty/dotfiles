@@ -233,6 +233,7 @@ nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
 nmap          <unique> <S-F8> :SyntasticCheck<CR>
 nmap <silent> <unique> <S-F9> q:<UP>
 nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
+imap <silent> <unique> <S-Space> <C-V><Space>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :q!<CR>
@@ -592,10 +593,10 @@ let g:neocomplcache_enable_underbar_completion = 1
 " neocomplcache-snippets-complete {{{3
 let g:neocomplcache_snippets_dir = "$HOME/.vim/snippets/"
 let g:neocomplcache_disable_select_mode_mappings = 1
-imap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
-    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<Enter>" : "\<Enter>"
-smap <expr><Enter> neocomplcache#sources#snippets_complete#expandable() ?
-    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-g>" : "\<Enter>"
+imap <expr><Space> neocomplcache#sources#snippets_complete#expandable() ?
+    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-g>" : "\<Space>"
+smap <expr><Space> neocomplcache#sources#snippets_complete#expandable() ?
+    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-g>" : "\<Space>"
 
 " unite.vim 4.0 : Unite all sources {{{3
 "   | unite-outline
@@ -756,7 +757,9 @@ map  <Esc>[20^ <C-F9>
 map  <Esc>[21^ <C-F10>
 map  <Esc>[23^ <C-F11>
 map  <Esc>[24^ <C-F12>
-map! <Esc>[23~ <S-F1>
+" URxvt.keysym.S-space: \033[23~
+map! <Esc>[23~ <S-Space>
+" map! <Esc>[23~ <S-F1>
 map! <Esc>[24~ <S-F2>
 map! <Esc>[25~ <S-F3>
 map! <Esc>[26~ <S-F4>
@@ -782,4 +785,5 @@ map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
 
 " }}}1
+
 
