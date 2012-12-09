@@ -27,7 +27,10 @@ set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set showcmd " 右下方显示按键序列
 set winaltkeys=no
 set cinoptions=:0
-set timeoutlen=500
+set timeoutlen=1000
+set ttimeoutlen=100
+set timeout
+set ttimeout
 set autoread
 set autowrite
 set wildignore=*/*.o,*/*.so,*/*.obj,*/*.orig,*/.git/*,*/.hg/*,*/.svn/*
@@ -124,6 +127,17 @@ endif
 "     endif
 " endfunction
 
+" 0键在行首与行顶间交替
+function! G_Good0()
+    if ! exists("b:is_pressed0")
+        normal g^
+        let b:is_pressed0 = 1
+    else
+        normal g0
+        unlet b:is_pressed0
+    endif
+endfunction
+
 " 跳转至文件编辑窗口
 " 参照 tabbar.vim 插件的 <SID>Bf_CrSel() 函数
 function! G_GotoEditor()
@@ -178,16 +192,6 @@ function! G_Jekyll()
 
 endfunction
 
-function! G_Good0()
-    if ! exists("b:is_pressed0")
-        normal g^
-        let b:is_pressed0 = 1
-    else
-        normal g0
-        unlet b:is_pressed0
-    endif
-endfunction
-
 " Ranger file manager
 " function Ranger()
 "   silent !ranger --choosefile=/tmp/chosen
@@ -220,7 +224,7 @@ nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEF
 nmap <silent> <unique> <F6> :<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
 nmap <silent> <unique> <F8> :make!<CR>
-nmap <silent> <unique> <F9> :Unite file_mru buffer bookmark directory_mru quickfix outline<CR>
+nmap <silent> <unique> <F9> :Unite file_mru session buffer bookmark directory_mru quickfix outline<CR>
 nmap <silent> <unique> <F10> :<CR>
 nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
@@ -277,7 +281,6 @@ imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
 else
-nmap <silent> <unique> <ESC><ESC> :<CR>
 nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
 nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
@@ -322,59 +325,71 @@ command L :UniteSessionLoad
 
 " Autocmd {{{1
 if has("autocmd")
-  function! <SID>AC_ResetCursorPosition()
-      if line("'\"") > 1 && line("'\"") <= line("$")
-          exec "normal g`\"zz"
-      endif
-  endfunction
+    function! <SID>AC_ResetCursorPosition()
+        if line("'\"") > 1 && line("'\"") <= line("$")
+            exec "normal g`\"zz"
+        endif
+    endfunction
 
-  function! <SID>AC_HighlightDirtySpace()
-      syn match wtfSpace '　'
-      hi link wtfSpace   SpecialKey
-  endfunction
+    function! <SID>AC_HighlightDirtySpace()
+        syn match wtfSpace '　'
+        hi link wtfSpace   SpecialKey
+    endfunction
 
-  function! <SID>AC_ChmodExecutable()
-      if getline(1) =~ "^#!" && getline(1) =~ "/bin/"
-          silent !chmod u+x %
-          redraw!
-      endif
-  endfunction
+    function! <SID>AC_ChmodExecutable()
+        if getline(1) =~ "^#!" && getline(1) =~ "/bin/"
+            silent !chmod u+x %
+            redraw!
+        endif
+    endfunction
 
-  function! <SID>AC_IBusToggle()
-      if exists("b:ibustoggle") "上次从输入法状态离开
-          unlet b:ibustoggle
-          call ibus#enable()
-      elseif ibus#is_enabled() " 离开前处于输入法状态
-          let b:ibustoggle = ibus#is_enabled()
-          call ibus#disable()
-      endif
-  endfunction
+    function! <SID>AC_IBusDisable()
+        if ibus#is_enabled()
+            call ibus#disable()
+            let b:ibustoggle = 1
+        endif
+        set timeoutlen=1000
+    endfunction
 
-  autocmd VimResized *
-    \ redrawstatus!
+    function! <SID>AC_IBusRenable()
+        if exists("b:ibustoggle")
+            if b:ibustoggle == 1
+                call ibus#enable()
+                let b:ibustoggle = 0
+                set timeoutlen=100
+            endif
+        else
+            let b:ibustoggle = 0
+        endif
+    endfunction
 
-  autocmd InsertLeave,InsertEnter *
-    \ call <SID>AC_IBusToggle()
+    autocmd VimResized *
+                \ redrawstatus!
 
-  " 每次访问文件时都把光标放置在上次离开的位置
-  autocmd BufReadPost *
-    \ call <SID>AC_ResetCursorPosition()
+    autocmd InsertLeave *
+                \ call <SID>AC_IBusDisable()
 
-  " 每次加载文件时都把全角空格'　'高亮显示出来
-  autocmd BufReadPost *
-    \ call <SID>AC_HighlightDirtySpace()
+    autocmd InsertEnter *
+                \ call <SID>AC_IBusRenable()
 
-  " 写测试脚本的时候自动更新为可执行格式
-  autocmd BufWritePost *
-    \ call <SID>AC_ChmodExecutable()
+    " 每次访问文件时都把光标放置在上次离开的位置
+    autocmd BufReadPost *
+                \ call <SID>AC_ResetCursorPosition()
 
-  " 让 checkpath 找到相关文件，便于 [I 正常工作
-  autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
-    \ set path+=./,/usr/include/
+    " 每次加载文件时都把全角空格'　'高亮显示出来
+    autocmd BufReadPost *
+                \ call <SID>AC_HighlightDirtySpace()
 
-  autocmd Filetype java
-    \ setlocal omnifunc=javacomplete#Complete
+    " 写测试脚本的时候自动更新为可执行格式
+    autocmd BufWritePost *
+                \ call <SID>AC_ChmodExecutable()
 
+    " 让 checkpath 找到相关文件，便于 [I 正常工作
+    autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
+                \ set path+=./,/usr/include/
+
+    autocmd Filetype java
+                \ setlocal omnifunc=javacomplete#Complete
 endif
 " }}}
 
@@ -797,5 +812,4 @@ map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
 
 " }}}1
-
 
