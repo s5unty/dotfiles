@@ -1,7 +1,8 @@
 snippet printf
-	printf ("${1:%s}\n"${2})${3:;}${4}
+	printf ("${1:%s}\n"${2});
 snippet pp
-	printf (__FILE__ ":%d %s ${1:/*blabla*/} %s", __LINE__, "\033[0;42m", ${2:/*highlight*/} "\033[m\n")${3:;}${4}
+	printf ("%s:%d \033[0;42m ${1:/*blabla*/} \033[m\n", __FILE__, __LINE__${2:/*highlight*/});
+    printf ("%s:%d \033[0;42m /*blabla*/ \033[m\n"/*highlight*/, __FILE__, __LINE__);
 snippet ps
 	{ char *s; asprintf(&s, "logger -i -t swa -- '%s:%d %${1:s}'", __FILE__, __LINE__, ${2:""}); system(s); free(s);${3} }
 snippet assert

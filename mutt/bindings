@@ -11,6 +11,8 @@ bind pager      <Backspace> parent-message
 bind pager      r           group-reply
 bind pager      R           reply
 bind pager      S           decode-save
+bind pager      <Space>     half-down
+bind pager      -           half-up
 # 浏览首页时
 bind index      0           collapse-thread
 bind index     \;           current-middle
