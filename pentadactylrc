@@ -7,19 +7,21 @@ set autocomplete=/ex/buffer,^(/|/ex/?)$
 set shell="/usr/bin/zsh"
 " 编辑器
 set editor="urxvt -e vim -f"
+" 搜索关键字高亮
+set hlfind
 " 状态栏的背景色
 hi StatusLineNormal color: black !important; background: transparent !important;
 " }}}
 
 " Key bindings {{{1
 " 下一个标签页
-map                     .           <C-PageDown>
+map                     .           <C-PageDown><C-L>
 " 上一个标签页
-map                     ,           <C-PageUp>
+map                     ,           <C-PageUp><C-L>
 " 下一个标签组
-map                     <C-.>       <C-S-n>
+map                     <C-.>       <C-S-n><C-L>
 " 上一个标签组
-map                     <C-,>       <C-S-p>
+map                     <C-,>       <C-S-p><C-L>
 " 向上翻页
 map --                  -           <C-b>
 " 向下翻页
@@ -39,10 +41,10 @@ map                     k           2<C-y>
 map                     <C-q>       :winclose<CR>
 " 右移当前标签页
 map                     <A-.>       :tabm +1<CR>
-" 左移当前标签页
+" 左移当前标>??页
 map                     <A-,>       :tabm -1<CR>
 " 切换之前选择的标签页
-map                     <A-`>       <C-^>
+map                     <A-`>       <C-^><C-L>
 " 避免和 diigo 冲突
 map                     <C-a>       <Nop>
 " 切换标签页 {{{2
@@ -96,8 +98,7 @@ silent qmark j http://dict.hjenglish.com/jp/
 silent qmark w file:///sun/wikipad/index.html
 silent qmark r https://www.rememberthemilk.com/home/s5unty/
 
-silent qmark o http://oa.fnst.cn.fujitsu.com/oa/
-silent qmark p http://pdn.vpdc.sg.soft.fujitsu.com/pdn/platform-login.do
+silent qmark o http://ioffice.fnst.cn.fujitsu.com/
 silent qmark i http://info.fnst.cn.fujitsu.com
 silent qmark c http://campus.fnst.cn.fujitsu.com
 silent qmark b http://ltech.fnst.cn.fujitsu.com/tsd
@@ -140,3 +141,8 @@ try{if(window.diigoToolbarVersion){alert("Diigolet will not run because Diigo To
 EOF
 
 map -g user B -js dactyl.searchWikis1()
+
+
+command! diigo :open javascript:(function(){s=document.createElement("script");s.type="text/javascript";s.src="http://www.diigo.com/javascripts/webtoolbar/diigolet_b_h_b.js";document.body.appendChild(s);})();
+command! diigomark :open javascript:javascript:(function(){var%20url%20=%20location.href;var%20title%20=%20document.title%20||%20url;var%20desc%20=%20(window.getSelection%20?%20window.getSelection().toString()%20:%20document.getSelection%20?%20document.getSelection()%20%20:%20document.selection.createRange().text);window.open('http://www.diigo.com/post?url='%20+%20encodeURIComponent(url)%20+%20'&title='%20+%20encodeURIComponent(title)%20+%20'&desc='%20+%20encodeURIComponent(desc)+'&client=simplelet#main','_blank','menubar=no,height=580,width=608,toolbar=no,scrollbars=no,status=no');})();
+command! -nargs=* diigosearch :tabopen www.diigo.com/user/bae222/<args>
