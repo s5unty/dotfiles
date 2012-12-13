@@ -28,21 +28,24 @@ revelation.config.tag_name = '卍'
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts = {
-    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile,
     awful.layout.suit.tile.left,
+    awful.layout.suit.tile.top,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
     awful.layout.suit.magnifier
 }
 tags = { }
 mytags = {
-    { layout = layouts[1], mwfact = 0.500, nmaster=2 },
-    { layout = layouts[3], mwfact = 0.500, nmaster=1 },
-    { layout = layouts[2], mwfact = 0.500, nmaster=1 },
-    { layout = layouts[1], mwfact = 0.382, nmaster=1 },
-    { layout = layouts[2], mwfact = 0.382, nmaster=2 },
-    { layout = layouts[2], mwfact = 0.668, nmaster=1 },
-    { layout = layouts[2], mwfact = 0.618, nmaster=1 },
-    { layout = layouts[1], mwfact = 0.618, nmaster=1 },
+    { mwfact = 0.500, nmaster=2, layout = awful.layout.suit.tile.bottom },
+    { mwfact = 0.500, nmaster=1, layout = awful.layout.suit.fair.horizontal },
+    { mwfact = 0.500, nmaster=1, layout = awful.layout.suit.tile.left },
+    { mwfact = 0.382, nmaster=1, layout = awful.layout.suit.tile.bottom },
+    { mwfact = 0.382, nmaster=2, layout = awful.layout.suit.tile.left },
+    { mwfact = 0.668, nmaster=1, layout = awful.layout.suit.tile.left },
+    { mwfact = 0.618, nmaster=1, layout = awful.layout.suit.tile },
+    { mwfact = 0.618, nmaster=1, layout = awful.layout.suit.tile.bottom  },
 }
 for s = 1, screen.count() do
     tags[s] = awful.tag({ "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }, s)
@@ -132,6 +135,7 @@ vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
 -- Clock {{{3
 mytextclock = widget({ type = 'textbox' })
+mytextclock.bg = "#292B2F"
 mytextclock:margin({ left = 5, right = 5 })
 vicious.register(mytextclock, vicious.widgets.date, "<span color='#FFFFFF'>%m/%d</span>(%a)<span color='#FFFFFF'>%l:%M</span>(%p)", 60)
 

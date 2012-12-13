@@ -1,14 +1,7 @@
-snippet printf
-	printf ("${1:%s}\n"${2});
 snippet pp
-	printf ("%s:%d \033[0;42m ${1:/*blabla*/} \033[m\n", __FILE__, __LINE__${2:/*highlight*/});
     printf ("%s:%d \033[0;42m /*blabla*/ \033[m\n"/*highlight*/, __FILE__, __LINE__);
 snippet ps
 	{ char *s; asprintf(&s, "logger -i -t swa -- '%s:%d %${1:s}'", __FILE__, __LINE__, ${2:""}); system(s); free(s);${3} }
 snippet assert
 	assert (${1})${2:;}${3}
-snippet fprintf
-	fprintf(${1:stderr}, "${2:%s}\n"${3})${4:;}${5}
 
-snippet pg
-	{ char *s; asprintf(&s, "logger -i -t PG71142 -- '%s:%d %${1:s}'", __FILE__, __LINE__, ${2:""}); system(s); free(s);${3} }
