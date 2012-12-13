@@ -30,7 +30,7 @@ set cinoptions=:0
 set timeoutlen=1000
 set ttimeoutlen=100
 set timeout
-set ttimeout
+"set ttimeout
 set autoread
 set autowrite
 set wildignore=*/*.o,*/*.so,*/*.obj,*/*.orig,*/.git/*,*/.hg/*,*/.svn/*
@@ -616,14 +616,34 @@ let g:neocomplcache_enable_auto_select = 0
 let g:neocomplcache_enable_ignore_case = 0
 let g:neocomplCache_SmartCase = 1
 let g:neocomplcache_enable_underbar_completion = 1
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+if !exists('g:neocomplcache_omni_patterns')
+    let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
-" neocomplcache-snippets-complete {{{3
-let g:neocomplcache_snippets_dir = "$HOME/.vim/snippets/"
-let g:neocomplcache_disable_select_mode_mappings = 1
-imap <expr><Space> neocomplcache#sources#snippets_complete#expandable() ?
-    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<Space>" : "\<Space>"
-smap <expr><Space> neocomplcache#sources#snippets_complete#expandable() ?
-    \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<Space>" : "\<Space>"
+
+" neosnippet {{{3
+let g:neosnippet#snippets_directory = "$HOME/.vim/snippets/"
+" Plugin key-mappings.
+imap <expr><Space> neosnippet#expandable() == 1 ? "\<Plug>(neosnippet_expand)" : "\<Space>"
+
+" SuperTab like snippets behavior.
+imap <expr><Esc><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><Esc><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
 
 " unite.vim 4.0 : Unite all sources {{{3
 "   | unite-outline
@@ -652,7 +672,8 @@ function! s:unite_my_settings()
     imap <silent><buffer> <S-Tab> <Plug>(unite_select_previous_line)
     vmap <silent><buffer> t <Plug>(unite_toggle_mark_current_candidate)
 endfunction
- 
+
+" }}}2
 " }}}1
 
 " 3# keys ref: http://tinyurl.com/2cae5vw {{{1
@@ -784,9 +805,7 @@ map  <Esc>[20^ <C-F9>
 map  <Esc>[21^ <C-F10>
 map  <Esc>[23^ <C-F11>
 map  <Esc>[24^ <C-F12>
-" URxvt.keysym.S-space: \033[23~
-map! <Esc>[23~ <S-Space>
-" map! <Esc>[23~ <S-F1>
+map! <Esc>[23~ <S-F1>
 map! <Esc>[24~ <S-F2>
 map! <Esc>[25~ <S-F3>
 map! <Esc>[26~ <S-F4>
@@ -797,7 +816,9 @@ map! <Esc>[32~ <S-F8>
 map! <Esc>[33~ <S-F9>
 map! <Esc>[34~ <S-F10>
 map! <Esc>[23$ <S-F11>
-map! <Esc>[24$ <S-F12>
+map! <Esc>[24$ <S-Space>
+" URxvt.keysym.S-space: \033[24$
+" map! <Esc>[24$ <S-F12>
 map! <Esc>[11^ <C-F1>
 map! <Esc>[12^ <C-F2>
 map! <Esc>[13^ <C-F3>
