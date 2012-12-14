@@ -39,7 +39,7 @@ setopt FLOW_CONTROL         # don't ignore ^S/^Q
 setopt LONGLISTJOBS         # display PID when suspending processes as well
 setopt NOTIFY               # report the status of backgrounds jobs immediately
 setopt COMPLETEINWORD       # not just at the end
-setopt EXTENDEDGLOB         # 扩展文件名匹配功能
+#setopt EXTENDEDGLOB         # 扩展文件名匹配功能
 
 if is-at-least 4.3.12; then
     setopt HIST_LEX_WORDS

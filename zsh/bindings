@@ -145,12 +145,16 @@ zle -N osc-ipaddr
 
 ranger-cd() {
     tempfile='/tmp/chosendir'
-    command ranger --choosedir="$tempfile" "${@:-$(pwd)}" <$TTY
+    ranger --choosedir="$tempfile" "${@:-$(pwd)}" <$TTY
     test -f "$tempfile" &&
     if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
-        cd -- "$(cat "$tempfile")"
+        builtin cd -- "$(cat "$tempfile")"
     fi
     rm -f -- "$tempfile"
+
+    zle redisplay
+    precmd
+    zle reset-prompt
 }
 zle -N ranger-cd
 

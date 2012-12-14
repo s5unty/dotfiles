@@ -10,8 +10,7 @@ if [ -e "/usr/bin/sudo" ];      then __SUDO="sudo" fi
 export HISTFILE=$HOME/.zsh/cache/HISTFILE
 export HISTSIZE=100000
 export SAVEHIST=102400
-export DIRSTACK=$HOME/.zsh/cache/DIRSTACK
-export DIRSTACKSIZE=30
+export _Z_DATA=$HOME/.zsh/cache/DIRSTACK
 export WORDCHARS='*?_-[]~=&:;!#$%^(){}<>'
 export MAILDIR="$HOME/maildir"
 export LISTPROMPT=""
@@ -33,13 +32,4 @@ export SDCV_HISTSIZE=32
 # http://todotxt.com/
 [ -e $HOME/.todo/config ] && source $HOME/.todo/config
 export DOTREMINDERS="$TODO_DIR/var/remind/index.rem"
-
-if [[ -f $DIRSTACK ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
-    dirstack=( ${(uf)"$(< $DIRSTACK)"} )
-    builtin cd ${PWD} # 保留来自ranger的目录信息
-    builtin cd $(head -1 $DIRSTACK) # 打开终端时进入最近目录
-else
-    mkdir -p ${DIRSTACK:h}
-fi
-chpwd() { dirs -pl | uniq >! $DIRSTACK }
 

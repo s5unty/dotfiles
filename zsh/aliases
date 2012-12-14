@@ -7,7 +7,6 @@ alias -g iy="| xsel"
 
 alias ...="../../"
 alias ....="../../../"
-alias ds="dirs -v | head -30 | sort -nr"
 alias cs="history 0"
 alias mv="/bin/mv -i"
 alias ll="/bin/ls --color=always -hFxtrl"
