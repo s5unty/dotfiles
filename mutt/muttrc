@@ -105,7 +105,7 @@ set sig_dashes=no
 set date_format="%F(%a) at %R(%Z)"
 set attribution="on %d, %n wrote:"
 # 设定编辑器
-set editor="vim"
+set editor="vim -c 'set ft=mail.markdown'"
 # 采用作为附件而非作为引用的方式转发邮件
 # 为了在转发邮件时自动包含待转发邮件本身的附件，似乎暂时只有这个办法。
 set mime_forward=yes
@@ -123,7 +123,7 @@ set crypt_autosign=yes
 # 有新邮件时提醒
 set beep_new=yes
 # 查看邮件同时显示迷你线索
-set pager_index_lines=4
+set pager_index_lines=2
 # 允许跳到被折叠了的未读邮件
 set uncollapse_jump=yes
 # 使用 Reply-to 字段作回复地址
@@ -142,13 +142,14 @@ set wrap=-7
 # 每五分钟检查/报告一次新邮件 300
 set timeout=300
 # CJK由paps正确处理后再转给lp打印
-set print_command="paps --landscape --font='monospace 7' --header --columns=2 | lp -o landscape -o sites=two-sided-long-edge -"
+set print_command="vi -g -"
+#set print_command="paps --landscape --font='monospace 7' --header --columns=2 | lp -o landscape -o sites=two-sided-long-edge -"
 #set print_command="paps --landscape --font='monospace 7' --header --columns=2 | ps2pdf - - | zathura -"
 # 编辑邮件的临时目录
 set tmpdir="~/maildir/draft/tmp"
 # 保存撰写邮件头的编辑历史记录
 set history=20
-set save_history=20
 set history_file="~/.mutt/cache/history"
+set save_history=10
 # 隐藏线索中那些被过滤了的主题
 set hide_limited=yes

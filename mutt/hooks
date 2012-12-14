@@ -21,6 +21,6 @@ send-hook   "~u" "set record=''"
 reply-hook  "~u" "set record=''"
 send-hook   "!~u" "set record='=fnst-inbox'"
 reply-hook  "!~u" "set record='=fnst-inbox'"
-send-hook   "(~t chenqing2010 | ~s .*\[翻译\].*)" "set record='=planet-chenqing'"
-reply-hook  "(~t chenqing2010 | ~s .*\[翻译\].*)" "set record='=planet-chenqing'"
+send-hook   "(~t chenqing2010 | ~s .*\[翻译\].*)" "set record='=pcl-translation'"
+reply-hook  "(~t chenqing2010 | ~s .*\[翻译\].*)" "set record='=pcl-translation'"
 

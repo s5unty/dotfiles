@@ -1,6 +1,6 @@
 # 自定义界面颜色
 # --   --        前景色      背景色
-color indicator  default     color248 # 当前行
+color indicator  default     color230 # 当前行
 color normal     default     default  # 普通文字
 color status     default     default  # 状态栏
 color tree       default     default  # 线索

@@ -1,12 +1,13 @@
 #!/bin/sh
 
 # 获取这封邮件的 message-id
-ANNO=$(egrep -A1 -i '^message-id' $* | paste -s |sed 's/[ \t][ \t]*//g' | sed -e 's/^\(M.*>\)[A-Z].*/\1/g')
+#ANNO=$(egrep -A1 -i '^message-id' $* | paste -s |sed 's/[ \t][ \t]*//g' | sed -e 's/^\(M.*>\)[A-Z].*/\1/g')
+ANNO=$(formail -fXMessage-ID | perl -pe 's/: </:</')
 
 # 获取刚刚由 mutt2task 添加的 task id
 TASK=$(todo.sh list | tail -1 | cut -d' ' -f2)
 
 # 为最新的 task 添加 message-id
 # todo.sh archive
-todo.sh append $TASK $ANNO
+todo.sh append ${TASK} ${ANNO}
 

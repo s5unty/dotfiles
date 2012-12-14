@@ -28,6 +28,7 @@ bind index      R           reply
 bind index      S           decode-save
 bind index      i           collapse-thread
 bind index      z           collapse-thread
+bind index      <Esc>t      tag-pattern
 # 编辑邮件头、命令行时
 bind editor     <Esc>p      history-up
 bind editor     <Esc>n      history-down
