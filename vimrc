@@ -579,10 +579,6 @@ let g:nrrw_topbot_leftright = 'aboveleft'
 let g:nrrw_rgn_wdth = 50
 
 
-
-
-
-
 " Syntastic 2.3.0 : Automatic syntax checking {{{2
 " http://www.vim.org/scripts/script.php?script_id=2736
 let g:syntastic_check_on_open=1

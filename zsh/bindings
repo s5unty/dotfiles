@@ -76,15 +76,18 @@ zle -N list-directory-stack
 # 插入模式光标黑色
 # 命令模式光标红色
 zle-keymap-select () {
-    if [ "$TERM" = "rxvt-unicode" ]; then
+    if [ "$TERM" = "rxvt-unicode-256color" ]; then
         if [ $KEYMAP = vicmd ]; then
             echo -ne "\033]12;Red\007"
         else
             echo -ne "\033]12;Black\007"
         fi
     fi
-}
-zle -N zle-keymap-select
+}; zle -N zle-keymap-select
+zle-line-init () {
+    zle -K viins
+    echo -ne "\033]12;black\007"
+}; zle -N zle-line-init
 
 # 不带参数表示执行 cd -
 #   直接按快捷键相当于执行 cd -
@@ -206,4 +209,3 @@ key[Menu]='^[[29~'
 [[ -n "${key[Left]}"      ]]  && bindkey -M vicmd "${key[Left]}"      backward-char
 [[ -n "${key[Right]}"     ]]  && bindkey -M vicmd "${key[Right]}"     forward-char
 # }}}1
-
