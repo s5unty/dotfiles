@@ -20,7 +20,7 @@ zstyle ':completion:*:history-words' list false
 zstyle ':completion:*:history-words' menu yes
 
 # cd - {{{1
-zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes
 
 # correct {{{1
 zstyle ':completion:::::' completer _complete _approximate

@@ -130,7 +130,7 @@ endif
 " 0键在行首与行顶间交替
 function! G_Good0()
     if ! exists("b:is_pressed0")
-        normal g^
+        normal ^
         let b:is_pressed0 = 1
     else
         normal g0
@@ -239,7 +239,6 @@ nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' 10[{kz<CR>
 vmap <silent> <unique> + :Align =<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
-nmap <silent> <unique> $ g$
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>

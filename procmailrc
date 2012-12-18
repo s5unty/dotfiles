@@ -39,7 +39,7 @@ VERBOSE=off
 # TODO 为什么先 encode UTF8 然后再 decode UTF8？
 #   MIME::EncWords::decode_mimewords 函数的返回值是字符串，问题是
 #   在脚本中能够正常 print 的字符串，在命令行中显示的值是 ARRAY(...)
-:0 Hi
+:0 Hiw
 X_Subject=| $FORMAIL -zfxSubject \
 | perl -pe 's/(^\s*|\n$)//sg' \
 | perl -MEncode -MMIME::EncWords -ne 'print decode("UTF8", encode("UTF8", MIME::EncWords::decode_mimewords($_, Charset => "UTF8")))'
@@ -54,7 +54,10 @@ X_Subject=| $FORMAIL -zfxSubject \
 # procmail 标记
 #   r   禁止在文件末尾新增一空白行。否则 mailtextbody 不能正常工作
 #
-:0 HBrfw
+# XXX 配方如果添加了 `f` 标记，日志会抱怨：
+#   procmail: Extraneous filter-flag ignored
+# 理解为：用管道为变量赋值时，不需要加 `f` 标记。
+:0 HBrw
 X_Context=| tail -n +2 | mailtextbody | nkf -w | head -5
 # }}}1
 

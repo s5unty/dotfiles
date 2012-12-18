@@ -8,10 +8,16 @@ parse_git_branch() {
 
     git diff --no-ext-diff --ignore-submodules=all --quiet 2> /dev/null
     flag=$?
-    if [ $flag -eq 1 ]; then # branch is not clear
+    if [ $flag -eq 1 ]; then # head is not clear
         _branch="${at_underl}${branch}"
-    elif [ $flag -eq 0 ]; then # branch is clear
-        _branch="${branch}"
+    elif [ $flag -eq 0 ]; then # head is clear
+        git diff --cached --no-ext-diff --ignore-submodules=all --quiet 2> /dev/null
+        cflag=$?
+        if [ $cflag -eq 0 ]; then # cache is clear
+            _branch="${branch}"
+        else # cache is not clear
+            _branch="${at_italic}${branch}"
+        fi
     else # there is not git repository == 129
         _branch=""
     fi
