@@ -1,6 +1,12 @@
 # Incremental completion for zsh
 # by y.fujii <y-fujii at mimosa-pudica.net>, public domain
 
+##########################################################
+# 1. \
+#   从左向右录入的时候，自动补全
+#   从右向左删除的时候，只提示不补全
+#
+# 2. 禁用色差
 
 autoload -U compinit
 zle -N self-insert self-insert-incr
@@ -11,8 +17,8 @@ zle -N expand-or-complete-prefix-incr
 compinit
 
 bindkey -M viins '^[' vi-cmd-mode-incr
-bindkey -M viins '^h' vi-backward-delete-char-incr
-bindkey -M viins '^?' vi-backward-delete-char-incr
+bindkey -M viins '^h' backward-delete-char-incr
+bindkey -M viins '^?' backward-delete-char-incr
 bindkey -M viins '^i' expand-or-complete-prefix-incr
 bindkey -M emacs '^h' backward-delete-char-incr
 bindkey -M emacs '^?' backward-delete-char-incr
@@ -70,7 +76,11 @@ function show-prediction
 		cursor_org="$CURSOR"
 		buffer_org="$BUFFER"
 		comppostfuncs=(limit-completion)
-		zle complete-word
+        if [[ $1 == "just-list" ]]; then
+		    zle list-choices
+        else
+            zle complete-word
+        fi
 		cursor_prd="$CURSOR"
 		buffer_prd="$BUFFER"
 		if [[ "$buffer_org[1,cursor_org]" == "$buffer_prd[1,cursor_org]" ]]; then
@@ -82,16 +92,16 @@ function show-prediction
 			BUFFER="$buffer_org"
 			CURSOR="$cursor_org"
 		fi
-		echo -n "\e[32m"
+		#echo -n "\e[32m"
 	else
 		zle -M ""
 	fi
 }
 
-function preexec
-{
-	echo -n "\e[39m"
-}
+#function preexec
+#{
+#	echo -n "\e[39m"
+#}
 
 function vi-cmd-mode-incr
 {
@@ -123,7 +133,7 @@ function backward-delete-char-incr
 	correct-prediction
 	remove-prediction
 	if zle backward-delete-char; then
-		show-prediction
+		show-prediction "just-list"
 	fi
 }
 
@@ -140,3 +150,5 @@ function expand-or-complete-prefix-incr
 		zle expand-or-complete-prefix
 	fi
 }
+
+# vim: ft=zsh et

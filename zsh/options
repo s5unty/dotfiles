@@ -1,7 +1,6 @@
-# vim:set syntax=zsh:
-
 autoload zsh/terminfo
 autoload -U is-at-least
+autoload -U zmv
 autoload -U zed
 autoload -U compinit && compinit
 autoload -U insert-files && zle -N insert-files
@@ -25,7 +24,6 @@ setopt PUSHD_MINUS
 setopt PUSHD_SILENT
 setopt PUSHD_TO_HOME
 setopt PUSHD_IGNOREDUPS
-
 setopt SHARE_HISTORY
 setopt EXTENDED_HISTORY
 setopt HIST_FIND_NO_DUPS
@@ -46,3 +44,4 @@ if is-at-least 4.3.12; then
     setopt HIST_FCNTL_LOCK
 fi
 
+# vim: ft=zsh et
