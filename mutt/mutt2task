@@ -2,7 +2,6 @@
 
 # 获取这封邮件的主题
 subject=$(formail -zfxSubject \
-    | perl -pe 's/(^\s*|\n$)//sg' \
     | perl -MEncode -MMIME::EncWords -ne 'print decode("UTF8", encode("UTF8", MIME::EncWords::decode_mimewords($_, Charset => "UTF8")))')
 
 # 添加一项

@@ -5,7 +5,8 @@ ANNO=$(formail -fXMessage-ID | perl -pe 's/: </:</')
 
 # 获取刚刚由 mutt2task 添加的 task id
 # TASK=$(todo.sh list | tail -1 | cut -d' ' -f2)
-TERM=$(tail -1 $TODO_FILE)
+# TERM=$(tail -1 $TODO_FILE)
+TERM=$(tail -1 /sun/.todo/var/todo.log)
 TASK=$(todo.sh list "$TERM" | head -1 | cut -d' ' -f1)
 
 # 为最新的 task 添加 message-id
