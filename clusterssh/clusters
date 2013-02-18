@@ -1,0 +1,10 @@
+# p0/p1/p2/p3 has defined in ~/.ssh/config
+ca p1 p0
+cb p3 p2
+cc ca cb
+
+# telnet server:port
+caa 10.xxx.xxx.xxx:7001 10.xxx.xxx.xxx:7000
+cbb 10.xxx.xxx.xxx:7003 10.xxx.xxx.xxx:7002
+ccc caa cbb
+

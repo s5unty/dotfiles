@@ -83,8 +83,12 @@ map           <A-0><A-3><A-8>       38gt
 map           <A-0><A-3><A-9>       39gt
 " }}}2
 " 切换当前页面编码
-map <silent>            <F2>        :set encoding=GB2312<CR>
-map <silent>            <S-F2>      :set encoding=UTF-8<CR>
+map <silent>            <F2>        :set encoding=Shift_JIS<CR>
+map <silent>            <F3>        :set encoding=EUC-JP<CR>
+map <silent>            <F4>        :set encoding=ISO-2022-JP<CR>
+map <silent>            <F5>        :set encoding=UTF-8<CR>
+map <silent>            <F6>        :set encoding=BIG5<CR>
+map <silent>            <F7>        :set encoding=GB2312<CR>
 " }}}
 
 " QuickMarks {{{1
@@ -109,9 +113,6 @@ silent qmark 1 http://10.167.225.189/wiki/index.php/PRIMECLUSTER
 
 " }}} 
 
-" goo.gl.js {{{2
-map <silent> ! :googl<CR>
-
 " AutoProxy {{{2
 " 切换 AutoProxy 的代理模式：智能、全局、禁用
 map <silent> <F2> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
@@ -122,27 +123,11 @@ map <silent> <F4> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
 map L :set ds=l<CR>P:set ds=google<CR>
 map J :set ds=j<CR>P:set ds=google<CR>
 
-javascript <<EOF
-    dactyl.searchWikis = function () {
-        var url = location.href;
-        var title = document.title || url;
-        var desc = (window.getSelection ? window.getSelection().toString() : document.getSelection ? document.getSelection()  : document.selection.createRange().text);
-        window.open('https://www.diigo.com/post?url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(title) + '&desc=' + encodeURIComponent(desc)+'&client=simplelet#main','_blank','menubar=no,height=580,width=608,toolbar=no,scrollbars=no,status=no');
-    }
-EOF
 
-map -g user A -js dactyl.searchWikis()
+" diigo {{{2
+map <silent> A :diigomark<CR>
+map <silent> ! :diigo<CR>
 
-
-javascript <<EOF
-    dactyl.searchWikis1 = function () {
-try{if(window.diigoToolbarVersion){alert("Diigolet will not run because Diigo Toolbar is installed.");return }var J=navigator.userAgent.toLowerCase();browser={version:(J.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/)||[])[1],safari:/webkit/.test(J),opera:/opera/.test(J),msie:/msie/.test(J)&&!/opera/.test(J),mozilla:/mozilla/.test(J)&&!/(compatible|webkit)/.test(J)};var H=!browser.msie||document.compatMode=="CSS1Compat";var F="http://www.diigo.com/javascripts/webtoolbar";function B(){var K=window;if(K.document.body.tagName.toLowerCase()=="body"){return K}if(K.document.getElementsByTagName("frameset").length>0){K=C(K.frames)}return K}function D(K){return browser.opera&&document.body["client"+K]||browser.safari&&window["inner"+K]||document.compatMode=="CSS1Compat"&&document.documentElement["client"+K]||document.body["client"+K]}function C(R){var P=null;for(var O=0;O<R.length;O++){var L=R[O];var N=false;try{N=!!(L.document&&L.document.body)}catch(Q){}if(!N){continue}if(L.document.getElementsByTagName("frameset").length>0){L=C(L.frames)}if(P==null){P=L}else{var M=D(P,"width")*D(P,"height");var K=D(L,"width")*D(L,"height");if(K>M){P=L}}}return P}function A(M,L,N){var K=M.getElementById(N);if(K&&K.tagName.toLowerCase()=="script"){K.parentNode.removeChild(K)}K=M.createElement("script");K.id=N;K.type="text/javascript";K.src=L;M.body.appendChild(K)}var I=B(),G=I.document;if(I.diigolet&&I.diigolet.loaded){I.diigolet.show()}else{I.diigoletLaunchMode=0;setTimeout(function(){if(I.diigoletLaunchMode!=5&&I.diigoletLaunchMode!=6){var L="diigoDivLoading";var K=G.getElementById(L)||G.createElement("div");K.id=L;K.innerHTML="Loading Diigolet...";K.style.cssText="width:150px;top:0;float:right;right:0;background-color:#B2E57E;color:#fff;font:bold 14px arial;padding:2px;padding-left:6px;z-index:99999;position:"+((browser.msie&&parseFloat(browser.version)<7)||(!H)?"absolute;":"fixed;");G.body.appendChild(K)}A(I.document,F+"/diigolet.js","diigoLoaderScript_2")},100)}}catch(E){alert(":( Diigolet doesn't support this page.")}
-    }
-EOF
-
-map -g user B -js dactyl.searchWikis1()
-
-
-command! diigo :open javascript:(function(){s=document.createElement("script");s.type="text/javascript";s.src="http://www.diigo.com/javascripts/webtoolbar/diigolet_b_h_b.js";document.body.appendChild(s);})();
-command! diigomark :open javascript:javascript:(function(){var%20url%20=%20location.href;var%20title%20=%20document.title%20||%20url;var%20desc%20=%20(window.getSelection%20?%20window.getSelection().toString()%20:%20document.getSelection%20?%20document.getSelection()%20%20:%20document.selection.createRange().text);window.open('http://www.diigo.com/post?url='%20+%20encodeURIComponent(url)%20+%20'&title='%20+%20encodeURIComponent(title)%20+%20'&desc='%20+%20encodeURIComponent(desc)+'&client=simplelet#main','_blank','menubar=no,height=580,width=608,toolbar=no,scrollbars=no,status=no');})();
-command! -nargs=* diigosearch :tabopen www.diigo.com/user/bae222/<args>
+command! diigo :open javascript:(function(){s=document.createElement("script");s.type="text/javascript";s.src="https://www.diigo.com/javascripts/webtoolbar/diigolet_b_h_b.js";document.body.appendChild(s);})();
+command! diigomark :open javascript:javascript:(function(){var%20url%20=%20location.href;var%20title%20=%20document.title%20||%20url;var%20desc%20=%20(window.getSelection%20?%20window.getSelection().toString()%20:%20document.getSelection%20?%20document.getSelection()%20%20:%20document.selection.createRange().text);window.open('https://www.diigo.com/post?url='%20+%20encodeURIComponent(url)%20+%20'&title='%20+%20encodeURIComponent(title)%20+%20'&desc='%20+%20encodeURIComponent(desc)+'&client=simplelet#main','_blank','menubar=no,height=580,width=608,toolbar=no,scrollbars=no,status=no');})();
+command! -nargs=* diigosearch :tabopen https://www.diigo.com/user/s5unty/<args>
