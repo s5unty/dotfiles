@@ -1,10 +1,7 @@
 #! /usr/bin/env python
+# -*- coding: utf-8 -*-
 
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-
-VERSION = "1.2.0"
+VERSION = "1.3.1"
 
 # LICENSE
 # ======================================================================
@@ -42,7 +39,7 @@ VERSION = "1.2.0"
 # add filter / smart lists to create list
 # add estimate support
 # add location support
-# incoporate Google Calendar?  --> Usung Google's CLI
+# incoporate Google Calendar?  --> Using Google's CLI
 
 
 
@@ -53,7 +50,10 @@ DISP_TAGS = 1               # print tasks with (=1) or without (=0) tags
 DISP_NOTES = 1              # print tasks with (=1) or without (=0) note indicators
 DISP_COMP = 1               # print tasks with (=1) or without (=0) completed tasks
 DISP_STATUS = 1             # print status messages (=1)
+ENABLE_READLINE = 1         # enable the import of readline module (disable for better unicode support)
 
+CLI_EDITOR = "nano"         # this is the name of the CLI text editor used to edit the body of notes
+CLI_EDITOR_PAUSE = 0        # set this to 1 if you want the script to pause after starting the editor
 
 
 # COLOR CODES:
@@ -67,13 +67,20 @@ DISP_STATUS = 1             # print status messages (=1)
 # 5 Blink                   34 Blue
 # 7 Reverse                 35 Magenta
 # 8 Hidden                  36 Cyan
-#                           37 White                                    
+#                           37 White
 
-COLOR_PRI1 = "\033[1;31m"
-COLOR_PRI2 = "\033[1;34m"
-COLOR_PRI3 = "\033[1;36m"
-COLOR_DUE = "\033[1;32m"
+COLOR_PRI1 = "\033[0;31m"
+COLOR_PRI2 = "\033[0;34m"
+COLOR_PRI3 = "\033[0;36m"
+COLOR_DUE = "\033[0;32m"
 COLOR_TAG = "\033[0;35m"
+COLOR_LIST = "\033[4;33m"
+COLOR_NOTE_BORDER = "\033[0;33m"
+COLOR_NOTE_TITLE = "\033[1;31m"
+COLOR_PLANNER_BORDER = ""
+COLOR_PLANNER_DATE = "\033[1;32m"
+COLOR_PLANNER_TODAY = "\033[4;32m"
+COLOR_PLANNER_OA_HEADER = "\033[4;35m"
 COLOR_RESET = "\033[0;m"
 
 
@@ -83,6 +90,9 @@ COLOR_RESET = "\033[0;m"
 import rtm
 import sys
 import os
+import re
+import tempfile
+import subprocess
 import getopt
 from datetime import datetime
 from datetime import date
@@ -90,8 +100,12 @@ from datetime import timedelta
 from datetime import tzinfo
 from operator import itemgetter
 import string
-import urllib2
 import webbrowser
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib import urlopen
+    from urllib import quote
 
 
 
@@ -103,9 +117,9 @@ api_secret = "131beea786379309"                 # The RTM API Shared Secret
 lookup_table = {}                               # An index of all tasks based on their id
 lists = {}                                      # An index of list names based on their id
 tasks = []                                      # A nested list of tasks containing their properties
-PLANNER_LENGTH = 20                             # The max length of task names displayed by the weekly planner
 MODE = ""                                       # The mode the script is currently running as
 weekdays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+
 
 # TIMEZONE CLASSES:
 # Dealing with timezone differences between RTM (UTC) and local machine
@@ -184,16 +198,16 @@ def login():
     
     # try to connect to the RTM API server
     try:
-        test = urllib2.urlopen("http://api.rememberthemilk.com/services/rest/")
+        test = urlopen("http://api.rememberthemilk.com/services/rest/")
 
     # when no internet connection is available...
-    except urllib2.URLError:
-        print "ERROR: Cannot connect to RTM server."
+    except URLError:
+        display("ERROR: Cannot connect to RTM server.")
         sys.exit(1)
     
     # if a redirect occurs...
     if test.geturl() != "http://api.rememberthemilk.com/services/rest/":
-        print "ERROR: Cannot connect to RTM server."
+        display("ERROR: Cannot connect to RTM server.")
         sys.exit(1)
     
     status("Authenticating... |==    |")
@@ -206,7 +220,7 @@ def login():
             os.makedirs(full_dir)
         except OSError:
             pass
-        f = file(full_path, "r")
+        f = open(full_path, "rt")
         token = f.read()
         f.close()
         
@@ -222,36 +236,36 @@ def login():
         
     except IOError:
         status("Authenticating... |====  |")
-    	reauth = "true"
+        reauth = "true"
      
     status("Authenticating... |===== |")
     # IF THE TOKEN CACHE IS NOT FOUND...
     if reauth == "true":
     
-		# AUTHENTICATE THE USER WITH RTM
-		
-		# create a temporary rtm object to get authURL
-		rtm_init = rtm.createRTM(api_key, api_secret, "null")
-		auth_url = rtm_init.getAuthURL()
-		
-		# Prompt and pause when we need to get a new token
-		webbrowser.open(auth_url, True, True)
-		print "This program requires access to your RTM account"
-		raw_input("Press ENTER after you have authorized this program")
-		
-		# Get the authorized token
-		token = rtm_init.getToken()
-		
-		# SAVE TOKEN TO DISK
-		full_dir = os.path.expanduser(os.path.join("~", ".rtm", api_key))
-		full_path = os.path.expanduser(os.path.join(full_dir, "token"))
-		try:
-			os.makedirs(full_dir)
-		except OSError:
-			pass
-		f = file(full_path, "w")
-		f.write(token)
-		f.close()
+        # AUTHENTICATE THE USER WITH RTM
+        
+        # create a temporary rtm object to get authURL
+        rtm_init = rtm.createRTM(api_key, api_secret, "null")
+        auth_url = rtm_init.getAuthURL()
+        
+        # Prompt and pause when we need to get a new token
+        webbrowser.open(auth_url, True, True)
+        display("This program requires access to your RTM account")
+        get_input("Press ENTER after you have authorized this program")
+        
+        # Get the authorized token
+        token = rtm_init.getToken()
+        
+        # SAVE TOKEN TO DISK
+        full_dir = os.path.expanduser(os.path.join("~", ".rtm", api_key))
+        full_path = os.path.expanduser(os.path.join(full_dir, "token"))
+        try:
+            os.makedirs(full_dir)
+        except OSError:
+            pass
+        f = open(full_path, "wt")
+        f.write(token)
+        f.close()
     
     
     status("Authenticating... |===== |")
@@ -266,8 +280,8 @@ def login():
         return rsp.user.username
     except rtm.RTMAPIError:
         status(None)
-    	print "ERROR! Could not properly authenticate with RTM"
-    	return "null"
+        display("ERROR! Could not properly authenticate with RTM")
+        return "null"
  
 # END login()    
 # ========================================================================================================= #    
@@ -280,7 +294,7 @@ def login():
 # ========================================================================================================= #
 def logout():
 
-    print "logging out..."
+    display("logging out...")
     
     # get the path to the rtm settings
     full_path = os.path.expanduser(os.path.join("~", ".rtm"))
@@ -312,9 +326,10 @@ def getTimeline():
     
     # attempt to read the timeline from disk, if there
     try:
-        f = file(full_path, "r")
+        f = open(full_path, "r")
         timeline = f.read()
         f.close()
+        
         return timeline.strip()
         
     # if no file is found...
@@ -324,15 +339,15 @@ def getTimeline():
         timeline = rsp.timeline
         
         # write it to disk
-        f = file(full_path, "w")
-        print >>f, timeline
+        f = open(full_path, "w")
+        f.write(timeline)
         f.close()
         
         # return the newly minted timeline id
         return timeline
 
 # END getTimeline()    
-# ========================================================================================================= #    
+# ========================================================================================================= #
 
 
 
@@ -352,7 +367,7 @@ def getTransID():
     
     # read transaction ID from disk
     try:
-        f = file(full_path, "r")
+        f = open(full_path, "r")
         transIDs = f.readlines()
         f.close()
         
@@ -384,24 +399,24 @@ def writeTransID(transID, multi=""):
     
     # clear old transIDs if "startMulti" flag is sent
     if transID == "startMulti":
-        f = file(full_path, "w")
+        f = open(full_path, "w")
         f.close()
     
     else:
     
         # if multi, append new trans id to end of file
         if multi == "true":
-            f = file(full_path, "a")
+            f = open(full_path, "a")
             f.write(transID+"\n")
             f.close()
         
         # otherwise, write the trans id to file (replacing old one)
         else:
-            f = file(full_path, "w")
+            f = open(full_path, "w")
             f.write(transID+"\n")
             f.close()
 
-# END writeTransID()    
+# END writeTransID()
 # ========================================================================================================= #    
 
 
@@ -430,37 +445,37 @@ def genLookupTable():
             # when there are multiple taskseries in a list...
             if isinstance(lists.taskseries, list):
             
-            	# cycle through each taskseries in the list...
-            	for series in lists.taskseries:
+                # cycle through each taskseries in the list...
+                for series in lists.taskseries:
 
-            		# when there are multiple tasks in a taskseries (recurring tasks)...
-            		if isinstance(series.task, list):
-            			for idx in range(0, len(series.task)):
-            			    lookup_table[n] = series.task[idx].id
-            			    n=n+1
-            		
-            		# when there is only 1 task in a taskseries...
-            		else:
-	            		lookup_table[n] = series.task.id
-    	        		n=n+1
+                    # when there are multiple tasks in a taskseries (recurring tasks)...
+                    if isinstance(series.task, list):
+                        for idx in range(0, len(series.task)):
+                            lookup_table[n] = series.task[idx].id
+                            n=n+1
+                    
+                    # when there is only 1 task in a taskseries...
+                    else:
+                        lookup_table[n] = series.task.id
+                        n=n+1
             
             
             # when there is only 1 taskseries in a list...
             else:
-            		
-            	series = lists.taskseries
-            	
-            	# when there are multiple tasks in a taskseries (recurring tasks)...
-            	if isinstance(series.task, list):
-            		for idx in range(0, len(series.task)):
-            		    lookup_table[n] = series.task[idx].id
-            		    n=n+1
-            		
-            	# when there is only 1 task in a taskseries...
-            	else:
-        			lookup_table[n] = series.task.id
-        			n=n+1
-				
+                    
+                series = lists.taskseries
+                
+                # when there are multiple tasks in a taskseries (recurring tasks)...
+                if isinstance(series.task, list):
+                    for idx in range(0, len(series.task)):
+                        lookup_table[n] = series.task[idx].id
+                        n=n+1
+                    
+                # when there is only 1 task in a taskseries...
+                else:
+                    lookup_table[n] = series.task.id
+                    n=n+1
+                
 # END genLookupTable()    
 # ========================================================================================================= #    
 
@@ -527,7 +542,7 @@ def getList(id="", name=""):
                 return iter_id
     
     # list not found...
-    print "ERROR: List " + id + name + " not found"
+    display("ERROR: List " + id + name + " not found")
     sys.exit(2)
     
     
@@ -562,131 +577,132 @@ def getTasks(filterString=""):
     
     if hasattr(root.tasks, "list"):
     
-		# cycle through each task series and gather all required data
-		for lists in root.tasks.list:
-			
-			if hasattr(lists, "taskseries"):
-				
-				# When there are multiples taskseries in the list...
-				if isinstance(lists.taskseries, list):
-				
-					# cycle through each task in the current list...
-					for series in lists.taskseries:
-						task = series.task
-						
-						
-						# TASKSERIES PROPERTIES
-						
-						taskseries_id = series.id
-						task_name = series.name
-						
-						if series.tags == []:
-							tags = []
-						else:
-							if (type(series.tags.tag) == unicode or type(series.tags.tag) == type(str())):
-								tags = [series.tags.tag]
-							else:
-								tags = series.tags.tag
-						
-						if series.notes == []:
-							notes_num = 0
-						else:
-							if isinstance(series.notes.note, list):
-								notes_num = len(series.notes.note)
-							else:
-								notes_num = 1
-						
-						
-						# TASK PROPERTIES
-						
-						# if there is more than one task in the taskseries (recurring tasks)...
-						if isinstance(task, list):
-							idx = 0
-							task_id = task[idx].id
-							task_pri = task[idx].priority
-							task_due = task[idx].due
-							task_comp = task[idx].completed
-							
-						# when there is only one task in the taskseries...
-						else:
-							task_id = task.id
-							task_pri = task.priority
-							task_due = task.due
-							task_comp = task.completed
-						
-						
-						# LIST PROPERTIES
-						
-						list_id = lists.id
-						list_name = getList(id=list_id)
-						
-						
-						# Add task properties to the nested list
-						tasks.append([taskseries_id, task_id, task_name, task_pri, task_due, list_name, list_id, task_comp, tags, notes_num])
-				
-				
-				
-				# When there is only one taskseries in the list
-				else:
-					series = lists.taskseries
-					task = series.task
-					
-					
-					# TASKSERIES PROPERTIES
-						
-					taskseries_id = series.id
-					task_name = series.name
-					
-					if series.tags == []:
-						tags = []
-					else:
-						if (type(series.tags.tag) == unicode or type(series.tags.tag) == type(str())):
-							tags = [series.tags.tag]
-						else:
-							tags = series.tags.tag
-					
-					if series.notes == []:
-						notes_num = 0
-					else:
-						if isinstance(series.notes.note, list):
-							notes_num = len(series.notes.note)
-						else:
-							notes_num = 1
-					
-					
-					# TASK PROPERTIES
-					
-					# if there is more than one task in the taskseries (recurring tasks)...
-					if isinstance(task, list):
-						idx = 0
-						task_id = task[idx].id
-						task_pri = task[idx].priority
-						task_due = task[idx].due
-						task_comp = task[idx].completed
-						
-					# when there is only one task in the taskseries...
-					else:
-						task_id = task.id
-						task_pri = task.priority
-						task_due = task.due
-						task_comp = task.completed
+        # cycle through each task series and gather all required data
+        for lists in root.tasks.list:
+            
+            if hasattr(lists, "taskseries"):
+                
+                # When there are multiples taskseries in the list...
+                if isinstance(lists.taskseries, list):
+                
+                    # cycle through each task in the current list...
+                    for series in lists.taskseries:
+                        task = series.task
+                        
+                        
+                        # TASKSERIES PROPERTIES
+                        
+                        taskseries_id = series.id
+                        task_name = series.name
+                        
+                        if series.tags == []:
+                            tags = []
+                        else:
+                            if isinstance(series.tags.tag, list):
+                                tags = series.tags.tag
+                            else:
+                                tags = [series.tags.tag]
+                            
+                        
+                        if series.notes == []:
+                            notes_num = 0
+                        else:
+                            if isinstance(series.notes.note, list):
+                                notes_num = len(series.notes.note)
+                            else:
+                                notes_num = 1
+                        
+                        
+                        # TASK PROPERTIES
+                        
+                        # if there is more than one task in the taskseries (recurring tasks)...
+                        if isinstance(task, list):
+                            idx = 0
+                            task_id = task[idx].id
+                            task_pri = task[idx].priority
+                            task_due = task[idx].due
+                            task_comp = task[idx].completed
+                            
+                        # when there is only one task in the taskseries...
+                        else:
+                            task_id = task.id
+                            task_pri = task.priority
+                            task_due = task.due
+                            task_comp = task.completed
+                        
+                        
+                        # LIST PROPERTIES
+                        
+                        list_id = lists.id
+                        list_name = getList(id=list_id)
+                        
+                        
+                        # Add task properties to the nested list
+                        tasks.append([taskseries_id, task_id, task_name, task_pri, task_due, list_name, list_id, task_comp, tags, notes_num])
+                
+                
+                
+                # When there is only one taskseries in the list
+                else:
+                    series = lists.taskseries
+                    task = series.task
+                    
+                    
+                    # TASKSERIES PROPERTIES
+                        
+                    taskseries_id = series.id
+                    task_name = series.name
+                    
+                    if series.tags == []:
+                        tags = []
+                    else:
+                        if type(series.tags.tag) == list:
+                            tags = series.tags.tag
+                        else:
+                            tags = [series.tags.tag]
+                    
+                    if series.notes == []:
+                        notes_num = 0
+                    else:
+                        if isinstance(series.notes.note, list):
+                            notes_num = len(series.notes.note)
+                        else:
+                            notes_num = 1
+                    
+                    
+                    # TASK PROPERTIES
+                    
+                    # if there is more than one task in the taskseries (recurring tasks)...
+                    if isinstance(task, list):
+                        idx = 0
+                        task_id = task[idx].id
+                        task_pri = task[idx].priority
+                        task_due = task[idx].due
+                        task_comp = task[idx].completed
+                        
+                    # when there is only one task in the taskseries...
+                    else:
+                        task_id = task.id
+                        task_pri = task.priority
+                        task_due = task.due
+                        task_comp = task.completed
 
-					
-					# LIST PROPERTIES
-					
-					list_id = lists.id
-					list_name = getList(id=list_id)
-					
-					
-					# Add task properties to the nested list
-					tasks.append([taskseries_id, task_id, task_name, task_pri, task_due, list_name, list_id, task_comp, tags, notes_num])
-			
-			
-			# When there are no taskseries in the current list...    
-			else:
-				pass
-				
-				
+                    
+                    # LIST PROPERTIES
+                    
+                    list_id = lists.id
+                    list_name = getList(id=list_id)
+                    
+                    
+                    # Add task properties to the nested list
+                    tasks.append([taskseries_id, task_id, task_name, task_pri, task_due, list_name, list_id, task_comp, tags, notes_num])
+            
+            
+            # When there are no taskseries in the current list...    
+            else:
+                pass
+                
+                
 # END getTasks()    
 # ========================================================================================================= #    
 
@@ -727,7 +743,7 @@ def getTask(index):
 # ========================================================================================================= #
 # ls <filter>                                                                                               #
 #   Print a list of all of the tasks sorted first by list, then completed, pri, due date, and then task     #
-#   name.  The task    list can be optionally filtered by RTM's built-in search filters.                    #
+#   name.  The task list can be optionally filtered by RTM's built-in search filters.                       #
 # ========================================================================================================= #
 def ls(filterString=""):
        
@@ -755,34 +771,38 @@ def ls(filterString=""):
         # if the task item is in a new list...print the new list name
         if tasks[i][5] != current_list_name:
             current_list_name = tasks[i][5]
-            print ""            
-            print "  " + current_list_name + ":"
+            display("")
+            
+            if PLAIN == 1:
+                display("  " + current_list_name + ":")
+            else:
+                display("  " + COLOR_LIST + current_list_name + ":" + COLOR_RESET)
         
         # print task index value, padded with zeros (depending on # of tasks)
         if len(tasks) < 100:
-            print "%02d" % getLookupTable(id=tasks[i][1]),
+            display("%02d " % getLookupTable(id=tasks[i][1]), 0)
         elif len(tasks) < 1000:
-            print "%03d" % getLookupTable(id=tasks[i][1]),
+            display("%03d " % getLookupTable(id=tasks[i][1]), 0)
         elif len(tasks) < 10000:
-            print "%04d" % getLookupTable(id=tasks[i][1]),
+            display("%04d " % getLookupTable(id=tasks[i][1]), 0)
         else:
-            print "%02d" % getLookupTable(id=tasks[i][1]),
+            display("%02d " % getLookupTable(id=tasks[i][1]), 0)
         
         # if task is completed...
         if tasks[i][7] != "":
         
             # print an 'x' instead of priority
-            print (" x  " + tasks[i][2]).encode("utf-8"),
+            display(" x  " + tasks[i][2], 0)
             
             # print any notes indicators, if requested
             if DISP_NOTES == 1:
                 for j in range(tasks[i][9]):
-                   print "*",
+                   display("*", 0)
             
             # print the tags, if any
             if (len(tasks[i][8]) != 0) and (DISP_TAGS == 1):
                 for j in range(len(tasks[i][8])):
-                   print "#" + tasks[i][8][j],
+                   display(" #" + tasks[i][8][j], 0)
                 
             # get the completed date as a string
             date = str(tasks[i][7])
@@ -791,7 +811,7 @@ def ls(filterString=""):
             date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=utc).astimezone(Local)
             
             # print the completed date
-            print "x " + weekdays[date.weekday()] + " " + str(date)[5:10]
+            display(" x " + weekdays[date.weekday()] + " " + str(date)[5:10])
         
         # for incomplete tasks...
         else:
@@ -801,30 +821,31 @@ def ls(filterString=""):
                 
                 # for plain output..
                 if PLAIN == 1:
-                   print ("(" + tasks[i][3] + ") " + tasks[i][2]).encode("utf-8"),
+                   display("(" + tasks[i][3] + ") " + tasks[i][2], 0)
                 
                 # for colored output...
                 else:
                     if tasks[i][3] == "1":
-                        print (COLOR_PRI1 + '(' + tasks[i][3] + ') ' + tasks[i][2]).encode("utf-8"),
+                        display(COLOR_PRI1 + '(' + tasks[i][3] + ') ' + tasks[i][2], 0)
                     elif tasks[i][3] == "2":
-                        print (COLOR_PRI2 + '(' + tasks[i][3] + ') ' + tasks[i][2]).encode("utf-8"),
+                        display(COLOR_PRI2 + '(' + tasks[i][3] + ') ' + tasks[i][2], 0)
                     elif tasks[i][3] == "3":
-                        print (COLOR_PRI3 + '(' + tasks[i][3] + ') ' + tasks[i][2]).encode("utf-8"),
+                        display(COLOR_PRI3 + '(' + tasks[i][3] + ') ' + tasks[i][2], 0)
             
             # indent non-prioritized tasks further
             else:
-                print ("    " + tasks[i][2]).encode("utf-8"),
+                display("    " + tasks[i][2], 0)
             
             
             # print notes indicator, if requested
             if DISP_NOTES == 1:
                 for j in range(tasks[i][9]):
-                    print "*",
+                    display("*", 0)
             
             if PLAIN == 0:
-                print COLOR_RESET,
+                display(COLOR_RESET, 0)
             
+            display(" ", 0)
             
             # print the tags, if any
             if (len(tasks[i][8]) != 0) and (DISP_TAGS == 1):
@@ -832,14 +853,14 @@ def ls(filterString=""):
                 # for plain output...
                 if PLAIN == 1:
                     for j in range(len(tasks[i][8])):
-                        print "#" + tasks[i][8][j],
+                        display("#" + tasks[i][8][j] + " ", 0)
                 
                 # for colored output...
                 else:
-                    print COLOR_TAG,
+                    display(COLOR_TAG, 0)
                     for j in range(len(tasks[i][8])):
-                       print "#" + tasks[i][8][j],
-                    print COLOR_RESET,
+                       display("#" + tasks[i][8][j] + " ", 0)
+                    display(COLOR_RESET, 0)
             
         
             # print the due date, if it has one and in color, if desired
@@ -853,16 +874,16 @@ def ls(filterString=""):
         
                 # for plain output...
                 if PLAIN == 1:
-                    print "| " + weekdays[date.weekday()] + " " + str(date)[5:10],
+                    display("| " + weekdays[date.weekday()] + " " + str(date)[5:10], 0)
             
                 # for colored output...
                 else:
-                   print COLOR_DUE + '| ' + weekdays[date.weekday()] + " " + str(date)[5:10] + COLOR_RESET,
+                   display(COLOR_DUE + '| ' + weekdays[date.weekday()] + " " + str(date)[5:10] + COLOR_RESET, 0)
             
             # print new line
-            print ""
+            display("")
     
-    print ""
+    display("")
 
 # END ls()    
 # ========================================================================================================= #    
@@ -891,34 +912,36 @@ def lsp(filterString=""):
     global tasks
     tasks = sorted(tasks, key=itemgetter(7,3,5,4,2))
     
+    
     # parse through each task
     for i in range(len(tasks)):
-    
+        
         # print task index value, padded with zeros (depending on # of tasks)
         if len(tasks) < 100:
-            print "%02d" % getLookupTable(id=tasks[i][1]),
+            display("%02d " % getLookupTable(id=tasks[i][1]), 0)
         elif len(tasks) < 1000:
-            print "%03d" % getLookupTable(id=tasks[i][1]),
+            display("%03d " % getLookupTable(id=tasks[i][1]), 0)
         elif len(tasks) < 10000:
-            print "%04d" % getLookupTable(id=tasks[i][1]),
+            display("%04d " % getLookupTable(id=tasks[i][1]), 0)
         else:
-            print "%02d" % getLookupTable(id=tasks[i][1]),
-    
+            display("%02d " % getLookupTable(id=tasks[i][1]), 0)
+        
+        
         # for completed tasks...
         if tasks[i][7] != "":
             
             # print an "x" instead of priority and then the task list and name
-            print (" x  " + tasks[i][5] + ": " + tasks[i][2]).encode("utf-8"),
+            display(" x  " + tasks[i][5] + ": " + tasks[i][2], 0)
             
             # print notes indicator, if requested
             if DISP_NOTES == 1:
                 for j in range(tasks[i][9]):
-                    print "*",
+                    display("*", 0)
             
             # print the tags, if any
             if (len(tasks[i][8]) != 0) and (DISP_TAGS == 1):
                 for j in range(len(tasks[i][8])):
-                    print "#" + tasks[i][8][j],
+                    display(" #" + tasks[i][8][j], 0)
 
             # get the completed date as a string
             date = str(tasks[i][7])
@@ -927,7 +950,7 @@ def lsp(filterString=""):
             date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=utc).astimezone(Local)
         
             # print the completed date
-            print "x " + weekdays[date.weekday()] + " " + str(date)[5:10]
+            display(" x " + weekdays[date.weekday()] + " " + str(date)[5:10])
         
         
         # for uncompleted tasks..
@@ -938,29 +961,30 @@ def lsp(filterString=""):
                     
                 # for plain output..
                 if PLAIN == 1:
-                   print ("(" + tasks[i][3] + ") " + tasks[i][5] + ": " + tasks[i][2]).encode("utf-8"),
+                   display("(" + tasks[i][3] + ") " + tasks[i][5] + ": " + tasks[i][2], 0)
                     
                 # for colored output...
                 else:
                     if tasks[i][3] == "1":
-                        print (COLOR_PRI1 + '(' + tasks[i][3] + ') ' + tasks[i][5] + ': ' + tasks[i][2]).encode("utf-8"),
+                        display(COLOR_PRI1 + "(" + tasks[i][3] + ") " + COLOR_LIST + tasks[i][5] + ":" + COLOR_PRI1 + " " + tasks[i][2], 0)
                     elif tasks[i][3] == "2":
-                        print (COLOR_PRI2 + '(' + tasks[i][3] + ') ' + tasks[i][5] + ': ' + tasks[i][2]).encode("utf-8"),
+                        display(COLOR_PRI2 + "(" + tasks[i][3] + ") " + COLOR_LIST + tasks[i][5] + ":" + COLOR_PRI2 + " " + tasks[i][2], 0)
                     elif tasks[i][3] == "3":
-                        print (COLOR_PRI3 + '(' + tasks[i][3] + ') ' + tasks[i][5] + ': ' + tasks[i][2]).encode("utf-8"),
+                        display(COLOR_PRI3 + "(" + tasks[i][3] + ") " + COLOR_LIST + tasks[i][5] + ":" + COLOR_PRI3 + " " + tasks[i][2], 0)
             
             # when there is no priority, indent more and print the list and task
             else:
-                print ("    " + tasks[i][5] + ": " + tasks[i][2]).encode("utf-8"),
-                       
+                display("    " + COLOR_LIST + tasks[i][5] + ":" + COLOR_RESET + " " + tasks[i][2], 0)
+            
             # print the notes indicator, if requested
             if DISP_NOTES == 1:
                 for j in range(tasks[i][9]):
-                    print "*",
+                    display("*", 0)
             
             if PLAIN == 0:
-                print COLOR_RESET,
+                display(COLOR_RESET, 0)
             
+            display(" ", 0)
             
             # print the tags, if any
             if (len(tasks[i][8]) != 0) and (DISP_TAGS == 1):
@@ -968,14 +992,14 @@ def lsp(filterString=""):
                 # for plain output...
                 if PLAIN == 1:
                     for j in range(len(tasks[i][8])):
-                        print "#" + tasks[i][8][j],
+                        display("#" + tasks[i][8][j] + " ", 0)
                 
                 # for colored output...
                 else:
-                    print COLOR_TAG,
+                    display(COLOR_TAG, 0)
                     for j in range(len(tasks[i][8])):
-                        print "#" + tasks[i][8][j],
-                    print COLOR_RESET,
+                        display("#" + tasks[i][8][j] + " ", 0)
+                    display(COLOR_RESET, 0)
             
             # print the due date, if it has one and in color, if desired
             if tasks[i][4] != "":
@@ -988,17 +1012,18 @@ def lsp(filterString=""):
         
                 # for plain output...
                 if PLAIN == 1:
-                    print "| " + weekdays[date.weekday()] + " " + str(date)[5:10]
+                    display("| " + weekdays[date.weekday()] + " " + str(date)[5:10])
             
                 # for colored output...
                 else:
-                    print COLOR_DUE + '| ' + weekdays[date.weekday()] + " " + str(date)[5:10] + COLOR_RESET
+                    display(COLOR_DUE + '| ' + weekdays[date.weekday()] + " " + str(date)[5:10] + COLOR_RESET)
             
             # print a newline if there's no due date
             else:
-                print ""
+                display("")
     
-# END lsp()    
+    display("")
+# END lsp()
 # ========================================================================================================= #    
 
 
@@ -1043,40 +1068,40 @@ def lsd(filterString=""):
         
             # for plain output...
             if PLAIN == 1:
-                print ""
-                print "   " + weekdays[date.weekday()] + " " + str(date)[5:10]
+                display("")
+                display("   " + weekdays[date.weekday()] + " " + str(date)[5:10])
             
             # for colored output...
             else:
-                print ""
-                print COLOR_DUE + '   ' + weekdays[date.weekday()] + " " + str(date)[5:10] + COLOR_RESET
+                display("")
+                display(COLOR_DUE + '   ' + weekdays[date.weekday()] + " " + str(date)[5:10] + COLOR_RESET)
         
         
         # print task index value, padded with zeros (depending on # of tasks)
         if len(tasks) < 100:
-            print "%02d" % getLookupTable(id=tasks[i][1]),
+            display("%02d" % getLookupTable(id=tasks[i][1]), 0)
         elif len(tasks) < 1000:
-            print "%03d" % getLookupTable(id=tasks[i][1]),
+            display("%03d" % getLookupTable(id=tasks[i][1]), 0)
         elif len(tasks) < 10000:
-            print "%04d" % getLookupTable(id=tasks[i][1]),
+            display("%04d" % getLookupTable(id=tasks[i][1]), 0)
         else:
-            print "%02d" % getLookupTable(id=tasks[i][1]),
+            display("%02d" % getLookupTable(id=tasks[i][1]), 0)
         
         
         # if task is completed...
         if tasks[i][7] != "":
             # print an 'x' instead of priority and then the list name and task
-            sys.stdout.write("  x  " + tasks[i][5] + ": " + tasks[i][2])
+            display("  x  " + tasks[i][5] + ": " + tasks[i][2], 0)
             
             # print the notes indicator, if requested
             if DISP_NOTES == 1:
                 for j in range(tasks[i][9]):
-                    sys.stdout.write("*")
+                    display("*", 0)
             
             # print the tags, if any
             if (len(tasks[i][8]) != 0) and (DISP_TAGS == 1):
                 for j in range(len(tasks[i][8])):
-                    sys.stdout.write(" #" + tasks[i][8][j])
+                    display(" #" + tasks[i][8][j], 0)
             
             # get the completed date as a string
             date = str(tasks[i][7])
@@ -1085,7 +1110,7 @@ def lsd(filterString=""):
             date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=utc).astimezone(Local)
             
             # print the completed date
-            print " x " + weekdays[date.weekday()] + " " + str(date)[5:10]
+            display(" x " + weekdays[date.weekday()] + " " + str(date)[5:10])
         
         
         # for uncompleted tasks...
@@ -1096,31 +1121,31 @@ def lsd(filterString=""):
                 
                 # for plain output..
                 if PLAIN == 1:
-                    sys.stdout.write(" (" + tasks[i][3] + ") " + tasks[i][5] + ": " + tasks[i][2])
+                    display(" (" + tasks[i][3] + ") " + tasks[i][5] + ": " + tasks[i][2], 0)
             
             
                 # for colored output...
                 else:
                     if tasks[i][3] == "1":
-                        sys.stdout.write(COLOR_PRI1 + ' (' + tasks[i][3] + ') ' + tasks[i][5] + ": " + tasks[i][2])
+                        display(COLOR_PRI1 + ' (' + tasks[i][3] + ') ' + COLOR_LIST + tasks[i][5] + ":" + COLOR_PRI1 + " " + tasks[i][2], 0)
                     elif tasks[i][3] == "2":
-                        sys.stdout.write(COLOR_PRI2 + ' (' + tasks[i][3] + ') ' + tasks[i][5] + ": " + tasks[i][2])
+                        display(COLOR_PRI2 + ' (' + tasks[i][3] + ') ' + COLOR_LIST + tasks[i][5] + ":" + COLOR_PRI2 + " " + tasks[i][2], 0)
                     elif tasks[i][3] == "3":
-                        sys.stdout.write(COLOR_PRI3 + ' (' + tasks[i][3] + ') ' + tasks[i][5] + ": " + tasks[i][2])
+                        display(COLOR_PRI3 + ' (' + tasks[i][3] + ') ' + COLOR_LIST + tasks[i][5] + ":" + COLOR_PRI3 + " " + tasks[i][2], 0)
                         
                         
             # indent non-prioritized tasks further
             else:
-                sys.stdout.write("     " + tasks[i][5] + ": " + tasks[i][2])
+                display("     " + COLOR_LIST + tasks[i][5] + ":" + COLOR_RESET + " " + tasks[i][2], 0)
              
              
             # print the notes indicator, if requested
             if DISP_NOTES == 1:
                 for j in range(tasks[i][9]):
-                     sys.stdout.write("*")
+                     display("*", 0)
             
             if PLAIN == 0:
-                sys.stdout.write(COLOR_RESET)
+                display(COLOR_RESET, 0)
              
             # print the tags, if any
             if (len(tasks[i][8]) != 0) and (DISP_TAGS == 1):
@@ -1128,18 +1153,18 @@ def lsd(filterString=""):
                 # for plain output...
                 if PLAIN == 1:
                     for j in range(len(tasks[i][8])):
-                        sys.stdout.write(" #" + tasks[i][8][j])
+                        display(" #" + tasks[i][8][j], 0)
                
                 # for colored output...
                 else:
-                    sys.stdout.write(COLOR_TAG)
+                    display(COLOR_TAG, 0)
                     for j in range(len(tasks[i][8])):
-                        sys.stdout.write(" #" + tasks[i][8][j])
-                    sys.stdout.write(COLOR_RESET)   
+                        display(" #" + tasks[i][8][j], 0)
+                    display(COLOR_RESET, 0)
                 
-            print ""
+            display("")
     
-    print ""
+    display("")
 
 # END lsd()    
 # ========================================================================================================= #    
@@ -1166,7 +1191,7 @@ def add(task):
     # replace 't:' with '#" for the tags
     task = task.replace("t:","#") 
     
-    print "adding task: " + task + "..."
+    display("adding task: " + task + "...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -1180,8 +1205,8 @@ def add(task):
     else:
         writeTransID("NA")
 
-# END add()    
-# ========================================================================================================= #    
+# END add()
+# ========================================================================================================= #
 
 
 
@@ -1193,16 +1218,16 @@ def add(task):
 def madd():
     
     # Give instructions
-    print "Enter each task in the format: task name due date p:priority l:list t:tag"
-    print "Enter a blank line when finished."
-    print ""
+    display("Enter each task in the format: task name due date p:priority l:list t:tag")
+    display("Enter a blank line when finished.")
+    display("")
     
     # The task stack
     stack=[]
     done=0
     
     while done == 0:
-        new_task = raw_input("New Task: ")
+        new_task = get_input("New Task: ")
         
         # if a blank line was entered, signal end of input
         if new_task == "":
@@ -1222,8 +1247,8 @@ def madd():
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting tasks to RTM..."
+    display("")
+    display("submitting tasks to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -1234,7 +1259,7 @@ def madd():
     # submit the tasks to RTM
     while len(stack) != 0:
         task=stack.pop()
-        print "adding task: " + task + "..."
+        display("adding task: " + task + "...")
         added_task = my_rtm.tasks.add(timeline=timeline, name=task, parse=1)
         
         # write the transaction ID if it is undoable
@@ -1249,6 +1274,161 @@ def madd():
 
 
 # ========================================================================================================= #
+# edit                                                                                                      #
+#    This method will change the name of the task specified by its index number                             #
+# ========================================================================================================= #
+def edit(index, newTaskName):
+    
+    # login to RTM and authenticate the user
+    if MODE != "interactive":
+        login()
+    
+    # if newTaskName is a list, convert to a single string
+    if type(newTaskName) == list:
+        # print(len(newTaskName))
+        temp = ""
+        for i in range(len(newTaskName)):
+            temp = temp + newTaskName[i]
+            if i < len(newTaskName)-1:
+                temp = temp + " "
+        newTaskName = temp
+    
+    # use the lookuptable to get the task id
+    task_id = getLookupTable(index=index)
+    
+    # get the previous task information
+    getTasks()
+        
+    # find the proper task
+    for i in range(len(tasks)):
+        
+        # when we find our task id, save its taskseries id and list id
+        if tasks[i][1] == task_id:
+            old_task_name = tasks[i][2]
+            taskseries_id = tasks[i][0]
+            list_id = tasks[i][6]
+    
+    display("renaming task #" + index + " from '" + str(old_task_name) + "' to '" + str(newTaskName) + "'...")
+    
+    # get the timeline
+    timeline = getTimeline()
+    
+    # edit the task
+    edit_task = my_rtm.tasks.setName(timeline=timeline, task_id=task_id, taskseries_id=taskseries_id, list_id=list_id, name=newTaskName)
+    
+    # write the transaction ID if it is undoable
+    if edit_task.transaction.undoable == "1":
+        writeTransID(edit_task.transaction.id)
+    else:
+        writeTransID("NA")
+
+# END edit()
+# ========================================================================================================= #
+
+
+
+# ========================================================================================================= #
+# mdit                                                                                                      #
+#    This method will prompt the user for task indices and new names to rename tasks                        #
+# ========================================================================================================= #
+def medit():
+    
+    # Give instructions
+    display("Enter each task index number and new task name (separately) at the prompts below to rename the tasks.")
+    
+    if ENABLE_READLINE == 1:
+        import readline
+        display("Press the up arrow to load the old task name")
+    
+    display("Enter a blank line at the task prompt when finished.")
+    display("")
+    
+    # The entered arguments
+    list_args=[]
+    done=0
+    
+    # Get the task properties, if readline is enabled, to add to readline history
+    if ENABLE_READLINE == 1:
+        if MODE != "interactive":
+            login()
+        getTasks()
+    
+    # prompt user for task #
+    while done == 0:
+        index = get_input("Task #: ")
+        
+        # catch a blank line to signal the end of input
+        if index == "":
+            done = 1
+        
+        # otherwise append the task index number to the list
+        else:
+            
+            if ENABLE_READLINE == 1:
+                # get the old task name
+                task_id = getLookupTable(index=index)
+                
+                # find the proper task
+                for i in range(len(tasks)):
+                    
+                    # when we find our task id, save its taskseries id and list id
+                    if tasks[i][1] == task_id:
+                        task_id = tasks[i][1]
+                        taskseries_id = tasks[i][0]
+                        list_id = tasks[i][6]
+                        old_task_name = tasks[i][2]
+                        readline.add_history(old_task_name)
+                        
+            new_name = get_input("New Name: ")
+            
+            task = [task_id, taskseries_id, list_id, old_task_name, new_name]
+            list_args.append(task)
+    
+    
+    # login to RTM and authenticate the user, if not done already
+    if ENABLE_READLINE == 0:
+        if MODE != "interactive":
+            login()
+    
+    display("")
+    
+    # get a timeline id
+    timeline = getTimeline()    
+    
+    # signal the start of a multi function
+    writeTransID("startMulti")
+    
+    # get task properties before submitting changes, 
+    # since the task index numbers may change after something is submitted to RTM
+    while len(list_args) != 0:
+        
+        # get the task array from the list
+        task = list_args.pop()
+        
+        task_id = task[0]
+        taskseries_id = task[1]
+        list_id = task[2]
+        old_name = task[3]
+        new_name = task[4]
+        
+        # now, submit the changes to RTM            
+        display("renaming task #" + index + " from '" + str(old_name) + "' to '" + str(new_name) + "'...")
+        
+        # submit the changes to RTM
+        edit_task = my_rtm.tasks.setName(timeline=timeline, task_id=task_id, taskseries_id=taskseries_id, list_id=list_id, name=new_name)
+        
+        # write the transaction ID if it is undoable
+        if edit_task.transaction.undoable == "1":
+            writeTransID(edit_task.transaction.id, multi="true")
+        else:
+            writeTransID("NA")
+
+# END medit()
+# ========================================================================================================= #
+
+
+
+# ========================================================================================================= #
 # complete <task index>                                                                                     #
 #    This method will mark the task specified by the task index as complete                                 #
 # ========================================================================================================= #
@@ -1258,7 +1438,7 @@ def complete(index):
     if MODE != "interactive":
         login()
     
-    print "marking task #" + index + " as complete..."
+    display("marking task #" + index + " as complete...")
     
     # get the timeline
     timeline = getTimeline()
@@ -1287,9 +1467,9 @@ def complete(index):
 def mcomplete():
     
     # Give instructions
-    print "Enter each task index number (separately) at the prompt below to mark these tasks as complete."
-    print "Enter a blank line at the task prompt when finished."
-    print ""
+    display("Enter each task index number (separately) at the prompt below to mark these tasks as complete.")
+    display("Enter a blank line at the task prompt when finished.")
+    display("")
     
     # The string of new priorities
     list_args=[]
@@ -1298,7 +1478,7 @@ def mcomplete():
         
     # prompt user for task #
     while done == 0:
-        index = raw_input("Task #: ")
+        index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if index == "":
@@ -1312,8 +1492,8 @@ def mcomplete():
     if MODE != "interactive":
         login()
     
-    print ""
-    print "submitting completed tasks to RTM..."
+    display("")
+    display("submitting completed tasks to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -1339,7 +1519,7 @@ def mcomplete():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "marking task #" + props[3] + " as complete..."
+        display("marking task #" + props[3] + " as complete...")
     
         # submit the changes to RTM
         comp_task = my_rtm.tasks.complete(timeline=timeline, task_id=props[0], taskseries_id=props[1], list_id=props[2])
@@ -1367,9 +1547,9 @@ def delete(index):
     
     # when no task is given, prompt the user to enter the task index
     if index == "":
-        index = raw_input("Task #: ")
+        index = get_input("Task #: ")
     
-    print "deleting task #" + index + "..."
+    display("deleting task #" + index + "...")
     
     # get the timeline
     timeline = getTimeline()
@@ -1399,9 +1579,9 @@ def delete(index):
 def mdelete():
     
     # Give instructions
-    print "Enter each task index number (separately) at the prompt below to delete these tasks."
-    print "Enter a blank line at the task prompt when finished."
-    print ""
+    display("Enter each task index number (separately) at the prompt below to delete these tasks.")
+    display("Enter a blank line at the task prompt when finished.")
+    display("")
     
     # The string of new priorities
     list_args=[]
@@ -1411,7 +1591,7 @@ def mdelete():
     
     # prompt user for task #
     while done == 0:
-        index = raw_input("Task #: ")
+        index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if index == "":
@@ -1425,8 +1605,8 @@ def mdelete():
     if MODE != "interactive":
         login()
     
-    print ""
-    print "submitting deleted tasks to RTM..."
+    display("")
+    display("submitting deleted tasks to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -1452,7 +1632,7 @@ def mdelete():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "deleting task #" + props[3] + "..."
+        display("deleting task #" + props[3] + "...")
     
         # set the priority of the task
         del_task = my_rtm.tasks.delete(timeline=timeline, task_id=props[0], taskseries_id=props[1], list_id=props[2])
@@ -1479,7 +1659,7 @@ def setPriority(index, pri="1"):
     if MODE != "interactive":
         login()
     
-    print "setting the priority of task #" + index + " to " + pri + "..."
+    display("setting the priority of task #" + index + " to " + pri + "...")
     
     # get the timeline
     timeline = getTimeline()
@@ -1509,9 +1689,9 @@ def setPriority(index, pri="1"):
 def msetPriority():
     
     # Give instructions
-    print "Enter each task index number followed by its new priority (1,2,3 or 0 to remove)."
-    print "Enter a blank line at the task prompt when finished."
-    print ""
+    display("Enter each task index number followed by its new priority (1,2,3 or 0 to remove).")
+    display("Enter a blank line at the task prompt when finished.")
+    display("")
     
     # The string of new priorities
     list_args=[]
@@ -1521,7 +1701,7 @@ def msetPriority():
     
     # prompt user for task # and priorities
     while done == 0:
-        index = raw_input("Task #: ")
+        index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if index == "":
@@ -1529,7 +1709,7 @@ def msetPriority():
         
         # append arguments to the list
         else:
-            new_pri = raw_input("New Pri: ")
+            new_pri = get_input("New Pri: ")
             list_args.append(index)
             list_args.append(new_pri)
 
@@ -1537,8 +1717,8 @@ def msetPriority():
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting new priorities to RTM..."
+    display("")
+    display("submitting new priorities to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -1565,7 +1745,7 @@ def msetPriority():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "setting the priority of task #" + props[4] + " to " + props[3] + "..."
+        display("setting the priority of task #" + props[4] + " to " + props[3] + "...")
     
         # set the priority of the task
         pri_task = my_rtm.tasks.setPriority(timeline=timeline, task_id=props[0], taskseries_id=props[1], list_id=props[2], priority=props[3])
@@ -1591,7 +1771,7 @@ def move(index, list):
     if MODE != "interactive":
         login()
     
-    print "moving task #" + index + " to list " + list + "..."
+    display("moving task #" + index + " to list " + list + "...")
     
     # get the timeline
     timeline = getTimeline()
@@ -1624,9 +1804,9 @@ def move(index, list):
 def mmove():
     
     # Give instructions
-    print "Enter each task index number followed by its new list at the following prompts."
-    print "Enter a blank line at the task prompt when finished."
-    print ""
+    display("Enter each task index number followed by its new list at the following prompts.")
+    display("Enter a blank line at the task prompt when finished.")
+    display("")
     
     # The string of new priorities
     list_args=[]
@@ -1635,7 +1815,7 @@ def mmove():
     
     # prompt user for task # and the new lists
     while done == 0:
-        index = raw_input("Task #: ")
+        index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if index == "":
@@ -1643,7 +1823,7 @@ def mmove():
         
         # append arguments to the list
         else:
-            new_list = raw_input("Move to: ")
+            new_list = get_input("Move to: ")
             list_args.append(index)
             list_args.append(new_list)
 
@@ -1651,8 +1831,8 @@ def mmove():
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting changes to RTM..."
+    display("")
+    display("submitting changes to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -1682,7 +1862,7 @@ def mmove():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "moving task #" + props[4] + " to list " + props[5] + "..."
+        display("moving task #" + props[4] + " to list " + props[5] + "...")
     
         # move the task to the new list
         moved_task = my_rtm.tasks.moveTo(timeline=timeline, task_id=props[0], taskseries_id=props[1], from_list_id=props[2], to_list_id=props[3])
@@ -1708,7 +1888,7 @@ def setDueDate(index, due_date="today"):
     if MODE != "interactive":
         login()
     
-    print "setting task #" + index + " as due: " + due_date + "..."
+    display("setting task #" + index + " as due: " + due_date + "...")
     
     # get the timeline
     timeline = getTimeline()
@@ -1738,9 +1918,9 @@ def setDueDate(index, due_date="today"):
 def msetDueDate():
     
     # Give instructions
-    print "Enter each task index number followed by its new due date at the following prompts."
-    print "Enter a blank line at the task prompt when finished."
-    print ""
+    display("Enter each task index number followed by its new due date at the following prompts.")
+    display("Enter a blank line at the task prompt when finished.")
+    display("")
     
     # The string of new priorities
     list_args=[]
@@ -1749,7 +1929,7 @@ def msetDueDate():
     
     # prompt user for task # and the new due date
     while done == 0:
-        index = raw_input("Task #: ")
+        index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if index == "":
@@ -1757,7 +1937,7 @@ def msetDueDate():
         
         # append arguments to the list
         else:
-            new_date = raw_input("New Due Date: ")
+            new_date = get_input("New Due Date: ")
             list_args.append(index)
             list_args.append(new_date)
 
@@ -1765,8 +1945,8 @@ def msetDueDate():
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting new due dates to RTM..."
+    display("")
+    display("submitting new due dates to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -1793,7 +1973,7 @@ def msetDueDate():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "setting the due date of task #" + props[4] + " to " + props[3] + "..."
+        display("setting the due date of task #" + props[4] + " to " + props[3] + "...")
     
         # move the task to the new list
         due_task = my_rtm.tasks.setDueDate(timeline=timeline, task_id=props[0], taskseries_id=props[1], list_id=props[2], due=props[3], parse=1)
@@ -1819,7 +1999,7 @@ def uncomplete(index):
     if MODE != "interactive":
         login()
     
-    print "uncompleting task #" + index + "..."
+    display("uncompleting task #" + index + "...")
     
     # get the timeline
     timeline = getTimeline()
@@ -1848,9 +2028,9 @@ def uncomplete(index):
 def muncomplete():
     
     # Give instructions
-    print "Enter each task index number (separately) at the prompt below to mark these tasks as incomplete."
-    print "Enter a blank line at the task prompt when finished."
-    print ""
+    display("Enter each task index number (separately) at the prompt below to mark these tasks as incomplete.")
+    display("Enter a blank line at the task prompt when finished.")
+    display("")
     
     # The string of new priorities
     list_args=[]
@@ -1859,7 +2039,7 @@ def muncomplete():
         
     # prompt user for task #
     while done == 0:
-        index = raw_input("Task #: ")
+        index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if index == "":
@@ -1873,8 +2053,8 @@ def muncomplete():
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting incompleted tasks to RTM..."
+    display("")
+    display("submitting incompleted tasks to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -1900,7 +2080,7 @@ def muncomplete():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "marking task #" + props[3] + " as incomplete..."
+        display("marking task #" + props[3] + " as incomplete...")
     
         # submit the changes to RTM
         unc_task = my_rtm.tasks.uncomplete(timeline=timeline, task_id=props[0], taskseries_id=props[1], list_id=props[2])
@@ -1926,7 +2106,7 @@ def postpone(index):
     if MODE != "interactive":
         login()
     
-    print "postponing task #" + index + "..."
+    display("postponing task #" + index + "...")
     
     # get the timeline
     timeline = getTimeline()
@@ -1956,9 +2136,9 @@ def postpone(index):
 def mpostpone():
     
     # Give instructions
-    print "Enter each task index number (separately) at the prompt below to postpone these tasks by one day."
-    print "Enter a blank line at the task prompt when finished."
-    print ""
+    display("Enter each task index number (separately) at the prompt below to postpone these tasks by one day.")
+    display("Enter a blank line at the task prompt when finished.")
+    display("")
     
     # The string of new priorities
     list_args=[]
@@ -1967,7 +2147,7 @@ def mpostpone():
         
     # prompt user for task #
     while done == 0:
-        index = raw_input("Task #: ")
+        index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if index == "":
@@ -1981,8 +2161,8 @@ def mpostpone():
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting postponed tasks to RTM..."
+    display("")
+    display("submitting postponed tasks to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2008,7 +2188,7 @@ def mpostpone():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "postponing task #" + props[3] + "..."
+        display("postponing task #" + props[3] + "...")
     
         # submit the changes to RTM
         post_task = my_rtm.tasks.postpone(timeline=timeline, task_id=props[0], taskseries_id=props[1], list_id=props[2])
@@ -2034,7 +2214,7 @@ def addList(name):
     if MODE != "interactive":
         login()
     
-    print "creating new list: " + name + "..."
+    display("creating new list: " + name + "...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2061,16 +2241,16 @@ def addList(name):
 def maddList():
     
     # Give instructions
-    print "Enter each new list name at the prompt below."
-    print "Enter a blank line when finished."
-    print ""
+    display("Enter each new list name at the prompt below.")
+    display("Enter a blank line when finished.")
+    display("")
     
     # The task stack
     stack=[]
     done=0
     
     while done == 0:
-        new_list = raw_input("New List Name: ")
+        new_list = get_input("New List Name: ")
         
         # if a blank line was entered, signal end of input
         if new_list == "":
@@ -2085,8 +2265,8 @@ def maddList():
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting new lists to RTM..."
+    display("")
+    display("submitting new lists to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2097,7 +2277,7 @@ def maddList():
     # submit the tasks to RTM
     while len(stack) != 0:
         list_name = stack.pop()
-        print "creating new list: " + list_name + "..."
+        display("creating new list: " + list_name + "...")
         created_list = my_rtm.lists.add(timeline=timeline, name=list_name)
         
         # write the transaction ID if it is undoable
@@ -2121,7 +2301,7 @@ def delList(name):
     if MODE != "interactive":
         login()
     
-    print "deleting list: " + name + "..."
+    display("deleting list: " + name + "...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2151,16 +2331,16 @@ def delList(name):
 def mdelList():
     
     # Give instructions
-    print "Enter each list name to delete at the prompt below."
-    print "Enter a blank line when finished."
-    print ""
+    display("Enter each list name to delete at the prompt below.")
+    display("Enter a blank line when finished.")
+    display("")
     
     # The task stack
     stack=[]
     done=0
     
     while done == 0:
-        del_list = raw_input("List Name: ")
+        del_list = get_input("List Name: ")
         
         # if a blank line was entered, signal end of input
         if del_list == "":
@@ -2175,8 +2355,8 @@ def mdelList():
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting lists to RTM for removal..."
+    display("")
+    display("submitting lists to RTM for removal...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2193,7 +2373,7 @@ def mdelList():
         # get the list id
         list_id = getList(name=list_name)
         
-        print "deleting list: " + list_name + "..."
+        display("deleting list: " + list_name + "...")
         
         deleted_list = my_rtm.lists.delete(timeline=timeline, list_id=list_id)
         
@@ -2218,7 +2398,7 @@ def renameList(old_name, new_name):
     if MODE != "interactive":
         login()
     
-    print "renaming list: " + old_name + " to " + new_name + "..."
+    display("renaming list: " + old_name + " to " + new_name + "...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2248,9 +2428,9 @@ def renameList(old_name, new_name):
 def mrenameList():
     
     # Give instructions
-    print "Enter each old list name followed by its new name at the prompt below."
-    print "Enter a blank line when finished."
-    print ""
+    display("Enter each old list name followed by its new name at the prompt below.")
+    display("Enter a blank line when finished.")
+    display("")
     
     # The task stack
     stack=[]
@@ -2258,7 +2438,7 @@ def mrenameList():
     
     # prompt user for old and new list name
     while done == 0:
-        old_name = raw_input("Old List Name: ")
+        old_name = get_input("Old List Name: ")
         
         # catch a blank line to signal the end of input
         if old_name == "":
@@ -2266,17 +2446,17 @@ def mrenameList():
         
         # append arguments to the list
         else:
-            new_name = raw_input("New List Name: ")
+            new_name = get_input("New List Name: ")
             stack.append(old_name)
             stack.append(new_name)
 
-	
+    
     # login to RTM and authenticate the user
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting list changes to RTM..."
+    display("")
+    display("submitting list changes to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2296,7 +2476,7 @@ def mrenameList():
         # get the old list id
         old_id = getList(name=old_name)
         
-        print "renaming list: " + old_name + " to " + new_name + "..."
+        display("renaming list: " + old_name + " to " + new_name + "...")
         
         new_list = my_rtm.lists.setName(timeline=timeline, list_id=old_id, name=new_name)
         
@@ -2321,7 +2501,7 @@ def addTags(index, tags):
     if MODE != "interactive":
         login()
     
-    print "adding tags: " + tags + " to task #" + index + "..."
+    display("adding tags: " + tags + " to task #" + index + "...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2351,9 +2531,9 @@ def addTags(index, tags):
 def maddTags():
     
     # Give instructions
-    print "Enter each task followed by the tags to add to it at the prompt below."
-    print "Enter a blank line when finished."
-    print ""
+    display("Enter each task followed by the tags to add to it at the prompt below.")
+    display("Enter a blank line when finished.")
+    display("")
     
     # The task stack
     list_args=[]
@@ -2362,7 +2542,7 @@ def maddTags():
     
     # prompt user for old and new list name
     while done == 0:
-        task_index = raw_input("Task #: ")
+        task_index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if task_index == "":
@@ -2370,20 +2550,20 @@ def maddTags():
         
         # append arguments to the list
         else:
-            tags = raw_input("Tags: ")
+            tags = get_input("Tags: ")
             tags = tags.replace(" ",",")
             tags = tags.replace(",,",",")
             
             list_args.append(task_index)
             list_args.append(tags)
 
-	
+    
     # login to RTM and authenticate the user
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting new tags to RTM..."
+    display("")
+    display("submitting new tags to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2410,7 +2590,7 @@ def maddTags():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "adding tags: " + props[4] + " to task #" + props[3] + "..."
+        display("adding tags: " + props[4] + " to task #" + props[3] + "...")
     
         # add new tags
         new_task = my_rtm.tasks.addTags(timeline=timeline, list_id=props[2], taskseries_id=props[1], task_id=props[0], tags=props[4])
@@ -2436,7 +2616,7 @@ def delTags(index, tags):
     if MODE != "interactive":
         login()
     
-    print "removing tags: " + tags + " from task #" + index + "..."
+    display("removing tags: " + tags + " from task #" + index + "...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2466,9 +2646,9 @@ def delTags(index, tags):
 def mdelTags():
     
     # Give instructions
-    print "Enter each task followed by the tags to remove from it at the prompt below."
-    print "Enter a blank line when finished."
-    print ""
+    display("Enter each task followed by the tags to remove from it at the prompt below.")
+    display("Enter a blank line when finished.")
+    display("")
     
     # The task stack
     list_args=[]
@@ -2477,7 +2657,7 @@ def mdelTags():
     
     # prompt user for old and new list name
     while done == 0:
-        task_index = raw_input("Task #: ")
+        task_index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if task_index == "":
@@ -2485,20 +2665,20 @@ def mdelTags():
         
         # append arguments to the list
         else:
-            tags = raw_input("Tags: ")
+            tags = get_input("Tags: ")
             tags = tags.replace(" ",",")
             tags = tags.replace(",,",",")
             
             list_args.append(task_index)
             list_args.append(tags)
 
-	
+    
     # login to RTM and authenticate the user
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting tags to remove to RTM..."
+    display("")
+    display("submitting tags to remove to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2525,7 +2705,7 @@ def mdelTags():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "removing tags: " + props[4] + " to task #" + props[3] + "..."
+        display("removing tags: " + props[4] + " to task #" + props[3] + "...")
     
         # remove tags
         new_task = my_rtm.tasks.removeTags(timeline=timeline, list_id=props[2], taskseries_id=props[1], task_id=props[0], tags=props[4])
@@ -2551,7 +2731,7 @@ def addNote(index, title, body):
     if MODE != "interactive":
         login()
     
-    print "adding note to task # " + index + "..."
+    display("adding note to task # " + index + "...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2581,9 +2761,9 @@ def addNote(index, title, body):
 def maddNote():
     
     # Give instructions
-    print "Enter each task # followed by the note title and then the note body at the prompts below."
-    print "Enter a blank line when finished."
-    print ""
+    display("Enter each task # followed by the note title and then the note body at the prompts below.")
+    display("Enter a blank line for the task # when finished.")
+    display("")
     
     # The task stack
     list_args=[]
@@ -2592,7 +2772,7 @@ def maddNote():
     
     # prompt user for note titles and bodies
     while done == 0:
-        task_index = raw_input("Task #: ")
+        task_index = get_input("Task #: ")
         
         # catch a blank line to signal the end of input
         if task_index == "":
@@ -2600,20 +2780,21 @@ def maddNote():
         
         # append arguments to the list
         else:
-            title = raw_input("Title: ")
-            body = raw_input("Body: ")
+            title = get_input("Title: ")
+            display("Body: (Enter EOF/ctr-D to finish)")
+            body = get_multi_input()
             
             list_args.append(task_index)
             list_args.append(title)
             list_args.append(body)
 
-	
+    
     # login to RTM and authenticate the user
     if MODE != "interactive":
         login()
 
-    print ""
-    print "submitting new notes to RTM..."
+    display("")
+    display("submitting new notes to RTM...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2641,7 +2822,7 @@ def maddNote():
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "adding note to task #" + props[3] + "..."
+        display("adding note to task #" + props[3] + "...")
     
         # add new tags
         rsp = my_rtm.tasksNotes.add(timeline=timeline, list_id=props[2], taskseries_id=props[1], task_id=props[0], note_title=props[4], note_text=props[5])
@@ -2669,11 +2850,11 @@ def delNote(index=""):
     
     
     if index == "":
-        index = raw_input("Task #: ")
+        index = get_input("Task #: ")
     
     
-    print "Choose which notes to delete from the list below"
-    print ""
+    display("Choose which notes to delete from the list below")
+    display("")
     
     # get the task properties
     (task_id, taskseries_id, list_id) = getTask(index)
@@ -2683,19 +2864,19 @@ def delNote(index=""):
     for lists in root.tasks.list:
         if hasattr(lists, "taskseries"):
             if isinstance(lists.taskseries, list):
-				for series in lists.taskseries:
-					if series.id == taskseries_id:
-						series_elem = series
-						notes = series_elem.notes
+                for series in lists.taskseries:
+                    if series.id == taskseries_id:
+                        series_elem = series
+                        notes = series_elem.notes
             else:
-			    series = lists.taskseries
-			    if series.id == taskseries_id:
-				    series_elem = series
-				    notes = series_elem.notes
+                series = lists.taskseries
+                if series.id == taskseries_id:
+                    series_elem = series
+                    notes = series_elem.notes
 
     
     if notes == []:
-        print "This task has no notes"
+        display("This task has no notes")
         
     # Have the user choose which notes to delete
     else:
@@ -2706,31 +2887,31 @@ def delNote(index=""):
         
         # display the titles each note, prompt the user if it should be deleted
         if isinstance(notes.note, list):
-			for note in notes.note:
-			    if ( note.title != "" ):
-			        print "Title: " + note.title
-			    else:
-			        print "Body: " + getattr(note, "$t")
-			    dn = raw_input("Delete this note (y/n)? ")
-			    if (dn == "y" or dn == "Y" or dn == "yes" or dn == "Yes" or dn == "YES"):
-			        stack.append(note.id)
-			    print ""
-				
+            for note in notes.note:
+                if ( note.title != "" ):
+                    display("Title: " + note.title)
+                else:
+                    display("Body: " + getattr(note, "$t"))
+                dn = get_input("Delete this note (y/n)? ")
+                if (dn == "y" or dn == "Y" or dn == "yes" or dn == "Yes" or dn == "YES"):
+                    stack.append(note.id)
+                display("")
+                
         else:
             note = notes.note
             
             if ( note.title != "" ):
-                print "Title: " + note.title
+                display("Title: " + note.title)
             else:
-			    print "Body: " + getattr(note, "$t")
-            dn = raw_input("Delete this note (y/n)?")
+                display("Body: " + getattr(note, "$t"))
+            dn = get_input("Delete this note (y/n)?")
             if (dn == "y" or dn == "Y" or dn == "yes" or dn == "Yes" or dn == "YES"):
                 stack.append(note.id)
-            print ""
+            display("")
         
         # loop through each note that was selected, and delete
         for i in range(len(stack)):
-            print "Deleting note # " + stack[i] + "..."
+            display("Deleting note # " + stack[i] + "...")
             
             # delete the note
             rsp = my_rtm.tasksNotes.delete(timeline=timeline, note_id=stack[i])
@@ -2742,6 +2923,127 @@ def delNote(index=""):
                 writeTransID("NA", multi="true")
         
 # END delNote()    
+# ========================================================================================================= #
+
+
+
+# ========================================================================================================= #
+# editNote <task index>                                                                                     #
+#    This method will edit the note(s) (title and body) of the specified or entered task                    #
+# ========================================================================================================= #
+def editNote(index=""):
+    
+    # get a task index number, if not passed
+    if index == "":
+        index = get_input("Task #: ")
+        
+    if MODE != "interactive":
+        login()
+    
+    if ENABLE_READLINE:
+        import readline
+    
+    # get the task properties
+    (task_id, taskseries_id, list_id) = getTask(index)
+    
+    # find the task
+    root = my_rtm.tasks.getList()
+    for lists in root.tasks.list:
+        if hasattr(lists, "taskseries"):
+            if isinstance(lists.taskseries, list):
+                for series in lists.taskseries:
+                    if series.id == taskseries_id:
+                        series_elem = series
+                        notes = series_elem.notes
+            else:
+                series = lists.taskseries
+                if series.id == taskseries_id:
+                    series_elem = series
+                    notes = series_elem.notes
+
+    
+    if notes == []:
+        display("This task has no notes")
+    else:
+        # Display Instructions
+        display("Choose the notes for this task to edit:")
+        display("")
+        
+        # convert notes.note to a list, if there's only a single note
+        if isinstance(notes.note, list):
+            notes_list = notes.note
+        else:
+            notes_list = [notes.note]
+        
+        # determine which note to edit
+        args_list = []
+        for note in notes_list:
+            title = note.title
+            body = getattr(note, "$t")
+            
+            display("** " + title + " **")
+            display(body)
+            display("")
+            response = get_input("EDIT THIS NOTE (y/n)? ")
+            display("")
+            
+            if response in ("y", "Y", "yes", "Yes", "YES"):
+                readline.add_history(title)
+                new_title = get_input("New title: ")
+                
+                display("You will now edit the body of the note in " + CLI_EDITOR + ".")
+                display("Make your changes then use the editor to save your changes.")
+                get_input("Press enter to continue...")
+                
+                temp = tempfile.NamedTemporaryFile(delete=False)
+                filename = str(temp.name)
+                temp.write(body.encode('utf-8'))
+                temp.flush()
+                temp.close()
+                
+                subprocess.call([CLI_EDITOR, filename])
+                
+                if CLI_EDITOR_PAUSE == 1:
+                    get_input("Press enter when finished editing...")
+                
+                new_body = open(filename, 'r').read()
+                os.remove(filename)
+                
+                # Make a list of arguments to passed to RTM
+                note_args = []
+                note_args.append(note.id)
+                note_args.append(new_title)
+                note_args.append(new_body)
+                
+                args_list.append(note_args)
+                
+                display("")
+        
+        # Save the changes
+        display("Saving changes...")
+        
+        timeline = getTimeline()
+        
+        for i in range(len(args_list)):
+            note_args = args_list[i]
+            
+            note_id = note_args[0]
+            note_title = note_args[1]
+            note_body = note_args[2]
+            
+            display("saving note #" + str(note_id) + "...")
+            
+            # save the note
+            rsp = my_rtm.tasksNotes.edit(timeline=timeline, note_id=note_id, note_title=note_title, note_text=note_body)
+            
+            # write the transaction ID if it is undoable
+            if rsp.transaction.undoable == "1":
+                writeTransID(rsp.transaction.id, multi="true")
+            else:
+                writeTransID("NA", multi="true")
+        
+    
+# END editNote()    
 # ========================================================================================================= #
 
 
@@ -2763,41 +3065,211 @@ def getNotes(index):
     for lists in root.tasks.list:
         if hasattr(lists, "taskseries"):
             if isinstance(lists.taskseries, list):
-				for series in lists.taskseries:
-					if series.id == taskseries_id:
-						series_elem = series
-						notes = series_elem.notes
+                for series in lists.taskseries:
+                    if series.id == taskseries_id:
+                        series_elem = series
+                        notes = series_elem.notes
             else:
-			    series = lists.taskseries
-			    if series.id == taskseries_id:
-				    series_elem = series
-				    notes = series_elem.notes
+                series = lists.taskseries
+                if series.id == taskseries_id:
+                    series_elem = series
+                    notes = series_elem.notes
 
     
     if notes == []:
-        print "This task has no notes"
+        display("This task has no notes")
     else:
-        print "----------------------------------------------------"
+        # get the size of the console
+        rows, columns = os.popen('stty size', 'r').read().split()
+        
+        
+        # convert notes.note to a list, if there's only a single note
         if isinstance(notes.note, list):
-			for note in notes.note:
-			    space_len = (52-len(note.title))/2
-			    for i in range(space_len):
-			        sys.stdout.write(" ")
-			    print note.title
-			    body = getattr(note, "$t")
-			    print body
-			    print "----------------------------------------------------"
-				
+            notes_list = notes.note
         else:
-            note = notes.note
+            notes_list = [notes.note]
             
-            space_len = (52-len(note.title))/2
-            for i in range(space_len):
-                sys.stdout.write(" ")
-            print note.title
+        
+        # DISPLAY THE NOTES
+        for note in notes_list:
+            title = note.title
+            title_length = int(len(title))
             body = getattr(note, "$t")
-            print body
-            print "----------------------------------------------------"
+            
+            # Get the width of the note (either the max length of a line or the width of the console)
+            index = 0;
+            max_line_length = 0
+            
+            
+            done = 0
+            while body.find('\n', index) != -1 and done == 0:
+                
+                new_index = body.find('\n', index+1)
+                length = new_index - index
+                
+                if length > max_line_length:
+                    max_line_length = length
+                
+                if new_index > 0:
+                    index = new_index+1
+                else:
+                    done = 1
+            
+            # last segment length or entire string if one line
+            new_index = int(len(body))
+            length = new_index - index
+            
+            if length > max_line_length:
+                # print(str(length) + "*")
+                max_line_length = length
+            
+            # if the max line length is greater than the console, we'll have to wrap it
+            max_line_length = max_line_length + 4
+            title_length = title_length + 4
+            
+            if title_length > max_line_length and title_length < int(columns):
+                max_width = title_length
+            elif int(max_line_length) > int(columns):
+                max_width = int(columns)
+            else:
+                max_width = max_line_length
+            
+            
+            # top line
+            
+            if PLAIN == 0:
+                display(COLOR_NOTE_BORDER, 0)
+            
+            display("|", 0)
+            for i in range(max_width-2):
+                display("=", 0)
+            display("|")
+            
+            if PLAIN == 0:
+                display(COLOR_RESET, 0)
+            
+            
+            
+            # title row
+            if len(title) > 0:
+                if PLAIN == 0:
+                    display(COLOR_NOTE_BORDER, 0)
+                
+                display("|", 0)
+                
+                if PLAIN == 0:
+                    display(COLOR_RESET, 0)
+                
+                space_len = int((max_width-int(len(note.title))-2)/2)
+                for i in range(space_len):
+                    display(" ", 0)
+                
+                if PLAIN == 0:
+                    display(COLOR_NOTE_TITLE, 0)
+                    
+                display(title, 0)
+                
+                if PLAIN == 0:
+                    display(COLOR_RESET, 0)
+                
+                title_length = 1+space_len+int(len(note.title))
+                space_len = int(max_width-title_length-1)
+                for i in range(space_len):
+                    display(" ", 0)
+                    
+                if PLAIN == 0:
+                    display(COLOR_NOTE_BORDER, 0)
+                
+                display("|")
+                
+                if PLAIN == 0:
+                    display(COLOR_RESET, 0)
+                
+                
+                
+                # title divider
+                if PLAIN == 0:
+                    display(COLOR_NOTE_BORDER, 0)
+                
+                display("|", 0)
+                
+                for i in range(max_width-2):
+                    display("-", 0)
+                
+                display("|")
+                
+                if PLAIN == 0:
+                    display(COLOR_RESET, 0)
+            
+            
+            
+            # body
+            
+            # turn the string into a list
+            body = " \n ".join(body.split("\n"))
+            body = re.split(' ', body)
+                        
+            if PLAIN == 0:
+                display(COLOR_NOTE_BORDER, 0)
+            
+            display("| ", 0)
+            
+            if PLAIN == 0:
+                display(COLOR_RESET, 0)
+                
+            # parse each word
+            line_length = 0
+            for i in range(len(body)):
+                
+                # manually handle new lines
+                if body[i] == "\n" or (line_length + int(len(body[i])) + 4) > max_width:
+                    
+                    # pad with spaces
+                    space_len = max_width - line_length - 3
+                    for j in range(space_len):
+                        display(" ", 0)
+                    
+                    if PLAIN == 0:
+                        display(COLOR_NOTE_BORDER, 0)
+                    
+                    display("|")
+                                        
+                    display("| ", 0)
+                    
+                    if PLAIN == 0:
+                        display(COLOR_RESET, 0)
+                        
+                    line_length = 0
+                
+                # display the word
+                else:
+                    display(body[i] + " ", 0)
+                    line_length = line_length + int(len(body[i]))+1
+            
+            # pad with spaces
+            space_len = max_width - line_length - 3
+            for j in range(space_len):
+                display(" ", 0)
+                    
+            if PLAIN == 0:
+                display(COLOR_NOTE_BORDER, 0)
+                    
+            display("|")
+            
+            
+            # Bottom Line
+            display("|", 0)
+            
+            for i in range(max_width-2):
+                display("=", 0)
+            display("|")
+            
+            if PLAIN == 0:
+                display(COLOR_RESET, 0)
+            
+            
+            display("")
+                
 
 # END getNotes()    
 # ========================================================================================================= #
@@ -2827,7 +3299,7 @@ def clear(filterString=""):
         if tasks[i][7] != "":
             stack.append((tasks[i][1], tasks[i][0], tasks[i][6], tasks[i][2]))
     
-    print "cleaning up RTM tasks..."
+    display("cleaning up RTM tasks...")
     
     # get a timeline id
     timeline = getTimeline()
@@ -2840,7 +3312,7 @@ def clear(filterString=""):
         # get the current tasks's saved properties
         props = stack.pop()
                 
-        print "deleting task: " + props[3] + "..."
+        display("deleting task: " + props[3] + "...")
     
         # set the priority of the task
         del_task = my_rtm.tasks.delete(timeline=timeline, task_id=props[0], taskseries_id=props[1], list_id=props[2])
@@ -2875,20 +3347,20 @@ def undo():
     
     # when there is no transID found
     if transIDs == []:
-        print "No action was found to undo..."
+        display("No action was found to undo...")
     
     # when the last action is not undoable
     elif transIDs[0] == "NA":
-        print "What you just did cannot be undone..."
+        display("What you just did cannot be undone...")
         
     # when there is only one action to undo
     elif len(transIDs) == 1:
-        print "undoing the last action..."
+        display("undoing the last action...")
         my_rtm.transactions.undo(transaction_id=transIDs[0], timeline=timeline)
         
     # when there are multiple actions to undo
     else:
-        print "undoing the last multi-action..."
+        display("undoing the last multi-action...")
     
         for i in range(len(transIDs)):
             my_rtm.transactions.undo(transaction_id=transIDs[i], timeline=timeline)
@@ -2910,23 +3382,30 @@ def undo():
 #   THIS REALLY NEEDS TO BE CLEANED UP                                                                      #
 # ========================================================================================================= #
 def planner(start="mon", filterString=""):
+    col_buffer = 8
+    
     # max substring length
-    substring_length = PLANNER_LENGTH
-
+    # PLANNER_LENGTH = 20 # old value
+    rows, columns = os.popen('stty size', 'r').read().split()
+    substring_length = int(((int(columns)-8)/7)-col_buffer)
+    substring_remainder = int(int(columns) - (((int(substring_length)+col_buffer)*7)+8))
+    
+    
+    
     # login to RTM and authenticate the user
     if MODE != "interactive":
         login()
     
     # get the tasks
     getTasks(filterString=filterString)
-
+    
     # sort tasks by task due date, then completed, priority, and task name
     global tasks
     tasks = sorted(tasks, key=itemgetter(4,7,3,2))
-
-
+    
+    
     # SET UP DAYS OF WEEK
-
+    
     # Get today's date and day of week
     today_obj = date.today()
     weekday_int = date.weekday(today_obj)
@@ -2940,7 +3419,7 @@ def planner(start="mon", filterString=""):
     elif start == "today":
         first_day_obj = today_obj
     else:
-        print "ERROR: start day " + start + " not recognized."
+        display("ERROR: start day " + start + " not recognized.")
         sys.exit(2)
         
     # create a list of date objects for this week
@@ -2953,8 +3432,9 @@ def planner(start="mon", filterString=""):
     # SORT THROUGH AND GATHER TASKS DATA
     
     # initialize a list for each day of the week
+    # a list of overdue tasks
     # a list for anytime tasks
-    # a list for all others (not being used as of now)
+    # a list for all others
     day_0=[]
     day_1=[]
     day_2=[]
@@ -2962,6 +3442,7 @@ def planner(start="mon", filterString=""):
     day_4=[]
     day_5=[]
     day_6=[]
+    overdue=[]
     anytime=[]
     others=[]
     
@@ -2970,8 +3451,7 @@ def planner(start="mon", filterString=""):
     
         # get the due date as a string
         temp_date_obj = str(tasks[i][4])
-                
-                
+        
         # check for tasks with no due date
         if temp_date_obj == "":
             anytime.append((tasks[i][3], tasks[i][5], tasks[i][2], tasks[i][7], len(tasks[i][2])))    
@@ -2997,10 +3477,13 @@ def planner(start="mon", filterString=""):
                 day_5.append((tasks[i][3], tasks[i][5], tasks[i][2], tasks[i][7], len(tasks[i][2])))
             elif temp_date_obj.date() == date_objs[6]:
                 day_6.append((tasks[i][3], tasks[i][5], tasks[i][2], tasks[i][7], len(tasks[i][2])))
+            elif temp_date_obj.date() < date_objs[0]:
+                if tasks[i][7] == "":
+                    overdue.append((tasks[i][3], tasks[i][5], tasks[i][2], tasks[i][7], len(tasks[i][2])))
             else:
                 others.append((tasks[i][3], tasks[i][5], tasks[i][2], tasks[i][7], len(tasks[i][2])))
         
-
+    
     # sort each day by list, completed, priority and then name
     day_0 = sorted(day_0, key=itemgetter(1,3,0,2))
     day_1 = sorted(day_1, key=itemgetter(1,3,0,2))
@@ -3009,6 +3492,7 @@ def planner(start="mon", filterString=""):
     day_4 = sorted(day_4, key=itemgetter(1,3,0,2))
     day_5 = sorted(day_5, key=itemgetter(1,3,0,2))
     day_6 = sorted(day_6, key=itemgetter(1,3,0,2))
+    overdue = sorted(overdue, key=itemgetter(1,3,0,2))
     others = sorted(others, key=itemgetter(1,3,0,2))
     anytime = sorted(anytime, key=itemgetter(1,3,0,2))
     
@@ -3048,8 +3532,8 @@ def planner(start="mon", filterString=""):
             else:
                 task_count = task_count + 1
                 
-
-            if max_in_lists.has_key(temp_list):
+            
+            if temp_list in max_in_lists:
                 if task_count > max_in_lists[temp_list]:
                     max_in_lists[temp_list] = task_count
                     
@@ -3062,7 +3546,7 @@ def planner(start="mon", filterString=""):
     max_lists = len(max_in_lists)
     
     # get the list names and sort
-    list_names = max_in_lists.keys()
+    list_names = list(max_in_lists.keys())
     list_names.sort()
 
 
@@ -3075,6 +3559,8 @@ def planner(start="mon", filterString=""):
     
     # find the max length of the largest task name for each day
     max_length = []
+    needs_extra = []
+    extra_length = substring_remainder
     for i in range(7):
         
         # set initial max_length for day i
@@ -3086,15 +3572,46 @@ def planner(start="mon", filterString=""):
             if len(days[i][j][2]) > temp_max_length:
                 temp_max_length = len(days[i][j][2])
         
+        
+        # add unused length to the extra
+        if temp_max_length < substring_length:
+            extra_length = extra_length + (substring_length - temp_max_length)
+        
         # if the max length is greater than the preset max
         # use the preset instead
         if temp_max_length > substring_length:
-            temp_max_length = substring_length
+            use_extra = temp_max_length - substring_length
+            if extra_length < use_extra:
+                needs_extra.append(use_extra - extra_length)
+                use_extra = extra_length
+            else:
+                needs_extra.append(0)
+            
+            if use_extra > 0:
+                temp_max_length = substring_length + use_extra
+                extra_length = extra_length - use_extra
+            else:
+                temp_max_length = substring_length
+                
+        else:
+            needs_extra.append(0)
         
         # after all j tasks have been tested,
         # set the temp max as the max for day i
         max_length.append(temp_max_length)
     
+    # Add any remaining length
+    if extra_length > 0:
+        for i in range(6, 0, -1):
+            needs = needs_extra[i]
+            if needs > 0:
+                if needs > extra_length:
+                    add = extra_length
+                else:
+                    add = extra_length - needs
+                max_length[i] = max_length[i] + add
+                extra_length = extra_length - add
+                
     
     # find the max number of tasks (across all days)
     max_tasks = 0
@@ -3110,67 +3627,93 @@ def planner(start="mon", filterString=""):
         max_lines = max_lines + max_in_lists[name]
         
     
+    
     # PRINT DATE HEADER
     
     # first line
     for i in range(7):
-        sys.stdout.write('+')
+        if PLAIN == 0:
+            display(COLOR_PLANNER_BORDER, 0)
+        display('+', 0)
         
-        total = max_length[i]+8
+        total = max_length[i]+col_buffer
         
+        for j in range(int(total)):
+            display('-', 0)
         
-        for j in range(total):
-            sys.stdout.write('-')
-        
-    print "+"    
+    display("+")
+    
+    if PLAIN == 0:
+        display(COLOR_RESET, 0)
     
         
     # second line
     for i in range(7):
-        sys.stdout.write('|')
+        if PLAIN == 0:
+            display(COLOR_PLANNER_BORDER,0)
+        
+        display('|', 0)
+        
         
         current_date = weekdays[date_objs[i].weekday()] + " " + str(date_objs[i])[5:10]
         
         if current_date == today:
             buffer = (max_length[i]-1)/2
             
-            for j in range(buffer):
-                sys.stdout.write(' ')
+            for j in range(int(buffer)):
+                display(' ', 0)
             
-            sys.stdout.write('**TODAY**')
+            if PLAIN == 0:
+                display(COLOR_PLANNER_TODAY, 0)
+            
+            display('**TODAY**', 0)
+            
+            if PLAIN == 0:
+                display(COLOR_RESET, 0)
             
             if ((max_length[i]-1)%2) != 0:
                 buffer = buffer+1
-            for j in range(buffer):
-                sys.stdout.write(' ')
+            for j in range(int(buffer)):
+                display(' ', 0)
                 
-        else:
+        else:    
             buffer = (max_length[i]-1)/2
             
-            for j in range(buffer):
-                sys.stdout.write(' ')
+            for j in range(int(buffer)):
+                display(' ', 0)
             
-            sys.stdout.write(current_date)
+            if PLAIN == 0:
+                display(COLOR_PLANNER_DATE, 0)
+            
+            display(current_date, 0)
+            
+            if PLAIN == 0:
+                display(COLOR_RESET, 0)
             
             if ((max_length[i]-1)%2) != 0:
                 buffer = buffer+1
-            for j in range(buffer):
-                sys.stdout.write(' ')
-            
-    print "|"
+            for j in range(int(buffer)):
+                display(' ', 0)
+    
+    if PLAIN == 0:
+        display(COLOR_PLANNER_BORDER, 0)
+        
+    display("|")
     
     
     # third line
     for i in range(7):
-        sys.stdout.write('+')
+        display('+', 0)
         
-        total = max_length[i]+8
+        total = max_length[i]+col_buffer
         
+        for j in range(int(total)):
+            display('-', 0)
         
-        for j in range(total):
-            sys.stdout.write('-')
-        
-    print "+"    
+    display("+")
+    
+    if PLAIN == 0:
+        display(COLOR_RESET, 0)
 
     
     # PRINT TASK LISTS    
@@ -3199,11 +3742,28 @@ def planner(start="mon", filterString=""):
         # print a list heading, if needed
         if (h == next_row):
             for i in range(7):
-                sys.stdout.write('| ' + list_names[list_count] + ':')
+                if PLAIN == 0:
+                    display(COLOR_PLANNER_BORDER, 0)
+                display('| ', 0)
+                
+                if PLAIN == 0:
+                    display(COLOR_LIST, 0)
+                display(list_names[list_count] + ':', 0)
+                
+                if PLAIN == 0:
+                    display(COLOR_RESET, 0)
+                
                 buffer = max_length[i]-len(list_names[list_count])+6
-                for j in range(buffer):
-                    sys.stdout.write(' ')
-            print "|"
+                for j in range(int(buffer)):
+                    display(' ', 0)
+            
+            if PLAIN == 0:
+                display(COLOR_PLANNER_BORDER, 0)
+                
+            display("|")
+            
+            if PLAIN == 0:
+                display(COLOR_RESET, 0)
             
             list_count = list_count + 1
             
@@ -3214,7 +3774,16 @@ def planner(start="mon", filterString=""):
         # print the actual tasks
         for i in range(7):
             
-            sys.stdout.write('|')
+            # the max length of the task string
+            task_max_length = max_length[i]
+            
+            if PLAIN == 0:
+                display(COLOR_PLANNER_BORDER, 0)
+                
+            display('|', 0)
+            
+            if PLAIN == 0:
+                display(COLOR_RESET, 0)
             
             # number of tasks for day i
             days_task_count = task_count[i]
@@ -3230,71 +3799,214 @@ def planner(start="mon", filterString=""):
                 
                     # increase the task count for the current day
                     task_count[i] = task_count[i] + 1
-                
+                    
+                    
+                    # Parse pri of incomplete tasks, if displaying in color
+                    if PLAIN == 0 and days[i][days_task_count][3] == "":
+                        pri = days[i][days_task_count][0]
+                        if pri == "1":
+                            display(COLOR_PRI1, 0)
+                        elif pri == "2":
+                            display(COLOR_PRI2, 0)
+                        elif pri == "3":
+                            display(COLOR_PRI3, 0)
+                    
+                    
                     # for completed tasks
                     if days[i][days_task_count][3] != "":
-                        sys.stdout.write('    x  ')
+                        display('    x  ', 0)
                 
                     # for unprioritized tasks
                     elif days[i][days_task_count][0] == "N":
-                        sys.stdout.write('       ')
+                        display('       ', 0)
                 
                     # for incomplete tasks, print the priority
                     else:
-                        sys.stdout.write('   (' + days[i][days_task_count][0] + ') ')
+                        display('   (' + days[i][days_task_count][0] + ') ', 0)
                         
                     # print the task itself
-                    sys.stdout.write(days[i][days_task_count][2][:substring_length] + ' ')    
+                    display(days[i][days_task_count][2][:int(task_max_length)] + ' ', 0)
+                    
+                    if PLAIN == 0:
+                        display(COLOR_RESET, 0)
                     
                     # print buffer space
                     buffer = max_length[i]-days[i][days_task_count][4]
-                    for j in range(buffer):
-                        sys.stdout.write(' ')
+                    for j in range(int(buffer)):
+                        display(' ', 0)
                     
                     
                 # Print a spacer when the task doens't match the list
                 else:
-                    buffer = max_length[i]+8
-                    for j in range(buffer):
-                        sys.stdout.write(' ')
+                    buffer = max_length[i]+col_buffer
+                    for j in range(int(buffer)):
+                        display(' ', 0)
                         
                         
             # print a spacer when there is no task
             else:
-                buffer = max_length[i]+8
-                for j in range(buffer):
-                    sys.stdout.write(' ')
+                buffer = max_length[i]+col_buffer
+                for j in range(int(buffer)):
+                    display(' ', 0)
         
-        print "|"
+        if PLAIN == 0:
+            display(COLOR_PLANNER_BORDER, 0)
+        
+        display("|")
 
     # bottom line
     for i in range(7):
-        sys.stdout.write('+')
+        display('+', 0)
         
-        total = max_length[i]+8
+        total = max_length[i]+col_buffer
         
         
-        for j in range(total):
-            sys.stdout.write('-')
+        for j in range(int(total)):
+            display('-', 0)
         
-    print "+"    
+    display("+")
+    
+    if PLAIN == 0:
+        display(COLOR_RESET, 0)
+    
+    
+    # Get the number of columns in console
+    rows, columns = os.popen('stty size', 'r').read().split()
+    line_length = 0;
+    
+    
+    # get the max length of the anytime and overdue tasks
+    max_task_length_o=0
+    max_list_name_o=0
+    for j in range(len(overdue)):
+        if len(overdue[j][2]) > max_task_length_o:
+            max_task_length_o = len(overdue[j][2])
+        if len(overdue[j][1]) > max_list_name_o:
+            max_list_name_o = len(overdue[j][1])
+    
+    max_task_length_a=0
+    max_list_name_a=0
+    for j in range(len(anytime)):
+        if len(anytime[j][2]) > max_task_length_a:
+            max_task_length_a = len(anytime[j][2])
+        if len(anytime[j][1]) > max_list_name_a:
+            max_list_name_a = len(anytime[j][1])
+    
+    if max_task_length_o > max_task_length_a:
+        max_task_length = max_task_length_o
+    else:
+        max_task_length = max_task_length_a
+        
+    if max_list_name_o > max_list_name_a:
+        max_list_name = max_list_name_o
+    else:
+        max_list_name = max_list_name_a
+    
+    
+    
+    # PRINT OVERDUE TASKS
+    if len(overdue) > 0:
+        display("")
+        
+        if PLAIN == 0:
+            display(COLOR_PLANNER_OA_HEADER, 0)
+            
+        display("OVERDUE TASKS:", 0)
+        
+        if PLAIN == 0:
+            display(COLOR_RESET, 0)
+        
+        # initial list heading
+        current_list_name = ""
+        
+        # cycle through each task item
+        for i in range(len(overdue)):
+    
+            # if the task item is in a new list...print the new list name
+            if overdue[i][1] != current_list_name:
+                current_list_name = overdue[i][1]
+                
+                display("")
+                display('  ', 0)
+                
+                if PLAIN == 0:
+                    display(COLOR_LIST, 0)
+                
+                display(current_list_name + ':', 0)
+                
+                if PLAIN == 0:
+                    display(COLOR_RESET, 0)
+                
+                buffer = max_list_name - len(current_list_name)
+                for k in range(int(buffer)):
+                    display(' ', 0)
+                    
+                line_length = max_list_name + 3
+            
+            # check to see if the task will wrap line
+            if int(line_length + max_task_length + 6) > int(columns):
+                display("")
+                buffer = max_list_name + 3
+                for k in range(int(buffer)):
+                    display(' ', 0)
+                line_length = max_list_name + max_task_length + 3
+            else:
+                line_length = line_length + max_task_length + 6
+            
+            
+            # if task is completed...
+            if overdue[i][3] != "":
+            
+                # print an 'x' instead of priority
+                display('   x  ', 0)
+                
+            # for uncompleted tasks...
+            else:
+                
+                # Parse the pri, if displaying color
+                if PLAIN == 0:
+                    pri = overdue[i][0]
+                    if pri == "1":
+                        display(COLOR_PRI1, 0)
+                    elif pri == "2":
+                        display(COLOR_PRI2, 0)
+                    elif pri == "3":
+                        display(COLOR_PRI3, 0)
+                
+                # print the priority, if present, and the task in color, if desired
+                if overdue[i][0] != "N":
+                    display('  (' + overdue[i][0] + ') ', 0)
+                
+                # indent non-prioritized tasks further
+                else:
+                    display('      ', 0)
+            
+            # print the actual task
+            display(overdue[i][2], 0)
+            buffer = max_task_length - len(overdue[i][2])
+            for k in range(int(buffer)):
+                display(' ', 0)
+                
+            if PLAIN == 0:
+                display(COLOR_RESET, 0)
+        
+        display("")
     
     
     # PRINT THE ANYTIME TASKS
-    print ""
-    print "Due Anytime: ",
+    display("")
+    if PLAIN == 0:
+        display(COLOR_PLANNER_OA_HEADER, 0)
     
+    display("Due Anytime:", 0)
     
-    # get the max length of the anytime tasks
-    max_task_length=0
-    for j in range(len(anytime)):
-            if len(anytime[j][2]) > max_task_length:
-                max_task_length = len(anytime[j][2])
+    if PLAIN == 0:
+        display(COLOR_RESET, 0)
     
     
     # initial list heading
     current_list_name = ""
-        
+    
     # cycle through each task item
     for i in range(len(anytime)):
     
@@ -3302,39 +4014,70 @@ def planner(start="mon", filterString=""):
         if anytime[i][1] != current_list_name:
             current_list_name = anytime[i][1]
             
-            print ""
-            sys.stdout.write('  ' + current_list_name + ':')
+            display("")
+            display("  ", 0)
+            
+            if PLAIN == 0:
+                display(COLOR_LIST, 0)
+                
+            display(current_list_name + ':', 0)
+            
+            if PLAIN == 0:
+                display(COLOR_RESET, 0)
             
             buffer = max_list_name - len(current_list_name)
-            for k in range(buffer):
-                sys.stdout.write(' ')
-            
+            for k in range(int(buffer)):
+                display(' ', 0)
+                
+            line_length = max_list_name + 3
+        
+        # check to see if the task will wrap line
+        if int(line_length + max_task_length + 6) > int(columns):
+            display("")
+            buffer = max_list_name + 3
+            for k in range(int(buffer)):
+                display(' ', 0)
+            line_length = max_list_name + max_task_length + 3
+        else:
+            line_length = line_length + max_task_length + 6
             
         # if task is completed...
         if anytime[i][3] != "":
         
             # print an 'x' instead of priority
-            sys.stdout.write('     x  ')
+            display('   x  ', 0)
             
         # for uncompleted tasks...
         else:
-        
+            # Parse the pri, if displaying color
+            if PLAIN == 0:
+                pri = anytime[i][0]
+                if pri == "1":
+                    display(COLOR_PRI1, 0)
+                elif pri == "2":
+                    display(COLOR_PRI2, 0)
+                elif pri == "3":
+                    display(COLOR_PRI3, 0)
+                        
             # print the priority, if present, and the task in color, if desired
             if anytime[i][0] != "N":
                 
-                sys.stdout.write('    (' + anytime[i][0] + ') ')
+                display('  (' + anytime[i][0] + ') ', 0)
                 
             # indent non-prioritized tasks further
             else:
-                sys.stdout.write('        ')
+                display('      ', 0)
         
         # print the actual task
-        sys.stdout.write(anytime[i][2])
+        display(anytime[i][2], 0)
         buffer = max_task_length - len(anytime[i][2])
-        for k in range(buffer):
-                sys.stdout.write(' ')
+        for k in range(int(buffer)):
+            display(' ', 0)
+            
+        if PLAIN == 0:
+            display(COLOR_RESET, 0)
         
-    print ""
+    display("")
     
 # END planner()
 # ========================================================================================================= #    
@@ -3349,13 +4092,13 @@ def status(msg):
 
     if DISP_STATUS == 1:
         
-		if msg == None:
-			sys.stdout.write("                                                            \r")
-			sys.stdout.flush()
-		else:
-			sys.stdout.write(msg+"\r")
-			sys.stdout.flush()
-		
+        if msg == None:
+            sys.stdout.write("                                                            \r")
+            sys.stdout.flush()
+        else:
+            sys.stdout.write(msg+"\r")
+            sys.stdout.flush()
+        
 # END status()
 # ========================================================================================================= # 
 
@@ -3370,8 +4113,8 @@ def interactive():
     MODE = "interactive"
     cmd = ""
     while (cmd != "exit"):
-        cmd = raw_input('>> ')
-        cmd = string.split(cmd)
+        cmd = get_input('>> ')
+        cmd = cmd.split(' ')
         main(cmd, mode="interactive")
         genLookupTable()
 # END give_input()
@@ -3388,21 +4131,21 @@ def help():
     # Get user credentials
     username = login()
     
-    print "NAME"
-    print "  rtm -- a command line interface for the Remember the Milk task manager"
-    print "         see http://www.rememberthemilk.com/ for more information."
-    print ""
-    print "DESCRIPTION"
-    print "  This program gives full command line access to a user's rtm tasks and "
-    print "  can view, add and modify tasks.  The program utilizes the pyrtm Remember"
-    print "  The Milk API interface for python.  Visit <https://bitbucket.org/srid/pyrtm/>"
-    print "  for more information about the API interface."
-    print ""
+    display("NAME")
+    display("  rtm -- a command line interface for the Remember the Milk task manager")
+    display("         see http://www.rememberthemilk.com/ for more information.")
+    display("")
+    display("DESCRIPTION")
+    display("  This program gives full command line access to a user's rtm tasks and ")
+    display("  can view, add and modify tasks.  The program utilizes the pyrtm Remember")
+    display("  The Milk API interface for python.  Visit <https://bitbucket.org/srid/pyrtm/>")
+    display("  for more information about the API interface.")
+    display("")
     version()
-    print ""
-    print "RTM USER INFORMATION"
-    print "  Username: " + username
-    print ""
+    display("")
+    display("RTM USER INFORMATION")
+    display("  Username: " + username)
+    display("")
     usage()
 
 # END help()
@@ -3415,13 +4158,20 @@ def help():
 #     print author and version                                                                              #
 # ========================================================================================================= #
 def version():
+    try:
+        paths = rtm.__file__.split(os.sep)
+        pyrtm = paths[-3]
+    except:
+        pyrtm = "Unknown"
     
-    print "AUTHOR"
-    print "  David Waring -- dave@davidwaring.net"
-    print "  http://www.davidwaring.net/projects/rtm.html"
-    print ""
-    print "VERSION"
-    print "  " + VERSION
+    display("AUTHOR")
+    display("  David Waring -- dave@davidwaring.net")
+    display("  http://www.davidwaring.net/projects/rtm.html")
+    display("")
+    display("VERSION")
+    display("  SCRIPT: " + VERSION)
+    display("  PYRTM: " + pyrtm)
+    display("  PYTHON: " + sys.version.split(' ')[0])
 
 # END version()
 # ========================================================================================================= #    
@@ -3434,103 +4184,169 @@ def version():
 # ========================================================================================================= #
 def usage():
     
-    print "USAGE"
-    print "  rtm [options] ... [command] [command arguments]"
-    print ""
-    print "  Options:"
-    print "    Note: To change the default display variables, edit the values in the beginning of this script"
-    print ""
-    print "    --comp, -c          : toggle the display of completed tasks - default", DISP_COMP
-    print "    --help, -h          : display the help and usage"
-    print "    --notes, -n         : toggle the display of notes indicators - default", DISP_NOTES
-    print "    --plain, -p         : set output to plain (no color) - default", PLAIN
-    print "    --status, -s        : toggle the display of status messages - default", DISP_STATUS
-    print "    --tags, -t          : toggle the display of tags - default", DISP_TAGS
-    print "    --usage, -u         : display the usage"
-    print "    --version, -v       : display the author and version"
-    print ""
-    print "  Commands [arguments]:"
-    print "    - Only 1 command can be used at a time"
-    print "    - Leaving the command blank will start the interactive mode"
-    print "    - Generally, leaving the arguments blank will allow the user to enter"
-    print "      multiple arguments at a prompt (ie marking multiple tasks complete)."
-    print ""
-    print "    add [task]          : add a task using the following format::"
-    print "      a [task]              task name due date p:priority l:list name t:tag"
-    print "    addList [name]      : add a new list to RTM using the specified name"
-    print "      al [name]"
-    print "    addNote [index] [title] [body] : add a note to the specified task"
-    print "      an [index] [title] [body]"
-    print "    addTags [index] [tags] : add the given tags to the specified task"
-    print "      at [index] [tags]"
-    print "    comp [index]        : mark the task specified by its index number as complete"
-    print "      c [index]"
-    print "    delete [index]      : delete the task specified by its index number"
-    print "      del [index]"
-    print "      rm [index]"
-    print "    delList [name]      : delete the list specified by its name"
-    print "      dl [name]             (moves remaining tasks to the Inbox)"
-    print "    delNote [index]     : delete a note from the specified task"
-    print "      dn [index]"
-    print "    delTags [index] [tags] : delete the given tags from the specified task"
-    print "      dt [index] [tags]"
-    print "    due [index] [date]  : set the due date of the task specified by its index number"
-    print "    exit                : exit interactive mode"
-    print "    help                : display this help information"
-    print "    logout              : remove login credentials used by RTM-CLI"
-    print "    ls [filter]         : list all tasks sorted first by list then priority"
-    print "    lsd [filter]        : list all tasks sorted first by due date then priority"
-    print "    lsp [filter]        : list all tasks sorted first by priority then list"
-    print "        [filter]        : filter options based on RTM's advanced search filters, ie::"
-    print "                            list:<task list>"
-    print "                            priority:<priority>"
-    print "                            tag:<tag>"
-    print "                            status:<completed | incomplete>"
-    print "                            due:<due date>"
-    print "    move [index] [list] : move the task specified by its index number to the specified list"
-    print "      mv [index] [list]"
-    print "      m [index] [list]"
-    print "    notes [index]       : display the notes for the task specified by its index number"
-    print "    open [page]         : open RTM <page> (home by default) in a web browser"
-    print "      o [page]              <page> = filters, help, home, planner, tasks, search, settings"
-    print "    postpone [index]    : postpone the due date of the specified task by 1 day"
-    print "      pp [index]"
-    print "    pri [index] [pri]   : set the priority of task specified by its index number to <pri>,"
-    print "      p [index] [pri]       where <pri> can be priorities 1,2,3 or 0 to remove priority"
-    print "    renameList [old name] [new name] : change the name of a list from <old name> to <new name>"
-    print "      mvList [old name] [new name]"
-    print "    uncomp [index]      : uncomplete the task specified by its index number"
-    print "      unc [index]           set the status of a previously completed task to incomplete"
-    print "      inc [index]"
-    print "    undo                : undo the last function"
-    print ""
-    print "  Meta-Commands:"
-    print "    clear [filter]      : delete all completed tasks (that match the optional filter)"
-    print "    planner [start] [filter] : print a weekly planner for tasks with due dates for this week"
-    print "      week [start] [filter]      <start> = mon (default), sun or today"
-    print "                               NOTE: this will print a very wide display and task names will"
-    print "                                  be cut at 20 characters."
-    print "    today               : display prioritized tasks and tasks completed today"
+    display("USAGE")
+    display("  rtm [options] ... [command] [command arguments]")
+    display("")
+    display("  Options:")
+    display("    Note: To change the default display variables, edit the values in the beginning of this script")
+    display("")
+    display("    --comp, -c          : toggle the display of completed tasks - default " + str(DISP_COMP))
+    display("    --help, -h          : display the help and usage")
+    display("    --notes, -n         : toggle the display of notes indicators - default " + str(DISP_NOTES))
+    display("    --plain, -p         : set output to plain (no color) - default " + str(PLAIN))
+    display("    --readline, -r      : toggle readline support (disable to improve unicode support in interative mode) - default " + str(ENABLE_READLINE))
+    display("    --status, -s        : toggle the display of status messages - default " + str(DISP_STATUS))
+    display("    --tags, -t          : toggle the display of tags - default " + str(DISP_TAGS))
+    display("    --usage, -u         : display the usage")
+    display("    --version, -v       : display the author and version")
+    display("")
+    display("  Commands [arguments]:")
+    display("    - Only 1 command can be used at a time")
+    display("    - Leaving the command blank will start the interactive mode")
+    display("    - Generally, leaving the arguments blank will allow the user to enter")
+    display("      multiple arguments at a prompt (ie marking multiple tasks complete).")
+    display("")
+    display("    add [task]          : add a task using the following format::")
+    display("      a [task]              task name due date p:priority l:list name t:tag")
+    display("    addList [name]      : add a new list to RTM using the specified name")
+    display("      al [name]")
+    display("    addNote [index] [title] [body] : add a note to the specified task")
+    display("      an [index] [title] [body]")
+    display("    addTags [index] [tags] : add the given tags to the specified task")
+    display("      at [index] [tags]")
+    display("    comp [index]        : mark the task specified by its index number as complete")
+    display("      c [index]")
+    display("    delete [index]      : delete the task specified by its index number")
+    display("      del [index]")
+    display("      rm [index]")
+    display("    delList [name]      : delete the list specified by its name")
+    display("      dl [name]             (moves remaining tasks to the Inbox)")
+    display("    delNote [index]     : delete a note from the specified task")
+    display("      dn [index]")
+    display("    delTags [index] [tags] : delete the given tags from the specified task")
+    display("      dt [index] [tags]")
+    display("    due [index] [date]  : set the due date of the task specified by its index number")
+    display("    edit [index] [name] : edit the name of the task specified by its index number")
+    display("      e [index] [name]")
+    display("    editNote [index]    : edit one of the notes for the specified task")
+    display("      en [index]")
+    display("    exit                : exit interactive mode")
+    display("    help                : display this help information")
+    display("    logout              : remove login credentials used by RTM-CLI")
+    display("    ls [filter]         : list all tasks sorted first by list then priority")
+    display("    lsd [filter]        : list all tasks sorted first by due date then priority")
+    display("    lsp [filter]        : list all tasks sorted first by priority then list")
+    display("        [filter]        : filter options based on RTM's advanced search filters, ie::")
+    display("                            list:<task list>")
+    display("                            priority:<priority>")
+    display("                            tag:<tag>")
+    display("                            status:<completed | incomplete>")
+    display("                            due:<due date>")
+    display("    move [index] [list] : move the task specified by its index number to the specified list")
+    display("      mv [index] [list]")
+    display("      m [index] [list]")
+    display("    notes [index]       : display the notes for the task specified by its index number")
+    display("    open [page]         : open RTM <page> (home by default) in a web browser")
+    display("      o [page]              <page> = filters, help, home, planner, tasks, search, settings")
+    display("    postpone [index]    : postpone the due date of the specified task by 1 day")
+    display("      pp [index]")
+    display("    pri [index] [pri]   : set the priority of task specified by its index number to <pri>,")
+    display("      p [index] [pri]       where <pri> can be priorities 1,2,3 or 0 to remove priority")
+    display("    renameList [old name] [new name] : change the name of a list from <old name> to <new name>")
+    display("      mvList [old name] [new name]")
+    display("    uncomp [index]      : uncomplete the task specified by its index number")
+    display("      unc [index]           set the status of a previously completed task to incomplete")
+    display("      inc [index]")
+    display("    undo                : undo the last function")
+    display("")
+    display("  Meta-Commands:")
+    display("    clear [filter]      : delete all completed tasks (that match the optional filter)")
+    display("    planner [start] [filter] : print a weekly planner for tasks with due dates for this week")
+    display("      week [start] [filter]      <start> = mon (default), sun or today")
+    display("                               NOTE: this will print a very wide display and task names will")
+    display("                                  be cut at 20 characters.")
+    display("    today               : display prioritized tasks and tasks completed today")
 
 # END usage()
 # ========================================================================================================= #    
+
+
+
+# ========================================================================================================= #
+# get_input( prompt )                                                                                       #
+#     get user input and return the result                                                                  #
+# ========================================================================================================= #
+def get_input(prompt=">> "):
+    try:
+        res = raw_input(prompt)
+    except NameError:
+        res = input(prompt)
     
+    return res
+# END get_input()
+# ========================================================================================================= #
+
+
+
+# ========================================================================================================= #
+# get_multi_input( prompt )                                                                                 #
+#     get multi-line user input, send EOF to end                                                            #
+# ========================================================================================================= #
+def get_multi_input():
+    result = sys.stdin.readlines()
+    result_str = ""
+    for i in range(len(result)):
+        result_str = result_str + str(result[i])
+    return result_str
+# END get_input()
+# ========================================================================================================= #
+
+
+
+# ========================================================================================================= #
+# display( text, newline )                                                                                  #
+#     get user input and return the result                                                                  #
+#     newline=1: adds newline at end of text                                                                #
+#     newline=0: does not add newline at end of text                                                        #
+# ========================================================================================================= #
+def display(text, newline=1):
+    # Python 2
+    if sys.version_info < (3, 0):
+        if type(text) == unicode:
+            text = text.encode('utf-8')
     
+        if (newline == 1):
+            sys.stdout.write(text)
+            sys.stdout.write("\n")
+        else:
+            sys.stdout.write(text)
+    
+    # Python 3
+    else:
+        if (newline == 1):
+            sys.stdout.write(text)
+            sys.stdout.write("\n")
+        else:
+            sys.stdout.write(text)
+# END display()
+# ========================================================================================================= #
+
+
 
 # ========================================================================================================= #
 # main( argv )                                                                                              #
 #     login in to RTM and process the command line arguments                                                #
-# ========================================================================================================= #    
+# ========================================================================================================= #
 def main(argv, mode=""):
    
     # PROCESS COMMAND LINE ARGUMENTS
     
     # define command line options
     try:
-        opts, args = getopt.getopt(argv, "chnpstuv", ["comp", "help", "notes", "plain", "status", "tags", "usage", "version"])
-    except getopt.GetoptError, err:
-        print "ERROR: " + str(err)
-        print ""
+        opts, args = getopt.getopt(argv, "chnprstuv", ["comp", "help", "notes", "plain", "readline", "status", "tags", "usage", "version"])
+    except getopt.GetoptError as err:
+        display("ERROR: " + str(err))
+        display("")
         usage()
         sys.exit(2)
     
@@ -3549,6 +4365,9 @@ def main(argv, mode=""):
         elif opt in ("--plain", "-p"):
             global PLAIN
             PLAIN=1
+        elif opt in ("--readline", "-r"):
+            global ENABLE_READLINE
+            ENABLE_READLINE = abs(ENABLE_READLINE-1)
         elif opt in ("--status", "-s"):
             global DISP_STATUS
             DISP_STATUS = abs(DISP_STATUS-1)
@@ -3561,12 +4380,18 @@ def main(argv, mode=""):
         elif opt in ("--version", "-v"):
             version()
             sys.exit(0)
-
+    
+    
+    # conditional import statements
+    if ENABLE_READLINE == 1:
+        import readline
+    
     
     # parse command from the command line arguments
     if len(args) == 0:
-    	login()
+        login()
         interactive()
+    
     command = args[0]
 
     # Process commands (only one can be given at a time)
@@ -3592,13 +4417,13 @@ def main(argv, mode=""):
             addList(" ".join(args[1:]))
             
     elif command in ("addTags", "addtags", "at", "aT"):
-        if len(args) == 1:
+        if len(args) < 3:
             maddTags()
         else:
             addTags(args[1], ",".join(args[2:]))
     
     elif command in ("addNote", "addnote", "an", "aN"):
-        if len(args) == 1:
+        if len(args) < 4:
             maddNote()
         else:
             addNote(args[1], args[2], " ".join(args[3:]))
@@ -3622,7 +4447,7 @@ def main(argv, mode=""):
             delList(" ".join(args[1:]))
             
     elif command in ("delTags", "deltags", "dt", "dT", "deletetags", "deleteTags"):
-        if len(args) == 1:
+        if len(args) < 3:
             mdelTags()
         else:
             delTags(args[1], ",".join(args[2:]))
@@ -3630,17 +4455,35 @@ def main(argv, mode=""):
     elif command in ("delNote", "delnote", "dn", "dN", "deletenote", "deleteNote"):
         if len(args) == 1:
             delNote()
-        if len(args) == 2:
+        elif len(args) == 2:
             delNote(args[1])
-            
+        else:
+            delNote()
+    
+    elif command in ("edit", "rename", "e", "rn"):
+        if len(args) < 3:
+            medit()
+        elif len(args) == 3:
+            edit(args[1], args[2])
+        else:
+            edit(args[1], args[2:])
+    
+    elif command in ("editNote", "editnote", "editNotes", "editnotes", "en", "eN"):
+        if len(args) == 1:
+            editNote()
+        elif len(args) == 2:
+            editNote(args[1])
+        else:
+            editNote()
+    
     elif command in ("exit"):
         sys.exit(0)
             
     elif command in ("renameList", "renamelist", "rl", "rL", "mvList", "mvlist"):
-        if len(args) == 1:
-            mrenameList()
-        else:
+        if len(args) == 3:
             renameList(args[1], args[2])
+        else:
+            mrenameList()
     
     elif command in ("priority", "pri", "p"):
         if len(args) == 3:
@@ -3655,7 +4498,10 @@ def main(argv, mode=""):
             mmove()
     
     elif command in ("notes"):
-         getNotes(args[1])
+        if len(args) == 2:
+            getNotes(args[1])
+        else:
+            display("You must supply a task index number.")
             
     elif command in ("due"):
         if len(args) == 3:
@@ -3693,28 +4539,28 @@ def main(argv, mode=""):
         username = login()
         if len(args) == 2:
             if args[1] == "planner":
-                print "opening the RTM planner..."
+                display("opening the RTM planner...")
                 webbrowser.open("http://www.rememberthemilk.com/printplanner/"+username, True, True)
             elif args[1] == "tasks":
-                print "opening the RTM tasks page..."
+                display("opening the RTM tasks page...")
                 webbrowser.open("http://www.rememberthemilk.com/home/"+username+"/#section.tasks", True, True)
             elif args[1] == "settings":
-                print "opening the RTM settings page..."
+                display("opening the RTM settings page...")
                 webbrowser.open("http://www.rememberthemilk.com/home/"+username+"/#section.settings", True, True)
             elif args[1] == "help":
-                print "opening the RTM help page..."
+                display("opening the RTM help page...")
                 webbrowser.open("http://www.rememberthemilk.com/help/", True, True)
             elif args[1] == "search":
-                print "opening RTM advanced serach filters..."
+                display("opening RTM advanced serach filters...")
                 webbrowser.open("http://www.rememberthemilk.com/help/answers/search/advanced.rtm", True, True)
             elif args[1] == "filters":
-                print "opening RTM advanced serach filters..."
+                display("opening RTM advanced serach filters...")
                 webbrowser.open("http://www.rememberthemilk.com/help/answers/search/advanced.rtm", True, True)
             else:
-                print "opening RTM..."
+                display("opening RTM...")
                 webbrowser.open("http://www.rememberthemilk.com/home/"+username, True, True)
         else:
-            print "opening RTM..."
+            display("opening RTM...")
             webbrowser.open("http://www.rememberthemilk.com/home/"+username, True, True)
     
     elif command in ("clean", "clear"):
@@ -3735,7 +4581,7 @@ def main(argv, mode=""):
         main(args[1:])
         
     else:
-        print "ERROR: command " + command + " not recognized"
+        display("ERROR: command " + command + " not recognized")
         usage()
         if MODE != "interactive":
             sys.exit(2)

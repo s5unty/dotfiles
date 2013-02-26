@@ -66,4 +66,7 @@
 	url = https://github.com/plasticboy/vim-markdown.git
 [submodule "vim/bundle/vim-pad"]
 	path = vim/bundle/vim-pad
-	url = https://github.com/vim-scripts/vim-pad.git
+	url = https://github.com/fmoralesc/vim-pad
+[submodule "todo/home/inkarkat"]
+	path = todo/home/inkarkat
+	url = git@github.com:s5unty/todo.txt-cli-ex.git

@@ -82,7 +82,8 @@ endif
 " http://du1abadd.org/debian/UTF-8-EAW-FULLWIDTH.gz
 set ambiwidth=double
 
-let mapleader=","
+let mapleader=','
+let maplocalleader='\'
 let html_dynamic_folds=1
 let c_space_errors=1
 let sh_minlines = 100
@@ -126,6 +127,15 @@ endif
 "         nnor <silent> <unique> p :call G_GoodP()<CR>
 "     endif
 " endfunction
+
+" Space键 翻页/打开折叠
+function! G_GoodSpace()
+    if foldclosed('.') != -1
+        normal zO
+    else
+        exec "normal \<C-D>"
+    endif
+endfunction
 
 " 0键在行首与行顶间交替
 function! G_Good0()
@@ -232,7 +242,7 @@ nmap <silent> <unique> <F12> <C-]>zz
 " Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
-nmap <silent> <unique> <Space> <C-D>
+nmap <silent> <unique> <Space> :call G_GoodSpace()<CR>
 nmap <silent> <unique> qq :UniteResume<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
@@ -596,6 +606,19 @@ let g:EasyMotion_leader_key = 'f'
 let g:EasyMotion_grouping = 1
 let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 
+" vim-pad: quick notetaking {{{2
+" http://www.vim.org/scripts/script.php?script_id=3753
+" https://github.com/fmoralesc/vim-pad
+let g:pad_dir = "~/wikipad/notes/"
+let g:pad_default_format = "mkd"
+let g:pad_window_height = 20
+let g:pad_open_in_split = 0
+let g:pad_search_backend = "ack"
+let g:pad_use_default_mappings = 0
+nmap <silent> <unique> <localleader>\ <Plug>ListPads
+nmap <silent> <unique> <localleader>/ <Plug>SearchPads
+nmap <silent> <unique> <localleader><Enter> <Plug>OpenPad
+
 
 " }}}
 
@@ -778,7 +801,8 @@ map! <Esc>[24;5~ <C-F12>
 " <Esc>[24~ confilict between <S-F2> and <F12>
 map  <Esc>[a   <S-Up>
 map  <Esc>[b   <S-Down>
-map  <Esc>[25~ <S-F3>
+map  <Esc>[25~ <S-CR>
+"    <Esc>[25~ <S-F3> " hack ~/.Xresources for vimwiki <S-CR> mapping
 map  <Esc>[26~ <S-F4>
 map  <Esc>[28~ <S-F5>
 map  <Esc>[29~ <S-F6>
@@ -790,7 +814,8 @@ map  <Esc>[23$ <S-F11>
 map  <Esc>[24$ <S-F12>
 map  <Esc>[11^ <C-F1>
 map  <Esc>[12^ <C-F2>
-map  <Esc>[13^ <C-F3>
+map  <Esc>[13^ <C-CR>
+"    <Esc>[13^ <C-F3> " hack ~/.Xresources for vimwiki <C-CR> mapping
 map  <Esc>[14^ <C-F4>
 map  <Esc>[15^ <C-F5>
 map  <Esc>[17^ <C-F6>

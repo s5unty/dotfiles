@@ -1,5 +1,3 @@
-over-date
-
 http://todotxt.com/
     - todo.sh
     - todo.cfg
@@ -8,20 +6,15 @@ https://gist.github.com/1084259
     - todo_ff.sh (origin)
 
 http://about:home/
-    - ./remind/notify-wm
-    - ./actions/todo_ff.sh
+    - ./opt/pomodoro/pomodoro.sh
+    - ./opt/remind/notify-wm
+    - ./opt/due/due
 
 https://github.com/weisslj/muttjump
-    - ./mutt/muttjump
-
-https://github.com/the1ts/todo.txt-plugins.git
-    - ./actions/notes*
+    - ./opt/mutt/muttjump
 
 http://code.google.com/p/punch-time-tracking/
-    - ./actions/Puncy.py
-    - config -> todo.cfg
+    - ./opt/punch/Puncy.py
 
-https://github.com/emilerl/emilerl.git
-    - ./actions/lately*
-    - ./actions/review*
-
+https://github.com/inkarkat/todo.txt-cli-ex.git
+    - ./home/inkarkat

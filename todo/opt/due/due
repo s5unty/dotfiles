@@ -13,7 +13,7 @@ shift
 
 export DOTREMINDERS="/sun/.todo/var/remind/index.rem"
 reminds=(${(s.
-.)"$(rem -b1 -s+4 | /bin/grep $(date +"%Y/%m/%d" -d "tomorrow") \
+.)"$(rem -m -b1 -s+2 | /bin/grep $(date +"%Y/%m/%d" -d "tomorrow") \
     | sed -e 's?..../\(../..\).*\(\(..:..\)\|\( \*\)\) \(.*\)?\5 due:\1 \3?g')"})
 for task in $reminds; do
     if ! grep $task $TODO_FILE > /dev/null 2>&1; then
@@ -23,7 +23,7 @@ done
 
 tod=$(date +"due:%m/%d")
 tasks=(${(s.
-.)"$($TODO_SH list "$tod" | awk '/^[0-9]+/ { print $1 }')"})
+.)"$($TODO_SH -p list "$tod" | awk '/^[0-9]+/ { print $1 }')"})
 for id in $tasks; do
     # (D) meaning to(d)ay
     $TODO_SH command pri "$id" d
@@ -31,7 +31,7 @@ done
 
 tom=$(date +"due:%m/%d" -d "+1 day")
 tasks=(${(s.
-.)"$($TODO_SH list "$tom" | awk '/^[0-9]+/ { print $1 }')"})
+.)"$($TODO_SH -p list "$tom" | awk '/^[0-9]+/ { print $1 }')"})
 for id in $tasks; do
     # (T) meaning (t)omorrow
     $TODO_SH command pri "$id" t

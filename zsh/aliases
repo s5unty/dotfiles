@@ -154,6 +154,7 @@ elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
     alias dpi="$__SUDO rpm -iUfvh --replacefiles --replacepkgs --oldpackage"
     alias dpc="rpm -qpl"
     alias dps="rpm -qpi"
+    alias dpo="rpm --scripts -qp"
     alias dpg="rpm -qa | grep"
     alias dpL="rpm -ql"
     alias dps="rpm -qi"
@@ -178,7 +179,7 @@ alias tdG="td listall"
 alias tdp="td pri"
 alias tdP="td depri"
 alias tdO="td listnotes 2>/dev/null"
-alias tdl="td lf =(remind -s+4 $TODO_DIR/var/remind/index.rem)"
+alias tdl="td lf =(remind -b1 -s+4 $TODO_DIR/var/remind/index.rem)"
 alias tdn="pu what"
 tdc() {
     if [[ ${ARGC} > 1 ]]; then # 追加注释
