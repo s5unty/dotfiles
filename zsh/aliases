@@ -1,5 +1,4 @@
 # vim:syntax=zsh:ft=zsh
-
 alias -g G='| egrep -i --color=always'
 alias -g M="| $__LESS"
 alias -g Y="| xsel"
@@ -167,19 +166,18 @@ fi
 # task {{{
 alias pu="python $TODO_DIR/opt/punch/Punch.py"
 alias td="todo.sh"
-alias tdE="vi $TODO_DIR/inbox.txt +\"set ft=asciidoc\""
-alias tda="td add"
-#alias tdr="td del"
-alias tdR="td replace"
-alias td0="td prepend"
-alias td\$="td append"
-alias tdg="td list"
-alias tdgc="td archive"
-alias tdG="td listall"
-alias tdp="td pri"
-alias tdP="td depri"
-alias tdO="td listnotes 2>/dev/null"
-alias tdl="td lf =(remind -b1 -s+4 $TODO_DIR/var/remind/index.rem)"
+alias tda="todo.sh add"
+#alias tdr="todo.sh del"
+alias tdR="todo.sh replace"
+alias td0="todo.sh prepend"
+alias td\$="todo.sh append"
+alias tdg="todo.sh list"
+alias tdgc="todo.sh archive"
+alias tdG="todo.sh listall"
+alias tdp="todo.sh pri"
+alias tdP="todo.sh depri"
+alias tdO="todo.sh listnotes 2>/dev/null"
+alias tdl="todo.sh lf =(remind -b1 -s+4 $TODO_DIR/var/remind/index.rem)"
 alias tdn="pu what"
 tdc() {
     if [[ ${ARGC} > 1 ]]; then # 追加注释
@@ -217,13 +215,9 @@ tde() {
         loc=":normal $1gg"
     fi
     REMD_FILE=$TODO_DIR/var/remind/index.rem
-    vi +":e $DONE_FILE" +"normal Gzz" \
-        +":sp $REMD_FILE" +":normal zz" \
-        +":vs $TODO_FILE" +"${loc}"
-}
-tdb() { # 某项任务带来的突发问题 (I)ssue
-    tda "(I) ${(@)argv[2,$#]} by:${1}" > /dev/null 2>&1
-    tdp ${1} B # 该任务被切换到阻塞状态 (B)lock
+    vi +":e $REMD_FILE" +":normal zz" \
+        +":vs $TODO_FILE" +"${loc}" \
+        +":ListPads"
 }
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})
@@ -249,6 +243,7 @@ tds() { # 开始一项工作
         TURN=1
     fi
 
+    td start ${TDID} > /dev/null 2>&1
     python $TODO_DIR/opt/punch/Punch.py in ${TDID} | tail -1
     # 如果上一个工作周期还没结束，譬如前一项工作在周期内完成了，
     # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
@@ -266,22 +261,14 @@ tdd() { # 完成一项工作
 
     if [[ ${ARGC} == 0 ]]; then # 如果没给参数，表示当前正在进行的任务被打断 [D]isturb
         pkill pomodoro.sh
+        td bump ${TDID} > /dev/null 2>&1
+        td stop ${TDID} > /dev/null 2>&1
         return
-    else # 否则处理由第一个参数代表的任务
+    else # 否则标记由第一个参数代表的任务已完成，但并不结束番茄钟
         TDID=${1}
         td do ${TDID} > /dev/null 2>&1
         if [[ ${ARGC} > 1 ]]; then # 完成时允许添加简短的注释
             td$ ${TDID} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
-        fi
-    fi
-
-    # 对于被 issue 阻塞了的任务，当该 issue 解决时，自动切换父任务状态为 (F)ixed
-    if td -p ls " by:" | egrep -qi "^${TDID}"; then # 当前任务是 issue 类型(by:)的任务
-        # 找到被它阻塞的父任务
-        F_TDID=$(sed -n "${TDID}p" ${TODO_FILE} | egrep --color=never -o 'by:[0-9]+' | cut -d':' -f2)
-        # 当前解决的 issue 任务是导致父任务阻塞的唯一任务
-        if [[ $(grep -c "(I).*by:${F_TDID}" ${TODO_FILE}) == 1 ]]; then
-            tdp ${F_TDID} F # 父任务切换到已修复 (F)ixed 状态
         fi
     fi
 }
