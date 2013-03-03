@@ -43,7 +43,7 @@ for line in f:
 
     if m.group(1) is not None:
         ddate = datetime.strptime(m.group(1), '%Y-%m-%d')
-        ddttm = ddate - timedelta(days=0)  # 最后一次提醒：任务到期当天凌晨
+        dlast = ddate - timedelta(days=0)  # 最后一次提醒：任务到期当天凌晨
 
     if m.group(2) is not None:
         mm = re.search('\+([0-9]+)([dDwW])', m.group(2))
@@ -59,7 +59,7 @@ for line in f:
 
     if m.group(3) is not None:
         dtime = datetime.strptime("%s %s" % (ddate.strftime("%Y-%m-%d"), m.group(3)), '%Y-%m-%d %H:%M')
-        ddttm = dtime - timedelta(minutes=5)  # 最后一次提醒：任务到期前 5 分钟
+        dlast = dtime - timedelta(minutes=5)  # 最后一次提醒：任务到期前 5 分钟
 
     if m.group(4) is not None:
         mm = re.search('\+([0-9]+)([mMhH])', m.group(4))
@@ -73,13 +73,13 @@ for line in f:
             if   mm.group(2) == 'm' or mm.group(2) == 'M': dtime = dtime - timedelta(minutes=int(mm.group(1)))  # 分钟
             elif mm.group(2) == 'h' or mm.group(2) == 'H': dtime = dtime - timedelta(hours=int(mm.group(1)))    # 小时
 
-    default = ddttm.strftime('%Y-%m-%d 00:00')
+    last = ddttm.strftime('%Y-%m-%d 00:00')
     if 'dtime' in dir():
         dttm = dtime.strftime('%Y-%m-%d %H:%M')
     else:
         dttm = ddate.strftime('%Y-%m-%d 00:00')
 
-    if dttm == todayDttm or default == todayDttm:
+    if dttm == todayDttm or last == todayDttm:
         conn = httplib.HTTPSConnection("api.pushover.net:443")
         conn.request('POST', '/1/messages.json',
                 urllib.urlencode({
