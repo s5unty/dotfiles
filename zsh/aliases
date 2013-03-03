@@ -216,8 +216,7 @@ tde() {
     fi
     REMD_FILE=$TODO_DIR/var/remind/index.rem
     vi +":e $REMD_FILE" +":normal zz" \
-        +":vs $TODO_FILE" +"${loc}" \
-        +":ListPads"
+        +":vs $TODO_FILE" +"${loc}"
 }
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})

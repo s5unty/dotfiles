@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# inspired on: https://github.com/jkrehm/todotxt-cli-addons
+#
+# 搜索 $TODO_FILE 中符合以下格式的内容：
+#   半角冒号＋4位年＋减号＋2位月＋减号＋2位日＋半角感叹号＋2位小时＋半角冒号＋2位分钟
+#
+# 例如：
+#   remember the milk t:2012-12-26!06:00
+#
+# $ crontab -l
+#   */5 * * * * TZ='Asia/Shanghai' /sun/todo/opt/remind/pushover ${YOUR_TODO_FILE} ${YOUR_API_TOKEN} ${YOUR_USER_KEY}
+#   */5 * * * * TZ='Asia/Shanghai' /sun/todo/opt/remind/pushover ${ANOTHER_TODO_FILE} ${YOUR_API_TOKEN} ${YOUR_USER_KEY}
+#
+# 在 pushover.net 申请 App 后得到 ${YOUR_API_TOKEN}
+# 在 pushover.net 注册用户后得到 ${YOUR_USER_KEY}
+#
+# 为什么要导出时区环境变量(TZ)？
+#   命令行调试正常，放到 cron 执行时却失败，原因是
+#   cron 默认使用系统时区(/etc/timezone)，有可能不同于当前登录用户环境所采用的时区
+
+import sys, httplib, os, re, urllib
+from datetime import datetime, date, time
+
+todo_file = sys.argv[1]
+api_token = sys.argv[2]
+user = sys.argv[3]
+
+today = datetime.today()
+todayDt = str(today.date())
+todayDttm = today.strftime('%Y-%m-%d %H:%M')
+
+f = open(todo_file)
+for line in f:
+    m = re.search(':([0-9]{4}-[0-9]{2}-[0-9]{2})!([0-9]{1,2}:[0-9]{2})', line)
+    if m is not None:
+        dttm = "%s %s" % (m.group(1), m.group(2))
+
+        # No time found, so assume midnight
+        if dttm.find(':') == -1:
+            dttm += ' 00:00'
+
+        if dttm == todayDttm:
+            conn = httplib.HTTPSConnection("api.pushover.net:443")
+            conn.request('POST', '/1/messages.json',
+                    urllib.urlencode({
+                        'token': api_token,
+                        'user': user,
+                        'message': line,
+                        }), { 'Content-type': 'application/x-www-form-urlencoded' }
+                    )
+            print conn.getresponse()
+f.close()

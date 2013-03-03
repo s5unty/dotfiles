@@ -33,7 +33,6 @@
 /usr/bin/x-www-browser & #浏览器
 /usr/bin/x-terminal-emulator -name Mutt -T Mutt -e sh -c mutt &
 /usr/bin/fetchmail -d 60 #邮件，邮件通知
-/usr/bin/mailleds -u vern -a -x -q -M -m ~/maildir/fnst-inbox/
 
 #/usr/bin/mocp -S #音乐服务
 #/usr/local/bin/lrcdis & # 歌词
@@ -50,11 +49,11 @@
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
 
 # pull, monitor, push TODO 如果同步失败，邮件通知自己
-/usr/bin/rsync -azu du1abadd.org:~/.todo/var/ ~/.todo/var/ &
+/usr/bin/rsync -azu du1abadd.org:~/todo/var/ ~/.todo/var/ &
 /usr/bin/remind -z -k'~/.todo/opt/remind/notify-wm %s &' ~/.todo/var/remind/index.rem &
 /usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.todo/var/ | \
     while read file; do
-        rsync -azu --delete ~/.todo/var/ du1abadd.org:~/.todo/var/ &
+        rsync -azu --delete ~/.todo/var/ du1abadd.org:~/todo/var/ &
     done &
 
 # 使用渐隐、阴影特效
@@ -62,7 +61,11 @@
 /usr/bin/unclutter -idle 5 -noevents &
 
 # 绑定 cifs 分区
-/bin/mount -a -t cifs
+/bin/mount -a -t cifs &
+
+# 初次启动 dropbox 须由 proxychains 启动，之后才可以使用 dropbox 内置的 socks5 代理
+# http://lucidhacking.net/2011/12/how-to-access-dropbox-behind-a-firewall-or-proxy/
+/usr/bin/dropbox start &
 
 # 启动窗口管理器
 /usr/bin/awesome
