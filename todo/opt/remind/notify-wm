@@ -7,11 +7,22 @@
 ## 
 ####################################################################
 
-DESC=${*}
+form=$1; shift
+form=$(echo $form | \
+    sed -e 's/ and //' | \
+    sed -e 's/ minutes\?/分钟/' | \
+    sed -e 's/ hours\?/小时/' | \
+    sed -e 's/ from now/后/g' | \
+    sed -e 's/ ago/前/g' | \
+    sed -e 's/^now/现在/' | \
+    sed -e 's/in \([0-9]*\) days. time/\1天后/')
+form=$(echo ${form} | sed -e 's/\(^.*\)$/<span color=\\"#FFFF00\\">\1<\/span>/g')                        # tdelta
 
-DESC=`echo ${DESC} | sed -e 's/</＜/' | sed -e 's/>/＞/'`                                                   # fix bug
-DESC=`echo ${DESC} | sed -e 's/\(^(.)\) /<span color=\\\\"#FF0000\\\\">\1<\/span> /'`                       # priority
-DESC=`echo ${DESC} | sed -e 's/\(\(\(^@\)\|\( @\)\)[^ <]*\)/<span color=\\\\"#00FF00\\\\">\1<\/span>/g'`    # context
-DESC=`echo ${DESC} | sed -e 's/\(\(\(^+\)\|\( +\)\)[^ <]*\)/<span color=\\\\"#00FFFF\\\\">\1<\/span>/g'`    # project
-DESC=`echo ${DESC} | sed -e 's/\(^.*\)$/<span color=\\\\"#FFFFFF\\\\">\1<\/span>/g'`                        # normal
-/bin/echo -E 'naughty.notify({opacity = 0.9, margin = 0, position = "bottom_right", text = '\"${DESC}\"', icon="/usr/share/pixmaps/gtk-chtheme.xpm", timeout=0})' | awesome-client -
+desc=$*
+desc=$(echo ${desc} | sed -e 's/</＜/' | sed -e 's/>/＞/')                                               # fix bug
+desc=$(echo ${desc} | sed -e 's/\(^(.)\) /<span color=\\"#FF0000\\">\1<\/span> /')                       # priority
+desc=$(echo ${desc} | sed -e 's/\(\(\(^@\)\|\( @\)\)[^ <]*\)/<span color=\\"#00FF00\\">\1<\/span>/g')    # context
+desc=$(echo ${desc} | sed -e 's/\(\(\(^+\)\|\( +\)\)[^ <]*\)/<span color=\\"#00FFFF\\">\1<\/span>/g')    # project
+desc=$(echo ${desc} | sed -e 's/\(^.*\)$/<span color=\\"#FFFFFF\\">\1<\/span>/g')                        # normal
+
+/bin/echo -E 'naughty.notify({opacity = 0.9, margin = 0, position = "bottom_right", text = '\"${form} ${desc}\"', icon="/usr/share/pixmaps/gtk-chtheme.xpm", timeout=0})' | awesome-client -
