@@ -8,6 +8,8 @@ form=$(echo $form | \
     sed -e 's/ from now/后/g' | \
     sed -e 's/ ago/前/g' | \
     sed -e 's/^now/现在/' | \
+    sed -e 's/today/今天/' | \
+    sed -e 's/tomorrow/明天/' | \
     sed -e 's/in \([0-9]*\) days. time/\1天后/')
 
 # 在 pushover.net 申请 App 后得到 ${YOUR_API_TOKEN}
