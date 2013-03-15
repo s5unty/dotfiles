@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 # inspired from http://feedelli.org/2012/07/29/bash-command-line-pomodoro-timer.html
 # punch-time-tracking: http://code.google.com/p/punch-time-tracking/
 #
@@ -29,8 +29,10 @@ clean_up() {
 }
 trap clean_up HUP INT TERM KILL
 
-work=$((25*60))
-rest=$((5*60))
+#work=$((25*60))
+#rest=$((5*60))
+work=$((25))
+rest=$((5))
 turn=${2}
 
 for t in $(seq ${turn}); do
@@ -43,7 +45,7 @@ for t in $(seq ${turn}); do
 
     # 工作时间结束
     doing=$(python $TODO_DIR/opt/punch/Punch.py what | sed 's/Active task: \(.*\) (.*)/\1/g')
-    notify-send -u critical -i appointment -t $((30*1000)) "Please stop this work and take short break. ☻" "$doing"
+    echo 'naughty.notify({ margin = 4, position = "bottom_left", timeout=120, text = "Time to stop work and take a little break."})' | awesome-client
 
     # 休息时间开始
     for i in $(seq 100); do

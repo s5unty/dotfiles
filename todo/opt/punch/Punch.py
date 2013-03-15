@@ -151,6 +151,7 @@ class Punch(object):
     def open_todo(self):
         """Open the user's todo.txt file."""
         try:
+            self.propDict['TODO_FILE'] = os.environ['TODO_FILE']
             print self.resolve( self.propDict['TODO_FILE'])
             self.taskFile = open( self.resolve( self.propDict['TODO_FILE']), 'U' )
         except IOError:

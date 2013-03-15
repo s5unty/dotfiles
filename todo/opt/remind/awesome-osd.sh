@@ -1,26 +1,21 @@
-#!/bin/sh
-####################################################################
-##
-## 格式化符合 todo.txt 规范的字符串，传给 awesome 窗口管理器显示通知
-## 
-## "(C) @foo +test +test @foo +foo something blabla .."
-## 
-####################################################################
+#!/bin/zsh
 
-form=$1; shift
-form=$(echo $form | \
-    sed -e 's/ and //' | \
-    sed -e 's/ minutes\?/分钟/' | \
-    sed -e 's/ hours\?/小时/' | \
-    sed -e 's/ from now/后/g' | \
-    sed -e 's/ ago/前/g' | \
-    sed -e 's/^now/现在/' | \
-    sed -e 's/today/今天/' | \
-    sed -e 's/tomorrow/明天/' | \
-    sed -e 's/in \([0-9]*\) days. time/\1天后/')
+message=$*
+form=${message%%:*}
+desc=${message#*: }
+
+form=$(echo ${form} | sed \
+    -e 's/ minutes\?/分钟/' \
+    -e 's/ hours\?\( and \)\?/小时/' \
+    -e 's/ from now/后/' \
+    -e 's/ ago/前/g' \
+    -e 's/^now/现在/' \
+    -e 's/today/今天/' \
+    -e 's/tomorrow/明天/' \
+    -e 's/at \([0-9]\{1,2\}:[0-9]\{1,2\}[ap]m\)/\1/' \
+    -e 's/in \([0-9]*\) days. time/\1天后/')
 form=$(echo ${form} | sed -e 's/\(^.*\)$/<span color=\\"#FFFF00\\">\1<\/span>/g')                        # tdelta
 
-desc=$*
 desc=$(echo ${desc} | sed -e 's/</＜/' | sed -e 's/>/＞/')                                               # fix bug
 desc=$(echo ${desc} | sed -e 's/\(^(.)\) /<span color=\\"#FF0000\\">\1<\/span> /')                       # priority
 desc=$(echo ${desc} | sed -e 's/\(\(\(^@\)\|\( @\)\)[^ <]*\)/<span color=\\"#00FF00\\">\1<\/span>/g')    # context
@@ -28,3 +23,5 @@ desc=$(echo ${desc} | sed -e 's/\(\(\(^+\)\|\( +\)\)[^ <]*\)/<span color=\\"#00F
 desc=$(echo ${desc} | sed -e 's/\(^.*\)$/<span color=\\"#FFFFFF\\">\1<\/span>/g')                        # normal
 
 /bin/echo -E 'naughty.notify({opacity = 0.9, margin = 0, position = "bottom_right", text = '\"${form} ${desc}\"', icon="/usr/share/pixmaps/gtk-chtheme.xpm", timeout=0})' | awesome-client -
+exit 0
+
