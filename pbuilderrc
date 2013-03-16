@@ -1,4 +1,4 @@
-MIRRORSITE="http://tel.mirrors.163.com/debian/"
+MIRRORSITE="http://mirrors.163.com/debian/"
 DEBBUILDOPTS="-sa -i.git"
 DEBOOTSTRAP="debootstrap"
 APTCACHE="/var/cache/apt/archives"

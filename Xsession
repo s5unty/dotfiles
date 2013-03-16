@@ -50,7 +50,7 @@
 
 # pull, monitor, push TODO 如果同步失败，邮件通知自己
 /usr/bin/rsync -azu du1abadd.org:~/todo/var/ ~/.todo/var/ &
-/usr/bin/remind -z -k'~/.todo/opt/remind/notify-wm %s &' ~/.todo/var/remind/index.rem &
+/usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
 /usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.todo/var/ | \
     while read file; do
         rsync -azu --delete ~/.todo/var/ du1abadd.org:~/todo/var/ &

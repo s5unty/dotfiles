@@ -29,10 +29,8 @@ clean_up() {
 }
 trap clean_up HUP INT TERM KILL
 
-#work=$((25*60))
-#rest=$((5*60))
-work=$((25))
-rest=$((5))
+work=$((25*60))
+rest=$((5*60))
 turn=${2}
 
 for t in $(seq ${turn}); do
