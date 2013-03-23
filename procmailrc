@@ -62,7 +62,7 @@ X_Context=| tail -n +2 | mailtextbody | nkf -w | head -5
 # }}}1
 
 # 处理公司邮件 {{{1
-INCLUDERC=$MAILDIR".procmailrc.fnst"
+# INCLUDERC=$MAILDIR".procmailrc.fnst"
 # }}}1
 
 # 处理 QQ 邮箱 {{{1
@@ -84,47 +84,47 @@ INCLUDERC=$MAILDIR".procmailrc.fnst"
     debian-zh/
 }
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*(debian-chinese-|debian-l10n-chinese)
 debian-zh/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*debian-www.lists.debian.org
 debian-www/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*debian.*mentors.*(googlegroups.com|debian.org)
 debian-mentors/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*ubuntu-zh
 ubuntu-zh/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*(awesome-devel)
 awesome/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*vim(im|-cn).googlegroups.com
 vim-zh/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*shlug.googlegroups.com
 shlug/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*szlug.googlegroups.com
 szlug/
 
-:0 h
+:0
 * ^From:.*(amazon.cn|taobao.com|alipay.com)
 shopping/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*fcitx.*@googlegroups.com
 fcitx/
 
-:0 h
+:0
 * ^(List-Id|To|CC|BCC):.*<python-cn.googlegroups.com>
 python-cn/
 
