@@ -3,12 +3,13 @@ alias -g G='| egrep -i --color=always'
 alias -g M="| $__LESS"
 alias -g Y="| xsel"
 alias -g iy="| xsel"
+alias -g H='ansifilter --html -eUTF8'
 
 alias ...="../../"
 alias ....="../../../"
 alias cs="history 0"
 alias mv="/bin/mv -i"
-alias ll="/bin/ls --color=always -hFxtrl"
+alias ll="/usr/local/bin/ls++"
 alias la="/bin/ls --color=always -hFXA"
 alias ls="/bin/ls --color=always -hFv"
 alias cp="cp -a"
@@ -171,13 +172,13 @@ alias tda="todo.sh add"
 alias tdR="todo.sh replace"
 alias td0="todo.sh prepend"
 alias td\$="todo.sh append"
-alias tdg="todo.sh list"
+alias tdg="todo.sh latest"
+alias tdl="todo.sh list"
 alias tdgc="todo.sh archive"
 alias tdG="todo.sh listall"
 alias tdp="todo.sh pri"
 alias tdP="todo.sh depri"
 alias tdO="todo.sh listnotes 2>/dev/null"
-alias tdl="todo.sh lf =(remind -b1 -s+4 $TODO_DIR/var/remind/index.rem)"
 alias tdn="pu what"
 tdc() {
     if [[ ${ARGC} > 1 ]]; then # 追加注释
@@ -214,9 +215,10 @@ tde() {
     else
         loc=":normal $1gg"
     fi
-    REMD_FILE=$TODO_DIR/var/remind/index.rem
-    vi +":e $REMD_FILE" +":normal zz" \
-        +":vs $TODO_FILE" +"${loc}"
+    HOME_FILE="$TODO_DIR/var/home/todo.log"
+    FNST_FILE="$TODO_DIR/var/fnst/todo.log"
+    vi +":e $HOME_FILE" +":normal zz" \
+        +":vs $FNST_FILE" +"${loc}"
 }
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})

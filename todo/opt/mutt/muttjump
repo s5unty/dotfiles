@@ -162,6 +162,10 @@ if [ -z "$msgid" ] ; then
 fi
 msgid_quoted=$(quote_regexp "$msgid")
 msgid_clean=$(echo "$msgid" | sed -e 's/^<//' -e 's/>$//')
+# 有些狗日的客户端生成的 Message-ID 含有他妈的刀了符 '$'
+# 谁他妈知道 mu 还是 xapian 怎么查询含有特殊字符的内容啊
+# 老子直接把 '$' 连同后面的字符一齐替换成 '*'，干干干
+msgid_clean=$(echo "$msgid_clean" | sed -e 's/\$.*/\*/')
 
 # try to locate path of message using a mail search engine
 case $MUTTJUMP_INDEXER in
