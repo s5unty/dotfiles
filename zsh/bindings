@@ -70,14 +70,14 @@ list-directory-stack() {
 }
 zle -N list-directory-stack
 
-# 插入模式光标黑色
+# 插入模式光标灰色
 # 命令模式光标红色
 zle-keymap-select () {
     if [ "$TERM" = "rxvt-unicode-256color" ]; then
         if [ $KEYMAP = vicmd ]; then
-            echo -ne "\033]12;Red\007"
+            echo -ne "\033]12;#ff0087\007"
         else
-            echo -ne "\033]12;Black\007"
+            echo -ne "\033]12;#3a3a3a\007"
         fi
     fi
     zle reset-prompt
@@ -85,7 +85,7 @@ zle-keymap-select () {
 zle-line-init () {
     zle -K viins
     if [ "$TERM" = "rxvt-unicode-256color" ]; then
-        echo -ne "\033]12;black\007"
+        echo -ne "\033]12;#3a3a3a\007"
     fi
 }; zle -N zle-line-init
 
