@@ -397,6 +397,9 @@ if has("autocmd")
     autocmd BufEnter,WinEnter *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
                 \ set path+=./,/usr/include/
 
+    autocmd BufRead *.tjp
+                \ set filetype=tjp
+
     autocmd Filetype java
                 \ setlocal omnifunc=javacomplete#Complete
 endif
@@ -494,7 +497,9 @@ nmap <Plug>IgnoreMarkSearchAnyPrev <Plug>MarkSearchAnyPrev
 
 " autofmt 1.6 (2011-11-03): text formatting plugin {{{2
 " http://www.vim.org/scripts/script.php?script_id=1939
-set formatexpr=autofmt#japanese#formatexpr()
+" Use uax14
+set formatexpr=autofmt#uax14#formatexpr()
+
 
 "}}}1
 
@@ -610,7 +615,7 @@ let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 " http://www.vim.org/scripts/script.php?script_id=3753
 " https://github.com/fmoralesc/vim-pad
 let g:pad_dir = "~/wikipad/notes/"
-let g:pad_default_format = "mkd"
+let g:pad_default_format = "pandoc"
 let g:pad_window_height = 20
 let g:pad_open_in_split = 0
 let g:pad_search_backend = "ack"
@@ -854,3 +859,4 @@ map! <Esc>[24^ <C-F12>
 
 " }}}1
 
+let g:pandoc_use_hard_wraps=1
