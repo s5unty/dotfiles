@@ -36,6 +36,3 @@ zle_highlight=(region:bg=blue     #选中区域
                special:bold       #特殊字符
                isearch:underline) #搜索时使用的关键字
 
-if [[ -f $HOME/.zsh/dircolors ]] ; then   #自定义颜色
-    eval $(dircolors -b $HOME/.zsh/dircolors)
-fi

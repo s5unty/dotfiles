@@ -83,12 +83,12 @@ map           <A-0><A-3><A-8>       38gt
 map           <A-0><A-3><A-9>       39gt
 " }}}2
 " 切换当前页面编码
-map <silent>            <F2>        :set encoding=Shift_JIS<CR>
-map <silent>            <F3>        :set encoding=EUC-JP<CR>
-map <silent>            <F4>        :set encoding=ISO-2022-JP<CR>
-map <silent>            <F5>        :set encoding=UTF-8<CR>
-map <silent>            <F6>        :set encoding=BIG5<CR>
-map <silent>            <F7>        :set encoding=GB2312<CR>
+map <silent>            <F2>        :set encoding=Shift_JIS<CR>:echo 'Shift_JIS'<CR>
+map <silent>            <F3>        :set encoding=EUC-JP<CR>:echo 'EUC-JP'<CR>
+map <silent>            <F4>        :set encoding=ISO-2022-JP<CR>:echo 'ISO-2022-JP'<CR>
+map <silent>            <F5>        :set encoding=UTF-8<CR>:echo 'UTF-8'<CR>
+map <silent>            <F6>        :set encoding=BIG5<CR>:echo 'BIG5'<CR>
+map <silent>            <F7>        :set encoding=GB2312<CR>:echo 'GB2312'<CR>
 " }}}
 
 " QuickMarks {{{1
@@ -115,19 +115,20 @@ silent qmark 1 http://10.167.225.189/wiki/index.php/PRIMECLUSTER
 
 " AutoProxy {{{2
 " 切换 AutoProxy 的代理模式：智能、全局、禁用
-map <silent> <F2> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
-map <silent> <F3> :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
-map <silent> <F4> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
+map <silent> <F9> :set! extensions.autoproxy.proxyMode=global<CR>:echo ':('<CR>
+map <silent> <F10> :set! extensions.autoproxy.proxyMode=disabled<CR>:echo ':D'<CR>
+map <silent> <F12> :set! extensions.autoproxy.proxyMode=auto<CR>:echo ':)'<CR>
 
 " Translate {{{2
 map L :set ds=l<CR>P:set ds=google<CR>
 map J :set ds=j<CR>P:set ds=google<CR>
 
-
 " diigo {{{2
-map <silent> A :diigomark<CR>
-map <silent> ! :diigo<CR>
-
-command! diigo :open javascript:(function(){s=document.createElement("script");s.type="text/javascript";s.src="https://www.diigo.com/javascripts/webtoolbar/diigolet_b_h_b.js";document.body.appendChild(s);})();
-command! diigomark :open javascript:javascript:(function(){var%20url%20=%20location.href;var%20title%20=%20document.title%20||%20url;var%20desc%20=%20(window.getSelection%20?%20window.getSelection().toString()%20:%20document.getSelection%20?%20document.getSelection()%20%20:%20document.selection.createRange().text);window.open('https://www.diigo.com/post?url='%20+%20encodeURIComponent(url)%20+%20'&title='%20+%20encodeURIComponent(title)%20+%20'&desc='%20+%20encodeURIComponent(desc)+'&client=simplelet#main','_blank','menubar=no,height=580,width=608,toolbar=no,scrollbars=no,status=no');})();
-command! -nargs=* diigosearch :tabopen https://www.diigo.com/user/s5unty/<args>
+"" HTTPS has been supported by Diigo Toolbar.
+"" So, hacks listed below is no necessary any more.
+" map <silent> A :diigomark<CR>
+" map <silent> ! :diigo<CR>
+"
+" command! diigo :open javascript:(function(){s=document.createElement("script");s.type="text/javascript";s.src="https://www.diigo.com/javascripts/webtoolbar/diigolet_b_h_b.js";document.body.appendChild(s);})();
+" command! diigomark :open javascript:javascript:(function(){var%20url%20=%20location.href;var%20title%20=%20document.title%20||%20url;var%20desc%20=%20(window.getSelection%20?%20window.getSelection().toString()%20:%20document.getSelection%20?%20document.getSelection()%20%20:%20document.selection.createRange().text);window.open('https://www.diigo.com/post?url='%20+%20encodeURIComponent(url)%20+%20'&title='%20+%20encodeURIComponent(title)%20+%20'&desc='%20+%20encodeURIComponent(desc)+'&client=simplelet#main','_blank','menubar=no,height=580,width=608,toolbar=no,scrollbars=no,status=no');})();
+" command! -nargs=* diigosearch :tabopen https://www.diigo.com/user/s5unty/<args>

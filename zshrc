@@ -24,4 +24,8 @@ if [ `tty | grep -c pts` -eq 1 ]; then
     export LANG="zh_CN.UTF-8"
 fi
 
+if [[ -f $HOME/.zsh/dircolors ]] ; then   #自定义颜色
+    eval $(dircolors -b $HOME/.zsh/dircolors)
+fi
+
 # vim: ft=zsh et

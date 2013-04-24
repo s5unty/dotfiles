@@ -50,7 +50,8 @@ precmd() {
 }
 
 preexec () {
-    if [[ $TTY =~ "pts" ]]; then
+    # if [[ $TTY =~ "pts" ]]; then ## zsh-4.2.0 不支持这种表达式
+    if [[ ${(@)${(s#/#)TTY}[2]} == "pts" ]]; then
         # 当前执行的命令输出到终端标题栏
         print -Pn '\e]0;%# $1 (%1~) - %l\a'
     fi
