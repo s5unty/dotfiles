@@ -73,3 +73,6 @@
 [submodule "vim/bundle/vim-pandoc"]
 	path = vim/bundle/vim-pandoc
 	url = https://github.com/vim-pandoc/vim-pandoc.git
+[submodule "vim/bundle/visSum"]
+	path = vim/bundle/visSum
+	url = https://github.com/vim-scripts/visSum.vim.git

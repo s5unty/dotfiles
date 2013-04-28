@@ -14,6 +14,8 @@ require("revelation")
 require("vicious")
 -- awesome-client
 require("awful.remote")
+
+require("blingbling")
 os.setlocale("zh_CN.UTF-8")
 
 -- General {{{1
@@ -122,16 +124,22 @@ end)
 )
 
 -- Disk IO {{{3
-diowidget = awful.widget.graph()
-diowidget:set_width(50)
-diowidget:set_gradient_colors({ "#AECF96", "#88A175", "#FF5656" })
-vicious.register(diowidget, vicious.widgets.dio, "${sda total_mb}")
+dio_graph = blingbling.classical_graph({ height = 18, width = 50 })
+dio_graph:set_show_text(true)
+dio_graph:set_label("I/O")
+dio_graph:set_tiles_color("#292B2F")
+dio_graph:set_graph_color("#AAAAAA")
+dio_graph:set_graph_line_color("#AAAAAA")
+vicious.register(dio_graph, vicious.widgets.dio, "${sda total_mb}")
 
 -- CPU widget {{{3
-cpuwidget = awful.widget.graph()
-cpuwidget:set_width(50)
-cpuwidget:set_gradient_colors({ "#AECF96", "#88A175", "#FF5656" })
-vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
+cpu_graph = blingbling.classical_graph({ height = 18, width = 50 })
+cpu_graph:set_show_text(true)
+cpu_graph:set_label("CPU")
+cpu_graph:set_tiles_color("#292B2F")
+cpu_graph:set_graph_color("#AAAAAA")
+cpu_graph:set_graph_line_color("#AAAAAA")
+vicious.register(cpu_graph, vicious.widgets.cpu,'$1',2)
 
 -- Clock {{{3
 mytextclock = widget({ type = 'textbox' })
@@ -182,8 +190,8 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         s == 1 and mysystray or nil,
         mytextclock,
-        cpuwidget.widget,
-        diowidget.widget,
+        cpu_graph.widget,
+        dio_graph.widget,
         mytasklist[s],
         ["layout"] = awful.widget.layout.horizontal.rightleft
     }
@@ -268,6 +276,7 @@ end),
 
 awful.key({ modkey }, "u", awful.client.urgent.jumpto),
 awful.key({ modkey }, "z", awful.client.movetoscreen),
+awful.key({ modkey }, "/", awful.client.movetoscreen),
 awful.key({ modkey }, "o", awful.client.floating.toggle),
 awful.key({ modkey }, "b", awful.client.togglemarked),
 
@@ -308,8 +317,8 @@ awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm '
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
-awful.key({"Shift" }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
-awful.key({        }, "Scroll_Lock", function () awful.util.spawn("xautolock -locknow") end),
+awful.key({ modkey, "Control" }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
+awful.key({ modkey }, "Scroll_Lock",   function () awful.util.spawn("xscreensaver-command -lock") end),
 -- }}}
 
 -- {{{ calendar
@@ -479,10 +488,6 @@ end),
 awful.key({ modkey            }, "m",       function (c)
     c.maximized_horizontal = not c.maximized_horizontal
     c.maximized_vertical   = not c.maximized_vertical
-    c:raise()
-end),
-
-awful.key({ modkey            }, "/",       function (c)
     c:raise()
 end),
 
