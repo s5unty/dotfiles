@@ -350,7 +350,7 @@ awful.key({ modkey }, "d", function ()
     local c = f:read("*a")
     f:close()
 
-    frame = naughty.notify({ text = c, timeout = 15, width = 360 })
+    frame = naughty.notify({ text = c, timeout = 15, width = 360, screen = mouse.screen })
 end),
 awful.key({ modkey, "Shift" }, "d", function ()
     awful.prompt.run({prompt = "Dict: "}, mypromptbox[mouse.screen].widget, function(cin_word)
@@ -363,7 +363,7 @@ awful.key({ modkey, "Shift" }, "d", function ()
         local c = f:read("*a")
         f:close()
 
-        frame = naughty.notify({ text = c, font='Envy Code R 9', timeout = 30, width = 360 })
+        frame = naughty.notify({ text = c, font='Envy Code R 9', timeout = 30, width = 360, screen = mouse.screen })
     end, nil, awful.util.getdir("cache").."/dict")
 end),
 -- }}}
