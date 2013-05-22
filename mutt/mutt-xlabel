@@ -1,0 +1,71 @@
+#! /bin/sh -
+# inspiration from: http://www.zsh.org/mla/users/2007/msg01187.html
+# we're not using <shell-escape> because we want to prompt the user in
+# mutt's prompt area and still have mutt's index visible.
+
+set -f
+
+# restore stdin/stdout to the terminal, fd 3 goes to mutt's backticks.
+exec < /dev/tty 3>&1 > /dev/tty
+
+# save tty settings before modifying them
+saved_tty_settings=$(stty -g)
+
+trap '
+    printf "\r"; tput ed; tput rc
+    printf "<refresh>" >&3
+    stty "$saved_tty_settings"
+    exit
+' INT TERM
+
+# retrieve the size of the screen.
+set $(stty size)
+
+# save cursor position:
+tput sc
+
+# go to last line of the screen
+tput cup "$1" 0
+
+# Clear.
+tput ed
+
+cmdhist=~/.mutt/cache/labels
+# run zsh in interactive mode (for history to work and .zshrc to
+# be read).
+# 不指定 ZDOTDIR 就不能输入中文，搞不懂
+xlabel=$(
+  cmdhist=$cmdhist ZDOTDIR="/tmp" zsh -ic '
+  stty sane
+  bindkey -e
+  send-break() {
+    print "<BREAK>"
+    kill -HUP $$
+  }
+  accept-line() {
+    print -r -- "$BUFFER"
+    print -rs -- "$BUFFER"
+    fc -P
+    kill -HUP $$
+  }
+  zle -N accept-line
+  zle -N send-break
+  fc -p -a "$cmdhist" 100
+  a=; vared -p "标签(替换)：" -eh a'
+)
+
+xlabel=$(echo $xlabel | sed -e 's/ /\\\\ /g')
+echo "0: $xlabel" >> /tmp/11
+cmd="<enter-command>set\ my_lab=\"$xlabel\"\n"
+
+# clear our mess
+printf '\r'; tput ed
+
+# restore cursor position
+tput rc
+
+# and tty settings
+stty "$saved_tty_settings"
+
+printf %s "$cmd" >&3
+

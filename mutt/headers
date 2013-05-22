@@ -5,8 +5,9 @@ unignore To:
 unignore CC:
 unignore BCC:
 unignore X-LDate:
+unignore X-Label:
 unignore Subject:
 unignore X-Mailer:
 unignore User-Agent:
 
-hdr_order From: To: CC: BCC: Subject: X-LDate: X-Mailer: User-Agent:
+hdr_order From: To: CC: BCC: Subject: X-LDate: X-Label: X-Mailer: User-Agent:

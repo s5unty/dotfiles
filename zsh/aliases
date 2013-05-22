@@ -9,7 +9,7 @@ alias ...="../../"
 alias ....="../../../"
 alias cs="history 0"
 alias mv="/bin/mv -i"
-alias ll="/usr/local/bin/ls++"
+alias ll="/bin/ls --color=always -hFxtrl"
 alias la="/bin/ls --color=always -hFXA"
 alias ls="/bin/ls --color=always -hFv"
 alias cp="cp -a"
@@ -151,7 +151,8 @@ elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
     alias apg="yum search"
     alias aps="yum info"
 
-    alias dpi="$__SUDO rpm -iUfvh --replacefiles --replacepkgs --oldpackage"
+    alias dpi="$__SUDO rpm -iUfvh"
+    alias dpI="$__SUDO rpm -iUfvh --replacefiles --replacepkgs --oldpackage"
     alias dpc="rpm -qpl"
     alias dps="rpm -qpi"
     alias dpo="rpm --scripts -qp"
@@ -159,6 +160,7 @@ elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
     alias dpL="rpm -ql"
     alias dps="rpm -qi"
     alias dpr="$__SUDO rpm -e"
+    alias dpp="$__SUDO rpm -e --nodeps --allmatches"
 
     alias sl="$__SUDO tail -f /var/log/messages"
 fi

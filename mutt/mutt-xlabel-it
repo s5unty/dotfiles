@@ -1,0 +1,23 @@
+#!/bin/sh
+
+LABEL="$1"
+FNAME="$2"
+NFNAME="/tmp/mutt-xlabel-`basename "$2"`.$$"
+
+echo "1: $1" >> /tmp/11
+echo "2: $2" >> /tmp/11
+
+if [ x"$LABEL" = "x" ]; then
+	NEW="X-Label" # delete this field
+else
+	NEW="X-Label: $LABEL"
+fi
+
+formail -I "$NEW" < "$FNAME" > "$NFNAME"
+
+# if we created a new file, step over the old one
+if [ -f "$NFNAME" ]; then
+	mv "$NFNAME" "$FNAME"
+fi
+
+# vi:noet:

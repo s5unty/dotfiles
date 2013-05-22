@@ -11,6 +11,8 @@ set editor="urxvt -e vim -f"
 set hlfind
 " 状态栏的背景色
 hi StatusLineNormal color: black !important; background: transparent !important;
+" 可视提示
+set visualbell
 " }}}
 
 " Key bindings {{{1
@@ -26,9 +28,10 @@ map                     <C-,>       <C-S-p><C-L>
 map --                  -           <C-b>
 " 向下翻页
 map                     <Space>     <C-d>
+" 好像最近(201304)版本内置的删除模式已更新
 " 交换 d/D
-map -builtin            d           D
-map -builtin            D           d
+" map -builtin            d           D
+" map -builtin            D           d
 " 前进
 map                     \\          <C-i>
 " 后退
@@ -89,6 +92,20 @@ map <silent>            <F4>        :set encoding=ISO-2022-JP<CR>:echo 'ISO-2022
 map <silent>            <F5>        :set encoding=UTF-8<CR>:echo 'UTF-8'<CR>
 map <silent>            <F6>        :set encoding=BIG5<CR>:echo 'BIG5'<CR>
 map <silent>            <F7>        :set encoding=GB2312<CR>:echo 'GB2312'<CR>
+
+" https://github.com/claytron/dotfiles/master/.pentadactylrc {{{2
+" bring back/hide portions of the GUI
+map -builtin <silent> ;g :set guioptions+=mBT<CR>
+map -builtin <silent> ;G :set guioptions-=mBT<CR>
+map -builtin <silent> ;b :toolbartoggle Bookmarks Toolbar<CR>
+map -builtin <silent> ;y :set showtabline=always<CR>
+map -builtin <silent> ;u :set showtabline=never<CR>
+" jj as esc
+cmap jj <Esc>
+imap jj <Esc>
+tmap jj <Esc>
+" }}}2
+
 " }}}
 
 " QuickMarks {{{1

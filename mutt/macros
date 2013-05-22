@@ -25,12 +25,12 @@ macro attach s "<save-entry><kill-line>/tmp/<enter>a"
 # http://www.nixternal.com/mark-e-mails-in-mutt-as-tasks-in-taskwarrior/
 # https://github.com/ValiValpas/taskopen
 macro index,pager T "\
-          <pipe-message>~/.mutt/mutt2task<enter>\
-          :set wait_key=no<enter>\
-          :set pipe_decode=no<enter>\
-          <pipe-message>~/.mutt/mess2task<enter>\
-          :set pipe_decode=yes<enter>\
-          :set wait_key=yes<enter>" "Task"
+	<pipe-message>~/.mutt/mutt-todotxt\n\
+	:set wait_key=no\n\
+	:set pipe_decode=no\n\
+	<pipe-message>~/.mutt/mutt-todotxt-it\n\
+	:set pipe_decode=yes\n\
+	:set wait_key=yes\n" "Task"
 #macro index,pager "<esc>t" ":set pipe_decode=no<enter>\
 #          <pipe-message>~/.mutt/mess2task<enter>\
 #          :set pipe_decode=yes<enter>" "Task"
@@ -55,9 +55,30 @@ macro index Z "<collapse-all><current-bottom>"
 # 显示当前邮箱里曾经被我回复过的邮件(~Q)，包括我的回复(~P)
 macro index "<F5>" "<limit>~Q | ~P<enter>"
 # 显示当前邮箱里最近两天的邮件
-macro index "<F8>" "<limit>~d `date -d '1 days ago' +%d/%m`-<enter>"
+macro index "<F6>" "<limit>~d `date -d '1 day ago' +%d/%m`-<enter>"
+# 显示当前邮箱里最近一周的邮件
+macro index "<F7>" "<limit>~d `date -d '1 week ago' +%d/%m`-<enter>"
+# 显示当前邮箱里最近一月的邮件
+macro index "<F8>" "<limit>~d `date -d '1 month ago' +%d/%m`-<enter>"
 # http://wiki.mutt.org/?UserStory/SearchingMail
 # http://www.zsh.org/mla/users/2007/msg01187.html
 # mu-0.9.7 with wrapper
-macro index,pager \` "<enter-command>set my_cmd = \`~/.mutt/mutt-grep\`<return><enter-command>push \$my_cmd<return>" "global find"
+macro index,pager \` "\
+	:set history=0\n\
+	:set my_cmd = \`~/.mutt/mutt-grep\`\n\
+	:push \$my_cmd\n\
+	:set history=10\n" "global find"
 
+# labels
+# TODO inherit
+macro index,pager x "\
+	:set my_cmd=\`~/.mutt/mutt-xlabel\`\n\
+	:push \$my_cmd<enter>\
+	:set editor=\"~/.mutt/mutt-xlabel-it \\\"\$my_lab\\\"\"<enter>\
+	<edit>\
+	:set editor=\"vim -c 'set ft=mail.markdown'\"<enter>\
+	:set delete=yes<enter>\
+	<sync-mailbox><next-undeleted>\
+	:set delete=ask-yes<enter>" "create label"
+
+# vi:noet:
