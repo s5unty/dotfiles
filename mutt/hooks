@@ -2,8 +2,8 @@
 folder-hook . "push '<collapse-all><last-entry><next-new-then-unread><current-bottom>'"
 
 # 真实邮箱，每次初始化高亮，只显示最近一个月的邮件
-folder-hook !(bingo) "source ~/.mutt/colours"
-folder-hook !(bingo) "push <limit>~d\"*30d\"<enter>"
+folder-hook (fnst.*|pcl.*) "source ~/.mutt/colours"
+folder-hook (fnst.*|pcl.*) "push <limit>~d\"*30d\"<enter>"
 
 # 私人邮箱，切换邮送域，自动gpg签名
 folder-hook personal "set from='Vern Sun <s5unty@gmail.com>'"

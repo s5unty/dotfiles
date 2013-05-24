@@ -67,10 +67,16 @@ search=$(
 # mu result folder in mutt folder syntax:
 MAILDIR=/sun/maildir
 # 用每次搜索的关键字作一个虚拟邮箱？就像 sup 那样？
-# MFOLDER=$(echo "$search" | sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g')
-MFOLDER=bingo
+MFOLDER=$(echo "$search" | sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g')
+# lables/ 目录用来标签每次搜索的关键字，
+# lables/.noindex 文件用来拒绝 mu 索引。
+MFOLDER="labels/"$MFOLDER
 export MAILDIR
 export MFOLDER
+
+if ! [ -d "$MAILDIR/$MFOLDER" ]; then
+    maildirmake "$MAILDIR/$MFOLDER"
+fi
 
 case $search in
   ("<BREAK>") ;;
@@ -175,8 +181,7 @@ case $search in
   (*)
     # 全邮箱正文搜索(含附件)，关键字高亮
     key=$(echo "$search")
-    sh -c "find $MAILDIR/$MFOLDER -type l -exec rm {} \;" # 清空虚拟邮箱
-    sh -c "recoll -t -q '${key}' | grep /sun/maildir/ | sed -s 's,^.*\('$MAILDIR'[^]]*\)\].*$,\"\1\",' | xargs ln -sft $MAILDIR/$MFOLDER/cur/ > /dev/null 2>&1"
+    sh -c "recoll -t -q '${key}' | grep $MAILDIR'.*/cur' | sed -s 's,^.*\('$MAILDIR'[^]]*\)\].*$,\"\1\",' | xargs ln -sft $MAILDIR/$MFOLDER/cur/ > /dev/null 2>&1"
     args=
     ;;
 esac

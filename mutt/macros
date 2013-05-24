@@ -69,7 +69,7 @@ macro index,pager \` "\
 	:push \$my_cmd\n\
 	:set history=10\n" "global find"
 
-# labels
+# x-labels
 # TODO inherit
 macro index,pager x "\
 	:set my_cmd=\`~/.mutt/mutt-xlabel\`\n\
