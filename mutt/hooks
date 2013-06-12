@@ -11,6 +11,9 @@ folder-hook personal "set crypt_autosign=yes"
 # 公司邮箱，切换邮送域，不用gpg签名
 folder-hook fnst- "set from='Sun Wuan <sunwuan@cn.fujitsu.com>'"
 folder-hook fnst- "set crypt_autosign=no"
+# 笔记本，切换首页信息
+folder-hook  notebook "set index_format='%?M?%-38.38i (%-2.2M)&%-43.43i? %S %-85.85s       %?Y?︴%-19.19Y&︴? %> %?N?%2N\"&   ? %[%b%d]┆%4c'"
+folder-hook !notebook "set index_format='%?X?%%& ? %?M?%-15.15n %-20.20t (%-2.2M)&%-15.15n %-25.25t? %S %-85.85s       %?Y?︴%-19.19Y&︴? %> %?N?%2N\"&   ? %[%b%d]┆%4c'"
 
 ################################
 ###  全部换回 UTF-8 编码了  ####
