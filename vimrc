@@ -341,10 +341,10 @@ if has("autocmd")
     endfunction
 
     function! <SID>AC_HighlightDirtySpace()
-        syn match wtfSpace '　'
-        hi link wtfSpace   SpecialKey
+        highlight link wtfSpace SpecialKey
+        match wtfSpace '　'
     endfunction
-
+  
     function! <SID>AC_ChmodExecutable()
         if getline(1) =~ "^#!" && getline(1) =~ "/bin/"
             silent !chmod u+x %
@@ -352,34 +352,12 @@ if has("autocmd")
         endif
     endfunction
 
-    function! <SID>AC_IBusDisable()
-        if ibus#is_enabled()
-            call ibus#disable()
-            let b:ibustoggle = 1
-        endif
-        set timeoutlen=1000
-    endfunction
-
-    function! <SID>AC_IBusRenable()
-        if exists("b:ibustoggle")
-            if b:ibustoggle == 1
-                call ibus#enable()
-                let b:ibustoggle = 0
-                set timeoutlen=100
-            endif
-        else
-            let b:ibustoggle = 0
-        endif
-    endfunction
-
     autocmd VimResized *
                 \ redrawstatus!
 
-    autocmd InsertLeave *
-                \ call <SID>AC_IBusDisable()
-
-    autocmd InsertEnter *
-                \ call <SID>AC_IBusRenable()
+    " 这样加快输入法自动切换时的体感速度
+    autocmd InsertEnter * set timeoutlen=100
+    autocmd InsertLeave * set timeoutlen=1000
 
     " 每次访问文件时都把光标放置在上次离开的位置
     autocmd BufReadPost *
@@ -615,6 +593,7 @@ let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 " http://www.vim.org/scripts/script.php?script_id=3753
 " https://github.com/fmoralesc/vim-pad
 let g:pad_dir = "~/wikipad/notes/"
+let g:pad_default_file_extension = ".txt"
 let g:pad_default_format = "pandoc"
 let g:pad_window_height = 20
 let g:pad_open_in_split = 0
@@ -624,6 +603,9 @@ nmap <silent> <unique> <localleader>\ <Plug>ListPads
 nmap <silent> <unique> <localleader>/ <Plug>SearchPads
 nmap <silent> <unique> <localleader><Enter> <Plug>OpenPad
 
+" vim-pandoc: vim bundle for pandoc users {{{2
+" https://github.com/vim-pandoc/vim-pandoc
+let g:pandoc_use_hard_wraps=1
 
 " }}}
 
@@ -679,7 +661,7 @@ let g:unite_cursor_line_highlight = 'TabLineSel'
 let g:unite_split_rule = 'botright'
 if executable('ack-grep')
     let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts = '-iHn --no-heading --no-color --all'
+    let g:unite_source_grep_default_opts = '-iH --no-heading --no-color --all'
     let g:unite_source_grep_recursive_opt = '-R'
 endif
 autocmd FileType unite call s:unite_my_settings()
@@ -859,4 +841,10 @@ map! <Esc>[24^ <C-F12>
 
 " }}}1
 
-let g:pandoc_use_hard_wraps=1
+let g:notes_directories = ['~/wikipad/notes']
+let g:notes_suffix = '.txt'
+let g:notes_title_sync = 'no'
+let g:notes_smart_quotes = 0
+let g:notes_tagsindex = '.tags_notes'
+
+let g:vimwiki_list = [{'path': '/tmp/foo/', 'ext': '.txt', 'path_html': '~/foo/'}]

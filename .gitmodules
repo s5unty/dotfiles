@@ -61,9 +61,6 @@
 [submodule "vim/bundle/neosnippet"]
 	path = vim/bundle/neosnippet
 	url = https://github.com/Shougo/neosnippet.git
-[submodule "vim/bundle/vim-markdown"]
-	path = vim/bundle/vim-markdown
-	url = https://github.com/plasticboy/vim-markdown.git
 [submodule "vim/bundle/vim-pad"]
 	path = vim/bundle/vim-pad
 	url = https://github.com/fmoralesc/vim-pad
