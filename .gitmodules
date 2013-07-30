@@ -55,15 +55,9 @@
 [submodule "vim/bundle/visincr"]
 	path = vim/bundle/visincr
 	url = https://github.com/vim-scripts/VisIncr
-[submodule "vim/bundle/vim-ibus"]
-	path = vim/bundle/vim-ibus
-	url = https://github.com/bouzuya/vim-ibus.git
 [submodule "vim/bundle/neosnippet"]
 	path = vim/bundle/neosnippet
 	url = https://github.com/Shougo/neosnippet.git
-[submodule "vim/bundle/vim-pad"]
-	path = vim/bundle/vim-pad
-	url = https://github.com/fmoralesc/vim-pad
 [submodule "todo/home/inkarkat"]
 	path = todo/home/inkarkat
 	url = git@github.com:s5unty/todo.txt-cli-ex.git
