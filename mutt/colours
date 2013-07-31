@@ -27,7 +27,6 @@ color index      white       black     "~n 10-"
 
 # 特殊状态
 color index      color8      default   "!(~d `date +'%d/%m' -d '3 days ago'`-)"
-color index      black       color246  "~y .*"
 color index      color32     default   "~y \\\\bvi\\\\b"  # very important (word only)
 color index      black       default   "~Q"  # 我回复过的邮件(~Q)
 color index      black       color255  "~T"  # 选中

@@ -12,8 +12,10 @@ folder-hook personal "set crypt_autosign=yes"
 folder-hook fnst- "set from='Sun Wuan <sunwuan@cn.fujitsu.com>'"
 folder-hook fnst- "set crypt_autosign=no"
 # 笔记本，切换首页信息
-folder-hook  notebook "set index_format='%?M?%-38.38i (%-2.2M)&%-43.43i? %S %-85.85s       %?Y?︴%-19.19Y&︴? %> %?N?%2N\"&   ? %[%b%d]┆%4c'"
+folder-hook  notebook "set index_format='%?M?%-38.38i (%-2.2M)&%-43.43i? %?X?%%& ? %-85.85s       %?Y?︴%-19.19Y&︴? %> %?N?%2N\"&   ? %[%b%d]┆%4c'"
+folder-hook  notebook "uncolor index \"!(~d `date +'%d/%m' -d '3 days ago'`-)\""
 folder-hook !notebook "set index_format='%?X?%%& ? %?M?%-15.15n %-20.20t (%-2.2M)&%-15.15n %-25.25t? %S %-85.85s       %?Y?︴%-19.19Y&︴? %> %?N?%2N\"&   ? %[%b%d]┆%4c'"
+folder-hook !notebook "color index color8 default \"!(~d `date +'%d/%m' -d '3 days ago'`-)\""
 
 ################################
 ###  全部换回 UTF-8 编码了  ####
