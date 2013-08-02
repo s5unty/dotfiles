@@ -1,6 +1,7 @@
 text/html; w3m -T text/html %s; copiousoutput; nametemplate=%s.html; needsterminal;
-text/*; view '%s'; edit=vim '%s'; compose=vim '%s'; needsterminal
-image/*; pqiv -i -q %s;
+
+text/calendar; ~/.mutt/ical-mutt.rb -i 'mailto:your@mail.address' %s;
+text/calendar; ~/.mutt/ical-view.rb; copiousoutput
 
 application/x-diff-gzip; atool -l %s; copiousoutput;
 application/x-gtar; atool -l %s; copiousoutput;
@@ -24,4 +25,5 @@ application/word; antiword -w 0 %s; copiousoutput; description="Microsoft Word T
 application/x-pdf; zathura %s;
 application/pdf; zathura %s;
 
-text/calendar; ~/.mutt/icalview.rb; copiousoutput
+text/*; view '%s'; edit=vim '%s'; compose=vim '%s'; needsterminal
+image/*; pqiv -i -q %s;
