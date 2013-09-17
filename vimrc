@@ -80,7 +80,7 @@ endif
 " http://lists.debian.or.jp/debian-devel/200703/msg00038.html
 " http://sakurapup.browserloadofcoolness.com/viewtopic.php?f=13&t=2027
 " http://du1abadd.org/debian/UTF-8-EAW-FULLWIDTH.gz
-"set ambiwidth=double
+set ambiwidth=double
 " 不用设置为double也能全角显示，vim@rxvt-unicode
 
 let mapleader=','
@@ -152,43 +152,43 @@ endfunction
 " 跳转至文件编辑窗口
 " 参照 tabbar.vim 插件的 <SID>Bf_CrSel() 函数
 function! G_GotoEditor()
-	if &buftype != ''
-		wincmd w
-		if &buftype != ''
-			wincmd w
-			if &buftype != ''
-				wincmd w
-				if &buftype != ''
-					wincmd W
-					wincmd W
-					wincmd W
-				endif
-			endif
-		endif
-	endif
+    if &buftype != ''
+        wincmd w
+        if &buftype != ''
+            wincmd w
+            if &buftype != ''
+                wincmd w
+                if &buftype != ''
+                    wincmd W
+                    wincmd W
+                    wincmd W
+                endif
+            endif
+        endif
+    endif
 endfunction
 
 " 关闭当前 Buffer
 function! G_CloseBuffer()
-	call G_GotoEditor()
+    call G_GotoEditor()
     let name = fnamemodify(expand('%'), ':t')
 
-	if bufname('%') != '-MiniBufExplorer-'
-		wincmd k
-		if bufname('%') != '-MiniBufExplorer-'
-			wincmd k
-			if bufname('%') != '-MiniBufExplorer-'
-				wincmd k
-				if bufname('%') != '-MiniBufExplorer-'
-					return
-				endif
-			endif
-		endif
-	endif
+    if bufname('%') != '-MiniBufExplorer-'
+        wincmd k
+        if bufname('%') != '-MiniBufExplorer-'
+            wincmd k
+            if bufname('%') != '-MiniBufExplorer-'
+                wincmd k
+                if bufname('%') != '-MiniBufExplorer-'
+                    return
+                endif
+            endif
+        endif
+    endif
 
-	exec "normal /" . name . "\<CR>"
-	normal d
-	call G_GotoEditor()
+    exec "normal /" . name . "\<CR>"
+    normal d
+    call G_GotoEditor()
 endfunction
 
 " vim macro to jump to devhelp topics.
@@ -345,7 +345,7 @@ if has("autocmd")
         highlight link wtfSpace SpecialKey
         match wtfSpace '　'
     endfunction
-  
+
     function! <SID>AC_ChmodExecutable()
         if getline(1) =~ "^#!" && getline(1) =~ "/bin/"
             silent !chmod u+x %
@@ -427,7 +427,7 @@ if has("cscope")
 
     " 在后台更新 tags | cscope*，便于在代码间正确的跳转
     autocmd BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.cxx,*.h,*.hh,*.hpp
-	  \ call <SID>CscopeRefresh()
+      \ call <SID>CscopeRefresh()
 endif
 
 " cscope 似乎不支持正则表达式,无法实现精确匹配
@@ -577,34 +577,49 @@ let g:pandoc_use_hard_wraps=1
 
 
 " 3# about statusline: vim-powerline、powerline、vim-airline {{{2
-" vim-powerline: The ultimate vim statusline utility. XXX has been deprecated {{{3
-"let g:Powerline_symbols = 'fancy'
-"   - 旧版的 powerline 专为 vim 设计
-"       http://www.vim.org/scripts/script.php?script_id=3881
-"       https://github.com/Lokaltog/vim-powerline
+" 1. vim-powerline: The ultimate vim statusline utility. XXX has been deprecated {{{3
+" 旧版的 powerline 专为 vim 设计
+"   http://www.vim.org/scripts/script.php?script_id=3881
+"   https://github.com/Lokaltog/vim-powerline
 "
-"  - 'fancy'符号依赖定制字体，详情参考
+"   - 'fancy'符号依赖定制字体，详情参考
+"       let g:Powerline_symbols = 'fancy'
 "       https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
 "
-" powerline: The ultimate statusline/prompt utility. {{{3
-"   - 新版的 powerline 完全使用 python 扩展了原有的设计
-"     不仅支持 vim，还支持 bash/zsh、tmux、awesome
-"       https://github.com/Lokaltog/powerline
-"       https://powerline.readthedocs.org/en/latest/index.html
+" 2. powerline: The ultimate statusline/prompt utility. {{{3
+" 新版的 powerline 完全使用 python 扩展了原有的设计
+" 不仅支持 vim，还支持 bash/zsh、tmux、awesome
+"   https://github.com/Lokaltog/powerline
+"   https://powerline.readthedocs.org/en/latest/index.html
 "
 " # 在使用宽字符的情况下，状态栏右侧内容右对齐(冗余空格)的问题 @db80fc95ed
 "   https://powerline.readthedocs.org/en/latest/fontpatching.html
 "       - <UE0A0>...<UE0A2>
 "       - <UE0B0>...<UE0b3>
 " # 在使用单字符的情况下，状态栏左侧编辑模式显示不完全的问题 @db80fc95ed
-" # 在以上两个问题未解决之前，暂时用 vim-airline 替代
 "
-" vim-airline @e31d5f3: lean & mean status/tabline for vim that's light as air {{{3
-" https://github.com/bling/vim-airline
-" # 完全使用 vim-scripts 实现的旧版的 vim-powerline，易于跨平台
-" # 使用的字体，依赖于新版 powerline 提供的字体定制工具
-let g:airline_powerline_fonts=1
+" 3. vim-airline @e31d5f3: lean & mean status/tabline for vim that's light as air {{{3
+" 完全使用 vim-scripts 实现的旧版的 vim-powerline，易于跨平台
+"   https://github.com/bling/vim-airline
+"
 set laststatus=2
+let g:airline_theme="powerlineish"
+" 因为新版存在的宽字符问题，所以这里使用的是旧版的 vim-powerline 制作的字符
+"   旧版的 vim-powerline symbols 使用以下编码
+"       - <U2B60>
+"       - <U2B61>
+"       - <U2B64>
+"       - <U2B80>...<U2B83>
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+    let g:airline_symbols.branch = '⭠'
+    let g:airline_symbols.readonly = '⭤'
+    let g:airline_symbols.linenr = '⭡'
+endif
 
 " 4# Shougo's pack: https://github.com/Shougo/ {{{2
 " vimproc 7.0 : Asynchronous execution plugin for Vim {{{3
