@@ -37,7 +37,7 @@ set wildignore=*/*.o,*/*.so,*/*.obj,*/*.orig,*/.git/*,*/.hg/*,*/.svn/*
 set wildmenu
 set wildmode=list:longest,full
 set viminfo+=! " 为了 mark 能保存高亮信息
-set listchars=tab:\ \ ,trail:\
+set listchars=tab:.\ ,trail:\ ,
 set noswapfile " 内存大、禁用swapfile
 set history=200 " 命令行历史记录
 
@@ -66,7 +66,7 @@ endif
 if &term =~ "rxvt-unicode-256color"
     color light256
     " 区别普通/插入模式的光标颜色
-    " C: 改由PowerLine实现
+    " # PowerLine 已实现
     " let &t_SI = "\033]12;black\007"
     " let &t_EI = "\033]12;red\007"
     " autocmd VimLeave * :!echo -ne "\033]12;black\007"
@@ -80,7 +80,8 @@ endif
 " http://lists.debian.or.jp/debian-devel/200703/msg00038.html
 " http://sakurapup.browserloadofcoolness.com/viewtopic.php?f=13&t=2027
 " http://du1abadd.org/debian/UTF-8-EAW-FULLWIDTH.gz
-set ambiwidth=double
+"set ambiwidth=double
+" 不用设置为double也能全角显示，vim@rxvt-unicode
 
 let mapleader=','
 let maplocalleader='\'
@@ -489,16 +490,12 @@ call pathogen#helptags()
 " http://www.vim.org/scripts/script.php?script_id=159 (origin)
 " https://github.com/fholgado/minibufexpl.vim (improved)
 "
-" ppa1:
+" ppa1: (过时的)
 "     为了配合 Powerline 显示，修改了源文件
 let g:miniBufExplShowBufNumbers = 1
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplCheckDupeBufs = 0
 let g:miniBufExplMapWindowNavVim = 0
-" 依赖 Powerline
-"     第一个参数表示 Powerline/Matches.vim 中定义的列表序号(起始0)
-"     第二个参数表示状态栏拥有焦点(1)还是没有焦点(0)
-let g:statusLineText = '%!Pl#Statusline(8,0)'
 
 
 " Tagbar v2.4.1: Display tags of the current file ordered by scope {{{2
@@ -520,22 +517,6 @@ let SuperTabRetainCompletionType=1
 let SuperTabDefaultCompletionType="<C-X><C-U>" "配合neocomplcache使用时，单独使用时<C-X><C-N>局部补全
 let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
-
-
-" Powerline @38bbfb8: The ultimate vim statusline utility.  {{{2
-" http://www.vim.org/scripts/script.php?script_id=3881
-" https://github.com/Lokaltog/vim-powerline
-"
-" 'fancy'符号依赖定制字体，详情参考
-" https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
-"
-" p1: matches \-TabBar\-
-"     添加了一个匹配 -TabBar- 的主题
-" p2: 'line.tot', '$COL %-2v'
-"     使用可视列号
-"     :help statusline
-let g:Powerline_symbols = 'fancy'
-set laststatus=2
 
 
 " quickfixsigns 1.00 : Mark quickfix & location list items with signs {{{2
@@ -589,31 +570,47 @@ let g:EasyMotion_leader_key = 'f'
 let g:EasyMotion_grouping = 1
 let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 
-" vim-pad: quick notetaking {{{2
-" http://www.vim.org/scripts/script.php?script_id=3753
-" https://github.com/fmoralesc/vim-pad
-let g:pad_dir = "~/wikipad/notes/"
-let g:pad_default_file_extension = ".txt"
-let g:pad_default_format = "pandoc"
-let g:pad_window_height = 20
-let g:pad_open_in_split = 0
-let g:pad_search_backend = "ack"
-let g:pad_use_default_mappings = 0
-nmap <silent> <unique> <localleader>\ <Plug>ListPads
-nmap <silent> <unique> <localleader>/ <Plug>SearchPads
-nmap <silent> <unique> <localleader><Enter> <Plug>OpenPad
 
 " vim-pandoc: vim bundle for pandoc users {{{2
 " https://github.com/vim-pandoc/vim-pandoc
 let g:pandoc_use_hard_wraps=1
 
-" }}}
+
+" 3# about statusline: vim-powerline、powerline、vim-airline {{{2
+" vim-powerline: The ultimate vim statusline utility. XXX has been deprecated {{{3
+"let g:Powerline_symbols = 'fancy'
+"   - 旧版的 powerline 专为 vim 设计
+"       http://www.vim.org/scripts/script.php?script_id=3881
+"       https://github.com/Lokaltog/vim-powerline
+"
+"  - 'fancy'符号依赖定制字体，详情参考
+"       https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
+"
+" powerline: The ultimate statusline/prompt utility. {{{3
+"   - 新版的 powerline 完全使用 python 扩展了原有的设计
+"     不仅支持 vim，还支持 bash/zsh、tmux、awesome
+"       https://github.com/Lokaltog/powerline
+"       https://powerline.readthedocs.org/en/latest/index.html
+"
+" # 在使用宽字符的情况下，状态栏右侧内容右对齐(冗余空格)的问题 @db80fc95ed
+"   https://powerline.readthedocs.org/en/latest/fontpatching.html
+"       - <UE0A0>...<UE0A2>
+"       - <UE0B0>...<UE0b3>
+" # 在使用单字符的情况下，状态栏左侧编辑模式显示不完全的问题 @db80fc95ed
+" # 在以上两个问题未解决之前，暂时用 vim-airline 替代
+"
+" vim-airline @e31d5f3: lean & mean status/tabline for vim that's light as air {{{3
+" https://github.com/bling/vim-airline
+" # 完全使用 vim-scripts 实现的旧版的 vim-powerline，易于跨平台
+" # 使用的字体，依赖于新版 powerline 提供的字体定制工具
+let g:airline_powerline_fonts=1
+set laststatus=2
 
 " 4# Shougo's pack: https://github.com/Shougo/ {{{2
 " vimproc 7.0 : Asynchronous execution plugin for Vim {{{3
 " nothing
 
-" neocomplcache 7.1: Ultimate auto-completion system for Vim. {{{3
+" neocomplcache 8.0: Ultimate auto-completion system for Vim. {{{3
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_max_list = 20
 let g:neocomplcache_disable_auto_complete = 0
@@ -650,7 +647,7 @@ if has('conceal')
 endif
 
 
-" unite.vim 4.0 : Unite all sources {{{3
+" unite.vim 5.0 : Unite all sources {{{3
 "   | unite-outline
 "   | unite-session
 "   | unite-quickfix
@@ -841,10 +838,3 @@ map! <Esc>[24^ <C-F12>
 
 " }}}1
 
-let g:notes_directories = ['~/wikipad/notes']
-let g:notes_suffix = '.txt'
-let g:notes_title_sync = 'no'
-let g:notes_smart_quotes = 0
-let g:notes_tagsindex = '.tags_notes'
-
-let g:vimwiki_list = [{'path': '/tmp/foo/', 'ext': '.txt', 'path_html': '~/foo/'}]

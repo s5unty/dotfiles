@@ -41,7 +41,7 @@ hi PmenuSel      ctermfg=254    guifg=#e4e4e4  ctermbg=236    guibg=#303030  cte
 hi PmenuSbar     ctermfg=NONE   guifg=NONE     ctermbg=244    guibg=#808080  cterm=none       gui=none
 hi PmenuThumb    ctermfg=251    guifg=#c6c6c6  ctermbg=255    guibg=#eeeeee  cterm=none       gui=none
 hi LineNr        ctermfg=250    guifg=#bcbcbc  ctermbg=NONE   guibg=NONE     cterm=italic     gui=none
-hi NonText       ctermfg=238    guifg=#444444  ctermbg=NONE   guibg=NONE     cterm=bold       gui=bold
+hi NonText       ctermfg=238    guifg=#444444  ctermbg=250    guibg=#bcbcbc  cterm=bold       gui=bold
 hi SpecialKey    ctermfg=239    guifg=#4e4e4e  ctermbg=250    guibg=#bcbcbc  cterm=bold       gui=bold
 hi Title         ctermfg=254    guifg=#e4e4e4  ctermbg=167    guibg=#df5f5f  cterm=none       gui=none
 hi Directory     ctermfg=24     guifg=#005f87  ctermbg=NONE   guibg=NONE     cterm=bold       gui=bold
