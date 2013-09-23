@@ -40,6 +40,8 @@ set viminfo+=! " 为了 mark 能保存高亮信息
 set listchars=tab:.\ ,trail:\ ,
 set noswapfile " 内存大、禁用swapfile
 set history=200 " 命令行历史记录
+set laststatus=2 " 始终显示状态栏
+set noshowmode " 忽略内置的模式显示功能
 
 if has("gui_running")
     set guioptions-=m
@@ -602,7 +604,6 @@ let g:pandoc_use_hard_wraps=1
 " 完全使用 vim-scripts 实现的旧版的 vim-powerline，易于跨平台
 "   https://github.com/bling/vim-airline
 "
-set laststatus=2
 let g:airline_theme="powerlineish"
 " 因为新版存在的宽字符问题，所以这里使用的是旧版的 vim-powerline 制作的字符
 "   旧版的 vim-powerline symbols 使用以下编码
@@ -620,6 +621,13 @@ if !exists('g:airline_symbols')
     let g:airline_symbols.readonly = '⭤'
     let g:airline_symbols.linenr = '⭡'
 endif
+
+"if !exists('g:airline_symbols')
+"  let g:airline_symbols = {}
+"endif
+let g:airline#extensions#whitespace#symbol = ''
+let g:airline#extensions#whitespace#trailing_format = '[T:%s]'
+let g:airline#extensions#whitespace#mixed_indent_format = '[M:%s]'
 
 " 4# Shougo's pack: https://github.com/Shougo/ {{{2
 " vimproc 7.0 : Asynchronous execution plugin for Vim {{{3
