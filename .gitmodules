@@ -73,3 +73,6 @@
 [submodule "vim/bundle/fcitx.vim"]
 	path = vim/bundle/fcitx.vim
 	url = https://github.com/lilydjwg/fcitx.vim.git
+[submodule "vim/bundle/clang_complete"]
+	path = vim/bundle/clang_complete
+	url = https://github.com/Rip-Rip/clang_complete.git
