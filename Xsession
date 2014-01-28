@@ -1,12 +1,4 @@
 #!/bin/sh
-# % apt-get install xserver-xorg xdm iceweasel sudo vim zsh git awesome awesome-extra
-# % apt-get install ttf-wqy-microhei ttf-wqy-zenhei ttf-dejavu ruby1.8 rubygems1.8
-# % apt-get install autossh xscreensaver autocutsel moc synergy remind inotify-tools
-# % apt-get install mutt msmtp fetchmail procmail weechat bitlbee python-simplejson
-# % apt-get install devscripts dupload ctags cscope ack-grep feh xcompmgr rxvt-unicode
-# % apt-get install sdcv xsel xdg-user-dirs wpasupplicant
-#
-# FF: AutoPager, AutoProxy, Delicious, Download Statusbar, FlagFox, Organize Status Bar, Tab Utilities, TinyURL, Vimperator, rein
 
 # ln -sf /tmp/.xsession-errors ~/.xsession-errors
 /usr/bin/touch /tmp/.xsession-errors
@@ -20,18 +12,16 @@
 # 关闭机箱喇叭蜂鸣 设定键鼠灵敏度
 /usr/bin/xset b off m 3 10 r rate 400 40
 
-# 加载自定义的特殊的键盘功能键
-/usr/bin/xmodmap ~/.Xmodmaprc
-
 # 设置屏保
 /usr/bin/xscreensaver -no-splash &
 
 # 统一剪贴板，parcellite 比 autocutsel 好用 :)
 /usr/bin/parcellite -n &
 
+# 加载自定义的特殊的键盘功能键
+/usr/bin/xmodmap ~/.Xmodmaprc
+
 # 启动应用程序
-/usr/bin/x-www-browser & #浏览器
-/usr/bin/x-terminal-emulator -name Mutt -T Mutt -e sh -c mutt &
 /usr/bin/fetchmail -d 60 #邮件，邮件通知
 
 #/usr/bin/mocp -S #音乐服务
@@ -49,12 +39,19 @@
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
 
 # pull, monitor, push TODO 如果同步失败，邮件通知自己
-/usr/bin/rsync -azu du1abadd.org:~/todo/var/ ~/.todo/var/ &
 /usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
-/usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.todo/var/ | \
-    while read file; do
-        rsync -azu --delete ~/.todo/var/ du1abadd.org:~/todo/var/ &
-    done &
+/usr/bin/rsync -av --omit-dir-times --delete --progress ~/.todo/var/ du1abadd.org:~/todo/var/ &
+while [ 1 ]; do
+    while file=$(inotifywait -r -q -e modify,create,attrib ~/.todo/var/ --format "%f"); do
+        rsync -av --omit-dir-times --delete --progress ~/.todo/var/ du1abadd.org:~/todo/var/
+    done
+done &
+###
+## 因为inotifywait从不退出(-m)，时间久了滋生非常多僵尸进程(rsync)。
+#/usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.todo/var/ | \
+#    while read file; do
+#        rsync -azu --delete ~/.todo/var/ du1abadd.org:~/todo/var/ &
+#    done &
 
 # 使用渐隐、阴影特效
 /usr/bin/xcompmgr -f -n -C &
@@ -65,7 +62,20 @@
 
 # 初次启动 dropbox 须由 proxychains 启动，之后才可以使用 dropbox 内置的 socks5 代理
 # http://lucidhacking.net/2011/12/how-to-access-dropbox-behind-a-firewall-or-proxy/
-/usr/bin/dropbox start &
+# /usr/bin/dropbox start &
+
+# 为了 pidgin-sipe 正常登录 Lync
+export NSS_SSL_CBC_RANDOM_IV=0
+
+# 输入法在图形应用程序之前启动
+export GTK_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+export QT_IM_MODULE=fcitx
+/usr/bin/fcitx
+
+# 启动图形应用程序
+/usr/bin/x-terminal-emulator -name Mutt -T Mutt -e sh -c mutt &
+/usr/bin/x-www-browser & #浏览器
 
 # 启动窗口管理器
 /usr/bin/awesome

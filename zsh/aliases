@@ -27,6 +27,7 @@ alias lintian="lintian -viI"
 alias tig="tig --all"
 alias rsync="rsync -C"
 alias rot13="tr a-zA-Z n-za-mN-ZA-M"
+alias atf-run="env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/atf/bin atf-run"
 
 cd() {
     if builtin cd "$@"; then
@@ -175,13 +176,15 @@ alias tdR="todo.sh replace"
 alias td0="todo.sh prepend"
 alias td\$="todo.sh append"
 alias tdg="todo.sh ls"
-alias tdl="todo.sh list"
+alias tdl="todo.sh lsr"
 alias tdgc="todo.sh archive"
 alias tdG="todo.sh listall"
 alias tdp="todo.sh pri"
 alias tdP="todo.sh depri"
 alias tdO="todo.sh listnotes 2>/dev/null"
 alias tdn="pu what"
+alias td1="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 1 &)"
+alias td2="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 2 &)"
 tdc() {
     if [[ ${ARGC} > 1 ]]; then # 追加注释
         td$ ${1} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
@@ -275,6 +278,14 @@ tdd() { # 完成一项工作
         fi
     fi
 }
+tdD() { # 过去完成一项工作
+    if [ -z ${2} ]; then # 如果没给参数，代表昨天完成
+        WHEN="1 day ago"
+    else
+        WHEN=${2/da/days ago}
+    fi
+    td did ${1} "${WHEN}"
+}
 # }}}
 
 # archive {{{
@@ -310,20 +321,20 @@ tjg() {
 # }}}
 
 # file {{{
-alias -s png="qiv -p -l"
-alias -s PNG="qiv -p -l"
-alias -s gif="qiv -p -l"
-alias -s GIF="qiv -p -l"
-alias -s jpg="qiv -p -l"
-alias -s JPG="qiv -p -l"
-alias -s bmp="qiv -p -l"
-alias -s BMP="qiv -p -l"
-alias -s xpm="qiv -p -l"
-alias -s XPM="qiv -p -l"
-alias -s jpeg="qiv -p -l"
-alias -s JPEG="qiv -p -l"
-alias -s icon="qiv -p -l"
-alias -s ICON="qiv -p -l"
+alias -s png="pqiv -i"
+alias -s PNG="pqiv -i"
+alias -s gif="pqiv -i"
+alias -s GIF="pqiv -i"
+alias -s jpg="pqiv -i"
+alias -s JPG="pqiv -i"
+alias -s bmp="pqiv -i"
+alias -s BMP="pqiv -i"
+alias -s xpm="pqiv -i"
+alias -s XPM="pqiv -i"
+alias -s jpeg="pqiv -i"
+alias -s JPEG="pqiv -i"
+alias -s icon="pqiv -i"
+alias -s ICON="pqiv -i"
 
 alias -s doc=c_doc
 alias -s xls=c_xls

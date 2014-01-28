@@ -20,14 +20,6 @@ URxvt.scrollWithBuffer:  True
 URxvt.secondaryScreen:   True
 URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
-! 为了解决 Envy Code R for Powerline 的左箭头符号显示了一条空隙的问
-! 题(实际是两个字符之间的间距)，从原先的 10 号调整为 11 号，同时缩小
-! 了字间间距为 -1：
-!!URxvt.letterSpace:       -1
-!
-! 随后发现增大后的字体显示模糊有虚影，调试 ~/.fonts.conf 的过程中，
-! 解决了虚影问题，但是又发现没有虚影的字体，字间距过小，最后又不得不
-! 删除了自定义的间距。好在 Powerline 的间隙问题也随着解决了。
 
 URxvt.perl-lib:          /sun/.urxvt/
 URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selection
@@ -35,29 +27,31 @@ URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selecti
 
 ! @@ FONTS @@ {{{
 Xft.dpi:       96
-Xft.antialias: 1
-Xft.hinting:   1
+Xft.rgba:      None
+Xft.antialias: True
+Xft.hinting:   True
+Xft.autohint:  False
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
-! size:pixelsize 有 10:13、11:15 的比例关系，可能还和其它配置有关
-URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:pixelsize=15,\
+URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=10,\
                   [codeset=ISO10646]xft:WenQuanYi Micro Hei:regular
-URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R for Powerline:bold:pixelsize=15,\
+URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R for Powerline:bold:size=10,\
                   [codeset=ISO10646]xft:WenQuanYi Micro Hei:bold
-URxvt.italicFont: [codeset=ASCII]xft:Envy Code R for Powerline:italic:pixelsize=15,\
+URxvt.italicFont: [codeset=ASCII]xft:Envy Code R for Powerline:italic:size=10,\
                   [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic
 URxvt.boldItalicFont: \
-                  [codeset=ASCII]xft:Envy Code R for Powerline:bold:italic:pixelsize=15,\
+                  [codeset=ASCII]xft:Envy Code R for Powerline:bold:italic:size=10,\
                   [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic
+URxvt.letterSpace: -1
 
 URxvt.keysym.M-Up: command: \
-        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:pixelsize=18, [codeset=ISO10646]xft:WenQuanYi Micro Hei:regular\007 \
-        \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:pixelsize=18, [codeset=ISO10646]xft:WenQuanYi Micro Hei:bold\007 \
-        \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:pixelsize=18, [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic\007
+        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=13, [codeset=ISO10646]xft:WenQuanYi Micro Hei:regular\007 \
+        \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=13, [codeset=ISO10646]xft:WenQuanYi Micro Hei:bold\007 \
+        \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=13, [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic\007
 URxvt.keysym.M-Down: command: \
-        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:pixelsize=15, [codeset=ISO10646]xft:WenQuanYi Micro Hei:regular\007 \
-        \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:pixelsize=15, [codeset=ISO10646]xft:WenQuanYi Micro Hei:bold\007 \
-        \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:pixelsize=15, [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic\007
+        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=10, [codeset=ISO10646]xft:WenQuanYi Micro Hei:regular\007 \
+        \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=10, [codeset=ISO10646]xft:WenQuanYi Micro Hei:bold\007 \
+        \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=10, [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic\007
 ! }}}
 
 ! @@ COLORS AND GRAPHICS @@ {{{
