@@ -11,7 +11,7 @@
 " only existing files *.txt that appear to be AsciiDoc files.
 
 "au BufNewFile,BufRead *.txt,README,TODO,CHANGELOG,NOTES  setfiletype asciidoc
-au BufRead *.txt,README,TODO,CHANGELOG,NOTES call s:FTasciidoc()
+au BufRead *.asciidoc,*.adoc,README,TODO,CHANGELOG,NOTES call s:FTasciidoc()
 
 " This function checks for a valid AsciiDoc document title after first
 " skipping any leading comments.
