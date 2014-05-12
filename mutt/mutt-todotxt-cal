@@ -1,0 +1,30 @@
+#!/bin/sh
+# inspirsed: http://superuser.com/questions/197324/mutt-and-calendar
+# thanks garyjohn: http://www.spocom.com/users/gjohnson/mutt/
+#
+#   mutt_add_todotxt - create a todotxt from an calendar e-mail.
+#
+# depends another perl script to filter the calendar attechment.
+#
+#   http://notes.asd.me.uk/2011/06/22/coping-with-microsoft-exchange-meeting-requests-in-mutt/
+#   http://notes.asd.me.uk/wp-content/uploads/2012/08/vcal2text.txt
+#
+
+cat "$@" |
+perl -e '
+    while (<>) {
+	chomp;
+	if (/^Summary\s*: (.*)/) {
+	    $what = $1;
+	}
+    if (/^Dtstart\s*: (\d\d\d\d.\d\d.\d\d) (\d\d.\d\d)/) {
+        $date = $1;
+        $time = $2
+	}
+	if (/^Location\s*: .*([EW]\d\d\d).*/) {
+	    $where = "\@$1";
+	}
+    }
+    print "$what $where rem:($date at $time +15) t:$date\n";
+    ' >> "$TODO_FILE"
+

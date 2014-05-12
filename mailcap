@@ -1,7 +1,9 @@
-text/html; w3m -T text/html %s; copiousoutput; nametemplate=%s.html; needsterminal;
+text/html; w3m -t text/html %s; copiousoutput; nametemplate=%s.html; needsterminal;
 
-text/calendar; ~/.mutt/ical-mutt.rb -i 'mailto:your@mail.address' %s;
-text/calendar; ~/.mutt/ical-view.rb; copiousoutput
+text/calendar; ~/.mutt/mutt-calendar-view %s; copiousoutput;
+
+# http://www.spocom.com/users/gjohnson/mutt/#tnef
+application/ms-tnef; tnef -w %s; copiousoutput;
 
 application/x-diff-gzip; atool -l %s; copiousoutput;
 application/x-gtar; atool -l %s; copiousoutput;

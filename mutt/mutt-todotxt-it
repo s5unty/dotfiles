@@ -8,5 +8,5 @@ TASK=$(awk 'END { print NR }' /sun/.todo/var/fnst/todo.log)
 
 # 为最新的 task 添加 message-id
 # todo.sh archive
-todo.sh append ${TASK} ${ANNO}
+todo.sh -f append ${TASK} ${ANNO}
 
