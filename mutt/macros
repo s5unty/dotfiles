@@ -1,11 +1,18 @@
 # Alt-1, Alt-2 快速选择发件箱
-macro generic "<esc>1" ":set from='Sun Wuan <sunwuan@cn.fujitsu.com>'"
-macro generic "<esc>2" ":set from='Vern Sun <s5unty@gmail.com>'"
-macro compose "<esc>1" ":push <edit-from><enter><kill-line>Sun Wuan <sunwuan@cn.fujitsu.com><enter>"
-macro compose "<esc>2" ":push <edit-from><enter><kill-line>Vern Sun <s5unty@gmail.com><enter>"
+# macro generic "<esc>1" ":set from='Sun Wuan <sunwuan@cn.fujitsu.com>'"
+# macro generic "<esc>2" ":set from='Vern Sun <s5unty@gmail.com>'"
+# macro compose "<esc>1" ":push <edit-from><enter><kill-line>Sun Wuan <sunwuan@cn.fujitsu.com><enter>"
+# macro compose "<esc>2" ":push <edit-from><enter><kill-line>Vern Sun <s5unty@gmail.com><enter>"
 
 # 切换邮箱和发送邮件的默认快捷键都是 y，容易误发邮件
 macro index,pager "c" "<change-folder>?<toggle-mailboxes>"
+# bounce(打回)很少用到，改成 lables 标签的切换快捷键
+macro index,pager "b" "<change-folder>?\
+	<change-dir><kill-line>/sun/maildir/labels<enter>\
+	<enter-mask><kill-line>!^\..<enter>"
+# 逗号','改成「记事本」的切换快捷键
+macro index "\," "<change-folder>?\
+	<change-dir><kill-line>/sun/maildir/notebook<enter><enter><enter>"
 
 # 通知 fetchmail 立刻检查新邮件
 macro index,pager G "<shell-escape>fetchmail<enter>" 'retrieve mail from POP server'
@@ -26,16 +33,17 @@ macro attach s "<save-entry><kill-line>/tmp/<enter>a"
 # https://github.com/ValiValpas/taskopen
 macro index,pager T "\
 	<pipe-message>~/.mutt/mutt-todotxt\n\
-	:set wait_key=no\n\
 	:set pipe_decode=no\n\
+	:set wait_key=yes\n\
 	<pipe-message>~/.mutt/mutt-todotxt-it\n\
-	:set pipe_decode=yes\n\
-	:set wait_key=yes\n" "Task"
-#macro index,pager "<esc>t" ":set pipe_decode=no<enter>\
-#          <pipe-message>~/.mutt/mess2task<enter>\
-#          :set pipe_decode=yes<enter>" "Task"
-#          :set wait_key=no<enter>\
+	:set wait_key=no\n\
+	:set pipe_decode=yes\n" "Task"
 
+# 添加会议邀请到 Todotxt
+macro index,pager M "\
+	:set wait_key=yes\n\
+	<pipe-message>~/.mutt/mutt-todotxt-cal\n\
+	:set wait_key=no\n" "Metting"
 
 # 添加到通讯录
 macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"

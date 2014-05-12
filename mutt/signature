@@ -26,10 +26,10 @@ else
     echo 'Development Dept. I'
     echo 'Nanjing Fujitsu Nanda Software Tech. Co., Ltd.(FNST)'
     echo 'No. 6 Wenzhu Road, Nanjing, 210012, China'
-    echo 'TEL: +86+25-86630566-8201'
-    echo 'COINS: 7998-8201'
+    echo 'TEL: +86+25-86630566-9556'
+    echo 'COINS: 7998-9556'
     echo 'FAX: +86+25-83317685'
     echo 'ZNVY: fhajhna@pa.shwvgfh.pbz' | tr a-zA-Z n-za-mN-ZA-M
     echo '----------------------------------------------------'
+    echo ''
 fi
-
