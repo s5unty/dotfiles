@@ -72,10 +72,8 @@ macro index "<F8>" "<limit>~d `date -d '1 month ago' +%d/%m`-<enter>"
 # http://www.zsh.org/mla/users/2007/msg01187.html
 # mu-0.9.7 with wrapper
 macro index,pager \` "\
-	:set history=0\n\
 	:set my_cmd = \`~/.mutt/mutt-grep\`\n\
-	:push \$my_cmd\n\
-	:set history=10\n" "global find"
+	:push \$my_cmd\n" "global find"
 
 # x-labels
 # TODO inherit
