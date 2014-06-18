@@ -14,13 +14,18 @@ application/x-zip-compressed; atool -l %s; copiousoutput;
 application/x-gzip; atool -F tar+gzip -l %s; copiousoutput;
 application/zip; atool -l %s; copiousoutput;
 
-application/vnd.ms-excel; xlhtml -fw -nc -te -xp:0 -xr:0-200 %s 2>/dev/null | elinks -force-html -dump; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
-application/ms-excel; xlhtml -fw -nc -te -xp:0 -xr:0-200 %s 2>/dev/null | elinks -force-html -dump; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
-application/msexcel; xlhtml -fw -nc -te -xp:0 -xr:0-200 %s 2>/dev/null | elinks -force-html -dump; copiousoutput; description=Microsoft Excel Document; nametemplate=%s.xls;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; et %s; description="Microsoft Excel 2007+";
+application/vnd.ms-excel; et %s; description="Microsoft Excel";
+application/ms-excel; et %s; description="Microsoft Excel";
+application/msexcel; et %s; description="Microsoft Excel";
 
-application/vnd.ms-word; antiword -w 0 %s; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
-application/msword; antiword -w 0 %s; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
-application/word; antiword -w 0 %s; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; wps %s; description="Microsoft Word 2007+";
+application/vnd.ms-word; wps %s; description="Microsoft Word";
+application/msword; wps %s; description="Microsoft Word";
+application/word; wps %s; description="Microsoft Word";
+
+application/vnd.openxmlformats-officedocument.presentationml.presentation; wpp %s; description="Microsoft PowerPoint 2007+";
+application/vnd.ms-powerpoint; wpp %s; description="Microsoft PowerPoint";
 
 # application/x-pdf; pdftotext -q %s -; copiousoutput; description=Portable Document Format; nametemplate=%s.pdf;
 # application/pdf; pdftotext -q %s -; copiousoutput; description=Portable Document Format; nametemplate=%s.pdf;
@@ -28,4 +33,4 @@ application/x-pdf; zathura %s;
 application/pdf; zathura %s;
 
 text/*; view '%s'; edit=vim '%s'; compose=vim '%s'; needsterminal
-image/*; pqiv -i -q %s;
+image/*; qiv -X 0 %s;
