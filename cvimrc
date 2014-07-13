@@ -1,0 +1,44 @@
+set nosmoothscroll
+set noautofocus
+set typelinkhints
+
+let barposition = "bottom"
+let searchlimit = 30
+let scrollstep = 70
+let hintcharacters = "asdfgqwert123"
+let completionengines = ["google", "diigo"]
+let locale = "jp"
+
+let qmark f = ["http://fm.douban.com"]
+let qmark y = ["http://www.youku.com"]
+let qmark g = ["https://github.com/"]
+let qmark t = ["https://twitter.com/"]
+let qmark Y = ["https://youtube.com/"]
+let qmark m = ["https://mail.google.com"]
+
+let searchengine google = "https://www.google.co.jp/?gws_rd=ssl#newwindow=1&q=%s"
+let searchengine bug    = "https://bugs.debian.org/%s"
+let searchengine pkg    = "https://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=%s"
+let searchengine pkgc   = "https://packages.debian.org/search?searchon=contents&amp;keywords=%s&amp;mode=filename&amp;suite=stable&amp;arch=any"
+let searchengine pts    = "https://packages.qa.debian.org/?src=%s"
+let searchengine dict   = "http://dict.cn/mini.php?q=%s"
+let searchengine diigo  = "https://www.diigo.com/search?what=%s"
+let searchengine duck   = "https://duckduckgo.com/?q=%s"
+let searchengine wiki   = "https://zh.wikipedia.org/w/index.php?title=Special%3A%E6%90%9C%E7%B4%A2&profile=default&search=%s&fulltext=Search"
+let searchengine note   = "https://app.yinxiang.com/Home.action#st=p&x=%s&n=c090e93d-859e-4f56-8c35-cf01129892c4"
+let searchalias d = "dict"
+let searchalias b = "diigo"
+
+map d quit
+" close then (g)o lef(t)
+map D :execute gTx<CR>
+map u lastClosedTab
+map <Space> scrollPageDown
+map - scrollPageUp
+map . nextTab
+map , previousTab
+map <M-n> nextTab
+map <M-p> previousTab
+map <C-d> scrollPageDown
+map <C-u> scrollPageUp
+
