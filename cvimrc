@@ -5,7 +5,7 @@ set typelinkhints
 let barposition = "bottom"
 let searchlimit = 30
 let scrollstep = 70
-let hintcharacters = "asdfgqwert123"
+let hintcharacters = "asdfgqwert"
 
 let searchengine ggjp   = "https://www.google.co.jp/?gws_rd=ssl#newwindow=1&q="
 let searchengine bug    = "https://bugs.debian.org/"
