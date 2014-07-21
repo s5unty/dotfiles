@@ -1131,7 +1131,9 @@ sub paste {
       $self->tt_write($text);
    }else{
 #      if(open(my $process, "xclip -o |")){
-      if(open(my $process, "parcellite -c |")){
+      # Q: 为什么用 tail
+      # A: parcellite-1.1.8 命令行输出的首行是空行
+      if(open(my $process, "parcellite -c | tail -n +2 |")){
          $text = join('', <$process>);
          $self->tt_write($text);
       }

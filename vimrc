@@ -42,6 +42,7 @@ set noswapfile " 内存大、禁用swapfile
 set history=200 " 命令行历史记录
 set laststatus=2 " 始终显示状态栏
 set noshowmode " 忽略内置的模式显示功能
+set undolevels=50
 
 if has("gui_running")
     set guioptions-=m
@@ -52,12 +53,12 @@ if has("win32") || has("win64")
     au GUIEnter * simalt ~x
     language messages zh_CN.UTF-8
     set grepprg=findstr\ /n
-    set guifont=Envy_Code_R:h10
+    set guifont=Envy_Code_R_For_Powerline:h10
     set guifontwide=NSimsun:h10.5
     set shell=cmd.exe
     set directory=$TMP
 else
-    set guifont=Envy\ Code\ R\ 10
+    set guifont=Envy\ Code\ R\ For\ Powerline\ 10
     set guifontwide=WenQuanYi\ Micro\ Hei\ 10
     set makeprg=make\ -j2
     set grepprg=ack-grep\ -a
@@ -657,12 +658,14 @@ let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " neosnippet {{{3
 let g:neosnippet#snippets_directory = "$HOME/.vim/snippets/"
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
 " Plugin key-mappings.
 imap <expr><Space> neosnippet#expandable() == 1 ? "\<Plug>(neosnippet_expand)" : "\<Space>"
-
 " SuperTab like snippets behavior.
-imap <expr><Esc><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><Esc><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?  "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?  "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')
