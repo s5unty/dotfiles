@@ -219,17 +219,17 @@ endfunction
 
 " Key maps {{{1
 " Mouse Bindings {{{2
-map <silent> <unique> <2-LeftMouse> :call G_GotoEditor()<CR><C-O>zz
-map <silent> <unique> <2-RightMouse> :call G_GotoEditor()<CR><C-I>g`"zz
+"map <silent> <unique> <2-LeftMouse> :call G_GotoEditor()<CR><C-O>zz
+"map <silent> <unique> <2-RightMouse> :call G_GotoEditor()<CR><C-I>g`"zz
 map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
-nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>
-imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>a
+nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>
+imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>a
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
 imap <silent> <unique> <F2> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
-nmap <silent> <unique> <F3> :set list!<CR>:set nohls!<CR>:set nohls?<CR>
+nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
