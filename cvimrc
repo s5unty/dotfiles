@@ -7,6 +7,7 @@ let searchlimit = 30
 let scrollstep = 70
 let hintcharacters = "asdfjklh"
 let nextmatchpattern = "((?!first)(下一页|下一頁|下页|下頁|前进|前進|繼續|继续|更多|next|more|>|›|»|forward| )+)"
+let blacklists = ["https://app.yinxiang.com/*", "http://www.shanbay.com/*"]
 
 let searchengine ggjp   = "https://www.google.co.jp/?gws_rd=ssl#newwindow=1&q="
 let searchengine bug    = "https://bugs.debian.org/"
