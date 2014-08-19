@@ -12,20 +12,24 @@
 # 禁止 Ping
 /sbin/iptables -A INPUT -p icmp --icmp-type echo-request -i eth0 -j DROP
 
-# 禁止 SSH Attack @http://dwm.me.uk/articles/2008/mitigating-ssh-attacks
-
-# php-cgi
-/usr/bin/spawn-fcgi.standalone -u www-data -g www-data -C 4 -f /usr/bin/php-cgi -a 127.0.0.1 -p 3721 -P /var/run/fastcgi-php.pid
-
-# gollum - wiki 服务，配合 nginx 反向代理
-su - vern -c "export TZ=Asia/Shanghai && /var/lib/gems/1.8/bin/gollum /sun/wiki &"
-su - yong  -c "export TZ=Asia/Shanghai && /var/lib/gems/1.8/bin/gollum --port 7654 /yong/rainlotus/wiki &"
-
-# ssh 转发
-iptables -N SSH_INET_OUT
-
-# vpn 转发
-/sbin/iptables -t nat -A POSTROUTING -s 10.8.0.0/255.255.255.0 -j SNAT --to-source 64.120.96.91
-echo 1 > /proc/sys/net/ipv4/ip_forward
-
+/usr/bin/remind -uvern -z -k'/sun/todo/opt/remind/pushover.sh %s &' /sun/todo/var/ &
 exit 0
+
+## OUTDATED
+### 禁止 SSH Attack @http://dwm.me.uk/articles/2008/mitigating-ssh-attacks
+##
+### php-cgi
+##/usr/bin/spawn-fcgi.standalone -u www-data -g www-data -C 4 -f /usr/bin/php-cgi -a 127.0.0.1 -p 3721 -P /var/run/fastcgi-php.pid
+##
+### gollum - wiki 服务，配合 nginx 反向代理
+##su - vern -c "export TZ=Asia/Shanghai && /var/lib/gems/1.8/bin/gollum /sun/wiki &"
+##su - yong  -c "export TZ=Asia/Shanghai && /var/lib/gems/1.8/bin/gollum --port 7654 /yong/rainlotus/wiki &"
+##
+### ssh 转发
+##iptables -N SSH_INET_OUT
+##
+### vpn 转发
+##/sbin/iptables -t nat -A POSTROUTING -s 10.8.0.0/255.255.255.0 -j SNAT --to-source 64.120.96.91
+##echo 1 > /proc/sys/net/ipv4/ip_forward
+##
+##exit 0

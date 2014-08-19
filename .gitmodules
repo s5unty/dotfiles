@@ -85,3 +85,6 @@
 [submodule "vim/bundle/neocomplete.vim"]
 	path = vim/bundle/neocomplete.vim
 	url = https://github.com/Shougo/neocomplete.vim.git
+[submodule "vim/bundle/calendar"]
+	path = vim/bundle/calendar
+	url = https://github.com/itchyny/calendar.vim.git
