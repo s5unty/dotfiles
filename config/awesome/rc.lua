@@ -12,10 +12,11 @@ require("debian.menu")
 require("revelation")
 -- Widget plugin-in
 require("vicious")
+-- Widget plugin-in
+require("blingbling") -- (v1.0 @eb71f15)
 -- awesome-client
 require("awful.remote")
 
-require("blingbling")
 os.setlocale("zh_CN.UTF-8")
 
 -- General {{{1
@@ -24,6 +25,7 @@ terminal = "x-terminal-emulator"
 editor   = os.getenv("EDITOR") or "editor"
 theme    = awful.util.getdir("config") .. "/theme.lua"
 beautiful.init (theme)
+
 
 -- The name of the tag created for the 'exposed' view
 revelation.config.tag_name = '卍'
@@ -234,7 +236,8 @@ globalkeys = awful.util.table.join (
 -- {{{ Screen
 awful.key({ modkey, "Control" }, "h",   function () awful.screen.focus_relative (-1) end),
 awful.key({ modkey, "Control" }, "l",   function () awful.screen.focus_relative ( 1) end),
-awful.key({ modkey },       "Escape",   function () revelation({ class = "URxvt" }) end), -- TODO except_rule ={"Mutt"}
+awful.key({ modkey },       "Escape",   function () awful.screen.focus_relative (-1) end),
+-- awful.key({ modkey }, "Escape", function () revelation({ class = "URxvt" }) end), -- TODO except_rule ={"Mutt"}
 -- awful.key({ modkey }, "Escape", function () mymainmenu:show(true)  end),
 -- }}}
 
@@ -276,7 +279,6 @@ end),
 
 awful.key({ modkey }, "u", awful.client.urgent.jumpto),
 awful.key({ modkey }, "z", awful.client.movetoscreen),
-awful.key({ modkey }, "/", awful.client.movetoscreen),
 awful.key({ modkey }, "o", awful.client.floating.toggle),
 awful.key({ modkey }, "b", awful.client.togglemarked),
 
@@ -313,12 +315,12 @@ awful.key({ modkey, "Shift"   }, "Return", function () awful.layout.inc(layouts,
 awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Ranger -T Ranger -e zsh -c ranger") end),
 awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
 awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
-awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'WinXP'") end),
+awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'Win7'") end),
 awful.key({ modkey }, "space", function () awful.util.spawn(terminal) end),
 awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
 awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
-awful.key({ modkey, "Control" }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
-awful.key({ modkey }, "Scroll_Lock",   function () awful.util.spawn("xscreensaver-command -lock") end),
+awful.key({"Shift" }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
+awful.key({        }, "Scroll_Lock", function () awful.util.spawn("xscreensaver-command -lock") end),
 -- }}}
 
 -- {{{ calendar
@@ -346,11 +348,11 @@ awful.key({ modkey }, "d", function ()
     local f = io.popen("xsel -o")
     local word = f:read("*a")
     f:close()
-    local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+    local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' -u 'jmdict-en-ja' "..word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
     local c = f:read("*a")
     f:close()
 
-    frame = naughty.notify({ text = c, timeout = 15, width = 360, screen = mouse.screen })
+    frame = naughty.notify({ text = c, timeout = 15, width = 360 })
 end),
 awful.key({ modkey, "Shift" }, "d", function ()
     awful.prompt.run({prompt = "Dict: "}, mypromptbox[mouse.screen].widget, function(cin_word)
@@ -359,11 +361,11 @@ awful.key({ modkey, "Shift" }, "d", function ()
         if cin_word == "" then
             return
         end
-        local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '21世纪英汉汉英双向词典' "..cin_word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+        local f = io.popen("sdcv -n --utf8-output -u '21-enzh-zhen' "..cin_word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d'")
         local c = f:read("*a")
         f:close()
 
-        frame = naughty.notify({ text = c, font='Envy Code R 9', timeout = 30, width = 360, screen = mouse.screen })
+        frame = naughty.notify({ text = c, font='Envy Code R 9', timeout = 30, width = 360 })
     end, nil, awful.util.getdir("cache").."/dict")
 end),
 -- }}}
@@ -491,6 +493,10 @@ awful.key({ modkey            }, "m",       function (c)
     c:raise()
 end),
 
+awful.key({ modkey            }, "/",       function (c)
+    c:raise()
+end),
+
 awful.key({ modkey            }, "BackSpace",function (c)
     c:swap(awful.client.getmaster())
 end),
@@ -522,6 +528,9 @@ awful.rules.rules = {
     buttons = clientbuttons } },
     { rule = { class = "Iptux" },
     properties = { tag = tags[1][8], floating = true } },
+    -- Jitsi
+    { rule = { class = "Jitsi" },
+    properties = { floating=true, ontop=true } },
     { rule = { instance = "MPlayer" },
     properties = { floating = true } },
     { rule = { instance = "gimp" },
@@ -544,15 +553,46 @@ awful.rules.rules = {
     properties = { tag = tags[1][7], border_width = 0 } },
     { rule = { class = "Browser" },
     properties = { tag = tags[1][7], floating=true } },
-
     { rule = { instance = "plugin-container" },
     properties = { tag = tags[1][7], floating = true, border_width = 0 } },
+    -- Set Chrome/Chromium
+    { rule = { class = "Chromium" },
+    properties = { tag = tags[1][7], border_width = 0 } },
+    { rule = { class = "Chromium", role = "pop-up" },
+    properties = { tag = tags[1][7], floating = true } },
+
+
     { rule = { instance = "Weechat" },
     properties = { tag = tags[1][8] } },
     { rule = { instance = "Mutt" },
     properties = { tag = tags[1][8] } },
     { rule = { class = "Gtk-recordmydesktop" },
     properties = { floating=true } },
+
+    { rule = { class = "Pidgin" },
+    properties = { floating=true, ontop=true } },
+    { rule = { instance = "CSSH:*" },
+    properties = { floating = true }, callback = awful.placement.under_mouse },
+    { rule = { class = "Cssh" },
+    properties = { floating=true, ontop=true },
+    callback = function (c)
+        local cl_width = 180    -- width of cluster ssh agent window
+        local def_left = false  -- default placement.
+        local scr_area = screen[c.screen].workarea
+        local geometry = nil
+
+        -- scr_area is unaffected, so we can use the naive coordinates
+        if geometry == nil then
+            if def_left then
+                geometry = {x=scr_area.x, y=scr_area.y, width=cl_width}
+            else
+                geometry = {x=scr_area.x+scr_area.width-cl_width, y=scr_area.y, width=cl_width}
+            end
+        end
+        c:geometry(geometry)
+    end },
+    { rule = { class = "Keepassx" },
+    properties = { floating=true, ontop=true } },
 
 }
 -- }}}
@@ -594,6 +634,6 @@ client.add_signal("marked", function(c) c.border_color = beautiful.border_marked
 -- }}}
 
 -- {{{ Autorun
--- awful.util.spawn("/usr/bin/iptux")
+--awful.util.spawn("/usr/bin/pidgin")
 -- }}}
 

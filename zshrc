@@ -5,11 +5,11 @@
 [ -e $HOME/.zsh/prompt        ] && source $HOME/.zsh/prompt
 [ -e $HOME/.zsh/bindings      ] && source $HOME/.zsh/bindings
 [ -e $HOME/.zsh/completion    ] && source $HOME/.zsh/completion
-[ -d $HOME/.zsh/plugins/      ] && for plugin in $HOME/.zsh/plugins/*(.); do
+[ -d $HOME/.zsh/plugins/      ] && for plugin in $HOME/.zsh/plugins/*(.)zsh; do
     source $plugin
 done
 
-if ! hostname | grep "^verns-\|li380-170" > /dev/null 2>&1; then
+if ! hostname | grep "^verns-\|li380-170\|^G08FNST" > /dev/null 2>&1; then
     return # 不是我的机器
 fi
 

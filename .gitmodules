@@ -1,3 +1,6 @@
+[submodule "todo/home/inkarkat"]
+	path = todo/home/inkarkat
+	url = git@github.com:s5unty/todo.txt-cli-ex.git
 [submodule "vim/bundle/minibufexpl.vim"]
 	path = vim/bundle/minibufexpl.vim
 	url = https://github.com/fholgado/minibufexpl.vim.git
@@ -58,9 +61,6 @@
 [submodule "vim/bundle/neosnippet"]
 	path = vim/bundle/neosnippet
 	url = https://github.com/Shougo/neosnippet.git
-[submodule "todo/home/inkarkat"]
-	path = todo/home/inkarkat
-	url = git@github.com:s5unty/todo.txt-cli-ex.git
 [submodule "vim/bundle/vim-pandoc"]
 	path = vim/bundle/vim-pandoc
 	url = https://github.com/vim-pandoc/vim-pandoc.git
@@ -73,15 +73,6 @@
 [submodule "vim/bundle/fcitx.vim"]
 	path = vim/bundle/fcitx.vim
 	url = https://github.com/lilydjwg/fcitx.vim.git
-[submodule "vim/bundle/clang_complete"]
-	path = vim/bundle/clang_complete
-	url = https://github.com/Rip-Rip/clang_complete.git
-[submodule "vim/bundle/vim-marching"]
-	path = vim/bundle/vim-marching
-	url = https://github.com/osyo-manga/vim-marching.git
-[submodule "vim/bundle/vim-reunions"]
-	path = vim/bundle/vim-reunions
-	url = https://github.com/osyo-manga/vim-reunions.git
 [submodule "vim/bundle/neocomplete.vim"]
 	path = vim/bundle/neocomplete.vim
 	url = https://github.com/Shougo/neocomplete.vim.git
