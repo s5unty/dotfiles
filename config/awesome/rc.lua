@@ -526,11 +526,6 @@ awful.rules.rules = {
     focus = true,
     keys = clientkeys,
     buttons = clientbuttons } },
-    { rule = { class = "Iptux" },
-    properties = { tag = tags[1][8], floating = true } },
-    -- Jitsi
-    { rule = { class = "Jitsi" },
-    properties = { floating=true, ontop=true } },
     { rule = { instance = "MPlayer" },
     properties = { floating = true } },
     { rule = { instance = "gimp" },
@@ -571,8 +566,6 @@ awful.rules.rules = {
 
     { rule = { class = "Pidgin" },
     properties = { floating=true, ontop=true } },
-    { rule = { instance = "CSSH:*" },
-    properties = { floating = true }, callback = awful.placement.under_mouse },
     { rule = { class = "Cssh" },
     properties = { floating=true, ontop=true },
     callback = function (c)
