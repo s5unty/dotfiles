@@ -1,0 +1,14 @@
+[sncli]
+cfg_sn_username = s5unty@gmail.com
+cfg_sn_password = <YOUR PASS>
+kb_quit = Q
+clr_user_input_bar_fg = black
+clr_user_input_bar_bg = yellow
+
+clr_default_fg = black
+clr_default_bg = white
+
+clr_help_focus_bg = black
+clr_note_content_focus_bg = black
+clr_note_focus_bg = black
+
