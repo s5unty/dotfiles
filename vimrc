@@ -42,7 +42,8 @@ set noswapfile " 内存大、禁用swapfile
 set history=200 " 命令行历史记录
 set laststatus=2 " 始终显示状态栏
 set noshowmode " 忽略内置的模式显示功能
-set undolevels=50
+set undolevels=500
+set diffopt=filler,iwhite
 
 if has("gui_running")
     set guioptions-=m

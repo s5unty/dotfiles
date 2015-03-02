@@ -105,6 +105,8 @@ set askcc=yes
 set signature=~/.mutt/signature|
 # 签名前不自动插入 "-- "，由签名脚本负责
 set sig_dashes=no
+# 签名在引用内容之前，而不是在最后
+set sig_on_top=yes
 # 设定回信的模板
 set date_format="%F(%a) at %R(%Z)"
 set attribution="on %d, %n wrote:"
@@ -158,5 +160,3 @@ set save_history=20
 set hide_limited=yes
 # 外部命令非正常结束时等待我确认
 set wait_key=no
-
-set sig_on_top=yes

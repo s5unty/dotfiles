@@ -3,12 +3,15 @@
     email = s5unty@gmail.com
 [core]
     excludesfile = ~/.gitignore
+    attributesfile = ~/.gitattributes
     quotepath = false
 [format]
     headers = ""
     subjectprefix = ""
 [diff]
     tool = vimdiff
+[diff "jp"]
+    textconv=nkf -w
 [diff "msword"] # http://progit.org/book/zh/ch7-2.html
     textconv = antiword -w0
 [diff "msexcel"]
@@ -66,7 +69,7 @@
     tool = persistent
 [mergetool "persistent"]
     # ref Brian Phillips @http://stackoverflow.com/questions/585844/merging-with-git-mergetool
-    cmd = "vim --noplugin -d \"$PWD/$MERGED\" \
+    cmd = "vim -d \"$PWD/$MERGED\" \
         +\":split $PWD/$REMOTE\" +\":set buftype=nowrite\" \
         +\":vertical diffsplit $PWD/$LOCAL\" +\":set buftype=nowrite\" \
         +\":vertical diffsplit $PWD/$BASE\" +\":set buftype=nowrite\" \
@@ -102,7 +105,7 @@
     fp  = format-patch -s
 
     ll  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%cr%Creset %C(bold)%d%Creset' --branches --graph --since='2 weeks ago'
-    ls  = log --pretty=format:'%C(blue)%h%Creset %ce %m %s %C(green)%C(dim)%ci%Creset %C(bold)%d%Creset' --all --graph
+    ls  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%ci%Creset %C(bold)%d%Creset' --all --graph
 
     ms  = merge --squash
     mf  = merge --no-ff # generate a merge commit even if the merge resolved as a fast-forward
@@ -132,5 +135,8 @@
     dll = svn log --oneline --limit=20
     dls = svn log
 # }}}
+
+#[http]
+#	proxy = http://10.167.251.83:8080
 
 # vim: set foldmethod=marker:

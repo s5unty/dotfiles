@@ -87,4 +87,6 @@ macro index,pager x "\
 	<sync-mailbox><next-undeleted>\
 	:set delete=ask-yes<enter>" "create label"
 
+macro editor "<F9>"  "[本部依赖-翻译]-SW18371PJ01000-中译日-`date -d today '+%Y/%m/%d'`/17:00"
+
 # vi:noet:
