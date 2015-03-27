@@ -15,4 +15,6 @@ bind-key 	. 	next-feed	articlelist
 bind-key	SPACE	pagedown	article
 
 # Macros
-macro		F	edit-flags
+#bind-key B  cmdline set use-proxy=no;
+#bind-key    B  command set use-proxy=no;
+#macro       p  command set use-proxy=no; reload; set use-proxy=yes;

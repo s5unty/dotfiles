@@ -184,7 +184,7 @@ class Punch(object):
     
     def open_punch_backup_file(self):
         """Open the backup file - punch.dat.backup - in the user's TODO_DIR."""
-        name = self.resolve( self.propDict['TODO_DIR'] + "/punch.dat.backup" )
+        name = self.resolve( self.propDict['TODO_DIR'] + "/var/punch.dat.backup" )
         self.backupFile = open( name, 'w' )
                 
     def close_punch_backup_file(self):
@@ -200,7 +200,7 @@ class Punch(object):
 
     def open_archive_file(self,mode='a'):
         """Open the archive file - punch.archive - in the user's TODO_DIR."""
-        name = self.resolve( self.propDict['TODO_DIR'] + "/punch.archive" )
+        name = self.resolve( self.propDict['TODO_DIR'] + "/var/punch.archive" )
         self.archiveFile = open( name, mode )
         
     def close_archive_file(self):

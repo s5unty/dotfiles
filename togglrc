@@ -1,0 +1,10 @@
+[auth]
+username = ${YOUR_NAME}
+password = ${YOUR_PASS}
+api_token = ${YOUR_TOKEN}
+
+[options]
+timezone = Asia/Shanghai
+time_format = %I:%M%P
+prefer_token = true
+

@@ -17,6 +17,7 @@ alias rm="rm -r"
 alias at="at -m"
 alias ow="$__SUDO chown -R `whoami`:`whoami`"
 alias mkd="mkd2html -footer \"<hr /> Last updated: `date +"%F %T%:z"`\""
+alias w3m="/usr/bin/w3m -no-graph"
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="LANG=c tree -C"
@@ -26,6 +27,7 @@ alias scp="scp -p"
 alias lintian="lintian -viI"
 alias tig="tig --all"
 alias rsync="rsync -C"
+alias anki="/usr/bin/anki -b ~/.anki"
 alias rot13="tr a-zA-Z n-za-mN-ZA-M"
 alias atf-run="env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/atf/bin atf-run"
 
@@ -84,7 +86,7 @@ PPP() {
 }
 
 R() { # find in files
-    egrep -ri --color=always \
+    egrep -rin --color=always \
         --exclude="*.old" --exclude="*.bak" --exclude="*.BAK" --exclude="*.orig" \
         --exclude="*.rej" --exclude="*.a" --exclude="*.olb" --exclude="*.o" \
         --exclude="*.obj" --exclude="*.so" --exclude="*.exe" --exclude="*.gz" \
@@ -115,6 +117,16 @@ dup() { # dupload
         # dup 127 *.changes
         /usr/bin/dupload -t "$1" ${(@)argv[2,$#]}
     fi
+}
+
+piff() {
+    $__DIFF --old-line-format='< %l
+' --new-line-format='> %l
+' --old-group-format='%df%(f=l?:,%dl)d%dE
+%<' --new-group-format='%dea%dF%(F=L?:,%dL)
+%>' --changed-group-format='%df%(f=l?:,%dl)c%dF%(F=L?:,%dL)
+%<---
+%>' --unchanged-group-format='' $*
 }
 
 # package {{{
@@ -176,7 +188,7 @@ alias tdR="todo.sh replace"
 alias td0="todo.sh prepend"
 alias td\$="todo.sh append"
 alias tdg="todo.sh ls"
-alias tdl="todo.sh lsr"
+alias tdl="todo.sh lsdue today"
 alias tdgc="todo.sh archive"
 alias tdG="todo.sh listall"
 alias tdp="todo.sh pri"
@@ -228,7 +240,7 @@ tde() {
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})
     if echo ${DESC} | egrep -qi 'message-id:'; then
-        MAIL=`echo ${DESC} | sed -e 's/.*message-id:<\([^@]*@[^ ]*\)>.*/\1/gi'`
+        MAIL=`echo ${DESC} | sed -e 's/.*message-id:[ ]\?<\([^@]*@[^ ]*\)>.*/\1/gi'`
         ${TODO_DIR}/opt/mutt/muttjump "${MAIL}"
     elif echo ${DESC} | egrep -qi 'note:'; then
         NOTE=`echo ${DESC} | sed -e 's/.*note:\([^ ]*\).*/\1/g'`
@@ -236,12 +248,10 @@ tdo() {
     fi
 }
 tds() { # 开始一项工作
-    if [ -z ${1} ]; then # 如果没给参数，代表继续最近一次的任务
-        RECENT=$(tail -1 ${TODO_DIR}/var/punch.dat | cut -f1 | sed "s/\*/\\\*/g") # 关照星号(*)
-        TDID=$(sed -n "\|${RECENT}|"= ${TODO_FILE})
-    else
-        TDID=${1}
-    fi
+    if [ -n ${1} ]; then
+        echo ${1} > ${TODO_DIR}/var/latest.tid
+    fi # 如果没给参数，代表继续最近一次的任务
+    TDID=$(cat ${TODO_DIR}/var/latest.tid)
 
     if [ "x"${2} != "x" ]; then # 如果有第二参数，表示持续多个蕃茄钟
         TURN=$((${2}+0))
@@ -250,31 +260,39 @@ tds() { # 开始一项工作
     fi
 
     td start ${TDID} > /dev/null 2>&1
-    python $TODO_DIR/opt/punch/Punch.py in ${TDID} | tail -1
+
     # 如果上一个工作周期还没结束，譬如前一项工作在周期内完成了，
     # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
     if ! pgrep "pomodoro.sh" > /dev/null 2>&1; then
-        DESC=$(sed -n "${TDID}p" ${TODO_FILE})
-        (${TODO_DIR}/opt/pomodoro/pomodoro.sh ${DESC} ${TURN} &) # 放到后台
+        (${TODO_DIR}/opt/pomodoro/pomodoro.sh ${TDID} ${TURN} &) # 放到后台
+    fi
+
+    TODO=$(sed -n "${TDID}p" ${TODO_FILE})
+
+    PROJ=$(echo ${TODO:14} | sed 's/\([^+]*\)\(\(\(^+\)\|\( +[a-zA-Z]\)\)[^ <]*\)\(.*\)/\2/g')
+    # Todotxt 格式的 +Project 格式化为 Toggl 格式的 @Project
+    PROJ=${${PROJ:1}/+/@}
+    DESC=$(echo ${TODO:14} | sed 's/\([^+]*\)\(\(\(^+\)\|\( +[a-zA-Z]\)\)[^ <]*\)\(.*\)/\1\6/g')
+    # 避免感叹号「!」引起 Shell 的不良反应
+    DESC=${${DESC:1}/!/b}
+
+    if [ ${#DESC} -eq ${#PROJ} ]; then
+        $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":workspace" "@gbtw"   # Go Back To Work...
+    else
+        $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":workspace" "${PROJ}"
     fi
 }
 tdd() { # 完成一项工作
-    WHAT=$(pu what | sed "s/Active task: \(.*\) (.* .*)$/\1/") # 当前正在进行的任务描述
-    if [[ ${WHAT} != "No task is active." ]]; then
-        python $TODO_DIR/opt/punch/Punch.py out
-        TDID=$(td -p ls "${WHAT}" | head -1 | cut -d' ' -f1)
-    fi
-
     if [[ ${ARGC} == 0 ]]; then # 如果没给参数，表示当前正在进行的任务被打断 [D]isturb
-        pkill pomodoro.sh
+        TDID=$(cat ${TODO_DIR}/var/latest.tid)
         td bump ${TDID} > /dev/null 2>&1
-        td stop ${TDID} > /dev/null 2>&1
-        return
+        pkill pomodoro.sh
     else # 否则标记由第一个参数代表的任务已完成，但并不结束番茄钟
         TDID=${1}
         td do ${TDID} > /dev/null 2>&1
+        $TODO_DIR/opt/toggl/toggl.py stop
         if [[ ${ARGC} > 1 ]]; then # 完成时允许添加简短的注释
-            td$ ${TDID} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
+            td comment ${TDID} "${(@)argv[2,$#]}" > /dev/null 2>&1
         fi
     fi
 }

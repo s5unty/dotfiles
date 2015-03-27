@@ -110,7 +110,7 @@ hi def link TagbarSignature  Comment
 " http://fholgado.com/minibufexpl
 hi MBENormal                ctermfg=240     ctermbg=NONE    cterm=italic
 hi MBEChanged               ctermfg=196     ctermbg=NONE    cterm=italic
-hi MBEVisibleNormal         ctermfg=Black   ctermbg=NONE    cterm=bold
+hi MBEVisibleNormal                                         cterm=reverse
 hi MBEVisibleChanged        ctermfg=196     ctermbg=NONE    cterm=bold
-hi MBEVisibleChangedActive                  ctermbg=196     cterm=reverse,bold
-hi MBEVisibleActive                                         cterm=reverse,bold
+hi MBEVisibleActiveNormal                                   cterm=reverse,underline,bold
+hi MBEVisibleActiveChanged  ctermfg=196     ctermbg=None    cterm=reverse,underline,bold

@@ -1,7 +1,10 @@
 include ~/.newsbeuter/bindings
-include ~/.newsbeuter/googlereader
+#include ~/.newsbeuter/googlereader
 include ~/.newsbeuter/color
 
-proxy 10.167.129.20:8080 # in company
+#proxy 10.167.251.83:8080 # in company
+proxy 127.0.0.1:8123
+use-proxy yes
 confirm-exit yes
-browser x-www-browser
+browser w3m
+download-timeout 300
