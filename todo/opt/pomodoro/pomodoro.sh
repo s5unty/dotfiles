@@ -49,7 +49,7 @@ for t in $(seq ${turn}); do
     done
 
     # 工作时间结束
-    echo 'naughty.notify({ margin = 4, position = "bottom_left", timeout=120, text = "Time to stop work and take a little break."})' | awesome-client
+    echo 'naughty.notify({ margin = 4, position = "bottom_left", timeout=300, text = "Time to stop work and take a little break."})' | awesome-client
 
     # 休息时间开始
     for i in $(seq 100); do

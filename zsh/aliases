@@ -188,7 +188,7 @@ alias tdR="todo.sh replace"
 alias td0="todo.sh prepend"
 alias td\$="todo.sh append"
 alias tdg="todo.sh ls"
-alias tdl="todo.sh lsdue today"
+alias tdl="todo.sh lsdo"
 alias tdgc="todo.sh archive"
 alias tdG="todo.sh listall"
 alias tdp="todo.sh pri"
@@ -252,6 +252,7 @@ tds() { # 开始一项工作
         echo ${1} > ${TODO_DIR}/var/latest.tid
     fi # 如果没给参数，代表继续最近一次的任务
     TDID=$(cat ${TODO_DIR}/var/latest.tid)
+    TODO=$(sed -n "${TDID}p" ${TODO_FILE})
 
     if [ "x"${2} != "x" ]; then # 如果有第二参数，表示持续多个蕃茄钟
         TURN=$((${2}+0))
@@ -261,36 +262,44 @@ tds() { # 开始一项工作
 
     td start ${TDID} > /dev/null 2>&1
 
+    # 避免Message-ID被记录
+    TODO=${TODO/ Message-ID:*>/}
+    # 跳过Todotxt的日期字段
+    TODO=${TODO:11}
+
+    PROJ=$(echo $TODO | awk '{ patsplit($0, a, "\\+[a-z][a-zA-Z0-9]+"); print a[1] }')
+    if [ -z $PROJ ]; then
+        PROJ="+gbtw"
+    fi
+
+    DESC=$(echo $TODO | sed "s/$PROJ//g" | sed "s/^ //" | sed "s/ $//")
+    # 避免感叹号「!」引起 Shell 的不良反应
+    DESC=${${DESC}/!/b}
+    # Todotxt 格式的 +Project 格式化为 Toggl 格式的 @Project
+    PROJ=${${PROJ}/+/@}
+
+    $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":workspace" "${PROJ}"
+
     # 如果上一个工作周期还没结束，譬如前一项工作在周期内完成了，
     # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
     if ! pgrep "pomodoro.sh" > /dev/null 2>&1; then
         (${TODO_DIR}/opt/pomodoro/pomodoro.sh ${TDID} ${TURN} &) # 放到后台
     fi
-
-    TODO=$(sed -n "${TDID}p" ${TODO_FILE})
-
-    PROJ=$(echo ${TODO:14} | sed 's/\([^+]*\)\(\(\(^+\)\|\( +[a-zA-Z]\)\)[^ <]*\)\(.*\)/\2/g')
-    # Todotxt 格式的 +Project 格式化为 Toggl 格式的 @Project
-    PROJ=${${PROJ:1}/+/@}
-    DESC=$(echo ${TODO:14} | sed 's/\([^+]*\)\(\(\(^+\)\|\( +[a-zA-Z]\)\)[^ <]*\)\(.*\)/\1\6/g')
-    # 避免感叹号「!」引起 Shell 的不良反应
-    DESC=${${DESC:1}/!/b}
-
-    if [ ${#DESC} -eq ${#PROJ} ]; then
-        $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":workspace" "@gbtw"   # Go Back To Work...
-    else
-        $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":workspace" "${PROJ}"
-    fi
 }
 tdd() { # 完成一项工作
+    BEEN=$(cat ${TODO_DIR}/var/latest.tid)
     if [[ ${ARGC} == 0 ]]; then # 如果没给参数，表示当前正在进行的任务被打断 [D]isturb
-        TDID=$(cat ${TODO_DIR}/var/latest.tid)
-        td bump ${TDID} > /dev/null 2>&1
+        td bump ${BEEN} > /dev/null 2>&1
         pkill pomodoro.sh
     else # 否则标记由第一个参数代表的任务已完成，但并不结束番茄钟
         TDID=${1}
         td do ${TDID} > /dev/null 2>&1
-        $TODO_DIR/opt/toggl/toggl.py stop
+
+        # `tds A` and then `tdd B`, cause task A be stopped.
+        if [[ ${TDID} == ${BEEN} ]]; then # 停止在线计时
+            $TODO_DIR/opt/toggl/toggl.py stop
+        fi
+
         if [[ ${ARGC} > 1 ]]; then # 完成时允许添加简短的注释
             td comment ${TDID} "${(@)argv[2,$#]}" > /dev/null 2>&1
         fi
