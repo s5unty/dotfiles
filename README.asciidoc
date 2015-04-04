@@ -1,8 +1,6 @@
-一点文件
-========
+= 一点文件
 
-一点任务
---------
+== 一点任务
 
 http://todotxt.com/[Todo.txt]::
 
@@ -59,3 +57,5 @@ https://github.com/drobertadams/toggl-cli[Toggl]::
   - 在线计时器
     * ./todo/opt/toggl/toggl.py
 
+// vim:ft=asciidoctor
+// doctor is not doc.
