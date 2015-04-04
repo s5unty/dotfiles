@@ -1,0 +1,61 @@
+一点文件
+========
+
+一点任务
+--------
+
+http://todotxt.com/[Todo.txt]::
+
+  - ./todo/bin/todo.sh
+
+https://github.com/inkarkat/todo.txt-cli-ex.git[Extensions]::
+**Strongly Recommends**
+
+  - ./todo/home/inkarkat
+
+https://github.com/s5unty/dotfiles/tree/master/todo[Personal]::
+
+  - Todo.txt 配置文件
+    * ./todo/config -> ./todo/etc/todo.cfg
+  - Shell(zsh) 别名配置
+    * ./zsh/aliases
+  - 桌面(awesome)番茄钟
+    * ./todo/opt/pomodoro/pomodoro.sh
+  - 桌面(awesome)通知
+    * ./todo/opt/remind/notify-wm
+  - 手机(ios/android)通知(cron wrapper)
+    * ./todo/opt/remind/pushover
+  - 计时(toggl)工具
+    * ./todo/opt/toggl/toggl.py
+  - 邮件(mutt)录入
+    * ./mutt/mutt2task
+    * ./mutt/mess2task
+
+[line-through]#https://github.com/jkrehm/todotxt-cli-addons[Remind]#::
+被 pushover 替代
+
+  - 手机(ios/android)通知  
+    * ./todo/opt/remind/remind
+
+[line-through]#http://www.davidwaring.net/projects/rtm.html[Remind]#::
+被 pushover 替代
+
+  - 手机(ios/android)通知
+    * ./todo/opt/rtm/rtm
+
+https://github.com/weisslj/muttjump[Mutt]::
+
+  - 邮件(mutt)定位
+    * ./todo/opt/mutt/muttjump
+
+[line-through]#http://code.google.com/p/punch-time-tracking/[Punch]#^google^、[line-through]#https://github.com/haochong/punch-time-tracking-plus[Punch Plus]#^github^::
+被 toggl 替代
+
+  - 本地计时器
+    * ./todo/opt/punch/Puncy.py
+
+https://github.com/drobertadams/toggl-cli[Toggl]::
+
+  - 在线计时器
+    * ./todo/opt/toggl/toggl.py
+

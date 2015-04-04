@@ -130,7 +130,7 @@ piff() {
 }
 
 # package {{{
-DISTRO=`awk '/[[:alpha:]]/ { print $1; exit }' /etc/issue`
+DISTRO=`awk '/[a-zA-Z]/ { print $1; exit }' /etc/issue`
 if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" ]]; then
     alias api="$__SUDO apt-get install"
     alias apo="apt-get source"
