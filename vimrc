@@ -8,7 +8,7 @@ set expandtab " TAB is soft
 set tabstop=4 " TAB 的宽度
 set shiftwidth=4 " 缩进的宽度
 set softtabstop=4
-set clipboard=unnamed " 使用系统剪贴板
+set clipboard=unnamed,autoselect " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
@@ -496,10 +496,14 @@ call pathogen#helptags()
 "
 " ppa1: (过时的)
 "     为了配合 Powerline 显示，修改了源文件
-let g:miniBufExplShowBufNumbers = 1
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplCheckDupeBufs = 0
-let g:miniBufExplMapWindowNavVim = 0
+"
+" 被 airline 的 extensions#tabline 替代
+" --
+"let g:miniBufExplShowBufNumbers = 1
+"let g:miniBufExplModSelTarget = 1
+"let g:miniBufExplCheckDupeBufs = 0
+"let g:miniBufExplMapWindowNavVim = 0
+" -- 2015/04/16
 
 
 " Tagbar v2.4.1: Display tags of the current file ordered by scope {{{2
@@ -532,13 +536,13 @@ let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 TabBar 和 -TabBar- 
 " delimitMate.vim 2.6 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
 " http://www.vim.org/scripts/script.php?script_id=2754
 " https://github.com/Raimondi/delimitMate
-let delimitMate_autoclose = 0
-let delimitMate_quotes = "\" ' `"
-let delimitMate_nesting_quotes = []
-let delimitMate_matchpairs = "(:),[:],{:},<:>"
+let delimitMate_autoclose = 1
+"let delimitMate_quotes = "\" ' `"
+"let delimitMate_nesting_quotes = []
+"let delimitMate_matchpairs = "(:),[:],{:},<:>"
 let delimitMate_expand_cr = 1 " 该项和SuperTab的CrMapping选项冲突
-let delimitMate_smart_quotes = 1
-let delimitMate_balance_matchpairs = 1
+"let delimitMate_smart_quotes = 1
+"let delimitMate_balance_matchpairs = 1
 
 
 " Gundo 2.4.0 : Visualize your undo tree {{{2
@@ -623,6 +627,19 @@ if !exists('g:airline_symbols')
     let g:airline_symbols.readonly = '⭤'
     let g:airline_symbols.linenr = '⭡'
 endif
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = '⮀'
+let g:airline#extensions#tabline#left_alt_sep = '⮁'
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
 
 "if !exists('g:airline_symbols')
 "  let g:airline_symbols = {}
@@ -630,6 +647,7 @@ endif
 let g:airline#extensions#whitespace#symbol = ''
 let g:airline#extensions#whitespace#trailing_format = '[T:%s]'
 let g:airline#extensions#whitespace#mixed_indent_format = '[M:%s]'
+
 
 " 4# Shougo's pack: https://github.com/Shougo/ {{{2
 " vimproc 7.0 : Asynchronous execution plugin for Vim {{{3

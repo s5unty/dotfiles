@@ -1,9 +1,6 @@
 [submodule "todo/home/inkarkat"]
 	path = todo/home/inkarkat
 	url = git@github.com:s5unty/todo.txt-cli-ex.git
-[submodule "vim/bundle/minibufexpl.vim"]
-	path = vim/bundle/minibufexpl.vim
-	url = https://github.com/fholgado/minibufexpl.vim.git
 [submodule "vim/bundle/powerline"]
 	path = vim/bundle/powerline
 	url = git@github.com:s5unty/vim-powerline.git
