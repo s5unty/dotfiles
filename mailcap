@@ -1,4 +1,5 @@
-text/html; w3m -t text/html %s; copiousoutput; nametemplate=%s.html; needsterminal;
+text/html; w3m -T text/html %s; copiousoutput; nametemplate=%s.html; needsterminal;
+text/markdown; pandoc -f markdown -t html %s | elinks -dump 1 -dump-color-mode 2 -dump-width 196; copiousoutput; nametemplate=%s.html; needsterminal;
 
 text/calendar; ~/.mutt/mutt-calendar-view %s; copiousoutput;
 
@@ -15,6 +16,7 @@ application/x-gzip; atool -F tar+gzip -l %s; copiousoutput;
 application/zip; atool -l %s; copiousoutput;
 
 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; et %s; description="Microsoft Excel 2007+";
+application/vnd.ms-excel.sheet.macroenabled.12; et %s; description="Microsoft Excel";
 application/vnd.ms-excel; et %s; description="Microsoft Excel";
 application/ms-excel; et %s; description="Microsoft Excel";
 application/msexcel; et %s; description="Microsoft Excel";
