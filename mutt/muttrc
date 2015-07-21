@@ -160,3 +160,5 @@ set save_history=20
 set hide_limited=yes
 # 外部命令非正常结束时等待我确认
 set wait_key=no
+# 线索中表示回复的关键字
+set reply_regexp="^(re([\\[0-9\\]+])*|回复|答复|aw|fw):[ \t]*"
