@@ -264,12 +264,13 @@ tds() { # 开始一项工作
 
     # 避免Message-ID被记录
     TODO=${TODO/ Message-ID:*>/}
-    # 跳过Todotxt的日期字段
-    TODO=${TODO:11}
+    # 跳过Todotxt的日期字段，如果存在的话
+    TODO=${${TODO}/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] /}
 
     PROJ=$(echo $TODO | awk '{ patsplit($0, a, "\\+[a-z][a-zA-Z0-9]+"); print a[1] }')
     if [ -z $PROJ ]; then
-        PROJ="+gbtw"
+        # PROJ="+gbtw" # 公事
+        PROJ="+wip"    # 私事
     fi
 
     DESC=$(echo $TODO | sed "s/$PROJ//g" | sed "s/^ //" | sed "s/ $//")
@@ -278,7 +279,8 @@ tds() { # 开始一项工作
     # Todotxt 格式的 +Project 格式化为 Toggl 格式的 @Project
     PROJ=${${PROJ}/+/@}
 
-    $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":workspace" "${PROJ}"
+    # $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":workspace" "${PROJ}"  # 公事
+    $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":lifespace" "${PROJ}"    # 私事
 
     # 如果上一个工作周期还没结束，譬如前一项工作在周期内完成了，
     # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
