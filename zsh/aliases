@@ -130,7 +130,7 @@ piff() {
 }
 
 # package {{{
-DISTRO=`awk '/[a-zA-Z]/ { print $1; exit }' /etc/issue`
+DISTRO=`awk '/[[:alpha:]]/ { print $1; exit }' /etc/issue`
 if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" ]]; then
     alias api="$__SUDO apt-get install"
     alias apo="apt-get source"
@@ -264,8 +264,8 @@ tds() { # 开始一项工作
 
     # 避免Message-ID被记录
     TODO=${TODO/ Message-ID:*>/}
-    # 跳过Todotxt的日期字段，如果存在的话
-    TODO=${${TODO}/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] /}
+    # 跳过Todotxt的日期字段
+    TODO=${TODO:11}
 
     PROJ=$(echo $TODO | awk '{ patsplit($0, a, "\\+[a-z][a-zA-Z0-9]+"); print a[1] }')
     if [ -z $PROJ ]; then
