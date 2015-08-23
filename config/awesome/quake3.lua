@@ -2,18 +2,37 @@
 -- Similar to:
 --   http://git.sysphere.org/awesome-configs/tree/scratch/drop.lua
 
--- http://vincent.bernat.im/en/blog/2012-awesome-wm.html
--- http://awesome.naquadah.org/wiki/Drop-down_terminal
+-- But uses a different implementation. The main difference is that we
+-- are able to detect the Quake console from its name
+-- (QuakeConsoleNeedsUniqueName by default).
+
+-- Use:
+
+-- local quake = require("quake")
+-- local quakeconsole = {}
+-- for s = 1, screen.count() do
+--    quakeconsole[s] = quake({ terminal = config.terminal,
+--                              height = 0.3,
+--                              screen = s })
+-- end
+
+-- config.keys.global = awful.util.table.join(
+--    config.keys.global,
+--    awful.key({ modkey }, "`",
+--      function () quakeconsole[mouse.screen]:toggle() end)
+
+-- If you have a rule like "awful.client.setslave" for your terminals,
+-- ensure you use an exception for
+-- QuakeConsoleNeedsUniqueName. Otherwise, you may run into problems
+-- with focus.
 
 local setmetatable = setmetatable
 local string = string
 local awful  = require("awful")
 local capi   = { mouse = mouse,
-                 screen = screen,
-                 client = client,
-                 timer = timer }
---@@ awesome-3.4.6
-local pairs  = pairs
+        screen = screen,
+        client = client,
+        timer = timer }
 
 -- I use a namespace for my modules...
 module("quake")
@@ -25,39 +44,24 @@ function QuakeConsole:display()
    -- First, we locate the terminal
    local client = nil
    local i = 0
---@@ awesome-3.4.6 doesn't support `awful.client.cycle` method
---@   for c in awful.client.cycle(function (c)
---@         -- c.name may be changed!
---@         return c.instance == self.name
---@      end,
---@      nil, self.screen) do
---@      i = i + 1
---@      if i == 1 then
---@          client = c
---@      else
---@          -- Additional matching clients, let's remove the sticky bit
---@          -- which may persist between awesome restarts. We don't close
---@          -- them as they may be valuable. They will just turn into a
---@          -- classic terminal.
---@          c.sticky = false
---@          c.ontop = false
---@          c.above = false
---@      end
---@   end
-   local tags = capi.screen[self.screen]:tags()
-   for k,tag in pairs(tags) do
-      for i=1, #tag:clients() do
-         local c = tag:clients()[i]
-         if c.instance == self.name then
-            client = c
-         else
-            c.sticky = false
-            c.ontop = false
-            c.above = false
-         end
+   for c in awful.client.iterate(function (c)
+                   -- c.name may be changed!
+                   return c.instance == self.name
+                   end,
+                   nil, self.screen) do
+      i = i + 1
+      if i == 1 then
+     client = c
+      else
+     -- Additional matching clients, let's remove the sticky bit
+     -- which may persist between awesome restarts. We don't close
+     -- them as they may be valuable. They will just turn into a
+     -- classic terminal.
+     c.sticky = false
+     c.ontop = false
+     c.above = false
       end
    end
---@@
 
    if not client and not self.visible then
       -- The terminal is not here yet but we don't want it yet. Just do nothing.
@@ -67,7 +71,7 @@ function QuakeConsole:display()
    if not client then
       -- The client does not exist, we spawn it
       awful.util.spawn(self.terminal .. " " .. string.format(self.argname, self.name),
-      false, self.screen)
+               false, self.screen)
       return
    end
 
@@ -121,35 +125,35 @@ function QuakeConsole:new(config)
    config.argname  = config.argname  or "-name %s"     -- how to specify window name
 
    -- If width or height <= 1 this is a proportion of the workspace
-   config.height   = config.height   or 0.25            -- height
-   config.width    = config.width    or 1               -- width
-   config.vert     = config.vert     or "top"           -- top, bottom or center
-   config.horiz    = config.horiz    or "center"        -- left, right or center
+   config.height   = config.height   or 0.25       -- height
+   config.width    = config.width    or 1          -- width
+   config.vert     = config.vert     or "top"      -- top, bottom or center
+   config.horiz    = config.horiz    or "center"   -- left, right or center
 
    config.screen   = config.screen or capi.mouse.screen
    config.visible  = config.visible or false -- Initially, not visible
 
    local console = setmetatable(config, { __index = QuakeConsole })
-   capi.client.add_signal("manage",
-       function(c)
-           if c.instance == console.name and c.screen == console.screen then
-               console:display()
-           end
-       end)
-   capi.client.add_signal("unmanage",
-       function(c)
-           if c.instance == console.name and c.screen == console.screen then
-               console.visible = false
-           end
-       end)
+   capi.client.connect_signal("manage",
+   function(c)
+       if c.instance == console.name and c.screen == console.screen then
+           console:display()
+       end
+   end)
+   capi.client.connect_signal("unmanage",
+   function(c)
+       if c.instance == console.name and c.screen == console.screen then
+           console.visible = false
+       end
+   end)
 
    -- "Reattach" currently running QuakeConsole. This is in case awesome is restarted.
    local reattach = capi.timer { timeout = 0 }
-   reattach:add_signal("timeout",
-       function()
-           reattach:stop()
-           console:display()
-       end)
+   reattach:connect_signal("timeout",
+   function()
+       reattach:stop()
+       console:display()
+   end)
    reattach:start()
    return console
 end
