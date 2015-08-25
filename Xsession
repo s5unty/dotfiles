@@ -1,10 +1,15 @@
 #!/bin/sh
 
-# ln -sf /tmp/.xsession-errors ~/.xsession-errors
 /usr/bin/touch /tmp/.xsession-errors
+ln -sf /tmp/.xsession-errors ~/.xsession-errors
 
 # ssh 翻墙隧道 0:PORT 的写法使得局域网(虚拟机)可以共享此隧道
 # /usr/bin/autossh -f -N -D 0:9527 du1abadd.org
+# shadowsocks 相比 ssh，对墙作了更多优化
+/usr/local/bin/sslocal -d start -c ~/.ss.json --pid-file /tmp/.shadowsocks.pid --log-file /tmp/shadowsocks.log
+
+# dns 加密避免 dns 污染
+# /opt/dnscrypt/sbin/dnscrypt-proxy --daemonize --ephemeral-keys --resolver-name=cisco-port53
 
 # 强制启用 Ctrl-Alt-Backspace(重启图形界面) 组合键
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
@@ -16,9 +21,12 @@
 /usr/bin/xscreensaver -no-splash &
 
 # 统一剪贴板，parcellite 比 autocutsel 好用 :)
-/usr/bin/parcellite -n &
+# /usr/local/bin/parcellite -n &
+# gpaste 也不错
+/usr/bin/gpaste
 
 # 加载自定义的特殊的键盘功能键
+# 注意：fcitx 的 X 键盘集成(高级组件)
 /usr/bin/xmodmap ~/.Xmodmaprc
 
 # 启动应用程序
@@ -29,7 +37,7 @@
 #/usr/local/bin/eclimd & # eclimd
 
 # 远程登录访问的 VNC 服务器端
-/usr/bin/x0vncserver -PasswordFile=/sun/.vnc/passwd &
+# /usr/bin/x0vncserver -PasswordFile=/sun/.vnc/passwd &
 
 # 一套键鼠控制多台机器，服务器端
 # if [ s`hostname` != s"verns-laptop" ]; then
@@ -38,23 +46,30 @@
 # 客户端，由服务器端的键鼠控制
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
 
-# pull, monitor, push TODO 如果同步失败，邮件通知自己
-/usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
-/usr/bin/rsync -av --omit-dir-times --delete --progress ~/.todo/var/ du1abadd.org:~/todo/var/ &
-while [ 1 ]; do
-    while file=$(inotifywait -r -q -e modify,create,attrib ~/.todo/var/ --format "%f"); do
-        rsync -av --omit-dir-times --delete --progress ~/.todo/var/ du1abadd.org:~/todo/var/
-    done
-done &
-###
-## 因为inotifywait从不退出(-m)，时间久了滋生非常多僵尸进程(rsync)。
-#/usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.todo/var/ | \
-#    while read file; do
-#        rsync -azu --delete ~/.todo/var/ du1abadd.org:~/todo/var/ &
-#    done &
+##
+# /usr/bin/syncthing -no-browser &
+## pull, monitor, push TODO 如果同步失败，邮件通知自己
+#/usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
+#/usr/bin/rsync -av --omit-dir-times --delete --progress ~/.todo/var/ du1abadd.org:~/todo/var/ &
+#while [ 1 ]; do
+#    while file=$(inotifywait -r -q -e modify,create,attrib ~/.todo/var/ --format "%f"); do
+#        rsync -av --omit-dir-times --delete --progress ~/.todo/var/ du1abadd.org:~/todo/var/
+#    done
+#done &
+####
+### 因为inotifywait从不退出(-m)，时间久了滋生非常多僵尸进程(rsync)。
+##/usr/bin/inotifywait -mrq -e modify,delete,create,attrib ~/.todo/var/ | \
+##    while read file; do
+##        rsync -azu --delete ~/.todo/var/ du1abadd.org:~/todo/var/ &
+##    done &
 
 # 使用渐隐、阴影特效
-/usr/bin/xcompmgr -f -n -C &
+# xcompmgr 在窗口全屏时有不刷新的问题
+# /usr/bin/xcompmgr -f -n -C &
+# 找到 compton，比 xcompmgr 效果更好
+/usr/bin/compton -bcCGf -i 0.8 -e 0.8 --no-fading-openclose --sw-opti
+
+# 鼠标 5 秒不动后自动隐藏
 /usr/bin/unclutter -idle 5 -noevents &
 
 # 绑定 cifs 分区
