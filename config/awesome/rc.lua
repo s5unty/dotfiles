@@ -300,7 +300,7 @@ globalkeys = awful.util.table.join(
         awful.client.focus.byidx(-1)
         client.focus:raise()
     end),
-    awful.key({ "Control" }, "Tab", function ()
+    awful.key({ "Mod1" }, "Tab", function ()
         awful.client.focus.history.previous()
         client.focus:raise()
     end),
@@ -338,7 +338,6 @@ globalkeys = awful.util.table.join(
         local tag = awful.tag.selected()
         for i=1, #tag:clients() do
             tag:clients()[i].minimized=false
-            tag:clients()[i]:redraw()
         end
     end),
 
@@ -390,7 +389,7 @@ globalkeys = awful.util.table.join(
         local c = f:read("*a")
         f:close()
 
-        frame = naughty.notify({ text = c, timeout = 15, width = 360, screen = mouse.screen })
+        frame = naughty.notify({ text = c, font='Envy Code R 11', timeout = 15, width = 360, screen = mouse.screen })
     end),
     awful.key({ modkey, "Shift" }, "d", function ()
         awful.prompt.run({prompt = "Dict: "}, mypromptbox[mouse.screen].widget, function(cin_word)
@@ -403,7 +402,7 @@ globalkeys = awful.util.table.join(
             local c = f:read("*a")
             f:close()
 
-            frame = naughty.notify({ text = c, font='Envy Code R 9', timeout = 30, width = 360, screen = mouse.screen })
+            frame = naughty.notify({ text = c, font='Envy Code R 11', timeout = 30, width = 360, screen = mouse.screen })
         end, nil, awful.util.getdir("cache").."/dict")
     end),
     -- }}}
