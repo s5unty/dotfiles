@@ -1,0 +1,22 @@
+confirmation=1
+extensions=/usr/local/libexec/taskd
+ip.log=on
+log=/sun/taskd/taskd.log
+pid.file=/sun/taskd/taskd.pid
+queue.size=10
+request.limit=1048576
+root=/sun/taskd
+server=du1abadd.org:53589
+trust=strict
+verbose=1
+
+###
+# Finally there are client key/certs, which are not what you might expect.
+# These are for API access, and not for your Taskwarrior client. 
+client.cert=/sun/taskd/client.cert.pem
+client.key=/sun/taskd/client.key.pem
+##
+server.cert=/sun/taskd/server.cert.pem
+server.key=/sun/taskd/server.key.pem
+server.crl=/sun/taskd/server.crl.pem
+ca.cert=/sun/taskd/ca.cert.pem

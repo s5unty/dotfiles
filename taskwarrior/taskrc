@@ -1,0 +1,15 @@
+# task-2.4.4
+
+# Files
+data.location=~/.task
+
+# Color theme
+include /usr/share/taskwarrior/light-256.theme
+
+# Taskd-1.2.0
+# git clone https://git.tasktools.org/scm/tm/taskd.git
+taskd.server=du1abadd.org:53589
+taskd.key=/sun/.task/s5unty.key.pem
+taskd.certificate=/sun/.task/s5unty.cert.pem
+taskd.ca=/sun/.task/s5unty.ca.pem
+taskd.credentials=Private/s5unty/37a553a9-6ea4-4f1e-bbb2-2a69249e3d93
