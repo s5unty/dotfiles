@@ -1,9 +1,6 @@
 [submodule "todo/home/inkarkat"]
 	path = todo/home/inkarkat
 	url = git@github.com:s5unty/todo.txt-cli-ex.git
-[submodule "vim/bundle/powerline"]
-	path = vim/bundle/powerline
-	url = git@github.com:s5unty/vim-powerline.git
 [submodule "vim/bundle/tagbar"]
 	path = vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar
@@ -45,7 +42,7 @@
 	url = https://github.com/Shougo/unite-session.git
 [submodule "vim/bundle/neocomplcache"]
 	path = vim/bundle/neocomplcache
-	url = https://github.com/Shougo/neocomplcache.git
+	url = https://github.com/Shougo/neocomplcache.vim.git
 [submodule "vim/bundle/neocomplcache-snippets-complete"]
 	path = vim/bundle/neocomplcache-snippets-complete
 	url = https://github.com/Shougo/neocomplcache-snippets-complete.git
@@ -76,3 +73,6 @@
 [submodule "vim/bundle/calendar"]
 	path = vim/bundle/calendar
 	url = https://github.com/itchyny/calendar.vim.git
+[submodule "vim/bundle/minibufexpl.vim"]
+	path = vim/bundle/minibufexpl.vim
+    url = https://github.com/fholgado/minibufexpl.vim.git
