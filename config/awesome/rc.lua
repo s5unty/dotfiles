@@ -373,7 +373,7 @@ globalkeys = awful.util.table.join(
         f:close()
 
         mycalendar = naughty.notify({
-            text = string.format('<span font_desc="%s">%s</span>', "Envy Code R 10", c),
+            text = string.format('<span font_desc="%s">%s</span>', "Envy Code R for Powerline 10", c),
             position = "bottom_right", --font = "Envy Code R",
             timeout = 0, width = 530, screen = mouse.screen })
         end),
@@ -389,7 +389,7 @@ globalkeys = awful.util.table.join(
         local c = f:read("*a")
         f:close()
 
-        frame = naughty.notify({ text = c, font='Envy Code R 11', timeout = 15, width = 360, screen = mouse.screen })
+        frame = naughty.notify({ text = c, font='Envy Code R for Powerline 10', timeout = 15, width = 360, screen = mouse.screen })
     end),
     awful.key({ modkey, "Shift" }, "d", function ()
         awful.prompt.run({prompt = "Dict: "}, mypromptbox[mouse.screen].widget, function(cin_word)
@@ -402,7 +402,7 @@ globalkeys = awful.util.table.join(
             local c = f:read("*a")
             f:close()
 
-            frame = naughty.notify({ text = c, font='Envy Code R 11', timeout = 30, width = 360, screen = mouse.screen })
+            frame = naughty.notify({ text = c, font='Envy Code R for Powerline 10', timeout = 30, width = 360, screen = mouse.screen })
         end, nil, awful.util.getdir("cache").."/dict")
     end),
     -- }}}

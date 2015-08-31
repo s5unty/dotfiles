@@ -4,7 +4,7 @@
 
 theme = {}
 
-theme.font          = "DejaVu Sans 9"
+theme.font          = "DejaVu Sans 10"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -36,7 +36,7 @@ theme.border_marked = "#ff7f24"
 theme.taglist_squares_sel   = "/sun/.config/awesome/theme/taglist_squares_sel.png"
 theme.taglist_squares_unsel = "/sun/.config/awesome/theme/taglist_squares_unsel.png"
 
-theme.tasklist_font = "Envy Code R 10"
+theme.tasklist_font = "Envy Code R for Powerline 10"
 theme.tasklist_floating_icon = "/sun/.config/awesome/theme/mark.png"
 
 -- Variables set for theming the menu:
