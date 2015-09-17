@@ -182,138 +182,158 @@ fi
 # }}}
 
 # task {{{
-alias pu="python $TODO_DIR/opt/punch/Punch.py"
-alias td="todo.sh"
-alias tda="todo.sh add"
-#alias tdr="todo.sh del"
-alias tdR="todo.sh replace"
-alias td0="todo.sh prepend"
-alias td\$="todo.sh append"
-alias tdg="todo.sh ls"
-alias tdl="todo.sh lsdo"
-alias tdgc="todo.sh archive"
-alias tdG="todo.sh listall"
-alias tdp="todo.sh pri"
-alias tdP="todo.sh depri"
-alias tdO="todo.sh listnotes 2>/dev/null"
-alias tdn="pu what"
+###alias pu="python $TODO_DIR/opt/punch/Punch.py"
+###alias td="todo.sh"
+###alias tda="todo.sh add"
+####alias tdr="todo.sh del"
+###alias tdR="todo.sh replace"
+###alias td0="todo.sh prepend"
+###alias td\$="todo.sh append"
+###alias tdg="todo.sh ls"
+###alias tdl="todo.sh lsdo"
+###alias tdgc="todo.sh archive"
+###alias tdG="todo.sh listall"
+###alias tdp="todo.sh pri"
+###alias tdP="todo.sh depri"
+###alias tdO="todo.sh listnotes 2>/dev/null"
+###alias tdn="pu what"
+###alias td1="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 1 &)"
+###alias td2="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 2 &)"
+###tdc() {
+###    if [[ ${ARGC} > 1 ]]; then # 追加注释
+###        td$ ${1} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
+###    fi
+###}
+###tdr() { # remember the milk
+#### depends: http://www.davidwaring.net/projects/rtm.html
+#### depends: http://www.rememberthemilk.com/
+###    idx=${1}
+###    if [[ ${idx} == "" ]]; then
+###        return
+###    fi
+###    inbox=$(echo "#0x5BCC0x58EB0x901A" | ascii2uni -q)
+###
+###    rem=$(remind -s+4 $TODO_DIR/var/remind/index.rem | sed -n "${idx}p")
+###    rem_date=$(echo ${rem} | sed 's/\(^.\{10\}\).*/\1/' )
+###    rem_time=$(echo ${rem} | sed 's/.* \([0-9]\{1,2\}:[0-9]\{1,2\}[ap]m\) .*/\1/')
+###    rem_mesg=$(echo ${rem} | sed 's/.*\(\([ap]m\)\|\(\*\)\) \(.*\)/\4/g')
+###
+###    if [[ ${rem_time} == ${rem} ]]; then # 没有时间信息
+###        rem_time=""
+###    fi
+###
+###    if ! pgrep "python" | grep "rtm add"; then # todo
+###        (rtm add ${inbox} "${rem_date} ${rem_time} ${rem_mesg}" > /dev/null &)
+###    else
+###        echo "rtm: there is another running instance."
+###    fi
+###}
+###tde() {
+###    if [ -z ${1} ]; then
+###        loc=":normal M"
+###    else
+###        loc=":normal $1gg"
+###    fi
+###    HOME_FILE="$TODO_DIR/var/home/todo.log"
+###    FNST_FILE="$TODO_DIR/var/fnst/todo.log"
+###    vi +":e $HOME_FILE" +":normal zz" \
+###        +":vs $FNST_FILE" +"${loc}"
+###}
+###tdo() {
+###    DESC=$(sed -n "${1}p" ${TODO_FILE})
+###    if echo ${DESC} | egrep -qi 'message-id:'; then
+###        MAIL=`echo ${DESC} | sed -e 's/.*message-id:[ ]\?<\([^@]*@[^ ]*\)>.*/\1/gi'`
+###        ${TODO_DIR}/opt/mutt/muttjump "${MAIL}"
+###    elif echo ${DESC} | egrep -qi 'note:'; then
+###        NOTE=`echo ${DESC} | sed -e 's/.*note:\([^ ]*\).*/\1/g'`
+###        td notesedit ${NOTE} 2> /dev/null
+###    fi
+###}
+###tds() { # 开始一项工作
+###    if [ -n ${1} ]; then
+###        echo ${1} > ${TODO_DIR}/var/latest.tid
+###    fi # 如果没给参数，代表继续最近一次的任务
+###    TDID=$(cat ${TODO_DIR}/var/latest.tid)
+###    TODO=$(sed -n "${TDID}p" ${TODO_FILE})
+###
+###    if [ "x"${2} != "x" ]; then # 如果有第二参数，表示持续多个蕃茄钟
+###        TURN=$((${2}+0))
+###    else
+###        TURN=1
+###    fi
+###
+###    td start ${TDID} > /dev/null 2>&1
+###
+###    # 避免Message-ID被记录
+###    TODO=${TODO/ Message-ID:*>/}
+###    # 跳过Todotxt的日期字段，如果存在的话
+###    TODO=${${TODO}/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] /}
+###
+###    PROJ=$(echo $TODO | awk '{ patsplit($0, a, "\\+[a-z][a-zA-Z0-9]+"); print a[1] }')
+###    if [ -z $PROJ ]; then
+###        PROJ="+wip"
+###    fi
+###
+###    DESC=$(echo $TODO | sed "s/$PROJ//g" | sed "s/^ //" | sed "s/ $//")
+###    # 避免感叹号「!」引起 Shell 的不良反应
+###    DESC=${${DESC}/!/b}
+###    # Todotxt 格式的 +Project 格式化为 Toggl 格式的 @Project
+###    PROJ=${${PROJ}/+/@}
+###
+###    $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":lifespace" "${PROJ}"
+###
+###    # 如果上一个工作周期还没结束，譬如前一项工作在周期内完成了，
+###    # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
+###    if ! pgrep "pomodoro.sh" > /dev/null 2>&1; then
+###        (${TODO_DIR}/opt/pomodoro/pomodoro.sh ${TDID} ${TURN} &) # 放到后台
+###    fi
+###}
+###tdd() { # 完成一项工作
+###    BEEN=$(cat ${TODO_DIR}/var/latest.tid)
+###    if [[ ${ARGC} == 0 ]]; then # 如果没给参数，表示当前正在进行的任务被打断 [D]isturb
+###        td bump ${BEEN} > /dev/null 2>&1
+###        pkill pomodoro.sh
+###    else # 否则标记由第一个参数代表的任务已完成，但并不结束番茄钟
+###        TDID=${1}
+###        td do ${TDID} > /dev/null 2>&1
+###
+###        # `tds A` and then `tdd B`, cause task A be stopped.
+###        if [[ ${TDID} == ${BEEN} ]]; then # 停止在线计时
+###            $TODO_DIR/opt/toggl/toggl.py stop
+###        fi
+###
+###        if [[ ${ARGC} > 1 ]]; then # 完成时允许添加简短的注释
+###            td comment ${TDID} "${(@)argv[2,$#]}" > /dev/null 2>&1
+###        fi
+###    fi
+###}
+###tdD() { # 过去完成一项工作
+###    if [ -z ${2} ]; then # 如果没给参数，代表昨天完成
+###        WHEN="1 day ago"
+###    else
+###        WHEN=${2/da/days ago}
+###    fi
+###    td did ${1} "${WHEN}"
+###}
+# }}}
+
+# task-2.0 {{{
 alias td1="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 1 &)"
 alias td2="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 2 &)"
-tdc() {
-    if [[ ${ARGC} > 1 ]]; then # 追加注释
-        td$ ${1} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
-    fi
-}
-tdr() { # remember the milk
-# depends: http://www.davidwaring.net/projects/rtm.html
-# depends: http://www.rememberthemilk.com/
-    idx=${1}
-    if [[ ${idx} == "" ]]; then
-        return
-    fi
-    inbox=$(echo "#0x5BCC0x58EB0x901A" | ascii2uni -q)
-
-    rem=$(remind -s+4 $TODO_DIR/var/remind/index.rem | sed -n "${idx}p")
-    rem_date=$(echo ${rem} | sed 's/\(^.\{10\}\).*/\1/' )
-    rem_time=$(echo ${rem} | sed 's/.* \([0-9]\{1,2\}:[0-9]\{1,2\}[ap]m\) .*/\1/')
-    rem_mesg=$(echo ${rem} | sed 's/.*\(\([ap]m\)\|\(\*\)\) \(.*\)/\4/g')
-
-    if [[ ${rem_time} == ${rem} ]]; then # 没有时间信息
-        rem_time=""
-    fi
-
-    if ! pgrep "python" | grep "rtm add"; then # todo
-        (rtm add ${inbox} "${rem_date} ${rem_time} ${rem_mesg}" > /dev/null &)
-    else
-        echo "rtm: there is another running instance."
-    fi
-}
-tde() {
-    if [ -z ${1} ]; then
-        loc=":normal M"
-    else
-        loc=":normal $1gg"
-    fi
-    HOME_FILE="$TODO_DIR/var/home/todo.log"
-    FNST_FILE="$TODO_DIR/var/fnst/todo.log"
-    vi +":e $HOME_FILE" +":normal zz" \
-        +":vs $FNST_FILE" +"${loc}"
-}
+alias tda="task add"
+tdd() { task $* done }
+tdg() { task $* }
+tdu() { task $* undo }
+tde() { task $* edit }
 tdo() {
-    DESC=$(sed -n "${1}p" ${TODO_FILE})
-    if echo ${DESC} | egrep -qi 'message-id:'; then
-        MAIL=`echo ${DESC} | sed -e 's/.*message-id:[ ]\?<\([^@]*@[^ ]*\)>.*/\1/gi'`
-        ${TODO_DIR}/opt/mutt/muttjump "${MAIL}"
-    elif echo ${DESC} | egrep -qi 'note:'; then
+    DESC=$(task "${1}" export)
+    if echo ${DESC} | /bin/egrep -qi 'message.*id:'; then
+        MAIL=`echo ${DESC} | sed -e 's/^.*[mM]essage-[Ii][Dd]:<\(.*\)>.*$/\1/g'`
+        ${HOME}/.mutt/mutt-jump "${MAIL}"
+    elif echo ${DESC} | /bin/egrep -qi 'note:'; then
         NOTE=`echo ${DESC} | sed -e 's/.*note:\([^ ]*\).*/\1/g'`
         td notesedit ${NOTE} 2> /dev/null
     fi
-}
-tds() { # 开始一项工作
-    if [ -n ${1} ]; then
-        echo ${1} > ${TODO_DIR}/var/latest.tid
-    fi # 如果没给参数，代表继续最近一次的任务
-    TDID=$(cat ${TODO_DIR}/var/latest.tid)
-    TODO=$(sed -n "${TDID}p" ${TODO_FILE})
-
-    if [ "x"${2} != "x" ]; then # 如果有第二参数，表示持续多个蕃茄钟
-        TURN=$((${2}+0))
-    else
-        TURN=1
-    fi
-
-    td start ${TDID} > /dev/null 2>&1
-
-    # 避免Message-ID被记录
-    TODO=${TODO/ Message-ID:*>/}
-    # 跳过Todotxt的日期字段，如果存在的话
-    TODO=${${TODO}/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] /}
-
-    PROJ=$(echo $TODO | awk '{ patsplit($0, a, "\\+[a-z][a-zA-Z0-9]+"); print a[1] }')
-    if [ -z $PROJ ]; then
-        PROJ="+wip"
-    fi
-
-    DESC=$(echo $TODO | sed "s/$PROJ//g" | sed "s/^ //" | sed "s/ $//")
-    # 避免感叹号「!」引起 Shell 的不良反应
-    DESC=${${DESC}/!/b}
-    # Todotxt 格式的 +Project 格式化为 Toggl 格式的 @Project
-    PROJ=${${PROJ}/+/@}
-
-    $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":lifespace" "${PROJ}"
-
-    # 如果上一个工作周期还没结束，譬如前一项工作在周期内完成了，
-    # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
-    if ! pgrep "pomodoro.sh" > /dev/null 2>&1; then
-        (${TODO_DIR}/opt/pomodoro/pomodoro.sh ${TDID} ${TURN} &) # 放到后台
-    fi
-}
-tdd() { # 完成一项工作
-    BEEN=$(cat ${TODO_DIR}/var/latest.tid)
-    if [[ ${ARGC} == 0 ]]; then # 如果没给参数，表示当前正在进行的任务被打断 [D]isturb
-        td bump ${BEEN} > /dev/null 2>&1
-        pkill pomodoro.sh
-    else # 否则标记由第一个参数代表的任务已完成，但并不结束番茄钟
-        TDID=${1}
-        td do ${TDID} > /dev/null 2>&1
-
-        # `tds A` and then `tdd B`, cause task A be stopped.
-        if [[ ${TDID} == ${BEEN} ]]; then # 停止在线计时
-            $TODO_DIR/opt/toggl/toggl.py stop
-        fi
-
-        if [[ ${ARGC} > 1 ]]; then # 完成时允许添加简短的注释
-            td comment ${TDID} "${(@)argv[2,$#]}" > /dev/null 2>&1
-        fi
-    fi
-}
-tdD() { # 过去完成一项工作
-    if [ -z ${2} ]; then # 如果没给参数，代表昨天完成
-        WHEN="1 day ago"
-    else
-        WHEN=${2/da/days ago}
-    fi
-    td did ${1} "${WHEN}"
 }
 # }}}
 

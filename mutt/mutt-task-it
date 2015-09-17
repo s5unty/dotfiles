@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# 获取这封邮件的 message-id
+ANNO=$(formail -fXMessage-ID | perl -pe 's/\n//' | perl -pe 's/: </:</')
+
+# 获取刚刚由 mutt2task 添加的 task id
+TASK=$(task ids | cut -d"-" -f2)
+
+# 为最新的 task 添加 message-id
+task ${TASK} annotate ${ANNO}
+
