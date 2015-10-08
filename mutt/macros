@@ -32,17 +32,17 @@ macro attach s "<save-entry><kill-line>/tmp/<enter>a"
 # http://www.nixternal.com/mark-e-mails-in-mutt-as-tasks-in-taskwarrior/
 # https://github.com/ValiValpas/taskopen
 macro index,pager T "\
-	<pipe-message>~/.mutt/mutt-todotxt\n\
+	<pipe-message>~/.mutt/mutt-task\n\
 	:set pipe_decode=no\n\
 	:set wait_key=yes\n\
-	<pipe-message>~/.mutt/mutt-todotxt-it\n\
+	<pipe-message>~/.mutt/mutt-task-it\n\
 	:set wait_key=no\n\
 	:set pipe_decode=yes\n" "Task"
 
 # 添加会议邀请到 Todotxt
 macro index,pager M "\
 	:set wait_key=yes\n\
-	<pipe-message>~/.mutt/mutt-todotxt-cal\n\
+	<pipe-message>~/.mutt/mutt-task-cal\n\
 	:set wait_key=no\n" "Metting"
 
 # 添加到通讯录
@@ -52,13 +52,15 @@ macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender ad
 macro index Z "<collapse-all><current-bottom>"
 
 # 邮件备注
-# macro index,pager "<Return>" "\
-#           :set pipe_decode=no<enter>\
-#           :set wait_key=no<enter>\
-#           <pipe-message>~/.mutt/mutt2note<enter>\
-#           :set wait_key=yes<enter>\
-#           :set pipe_decode=yes<enter>\
-#           :set <enter>" "Note"
+#macro index,pager "<Return>" "\
+#          :set pipe_decode=no<enter>\
+#          :set wait_key=no<enter>\
+#          <pipe-message>~/.mutt/mutt-note<enter>\
+#          :set wait_key=yes<enter>\
+#          :set pipe_decode=yes<enter>\
+#          :set <enter>" "Note"
+#
+# 一句话的备注，可以使用 X-Label 功能
 
 # 显示当前邮箱里曾经被我回复过的邮件(~Q)，包括我的回复(~P)
 macro index "<F5>" "<limit>~Q | ~P<enter>"
@@ -82,7 +84,6 @@ macro index,pager x "\
 	:push \$my_cmd<enter>\
 	:set editor=\"~/.mutt/mutt-xlabel-it \\\"\$my_lab\\\"\"<enter>\
 	<edit>\
-	:set editor=\"vim -c 'set ft=mail.markdown'\"<enter>\
 	:set delete=yes<enter>\
 	<sync-mailbox><next-undeleted>\
 	:set delete=ask-yes<enter>" "create label"

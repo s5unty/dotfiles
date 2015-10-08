@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash -
+
+set -f
 
 LABEL="$1"
 FNAME="$2"
@@ -6,6 +8,9 @@ NFNAME="/tmp/mutt-xlabel-`basename "$2"`.$$"
 
 echo "1: $1" >> /tmp/11
 echo "2: $2" >> /tmp/11
+
+# 行首多出一个等号的问题，暂时解决
+LABEL=${LABEL//=/}
 
 if [ x"$LABEL" = "x" ]; then
 	NEW="X-Label" # delete this field
