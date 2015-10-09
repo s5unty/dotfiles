@@ -300,7 +300,7 @@ globalkeys = awful.util.table.join(
         awful.client.focus.byidx(-1)
         client.focus:raise()
     end),
-    awful.key({ "Mod1" }, "Tab", function ()
+    awful.key({ "Control" }, "Tab", function ()
         awful.client.focus.history.previous()
         client.focus:raise()
     end),
@@ -338,6 +338,7 @@ globalkeys = awful.util.table.join(
         local tag = awful.tag.selected()
         for i=1, #tag:clients() do
             tag:clients()[i].minimized=false
+            tag:clients()[i]:redraw()
         end
     end),
 
@@ -373,7 +374,7 @@ globalkeys = awful.util.table.join(
         f:close()
 
         mycalendar = naughty.notify({
-            text = string.format('<span font_desc="%s">%s</span>', "Envy Code R for Powerline 10", c),
+            text = string.format('<span font_desc="%s">%s</span>', "Envy Code R 10", c),
             position = "bottom_right", --font = "Envy Code R",
             timeout = 0, width = 530, screen = mouse.screen })
         end),
@@ -389,7 +390,7 @@ globalkeys = awful.util.table.join(
         local c = f:read("*a")
         f:close()
 
-        frame = naughty.notify({ text = c, font='Envy Code R for Powerline 10', timeout = 15, width = 360, screen = mouse.screen })
+        frame = naughty.notify({ text = c, timeout = 15, width = 360, screen = mouse.screen })
     end),
     awful.key({ modkey, "Shift" }, "d", function ()
         awful.prompt.run({prompt = "Dict: "}, mypromptbox[mouse.screen].widget, function(cin_word)
@@ -402,7 +403,7 @@ globalkeys = awful.util.table.join(
             local c = f:read("*a")
             f:close()
 
-            frame = naughty.notify({ text = c, font='Envy Code R for Powerline 10', timeout = 30, width = 360, screen = mouse.screen })
+            frame = naughty.notify({ text = c, font='Envy Code R 9', timeout = 30, width = 360, screen = mouse.screen })
         end, nil, awful.util.getdir("cache").."/dict")
     end),
     -- }}}
@@ -576,6 +577,9 @@ awful.rules.rules = {
     properties = { tag = tags[1][8] } },
     { rule = { class = "Gtk-recordmydesktop" },
     properties = { floating=true } },
+    { rule = { instance = "CMatrix" },
+    properties = { floating=true, ontop=true },
+    callback = function (c) c.fullscreen = true end },
 
     { rule = { class = "Pidgin" },
     properties = { floating=true, ontop=true } },
@@ -618,65 +622,65 @@ client.connect_signal("manage", function (c, startup)
         end
     end)
 
-    if not startup then
-        -- Set the windows at the slave,
-        -- i.e. put it at the end of others instead of setting it master.
-        awful.client.setslave(c)
-
-        -- Put windows in a smart way, only if they does not set an initial position.
-        if not c.size_hints.user_position and not c.size_hints.program_position then
-            awful.placement.no_overlap(c)
-            awful.placement.no_offscreen(c)
-        end
-    elseif not c.size_hints.user_position and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count change
-        awful.placement.no_offscreen(c)
-    end
-
-    local titlebars_enabled = false
-    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
-        -- buttons for the titlebar
-        local buttons = awful.util.table.join(
-                awful.button({ }, 1, function()
-                    client.focus = c
-                    c:raise()
-                    awful.mouse.client.move(c)
-                end),
-                awful.button({ }, 3, function()
-                    client.focus = c
-                    c:raise()
-                    awful.mouse.client.resize(c)
-                end)
-                )
-
-        -- Widgets that are aligned to the left
-        local left_layout = wibox.layout.fixed.horizontal()
-        left_layout:add(awful.titlebar.widget.iconwidget(c))
-        left_layout:buttons(buttons)
-
-        -- Widgets that are aligned to the right
-        local right_layout = wibox.layout.fixed.horizontal()
-        right_layout:add(awful.titlebar.widget.floatingbutton(c))
-        right_layout:add(awful.titlebar.widget.maximizedbutton(c))
-        right_layout:add(awful.titlebar.widget.stickybutton(c))
-        right_layout:add(awful.titlebar.widget.ontopbutton(c))
-        right_layout:add(awful.titlebar.widget.closebutton(c))
-
-        -- The title goes in the middle
-        local middle_layout = wibox.layout.flex.horizontal()
-        local title = awful.titlebar.widget.titlewidget(c)
-        title:set_align("center")
-        middle_layout:add(title)
-        middle_layout:buttons(buttons)
-
-        -- Now bring it all together
-        local layout = wibox.layout.align.horizontal()
-        layout:set_left(left_layout)
-        layout:set_right(right_layout)
-        layout:set_middle(middle_layout)
-
-        awful.titlebar(c):set_widget(layout)
-    end
+--    if not startup then
+--        -- Set the windows at the slave,
+--        -- i.e. put it at the end of others instead of setting it master.
+--        awful.client.setslave(c)
+--
+--        -- Put windows in a smart way, only if they does not set an initial position.
+--        if not c.size_hints.user_position and not c.size_hints.program_position then
+--            awful.placement.no_overlap(c)
+--            awful.placement.no_offscreen(c)
+--        end
+--    elseif not c.size_hints.user_position and not c.size_hints.program_position then
+--        -- Prevent clients from being unreachable after screen count change
+--        awful.placement.no_offscreen(c)
+--    end
+--
+--    local titlebars_enabled = false
+--    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
+--        -- buttons for the titlebar
+--        local buttons = awful.util.table.join(
+--                awful.button({ }, 1, function()
+--                    client.focus = c
+--                    c:raise()
+--                    awful.mouse.client.move(c)
+--                end),
+--                awful.button({ }, 3, function()
+--                    client.focus = c
+--                    c:raise()
+--                    awful.mouse.client.resize(c)
+--                end)
+--                )
+--
+--        -- Widgets that are aligned to the left
+--        local left_layout = wibox.layout.fixed.horizontal()
+--        left_layout:add(awful.titlebar.widget.iconwidget(c))
+--        left_layout:buttons(buttons)
+--
+--        -- Widgets that are aligned to the right
+--        local right_layout = wibox.layout.fixed.horizontal()
+--        right_layout:add(awful.titlebar.widget.floatingbutton(c))
+--        right_layout:add(awful.titlebar.widget.maximizedbutton(c))
+--        right_layout:add(awful.titlebar.widget.stickybutton(c))
+--        right_layout:add(awful.titlebar.widget.ontopbutton(c))
+--        right_layout:add(awful.titlebar.widget.closebutton(c))
+--
+--        -- The title goes in the middle
+--        local middle_layout = wibox.layout.flex.horizontal()
+--        local title = awful.titlebar.widget.titlewidget(c)
+--        title:set_align("center")
+--        middle_layout:add(title)
+--        middle_layout:buttons(buttons)
+--
+--        -- Now bring it all together
+--        local layout = wibox.layout.align.horizontal()
+--        layout:set_left(left_layout)
+--        layout:set_right(right_layout)
+--        layout:set_middle(middle_layout)
+--
+--        awful.titlebar(c):set_widget(layout)
+--    end
 end)
 
 client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus end)
