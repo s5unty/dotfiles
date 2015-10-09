@@ -383,7 +383,7 @@ globalkeys = awful.util.table.join(
     -- {{{ sdcv/stardict
     -- 有些字典的翻译结果包含尖括号，会导致 naughty 无法正常显示。这里替换所有的尖括号，并同时美化显示结果
     awful.key({ modkey }, "d", function ()
-        local f = io.popen("clipit -p")
+        local f = io.popen("gpaste get 0")
         local word = f:read("*a")
         f:close()
         local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
