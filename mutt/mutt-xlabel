@@ -35,7 +35,7 @@ cmdhist=~/.mutt/cache/labels
 # be read).
 # 不指定 ZDOTDIR 就不能输入中文，搞不懂
 xlabel=$(
-  cmdhist=$cmdhist ZDOTDIR="/tmp" zsh -ic '
+  cmdhist=$cmdhist ZDOTDIR="/tmp" zsh -c '
   stty sane
   bindkey -e
   send-break() {
@@ -55,7 +55,6 @@ xlabel=$(
 )
 
 xlabel=$(echo $xlabel | sed -e 's/ /\\\\ /g')
-echo "0: $xlabel" >> /tmp/11
 cmd="<enter-command>set\ my_lab=\"$xlabel\"\n"
 
 # clear our mess

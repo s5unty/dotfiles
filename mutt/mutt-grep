@@ -45,7 +45,7 @@ lastcmd=
 # run zsh in interactive mode (for history to work and .zshrc to
 # be read).
 search=$(
-  cmdhist=$cmdhist ZDOTDIR=$mu_base zsh -ic '
+  cmdhist=$cmdhist ZDOTDIR=$mu_base zsh -c '
   stty sane
   bindkey -e
   send-break() {
@@ -63,11 +63,12 @@ search=$(
   fc -p -a "$cmdhist" 100
   a=; vared -p "搜寻(所有)：" -eh a'
 )
+keyword="$search"
 
 # mu result folder in mutt folder syntax:
 MAILDIR=/sun/maildir
 # 用每次搜索的关键字作一个虚拟邮箱？就像 sup 那样？
-MFOLDER=$(echo "$search" | sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g')
+MFOLDER=$(echo "$keyword" | /bin/sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g')
 # lables/ 目录用来标签每次搜索的关键字，
 # lables/.noindex 文件用来拒绝 mu 索引。
 MFOLDER="labels/"$MFOLDER
@@ -78,7 +79,7 @@ if ! [ -d "$MAILDIR/$MFOLDER" ]; then
     maildirmake "$MAILDIR/$MFOLDER"
 fi
 
-case $search in
+case $keyword in
   ("<BREAK>") ;;
   ("")
     # rebuild the index
@@ -94,7 +95,7 @@ case $search in
     cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (~i*)
-    args=$(echo "$search" | sed 's/\s*~i\s\+//g' | sed 's/|/\n/g' | awk '\
+    args=$(echo "$keyword" | sed 's/\s*~i\s\+//g' | sed 's/|/\n/g' | awk '\
       {
         if (NR==1) {
           str = sprintf("i:%s", $1)
@@ -109,7 +110,7 @@ case $search in
     cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (~f*)
-    args=$(echo "$search" | sed 's/\s*~f\s\+//g' | sed 's/|/\n/g' | awk '\
+    args=$(echo "$keyword" | sed 's/\s*~f\s\+//g' | sed 's/|/\n/g' | awk '\
       {
         if (NR==1) {
           str = sprintf("f:%s*", $1)
@@ -126,7 +127,7 @@ case $search in
     cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (~t*)
-    args=$(echo "$search" | sed 's/\s*~t\s\+//g' | sed 's/|/\n/g' | awk '\
+    args=$(echo "$keyword" | sed 's/\s*~t\s\+//g' | sed 's/|/\n/g' | awk '\
       {
         if (NR==1) {
           str = sprintf("t:%s*", $1)
@@ -143,7 +144,7 @@ case $search in
     cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
     ;;
   (~d*)
-    args=$(echo "$search" | sed 's/\s*~d\s\+\([<>=]\?[^-+*]*\)\?\([-+*]\?\)\(.*$\)/\1\n\2\n\3/g' | sed '/^$/d' | awk '\
+    args=$(echo "$keyword" | sed 's/\s*~d\s\+\([<>=]\?[^-+*]*\)\?\([-+*]\?\)\(.*$\)/\1\n\2\n\3/g' | sed '/^$/d' | awk '\
       {
         if (NR==1) {
           str = sprintf("d:%s", $1)
@@ -160,7 +161,7 @@ case $search in
     ;;
   (~s*)
     # 空格隔开的多个参数，表示逻辑或的关系
-    key=$(echo "$search" | sed 's/ /\\\|/g')
+    key=$(echo "$keyword" | sed 's/ /\\\|/g')
     # 把搜到的邮件作成待搜索的 message-id 列表
     args=$(mu find '' -f 'i s' | grep $key | awk '\
       {
@@ -180,7 +181,7 @@ case $search in
     ;;
   (*)
     # 全邮箱正文搜索(含附件)，关键字高亮
-    key=$(echo "$search")
+    key=$(echo "$keyword")
     sh -c "recoll -t -q '${key}' | grep $MAILDIR'.*/cur' | sed -s 's,^.*\('$MAILDIR'[^]]*\)\].*$,\"\1\",' | xargs ln -sft $MAILDIR/$MFOLDER/cur/ > /dev/null 2>&1"
     args=
     ;;
