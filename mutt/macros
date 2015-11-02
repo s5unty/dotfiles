@@ -86,7 +86,8 @@ macro index,pager x "\
 	<edit>\
 	:set delete=yes<enter>\
 	<sync-mailbox><next-undeleted>\
-	:set delete=ask-yes<enter>" "create label"
+	:set delete=ask-yes<enter>\
+	:set editor=\"vim -c 'set ft=mail.markdown'\"<enter>" "create label"
 
 macro editor "<F9>"  "[本部依赖-翻译]-SW18371PJ01000-中译日-`date -d today '+%Y/%m/%d'`/17:00"
 
