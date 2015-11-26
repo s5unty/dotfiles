@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # 获取这封邮件的 message-id
-ANNO=$(formail -fXMessage-ID | perl -pe 's/: </:</')
+ANNO=$(formail -fXMessage-ID | perl -pe 's/\n//' | perl -pe 's/: </:</')
 
 # 获取刚刚由 mutt2task 添加的 task id
-TASK=$(awk 'END { print NR }' /sun/.todo/var/fnst/todo.log)
+TASK=$(awk 'END { print NR }' $HOME/.todo/var/work/todo.log)
 
 # 为最新的 task 添加 message-id
 # todo.sh archive
