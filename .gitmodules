@@ -76,3 +76,9 @@
 [submodule "vim/bundle/minibufexpl.vim"]
 	path = vim/bundle/minibufexpl.vim
     url = https://github.com/fholgado/minibufexpl.vim.git
+[submodule "vim/bundle/salt-vim"]
+	path = vim/bundle/salt-vim
+	url = git@github.com:saltstack/salt-vim.git
+[submodule "vim/bundle/vim-snippets-salt"]
+	path = vim/bundle/vim-snippets-salt
+	url = https://github.com/StephenPCG/vim-snippets-salt/
