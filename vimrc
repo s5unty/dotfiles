@@ -177,18 +177,18 @@ function! G_CloseBuffer()
     call G_GotoEditor()
     let name = fnamemodify(expand('%'), ':t')
 
-    if bufname('%') != '-MiniBufExplorer-'
-        wincmd k
-        if bufname('%') != '-MiniBufExplorer-'
-            wincmd k
-            if bufname('%') != '-MiniBufExplorer-'
-                wincmd k
-                if bufname('%') != '-MiniBufExplorer-'
-                    return
-                endif
-            endif
-        endif
-    endif
+    "if bufname('%') != '-MiniBufExplorer-'
+    "    wincmd k
+    "    if bufname('%') != '-MiniBufExplorer-'
+    "        wincmd k
+    "        if bufname('%') != '-MiniBufExplorer-'
+    "            wincmd k
+    "            if bufname('%') != '-MiniBufExplorer-'
+    "                return
+    "            endif
+    "        endif
+    "    endif
+    "endif
 
     exec "normal /" . name . "\<CR>"
     normal d
@@ -628,6 +628,9 @@ if !exists('g:airline_symbols')
     let g:airline_symbols.linenr = '⭡'
 endif
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#tab_nr_type = 0
+let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#left_sep = '⮀'
 let g:airline#extensions#tabline#left_alt_sep = '⮁'
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -685,6 +688,9 @@ imap <expr><Space> neosnippet#expandable() == 1 ? "\<Plug>(neosnippet_expand)" :
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?  "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?  "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" g:neosnippet#scope_aliases is a dictionary, initialize it if you haven't done it
+let g:neosnippet#scope_aliases = {}
+let g:neosnippet#scope_aliases['sls'] = 'sls-2014.1.13'
 
 " For snippet_complete marker.
 if has('conceal')
