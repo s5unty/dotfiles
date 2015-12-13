@@ -73,9 +73,6 @@
 [submodule "vim/bundle/calendar"]
 	path = vim/bundle/calendar
 	url = https://github.com/itchyny/calendar.vim.git
-[submodule "vim/bundle/minibufexpl.vim"]
-	path = vim/bundle/minibufexpl.vim
-    url = https://github.com/fholgado/minibufexpl.vim.git
 [submodule "vim/bundle/salt-vim"]
 	path = vim/bundle/salt-vim
 	url = git@github.com:saltstack/salt-vim.git
