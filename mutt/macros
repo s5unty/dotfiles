@@ -27,26 +27,18 @@ macro index \cr "<collapse-all><tag-pattern>~(~N|~O)<enter><tag-prefix><read-sub
 macro browser h "<first-entry><select-entry>"
 
 # 快速保存附件
-macro attach s "<save-entry><kill-line>/tmp/<enter>a"
+macro attach s "<save-entry><kill-line>/tmp/today/<enter>a"
 
 # http://www.nixternal.com/mark-e-mails-in-mutt-as-tasks-in-taskwarrior/
 # https://github.com/ValiValpas/taskopen
-macro index,pager T "\
-	<pipe-message>~/.mutt/mutt-task\n\
-	:set pipe_decode=no\n\
-	:set wait_key=yes\n\
-	<pipe-message>~/.mutt/mutt-task-it\n\
-	:set wait_key=no\n\
-	:set pipe_decode=yes\n" "Task"
+# 不要使用多行排版、否则有问题(添加任务时选择了其它邮件)
+macro index,pager T "<pipe-message>~/.mutt/mutt-todotxt<enter><enter-command>set nopipe_decode<enter><enter-command>set wait_key<enter><pipe-message>~/.mutt/mutt-todotxt-it<enter><enter-command>set nowait_key<enter><enter-command>set pipe_decode<enter>" "Task"
 
 # 添加会议邀请到 Todotxt
-macro index,pager M "\
-	:set wait_key=yes\n\
-	<pipe-message>~/.mutt/mutt-task-cal\n\
-	:set wait_key=no\n" "Metting"
+macro index,pager M "<enter-command>set wait_key<enter><pipe-message>~/.mutt/mutt-todotxt-cal<enter><enter-command>set nowait_key<enter>" "Metting"
 
 # 添加到通讯录
-macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
+macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
 
 # 避免切换折叠后导致底部留白的问题
 macro index Z "<collapse-all><current-bottom>"
@@ -73,21 +65,19 @@ macro index "<F8>" "<limit>~d `date -d '1 month ago' +%d/%m`-<enter>"
 # http://wiki.mutt.org/?UserStory/SearchingMail
 # http://www.zsh.org/mla/users/2007/msg01187.html
 # mu-0.9.7 with wrapper
-macro index,pager \` "\
-	:set my_cmd = \`~/.mutt/mutt-grep\`\n\
-	:push \$my_cmd\n" "global find"
+macro index,pager \` "<enter-command>set my_cmd = \`~/.mutt/mutt-grep\`<enter><enter-command>push \$my_cmd<enter>" "global find"
 
 # x-labels
 # TODO inherit
 macro index,pager x "\
-	:set my_cmd=\`~/.mutt/mutt-xlabel\`\n\
-	:push \$my_cmd<enter>\
-	:set editor=\"~/.mutt/mutt-xlabel-it \\\"\$my_lab\\\"\"<enter>\
-	<edit>\
-	:set delete=yes<enter>\
-	<sync-mailbox><next-undeleted>\
-	:set delete=ask-yes<enter>\
-	:set editor=\"vim -c 'set ft=mail.markdown'\"<enter>" "create label"
+<enter-command>set my_cmd=\`~/.mutt/mutt-xlabel\`<enter>\
+<enter-command>push \$my_cmd<enter>\
+<enter-command>set editor=\"~/.mutt/mutt-xlabel-it \\\"\$my_lab\\\"\"<enter>\
+<edit>\
+<enter-command>set delete=yes<enter>\
+<sync-mailbox><next-undeleted>\
+<enter-command>set delete=ask-yes<enter>\
+<enter-command>set editor=\"vim -c 'set ft=mail.markdown'\"<enter>" "create label"
 
 macro editor "<F9>"  "[本部依赖-翻译]-SW18371PJ01000-中译日-`date -d today '+%Y/%m/%d'`/17:00"
 
