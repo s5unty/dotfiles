@@ -4,7 +4,7 @@ parse_git_branch() {
     branch="$(git branch --no-color 2> /dev/null | \
         sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
 
-    git diff --no-ext-diff --ignore-submodules=all --quiet 2> /dev/null
+    git diff --no-ext-diff --ignore-submodules=untracked --quiet 2> /dev/null
     flag=$?
     if [ $flag -eq 1 ]; then # head is not clear
         _branch="${at_underl}${branch}"

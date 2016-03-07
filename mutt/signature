@@ -1,37 +1,50 @@
 #!/bin/sh
 
 echo ''
-if ! hostname | grep "^verns-worktop\|G08FNST" > /dev/null 2>&1; then
+if ! hostname | grep "^verns-worktop\|G08FNST\|BITD" > /dev/null 2>&1; then
     echo 'Cheers,\n-- \nVern'
     echo 'vim -c ":s(^(ZnQr8va1puvan.(|:s)\d\(\S\)) \\U\\1)g|:1 normal g??"'
 else
-    case "$1" in
-    en)
-        echo 'Cheers,'
-        name=$(echo 'Fha Jhna' | tr a-zA-Z n-za-mN-ZA-M)
-        time=$(LANG=en_US.UTF-8 && echo "`date +'%Y.%m.%d(%a)'`")
-        dept=$(echo "Dept.6-8" | tr 0-9 5-90-4)
-        ;;
-    ja)
-        echo "0x4EE50x4E0A0x30010x30880x308D0x30570x304F0x304A0x98580x30440x30570x307E0x30590x3002" | ascii2uni -q
-        name=$(echo "0x5B6B0x6B660x5B89" | ascii2uni -q)
-        time=$(LANG=ja_JP.UTF-8 && echo "`date +'%Y.%m.%d(%a)'`")
-        dept=$(echo "10x4E8B)30x90E8" | ascii2uni -q)
-        ;;
-    *)
-        echo "0x4EE50x4E0A0x3002" | ascii2uni -q
-        name=$(echo "0x5B590x6B660x5B89" | ascii2uni -q)
-        time=$(LANG=zh_CN.UTF-8 && echo "`date +'%Y.%m.%d(%a)'`")
-        dept=$(echo "10x4E8B)30x90E8" | ascii2uni -q)
-        ;;
-    esac
-
+    name=$(echo "Sun Wuan (0x5B590x6B660x5B89)" | ascii2uni -q)
+    time=$(LANG=en_US.UTF-8 && echo "`date +'%Y.%m.%d (%a)'`")
+    dept=$(echo "IT (Staff)" | ascii2uni -q)
+    dial="3629 (内线)"
     echo '-- '
-    echo ${name}
-    echo ${dept} / 7998-9556
-    echo ${time}
+    echo $name / $dept
+    echo $time / $dial
     echo ''
     echo ''
+    echo ''
+##########FNST
+#else
+#    case "$1" in
+#    en)
+#        echo 'Cheers,'
+#        name=$(echo 'Fha Jhna' | tr a-zA-Z n-za-mN-ZA-M)
+#        time=$(LANG=en_US.UTF-8 && echo "`date +'%Y.%m.%d(%a)'`")
+#        dept=$(echo "Dept.6-8" | tr 0-9 5-90-4)
+#        ;;
+#    ja)
+#        echo "0x4EE50x4E0A0x30010x30880x308D0x30570x304F0x304A0x98580x30440x30570x307E0x30590x3002" | ascii2uni -q
+#        name=$(echo "0x5B6B0x6B660x5B89" | ascii2uni -q)
+#        time=$(LANG=ja_JP.UTF-8 && echo "`date +'%Y.%m.%d(%a)'`")
+#        dept=$(echo "10x4E8B)30x90E8" | ascii2uni -q)
+#        ;;
+#    *)
+#        echo "0x4EE50x4E0A0x3002" | ascii2uni -q
+#        name=$(echo "0x5B590x6B660x5B89" | ascii2uni -q)
+#        time=$(LANG=zh_CN.UTF-8 && echo "`date +'%Y.%m.%d(%a)'`")
+#        dept=$(echo "10x4E8B)30x90E8" | ascii2uni -q)
+#        ;;
+#    esac
+#
+#    echo '-- '
+#    echo ${name}
+#    echo ${dept} / 7998-9556
+#    echo ${time}
+#    echo ''
+#    echo ''
 fi
 
 exit 0
+

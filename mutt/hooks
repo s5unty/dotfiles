@@ -2,15 +2,15 @@
 folder-hook . "push '<collapse-all><last-entry><next-new-then-unread><current-bottom>'"
 
 # 真实邮箱，每次初始化高亮，只显示最近一个月的邮件
-folder-hook (fnst.*|pcl.*) "source ~/.mutt/colours"
-folder-hook (fnst.*|pcl.*) "push <limit>~d\"*30d\"<enter>"
+#folder-hook (fnst.*|pcl.*) "source ~/.mutt/colours"
+#folder-hook (fnst.*|pcl.*) "push <limit>~d\"*30d\"<enter>"
 
 # 私人邮箱，切换邮送域，自动gpg签名
 folder-hook personal "set from='Vern Sun <s5unty@gmail.com>'"
 folder-hook personal "set crypt_autosign=yes"
 # 公司邮箱，切换邮送域，不用gpg签名
-folder-hook fnst- "set from='Sun Wuan <sunwuan@cn.fujitsu.com>'"
-folder-hook fnst- "set crypt_autosign=no"
+folder-hook gens- "set from='Wuan Sun <wuan.sun@genscript.com>'"
+folder-hook gens- "set crypt_autosign=no"
 # 笔记本，切换首页信息
 #folder-hook  notebook "set index_format='%?M?%-38.38i (%-2.2M)&%-43.43i? %?X?%%& ? %-85.85s       %?Y?︴%-19.19Y&︴? %> %?N?%2N\"&   ? %[%b%d]┆%4c'"
 #folder-hook  notebook "uncolor index \"!(~d `date +'%d/%m' -d '3 days ago'`-)\""
@@ -33,12 +33,15 @@ send-hook   "~C.*jp\.f.j.t..\.com ~l" "set signature='~/.mutt/signature ja|'; se
 reply-hook  "~C.*jp\.f.j.t..\.com ~l" "set signature='~/.mutt/signature ja|'; set locale=ja_JP.UTF-8;"
 
 # 公司列表，外发邮件智能存档
-send-hook   "~u" "set record=''"
-send2-hook  "~u" "set record=''"
-reply-hook  "~u" "set record=''"
-send-hook   "!~u" "set record='=fnst-inbox'"
-send2-hook  "!~u" "set record='=fnst-inbox'"
-reply-hook  "!~u" "set record='=fnst-inbox'"
+#send-hook   "~u" "set record=''"
+#send2-hook  "~u" "set record=''"
+#reply-hook  "~u" "set record=''"
+send-hook   "~u" "set record='=gens-inbox'"
+send2-hook  "~u" "set record='=gens-inbox'"
+reply-hook  "~u" "set record='=gens-inbox'"
+send-hook   "!~u" "set record='=gens-inbox'"
+send2-hook  "!~u" "set record='=gens-inbox'"
+reply-hook  "!~u" "set record='=gens-inbox'"
 send-hook   "(~t guomin | ~s .*\[翻译\].*)" "set record='=pcl-translation'"
 send2-hook  "(~t guomin | ~s .*\[翻译\].*)" "set record='=pcl-translation'"
 reply-hook  "(~t guomin | ~s .*\[翻译\].*)" "set record='=pcl-translation'"

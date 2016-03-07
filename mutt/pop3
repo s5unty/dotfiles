@@ -3,12 +3,11 @@ set mbox_type="Maildir"
 # 信箱目录
 set folder="/sun/maildir/"
 # 默认使用的信箱
-set spoolfile="=fnst-inbox"
-### set spoolfile="=personal"
+set spoolfile="=gens-inbox"
 
 # 邮箱列表 {{{
 mailboxes !
-source $folder".mailboxes.fnst"
+source $folder".mailboxes"
 ### mailboxes =personal
 ### mailboxes =debian-zh
 ### mailboxes =shlug

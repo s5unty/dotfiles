@@ -36,8 +36,10 @@ alternates s5unty@gmail.com
 # 在mutt按a，把发件人添加到通讯录
 set alias_file="~/.mutt/aliases"
 # 第三方通讯录工具
-#set query_command="/usr/bin/abook --mutt-query %s"
-set query_command="/sun/.mutt/mutt-query.sh %s"
+set query_command="/usr/bin/abook --mutt-query %s"
+#set query_command="/sun/.mutt/mutt-query.sh %s"
+#set query_command = "/sun/.mutt/mutt-ldap.py '%s'"
+#set query_command = "/sun/.mutt/mutt-ldap.pl '%s'"
 # 自定义显示界面
 set index_format="%?X?%%& ? %?M?%-15.15n %-20.20t (%-2.2M)&%-15.15n %-25.25t? %S %-85.85s       %?Y?︴%-19.19Y&︴? %> %?N?%2N\"&   ? %[%b%d]┆%4c"
 #set index_format="%?X?%%& ? %?M?%-15.15n %-20.20t (%-2.2M)&%-15.15n %-25.25t? %S %-50.50s       %?Y?┆%-10.10Y&┆? %> %?N?%2N\"&   ? %[%b%d]"
@@ -115,6 +117,10 @@ set editor="vim -c 'set ft=mail.markdown'"
 # 采用作为附件而非作为引用的方式转发邮件
 # 为了在转发邮件时自动包含待转发邮件本身的附件，似乎暂时只有这个办法。
 set mime_forward=yes
+# NOTE:
+# 另一个办法，通过选取(多)附件后 (toggle-)forward 的方式，
+# 个人觉得也不错。而且转发的内容可以是引用、避免了以附件的方式转发。
+set mime_forward=no
 # 让mutt识别不同的邮件特征
 # 1(空): 表示这封邮件的 To: 和 Cc: Bcc: 都没有你的地址，很多垃圾邮件都有这个特征。
 # 2: 表示你是收件人(To: 是你的地址之一)，而且是唯一的收件人。
@@ -136,9 +142,9 @@ set uncollapse_jump=yes
 set reply_to=yes
 # 解码后传递给管道解决中文问题
 set pipe_decode=yes
-# 签名邮件的公钥信息附件名
-set pgp_mime_signature_filename="signature.asc"
-set pgp_mime_signature_description="Digital signature"
+# 签名邮件的公钥信息附件名 dropped with v1.5.24(2015-08-30)
+##set pgp_mime_signature_filename="signature.asc"
+##set pgp_mime_signature_description="Digital signature"
 # 集成 Google 联系人名单
 # set query_command ="~/.mutt/gcontacts.rb --mutt %s"
 # 在标题栏显示邮件数量
@@ -162,3 +168,4 @@ set hide_limited=yes
 set wait_key=no
 # 线索中表示回复的关键字
 set reply_regexp="^(re([\\[0-9\\]+])*|回复|答复|aw|fw):[ \t]*"
+

@@ -1,5 +1,5 @@
 # 优先显示纯文本邮件
-alternative_order text/calendar text/plain text/html
+alternative_order text/calendar text/html text/plain
 
 # 不同类型在 $HOME/.mailcap 中定义，在这里声明使用
 auto_view text/html

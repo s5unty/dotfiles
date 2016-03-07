@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FOLDER="/sun/maildir/NOTES/"
+FOLDER="/sun/maildir/notes/"
 EDITOR='vim'
 EXT=".mkd"
 

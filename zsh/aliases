@@ -18,7 +18,6 @@ alias at="at -m"
 alias ow="$__SUDO chown -R `whoami`:`whoami`"
 alias mkd="mkd2html -footer \"<hr /> Last updated: `date +"%F %T%:z"`\""
 alias w3m="/usr/bin/w3m -no-graph"
-alias top="/usr/bin/htop"
 alias diff="$__DIFF"
 alias more="$__LESS"
 alias tree="LANG=c tree -C"
@@ -269,9 +268,9 @@ tde() {
         loc=":normal $1gg"
     fi
     HOME_FILE="$TODO_DIR/var/home/todo.log"
-    FNST_FILE="$TODO_DIR/var/fnst/todo.log"
+    WORK_FILE="$TODO_DIR/var/work/todo.log"
     vi +":e $HOME_FILE" +":normal zz" \
-        +":vs $FNST_FILE" +"${loc}"
+        +":vs $WORK_FILE" +"${loc}"
 }
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})
@@ -384,20 +383,20 @@ tjg() {
 # }}}
 
 # file {{{
-alias -s png="pqiv -i"
-alias -s PNG="pqiv -i"
-alias -s gif="pqiv -i"
-alias -s GIF="pqiv -i"
-alias -s jpg="pqiv -i"
-alias -s JPG="pqiv -i"
-alias -s bmp="pqiv -i"
-alias -s BMP="pqiv -i"
-alias -s xpm="pqiv -i"
-alias -s XPM="pqiv -i"
-alias -s jpeg="pqiv -i"
-alias -s JPEG="pqiv -i"
-alias -s icon="pqiv -i"
-alias -s ICON="pqiv -i"
+alias -s png="qiv -i"
+alias -s PNG="qiv -i"
+alias -s gif="qiv -i"
+alias -s GIF="qiv -i"
+alias -s jpg="qiv -i"
+alias -s JPG="qiv -i"
+alias -s bmp="qiv -i"
+alias -s BMP="qiv -i"
+alias -s xpm="qiv -i"
+alias -s XPM="qiv -i"
+alias -s jpeg="qiv -i"
+alias -s JPEG="qiv -i"
+alias -s icon="qiv -i"
+alias -s ICON="qiv -i"
 
 alias -s doc=c_doc
 alias -s xls=c_xls

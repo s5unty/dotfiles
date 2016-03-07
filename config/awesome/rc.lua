@@ -272,9 +272,11 @@ end
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
     -- {{{ Screen
+    awful.key({ modkey            }, "9",   function () awful.screen.focus_relative (-1) end),
+    awful.key({ modkey            }, "0",   function () awful.screen.focus_relative ( 1) end),
     awful.key({ modkey, "Control" }, "h",   function () awful.screen.focus_relative (-1) end),
     awful.key({ modkey, "Control" }, "l",   function () awful.screen.focus_relative ( 1) end),
-    awful.key({ modkey },       "Escape",   function () revelation({ class = "URxvt" }) end), -- TODO except_rule ={"Mutt"}
+    -- awful.key({ modkey },       "Escape",   function () revelation({ class = "URxvt" }) end), -- TODO except_rule ={"Mutt"}
     -- awful.key({ modkey }, "Escape", function () mymainmenu:show(true)  end),
     -- }}}
 
@@ -300,7 +302,7 @@ globalkeys = awful.util.table.join(
         awful.client.focus.byidx(-1)
         client.focus:raise()
     end),
-    awful.key({ "Control" }, "Tab", function ()
+    awful.key({ "Mod1" }, "Tab", function ()
         awful.client.focus.history.previous()
         client.focus:raise()
     end),
@@ -338,7 +340,6 @@ globalkeys = awful.util.table.join(
         local tag = awful.tag.selected()
         for i=1, #tag:clients() do
             tag:clients()[i].minimized=false
-            tag:clients()[i]:redraw()
         end
     end),
 
@@ -358,7 +359,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "Print", function () awful.util.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
     awful.key({        }, "Print", function () awful.util.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
     awful.key({ modkey, "Control" }, "Print", function () awful.util.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
-    awful.key({ modkey }, "Scroll_Lock",   function () awful.util.spawn("xscreensaver-command -lock") end),
+    awful.key({ modkey }, "Scroll_Lock",   function () awful.util.spawn("i3lock -t -i /sun/.config/awesome/light_wp.png") end),
     -- }}}
 
     -- {{{ calendar
@@ -374,7 +375,7 @@ globalkeys = awful.util.table.join(
         f:close()
 
         mycalendar = naughty.notify({
-            text = string.format('<span font_desc="%s">%s</span>', "Envy Code R 10", c),
+            text = string.format('<span font_desc="%s">%s</span>', "Envy Code R for Powerline 10", c),
             position = "bottom_right", --font = "Envy Code R",
             timeout = 0, width = 530, screen = mouse.screen })
         end),
@@ -383,14 +384,14 @@ globalkeys = awful.util.table.join(
     -- {{{ sdcv/stardict
     -- 有些字典的翻译结果包含尖括号，会导致 naughty 无法正常显示。这里替换所有的尖括号，并同时美化显示结果
     awful.key({ modkey }, "d", function ()
-        local f = io.popen("gpaste get 0")
+        local f = io.popen("clipit -p")
         local word = f:read("*a")
         f:close()
         local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
         local c = f:read("*a")
         f:close()
 
-        frame = naughty.notify({ text = c, timeout = 15, width = 360, screen = mouse.screen })
+        frame = naughty.notify({ text = c, font='Envy Code R for Powerline 10', timeout = 15, width = 360, screen = mouse.screen })
     end),
     awful.key({ modkey, "Shift" }, "d", function ()
         awful.prompt.run({prompt = "Dict: "}, mypromptbox[mouse.screen].widget, function(cin_word)
@@ -403,7 +404,7 @@ globalkeys = awful.util.table.join(
             local c = f:read("*a")
             f:close()
 
-            frame = naughty.notify({ text = c, font='Envy Code R 9', timeout = 30, width = 360, screen = mouse.screen })
+            frame = naughty.notify({ text = c, font='Envy Code R for Powerline 10', timeout = 30, width = 360, screen = mouse.screen })
         end, nil, awful.util.getdir("cache").."/dict")
     end),
     -- }}}
@@ -575,11 +576,10 @@ awful.rules.rules = {
     properties = { tag = tags[1][8] } },
     { rule = { instance = "Mutt" },
     properties = { tag = tags[1][8] } },
+    { rule = { class = "VirtualBox" },
+    properties = { tag = tags[1][6] } },
     { rule = { class = "Gtk-recordmydesktop" },
     properties = { floating=true } },
-    { rule = { instance = "CMatrix" },
-    properties = { floating=true, ontop=true },
-    callback = function (c) c.fullscreen = true end },
 
     { rule = { class = "Pidgin" },
     properties = { floating=true, ontop=true } },
@@ -603,6 +603,10 @@ awful.rules.rules = {
     end },
     { rule = { class = "Keepassx" },
     properties = { floating=true, ontop=true } },
+    { rule = { class = "google-chrome", role = "pop-up" },
+    properties = { floating=true, ontop=true } },
+    { rule = { role = "bubble" },
+    properties = { floating=true, ontop=true } },
 
 }
 -- }}}
@@ -622,65 +626,65 @@ client.connect_signal("manage", function (c, startup)
         end
     end)
 
---    if not startup then
---        -- Set the windows at the slave,
---        -- i.e. put it at the end of others instead of setting it master.
---        awful.client.setslave(c)
---
---        -- Put windows in a smart way, only if they does not set an initial position.
---        if not c.size_hints.user_position and not c.size_hints.program_position then
---            awful.placement.no_overlap(c)
---            awful.placement.no_offscreen(c)
---        end
---    elseif not c.size_hints.user_position and not c.size_hints.program_position then
---        -- Prevent clients from being unreachable after screen count change
---        awful.placement.no_offscreen(c)
---    end
---
---    local titlebars_enabled = false
---    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
---        -- buttons for the titlebar
---        local buttons = awful.util.table.join(
---                awful.button({ }, 1, function()
---                    client.focus = c
---                    c:raise()
---                    awful.mouse.client.move(c)
---                end),
---                awful.button({ }, 3, function()
---                    client.focus = c
---                    c:raise()
---                    awful.mouse.client.resize(c)
---                end)
---                )
---
---        -- Widgets that are aligned to the left
---        local left_layout = wibox.layout.fixed.horizontal()
---        left_layout:add(awful.titlebar.widget.iconwidget(c))
---        left_layout:buttons(buttons)
---
---        -- Widgets that are aligned to the right
---        local right_layout = wibox.layout.fixed.horizontal()
---        right_layout:add(awful.titlebar.widget.floatingbutton(c))
---        right_layout:add(awful.titlebar.widget.maximizedbutton(c))
---        right_layout:add(awful.titlebar.widget.stickybutton(c))
---        right_layout:add(awful.titlebar.widget.ontopbutton(c))
---        right_layout:add(awful.titlebar.widget.closebutton(c))
---
---        -- The title goes in the middle
---        local middle_layout = wibox.layout.flex.horizontal()
---        local title = awful.titlebar.widget.titlewidget(c)
---        title:set_align("center")
---        middle_layout:add(title)
---        middle_layout:buttons(buttons)
---
---        -- Now bring it all together
---        local layout = wibox.layout.align.horizontal()
---        layout:set_left(left_layout)
---        layout:set_right(right_layout)
---        layout:set_middle(middle_layout)
---
---        awful.titlebar(c):set_widget(layout)
---    end
+    if not startup then
+        -- Set the windows at the slave,
+        -- i.e. put it at the end of others instead of setting it master.
+        awful.client.setslave(c)
+
+        -- Put windows in a smart way, only if they does not set an initial position.
+        if not c.size_hints.user_position and not c.size_hints.program_position then
+            awful.placement.no_overlap(c)
+            awful.placement.no_offscreen(c)
+        end
+    elseif not c.size_hints.user_position and not c.size_hints.program_position then
+        -- Prevent clients from being unreachable after screen count change
+        awful.placement.no_offscreen(c)
+    end
+
+    local titlebars_enabled = false
+    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
+        -- buttons for the titlebar
+        local buttons = awful.util.table.join(
+                awful.button({ }, 1, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.move(c)
+                end),
+                awful.button({ }, 3, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.resize(c)
+                end)
+                )
+
+        -- Widgets that are aligned to the left
+        local left_layout = wibox.layout.fixed.horizontal()
+        left_layout:add(awful.titlebar.widget.iconwidget(c))
+        left_layout:buttons(buttons)
+
+        -- Widgets that are aligned to the right
+        local right_layout = wibox.layout.fixed.horizontal()
+        right_layout:add(awful.titlebar.widget.floatingbutton(c))
+        right_layout:add(awful.titlebar.widget.maximizedbutton(c))
+        right_layout:add(awful.titlebar.widget.stickybutton(c))
+        right_layout:add(awful.titlebar.widget.ontopbutton(c))
+        right_layout:add(awful.titlebar.widget.closebutton(c))
+
+        -- The title goes in the middle
+        local middle_layout = wibox.layout.flex.horizontal()
+        local title = awful.titlebar.widget.titlewidget(c)
+        title:set_align("center")
+        middle_layout:add(title)
+        middle_layout:buttons(buttons)
+
+        -- Now bring it all together
+        local layout = wibox.layout.align.horizontal()
+        layout:set_left(left_layout)
+        layout:set_right(right_layout)
+        layout:set_middle(middle_layout)
+
+        awful.titlebar(c):set_widget(layout)
+    end
 end)
 
 client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus end)

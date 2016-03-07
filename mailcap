@@ -1,7 +1,7 @@
 text/html; w3m -T text/html %s; copiousoutput; nametemplate=%s.html; needsterminal;
 text/markdown; pandoc -f markdown -t html %s | elinks -dump 1 -dump-color-mode 2 -dump-width 196; copiousoutput; nametemplate=%s.html; needsterminal;
 
-text/calendar; ~/.mutt/mutt-calendar-view %s; copiousoutput;
+text/calendar; ~/.mutt/mutt-calendar-view.rb %s; copiousoutput;
 
 # http://www.spocom.com/users/gjohnson/mutt/#tnef
 application/ms-tnef; tnef -w %s; copiousoutput;

@@ -9,7 +9,7 @@
     source $plugin
 done
 
-if ! hostname | grep "^verns-\|li380-170\|^G08FNST" > /dev/null 2>&1; then
+if ! hostname | grep "^verns-\|li380-170\|^G08FNST\|^BITD" > /dev/null 2>&1; then
     return # 不是我的机器
 fi
 

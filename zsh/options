@@ -24,7 +24,7 @@ setopt PUSHD_MINUS
 setopt PUSHD_SILENT
 setopt PUSHD_TO_HOME
 setopt PUSHD_IGNOREDUPS
-unsetopt SHARE_HISTORY
+setopt SHARE_HISTORY
 setopt INC_APPEND_HISTORY
 setopt EXTENDED_GLOB        # 扩展文件名匹配功能
 setopt EXTENDED_HISTORY
