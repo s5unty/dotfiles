@@ -1133,7 +1133,7 @@ sub paste {
 #      if(open(my $process, "xclip -o |")){
       # Q: 为什么用 tail
       # A: parcellite-1.1.8 命令行输出的首行是空行
-      if(open(my $process, "parcellite -c | tail -n +2 |")){
+      if(open(my $process, "gpaste-client get 0 |")){
          $text = join('', <$process>);
          $self->tt_write($text);
       }
