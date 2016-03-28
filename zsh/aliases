@@ -30,8 +30,8 @@ alias rsync="rsync -C"
 alias anki="/usr/bin/anki -b ~/.anki"
 alias rot13="tr a-zA-Z n-za-mN-ZA-M"
 alias atf-run="env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/atf/bin atf-run"
-alias guanji="sudo systemctl poweroff"
-alias chongqi="sudo systemctl reboot"
+alias guanji="systemctl poweroff"
+alias chongqi="systemctl reboot"
 
 cd() {
     if builtin cd "$@"; then
@@ -181,39 +181,6 @@ elif [[ $DISTRO == "Fedora" || $DISTRO == "Red" ]]; then
 fi
 # }}}
 
-# docker {{{
-###################
-# example:
-#
-# 16185% sudo docker search debian
-# NAME                          DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
-# ubuntu                        Ubuntu is a Debian-based Linux operating s...   2375      [OK]
-# debian                        Debian is a Linux distribution that's comp...   771       [OK]
-# google/debian                                                                 47                   [OK]
-# visono/debian                 Docker base image of debian 7 with tools i...   0                    [OK]
-# ...(略)
-#
-# 16186% doG library/debian
-# "6.0.10"
-# "7.9"
-# "experimental"
-# "rc-buggy"
-# "stable"
-# "stable-backports"
-# "stretch"
-# "testing"
-# "unstable"
-# "wheezy-backports"
-# 16187% doG google/debian
-# "wheezy"
-#
-doG() {
-    # apt-get install jq
-    curl -s -S "https://registry.hub.docker.com/v2/repositories/$@/tags/" | jq '."results"[]["name"]' |sort
-}
-
-# }}}
-
 # task {{{
 alias pu="python $TODO_DIR/opt/punch/Punch.py"
 alias td="todo.sh"
@@ -224,14 +191,12 @@ alias td0="todo.sh prepend"
 alias td\$="todo.sh append"
 alias tdg="todo.sh ls"
 alias tdl="todo.sh lsdo"
-alias tdgc="todo.sh archive"
+alias tdgc="todo.sh archive && cat /dev/null > ${TODO_DIR}/var/latest.tid"
 alias tdG="todo.sh listall"
 alias tdp="todo.sh pri"
 alias tdP="todo.sh depri"
 alias tdO="todo.sh listnotes 2>/dev/null"
 alias tdn="pu what"
-alias td1="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 1 &)"
-alias td2="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 2 &)"
 tdc() {
     if [[ ${ARGC} > 1 ]]; then # 追加注释
         td$ ${1} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
@@ -281,6 +246,15 @@ tdo() {
         NOTE=`echo ${DESC} | sed -e 's/.*note:\([^ ]*\).*/\1/g'`
         td notesedit ${NOTE} 2> /dev/null
     fi
+}
+
+td1() { # 定一个番茄钟
+    ${TODO_DIR}/opt/toggl/toggl.py start "" ":lifespace"
+    ${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 1 &
+}
+td2() { # 定两个番茄钟
+    ${TODO_DIR}/opt/toggl/toggl.py start "" ":lifespace"
+    ${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 2 &
 }
 tds() { # 开始一项工作
     if [ -n ${1} ]; then
@@ -348,6 +322,26 @@ tdD() { # 过去完成一项工作
     fi
     td did ${1} "${WHEN}"
 }
+# }}}
+
+# task-2.0 {{{
+###alias td1="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 1 &)"
+###alias td2="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 2 &)"
+###alias tda="task add"
+###tdd() { task $* done }
+###tdg() { task $* }
+###tdu() { task $* undo }
+###tde() { task $* edit }
+###tdo() {
+###    DESC=$(task "${1}" export)
+###    if echo ${DESC} | /bin/egrep -qi 'message.*id:'; then
+###        MAIL=`echo ${DESC} | sed -e 's/^.*[mM]essage-[Ii][Dd]:<\(.*\)>.*$/\1/g'`
+###        ${HOME}/.mutt/mutt-jump "${MAIL}"
+###    elif echo ${DESC} | /bin/egrep -qi 'note:'; then
+###        NOTE=`echo ${DESC} | sed -e 's/.*note:\([^ ]*\).*/\1/g'`
+###        td notesedit ${NOTE} 2> /dev/null
+###    fi
+###}
 # }}}
 
 # archive {{{

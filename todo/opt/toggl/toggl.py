@@ -1,9 +1,30 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 toggl.py
 
-Copyright (c) 2014 D. Robert Adams. All rights reserved.
+The MIT License (MIT)
+
+Copyright (c) 2014 D. Robert Adams
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
 Modified for toggl API v8 by Beau Raines
 
 ASCII art from http://patorjk.com/software/taag/#p=display&c=bash&f=Standard
@@ -14,7 +35,6 @@ ASCII art from http://patorjk.com/software/taag/#p=display&c=bash&f=Standard
 #   2. Toggl Models - Toggl-specific data classes
 #   3. Command Line Interface - CLI
 
-import ConfigParser
 import datetime
 import dateutil.parser
 import iso8601
@@ -25,7 +45,9 @@ import pytz
 import requests
 import sys
 import time
-import urllib
+import six
+from six.moves import urllib
+from six.moves import configparser as ConfigParser
 
 TOGGL_URL = "https://www.toggl.com/api/v8"
 VERBOSE = False # verbose output?
@@ -77,7 +99,7 @@ class Config(object):
         """
         Reads configuration data from ~/.togglrc.
         """
-        self.cfg = ConfigParser.ConfigParser()
+        self.cfg = ConfigParser.ConfigParser({'continue_creates': 'false'})
         if self.cfg.read(os.path.expanduser('~/.togglrc')) == []:
             self._create_empty_config()
             raise IOError("Missing ~/.togglrc. A default has been created for editing.")
@@ -95,9 +117,10 @@ class Config(object):
         cfg.set('options', 'timezone', 'UTC')
         cfg.set('options', 'time_format', '%I:%M%p')
         cfg.set('options', 'prefer_token', 'true')
+        cfg.set('options', 'continue_creates', 'true')
         with open(os.path.expanduser('~/.togglrc'), 'w') as cfgfile:
             cfg.write(cfgfile)
-        os.chmod(os.path.expanduser('~/.togglrc'), 0600)
+        os.chmod(os.path.expanduser('~/.togglrc'), 0o600)
 
     def get(self, section, key):
         """
@@ -175,7 +198,7 @@ class DateAndTime(object):
         # for each time piece, grab the value and remaining seconds, and add it to
         # the time string
         for suffix, length in parts:
-            value = seconds / length
+            value = seconds // length
             if value > 0:
                 seconds = seconds % length
                 time.append('%s%s' % (str(value),
@@ -205,7 +228,7 @@ class DateAndTime(object):
         Returns "now" as a localized datetime object.
         """
         return self.tz.localize( datetime.datetime.now() ) 
-
+ 
     def parse_local_datetime_str(self, datetime_str):
         """
         Parses a local datetime string (e.g., "2:00pm") and returns
@@ -291,10 +314,10 @@ def toggl(url, method, data=None, headers={'content-type' : 'application/json'})
             raise NotImplementedError('HTTP method "%s" not implemented.' % method)
         r.raise_for_status() # raise exception on error
         return r.text
-    except Exception, e:
-        print 'Sent: %s' % data
-        print e
-        print r.text
+    except Exception as e:
+        print('Sent: %s' % data)
+        print(e)
+        print(r.text)
         #sys.exit(1)
 
 #############################################################################
@@ -349,12 +372,12 @@ class ClientList(object):
         s = ""
         for client in self.client_list:
             s = s + "%s\n" % client['name']
-        return s.rstrip() # strip trailing \n
+        return s.rstrip().encode('utf-8') # strip trailing \n
 
 #----------------------------------------------------------------------------
 # WorkspaceList
 #----------------------------------------------------------------------------
-class WorkspaceList(object):
+class WorkspaceList(six.Iterator):
     """
     A singleton list of workspace. A workspace object is a dictionary as
     documented at
@@ -384,7 +407,7 @@ class WorkspaceList(object):
         Returns the workspace object with the given name (or prefix), or None.
         """
         for workspace in self:
-            if workspace['name'].startswith(name_prefix):
+            if workspace['name'].startswith(name_prefix.decode('utf-8')):
                 return workspace
         return None
 
@@ -395,7 +418,7 @@ class WorkspaceList(object):
         self.iter_index = 0
         return self
 
-    def next(self):
+    def __next__(self):
         """
         Returns the next workspace.
         """
@@ -410,11 +433,11 @@ class WorkspaceList(object):
         s = ""
         for workspace in self:
             s = s + ":%s\n" % workspace['name']
-        return s.rstrip() # strip trailing \n
+        return s.rstrip().encode('utf-8') # strip trailing \n
 #----------------------------------------------------------------------------
 # ProjectList
 #----------------------------------------------------------------------------
-class ProjectList(object):
+class ProjectList(six.Iterator):
     """
     A singleton list of projects. A "project object" is a dictionary as 
     documented at 
@@ -436,9 +459,12 @@ class ProjectList(object):
             if self.workspace is not None:
                 wid = self.workspace["id"]
         if wid is None:
-                wid = User().get('default_wid')
-                self.workspace = WorkspaceList().find_by_id(wid)
+            wid = User().get('default_wid')
+            self.workspace = WorkspaceList().find_by_id(wid)
 
+        self.fetch_by_wid(wid)
+
+    def fetch_by_wid(self, wid):
         result = toggl("%s/workspaces/%s/projects" % (TOGGL_URL, wid), 'get')
         self.project_list = json.loads(result)
 
@@ -456,7 +482,7 @@ class ProjectList(object):
         Returns the project object with the given name (or prefix), or None.
         """
         for project in self:
-            if project['name'].startswith(name_prefix):
+            if project['name'].startswith(name_prefix.decode('utf-8')):
                 return project
         return None
 
@@ -467,7 +493,7 @@ class ProjectList(object):
         self.iter_index = 0
         return self
 
-    def next(self):
+    def __next__(self):
         """
         Returns the next project.
         """
@@ -488,7 +514,7 @@ class ProjectList(object):
                    if project['cid'] == client['id']:
                        client_name = " - %s" % client['name']
             s = s + ":%s @%s%s\n" % (self.workspace['name'], project['name'], client_name)
-        return s.rstrip() # strip trailing \n
+        return s.rstrip().encode('utf-8') # strip trailing \n
 
 #----------------------------------------------------------------------------
 # TimeEntry
@@ -559,14 +585,16 @@ class TimeEntry(object):
         self.validate()
         toggl("%s/time_entries" % TOGGL_URL, "post", self.json())
 
-    def continue_entry(self):
+    def continue_entry(self, continued_at=None):
         """
         Continues an existing entry.
         """
+        create = Config().get('options', 'continue_creates').lower() == 'true'
+
         # Was the entry started today or earlier than today?
         start_time = DateAndTime().parse_iso_str( self.get('start') )
 
-        if start_time <= DateAndTime().start_of_today():
+        if create or start_time <= DateAndTime().start_of_today():
             # Entry was from a previous day. Create a new entry from this
             # one, resetting any identifiers or time data.
             new_entry = TimeEntry()
@@ -576,8 +604,11 @@ class TimeEntry(object):
             new_entry.set('duration', None)
             new_entry.set('duronly', False) 
             new_entry.set('guid', None)
-            new_entry.set('id', None) 
-            new_entry.set('start', None)
+            new_entry.set('id', None)
+            if (continued_at):
+                new_entry.set('start', continued_at.isoformat())
+            else:
+                new_entry.set('start', None)
             new_entry.set('stop', None)
             new_entry.set('uid', None)
             new_entry.start()
@@ -585,7 +616,8 @@ class TimeEntry(object):
             # To continue an entry from today, set duration to 
             # 0 - (current_time - duration).
             now = DateAndTime().duration_since_epoch( DateAndTime().now() )
-            self.data['duration'] = 0 - (now - int(self.data['duration']))
+            duration = ((continued_at or DateAndTime().now()) - DateAndTime().now()).total_seconds()
+            self.data['duration'] = 0 - (now - int(self.data['duration'])) - duration
             self.data['duronly'] = True # ignore start/stop times from now on
 
             toggl("%s/time_entries/%s" % (TOGGL_URL, self.data['id']), 'put', data=self.json())
@@ -682,7 +714,7 @@ class TimeEntry(object):
         not given, then stops the time entry now.
         """
         Logger.debug('Stopping entry %s' % self.json())
-        self.validate()
+        self.validate(['description'])
         if int(self.data['duration']) >= 0:
             raise Exception("toggl: time entry is not currently running.")
         if 'id' not in self.data:
@@ -706,7 +738,15 @@ class TimeEntry(object):
             is_running = '* '
         
         if 'pid' in self.data:
-            project_name = " @%s " % ProjectList().find_by_id(self.data['pid'])['name']
+            project = ProjectList().find_by_id(self.data['pid'])
+            if project is not None:
+                project_name = " @%s " % project['name']
+            elif 'wid' in self.data:
+                ProjectList().fetch_by_wid(self.data['wid']);
+                project_name = " @%s " % ProjectList().find_by_id(self.data['pid'])['name']
+            else:
+                project_name = " "
+                
         else:
             project_name = " "
 
@@ -719,7 +759,7 @@ class TimeEntry(object):
 
         return s
 
-    def validate(self):
+    def validate(self, exclude=[]):
         """
         Ensure this time entry contains the minimum information required
         by toggl, as well as passing some basic sanity checks. If not,
@@ -728,8 +768,9 @@ class TimeEntry(object):
         * toggl requires start, duration, and created_with.
         * toggl doesn't require a description, but we do.
         """
-        for prop in [ 'start', 'duration', 'description', 'created_with' ]:
-            if not self.has(prop):
+        required = [ 'start', 'duration', 'description', 'created_with' ];
+        for prop in required:
+            if not self.has(prop) and prop not in exclude:
                 Logger.debug(self.json())
                 raise Exception("toggl: time entries must have a '%s' property." % prop)
         return True
@@ -765,11 +806,17 @@ class TimeEntryList(object):
         returned.
         """
         for entry in reversed(self.time_entries):
-            # 这里 description 来自终端，编码同终端编码(utf-8)
-            # 因此要从 utf-8 解码(decode)为 Python 的 unicode
-            if entry.get('description') == description.decode('utf-8'):
+            if entry.get('description') == description:
                 return entry
         return None
+
+    def get_latest(self):
+    	"""
+    	Returns the latest entry
+    	"""
+    	if len(self.time_entries) == 0:
+    		return None
+    	return self.time_entries[len(self.time_entries)-1]
 
     def next(self):
         """
@@ -797,8 +844,8 @@ class TimeEntryList(object):
         """
         # Fetch time entries from 00:00:00 yesterday to 23:59:59 today.
         url = "%s/time_entries?start_date=%s&end_date=%s" % \
-            (TOGGL_URL, urllib.quote(DateAndTime().start_of_yesterday().isoformat('T')), \
-            urllib.quote(DateAndTime().last_minute_today().isoformat('T')))
+            (TOGGL_URL, urllib.parse.quote(DateAndTime().start_of_yesterday().isoformat('T')), \
+            urllib.parse.quote(DateAndTime().last_minute_today().isoformat('T')))
         Logger.debug(url)
         entries = json.loads( toggl(url, 'get') )
 
@@ -818,24 +865,24 @@ class TimeEntryList(object):
         """
         Returns a human-friendly list of recent time entries.
         """
-	# Sort the time entries into buckets based on "Month Day" of the entry.
-	days = { }
-	for entry in self.time_entries:
+        # Sort the time entries into buckets based on "Month Day" of the entry.
+        days = { }
+        for entry in self.time_entries:
             start_time = DateAndTime().parse_iso_str(entry.get('start')).strftime("%Y-%m-%d")
             if start_time not in days:
                 days[start_time] = []
             days[start_time].append(entry)
 
-	# For each day, print the entries, and sum the times.
-        s = u""
-	for date in sorted(days.keys()):
+        # For each day, print the entries, and sum the times.
+        s = ""
+        for date in sorted(days.keys()):
             s += date + "\n"
             duration = 0
             for entry in days[date]:
-                s += unicode(entry) + "\n"
+                s += str(entry) + "\n"
                 duration += entry.normalized_duration()
             s += "  (%s)\n" % DateAndTime().elapsed_time(int(duration))
-        return s.rstrip() # strip trailing \n
+        return s.rstrip().encode('utf-8') # strip trailing \n
     
 #----------------------------------------------------------------------------
 # User
@@ -898,14 +945,16 @@ class CLI(object):
         self.parser = optparse.OptionParser(usage="Usage: %prog [OPTIONS] [ACTION]", \
             epilog="\nActions:\n"
             "  add DESCR [:WORKSPACE] [@PROJECT] START_DATETIME ('d'DURATION | END_DATETIME)\n\tcreates a completed time entry\n"
+            "  add DESCR [:WORKSPACE] [@PROJECT] 'd'DURATION\n\tcreates a completed time entry, with start time DURATION ago\n"
             "  clients\n\tlists all clients\n"
-            "  continue DESCR\n\trestarts the given entry\n"
+            "  continue [from DATETIME | 'd'DURATION]\n\trestarts the last entry\n"
+            "  continue DESCR [from DATETIME | 'd'DURATION]\n\trestarts the last entry matching DESCR\n"
             "  ls\n\tlist recent time entries\n"
             "  now\n\tprint what you're working on now\n"
             "  workspaces\n\tlists all workspaces\n"
             "  projects [:WORKSPACE]\n\tlists all projects\n"
             "  rm ID\n\tdelete a time entry by id\n"
-            "  start DESCR [:WORKSPACE] [@PROJECT] [DATETIME]\n\tstarts a new entry\n"
+            "  start DESCR [:WORKSPACE] [@PROJECT] ['d'DURATION | DATETIME]\n\tstarts a new entry\n"
             "  stop [DATETIME]\n\tstops the current entry\n"
             "  www\n\tvisits toggl.com\n"
             "\n"
@@ -938,6 +987,7 @@ class CLI(object):
         Creates a completed time entry.
         args should be: DESCR [:WORKSPACE] [@PROJECT] START_DATE_TIME
             'd'DURATION | STOP_DATE_TIME
+        or: DESCR [:WORKSPACE] [@PROJECT] 'd'DURATION
         """
         # Process the args.
         description = self._get_str_arg(args)
@@ -955,13 +1005,18 @@ class CLI(object):
             if project == None:
                 raise RuntimeError("Project '%s' not found." % project_name)
 
-        start_time = self._get_datetime_arg(args, optional=False)
         duration = self._get_duration_arg(args, optional=True)
-        if duration is None:
-            stop_time = self._get_datetime_arg(args, optional=False)
-            duration = (stop_time - start_time).total_seconds()
-        else:
+        if duration is not None:
+            start_time = DateAndTime().now() - datetime.timedelta(seconds=duration)
             stop_time = None
+        else:
+            start_time = self._get_datetime_arg(args, optional=False)
+            duration = self._get_duration_arg(args, optional=True)
+            if duration is None:
+                stop_time = self._get_datetime_arg(args, optional=False)
+                duration = (stop_time - start_time).total_seconds()
+            else:
+                stop_time = None
 
         # Create a time entry.
         entry = TimeEntry(
@@ -986,7 +1041,7 @@ class CLI(object):
         elif self.args[0] == "add":
             self._add_time_entry(self.args[1:])
         elif self.args[0] == "clients":
-            print ClientList()
+            print(ClientList())
         elif self.args[0] == "continue":
             self._continue_entry(self.args[1:])
         elif self.args[0] == "now":
@@ -1002,13 +1057,13 @@ class CLI(object):
         elif self.args[0] == "www":
             os.system(VISIT_WWW_COMMAND)
         elif self.args[0] == "workspaces":
-            print WorkspaceList()
+            print(WorkspaceList())
         else:
             self.print_help()
 
     def _show_projects(self, args):
         workspace_name = self._get_workspace_arg(args, optional=True)
-        print ProjectList(workspace_name)
+        print(ProjectList(workspace_name))
 
     def _continue_entry(self, args):
         """
@@ -1016,15 +1071,40 @@ class CLI(object):
         to restart. If a description appears multiple times in your history,
         then we restart the newest one.
         """
-        if len(args) == 0:
-            CLI().print_help()
-        entry = TimeEntryList().find_by_description(args[0])
+        if len(args) == 0 or args[0] == "from":
+            entry = TimeEntryList().get_latest()
+        else:
+            entry = TimeEntryList().find_by_description(args[0])
+            args.pop(0)
+
         if entry:
-            entry.continue_entry()
+            continued_at = None
+            if len(args) > 0:
+                if args[0] == "from":
+                    args.pop(0)
+                    if len(args) == 0:
+                        self._show_continue_usage()
+                        return
+                    else:
+                        duration = self._get_duration_arg(args, optional=True)
+                        if (duration is not None):
+                            continued_at = DateAndTime().now() - datetime.timedelta(seconds=duration)
+                        else:
+                            continued_at = self._get_datetime_arg(args, optional=True)
+                else:
+                    self._show_continue_usage()
+                    return
+
+            entry.continue_entry(continued_at)
+
             Logger.info("%s continued at %s" % (entry.get('description'), 
-                DateAndTime().format_time(datetime.datetime.now())))
+                DateAndTime().format_time(continued_at or DateAndTime().now())))
         else:
             Logger.info("Did not find '%s' in list of entries." % args[0] )
+
+    def _show_continue_usage(self):
+        Logger.info("continue usage: \n\tcontinue DESC from START_DATE_TIME | 'd'DURATION"
+            "\n\tcontinue from START_DATE_TIME | 'd'DURATION")
 
     def _delete_time_entry(self, args):
         """
@@ -1074,8 +1154,8 @@ class CLI(object):
 
     def _get_workspace_arg(self, args, optional=False):
         """
-        If the first entry in args is a workspace name (e.g., '#project')
-        then return the name of the project, or None.
+        If the first entry in args is a workspace name (e.g., ':workspace')
+        then return the name of the workspace, or None.
         """
         if len(args) == 0:
             if optional:
@@ -1127,7 +1207,7 @@ class CLI(object):
         entry = TimeEntryList().now()
 
         if entry != None:
-            Logger.info(unicode(entry))
+            Logger.info(str(entry))
         else:
             Logger.info("You're not working on anything right now.")
 
@@ -1139,12 +1219,17 @@ class CLI(object):
     def _start_time_entry(self, args):
         """
         Starts a new time entry.
-        args should be: DESCR [#WORKSPACE] [@PROJECT] [DATETIME]
+        args should be: DESCR [:WORKSPACE] [@PROJECT] ['d'DURATION | DATETIME]
         """
         description = self._get_str_arg(args, optional=False)
         workspace_name = self._get_workspace_arg(args, optional=True)
         project_name = self._get_project_arg(args, optional=True)
-        start_time = self._get_datetime_arg(args, optional=True)
+        duration = self._get_duration_arg(args, optional=True)
+        if duration is not None:
+            start_time = DateAndTime().now() - datetime.timedelta(seconds=duration)
+        else:
+            start_time = self._get_datetime_arg(args, optional=True)
+
 
         # Create the time entry.
         entry = TimeEntry(
