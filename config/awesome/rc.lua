@@ -136,22 +136,22 @@ pomodoro:set_color({ type = "linear", from = { 0, 0 }, to = { 100, 0 }, stops = 
 pomodoro:set_ticks(true) -- false:平滑的整体，true:间隙的个体
 
 -- Disk IO {{{3
-dio_graph = bling.line_graph({ height = 23, width = 65 })
+dio_graph = bling.line_graph({ height = 23, width = 74 })
 dio_graph:set_show_text(true)
 dio_graph:set_label("I/O")
 --dio_graph:set_tiles_color("#292B2F")
 dio_graph:set_graph_color("#AAAAAA")
 dio_graph:set_graph_line_color("#AAAAAA")
-vicious.register(dio_graph, vicious.widgets.dio, "${sda total_mb}")
+vicious.register(dio_graph, vicious.widgets.dio, "${sda total_mb}", 5)
 
 -- CPU widget {{{3
-cpu_graph = bling.line_graph({ height = 23, width = 65 })
+cpu_graph = bling.line_graph({ height = 23, width = 74 })
 cpu_graph:set_show_text(true)
 cpu_graph:set_label("CPU")
 --cpu_graph:set_tiles_color("#292B2F")
 cpu_graph:set_graph_color("#AAAAAA")
 cpu_graph:set_graph_line_color("#AAAAAA")
-vicious.register(cpu_graph, vicious.widgets.cpu,'$1',2)
+vicious.register(cpu_graph, vicious.widgets.cpu,'$1', 5)
 
 -- Create a wibox for each screen and add it {{{3
 mywibox = {}
@@ -265,6 +265,7 @@ local quakeconsole = {}
 for s = 1, screen.count() do
    quakeconsole[s] = quake({ terminal = terminal,
 			     height = 0.3,
+                 name = "Quake" .. s,
 			     screen = s })
 end
 -- }}}
@@ -384,7 +385,7 @@ globalkeys = awful.util.table.join(
     -- {{{ sdcv/stardict
     -- 有些字典的翻译结果包含尖括号，会导致 naughty 无法正常显示。这里替换所有的尖括号，并同时美化显示结果
     awful.key({ modkey }, "d", function ()
-        local f = io.popen("clipit -p")
+        local f = io.popen("gpaste get 0")
         local word = f:read("*a")
         f:close()
         local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")

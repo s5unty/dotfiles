@@ -48,7 +48,7 @@ function QuakeConsole:display()
                    -- c.name may be changed!
                    return c.instance == self.name
                    end,
-                   nil, self.screen) do
+                   nil, nil) do
       i = i + 1
       if i == 1 then
      client = c
