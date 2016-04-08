@@ -9,7 +9,7 @@ let hintcharacters = "asdfjklh"
 let nextmatchpattern = "((?!first)(下一页|下一頁|下页|下頁|前进|前進|繼續|继续|更多|next|more|>|›|»|forward| )+)"
 let blacklists = ["https://mail.google.com/*", "https://*workflowy.com/*", "http://*shanbay.com/*"]
 
-let searchengine ggjp   = "https://www.google.co.jp/?gws_rd=ssl#newwindow=1&q="
+let searchengine gghk   = "https://www.google.com.hk/?gws_rd=ssl#newwindow=1&q="
 let searchengine bug    = "https://bugs.debian.org/"
 let searchengine pkg    = "https://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords="
 let searchengine pkgc   = "https://packages.debian.org/search?searchon=contents&amp;keywords=%s&amp;mode=filename&amp;suite=stable&amp;arch=any"
@@ -19,8 +19,8 @@ let searchengine diigo  = "https://www.diigo.com/search?what="
 let searchengine duck   = "https://duckduckgo.com/?q="
 let searchengine wiki   = "https://zh.wikipedia.org/w/index.php?title=Special%3A%E6%90%9C%E7%B4%A2&profile=default&search=%s&fulltext=Search"
 let searchengine note   = "https://app.yinxiang.com/Home.action#st=p&x=%s&n=c090e93d-859e-4f56-8c35-cf01129892c4"
-let completionengines   = ["ggjp", "diigo"]
-let defaultengine = "ggjp"
+let completionengines   = ["gghk", "diigo"]
+let defaultengine = "gghk"
 
 map d :quit<CR>
 " close then (g)o lef(t)
