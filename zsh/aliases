@@ -32,6 +32,7 @@ alias rot13="tr a-zA-Z n-za-mN-ZA-M"
 alias atf-run="env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/atf/bin atf-run"
 alias guanji="systemctl poweroff"
 alias chongqi="systemctl reboot"
+alias sudo="/usr/bin/sudo "
 
 cd() {
     if builtin cd "$@"; then
