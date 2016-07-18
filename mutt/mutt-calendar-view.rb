@@ -12,15 +12,14 @@ class DateTime
   end
 end
 
-cals = Icalendar.parse($<)
+cals = Icalendar::Calendar.parse($<)
 cals.each do |cal|
   cal.events.each do |event|
     puts "Organizer: #{event.organizer}"
     puts "Event:     #{event.summary}"
-    puts "Starts:    #{event.dtstart} #{event.tzid}"
+    puts "Starts:    #{event.dtstart}"
     puts "Ends:      #{event.dtend}"
     puts "Location:  #{event.location}"
-    puts "Contact:   #{event.contacts}"
     puts "Description:\n#{event.description}"
     puts ""
     end
