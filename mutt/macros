@@ -81,4 +81,7 @@ macro index,pager x "\
 
 macro editor "<F9>"  "[本部依赖-翻译]-SW18371PJ01000-中译日-`date -d today '+%Y/%m/%d'`/17:00"
 
+# html view
+macro attach V "<pipe-message>cat > /tmp/.mutt.html; x-www-browser /tmp/.mutt.html<enter>"
+
 # vi:noet:
