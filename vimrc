@@ -67,7 +67,7 @@ else
     set directory=/tmp
 endif
 
-if &term =~ "rxvt-unicode-256color"
+if &term =~ "rxvt-unicode"
     color light256
     " 区别普通/插入模式的光标颜色
     " # PowerLine 已实现
