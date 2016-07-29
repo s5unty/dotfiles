@@ -50,7 +50,22 @@ terminal_bg_style=light
 terminal_colorize=1
 terminal_decoration_height=10
 terminal_decoration_width=8
+##
+# 取消对字体的显式定义(源码只支持 X 字体，不支持 XFT 字体)
+#
+# --- ./ClusterSSH.pm.orig	2014-10-13 00:57:22.000000000 +0800
+# +++ ./ClusterSSH.pm	2016-07-29 14:37:39.931408407 +0800
+# @@ -727,7 +727,6 @@
+#                  "'"
+#                      . $self->config->{title} . ': '
+#                      . $servers{$server}{connect_string} . "'",
+# -                '-font ' . $self->config->{terminal_font},
+#                  "-e " . $^X . ' -e ',
+#                  "'" . $self->helper->script( $self->config ) . "'",
+#                  " " . $servers{$server}{pipenm},
+#
 #terminal_font=6x13
+####
 terminal_reserve_bottom=0
 terminal_reserve_left=5
 terminal_reserve_right=0
