@@ -79,3 +79,9 @@
 [submodule "vim/bundle/vim-snippets-salt"]
 	path = vim/bundle/vim-snippets-salt
 	url = https://github.com/StephenPCG/vim-snippets-salt/
+[submodule "zsh/zsh-autosuggestions"]
+	path = zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "vim/bundle/ansible-vim"]
+	path = vim/bundle/ansible-vim
+	url = https://github.com/pearofducks/ansible-vim
