@@ -27,6 +27,7 @@ bindkey -M viins "\eb"  vi-backward-blank-word
 bindkey -M viins "\ef"  vi-forward-blank-word
 bindkey -M viins "\en"  zsh-history-substring-search-forward
 bindkey -M viins "\ep"  zsh-history-substring-search-backward
+bindkey -M viins "\e;"  autosuggest-accept
 bindkey -M viins "\eq"  push-line
 bindkey -M viins "\ek"  run-help
 bindkey -M viins "\ei"  osc-ipaddr
@@ -35,7 +36,6 @@ bindkey -M viins "\e."  insert-last-word
 bindkey -M viins "\e,"  insert-last-word-prior
 bindkey -M viins "\e/"  jump-around-directory
 bindkey -M viins "\e?"  list-directory-stack
-bindkey -M viins "\e;"  copy-earlier-word
 bindkey -M viins "\e\t" urxvt-scrollback-buffer-words-prefix
 bindkey -M viins "^[[Z" urxvt-scrollback-buffer-words-anywhere
 

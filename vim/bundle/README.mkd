@@ -1,0 +1,3 @@
+由 pathogen 改为 vim-plug 管理 VIM 插件。
+
+https://github.com/junegunn/vim-plug

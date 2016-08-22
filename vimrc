@@ -8,7 +8,7 @@ set expandtab " TAB is soft
 set tabstop=4 " TAB 的宽度
 set shiftwidth=4 " 缩进的宽度
 set softtabstop=4
-set clipboard=unnamed,autoselect " 使用系统剪贴板
+set clipboard=unnamed " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
@@ -67,7 +67,7 @@ else
     set directory=/tmp
 endif
 
-if &term =~ "rxvt-unicode"
+if &term =~ "rxvt-unicode-256color" || &term == "nvim"
     color light256
     " 区别普通/插入模式的光标颜色
     " # PowerLine 已实现
@@ -487,8 +487,29 @@ set formatexpr=autofmt#uax14#formatexpr()
 "}}}1
 
 " 10# bundle {{{1
-call pathogen#infect('bundle')
-call pathogen#helptags()
+" call pathogen#infect('bundle')
+" call pathogen#helptags()
+
+call plug#begin('~/.vim/bundle')
+  Plug 'majutsushi/tagbar'
+  Plug 'ervandew/supertab'
+  Plug 'tomtom/quickfixsigns_vim'
+  Plug 'Raimondi/delimitMate'
+  Plug 'sjl/gundo.vim'
+  Plug 'chrisbra/NrrwRgn'
+  Plug 'scrooloose/syntastic'
+  Plug 'easymotion/vim-easymotion'
+  Plug 'vim-pandoc/vim-pandoc'
+  Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+  Plug 'Shougo/neosnippet-snippets' | Plug 'Shougo/neosnippet.vim'
+  Plug 'Shougo/unite.vim'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'vim-scripts/fcitx.vim'
+  Plug 'vim-scripts/VisIncr'
+  Plug 'wgurecky/vimSum'
+  Plug 'itchyny/calendar.vim'
+  Plug 'pearofducks/ansible-vim'
+call plug#end()
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
 " http://www.vim.org/scripts/script.php?script_id=159 (origin)
@@ -563,8 +584,8 @@ let g:nrrw_rgn_wdth = 50
 " Syntastic 2.3.0 : Automatic syntax checking {{{2
 " http://www.vim.org/scripts/script.php?script_id=2736
 let g:syntastic_check_on_open=1
-let g:syntastic_quiet_warnings=1
 let g:syntastic_auto_loc_list=2
+let g:syntastic_quiet_messages = {'level': 'warnings'}
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['c', 'cpp'] }
 let g:syntastic_c_remove_include_errors=1
@@ -652,30 +673,30 @@ let g:airline#extensions#whitespace#trailing_format = '[T:%s]'
 let g:airline#extensions#whitespace#mixed_indent_format = '[M:%s]'
 
 
-" 4# Shougo's pack: https://github.com/Shougo/ {{{2
-" vimproc 7.0 : Asynchronous execution plugin for Vim {{{3
+" 4# Shougo's pack: https://github.com/Shougo/ {{{2 vimproc 7.0 : Asynchronous execution plugin for Vim {{{2
 " nothing
 
-" neocomplcache 8.0: Ultimate auto-completion system for Vim. {{{3
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_max_list = 20
-let g:neocomplcache_disable_auto_complete = 0
-let g:neocomplcache_enable_auto_select = 0
-let g:neocomplcache_enable_ignore_case = 0
-let g:neocomplCache_SmartCase = 1
-let g:neocomplcache_enable_underbar_completion = 1
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-if !exists('g:neocomplcache_omni_patterns')
-    let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+" -nvim
+"" neocomplcache 8.0: Ultimate auto-completion system for Vim. {{{3
+"let g:neocomplcache_enable_at_startup = 1
+"let g:neocomplcache_max_list = 20
+"let g:neocomplcache_disable_auto_complete = 0
+"let g:neocomplcache_enable_auto_select = 0
+"let g:neocomplcache_enable_ignore_case = 0
+"let g:neocomplCache_SmartCase = 1
+"let g:neocomplcache_enable_underbar_completion = 1
+"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+"if !exists('g:neocomplcache_omni_patterns')
+"    let g:neocomplcache_omni_patterns = {}
+"endif
+"let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+"let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 
 " neosnippet {{{3
@@ -726,7 +747,14 @@ function! s:unite_my_settings()
     vmap <silent><buffer> t <Plug>(unite_toggle_mark_current_candidate)
 endfunction
 
+
+" deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{3
+" https://github.com/Shougo/deoplete.nvim
+let g:deoplete#enable_at_startup = 1
+
+
 " }}}2
+
 " }}}1
 
 " 3# keys ref: http://tinyurl.com/2cae5vw {{{1
