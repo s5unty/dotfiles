@@ -239,7 +239,7 @@ nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEF
 nmap <silent> <unique> <F6> :<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
 nmap <silent> <unique> <F8> :make!<CR>
-nmap <silent> <unique> <F9> :Unite file_mru session buffer bookmark directory_mru quickfix outline<CR>
+nmap <silent> <unique> <F9> :Unite file_mru buffer bookmark directory_mru<CR>
 nmap <silent> <unique> <F10> :<CR>
 nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
@@ -502,7 +502,7 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'vim-pandoc/vim-pandoc'
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
   Plug 'Shougo/neosnippet-snippets' | Plug 'Shougo/neosnippet.vim'
-  Plug 'Shougo/unite.vim'
+  Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'vim-scripts/fcitx.vim'
   Plug 'vim-scripts/VisIncr'
