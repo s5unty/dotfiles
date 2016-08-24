@@ -9,7 +9,7 @@
     headers = ""
     subjectprefix = ""
 [diff]
-    tool = vimdiff
+    tool = nvimdiff
 [diff "jp"]
     textconv=nkf -w
 [diff "msword"] # http://progit.org/book/zh/ch7-2.html
@@ -18,6 +18,8 @@
     textconv = xlhtml -fw -asc -te -xp:0-10 -xc:0-100
 [difftool "normal"] # http://goo.gl/c8Xok
     cmd = diff $LOCAL $REMOTE
+[difftool "nvimdiff"] # https://github.com/neovim/neovim/issues/2377
+    cmd = nvim -d $LOCAL $REMOTE
 [push]
     default = current
 [gui]
@@ -69,7 +71,7 @@
     tool = persistent
 [mergetool "persistent"]
     # ref Brian Phillips @http://stackoverflow.com/questions/585844/merging-with-git-mergetool
-    cmd = "vim -d \"$PWD/$MERGED\" \
+    cmd = "nvim -d \"$PWD/$MERGED\" \
         +\":split $PWD/$REMOTE\" +\":set buftype=nowrite\" \
         +\":vertical diffsplit $PWD/$LOCAL\" +\":set buftype=nowrite\" \
         +\":vertical diffsplit $PWD/$BASE\" +\":set buftype=nowrite\" \
