@@ -8,7 +8,7 @@ set expandtab " TAB is soft
 set tabstop=4 " TAB 的宽度
 set shiftwidth=4 " 缩进的宽度
 set softtabstop=4
-set clipboard=unnamed " 使用系统剪贴板
+set clipboard=unnamedplus " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
@@ -269,8 +269,8 @@ imap <silent> <unique> <S-Space> <C-V><Space>
 nmap <silent> <unique> <C-Q> :q!<CR>
 nmap <silent> <unique> <C-J> :call EasyMotion#JK(0, 0)<CR>
 nmap <silent> <unique> <C-K> :call EasyMotion#JK(0, 1)<CR>
-nmap <silent> <unique> <C-N> :call G_GotoEditor()<CR>:bn!<CR>
-nmap <silent> <unique> <C-P> :call G_GotoEditor()<CR>:bp!<CR>
+nmap <silent> <unique> <C-N> :call G_GotoEditor()<CR><Plug>AirlineSelectNextTab<CR>
+nmap <silent> <unique> <C-P> :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
@@ -286,26 +286,30 @@ nmap <silent> <unique> <C-F8> :make! clean<CR>
 nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR><C-L>
 
 " Alt+ {{{2
-if has("gui_running")
-nmap <silent> <unique> <A-h> <C-W>h
-nmap <silent> <unique> <A-j> <C-W>j
-nmap <silent> <unique> <A-k> <C-W>k
-nmap <silent> <unique> <A-l> <C-W>l
-imap <silent> <unique> <A-b> <C-O>b
-imap <silent> <unique> <A-f> <C-O>w
-imap <silent> <unique> <A-d> <C-O>dw
+if has("gui_running") || &term == "nvim"
+nmap <silent> <unique> <M-Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
+nmap <silent> <unique> <M-\> :call G_GotoEditor()<CR>:tag<CR>zz
+nmap <silent> <unique> <M-`> :call G_GotoEditor()<CR>:e #<CR>
+imap <silent> <unique> <M-`> <ESC>:call G_GotoEditor()<CR>:e #<CR>a
+nmap <silent> <unique> <M-h> <C-W>h
+nmap <silent> <unique> <M-j> <C-W>j
+nmap <silent> <unique> <M-k> <C-W>k
+nmap <silent> <unique> <M-l> <C-W>l
+imap <silent> <unique> <M-b> <C-O>b
+imap <silent> <unique> <M-f> <C-O>w
+imap <silent> <unique> <M-d> <C-O>dw
 else
-nmap <silent> <unique> <ESC><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
-nmap <silent> <unique> <ESC>\ :call G_GotoEditor()<CR>:tag<CR>zz
-nmap <silent> <unique> <ESC>` :call G_GotoEditor()<CR>:e #<CR>
-imap <silent> <unique> <ESC>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
-nmap <silent> <unique> <ESC>h <C-W>h
-nmap <silent> <unique> <ESC>j <C-W>j
-nmap <silent> <unique> <ESC>k <C-W>k
-nmap <silent> <unique> <ESC>l <C-W>l
-imap <silent> <unique> <ESC>b <C-O>b
-imap <silent> <unique> <ESC>f <C-O>w
-imap <silent> <unique> <ESC>d <C-O>dw
+nmap <silent> <unique> <Esc>Backspace :call G_GotoEditor()<CR>:pop<CR>zz
+nmap <silent> <unique> <Esc>\ :call G_GotoEditor()<CR>:tag<CR>zz
+nmap <silent> <unique> <Esc>` :call G_GotoEditor()<CR>:e #<CR>
+imap <silent> <unique> <Esc>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
+nmap <silent> <unique> <Esc>h <C-W>h
+nmap <silent> <unique> <Esc>j <C-W>j
+nmap <silent> <unique> <Esc>k <C-W>k
+nmap <silent> <unique> <Esc>l <C-W>l
+imap <silent> <unique> <Esc>b <C-O>b
+imap <silent> <unique> <Esc>f <C-O>w
+imap <silent> <unique> <Esc>d <C-O>dw
 endif
 
 " Leader+ , Leader char is ',' {{{2
@@ -503,12 +507,14 @@ call plug#begin('~/.config/nvim/bundle')
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
   Plug 'Shougo/neosnippet-snippets' | Plug 'Shougo/neosnippet.vim'
   Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim'
+  Plug 'Shougo/neocomplete.vim'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'vim-scripts/fcitx.vim'
   Plug 'vim-scripts/VisIncr'
   Plug 'wgurecky/vimSum'
   Plug 'itchyny/calendar.vim'
   Plug 'pearofducks/ansible-vim'
+  Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
@@ -655,15 +661,31 @@ let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#left_sep = '⮀'
 let g:airline#extensions#tabline#left_alt_sep = '⮁'
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
+if has("gui_running") || &term == "nvim"
+nmap <M-1> <Plug>AirlineSelectTab1
+nmap <M-2> <Plug>AirlineSelectTab2
+nmap <M-3> <Plug>AirlineSelectTab3
+nmap <M-4> <Plug>AirlineSelectTab4
+nmap <M-5> <Plug>AirlineSelectTab5
+nmap <M-6> <Plug>AirlineSelectTab6
+nmap <M-7> <Plug>AirlineSelectTab7
+nmap <M-8> <Plug>AirlineSelectTab8
+nmap <M-9> <Plug>AirlineSelectTab9
+nmap <M-,> <Plug>AirlineSelectPrevTab
+nmap <M-.> <Plug>AirlineSelectNextTab
+else
+nmap <Esc>1 <Plug>AirlineSelectTab1
+nmap <Esc>2 <Plug>AirlineSelectTab2
+nmap <Esc>3 <Plug>AirlineSelectTab3
+nmap <Esc>4 <Plug>AirlineSelectTab4
+nmap <Esc>5 <Plug>AirlineSelectTab5
+nmap <Esc>6 <Plug>AirlineSelectTab6
+nmap <Esc>7 <Plug>AirlineSelectTab7
+nmap <Esc>8 <Plug>AirlineSelectTab8
+nmap <Esc>9 <Plug>AirlineSelectTab9
+nmap <Esc>, <Plug>AirlineSelectPrevTab
+nmap <Esc>. <Plug>AirlineSelectNextTab
+endif
 
 "if !exists('g:airline_symbols')
 "  let g:airline_symbols = {}
@@ -750,7 +772,19 @@ endfunction
 
 " deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{3
 " https://github.com/Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
+
+" neocomplete.vim : Next generation completion framework after neocomplcache {{{3
+" https://github.com/Shougo/neocomplete.vim
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 
 " }}}2

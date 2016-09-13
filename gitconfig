@@ -9,7 +9,7 @@
     headers = ""
     subjectprefix = ""
 [diff]
-    tool = nvimdiff
+    tool = vimdiff
 [diff "jp"]
     textconv=nkf -w
 [diff "msword"] # http://progit.org/book/zh/ch7-2.html
