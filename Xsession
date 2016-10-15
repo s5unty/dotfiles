@@ -7,6 +7,7 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # /usr/bin/autossh -f -N -D 0:9527 du1abadd.org
 # shadowsocks 相比 ssh，对墙作了更多优化
 /usr/local/bin/sslocal -d start -c ~/.ss.json --pid-file /tmp/.shadowsocks.pid --log-file /tmp/shadowsocks.log
+/usr/bin/autossh -f -N -D 0:9528 jumpserver
 
 # dns 加密避免 dns 污染
 # /opt/dnscrypt/sbin/dnscrypt-proxy --daemonize --ephemeral-keys --resolver-name=cisco-port53
@@ -23,7 +24,7 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # 统一剪贴板，parcellite 比 autocutsel 好用 :)
 # /usr/local/bin/parcellite -n &
 # gpaste 也不错
-/usr/bin/gpaste
+/usr/bin/gpaste-client
 
 # 加载自定义的特殊的键盘功能键
 # 注意：fcitx 的 X 键盘集成(高级组件)
