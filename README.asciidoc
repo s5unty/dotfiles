@@ -1,6 +1,4 @@
-= 一点文件
-
-== 一点任务
+== 任务跟踪
 
 http://todotxt.com/[Todo.txt]::
 
