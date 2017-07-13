@@ -17,12 +17,13 @@ do
   version="`grep -m1 \"Version: \" $file | cut -d' ' -f2`"
 
   mkdir -p "$source/$version"
-  mv `cut -d' ' -f6 $file | grep -E "\.deb$|\.udeb$|\.tar.gz$|\.diff.gz$|\.dsc$"` $file "$source/$version"
+  mv `cut -d' ' -f6 $file | grep -E "\.deb$|\.udeb$|\.tar.gz$|\.tar.bz2$|\.tar.xz|\.diff.gz$|\.dsc$"` $file "$source/$version"
 done
 
 dir=`pwd -P | grep -E -o "\w*$"`
-pre='debian/'
+pre=''
 cd -P ..
 dpkg-scanpackages -m $dir /dev/null $pre 2> /dev/null | gzip > $dir/Packages.gz
 dpkg-scansources $dir /dev/null $pre 2> /dev/null | gzip > $dir/Sources.gz
+
 

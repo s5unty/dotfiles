@@ -27,11 +27,7 @@
 # }}}
 
 [tig] # {{{
-    show-refs = yes
-    show-rev-graph = yes
     line-graphics = no
-    commit-encoding = "UTF-8"
-    author-width = 16
     tab-size = 4
 [tig "color"]
     default = default default
@@ -42,15 +38,10 @@
     title-focus = black white bold
 [tig "bind"]
     generic = i view-close
-    main = i view-main
-    main = q view-main
-    main = s view-status
-    main = space enter
     diff = , previous
     diff = . next
     stage = , previous
     stage = . next
-    status = space enter
 # }}}
 
 [color] #{{{

@@ -3,13 +3,14 @@
 
 #command
 ? help
+i quit
 
 -   back-scroll
 \40 forw-scroll
 ;   toggle-option
 
 v pipe . vim - \n
-V pipe $ vim - \n
+#V pipe $ vim - \n
 
 l right-scroll
 h left-scroll

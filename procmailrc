@@ -39,6 +39,15 @@ VERBOSE=off
 # TODO 为什么先 encode UTF8 然后再 decode UTF8？
 #   MIME::EncWords::decode_mimewords 函数的返回值是字符串，问题是
 #   在脚本中能够正常 print 的字符串，在命令行中显示的值是 ARRAY(...)
+#
+# NOTE
+#   在实际匹配时，注意以下模式中的问号(??)
+#
+#       ----
+#       :0
+#       * $X_Subject ?? 【VCS】
+#       gens-vcs-notify/
+#       ----
 :0 Hiw
 X_Subject=| $FORMAIL -zfxSubject \
 | perl -pe 's/(^\s*|\n$)//sg' \
@@ -62,7 +71,7 @@ X_Context=| tail -n +2 | mailtextbody | nkf -w | head -5
 # }}}1
 
 # 处理公司邮件 {{{1
-# INCLUDERC=$MAILDIR".procmailrc.fnst"
+# INCLUDERC=$MAILDIR".procmailrc"
 # }}}1
 
 # 处理 QQ 邮箱 {{{1

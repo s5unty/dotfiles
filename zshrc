@@ -8,6 +8,8 @@
 [ -d $HOME/.zsh/plugins/      ] && for plugin in $HOME/.zsh/plugins/*(.)zsh; do
     source $plugin
 done
+[ -e $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \
+    source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 if ! hostname | grep "^verns-\|li380-170\|^G08FNST\|^BITD" > /dev/null 2>&1; then
     return # 不是我的机器

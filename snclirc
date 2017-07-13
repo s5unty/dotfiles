@@ -1,14 +1,45 @@
 [sncli]
-cfg_sn_username = s5unty@gmail.com
-cfg_sn_password = <YOUR PASS>
-kb_quit = Q
-clr_user_input_bar_fg = black
-clr_user_input_bar_bg = yellow
+cfg_sn_username = <USERNAME>
+cfg_sn_password = <PASSWORD>
 
-clr_default_fg = black
-clr_default_bg = white
+# see http://urwid.org/manual/userinput.html for examples of more key combinations
+kb_quit = i
+kb_sync = G
+kb_page_down = page down
+kb_page_up = page up
+kb_half_page_down = ctrl d
+kb_half_page_up = ctrl u
+kb_bottom = *
+kb_top = =
 
-clr_help_focus_bg = black
-clr_note_content_focus_bg = black
-clr_note_focus_bg = black
+kb_view_note = space
+kb_view_note_ext = enter
+kb_view_prev_note = ,
+kb_view_next_note = .
+kb_note_markdown = M
+kb_note_pin = P
 
+# the EDITOR env variable overrides the value below
+cfg_editor = vim
+cfg_diff = colordiff -b -U10
+cfg_format_strftime = %m/%d
+cfg_format_note_title = %F %-N %T %D
+
+# note that values must not be quoted
+# TODO 256colors
+clr_note_focus_bg = light blue
+clr_note_title_day_fg = default
+clr_note_title_day_bg = default
+#clr_note_title_week_fg = 
+#clr_note_title_week_bg = 
+
+##
+# https://stackoverflow.com/questions/15496865/how-to-configure-less-to-show-formatted-markdown-files
+# https://github.com/axiros/terminal_markdown_viewer
+##
+#       $ cat /usr/local/sbin/mdless
+#       #!/bin/zsh
+#       # https://superuser.com/questions/1059781/what-exactly-is-in-bash-and-in-zsh
+#       /usr/bin/less -R -c =(mdv -A "$1")
+####
+cfg_pager = /usr/local/sbin/mdless

@@ -82,6 +82,9 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # http://lucidhacking.net/2011/12/how-to-access-dropbox-behind-a-firewall-or-proxy/
 # /usr/bin/dropbox start &
 
+# 双显
+# xrandr --output VGA1 --left-of HDMI2 --brightness 0.7
+
 # 为了 pidgin-sipe 正常登录 Lync
 export NSS_SSL_CBC_RANDOM_IV=0
 
