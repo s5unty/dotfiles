@@ -189,9 +189,10 @@ esac
 
 if [ -z ${args} ]; then
     # recoll
+    # 先设置颜色再切换邮箱，否则会收到 `fopen 不是目录 ... error = 20' 的报错
     key=$(echo "${key}" | sed 's,\s*\(.*\)\s*,(\1),g' | sed 's,\s\+,|,g')
-    cmd="<refresh><change-folder-readonly>=$MFOLDER<return>"
-    cmd=${cmd}"<enter-command>color\ body\ white\ blue\ ${key}<return>"
+    cmd="<enter-command>color\ body\ white\ blue\ ${key}<return>"
+    cmd=${cmd}"<refresh><change-folder-readonly>=$MFOLDER<return>"
 else
     # mu
     sh -c "mu $args > /dev/null 2>&1 3>&- &"

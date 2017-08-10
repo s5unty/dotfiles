@@ -67,17 +67,21 @@ macro index "<F8>" "<limit>~d `date -d '1 month ago' +%d/%m`-<enter>"
 # mu-0.9.7 with wrapper
 macro index,pager \` "<enter-command>set my_cmd = \`~/.mutt/mutt-grep\`<enter><enter-command>push \$my_cmd<enter>" "global find"
 
-# x-labels
-# TODO inherit
-macro index,pager x "\
-<enter-command>set my_cmd=\`~/.mutt/mutt-xlabel\`<enter>\
-<enter-command>push \$my_cmd<enter>\
-<enter-command>set editor=\"~/.mutt/mutt-xlabel-it \\\"\$my_lab\\\"\"<enter>\
-<edit>\
-<enter-command>set delete=yes<enter>\
-<sync-mailbox><next-undeleted>\
-<enter-command>set delete=ask-yes<enter>\
-<enter-command>set editor=\"vim -c 'set ft=mail.markdown'\"<enter>" "create label"
+##
+# v1.8.0 开始内置支持 X-Label 了(默认快捷键 Y)
+##
+# # x-labels
+# # TODO inherit
+# macro index,pager x "\
+# <enter-command>set my_cmd=\`~/.mutt/mutt-xlabel\`<enter>\
+# <enter-command>push \$my_cmd<enter>\
+# <enter-command>set editor=\"~/.mutt/mutt-xlabel-it \\\"\$my_lab\\\"\"<enter>\
+# <edit>\
+# <enter-command>set delete=yes<enter>\
+# <sync-mailbox><next-undeleted>\
+# <enter-command>set delete=ask-yes<enter>\
+# <enter-command>set editor=\"vim -c 'set ft=mail.markdown'\"<enter>" "create label"
+####
 
 macro editor "<F9>"  "[本部依赖-翻译]-SW18371PJ01000-中译日-`date -d today '+%Y/%m/%d'`/17:00"
 

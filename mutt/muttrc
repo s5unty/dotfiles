@@ -14,8 +14,8 @@ set charset="UTF-8"
 # 外发邮件使用的编码，改为由hooks智能设定
 #set send_charset="us-ascii:iso-2022-jp:utf-8"
 set send_charset="utf-8"
-# 用中文格式显示日期
-set locale=`echo "${LC_ALL:-${LC_TIME:-${LANG}}}"`
+# 用中文格式显示日期 (disabled in v1.8.3)
+# set locale=`echo "${LC_ALL:-${LC_TIME:-${LANG}}}"`
 # 解决未经过MIME编码的信件显示为乱码的问题
 set assumed_charset="gb2312:iso-2022-jp:utf-8"
 # 解决中文附件名为乱码的问题
