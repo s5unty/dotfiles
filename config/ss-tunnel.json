@@ -1,0 +1,10 @@
+{
+    "server" : "{{YOUR_SS_SERVER}}",
+    "tunnel_address": "8.8.8.8:53",
+    "server_port" : {{YOUR_SS_PORT}},
+    "local_port" : 53,
+    "timeout" : 60,
+    "mode": "tcp_and_udp",
+    "password" : "{{YOUR_PASSWORD}}",
+    "method" : "chacha20"
+}

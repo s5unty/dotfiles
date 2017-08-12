@@ -5,12 +5,15 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 
 # ssh 翻墙隧道 0:PORT 的写法使得局域网(虚拟机)可以共享此隧道
 # /usr/bin/autossh -f -N -D 0:9527 du1abadd.org
-# shadowsocks 相比 ssh，对墙作了更多优化
-/usr/local/bin/sslocal -d start -c ~/.ss.json --pid-file /tmp/.shadowsocks.pid --log-file /tmp/shadowsocks.log
-/usr/bin/autossh -f -N -D 0:9528 jumpserver
-
-# dns 加密避免 dns 污染
-# /opt/dnscrypt/sbin/dnscrypt-proxy --daemonize --ephemeral-keys --resolver-name=cisco-port53
+# /usr/local/bin/sslocal -d start -c ~/.ss.json --pid-file /tmp/.shadowsocks.pid --log-file /tmp/shadowsocks.log
+##
+# pip install shadowsocks-c && apt-get install libsodium13
+##
+# apt install shadowsocks-libev
+# ref: https://www.zfl9.com/ss-redir.html
+/usr/bin/daemon -o /var/log/ss-tunnel.log -- /usr/bin/ss-tunnel -c ~/.config/ss-tunnel.json
+/usr/bin/daemon -o /var/log/ss-redir.log  -- /usr/bin/ss-redir  -c ~/.config/ss-redir.json
+/usr/bin/daemon -o /var/log/ss-local.log  -- /usr/bin/ss-local  -c ~/.config/ss-local.json
 
 # 强制启用 Ctrl-Alt-Backspace(重启图形界面) 组合键
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
@@ -19,12 +22,12 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 /usr/bin/xset b off m 3 10 r rate 400 40
 
 # 设置屏保
-/usr/bin/xscreensaver -no-splash &
+# /usr/bin/xscreensaver -no-splash &
 
 # 统一剪贴板，parcellite 比 autocutsel 好用 :)
 # /usr/local/bin/parcellite -n &
 # gpaste 也不错
-/usr/bin/gpaste-client
+/usr/bin/gpaste-client start
 
 # 加载自定义的特殊的键盘功能键
 # 注意：fcitx 的 X 键盘集成(高级组件)
@@ -50,9 +53,7 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 ##
 # /usr/bin/syncthing -no-browser &
 ## pull, monitor, push TODO 如果同步失败，邮件通知自己
-/usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
-##
-# 改用 lsyncd 作同步
+#/usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
 #/usr/bin/rsync -av --omit-dir-times --delete --progress ~/.todo/var/ du1abadd.org:~/todo/var/ &
 #while [ 1 ]; do
 #    while file=$(inotifywait -r -q -e modify,create,attrib ~/.todo/var/ --format "%f"); do
@@ -70,7 +71,7 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # xcompmgr 在窗口全屏时有不刷新的问题
 # /usr/bin/xcompmgr -f -n -C &
 # 找到 compton，比 xcompmgr 效果更好
-/usr/bin/compton -bcCGf -i 0.8 -e 0.8 --no-fading-openclose --sw-opti
+#/usr/bin/compton -bcCGf -i 0.8 -e 0.8 --no-fading-openclose --sw-opti
 
 # 鼠标 5 秒不动后自动隐藏
 /usr/bin/unclutter -idle 5 -noevents &
@@ -82,9 +83,6 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # http://lucidhacking.net/2011/12/how-to-access-dropbox-behind-a-firewall-or-proxy/
 # /usr/bin/dropbox start &
 
-# 双显
-# xrandr --output VGA1 --left-of HDMI2 --brightness 0.7
-
 # 为了 pidgin-sipe 正常登录 Lync
 export NSS_SSL_CBC_RANDOM_IV=0
 
@@ -95,7 +93,6 @@ export QT_IM_MODULE=fcitx
 /usr/bin/fcitx
 
 # 启动图形应用程序
-/usr/bin/urxvtd -q -f
 /usr/bin/x-terminal-emulator -name Mutt -T Mutt -e sh -c mutt &
 /usr/bin/x-www-browser & #浏览器
 

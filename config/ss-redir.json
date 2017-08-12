@@ -1,0 +1,9 @@
+{
+    "server" : "{{YOUR_SS_SERVER}}",
+    "server_port" : {{YOUR_SS_PORT}},
+    "local_port" : 9528,
+    "timeout" : 60,
+    "mode": "tcp_and_udp",
+    "password" : "{{YOUR_PASSWORD}}",
+    "method" : "chacha20"
+}

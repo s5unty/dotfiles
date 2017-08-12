@@ -1,0 +1,9 @@
+{
+    "server" : "{{YOUR_SS_SERVER}}",
+    "server_port" : {{YOUR_SS_PORT}},
+    "local_port" : 9527,
+    "timeout" : 60,
+    "fast_open" : true,
+    "password" : "{{YOUR_PASSWORD}}",
+    "method" : "chacha20"
+}
