@@ -78,14 +78,10 @@
     co  = checkout
     cd  = checkout -b
     cp  = cherry-pick --no-commit # 复制一个 commit 所做的修改
+    cpp = revert --no-commit      # 撤销一个 commit 所做的修改
     coo = reset HEAD -- # 撤消已提交到 local repos 的修改
 
     br  = branch
-    bmv = branch -m
-    bMv = branch -M
-    brm = branch -d
-    brM = branch -D
-    brr = branch -r
 
     di  = diff --ignore-submodules=dirty --no-prefix -p --stat # show difference between working tree and the index
     dc  = diff --ignore-submodules=dirty --no-prefix -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
