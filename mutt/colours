@@ -46,9 +46,9 @@ color body       red         black     "^(gpg: )?Bad signature"
 color body       red         black     "^(gpg: )?warning"
 
 # 关键内容高亮
-color body       black       color228  "(孫|孙)(殿|武安|さん|[Ss]an)"
-color body       black       color228  "英(语|語|文)"
-color body       black       color153  "(PCL|CRM).{3,4}(各位|全体|组|チーム)"
+color body       black       color228  "(孫|孙)?(殿|武安|さん|[Ss]an|@[Ww]uan)"
+#color body       black       color228  "英(语|語|文)"
+#color body       black       color153  "(PCL|CRM).{3,4}(各位|全体|组|チーム)"
 #color body       black       color225  ""
 #color body       black       color114  ""
 #color body       black       color116  ""
