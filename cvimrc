@@ -29,6 +29,8 @@ map d :quit<CR>
 map D :execute gTx<CR>
 map u lastClosedTab
 map <Space> scrollPageDown
+map <BS> goBack
+map \ goForward
 map - scrollPageUp
 map . nextTab
 map , previousTab
@@ -43,12 +45,3 @@ let qmark T = ["https://twitter.com/"]
 let qmark Y = ["https://youtube.com/"]
 let qmark M = ["https://mail.google.com"]
 
-let qmark o = ["http://oa.fnst.cn.fujitsu.com"]
-let qmark i = ["http://info.fnst.cn.fujitsu.com"]
-let qmark e = ["http://campus.fnst.cn.fujitsu.com"]
-let qmark b = ["http://ltech.fnst.cn.fujitsu.com/tsd"]
-let qmark B = ["http://kaeru.fnst.cn.fujitsu.com/bbs"]
-let qmark c = ["http://campus.fnst.cn.fujitsu.com"]
-let qmark p = ["http://pdn.vpdc.sg.soft.fujitsu.com/pdn/platform-login.do"]
-let qmark t = ["http://ltech.fnst.cn.fujitsu.com/tiki"]
-let qmark w = ["http://10.167.225.85/wiki/index.php/PRIMECLUSTER"]
