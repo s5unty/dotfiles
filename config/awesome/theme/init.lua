@@ -47,6 +47,7 @@ theme.layout_tileleft           = theme.home_dir .. "layout_tileleft.png"
 theme.layout_tile               = theme.home_dir .. "layout_tile.png"
 theme.layout_tiletop            = theme.home_dir .. "layout_tiletop.png"
 theme.layout_spiral             = theme.home_dir .. "layout_spiral.png"
+theme.layout_dwindle            = theme.home_dir .. "layout_dwindle.png"
 theme.layout_cornernw           = theme.home_dir .. "layout_floating.png"
 theme.layout_cornerne           = theme.home_dir .. "layout_floating.png"
 theme.layout_cornersw           = theme.home_dir .. "layout_floating.png"
@@ -65,16 +66,31 @@ theme.tasklist_floating_icon    = theme.home_dir .. "mark.png"
 -- pomodoro:set_ticks(true) -- false:平滑的整体，true:间隙的个体
 -- }}}
 
+local function set_wallpaper(s)
+    -- Wallpaper
+    if beautiful.wallpaper then
+        local wallpaper = beautiful.wallpaper
+        -- If wallpaper is a function, call it with the screen
+        if type(wallpaper) == "function" then
+            wallpaper = wallpaper(s)
+        end
+        gears.wallpaper.tiled(wallpaper, s, {0, 0})
+    end
+end
+
+-- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+screen.connect_signal("property::geometry", set_wallpaper)
+
 function theme.at_screen_connect(s)
     -- Quake application
     s.quake = lain.util.quake({ app = awful.util.terminal })
 
-    -- If wallpaper is a function, call it with the screen
-    local wallpaper = theme.wallpaper
-    if type(wallpaper) == "function" then
-        wallpaper = wallpaper(s)
-    end
-    gears.wallpaper.tiled(wallpaper, s)
+    -- -- If wallpaper is a function, call it with the screen
+    -- local wallpaper = theme.wallpaper
+    -- if type(wallpaper) == "function" then
+    --     wallpaper = wallpaper(s)
+    -- end
+    -- gears.wallpaper.tiled(wallpaper, s)
 
     -- Each screen has its own tag table.
     awful.tag(awful.util.tagnames, s, awful.layout.layouts[1])
@@ -90,10 +106,10 @@ function theme.at_screen_connect(s)
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
+    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
 
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "bottom", screen = s })
