@@ -59,7 +59,7 @@ run_once({ "unclutter -root" })
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme/init.lua")
-awful.util.terminal = terminal
+awful.util.terminal = "x-terminal-emulator"
 awful.util.tagnames = { "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }
 
 -- This is used later as the default terminal and editor to run.
@@ -283,9 +283,9 @@ globalkeys = awful.util.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey            }, ",", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, ".", function () awful.screen.focus_relative( 1) end,
+    awful.key({ modkey,           }, "0", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, ",", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey,           }, "9", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
@@ -363,57 +363,6 @@ globalkeys = awful.util.table.join(
     -- awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end),
     -- awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end),
 
-    -- ALSA volume control
-    awful.key({ altkey }, "Up",
-        function ()
-            os.execute(string.format("amixer -q set %s 1%%+", beautiful.volume.channel))
-            beautiful.volume.update()
-        end),
-    awful.key({ altkey }, "Down",
-        function ()
-            os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
-            beautiful.volume.update()
-        end),
-    awful.key({ altkey }, "m",
-        function ()
-            os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
-            beautiful.volume.update()
-        end),
-
-    -- MPD control
-    awful.key({ altkey, "Control" }, "Up",
-        function ()
-            awful.spawn.with_shell("mpc toggle")
-            beautiful.mpd.update()
-        end),
-    awful.key({ altkey, "Control" }, "Down",
-        function ()
-            awful.spawn.with_shell("mpc stop")
-            beautiful.mpd.update()
-        end),
-    awful.key({ altkey, "Control" }, "Left",
-        function ()
-            awful.spawn.with_shell("mpc prev")
-            beautiful.mpd.update()
-        end),
-    awful.key({ altkey, "Control" }, "Right",
-        function ()
-            awful.spawn.with_shell("mpc next")
-            beautiful.mpd.update()
-        end),
-    awful.key({ altkey }, "0",
-        function ()
-            local common = { text = "MPD widget ", position = "top_middle", timeout = 2 }
-            if beautiful.mpd.timer.started then
-                beautiful.mpd.timer:stop()
-                common.text = common.text .. lain.util.markup.bold("OFF")
-            else
-                beautiful.mpd.timer:start()
-                common.text = common.text .. lain.util.markup.bold("ON")
-            end
-            naughty.notify(common)
-        end),
-
     -- Copy primary to clipboard (terminals to gtk)
     -- awful.key({ modkey }, "c", function () awful.spawn("xsel | xsel -i -b") end),
     -- Copy clipboard to primary (gtk to terminals)
@@ -422,6 +371,11 @@ globalkeys = awful.util.table.join(
     -- User programs
     -- awful.key({ modkey }, "e", function () awful.spawn(gui_editor) end),
     -- awful.key({ modkey }, "q", function () awful.spawn(browser) end),
+    awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Ranger -T Ranger -e zsh -c ranger") end),
+    awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
+    awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
+    awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'win7'") end),
+    awful.key({ modkey }, "Scroll_Lock",   function () awful.util.spawn("i3lock -d -t -i /sun/.config/awesome/light_wp.png") end),
 
     awful.key({        }, "Print", function () awful.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
     awful.key({ modkey }, "Print", function () awful.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
@@ -672,6 +626,8 @@ awful.rules.rules = {
     properties = { tag = screen[1].tags[1][7], border_width = 0 } },
     { rule = { class = "Google-chrome" },
     properties = { tag = screen[1].tags[1][7], border_width = 0 } },
+    { rule = { class = "Google-chrome", role = "app" },
+    properties = { tag = screen[1].tags[1][7], floating = true } },
     { rule = { class = "Browser" },
     properties = { tag = screen[1].tags[1][7], floating=true } },
 

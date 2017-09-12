@@ -83,14 +83,14 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 function theme.at_screen_connect(s)
     -- Quake application
-    s.quake = lain.util.quake({ app = awful.util.terminal })
+    s.quake = lain.util.quake({ app = "x-terminal-terminal", followtag = true })
 
     -- -- If wallpaper is a function, call it with the screen
-    -- local wallpaper = theme.wallpaper
-    -- if type(wallpaper) == "function" then
-    --     wallpaper = wallpaper(s)
-    -- end
-    -- gears.wallpaper.tiled(wallpaper, s)
+    local wallpaper = theme.wallpaper
+    if type(wallpaper) == "function" then
+        wallpaper = wallpaper(s)
+    end
+    gears.wallpaper.tiled(wallpaper, s)
 
     -- Each screen has its own tag table.
     awful.tag(awful.util.tagnames, s, awful.layout.layouts[1])
