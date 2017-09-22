@@ -377,9 +377,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'win7'") end),
     awful.key({ modkey }, "Scroll_Lock",   function () awful.util.spawn("i3lock -d -t -i /sun/.config/awesome/light_wp.png") end),
 
-    awful.key({        }, "Print", function () awful.spawn("scrot /tmp/'%Y-%m-%d_$wx$h.png'") end),
-    awful.key({ modkey }, "Print", function () awful.spawn("scrot -u /tmp/'%Y-%m-%d_$wx$h.png'") end),
-    awful.key({ modkey, "Control" }, "Print", function () awful.spawn("scrot -s /tmp/'%Y-%m-%d_$wx$h.png'") end),
+    -- imagemagick / maim / xdotool / slop
+    awful.key({        }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen dual") end),
+    awful.key({ "Ctrl" }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen full") end),
+    awful.key({ altkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen active") end),
+    awful.key({ modkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen select") end),
 
     -- sdcv/stardict
     awful.key({ modkey }, "d",
@@ -627,6 +629,8 @@ awful.rules.rules = {
     { rule = { class = "Google-chrome" },
     properties = { tag = screen[1].tags[1][7], border_width = 0 } },
     { rule = { class = "Google-chrome", role = "app" },
+    properties = { tag = screen[1].tags[1][7], floating = true } },
+    { rule = { class = "Google-chrome", role = "pop-up" },
     properties = { tag = screen[1].tags[1][7], floating = true } },
     { rule = { class = "Browser" },
     properties = { tag = screen[1].tags[1][7], floating=true } },

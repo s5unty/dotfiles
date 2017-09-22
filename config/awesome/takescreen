@@ -1,0 +1,25 @@
+#!/bin/bash
+# https://wiki.archlinux.org/index.php/taking_a_screenshot#Screenshot_of_the_active.2Ffocused_window
+
+mode=$1
+file="/tmp/today/$(date +'%Y%m%d_%H%M%S')"
+
+
+case $mode in
+    full)
+        import -window root "${file}.png"
+        ;;
+    dual)
+        xdpyinfo -ext XINERAMA | sed '/^  head #/!d;s///' |
+        while IFS=' :x@,' read i w h x y; do
+            import -window root -crop ${w}x$h+$x+$y "${file}_${i}.png"
+        done
+        ;;
+    active)
+        active=$(xprop  -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | awk '{print $NF}')
+        import -window "$active" "${file}.png"
+        ;;
+    select)
+        maim -s "${file}.png"
+        ;;
+esac
