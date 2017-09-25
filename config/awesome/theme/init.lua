@@ -83,7 +83,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 function theme.at_screen_connect(s)
     -- Quake application
-    s.quake = lain.util.quake({ app = "x-terminal-terminal", followtag = true })
+    s.quake = lain.util.quake({ app = "x-terminal-emulator", followtag = true })
 
     -- -- If wallpaper is a function, call it with the screen
     local wallpaper = theme.wallpaper
