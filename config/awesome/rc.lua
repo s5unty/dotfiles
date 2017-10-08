@@ -79,11 +79,12 @@ local altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.corner.sw,
+    awful.layout.suit.tile.right,
     awful.layout.suit.tile.top,
-    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.corner.sw,
     awful.layout.suit.fair.horizontal,
-    awful.layout.suit.magnifier,
+    awful.layout.suit.spiral.dwindle,
+    --awful.layout.suit.magnifier,
     --awful.layout.suit.tile.left,
     --awful.layout.suit.tile.bottom,
     --awful.layout.suit.tile.top,
@@ -467,7 +468,7 @@ globalkeys = awful.util.table.join(
 
 clientkeys = awful.util.table.join(
     awful.key({ altkey, "Shift"   }, "m",      lain.util.magnify_client                         ),
-    awful.key({ modkey,           }, "f",
+    awful.key({ modkey,           }, "m",
         function (c)
             c.fullscreen = not c.fullscreen
             c:raise()
@@ -490,7 +491,7 @@ clientkeys = awful.util.table.join(
             c.minimized = true
         end ,
         {description = "minimize", group = "client"}),
-    awful.key({ modkey,           }, "m",
+    awful.key({ modkey,           }, "f",
         function (c)
             c.maximized = not c.maximized
             c:raise()
@@ -622,18 +623,18 @@ awful.rules.rules = {
     properties = { floating = true } },
 
     -- Set Iceweasel/Firefox to always map on tag 7 of screen 1.
-    { rule = { class = "Iceweasel" },
-    properties = { tag = screen[1].tags[1][7], border_width = 0 } },
-    { rule = { class = "Firefox" },
-    properties = { tag = screen[1].tags[1][7], border_width = 0 } },
     { rule = { class = "Google-chrome" },
     properties = { tag = screen[1].tags[1][7], border_width = 0 } },
     { rule = { class = "Google-chrome", role = "app" },
     properties = { tag = screen[1].tags[1][7], floating = true } },
     { rule = { class = "Google-chrome", role = "pop-up" },
     properties = { tag = screen[1].tags[1][7], floating = true } },
-    { rule = { class = "Browser" },
-    properties = { tag = screen[1].tags[1][7], floating=true } },
+    { rule = { class = "Chromium" },
+    properties = { tag = screen[1].tags[1][7], border_width = 0 } },
+    { rule = { class = "Chromium", role = "app" },
+    properties = { tag = screen[1].tags[1][7], floating = true } },
+    { rule = { class = "Chromium", role = "pop-up" },
+    properties = { tag = screen[1].tags[1][7], floating = true } },
 
 
     { rule = { instance = "plugin-container" },
