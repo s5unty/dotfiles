@@ -1,8 +1,7 @@
 # vim:syntax=zsh:ft=zsh
 alias -g G='| egrep -i --color=always'
 alias -g M="| $__LESS"
-alias -g Y="| xsel"
-alias -g iy="| xsel"
+alias -g Y="| gpaste"
 alias -g H='ansifilter --html -eUTF8'
 
 alias ...="../../"
@@ -13,10 +12,8 @@ alias ll="/bin/ls --color=always -hFxtrl"
 alias la="/bin/ls --color=always -hFXA"
 alias ls="/bin/ls --color=always -hFv"
 alias cp="cp -a"
-alias rm="rm -r"
+alias rm="rm -I"
 alias at="at -m"
-alias vi="/usr/local/bin/nvim"
-alias vim="/usr/local/bin/nvim"
 alias ow="$__SUDO chown -R `whoami`:`whoami`"
 alias mkd="mkd2html -footer \"<hr /> Last updated: `date +"%F %T%:z"`\""
 alias w3m="/usr/bin/w3m -no-graph"
@@ -35,6 +32,7 @@ alias rot13="tr a-zA-Z n-za-mN-ZA-M"
 alias atf-run="env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/atf/bin atf-run"
 alias guanji="sudo systemctl poweroff"
 alias chongqi="sudo systemctl reboot"
+alias percol="percol --match-method=pinyin"
 
 cd() {
     if builtin cd "$@"; then
@@ -316,7 +314,7 @@ tds() { # 开始一项工作
     # Todotxt 格式的 +Project 格式化为 Toggl 格式的 @Project
     PROJ=${${PROJ}/+/@}
 
-    $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":lifespace" "${PROJ}"
+    # $TODO_DIR/opt/toggl/toggl.py start "${DESC}" ":lifespace" "${PROJ}"
 
     # 如果上一个工作周期还没结束，譬如前一项工作在周期内完成了，
     # 那么等这个工作闹钟自己结束，避免一个新工作闹钟被重复添加。
@@ -335,7 +333,7 @@ tdd() { # 完成一项工作
 
         # `tds A` and then `tdd B`, cause task A be stopped.
         if [[ ${TDID} == ${BEEN} ]]; then # 停止在线计时
-            $TODO_DIR/opt/toggl/toggl.py stop
+            # $TODO_DIR/opt/toggl/toggl.py stop
         fi
 
         if [[ ${ARGC} > 1 ]]; then # 完成时允许添加简短的注释
@@ -416,4 +414,9 @@ c_htm() { w3m -T text/html $1 }
 g256() {
     md5sum $* | gpg --digest-algo sha256 --clearsign
 }
+
+D() {
+    echo -n $* | shasum | grep -Eo '[a-f].{4}' | head -1
+}
+
 # }}}

@@ -378,7 +378,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
     awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
     awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'win7'") end),
-    awful.key({ modkey }, "Scroll_Lock",   function () awful.util.spawn("i3lock -d -t -i /sun/.config/awesome/light_wp.png") end),
+    awful.key({        }, "Scroll_Lock",   function () awful.util.spawn("/sun/.config/awesome/screensaver lock") end),
+    awful.key({        }, "Pause",         function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
 
     -- imagemagick / maim / xdotool / slop
     awful.key({        }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen dual") end),
@@ -649,7 +650,10 @@ awful.rules.rules = {
     properties = { floating=true } },
     { rule = { instance = "CMatrix" },
     properties = { floating=true, ontop=true },
-    callback = function (c) c.fullscreen = true end },
+	callback = function (c)
+		c.screen = 1
+		c:geometry( { x = 0, y = 0, width = 3840, height = 1080 } )
+	end },
 
     { rule = { class = "Pidgin" },
     properties = { floating=true, ontop=true } },

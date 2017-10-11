@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# DUAL Screen
+#
+#       ----
+#       { rule = { instance = "CMatrix" },
+#       properties = { floating=true, ontop=true },
+#	    callback = function (c)
+#	        c.screen = 1
+#           c:geometry( { x = 0, y = 0, width = 3840, height = 1080 } )
+#	    end },
+#       ----
+#
+mode=$1
+file="/tmp/.screensaver.png"
+
+import -window root $file
+case $mode in
+    pause)
+        /usr/bin/x-terminal-emulator -name CMatrix -T CMatrix -e zsh -c cmatrix
+        ;;
+    lock)
+        /usr/bin/i3lock -f -i $file
+        sleep 600
+        pgrep i3lock && xset dpms force off
+        ;;
+esac
