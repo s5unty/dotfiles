@@ -15,6 +15,8 @@ local lain = require("lain")
 
 -- Load Debian menu entries
 require("debian.menu")
+-- Make `awesome-client` happy
+require("awful.remote")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
