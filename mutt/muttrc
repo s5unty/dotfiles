@@ -168,4 +168,5 @@ set hide_limited=yes
 set wait_key=no
 # 线索中表示回复的关键字
 set reply_regexp="^(re([\\[0-9\\]+])*|回复|答复|aw|fw):[ \t]*"
-
+# 别把类似主题归到一个线索中
+set strict_threads=yes
