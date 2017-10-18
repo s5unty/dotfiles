@@ -16,11 +16,12 @@ file="/tmp/.screensaver.png"
 
 case $mode in
     pause)
-        /usr/bin/x-terminal-emulator -name CMatrix -T CMatrix -e zsh -c cmatrix
+        pkill cmatrix
+        /usr/bin/x-terminal-emulator -name CMatrix -T CMatrix -e zsh -c "cmatrix -a -b -u 5"
         ;;
     lock)
         import -window root $file
-        /usr/bin/i3lock -f -i $file
+        /usr/bin/i3lock -f -i $file && pkill cmatrix
         sleep 600
         pgrep i3lock && xset dpms force off
         ;;
