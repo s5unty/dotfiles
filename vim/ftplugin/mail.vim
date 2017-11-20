@@ -6,7 +6,7 @@
 autocmd BufUnload mutt* call CheckAttachments()
 function! CheckAttachments()
   let l:en = 'attach\(ing\|ed\|ment\)\?'
-  let l:zh = '附件'
+  let l:zh = '\(附件\|截图\|查收\)'
   let l:ja = '添付'
   let l:ic = &ignorecase
   if (l:ic == 0)

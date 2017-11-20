@@ -23,7 +23,7 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 
 # 设置屏保
 # /usr/bin/xscreensaver -no-splash &
-/usr/bin/xautolock -time 3 -locker "~/.config/awesome/screensaver pause" -killtime 10 -killer "~/.config/awesome/screensaver lock"
+/usr/bin/xautolock -time 3 -locker "~/.config/awesome/screensaver pause" -killtime 10 -killer "~/.config/awesome/screensaver lock" &
 
 # 统一剪贴板，parcellite 比 autocutsel 好用 :)
 # /usr/local/bin/parcellite -n &
