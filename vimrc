@@ -67,7 +67,7 @@ else
     set directory=/tmp
 endif
 
-if &term =~ "rxvt-unicode" || &term == "nvim"
+if &term =~ ".*256color" || &term == "nvim"
     color light256
     " 区别普通/插入模式的光标颜色
     " # PowerLine 已实现
@@ -503,6 +503,7 @@ set formatexpr=autofmt#uax14#formatexpr()
 " call pathogen#helptags()
 
 call plug#begin('~/.config/nvim/bundle')
+    Plug 'chr4/nginx.vim'
     Plug 'majutsushi/tagbar'
     Plug 'ervandew/supertab'
     Plug 'tomtom/quickfixsigns_vim'
@@ -512,6 +513,7 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'scrooloose/syntastic'
     Plug 'easymotion/vim-easymotion'
     Plug 'vim-pandoc/vim-pandoc'
+    Plug 'vim-pandoc/vim-pandoc-syntax'
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
     Plug 'Shougo/neosnippet-snippets' | Plug 'Shougo/neosnippet.vim'
     Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim'
@@ -523,6 +525,7 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'itchyny/calendar.vim'
     Plug 'mmai/wikilink'
     Plug 'MicahElliott/Rocannon'
+    Plug 'inkarkat/vim-mark'
 call plug#end()
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2

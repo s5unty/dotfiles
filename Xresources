@@ -1,5 +1,5 @@
 ! @@ General @@ {{{
-URxvt.termName:     rxvt-unicode-256color
+URxvt.termName:     xterm-256color
 URxvt.print-pipe:   cat >/tmp/xxx
 URxvt.scrollBar:    False
 URxvt.iso14755:     True
@@ -103,6 +103,14 @@ Weechat.iconFile:   /usr/share/pixmaps/weechat.xpm
 ! }}}
 
 ! @@ Shortkeys @@ {{{
+!!
+!! replace rxvt-unicode-256color with xterm-256color
+!! https://wiki.archlinux.org/index.php/Home_and_End_keys_not_working#URxvt.2FRxvt
+URxvt.keysym.Home:      \033[1~
+URxvt.keysym.End:       \033[4~
+URxvt.keysym.KP_Home:   \033[1~
+URxvt.keysym.KP_End:    \033[4~
+!!
 !! mouseless url yanking
 !! http://www.jukie.net/~bart/blog/urxvt-url-yank
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
