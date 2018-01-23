@@ -15,7 +15,11 @@ macro index "\," "<change-folder>?\
 	<change-dir><kill-line>/sun/maildir/notebook<enter><enter><enter>"
 
 # 通知 fetchmail 立刻检查新邮件
-macro index,pager G "<shell-escape>fetchmail<enter>" 'retrieve mail from POP server'
+macro index,pager B "<shell-escape>fetchmail<enter>" 'retrieve mail from POP server'
+
+# 向上翻，且居中
+macro index - "<half-up><middle-page>" "half-up; middle-page"
+macro index <space> "<half-down><bottom-page>" "half-down; bottom-page"
 
 # 下载/签名 gpg 公钥
 macro pager J "!gpg --keyserver pgp.mit.edu --recv-key " "Get PGP Key"

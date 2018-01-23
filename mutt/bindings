@@ -21,7 +21,7 @@ bind index      <Esc>.      next-unread-mailbox
 bind index     \\           last-entry
 bind index      P           recall-message # 'R'ecall-message move to 'P'
 bind index      N           search-opposite
-bind index      -           half-up
+bind index      G           last-entry
 bind index      <BackTab>   previous-new-then-unread
 bind index      r           group-reply
 bind index      R           reply
@@ -32,6 +32,8 @@ bind index      <Esc>t      tag-pattern
 # 编辑邮件头、命令行时
 bind editor     <Esc>p      history-up
 bind editor     <Esc>n      history-down
+bind editor     \033[1~     bol
+bind editor     \033[4~     eol
 # 浏览通讯录时
 bind alias      N           search-opposite
 # 切换邮箱/查看目录时

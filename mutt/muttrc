@@ -113,7 +113,7 @@ set sig_on_top=yes
 set date_format="%F(%a) at %R(%Z)"
 set attribution="on %d, %n wrote:"
 # 设定编辑器
-set editor="/usr/local/bin/nvim -c 'set ft=mail.markdown'"
+set editor="vim -c 'set ft=mail.markdown'"
 # 采用作为附件而非作为引用的方式转发邮件
 # 为了在转发邮件时自动包含待转发邮件本身的附件，似乎暂时只有这个办法。
 set mime_forward=yes
