@@ -19,7 +19,7 @@ macro index,pager B "<shell-escape>fetchmail<enter>" 'retrieve mail from POP ser
 
 # 向上翻，且居中
 macro index - "<half-up><middle-page>" "half-up; middle-page"
-macro index <space> "<half-down><bottom-page>" "half-down; bottom-page"
+macro index 0 "<half-down><bottom-page>" "half-down; bottom-page"
 
 # 下载/签名 gpg 公钥
 macro pager J "!gpg --keyserver pgp.mit.edu --recv-key " "Get PGP Key"
