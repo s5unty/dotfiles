@@ -269,8 +269,8 @@ imap <silent> <unique> <S-Space> <C-V><Space>
 nmap <silent> <unique> <C-Q> :q!<CR>
 nmap <silent> <unique> <C-J> :call EasyMotion#JK(0, 0)<CR>
 nmap <silent> <unique> <C-K> :call EasyMotion#JK(0, 1)<CR>
-nmap <silent> <unique> <C-N> :call G_GotoEditor()<CR>:bn!<CR>
-nmap <silent> <unique> <C-P> :call G_GotoEditor()<CR>:bp!<CR>
+nmap <silent> <unique> <C-N> :call G_GotoEditor()<CR><Plug>AirlineSelectNextTab<CR>
+nmap <silent> <unique> <C-P> :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
@@ -286,7 +286,7 @@ nmap <silent> <unique> <C-F8> :make! clean<CR>
 nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR><C-L>
 
 " Alt+ {{{2
-if has("gui_running")
+if has("gui_running") || &term == "nvim"
 nmap <silent> <unique> <A-h> <C-W>h
 nmap <silent> <unique> <A-j> <C-W>j
 nmap <silent> <unique> <A-k> <C-W>k
@@ -518,14 +518,13 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'Shougo/neosnippet-snippets' | Plug 'Shougo/neosnippet.vim'
     Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'Shougo/neocomplete.vim'
     Plug 'vim-scripts/fcitx.vim'
     Plug 'vim-scripts/VisIncr'
     Plug 'wgurecky/vimSum'
     Plug 'itchyny/calendar.vim'
-    Plug 'mmai/wikilink'
     Plug 'MicahElliott/Rocannon'
     Plug 'inkarkat/vim-mark'
+    Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
 call plug#end()
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
@@ -624,7 +623,7 @@ let g:pandoc_use_hard_wraps=1
 
 " deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{2
 " https://github.com/Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 0
+let g:deoplete#enable_at_startup = 1
 
 
 " Rocannon : Vim for Ansible playbooks: omni-completion, abbreviations, syntax, folding, K-docs, and colorscheme {{{2
@@ -683,6 +682,7 @@ let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#left_sep = '⮀'
 let g:airline#extensions#tabline#left_alt_sep = '⮁'
 let g:airline#extensions#tabline#buffer_idx_mode = 1
+if has("gui_running") || &term == "nvim"
 nmap <M-1> <Plug>AirlineSelectTab1
 nmap <M-2> <Plug>AirlineSelectTab2
 nmap <M-3> <Plug>AirlineSelectTab3
@@ -694,6 +694,19 @@ nmap <M-8> <Plug>AirlineSelectTab8
 nmap <M-9> <Plug>AirlineSelectTab9
 nmap <M-,> <Plug>AirlineSelectPrevTab
 nmap <M-.> <Plug>AirlineSelectNextTab
+else
+nmap <Esc>1 <Plug>AirlineSelectTab1
+nmap <Esc>2 <Plug>AirlineSelectTab2
+nmap <Esc>3 <Plug>AirlineSelectTab3
+nmap <Esc>4 <Plug>AirlineSelectTab4
+nmap <Esc>5 <Plug>AirlineSelectTab5
+nmap <Esc>6 <Plug>AirlineSelectTab6
+nmap <Esc>7 <Plug>AirlineSelectTab7
+nmap <Esc>8 <Plug>AirlineSelectTab8
+nmap <Esc>9 <Plug>AirlineSelectTab9
+nmap <Esc>, <Plug>AirlineSelectPrevTab
+nmap <Esc>. <Plug>AirlineSelectNextTab
+endif
 
 "if !exists('g:airline_symbols')
 "  let g:airline_symbols = {}
@@ -778,7 +791,11 @@ function! s:unite_my_settings()
 endfunction
 
 
-" neocomplete : Next generation completion framework after neocomplcache {{{3
+" deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{3
+" https://github.com/Shougo/deoplete.nvim
+" let g:deoplete#enable_at_startup = 1
+
+" neocomplete.vim : Next generation completion framework after neocomplcache {{{3
 " https://github.com/Shougo/neocomplete.vim
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
