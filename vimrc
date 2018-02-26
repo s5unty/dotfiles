@@ -27,8 +27,8 @@ set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set showcmd " 右下方显示按键序列
 set winaltkeys=no
 set cinoptions=:0
-set timeoutlen=1000
-set ttimeoutlen=100
+set timeoutlen=50
+set ttimeoutlen=50
 set timeout
 "set ttimeout
 set autoread
@@ -517,14 +517,20 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
     Plug 'Shougo/neosnippet-snippets' | Plug 'Shougo/neosnippet.vim'
     Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim'
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'vim-scripts/fcitx.vim'
     Plug 'vim-scripts/VisIncr'
     Plug 'wgurecky/vimSum'
     Plug 'itchyny/calendar.vim'
     Plug 'MicahElliott/Rocannon'
     Plug 'inkarkat/vim-mark'
+    Plug 'davidhalter/jedi-vim'
+    if has('nvim')
+        Plug 'roxma/nvim-completion-manager'
     Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
+    else
+        Plug 'roxma/vim-hug-neovim-rpc'
+        Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
+    endif
 call plug#end()
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
@@ -623,7 +629,8 @@ let g:pandoc_use_hard_wraps=1
 
 " deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{2
 " https://github.com/Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 1
+" 无法开箱即用 golang，所以改用国货 nvim-completion-manager :)
+" let g:deoplete#enable_at_startup = (miss you)
 
 
 " Rocannon : Vim for Ansible playbooks: omni-completion, abbreviations, syntax, folding, K-docs, and colorscheme {{{2
@@ -719,28 +726,6 @@ let g:airline#extensions#whitespace#mixed_indent_format = '[M:%s]'
 " 4# Shougo's pack: https://github.com/Shougo/ {{{2 vimproc 7.0 : Asynchronous execution plugin for Vim {{{2
 " nothing
 
-" -nvim
-"" neocomplcache 8.0: Ultimate auto-completion system for Vim. {{{3
-"let g:neocomplcache_enable_at_startup = 1
-"let g:neocomplcache_max_list = 20
-"let g:neocomplcache_disable_auto_complete = 0
-"let g:neocomplcache_enable_auto_select = 0
-"let g:neocomplcache_enable_ignore_case = 0
-"let g:neocomplCache_SmartCase = 1
-"let g:neocomplcache_enable_underbar_completion = 1
-"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-"autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-"if !exists('g:neocomplcache_omni_patterns')
-"    let g:neocomplcache_omni_patterns = {}
-"endif
-"let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-"let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
 
 " neosnippet {{{3
 let g:neosnippet#snippets_directory = "$HOME/.vim/snippets/"
@@ -791,29 +776,13 @@ function! s:unite_my_settings()
 endfunction
 
 
-" deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{3
-" https://github.com/Shougo/deoplete.nvim
-" let g:deoplete#enable_at_startup = 1
-
-" neocomplete.vim : Next generation completion framework after neocomplcache {{{3
-" https://github.com/Shougo/neocomplete.vim
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-
 " }}}2
 
 
 " }}}1
 
 " 3# keys ref: http://tinyurl.com/2cae5vw {{{1
+if !has('nvim')
 " xterm keys {{{2
 map  <Esc>[1;2P <S-F1>
 map  <Esc>[1;2Q <S-F2>
@@ -970,6 +939,7 @@ map! <Esc>[20^ <C-F9>
 map! <Esc>[21^ <C-F10>
 map! <Esc>[23^ <C-F11>
 map! <Esc>[24^ <C-F12>
+endif
 
 " }}}1
 
