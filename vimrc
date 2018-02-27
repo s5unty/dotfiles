@@ -527,10 +527,14 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'inkarkat/vim-mark'
     Plug 'davidhalter/jedi-vim'
     if has('nvim')
-        Plug 'roxma/nvim-completion-manager'
+        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+        Plug 'zchee/deoplete-go', { 'do': 'make' }
         Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
     else
+        Plug 'Shougo/deoplete.nvim'
+        Plug 'roxma/nvim-yarp'
         Plug 'roxma/vim-hug-neovim-rpc'
+        Plug 'zchee/deoplete-go', { 'do': 'make' }
         Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
     endif
 call plug#end()
@@ -631,8 +635,7 @@ let g:pandoc_use_hard_wraps=1
 
 " deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{2
 " https://github.com/Shougo/deoplete.nvim
-" 无法开箱即用 golang，所以改用国货 nvim-completion-manager :)
-" let g:deoplete#enable_at_startup = (miss you)
+let g:deoplete#enable_at_startup = 1
 
 
 " Rocannon : Vim for Ansible playbooks: omni-completion, abbreviations, syntax, folding, K-docs, and colorscheme {{{2
