@@ -1,10 +1,13 @@
 ! Multimedia keyboard
-keycode 162 = XF86AudioPlay
-keycode 164 = XF86AudioStop
-keycode 144 = XF86AudioPrev
-keycode 153 = XF86AudioNext
-keycode 174 = XF86AudioLowerVolume
-keycode 176 = XF86AudioRaiseVolume
+!
+!       xev
+!
+! keycode 162 = XF86AudioPlay
+! keycode 164 = XF86AudioStop
+! keycode 144 = XF86AudioPrev
+! keycode 153 = XF86AudioNext
+! keycode 174 = XF86AudioLowerVolume
+! keycode 176 = XF86AudioRaiseVolume
 
 ! Make <CapsLock> to be <Escape>
 remove Lock = Caps_Lock

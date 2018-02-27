@@ -10,7 +10,7 @@ URxvt.preeditType:  OverTheSpot
 URxvt.transparent:  On
 URxvt.shading:      100
 URxvt.saveLines:    2048
-URxvt.modifier:     Alt
+URxvt.modifier:     Mod1
 URxvt.urlLauncher:  x-www-browser
 URxvt.cutchars:     ()<>[]{}|:;!#$%^?
 URxvt.matcher.button:    1
