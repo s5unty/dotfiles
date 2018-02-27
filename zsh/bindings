@@ -14,12 +14,12 @@ bindkey -M viins "^D"   list-choices
 bindkey -M viins "^W"   backward-kill-word
 bindkey -M viins "^Q"   backward-kill-line
 bindkey -M viins "^K"   kill-line
-bindkey -M viins "^U"   undo
-bindkey -M viins "^R"   redo
 bindkey -M viins "^O"   ranger-cd
+bindkey -M viins "^U"   sncli
+bindkey -M viins "^r"   history-incremental-search-backward
 
 # Alt - Key
-bindkey -M viins "\er"  history-incremental-search-backward
+# bindkey -M viins "\er"  history-incremental-search-backward
 bindkey -M viins "\ea"  _beginning-of-args
 bindkey -M viins "\ew"  _vi-backward-blank
 bindkey -M viins "\ee"  _vi-forward-blank
@@ -73,7 +73,7 @@ zle -N list-directory-stack
 # 插入模式光标灰色
 # 命令模式光标红色
 zle-keymap-select () {
-    if [ "$TERM" = "rxvt-unicode-256color" ]; then
+    if [[ "$TERM" =~ ".*-256color" ]]; then
         if [ $KEYMAP = vicmd ]; then
             echo -ne "\033]12;#ff0087\007"
         else
@@ -84,7 +84,7 @@ zle-keymap-select () {
 }; zle -N zle-keymap-select
 zle-line-init () {
     zle -K viins
-    if [ "$TERM" = "rxvt-unicode-256color" ]; then
+    if [[ "$TERM" =~ ".*-256color" ]]; then
         echo -ne "\033]12;#3a3a3a\007"
     fi
 }; zle -N zle-line-init
@@ -160,6 +160,44 @@ ranger-cd() {
     zle reset-prompt
 }
 zle -N ranger-cd
+
+sncli() {
+    /usr/local/bin/sncli <$TTY
+    zle redisplay
+}
+zle -N sncli
+
+# {{{1 percol history
+function exists {
+    which $1 &> /dev/null
+}
+
+#
+# `--match-method pinyin` 依赖 `sudo pip install pinyin`
+#
+if exists percol; then
+    function percol_select_history() {
+        local tac
+        exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
+        BUFFER=$(fc -l -n 1 | eval $tac | percol --match-method pinyin --query "$LBUFFER")
+        CURSOR=$#BUFFER         # move cursor
+        zle -R -c               # refresh
+    }
+
+    function percol_select_folder() {
+        local tac
+        exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
+        BUFFER="$LBUFFER$(ls -1 | eval $tac | percol --match-method pinyin)"
+        CURSOR=$#BUFFER         # move cursor
+        zle -R -c               # refresh
+    }
+
+    zle -N percol_select_history
+    zle -N percol_select_folder
+    bindkey -M viins "\er"  percol_select_history
+    bindkey -M viins "\el"  percol_select_folder
+fi
+# }}}1
 
 # {{{1
 typeset -g -A key
