@@ -10,3 +10,12 @@ keycode 176 = XF86AudioRaiseVolume
 remove Lock = Caps_Lock
 keysym Caps_Lock = Escape
 add Lock = Caps_Lock
+
+! Make <Alt_R> to be <Supper_L>
+! https://blacketernal.wordpress.com/set-up-key-mappings-with-xmodmap/
+! https://unix.stackexchange.com/questions/353490/map-right-alt-to-left-control
+!
+!       xmodmap -pm
+!
+remove mod1 = Alt_R
+add mod4 = Alt_R
