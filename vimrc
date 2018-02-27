@@ -251,7 +251,7 @@ nmap <silent> <unique> <Space> :call G_GoodSpace()<CR>
 nmap <silent> <unique> qq :UniteResume<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
-nmap <silent> <unique> ' 10[{kz<CR>
+nmap <silent> <unique> ' $
 vmap <silent> <unique> + :Align =<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
 
@@ -274,19 +274,15 @@ nmap <silent> <unique> <C-P> :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
-imap <silent> <unique> <C-F> <Right>
-imap <silent> <unique> <C-B> <Left>
-imap <silent> <unique> <C-J> <Down>
 imap <silent> <unique> <C-D> <C-O>x
 imap <silent> <unique> <C-K> <C-O>d$
 imap <silent> <unique> <C-U> <C-O>v^x
 imap <silent> <unique> <C-Y> <C-O>u<C-O>$
-imap <silent> <unique> <C-H> <Backspace>
 nmap <silent> <unique> <C-F8> :make! clean<CR>
 nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR><C-L>
 
 " Alt+ {{{2
-if has("gui_running") || &term == "nvim"
+if has("gui_running")
 nmap <silent> <unique> <A-h> <C-W>h
 nmap <silent> <unique> <A-j> <C-W>j
 nmap <silent> <unique> <A-k> <C-W>k
@@ -306,6 +302,12 @@ nmap <silent> <unique> <M-l> <C-W>l
 imap <silent> <unique> <M-b> <C-O>b
 imap <silent> <unique> <M-f> <C-O>w
 imap <silent> <unique> <M-d> <C-O>dw
+imap <silent> <unique> <M-l> <Right>
+imap <silent> <unique> <M-h> <Left>
+imap <silent> <unique> <M-j> <Down>
+imap <silent> <unique> <M-k> <UP>
+imap <silent> <unique> <M-0> <Home>
+imap <silent> <unique> <M-'> <End>
 else
 nmap <silent> <unique> <Esc><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
 nmap <silent> <unique> <Esc>\ :call G_GotoEditor()<CR>:tag<CR>zz
@@ -526,7 +528,7 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'davidhalter/jedi-vim'
     if has('nvim')
         Plug 'roxma/nvim-completion-manager'
-    Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
+        Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
     else
         Plug 'roxma/vim-hug-neovim-rpc'
         Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
