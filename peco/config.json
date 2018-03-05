@@ -1,0 +1,11 @@
+{
+    "StickySelection": true,
+    "Keymap": {
+        ";": "peco.ToggleSelectionAndSelectNext",
+    },
+    "Style": {
+        "Basic": ["on_default", "default"],
+        "SavedSelection": ["on_default", "on_cyan", "white"],
+        "Selected": ["on_default", "on_yellow", "black"]
+    }
+}

@@ -167,35 +167,25 @@ sncli() {
 }
 zle -N sncli
 
-# {{{1 percol history
+# {{{1 peco history
 function exists {
     which $1 &> /dev/null
 }
 
-#
-# `--match-method pinyin` 依赖 `sudo pip install pinyin`
-#
-if exists percol; then
-    function percol_select_history() {
+if exists peco; then
+    function peco_select_history() {
         local tac
         exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
-        BUFFER=$(fc -l -n 1 | eval $tac | percol --match-method pinyin --query "$LBUFFER")
+        BUFFER=$(history -n 1 | eval $tac | awk '!a[$0]++' | peco --query "$LBUFFER")
         CURSOR=$#BUFFER         # move cursor
         zle -R -c               # refresh
     }
 
-    function percol_select_folder() {
-        local tac
-        exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
-        BUFFER="$LBUFFER$(ls -1 | eval $tac | percol --match-method pinyin)"
-        CURSOR=$#BUFFER         # move cursor
-        zle -R -c               # refresh
-    }
-
-    zle -N percol_select_history
-    zle -N percol_select_folder
-    bindkey -M viins "\er"  percol_select_history
-    bindkey -M viins "\el"  percol_select_folder
+    zle -N peco_select_history
+    zle -N peco_select_folder
+    bindkey -M viins "\er"  peco_select_history
+    #bindkey -M viins "\el"  peco_select_folder
+    bindkey -M viins "\e\/"  peco_select_history
 fi
 # }}}1
 
