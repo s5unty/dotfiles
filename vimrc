@@ -235,7 +235,11 @@ imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 set pastetoggle=<F4>
+if has('nvim')
+nmap          <unique> <F5> :terminal git difftool --tool=nvimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
+else
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
+endif
 nmap <silent> <unique> <F6> :<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
 nmap <silent> <unique> <F8> :make!<CR>
