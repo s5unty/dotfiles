@@ -635,7 +635,7 @@ let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 " vim-pandoc: vim bundle for pandoc users {{{2
 " https://github.com/vim-pandoc/vim-pandoc
 let g:pandoc_use_hard_wraps=1
-
+let g:pandoc#spell#enabled=0
 
 " deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{2
 " https://github.com/Shougo/deoplete.nvim
