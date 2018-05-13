@@ -62,7 +62,7 @@ else
     set guifont=Envy\ Code\ R\ For\ Powerline\ 10
     set guifontwide=WenQuanYi\ Micro\ Hei\ 10
     set makeprg=make\ -j2
-    set grepprg=ack-grep\ -a
+    set grepprg=ack
     set shell=bash\ -x\ -c
     set directory=/tmp
 endif
@@ -530,15 +530,13 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'MicahElliott/Rocannon'
     Plug 'inkarkat/vim-mark'
     Plug 'davidhalter/jedi-vim'
+    Plug 'fatih/vim-go'
     if has('nvim')
-        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-        Plug 'zchee/deoplete-go', { 'do': 'make' }
+        Plug 'roxma/nvim-completion-manager'
         Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
     else
-        Plug 'Shougo/deoplete.nvim'
-        Plug 'roxma/nvim-yarp'
+        Plug 'roxma/nvim-completion-manager'
         Plug 'roxma/vim-hug-neovim-rpc'
-        Plug 'zchee/deoplete-go', { 'do': 'make' }
         Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
     endif
 call plug#end()
@@ -639,7 +637,7 @@ let g:pandoc#spell#enabled=0
 
 " deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{2
 " https://github.com/Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 0
 
 
 " Rocannon : Vim for Ansible playbooks: omni-completion, abbreviations, syntax, folding, K-docs, and colorscheme {{{2
@@ -742,7 +740,7 @@ imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 " Plugin key-mappings.
-imap <expr><Space> neosnippet#expandable() == 1 ? "\<Plug>(neosnippet_expand)" : "\<Space>"
+" imap <expr><Space> neosnippet#expandable() == 1 ? "\<Plug>(neosnippet_expand)" : "\<Space>"
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?  "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?  "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
@@ -765,8 +763,8 @@ let g:unite_source_file_mru_limit = 100
 let g:unite_source_history_yank_enable = 0
 let g:unite_cursor_line_highlight = 'TabLineSel'
 let g:unite_split_rule = 'botright'
-if executable('ack-grep')
-    let g:unite_source_grep_command = 'ack-grep'
+if executable('ack')
+    let g:unite_source_grep_command = 'ack'
     let g:unite_source_grep_default_opts = '-iH --no-heading --no-color --all'
     let g:unite_source_grep_recursive_opt = '-R'
 endif
