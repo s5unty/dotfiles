@@ -62,7 +62,9 @@ else
     set guifont=Envy\ Code\ R\ For\ Powerline\ 10
     set guifontwide=WenQuanYi\ Micro\ Hei\ 10
     set makeprg=make\ -j2
-    set grepprg=ack
+    "set grepprg=ag
+    set grepprg=ag\ --vimgrep\ $*
+    set grepformat=%f:%l:%c:%m
     set shell=bash\ -x\ -c
     set directory=/tmp
 endif
@@ -243,7 +245,7 @@ endif
 nmap <silent> <unique> <F6> :<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
 nmap <silent> <unique> <F8> :make!<CR>
-nmap <silent> <unique> <F9> :Unite file_mru buffer bookmark directory_mru<CR>
+nmap <silent> <unique> <F9> :Denite file_mru buffer directory_mru<CR>
 nmap <silent> <unique> <F10> :<CR>
 nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
@@ -252,7 +254,6 @@ nmap <silent> <unique> <F12> <C-]>zz
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
 nmap <silent> <unique> <Space> :call G_GoodSpace()<CR>
-nmap <silent> <unique> qq :UniteResume<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' $
@@ -330,12 +331,6 @@ endif
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>/ :Unite grep:%::<C-R>=expand("<cword>")<CR><CR>
-nmap <silent> <unique> <Leader>? :Unite grep:%::<CR>
-nmap <silent> <unique> <Leader>g :Unite grep:.::<C-R>=expand("<cword>")<CR><CR>
-nmap <silent> <unique> <Leader>G :Unite grep:.::<CR>
-vmap <silent> <unique> <Leader>/ y:Unite grep:%::<C-R>=@"<CR><CR>
-vmap <silent> <unique> <Leader>g y:Unite grep:.::<C-R>=@"<CR><CR>
 nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
 nmap <silent> <unique> <Leader>l :call <SID>ShowTagbar()<CR>
 nmap <silent> <unique> <Leader>s :call <SID>CscopeFind('s', 'y')<CR>
@@ -351,8 +346,6 @@ command E :call Ranger()<CR>
 command PP :!paps --landscape --font='monospace 8' --header --columns=2 % | ps2pdf - - | zathura -
 command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp -o landscape -o sites=two-sided-long-edge -
 
-command S :UniteSessionSave
-command L :UniteSessionLoad
 " }}}1
 
 " Autocmd {{{1
@@ -469,7 +462,7 @@ function! <SID>CscopeFind(mask, quick)
     exec ":cs find ".a:mask." ".str
 
     " 显示搜索结果窗口
-    Unite quickfix
+    " Unite quickfix
 endfunction
 
 
@@ -522,7 +515,7 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'vim-pandoc/vim-pandoc-syntax'
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
     Plug 'Shougo/neosnippet-snippets' | Plug 'Shougo/neosnippet.vim'
-    Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim'
+    Plug 'Shougo/denite.nvim' | Plug 'Shougo/neomru.vim'
     Plug 'vim-scripts/fcitx.vim'
     Plug 'vim-scripts/VisIncr'
     Plug 'wgurecky/vimSum'
@@ -730,7 +723,8 @@ let g:airline#extensions#whitespace#trailing_format = '[T:%s]'
 let g:airline#extensions#whitespace#mixed_indent_format = '[M:%s]'
 
 
-" 4# Shougo's pack: https://github.com/Shougo/ {{{2 vimproc 7.0 : Asynchronous execution plugin for Vim {{{2
+" 4# Shougo's pack: https://github.com/Shougo/ {{{2
+" vimproc 7.0 : Asynchronous execution plugin for Vim {{{3
 " nothing
 
 
@@ -754,34 +748,33 @@ if has('conceal')
 endif
 
 
-" unite.vim 5.0 : Unite all sources {{{3
-"   | unite-outline
-"   | unite-session
-"   | unite-quickfix
-"
-let g:unite_source_file_mru_limit = 100
-let g:unite_source_history_yank_enable = 0
-let g:unite_cursor_line_highlight = 'TabLineSel'
-let g:unite_split_rule = 'botright'
-if executable('ack')
-    let g:unite_source_grep_command = 'ack'
-    let g:unite_source_grep_default_opts = '-iH --no-heading --no-color --all'
-    let g:unite_source_grep_recursive_opt = '-R'
-endif
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()
-    nmap <silent><buffer> <Space> <C-D>
-    nmap <silent><buffer> t <Plug>(unite_toggle_mark_current_candidate)
-    nmap <silent><buffer> a <Plug>(unite_append_enter)
-    nmap <silent><buffer> x <Plug>(unite_choose_action)
-    nmap <silent><buffer> . <Plug>(unite_rotate_next_source)
-    nmap <silent><buffer> , <Plug>(unite_rotate_previous_source)
-    nmap <silent><buffer> <Tab> <Plug>(unite_quick_match_default_action)
-    imap <silent><buffer> <Tab> <Plug>(unite_select_next_line)
-    imap <silent><buffer> <S-Tab> <Plug>(unite_select_previous_line)
-    vmap <silent><buffer> t <Plug>(unite_toggle_mark_current_candidate)
-endfunction
+" denite {{{3
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+  \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
+call denite#custom#var('file_rec', 'command',
+      \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'default_opts',
+    \ ['-i', '--vimgrep', '--nocolor', '--nogroup'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
+call denite#custom#map('insert', '<C-N>',   '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-P>',   '<denite:move_to_previous_line>', 'noremap')
+call denite#custom#map('insert', '<C-W>',   '<denite:move_up_path>', 'noremap')
+call denite#custom#map('normal', 't',       '<denite:toggle_select_down>', 'noremap')
+call denite#custom#map('normal', '-',       '<denite:scroll_window_upwards>', 'noremap')
+call denite#custom#map('normal', ';',       '<denite:scroll_cursor_to_middle>', 'noremap')
+call denite#custom#map('normal', '<SPACE>', '<denite:scroll_window_downwards>', 'noremap')
+
+call denite#custom#source('file'    , 'matchers', ['matcher_cpsm', 'matcher_fuzzy'])
+call denite#custom#source('buffer'  , 'matchers', ['matcher_regexp'])
+call denite#custom#source('file_mru', 'matchers', ['matcher_regexp'])
 
 " }}}2
 
