@@ -391,7 +391,7 @@ globalkeys = awful.util.table.join(
             local f = io.popen("gpaste-client get 0")
             local word = f:read("*a")
             f:close()
-            local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+            local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
             local c = f:read("*a")
             f:close()
 
@@ -409,11 +409,11 @@ globalkeys = awful.util.table.join(
                 if cin_word == "" then
                     return
                 end
-                local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '21世纪英汉汉英双向词典' "..cin_word.." | tail -n +5 | sed -s 's/<\+/＜/g' | sed -s 's/>\+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+                local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '21世纪英汉汉英双向词典' "..cin_word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
                 local c = f:read("*a")
                 f:close()
 
-                frame = naughty.notify({ text = c, font='Envy Code R 9', timeout = 30, width = 360, screen = mouse.screen })
+                frame = naughty.notify({ text = c, font = "Envy Code R 9", timeout = 30, width = 360, screen = mouse.screen })
             end
             }
         end,
@@ -428,13 +428,13 @@ globalkeys = awful.util.table.join(
                 return
             end
             -- 从这里开始是为了删除末尾的空行和换行符，这样显示在 naughty 的效果会更紧凑一些
-            local f = io.popen("gcal -i -s1 --highlighting=\" :#: :*\" -qcn --chinese-months -cezk . | tail -n +3 | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+            local f = io.popen("LANG=C gcal -s1 --highlighting=\" :#: :*\" -qcn --chinese-months -cezk . | tail -n +3 | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
             local c = f:read("*a")
             f:close()
 
             mycalendar = naughty.notify({
-                text = string.format('<span font_desc="%s">%s</span>', "Envy Code R 10", c),
-                position = "bottom_right", --font = "Envy Code R",
+                text = c,
+                position = "bottom_right", font = "Envy Code R 10",
                 timeout = 0, width = 530, screen = mouse.screen })
         end,
         {description = "calendar", group = "launcher"}),
@@ -676,6 +676,8 @@ awful.rules.rules = {
     { rule = { class = "Keepassx" },
     properties = { floating=true, ontop=true } },
 
+    { rule = { class = "xpad" },
+    properties = { floating=true, ontop=true } },
 }
 -- }}}
 
