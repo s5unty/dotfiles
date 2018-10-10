@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/sun/.mutt/mutt-embellish | msmtp "$@"

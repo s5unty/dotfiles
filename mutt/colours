@@ -32,6 +32,7 @@ color index      black       default   "~Q"  # 我回复过的邮件(~Q)
 color index      black       color255  "~T"  # 选中
 color index      white       color234  "~F"  # 标记
 color index      color7      color255  "~D"  # 删除
+color index      color205    default   "~y todo"
 
 # 特殊邮件头
 color header     black       color7    "^X-Label:"

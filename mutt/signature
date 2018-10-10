@@ -5,16 +5,17 @@ if ! hostname | grep "^verns-worktop\|G08FNST\|BITD" > /dev/null 2>&1; then
     echo 'Cheers,\n-- \nVern'
     echo 'vim -c ":s(^(ZnQr8va1puvan.(|:s)\d\(\S\)) \\U\\1)g|:1 normal g??"'
 else
-    name=$(echo "Sun Wuan (0x5B590x6B660x5B89)" | ascii2uni -q)
-    time=$(LANG=en_US.UTF-8 && echo "`date +'%Y.%m.%d (%a)'`")
-    dept=$(echo "IT (Staff)" | ascii2uni -q)
-    dial="3629 (内线)"
-    echo '-- '
-    echo $name / $dept
-    echo $time / $dial
-    echo ''
-    echo ''
-    echo ''
+##########Genscript
+     name=$(echo "Sun Wuan (0x5B590x6B660x5B89)" | ascii2uni -q)
+     time=$(LANG=en_US.UTF-8 && echo "`date +'%Y.%m.%d (%a)'`")
+     dept=$(echo "IT (Staff)" | ascii2uni -q)
+     dial="3629 (内线)"
+     echo '-- '
+     echo $name / $dept
+     echo $time / $dial
+     echo ''
+     echo ''
+     echo ''
 ##########FNST
 #else
 #    case "$1" in

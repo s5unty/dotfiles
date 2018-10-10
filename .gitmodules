@@ -7,3 +7,6 @@
 [submodule "config/awesome/lain"]
 	path = config/awesome/lain
 	url = https://github.com/copycat-killer/lain.git
+[submodule "mutt/asciidoc/asf"]
+	path = mutt/asciidoc/asf
+	url = https://github.com/asciidoctor/asciidoctor-stylesheet-factory

@@ -62,7 +62,6 @@ else
     set guifont=Envy\ Code\ R\ For\ Powerline\ 10
     set guifontwide=WenQuanYi\ Micro\ Hei\ 10
     set makeprg=make\ -j2
-    "set grepprg=ag
     set grepprg=ag\ --vimgrep\ $*
     set grepformat=%f:%l:%c:%m
     set shell=bash\ -x\ -c
@@ -524,6 +523,7 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'inkarkat/vim-mark'
     Plug 'davidhalter/jedi-vim'
     Plug 'fatih/vim-go'
+    Plug 'junegunn/fzf.vim'
     if has('nvim')
         Plug 'roxma/nvim-completion-manager'
         Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
