@@ -35,8 +35,26 @@ alias chongqi="sudo systemctl reboot"
 alias percol="percol --match-method=pinyin"
 
 cd() {
-    if builtin cd "$@"; then
-        ls
+    if [[ "$@" == "." ]]; then
+        while true; do
+            local lsd=$(echo ".." && /bin/ls -p | /bin/grep '/$' | /bin/sed 's;/$;;')
+            local dir="$(printf '%s\n' "${lsd[@]}" |
+                fzf --reverse --preview '
+                    __cd_nxt="$(echo {})";
+                    __cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
+                    echo $__cd_path;
+                    echo;
+                    ls -p --color=always "${__cd_path}";
+            ')"
+            [[ ${#dir} != 0 ]] || return 0
+            builtin cd "$dir" &> /dev/null
+        done
+    fi
+
+    if [[ "$#" != 0 ]]; then
+        builtin cd "$@";
+        ls;
+        return
     fi
 }
 
@@ -415,8 +433,8 @@ g256() {
     md5sum $* | gpg --digest-algo sha256 --clearsign
 }
 
-D() {
-    echo -n $* | shasum | grep -Eo '[a-f].{4}' | head -1
+ghash() {
+    echo -n $* | shasum | /bin/grep -Eo '[a-f].{4}' | head -1
 }
 
 # }}}

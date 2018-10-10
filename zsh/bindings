@@ -15,8 +15,7 @@ bindkey -M viins "^W"   backward-kill-word
 bindkey -M viins "^Q"   backward-kill-line
 bindkey -M viins "^K"   kill-line
 bindkey -M viins "^O"   ranger-cd
-bindkey -M viins "^U"   sncli
-bindkey -M viins "^r"   history-incremental-search-backward
+bindkey -M viins "^R"   history-incremental-search-backward
 
 # Alt - Key
 # bindkey -M viins "\er"  history-incremental-search-backward
