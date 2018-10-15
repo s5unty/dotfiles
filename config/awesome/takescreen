@@ -4,22 +4,48 @@
 mode=$1
 file="/tmp/today/$(date +'%Y%m%d_%H%M%S')"
 
-
 case $mode in
     full)
-        import -window root "${file}.png"
+        flameshot screen -p /tmp/today/
+
+        ### outdated ###
+        # import -window root "${file}.png"
+        ################
         ;;
     dual)
-        xdpyinfo -ext XINERAMA | sed '/^  head #/!d;s///' |
-        while IFS=' :x@,' read i w h x y; do
-            import -window root -crop ${w}x$h+$x+$y "${file}_${i}.png"
-        done
+        flameshot full -p /tmp/today/
+
+        ### outdated ###
+        # xdpyinfo -ext XINERAMA | sed '/^  head #/!d;s///' |
+        # while IFS=' :x@,' read i w h x y; do
+        #     import -window root -crop ${w}x$h+$x+$y "${file}_${i}.png"
+        # done
+        ################
         ;;
     active)
         active=$(xprop  -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | awk '{print $NF}')
         import -window "$active" "${file}.png"
         ;;
     select)
-        maim -s "${file}.png"
+        # 搭配 compton 使用，存在阴影混淆的问题，截出的图被阴影覆盖
+        # maim -s "${file}.png"
+
+        # 无法由 awesome 快捷键激活，原因未知，命令行执行没问题
+        # scrot -s "${file}.png"
+
+        # 截图完成后、总是弹出一个无法回避的对话框
+        # screengrab -r
+
+        # 不能直接截图，总是退出一个对话框
+        # xfce4-screenshooter -s /tmp/today -r
+
+        # 简单测试过程中竟然异常崩溃了，
+        # kazam
+
+        # 亮点是编辑文字，可惜文件名不能自定义
+        # deepin-screenshot
+
+        # 最后的选择，哦啦
+        flameshot gui -p /tmp/today/
         ;;
 esac

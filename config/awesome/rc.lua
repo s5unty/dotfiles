@@ -380,10 +380,10 @@ globalkeys = awful.util.table.join(
     awful.key({        }, "Pause",         function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
 
     -- imagemagick / maim / xdotool / slop
-    awful.key({        }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen dual") end),
-    awful.key({ "Ctrl" }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen full") end),
-    awful.key({ altkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen active") end),
-    awful.key({ modkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen select") end),
+    awful.key({        }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen select") end),  -- region
+    awful.key({ altkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen active") end),  -- window
+    awful.key({ modkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen full") end),    -- screen
+    awful.key({ "Ctrl" }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen dual") end),    -- dual screen
 
     -- sdcv/stardict
     awful.key({ modkey }, "d",

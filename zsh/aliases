@@ -438,3 +438,13 @@ ghash() {
 }
 
 # }}}
+
+# fzf {{{
+all() {
+    local all raw
+    all=/sun/worktop/ansible/inventory/all
+    on=$(/bin/grep -f =(ansible -u root 'all:!off' --list-hosts | awk '{print $1}') $all | sed 's/\(.*\)\s.*=\(.*\)/\1 \2/')
+    echo $on | fzf -0 -1 --preview-window=hidden
+}
+# }}}
+
