@@ -44,6 +44,7 @@ set laststatus=2 " 始终显示状态栏
 set noshowmode " 忽略内置的模式显示功能
 set undolevels=500
 set diffopt=filler,iwhite
+set rtp+=/usr/bin/fzf
 
 if has("gui_running")
     set guioptions-=m
@@ -523,14 +524,17 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'inkarkat/vim-mark'
     Plug 'davidhalter/jedi-vim'
     Plug 'fatih/vim-go'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
     if has('nvim')
         Plug 'roxma/nvim-completion-manager'
-        Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
+        " https://github.com/fatih/vim-go/pull/1853#issuecomment-410776425
+        Plug 'visualfc/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
     else
         Plug 'roxma/nvim-completion-manager'
         Plug 'roxma/vim-hug-neovim-rpc'
-        Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
+        " https://github.com/fatih/vim-go/pull/1853#issuecomment-410776425
+        Plug 'visualfc/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
     endif
 call plug#end()
 
