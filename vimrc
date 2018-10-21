@@ -643,6 +643,10 @@ autocmd FileType ansible setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType ansible setlocal foldmethod=marker
 
 
+" vim-go : Go development plugin for Vim {{{2
+let g:go_def_mode = 'godef'
+
+
 " 3# about statusline: vim-powerline、powerline、vim-airline {{{2
 " 1. vim-powerline: The ultimate vim statusline utility. XXX has been deprecated {{{3
 " 旧版的 powerline 专为 vim 设计
