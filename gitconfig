@@ -105,6 +105,7 @@
     ms  = merge --squash
     mf  = merge --no-ff # generate a merge commit even if the merge resolved as a fast-forward
     mt  = mergetool
+    mr  = !sh -c 'git fetch $1 merge-requests/$2/head:ppa/$2 && git checkout ppa/$2' -
 
     # 核弹级选项: filter-branch
     # http://progit.org/book/zh/ch6-4.html
