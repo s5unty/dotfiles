@@ -18,6 +18,9 @@ require("debian.menu")
 -- Make `awesome-client` happy
 require("awful.remote")
 
+-- https://github.com/awesomeWM/awesome/issues/1862#issuecomment-352200975
+naughty.config.defaults['icon_size'] = 48
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
