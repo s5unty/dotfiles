@@ -8,9 +8,9 @@ alias ...="../../"
 alias ....="../../../"
 alias cs="history 0"
 alias mv="/bin/mv -i"
-alias ll="/bin/ls --color=always -hFxtrl"
-alias la="/bin/ls --color=always -hFXA"
-alias ls="/bin/ls --color=always -hFv"
+alias ll="/bin/ls --color=always -hFNxtrl"
+alias la="/bin/ls --color=always -hFNXA"
+alias ls="/bin/ls --color=always -hFNv"
 alias cp="cp -a"
 alias rm="rm -I"
 alias at="at -m"
@@ -438,13 +438,3 @@ ghash() {
 }
 
 # }}}
-
-# fzf {{{
-all() {
-    local all raw
-    all=/sun/worktop/ansible/inventory/all
-    on=$(/bin/grep -f =(ansible -u root 'all:!off' --list-hosts | awk '{print $1}') $all | sed 's/\(.*\)\s.*=\(.*\)/\1 \2/')
-    echo $on | fzf -0 -1 --preview-window=hidden
-}
-# }}}
-

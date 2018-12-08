@@ -1,8 +1,22 @@
-nmap <buffer> <F8> :w ~/hacking/jekyll/<C-R>=strftime('%F')<CR>-<C-R>=tolower(substitute(strpart(getline(3), 7), " ", "_", "g"))<CR>.asciidoc
-nmap <buffer> <F9> :!cd ~/hacking/jekyll; git add '<C-R>=strftime('%F')<CR>-<C-R>=tolower(substitute(strpart(getline(3), 7), " ", "_", "g"))<CR>.asciidoc'; git ci -m '+ <C-R>=tolower(strpart(getline(3), 7))<CR>'; git push
-nmap <buffer> <F10> :w ~/maildir/notebook/cur/<C-R>=strftime('%F')<CR>-<C-R>=tolower(substitute(strpart(getline(1), 9), " ", "_", "g"))<CR>.asciidoc
+function Title(line, column)
+    let ret = tolower(strpart(getline(a:line), a:column))
+    let ret = substitute(ret, '"', '', "g")
+    let ret = substitute(ret, "'", "", "g")
+    let ret = substitute(ret, ' ', "-", "g")
+    return ret
+endfunction
 
-nmap <buffer> <F12> :!asciidoc -o "/tmp/.asciidoc.html" %; x-www-browser "/tmp/.asciidoc.html"<CR>
+function Filename()
+    let date = strftime('%F')
+    let title = Title(3, 7)
+    let ret = date . "-" . title . ".adoc"
+    echo ret
+    return ret
+endfunction
+
+nmap <buffer> <F8> :w ~/du1abadd/content/post/<C-R>=Filename()<CR>
+nmap <buffer> <F9> :!cd ~/du1abadd/content/post; git add '<C-R>=Filename()<CR>'; git ci -m '+ <C-R>=Title(3, 8)<CR>'; git push
+nmap <buffer> <F12> :!asciidoctor -o "/tmp/.adoc.html" %; x-www-browser "/tmp/.adoc.html"<CR>
 
 set foldmethod=indent
 

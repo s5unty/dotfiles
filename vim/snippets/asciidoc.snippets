@@ -1,20 +1,19 @@
 snippet pp
-	--- 
-	layout: post
-	title: ${1}
-	date: `strftime("%Y-%m-%d %H:%M")`
-	tags: [${2}]
-	categories: [${3:var}]
-	---
+    ---
+    date: `strftime("%FT%T%z")`
+    title: ${1}
+    tags: [${2}]
+    categories: [${3:var}]
+
+    ---
+    :hardbreaks:
+
 	${4}
 
 snippet cc
 	{% highlight ${1:bash} %}
 	${2:}
 	{% endhighlight %}
-
-snippet image
-	![](${1})
 
 snippet no
     Subject: ${1:`strftime("%Y-%m-%d %H:%M")`}
