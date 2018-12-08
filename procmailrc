@@ -1,6 +1,6 @@
 # 使用 Maildir 格式保存信件
 # 用户邮箱目录的位置
-MAILDIR="/sun/maildir/"
+MAILDIR="/sun/mailroom/"
 # 分拣日志保存的位置
 LOGFILE=$MAILDIR".procmail.log"
 # 邮件转换程序

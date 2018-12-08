@@ -83,7 +83,7 @@ set header_cache="~/.mutt/cache"
 # 开启 POP/IMAP 缓存功能 disappear from 1.5.21
 set message_cachedir="~/.mutt/cache"
 # 保存草稿的位置
-set postponed="~/maildir/draft"
+set postponed="~/mailroom/draft"
 # 中断发送的邮件自动保存在草稿箱
 set postpone=yes
 # 默认用主题内容和发件人作搜索关键字
@@ -159,7 +159,7 @@ set timeout=300
 #set print_command="paps --landscape --font='monospace 7' --header --columns=2 | lp -o landscape -o sites=two-sided-long-edge -"
 set print_command="paps --landscape --font='monospace 7' --header --columns=2 | ps2pdf - - | zathura -"
 # 编辑邮件的临时目录
-set tmpdir="~/maildir/draft/tmp"
+set tmpdir="~/mailroom/draft/tmp"
 # 保存撰写邮件头的编辑历史记录
 set history_file="~/.mutt/cache/history"
 set save_history=20

@@ -8,11 +8,11 @@
 macro index,pager "c" "<change-folder>?<toggle-mailboxes>"
 # bounce(打回)很少用到，改成 lables 标签的切换快捷键
 macro index,pager "b" "<change-folder>?\
-	<change-dir><kill-line>/sun/maildir/labels<enter>\
+	<change-dir><kill-line>/sun/mailroom/labels<enter>\
 	<enter-mask><kill-line>!^\..<enter>"
 # 逗号','改成「记事本」的切换快捷键
 macro index "\," "<change-folder>?\
-	<change-dir><kill-line>/sun/maildir/notebook<enter><enter><enter>"
+	<change-dir><kill-line>/sun/mailroom/notebook<enter><enter><enter>"
 
 # 通知 fetchmail 立刻检查新邮件
 macro index,pager B "<shell-escape>fetchmail<enter>" 'retrieve mail from POP server'

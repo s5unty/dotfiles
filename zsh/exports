@@ -12,7 +12,7 @@ export HISTSIZE=100000
 export SAVEHIST=102400
 export _Z_DATA=$HOME/.zsh/cache/DIRSTACK
 export WORDCHARS='*?_-[]~=&:;!#$%^(){}<>'
-export MAILDIR="$HOME/maildir"
+export MAILDIR="$HOME/mailroom"
 export LISTPROMPT=""
 export DEBIAN_DIR=""
 export REPREPRO_CONFIG_DIR=""

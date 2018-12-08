@@ -1,7 +1,7 @@
 # 信箱类型
 set mbox_type="Maildir"
 # 信箱目录
-set folder="/sun/maildir/"
+set folder="/sun/mailroom/"
 # 默认使用的信箱
 set spoolfile="=gens-inbox"
 
