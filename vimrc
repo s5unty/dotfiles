@@ -528,13 +528,15 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'junegunn/fzf.vim'
     if has('nvim')
         Plug 'roxma/nvim-completion-manager'
-        " https://github.com/fatih/vim-go/pull/1853#issuecomment-410776425
-        Plug 'visualfc/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
+        " " https://github.com/fatih/vim-go/pull/1853#issuecomment-410776425
+        " Plug 'visualfc/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
+        Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
     else
         Plug 'roxma/nvim-completion-manager'
         Plug 'roxma/vim-hug-neovim-rpc'
-        " https://github.com/fatih/vim-go/pull/1853#issuecomment-410776425
-        Plug 'visualfc/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
+        " " https://github.com/fatih/vim-go/pull/1853#issuecomment-410776425
+        " Plug 'visualfc/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
+        Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
     endif
 call plug#end()
 
@@ -585,7 +587,7 @@ let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 TabBar 和 -TabBar- 
 " http://www.vim.org/scripts/script.php?script_id=2754
 " https://github.com/Raimondi/delimitMate
 let delimitMate_autoclose = 1
-"let delimitMate_quotes = "\" ' `"
+let delimitMate_quotes = "\" ' `"
 "let delimitMate_nesting_quotes = []
 "let delimitMate_matchpairs = "(:),[:],{:},<:>"
 let delimitMate_expand_cr = 1 " 该项和SuperTab的CrMapping选项冲突
