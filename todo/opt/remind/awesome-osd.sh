@@ -22,6 +22,6 @@ desc=$(echo ${desc} | sed -e 's/\(\(\(^@\)\|\( @\)\)[^ <]*\)/<span color=\\"#00F
 desc=$(echo ${desc} | sed -e 's/\(\(\(^+\)\|\( +\)\)[^ <]*\)/<span color=\\"#00FFFF\\">\1<\/span>/g')    # project
 desc=$(echo ${desc} | sed -e 's/\(^.*\)$/<span color=\\"#FFFFFF\\">\1<\/span>/g')                        # normal
 
-/bin/echo -E 'naughty.notify({opacity = 0.9, margin = 0, position = "bottom_right", text = '\"${form} ${desc}\"', icon="/usr/share/pixmaps/gtk-chtheme.xpm", timeout=0})' | awesome-client -
+/bin/echo -E 'naughty = require("naughty"); naughty.notify({opacity = 0.9, margin = 6, position = "bottom_right", text = '\"${form} ${desc}\"', timeout=0})' | awesome-client
 exit 0
 

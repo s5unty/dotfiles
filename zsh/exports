@@ -35,7 +35,7 @@ export BC_ENV_ARGS="$HOME/.bc"
 # https://github.com/dj-wasabi/ansible-zabbix-agent/issues/66
 export PYTHONHTTPSVERIFY=0
 # https://github.com/junegunn/fzf/wiki/Color-schemes
-export FZF_DEFAULT_OPTS='--color hl:166,hl+:166'
+export FZF_DEFAULT_OPTS="--color hl:166,hl+:166 --height=68% --reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -50' --preview-window=right:48%"
 
 # todo.txt
 # http://todotxt.com/
