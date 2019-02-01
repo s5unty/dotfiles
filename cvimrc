@@ -34,6 +34,8 @@ map \ goForward
 map - scrollPageUp
 map . nextTab
 map , previousTab
+map ` nextTab
+map ~ previousTab
 map ; ]]
 map <C-d> scrollPageDown
 map <C-u> scrollPageUp
