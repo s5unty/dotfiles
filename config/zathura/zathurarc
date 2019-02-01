@@ -4,6 +4,8 @@ set guioptions ""
 
 map - scroll half-up
 map <Space> scroll half-down
+map ` navigate next
+map ~ navigate previous
 map . navigate next
 map , navigate previous
 map d set "pages-per-row 2"
