@@ -84,20 +84,20 @@ local altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.tile.left,
-    awful.layout.suit.corner.ne,
-    awful.layout.suit.corner.se,
+    awful.layout.suit.tile.right,
+    awful.layout.suit.tile.top,
+    awful.layout.suit.corner.sw,
     awful.layout.suit.fair.horizontal,
-    awful.layout.suit.fair,
-    awful.layout.suit.tile.bottom,
+    awful.layout.suit.spiral.dwindle,
     --awful.layout.suit.magnifier,
-    --awful.layout.suit.tile.right,
+    --awful.layout.suit.tile.left,
     --awful.layout.suit.tile.bottom,
     --awful.layout.suit.tile.top,
-    --awful.layout.suit.spiral,
+    --awful.layout.suit.fair.horizontal,
     --awful.layout.suit.spiral.dwindle,
     --awful.layout.suit.corner.nw,
-    --awful.layout.suit.corner.sw,
+    --awful.layout.suit.corner.ne,
+    --awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -431,14 +431,14 @@ globalkeys = awful.util.table.join(
                 return
             end
             -- 从这里开始是为了删除末尾的空行和换行符，这样显示在 naughty 的效果会更紧凑一些
-            local f = io.popen("LANG=C gcal -s1 --highlighting=\" :#: :*\" -qcn --chinese-months -cezk . | tail -n +3 | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+            local f = io.popen("LANG=C gcal -K --iso-week-number=yes -s1 --highlighting=\" :#: :*\" -qcn --chinese-months -cezk . | tail -n +3 | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
             local c = f:read("*a")
             f:close()
 
             mycalendar = naughty.notify({
                 text = c,
-                position = "bottom_right", font = "Envy Code R 10",
-                timeout = 0, width = 530, screen = mouse.screen })
+                position = "bottom_right", font = "Envy Code R 11",
+                timeout = 0, width = 630, screen = mouse.screen })
         end,
         {description = "calendar", group = "launcher"}),
 
