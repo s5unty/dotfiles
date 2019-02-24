@@ -221,6 +221,10 @@ switches:
     states: ["中文", "西文"]
   - name: full_shape
     states: ["半角", "全角"]
+  - name: traditional
+    states: [ 汉字, 漢字 ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
 translator:
   dictionary: cqlb
   enable_charset_filter: false
