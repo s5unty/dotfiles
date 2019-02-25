@@ -1,3 +1,50 @@
 patch:
   schema_list:
-    - schema: cqlb_pinyin
+    - schema: cqlb
+    - schema: cqlb_fluency
+    - schema: cqlb_express
+  key_binder:
+    bindings:
+      - {accept: minus, send: Page_Up, when: has_menu}
+      - {accept: equal, send: Page_Down, when: has_menu}
+      - {accept: comma, send: Page_Up, when: paging}
+      - {accept: period, send: Page_Down, when: paging}
+      - {accept: "Shift+space", toggle: full_shape, when: always}
+      - {accept: "Control+Alt+f", toggle: traditional, when: always}
+      - {accept: "Control+period", toggle: ascii_punct, when: always}
+  punctuator:
+    full_shape:
+      " ": {commit: "　"}
+    half_shape:
+      "`": "`"
+      "~": ["~", "～"]
+      "!": "!"
+      "@": "@"
+      "#": "#"
+      "$": ["￥", "$"]
+      "%": ["%", "％"]
+      "^": {commit: "..."}
+      "&": "&"
+      "*": ["★", "☆"]
+      "(": "（"
+      ")": "）"
+      "-": "-"
+      "=": "="
+      "[": "["
+      "]": "]"
+      "\\": {pair: ["【", "】"]}
+      ";": {commit: "、"}
+      "'": {pair: ["「", "」"]}
+      ",": {commit: "，"}
+      ".": {commit: "。"}
+      "/": "/"
+      "_": "_"
+      "+": "+"
+      "{": ["｛", "〔", "［"]
+      "}": ["｝", "〕", "］"]
+      "|": {pair: ["〖", "〗"]}
+      ":": {commit: "："}
+      "\"": {pair: ["『", "』"]}
+      "<": "«"
+      ">": "»"
+      "?": {commit: "？"}
