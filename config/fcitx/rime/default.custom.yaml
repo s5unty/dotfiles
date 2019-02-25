@@ -1,7 +1,5 @@
 patch:
   schema_list:
-    - schema: cqlb
-    - schema: cqlb_fluency
     - schema: cqlb_express
   key_binder:
     bindings:
