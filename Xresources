@@ -34,27 +34,28 @@ Xft.autohint:  False
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=12,\
-                  [codeset=ISO10646]xft:WenQuanYi Micro Hei:regular
-! URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R for Powerline:bold:size=12,\
-!                   [codeset=ISO10646]xft:WenQuanYi Micro Hei:bold
-! URxvt.italicFont: [codeset=ASCII]xft:Envy Code R for Powerline:italic:size=12,\
-!                   [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic
+                  [codeset=UTF-8]xft:ZhunYuan
+!URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R for Powerline:bold:size=12,\
+!                  [codeset=UTF-8]xft:WenQuanYi Micro Hei:bold
+!URxvt.italicFont: [codeset=ASCII]xft:Envy Code R for Powerline:italic:size=12,\
+!                  [codeset=UTF-8]xft:FZNewKai\\-Z03:regular
+!                   [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic
 ! URxvt.boldItalicFont: \
 !                   [codeset=ASCII]xft:Envy Code R for Powerline:bold:italic:size=12,\
-!                   [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic
+!                   [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic
 
 !注意，
 !font:size=10 的时候，设为 -1 可以使得字母间距不会太大
 !URxvt.letterSpace: -1
 
 URxvt.keysym.M-Up: command: \
-        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=14, [codeset=ISO10646]xft:WenQuanYi Micro Hei:regular\007
-!        \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=14, [codeset=ISO10646]xft:WenQuanYi Micro Hei:bold\007 \
-!        \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=14, [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic\007
+        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=14, [codeset=UTF-8]xft:ZhunYuan\007
+!        \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=14, [codeset=UTF-8]xft:WenQuanYi Micro Hei:bold\007 \
+!        \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=14, [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic\007
 URxvt.keysym.M-Down: command: \
-        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=12, [codeset=ISO10646]xft:WenQuanYi Micro Hei:regular\007
-!       \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=12, [codeset=ISO10646]xft:WenQuanYi Micro Hei:bold\007 \
-!       \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=12, [codeset=ISO10646]xft:WenQuanYi Micro Hei:italic\007
+        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=12, [codeset=UTF-8]xft:ZhunYuan\007
+!       \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=12, [codeset=UTF-8]xft:WenQuanYi Micro Hei:bold\007 \
+!       \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=12, [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic\007
 ! }}}
 
 ! @@ COLORS AND GRAPHICS @@ {{{
