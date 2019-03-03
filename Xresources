@@ -34,7 +34,7 @@ Xft.autohint:  False
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=12,\
-                  [codeset=UTF-8]xft:ZhunYuan
+                  [codeset=UTF-8]xft:方圆准圆体
 !URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R for Powerline:bold:size=12,\
 !                  [codeset=UTF-8]xft:WenQuanYi Micro Hei:bold
 !URxvt.italicFont: [codeset=ASCII]xft:Envy Code R for Powerline:italic:size=12,\
@@ -49,11 +49,11 @@ URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=12,\
 !URxvt.letterSpace: -1
 
 URxvt.keysym.M-Up: command: \
-        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=14, [codeset=UTF-8]xft:ZhunYuan\007
+        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=14, [codeset=UTF-8]xft:方圆准圆体\007
 !        \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=14, [codeset=UTF-8]xft:WenQuanYi Micro Hei:bold\007 \
 !        \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=14, [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic\007
 URxvt.keysym.M-Down: command: \
-        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=12, [codeset=UTF-8]xft:ZhunYuan\007
+        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=12, [codeset=UTF-8]xft:方圆准圆体\007
 !       \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=12, [codeset=UTF-8]xft:WenQuanYi Micro Hei:bold\007 \
 !       \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=12, [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic\007
 ! }}}
