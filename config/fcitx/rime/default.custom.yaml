@@ -13,8 +13,6 @@ patch:
       - { accept: Control+comma,      toggle: full_shape,   when: always    }
       - { accept: Control+period,     toggle: ascii_punct,  when: always    }
       - { accept: Control+semicolon,  toggle: ascii_mode,   when: always    }
-  ascii_composer/switch_key:
-    Shift_L: commit_text
   punctuator:
     full_shape:
       " ": {commit: "　"}
