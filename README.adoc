@@ -1,0 +1,9 @@
+== 随(jing)手(xin)截图
+:img-2019: http://du1abadd.org/images/2019/20190308_14-35-50.png
+:img-2012: http://du1abadd.org/images/2012/2012-04-23_1680x1050.png
+
+2019::
+image:{img-2019}[link={img-2019}, 640,480]
+
+2012::
+image:{img-2012}[link={img-2012}, 640,480]
