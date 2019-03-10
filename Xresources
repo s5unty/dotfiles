@@ -12,7 +12,7 @@ URxvt.shading:      100
 URxvt.saveLines:    2048
 URxvt.modifier:     Mod1
 URxvt.urlLauncher:  x-www-browser
-URxvt.cutchars:     ()<>[]{}|:;!#$%^?：
+URxvt.cutchars:     ()<>[]{}|:;!#$%^?
 URxvt.matcher.button:    1
 URxvt.scrollTtyKeypress: True
 URxvt.scrollTtyOutput:   False
