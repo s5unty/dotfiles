@@ -416,7 +416,7 @@ globalkeys = awful.util.table.join(
                 local c = f:read("*a")
                 f:close()
 
-                frame = naughty.notify({ text = c, font = "Envy Code R 9", timeout = 30, width = 360, screen = mouse.screen })
+                frame = naughty.notify({ text = c, font = "Tamzen 10", timeout = 30, width = 360, screen = mouse.screen })
             end
             }
         end,
@@ -437,7 +437,7 @@ globalkeys = awful.util.table.join(
 
             mycalendar = naughty.notify({
                 text = c,
-                position = "bottom_right", font = "Envy Code R 11",
+                position = "bottom_right", font = "Tamzen",
                 timeout = 0, width = 630, screen = mouse.screen })
         end,
         {description = "calendar", group = "launcher"}),
