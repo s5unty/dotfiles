@@ -27,35 +27,29 @@ URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selecti
 
 ! @@ FONTS @@ {{{
 Xft.dpi:       96
-Xft.rgba:      None
-Xft.antialias: True
-Xft.hinting:   True
+Xft.rgba:      none
+Xft.antialias: False
+Xft.hinting:   False
 Xft.autohint:  False
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
-URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=12,\
-                  [codeset=UTF-8]xft:方圆准圆体
-!URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R for Powerline:bold:size=12,\
-!                  [codeset=UTF-8]xft:WenQuanYi Micro Hei:bold
-!URxvt.italicFont: [codeset=ASCII]xft:Envy Code R for Powerline:italic:size=12,\
-!                  [codeset=UTF-8]xft:FZNewKai\\-Z03:regular
-!                   [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic
-! URxvt.boldItalicFont: \
-!                   [codeset=ASCII]xft:Envy Code R for Powerline:bold:italic:size=12,\
-!                   [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic
+URxvt.font:       [codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=11
+URxvt.italicFont: [codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
+! http://downloads.sourceforge.net/wqy/wqy-bitmapfont_0.7.9-5_all.deb
+URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=11
 
 !注意，
 !font:size=10 的时候，设为 -1 可以使得字母间距不会太大
-!URxvt.letterSpace: -1
+!URxvt.letterSpace: 0
 
 URxvt.keysym.M-Up: command: \
-        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=14, [codeset=UTF-8]xft:方圆准圆体\007
-!        \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=14, [codeset=UTF-8]xft:WenQuanYi Micro Hei:bold\007 \
-!        \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=14, [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic\007
+        \033]710;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=12\007 \
+        \033]712;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
+        \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12\007
 URxvt.keysym.M-Down: command: \
-        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=12, [codeset=UTF-8]xft:方圆准圆体\007
-!       \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:bold:size=12, [codeset=UTF-8]xft:WenQuanYi Micro Hei:bold\007 \
-!       \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:italic:size=12, [codeset=UTF-8]xft:WenQuanYi Micro Hei:italic\007
+        \033]710;[codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=11\007 \
+        \033]712;[codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
+        \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=11\007
 ! }}}
 
 ! @@ COLORS AND GRAPHICS @@ {{{
