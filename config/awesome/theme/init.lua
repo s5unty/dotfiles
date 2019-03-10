@@ -10,8 +10,8 @@ theme = {}
 
 theme.default_dir       = require("awful.util").get_themes_dir() .. "default"
 theme.home_dir          = os.getenv("HOME") .. "/.config/awesome/theme/"
-theme.font              = "DejaVu Sans 9"
-theme.taglist_font      = "DejaVu Sans 9"
+theme.font              = "Noto Sans 9"
+theme.taglist_font      = "Noto Sans 9"
 theme.tasklist_font     = "Tamzen 10"
 theme.fg_normal         = "#aaaaaa"
 theme.fg_focus          = "#ffffff"
