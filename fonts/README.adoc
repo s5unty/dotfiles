@@ -1,0 +1,17 @@
+:hardbreaks:
+:tamzen: https://github.com/sunaku/tamzen-font
+:bitmap: https://github.com/Tecate/bitmap-fonts
+:seven: https://gist.github.com/s5unty/2db3a925c465b3b6f047499bbf65653f
+
+## link:{tamzen}[Tamzen 字体]
+
+原版字体，虽然支持 Powerline，但是「图案字符」位于新版的区间。
+
+.7个字符
+- 新版(标准版): `<U+E0A0>...<U+E0A2>` 和 `<U+E0B0>...<U+E0B3>`
+- 旧版(过时的): `<U+2B60>...<U+2B62>` 和 `<U+2B80>...<U+2B83>`
+
+习惯了用旧版(因为新版在我的环境下，总是存在右侧不能对齐的情况)，
+手动编辑了字体(BDF 格式是纯文本，很方便编辑)，加了 7 个 {seven}[字符]。
+
+## link:{bitmap}[更多点阵字体]
