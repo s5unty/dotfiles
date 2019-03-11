@@ -12,8 +12,8 @@ URxvt.shading:      100
 URxvt.saveLines:    2048
 URxvt.modifier:     Mod1
 URxvt.urlLauncher:  x-www-browser
-URxvt.cutchars:     ()<>[]{}|:;!#$%^?
-URxvt.matcher.button:    1
+URxvt.cutchars:     ()<>[]{}|:;!#@'"`$%^?（）《》「」『』【】〖〗，。、：？
+URxvt.matcher.button:    3
 URxvt.scrollTtyKeypress: True
 URxvt.scrollTtyOutput:   False
 URxvt.scrollWithBuffer:  True
@@ -22,7 +22,7 @@ URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
 
 URxvt.perl-lib:          /sun/.urxvt/
-URxvt.perl-ext-common:   matcher,mark-yank-urls,vim-scrollback,translate-selection
+URxvt.perl-ext-common:   matcher,selection,mark-yank-urls,vim-scrollback,translate-selection
 ! }}}
 
 ! @@ FONTS @@ {{{
@@ -33,19 +33,27 @@ Xft.hinting:   False
 Xft.autohint:  False
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
+
+! http://downloads.sourceforge.net/wqy/wqy-bitmapfont_0.7.9-5_all.deb (系统自带的缺少粗体)
+! https://jnrowe.github.io/articles/tips/Sharing_Xresources_between_systems.html
+#ifdef SRVR_verns_worktop
+URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=13
+URxvt.italicFont: [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=13
+URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=13
+#elif SRVR_verns_desktop
 URxvt.font:       [codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=11
 URxvt.italicFont: [codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=11
-! http://downloads.sourceforge.net/wqy/wqy-bitmapfont_0.7.9-5_all.deb (系统自带的缺少粗体)
 URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=11
+#endif
 
 !注意，
 !font:size=10 的时候，设为 -1 可以使得字母间距不会太大
 !URxvt.letterSpace: 0
 
 URxvt.keysym.M-Up: command: \
-        \033]710;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=12\007 \
-        \033]712;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=12\007 \
-        \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12\007
+        \033]710;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=13\007 \
+        \033]712;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=13\007 \
+        \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=13\007
 URxvt.keysym.M-Down: command: \
         \033]710;[codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=11\007 \
         \033]712;[codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:size=11\007 \
