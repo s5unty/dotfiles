@@ -693,11 +693,9 @@ if !exists('g:airline_symbols')
     let g:airline_symbols.linenr = '⭡'
 endif
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#tab_nr_type = 0
-let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#left_sep = '⮀'
 let g:airline#extensions#tabline#left_alt_sep = '⮁'
+let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 if has("gui_running") || &term == "nvim"
 nmap <M-1> <Plug>AirlineSelectTab1
@@ -724,12 +722,20 @@ nmap <Esc>9 <Plug>AirlineSelectTab9
 nmap <Esc>, <Plug>AirlineSelectPrevTab
 nmap <Esc>. <Plug>AirlineSelectNextTab
 endif
-
-"if !exists('g:airline_symbols')
-"  let g:airline_symbols = {}
-"endif
-let g:airline#extensions#whitespace#symbol = ''
+let g:airline#extensions#tabline#buffer_idx_format = {
+    \ '1': '①',
+    \ '2': '②',
+    \ '3': '③',
+    \ '4': '④',
+    \ '5': '⑤',
+    \ '6': '⑥',
+    \ '7': '⑦',
+    \ '8': '⑧',
+    \ '9': '⑨'
+    \}
+let g:airline#extensions#whitespace#symbol = '※'
 let g:airline#extensions#whitespace#trailing_format = '[T:%s]'
+let g:airline#extensions#whitespace#mixed_indent_algo = 2
 let g:airline#extensions#whitespace#mixed_indent_format = '[M:%s]'
 
 
