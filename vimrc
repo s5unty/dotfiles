@@ -675,7 +675,7 @@ let g:go_def_mode = 'godef'
 " 完全使用 vim-scripts 实现的旧版的 vim-powerline，易于跨平台
 "   https://github.com/bling/vim-airline
 "
-let g:airline_theme="powerlineish"
+let g:airline_theme="angr"
 " 因为新版存在的宽字符问题，所以这里使用的是旧版的 vim-powerline 制作的字符
 "   旧版的 vim-powerline symbols 使用以下编码
 "       - <U2B60>
@@ -691,7 +691,10 @@ if !exists('g:airline_symbols')
     let g:airline_symbols.branch = '⭠'
     let g:airline_symbols.readonly = '⭤'
     let g:airline_symbols.linenr = '⭡'
+    let g:airline_symbols.space = ''
 endif
+let g:airline#extensions#hunks#non_zero_only = 1
+let g:airline#extensions#hunks#hunk_symbols = ['+', '=', '-']
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = '⮀'
 let g:airline#extensions#tabline#left_alt_sep = '⮁'
@@ -723,15 +726,15 @@ nmap <Esc>, <Plug>AirlineSelectPrevTab
 nmap <Esc>. <Plug>AirlineSelectNextTab
 endif
 let g:airline#extensions#tabline#buffer_idx_format = {
-    \ '1': '①',
-    \ '2': '②',
-    \ '3': '③',
-    \ '4': '④',
-    \ '5': '⑤',
-    \ '6': '⑥',
-    \ '7': '⑦',
-    \ '8': '⑧',
-    \ '9': '⑨'
+    \ '1': ' ①',
+    \ '2': ' ②',
+    \ '3': ' ③',
+    \ '4': ' ④',
+    \ '5': ' ⑤',
+    \ '6': ' ⑥',
+    \ '7': ' ⑦',
+    \ '8': ' ⑧',
+    \ '9': ' ⑨'
     \}
 let g:airline#extensions#whitespace#symbol = '※'
 let g:airline#extensions#whitespace#trailing_format = '[T:%s]'
