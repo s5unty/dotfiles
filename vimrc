@@ -45,6 +45,7 @@ set noshowmode " 忽略内置的模式显示功能
 set undolevels=500
 set diffopt=filler,iwhite
 set rtp+=/usr/bin/fzf
+set guicursor=a:blinkon100 " 让光标抖起来
 
 if has("gui_running")
     set guioptions-=m
@@ -55,13 +56,13 @@ if has("win32") || has("win64")
     au GUIEnter * simalt ~x
     language messages zh_CN.UTF-8
     set grepprg=findstr\ /n
-    set guifont=Envy_Code_R_For_Powerline:h10
-    set guifontwide=NSimsun:h10.5
+    " set guifont=Envy_Code_R_For_Powerline:h10
+    " set guifontwide=NSimsun:h10.5
     set shell=cmd.exe
     set directory=$TMP
 else
-    set guifont=Envy\ Code\ R\ For\ Powerline\ 10
-    set guifontwide=WenQuanYi\ Micro\ Hei\ 10
+    " set guifont=Envy\ Code\ R\ For\ Powerline\ 10
+    " set guifontwide=WenQuanYi\ Micro\ Hei\ 10
     set makeprg=make\ -j2
     set grepprg=ag\ --vimgrep\ $*
     set grepformat=%f:%l:%c:%m
