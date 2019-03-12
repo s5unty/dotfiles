@@ -522,11 +522,12 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'wgurecky/vimSum'
     Plug 'itchyny/calendar.vim'
     Plug 'MicahElliott/Rocannon'
-    Plug 'inkarkat/vim-mark'
+    Plug 'inkarkat/vim-mark', { 'tag':'3.0.0' }
     Plug 'davidhalter/jedi-vim'
     Plug 'fatih/vim-go'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
+    Plug 'RRethy/vim-illuminate'
     if has('nvim')
         Plug 'roxma/nvim-completion-manager'
         " " https://github.com/fatih/vim-go/pull/1853#issuecomment-410776425
@@ -650,6 +651,10 @@ autocmd FileType ansible setlocal foldmethod=marker
 let g:go_def_mode = 'godef'
 
 
+" vim-illuminate: Vim plugin for selectively illuminating other uses of the current word under the cursor {{{2
+let g:Illuminate_delay = 750
+
+
 " 3# about statusline: vim-powerline、powerline、vim-airline {{{2
 " 1. vim-powerline: The ultimate vim statusline utility. XXX has been deprecated {{{3
 " 旧版的 powerline 专为 vim 设计
@@ -690,10 +695,12 @@ let g:airline_right_alt_sep = '⮃'
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
     let g:airline_symbols.branch = '⭠'
-    let g:airline_symbols.readonly = '⭤'
-    let g:airline_symbols.linenr = '⭡'
+    let g:airline_symbols.readonly = '⭢'
+    let g:airline_symbols.linenr = ''
+    let g:airline_symbols.maxlinenr = ''
     let g:airline_symbols.space = ''
 endif
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#hunks#hunk_symbols = ['+', '=', '-']
 let g:airline#extensions#tabline#enabled = 1

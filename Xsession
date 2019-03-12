@@ -17,13 +17,14 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 
 # 强制启用 Ctrl-Alt-Backspace(重启图形界面) 组合键
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
+/usr/bin/setxkbmap -option caps:escape
 
 # 关闭机箱喇叭蜂鸣 设定键鼠灵敏度
 /usr/bin/xset b off m 3 10 r rate 400 40
 
 # 设置屏保
 # /usr/bin/xscreensaver -no-splash &
-/usr/bin/xautolock -time 3 -locker "~/.config/awesome/screensaver pause" -killtime 10 -killer "~/.config/awesome/screensaver lock" &
+/usr/bin/xautolock -time 15 -locker "~/.config/awesome/screensaver pause" -killtime 25 -killer "~/.config/awesome/screensaver lock" &
 
 # 统一剪贴板，parcellite 比 autocutsel 好用 :)
 # /usr/local/bin/parcellite -n &
@@ -54,7 +55,9 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 ##
 # /usr/bin/syncthing -no-browser &
 ## pull, monitor, push TODO 如果同步失败，邮件通知自己
-#/usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
+/usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
+##
+# 改用 lsyncd 作同步
 #/usr/bin/rsync -av --omit-dir-times --delete --progress ~/.todo/var/ du1abadd.org:~/todo/var/ &
 #while [ 1 ]; do
 #    while file=$(inotifywait -r -q -e modify,create,attrib ~/.todo/var/ --format "%f"); do
@@ -72,7 +75,7 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # xcompmgr 在窗口全屏时有不刷新的问题
 # /usr/bin/xcompmgr -f -n -C &
 # 找到 compton，比 xcompmgr 效果更好
-#/usr/bin/compton -bcCGf -i 0.8 -e 0.8 --no-fading-openclose --sw-opti
+# /usr/bin/compton -bcCGf -i 0.8 -e 0.8 --no-fading-openclose --sw-opti
 
 # 鼠标 5 秒不动后自动隐藏
 /usr/bin/unclutter -idle 5 -noevents &
@@ -83,6 +86,9 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # 初次启动 dropbox 须由 proxychains 启动，之后才可以使用 dropbox 内置的 socks5 代理
 # http://lucidhacking.net/2011/12/how-to-access-dropbox-behind-a-firewall-or-proxy/
 # /usr/bin/dropbox start &
+
+# 双显
+xrandr --output VGA-1 --left-of HDMI-2 # --brightness 0.7
 
 # 为了 pidgin-sipe 正常登录 Lync
 export NSS_SSL_CBC_RANDOM_IV=0
