@@ -503,43 +503,54 @@ set formatexpr=autofmt#uax14#formatexpr()
 " call pathogen#helptags()
 
 call plug#begin('~/.config/nvim/bundle')
-    Plug 'chr4/nginx.vim'
-    Plug 'majutsushi/tagbar'
-    Plug 'ervandew/supertab'
     Plug 'tomtom/quickfixsigns_vim'
-    Plug 'Raimondi/delimitMate'
-    Plug 'sjl/gundo.vim'
     Plug 'chrisbra/NrrwRgn'
-    Plug 'scrooloose/syntastic'
     Plug 'easymotion/vim-easymotion'
+    Plug 'itchyny/calendar.vim'
+    " 高亮自定义的关键字
+    Plug 'inkarkat/vim-mark', { 'tag':'3.0.0' }
+    " 语言(Nginx)
+    Plug 'chr4/nginx.vim'
+    " 文档结构的导航窗口
+    Plug 'majutsushi/tagbar'
+    " 补全功能的增强
+    Plug 'ervandew/supertab'
+    " 撤销功能的可视化窗口
+    Plug 'sjl/gundo.vim'
+    " 自动补全括号引号
+    Plug 'Raimondi/delimitMate'
+    " 源代码语法检查
+    Plug 'scrooloose/syntastic'
+    " 语言(Markdown)
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
+    " 著名的 Powerline
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-    Plug 'Shougo/neosnippet-snippets' | Plug 'Shougo/neosnippet.vim'
-    Plug 'Shougo/denite.nvim' | Plug 'Shougo/neomru.vim'
+    " 缩略语/段落模板
+    Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
+    " 在模式间切换输入法
     Plug 'vim-scripts/fcitx.vim'
+    " 数值的递增递减
     Plug 'vim-scripts/VisIncr'
+    " 数值的求和
     Plug 'wgurecky/vimSum'
-    Plug 'itchyny/calendar.vim'
-    Plug 'MicahElliott/Rocannon'
-    Plug 'inkarkat/vim-mark', { 'tag':'3.0.0' }
-    Plug 'davidhalter/jedi-vim'
-    Plug 'fatih/vim-go'
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/fzf.vim'
+    " 增量的模糊查询 [o]denite [x]fzf
+    Plug 'Shougo/denite.nvim' | Plug 'Shougo/neomru.vim'
+"   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"   Plug 'junegunn/fzf.vim'
+    " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
-    if has('nvim')
-        Plug 'roxma/nvim-completion-manager'
-        " " https://github.com/fatih/vim-go/pull/1853#issuecomment-410776425
-        " Plug 'visualfc/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
-        Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
-    else
-        Plug 'roxma/nvim-completion-manager'
-        Plug 'roxma/vim-hug-neovim-rpc'
-        " " https://github.com/fatih/vim-go/pull/1853#issuecomment-410776425
-        " Plug 'visualfc/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
-        Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
-    endif
+    " 语言(Ansible)
+    Plug 'MicahElliott/Rocannon'
+    " 语言(Golang)
+    Plug 'fatih/vim-go'
+    Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
+    " 语言(Python)
+    Plug 'davidhalter/jedi-vim'
+    " 代码补全 [o]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
+    Plug 'deoplete-plugins/deoplete-jedi'
 call plug#end()
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
@@ -636,9 +647,6 @@ let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 let g:pandoc_use_hard_wraps=1
 let g:pandoc#spell#enabled=0
 
-" deoplete : Deoplete is the abbreviation of "dark powered neo-completion {{{2
-" https://github.com/Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 0
 
 
 " Rocannon : Vim for Ansible playbooks: omni-completion, abbreviations, syntax, folding, K-docs, and colorscheme {{{2
@@ -802,6 +810,13 @@ call denite#custom#map('normal', '<SPACE>', '<denite:scroll_window_downwards>', 
 call denite#custom#source('file'    , 'matchers', ['matcher_cpsm', 'matcher_fuzzy'])
 call denite#custom#source('buffer'  , 'matchers', ['matcher_regexp'])
 call denite#custom#source('file_mru', 'matchers', ['matcher_regexp'])
+
+" deoplete {{{3
+" https://github.com/Shougo/deoplete.nvim
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option({
+            \ 'min_pattern_length': 2
+            \})
 
 " }}}2
 
