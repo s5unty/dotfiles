@@ -138,5 +138,16 @@ URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! take two function keycode: <C-F3>, <S-F3> ~ lOl ~
 URxvt.keysym.C-Return: \033[13^
 URxvt.keysym.S-Return: \033[25~
+!!
+!! Tabbed extension configuration
+!! https://github.com/gryf/tabbed
+!! 喜欢，但是暂不需要
+!!
+URxvt.tabbed.tabbar-fg: 8
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg:    15
+URxvt.tabbed.tab-bg:    8
+URxvt.tabbed.new-button: false
+
 ! }}}
 

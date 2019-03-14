@@ -4,7 +4,7 @@
 # paste.  Initially based on the searchable-scrollback extension and some gf
 # related code borrowed from the matcher extension.
 #
-# Copyright (C) 2007 - 2009  Eric Van Dewoestine
+# Copyright (C) 2007 - 2013  Eric Van Dewoestine
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -50,7 +50,7 @@
 # h j k l
 # w e b
 # 0 _ $
-# ctrl-u ctrl-d
+# ctrl-u ctrl-d ctrl-f ctrl-b
 # gg G
 #
 # f<char> - jump to next occurrence of <char> on the current line
@@ -95,15 +95,19 @@
 # in your ~/.Xdefaults file.
 #
 # ; configure alt-s as the keybinding to enter vim scrollback mode.
-# urxvt*vim-scrollback: M-s
+# urxvt.vim-scrollback: M-s
 #
-# ; configure shift-insert as the keybinding to paste mode.
-# urxvt*vim-scrollback-paste: S-Insert
+# ; configure alt-p as the keybinding to paste mode.
+# urxvt.vim-scrollback-paste: M-p
 #
 # ; configure the background and foreground colors used for the status bar while
 # ; in scrollback mode.
-# urxvt*vim-scrollback-bg: 16
-# urxvt*vim-scrollback-fg: 10
+# urxvt.vim-scrollback-bg: 16
+# urxvt.vim-scrollback-fg: 10
+#
+# ; configure vim-scrollback specific matchers
+# urxvt.vim-scrollback.pattern.1: \\B(/\\S+?):(\\d+)(?=:|$)
+# urxvt.vim-scrollback.launcher.1: gvim +$2 $1
 #
 # ; configure the command used when opening urls. Note, uses the same
 # ; configuration as the url launcher script shipped with urxvt.
@@ -111,7 +115,7 @@
 #
 ################################################################################
 
-my $DEBUG = 0;
+my $DEBUG = 1;
 my $DEBUG_FILE = '/tmp/urxvt_vim_scrollback.log';
 my $DEBUG_FH;
 
@@ -133,7 +137,7 @@ sub on_init {
    $self->parse_keysym($hotkey, "perl:vim-scrollback:start")
       or warn "unable to register '$hotkey' as vim scrollback start hotkey\n";
 
-   $hotkey = $self->x_resource("vim-scrollback-paste") || "S-Insert";
+   $hotkey = $self->x_resource("vim-scrollback-paste") || "M-r";
    $self->parse_keysym($hotkey, "perl:vim-scrollback:paste")
       or warn "unable to register '$hotkey' as vim paste hotkey\n";
 
@@ -157,6 +161,9 @@ sub enter {
       open($DEBUG_FH, ">$DEBUG_FILE");
       select((select($DEBUG_FH), $| = 1)[0]);
    }
+
+   ($self->{name} = __PACKAGE__) =~ s/.*:://;
+   $self->{name} =~ tr/_/-/;
 
    $self->{view_start} = $self->view_start;
    $self->{pty_ev_events} = $self->pty_ev_events(urxvt::EV_NONE);
@@ -319,11 +326,11 @@ sub key_press_normal {
    my ($self, $event, $keysym, $string) =  @_;
 
    $self->msg("");
-   if ($keysym == 0xff1b || # Esc
+   if ($keysym == 0xff1b ||
       $string =~ /^\cC$/ ||
-      ($self->{key_buffer} =~ /^:qa?$/ && $keysym == 0xff0d))
-   { # esc, ctrl-c, :q<enter>, :qa<enter>
-      if($self->{key_buffer} and $self->{key_buffer} !~ /^:qa?$/){
+      ($self->{key_buffer} =~ /^$/ && $keysym == 0xff0d))
+   { # esc, ctrl-c, <enter>
+      if($self->{key_buffer}){
          $self->{key_buffer} = "";
          $self->msg("");
       }else{
@@ -432,31 +439,6 @@ sub key_press_normal {
       $self->set_mark("'");
       $self->term_write($event, $self->{registers}{'"'});
 
-   # quick paste current line
-   } elsif ($string eq "P") {
-      # 移动到行首
-      my ($lnum, $cnum) = $self->screen_cur();
-      my $line = $self->line($lnum);
-      $self->move_cursor($event, $line->coord_of(0));
-
-      # 切换到选择模式
-      $self->{mode} = "visual";
-      $self->{mode_info} = "-- VISUAL -- ";
-      ($self->{visual_lnum}, $self->{visual_cnum}) = $self->screen_cur();
-      $self->{registers}{'"'} = $self->selection();
-
-      # 选至行尾
-      $self->move_cursor($event, $line->coord_of($line->l - 1));
-      # 执行复制
-      $self->{registers}{'"'} = $self->selection();
-      $self->normal_mode($event, 1);
-      # 执行粘贴
-      $self->set_mark("'");
-      $self->term_write($event, $self->{registers}{'"'});
-
-      $self->leave($event);
-      return 1;
-
    # motions
    } elsif ($string eq "j") {
       my ($lnum, $cnum) = $self->screen_cur();
@@ -507,19 +489,26 @@ sub key_press_normal {
    } elsif ($string eq "G") {
       $self->set_mark("'");
       $self->move_cursor($event, $self->{orig_lnum}, $self->{orig_cnum});
-   } elsif ($string eq ";") {
+   } elsif ($string =~ /^\cD$/) {
       my ($lnum, $cnum) = $self->screen_cur();
-      $self->scroll_cursor($event, $lnum, $cnum);
-   } elsif ($string eq ' ' or $string =~ /^\cD$/) {
-      my ($lnum, $cnum) = $self->screen_cur();
-      my $row = $lnum + 20;
+      my $row = $lnum + $self->nrow / 2;
       $row = $row < $self->{orig_lnum} ? $row : $self->{orig_lnum};
-      $self->scroll_cursor($event, $row, $cnum);
-   } elsif ($string eq '-' or $string =~ /^\cU$/) {
+      $self->move_cursor($event, $row, $cnum);
+   } elsif ($string =~ /^\cU$/) {
       my ($lnum, $cnum) = $self->screen_cur();
-      my $row = $lnum - 20;
+      my $row = $lnum - $self->nrow / 2;
       $row = $row > $self->top_row ? $row : $self->top_row;
-      $self->scroll_cursor($event, $row, $cnum);
+      $self->move_cursor($event, $row, $cnum);
+   } elsif ($string =~ /^\cF$/) {
+      my ($lnum, $cnum) = $self->screen_cur();
+      my $row = $lnum + $self->nrow - 1;
+      $row = $row < $self->{orig_lnum} ? $row : $self->{orig_lnum};
+      $self->move_cursor($event, $row, $cnum);
+   } elsif ($string =~ /^\cB$/) {
+      my ($lnum, $cnum) = $self->screen_cur();
+      my $row = $lnum - $self->nrow + 1;
+      $row = $row > $self->top_row ? $row : $self->top_row;
+      $self->move_cursor($event, $row, $cnum);
    } elsif ($string eq "w" or $string eq "e") {
       my $pattern = $string eq "w" ? '\W\w' : '\w\W';
       my $adj = $string eq "w" ? 0 : -1;
@@ -645,9 +634,6 @@ sub key_press_normal {
       if (@exec){
         $self->exec_async(@exec);
       }
-   } elsif ($string =~ "a" || $string =~ "i") {
-      $self->leave($event);
-      return 1;
 
    }elsif ($string =~ /^([0-9]+|[gm'])$/) {
       $self->msg($self->{msg});
@@ -917,12 +903,7 @@ sub move_cursor {
 
       $self->make_selection($event, $sl, $sc, $el, $ec, 1);
    }
-
-   if ($lnum < $self->view_start()) {
-      $self->view_start(List::Util::min 0, $lnum);
-   } elsif ($lnum >= $self->view_start() + $self->nrow - 1) {
-      $self->view_start(List::Util::min 0, $lnum - $self->nrow + 2);
-   }
+   $self->view_start(List::Util::min 0, $lnum - ($self->nrow >> 1));
    $self->want_refresh;
 }
 
@@ -1124,20 +1105,7 @@ sub debug {
 # entry point for paste mode
 sub paste {
    my ($self, $selection) = @_;
-#   $self->enable(key_press => \&key_press_paste);
-
-   my $text = $self->selection();
-   if($text){
-      $self->tt_write($text);
-   }else{
-#      if(open(my $process, "xclip -o |")){
-      # Q: 为什么用 tail
-      # A: parcellite-1.1.8 命令行输出的首行是空行
-      if(open(my $process, "gpaste-client get 0 |")){
-         $text = join('', <$process>);
-         $self->tt_write($text);
-      }
-   }
+   $self->enable(key_press => \&key_press_paste);
 }
 
 sub key_press_paste {
@@ -1159,8 +1127,21 @@ sub key_press_paste {
             $self->tt_write($text);
          }else{
             if(open(my $process, "xclip -o -selection $selection |")){
-               $text = join('', <$process>);
-               $self->tt_write($text);
+               while ($text = <$process>){
+                  # between rxvt-unicode 9.14 and 9.15 (or some other factor)
+                  # writing out new lines doesn't work (they seem to be
+                  # stripped), but using carriage returns does, so replace \n
+                  # with \r so pasting works with both versions (removing of \n
+                  # mostly to accommodate paste into vim since the term won't
+                  # issue both \n and \r, but vim will, resulting in extra lines
+                  # between pasted text... may affect other terminal apps as
+                  # well).
+                  $text =~ s/\n$/\r/;
+                  $self->tt_write($text);
+               }
+               #$text = join("\r", <$process>);
+               #$self->tt_write($text);
+               close $process;
             }
          }
       }
@@ -1169,12 +1150,4 @@ sub key_press_paste {
    }
 }
 
-sub scroll_cursor {
-   my ($self, $event, $lnum, $cnum) = @_;
-   $self->screen_cur($lnum, $cnum);
-   $self->view_start(List::Util::min 0, $lnum - ($self->nrow >> 1));
-   $self->want_refresh;
-}
-
 # vim:shiftwidth=3:tabstop=3
-
