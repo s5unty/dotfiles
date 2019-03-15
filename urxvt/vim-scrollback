@@ -489,12 +489,12 @@ sub key_press_normal {
    } elsif ($string eq "G") {
       $self->set_mark("'");
       $self->move_cursor($event, $self->{orig_lnum}, $self->{orig_cnum});
-   } elsif ($string =~ /^\cD$/) {
+   } elsif ($string eq ' ' or $string =~ /^\cD$/) {
       my ($lnum, $cnum) = $self->screen_cur();
       my $row = $lnum + $self->nrow / 2;
       $row = $row < $self->{orig_lnum} ? $row : $self->{orig_lnum};
       $self->move_cursor($event, $row, $cnum);
-   } elsif ($string =~ /^\cU$/) {
+   } elsif ($string eq '-' or $string =~ /^\cU$/) {
       my ($lnum, $cnum) = $self->screen_cur();
       my $row = $lnum - $self->nrow / 2;
       $row = $row > $self->top_row ? $row : $self->top_row;

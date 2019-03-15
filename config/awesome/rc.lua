@@ -271,8 +271,6 @@ globalkeys = awful.util.table.join(
             awful.client.focus.bydirection("right")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({                   }, "F10", function () awful.util.mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
 
 	-- How can I make a minimized client visible again?
 	-- https://bbs.archlinux.org/viewtopic.php?pid=838211

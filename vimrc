@@ -27,7 +27,7 @@ set matchpairs=(:),{:} " 避免TabBar的方括号被高亮
 set showcmd " 右下方显示按键序列
 set winaltkeys=no
 set cinoptions=:0
-set timeoutlen=50
+set timeoutlen=1000
 set ttimeoutlen=50
 set timeout
 "set ttimeout
@@ -258,8 +258,9 @@ nmap <silent> <unique> <Space> :call G_GoodSpace()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' $
-vmap <silent> <unique> + :Align =<CR>
+vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
+nmap <silent> <unique> * :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal line<CR>
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
@@ -305,6 +306,7 @@ nmap <silent> <unique> <M-h> <C-W>h
 nmap <silent> <unique> <M-j> <C-W>j
 nmap <silent> <unique> <M-k> <C-W>k
 nmap <silent> <unique> <M-l> <C-W>l
+nmap <silent> <unique> <M-b> :Denite buffer<CR>
 imap <silent> <unique> <M-b> <C-O>b
 imap <silent> <unique> <M-f> <C-O>w
 imap <silent> <unique> <M-d> <C-O>dw
@@ -341,8 +343,15 @@ nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <Leader>a :GundoToggle<CR>
 
 " Colon+, Colon char is ':' {{{2
-command W :w !sudo tee %
-command E :call Ranger()<CR>
+command W  :w !sudo tee %
+command E  :call Ranger()<CR>
+command D  :Denite file_rec buffer -winheight=12 -mode=normal -vertical-preview -auto-preview
+command M  :Denite file_mru -winheight=12 -mode=insert -vertical-preview -auto-preview
+" denite file search (c-p uses gitignore, c-o looks at everything)
+command F  :DeniteProjectDir -buffer-name=files -direction=top file_rec
+command FF :DeniteProjectDir -buffer-name=git -direction=top file_rec/git
+" denite content search
+command G  :DeniteProjectDir -buffer-name=grep grep:::!
 
 command PP :!paps --landscape --font='monospace 8' --header --columns=2 % | ps2pdf - - | zathura -
 command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp -o landscape -o sites=two-sided-long-edge -
@@ -799,9 +808,9 @@ call denite#custom#var('grep', 'pattern_opt', [])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
 
+call denite#custom#map('insert', '<Esc>',   '<denite:enter_mode:normal>', 'noremap')
 call denite#custom#map('insert', '<C-N>',   '<denite:move_to_next_line>', 'noremap')
 call denite#custom#map('insert', '<C-P>',   '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#map('insert', '<C-W>',   '<denite:move_up_path>', 'noremap')
 call denite#custom#map('normal', 't',       '<denite:toggle_select_down>', 'noremap')
 call denite#custom#map('normal', '-',       '<denite:scroll_window_upwards>', 'noremap')
 call denite#custom#map('normal', ';',       '<denite:scroll_cursor_to_middle>', 'noremap')

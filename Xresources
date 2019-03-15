@@ -22,7 +22,7 @@ URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
 
 URxvt.perl-lib:          /sun/.urxvt/
-URxvt.perl-ext-common:   matcher,selection,mark-yank-urls,vim-scrollback,translate-selection
+URxvt.perl-ext-common:   matcher,selection,mark-yank-urls,vim-scrollback,translate-selection,tabbedex
 ! }}}
 
 ! @@ FONTS @@ {{{
@@ -138,16 +138,31 @@ URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 !! take two function keycode: <C-F3>, <S-F3> ~ lOl ~
 URxvt.keysym.C-Return: \033[13^
 URxvt.keysym.S-Return: \033[25~
+
 !!
-!! Tabbed extension configuration
-!! https://github.com/gryf/tabbed
-!! 喜欢，但是暂不需要
+!! keyboard-select: Use keyboard shortcuts to select and copy text
+!! https://github.com/muennich/urxvt-perls
+!! 还是习惯了用 vim-scrollback
+!!
+! URxvt.keysym.M-s: perl:keyboard-select:search
+! URxvt.keysym.M-r: perl:keyboard-select:activate
+
+!!
+!! Tabbedex for Urxvt.
+!! https://github.com/shaggytwodope/tabbedex-urxvt
 !!
 URxvt.tabbed.tabbar-fg: 8
 URxvt.tabbed.tabbar-bg: 0
 URxvt.tabbed.tab-fg:    15
 URxvt.tabbed.tab-bg:    8
+URxvt.tabbed.autohide:  yes
+URxvt.tabbed.title:     yes
 URxvt.tabbed.new-button: false
-
+URxvt.keysym.M-t:       perl:tabbedex:new_tab
+URxvt.keysym.C-M-p:     perl:tabbedex:prev_tab
+URxvt.keysym.C-M-n:     perl:tabbedex:next_tab
+URxvt.keysym.C-M-h:     perl:tabbedex:move_tab_left
+URxvt.keysym.C-M-l:     perl:tabbedex:move_tab_right
+URxvt.keysym.C-M-t:     perl:tabbedex:rename_tab
 ! }}}
 
