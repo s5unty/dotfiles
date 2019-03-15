@@ -46,6 +46,7 @@ set undolevels=500
 set diffopt=filler,iwhite
 set rtp+=/usr/bin/fzf
 set guicursor=a:blinkon100 " 让光标抖起来
+set inccommand=split " 好像是 NeoVim 特有的
 
 if has("gui_running")
     set guioptions-=m
@@ -797,12 +798,11 @@ call denite#custom#alias('source', 'file_rec/git', 'file_rec')
 call denite#custom#var('file_rec/git', 'command',
   \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
-call denite#custom#var('file_rec', 'command',
-      \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
-call denite#custom#var('grep', 'command', ['ag'])
+" Pt command on grep source
+" https://github.com/monochromegane/the_platinum_searcher
+call denite#custom#var('grep', 'command', ['pt'])
 call denite#custom#var('grep', 'default_opts',
-    \ ['-i', '--vimgrep', '--nocolor', '--nogroup'])
+        \ ['-f', '--nogroup', '--nocolor', '--smart-case'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', [])
 call denite#custom#var('grep', 'separator', ['--'])
