@@ -307,7 +307,6 @@ nmap <silent> <unique> <M-h> <C-W>h
 nmap <silent> <unique> <M-j> <C-W>j
 nmap <silent> <unique> <M-k> <C-W>k
 nmap <silent> <unique> <M-l> <C-W>l
-nmap <silent> <unique> <M-b> :Denite buffer<CR>
 imap <silent> <unique> <M-b> <C-O>b
 imap <silent> <unique> <M-f> <C-O>w
 imap <silent> <unique> <M-d> <C-O>dw
@@ -517,8 +516,6 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'chrisbra/NrrwRgn'
     Plug 'easymotion/vim-easymotion'
     Plug 'itchyny/calendar.vim'
-    " 高亮自定义的关键字
-    Plug 'inkarkat/vim-mark', { 'tag':'3.0.0' }
     " 语言(Nginx)
     Plug 'chr4/nginx.vim'
     " 文档结构的导航窗口
