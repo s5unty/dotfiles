@@ -158,7 +158,7 @@ URxvt.tabbed.tab-bg:    8
 URxvt.tabbed.autohide:  yes
 URxvt.tabbed.title:     yes
 URxvt.tabbed.new-button: false
-URxvt.keysym.M-t:       perl:tabbedex:new_tab
+URxvt.keysym.C-t:       perl:tabbedex:new_tab
 URxvt.keysym.C-M-p:     perl:tabbedex:prev_tab
 URxvt.keysym.C-M-n:     perl:tabbedex:next_tab
 URxvt.keysym.C-M-h:     perl:tabbedex:move_tab_left
