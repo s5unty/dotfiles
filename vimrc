@@ -558,6 +558,8 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'Shougo/deoplete.nvim'
     Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
     Plug 'deoplete-plugins/deoplete-jedi'
+    " 真(?)智能补全
+    Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 call plug#end()
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
