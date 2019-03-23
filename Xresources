@@ -39,11 +39,11 @@ Xft.lcdfilter: lcddefault
 #ifdef SRVR_verns_worktop
 URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
 URxvt.italicFont: [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
-URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold
+URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
 #elif SRVR_verns_desktop
-URxvt.font:       [codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
-URxvt.italicFont: [codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
-URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold
+URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
+URxvt.italicFont: [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
+URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
 #endif
 
 !注意，
@@ -53,11 +53,11 @@ URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=12, [codeset=UTF-8]x
 URxvt.keysym.M-Up: command: \
         \033]710;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
         \033]712;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
-        \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold\007
+        \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12\007
 URxvt.keysym.M-Down: command: \
         \033]710;[codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
         \033]712;[codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
-        \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold\007
+        \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=10\007
 ! }}}
 
 ! @@ COLORS AND GRAPHICS @@ {{{
