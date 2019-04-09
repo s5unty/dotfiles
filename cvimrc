@@ -8,7 +8,7 @@ let searchlimit = 30
 let scrollstep = 70
 let hintcharacters = "asdfqwerzxcv"
 let nextmatchpattern = "((?!first)(下一页|下一頁|下页|下頁|前进|前進|繼續|继续|更多|next|more|>|›|»|forward| )+)"
-let blacklists = ["https://mail.google.com/*", "http://*shanbay.com/*", "https://dynalist.io/*", "https://efss-cn.internet.genscript.com/*"]
+let blacklists = ["https://mail.google.com/*", "http://*shanbay.com/*", "https://dynalist.io/*", "https://efss-cn.internet.genscript.com*"]
 
 let searchengine gghk   = "https://www.google.com.hk/?gws_rd=ssl#newwindow=1&q="
 let searchengine ggjp   = "https://www.google.co.jp/search?newwindow=1&q="
