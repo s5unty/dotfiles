@@ -9,7 +9,7 @@ folder-hook . "push '<collapse-all><last-entry><next-new-then-unread><current-bo
 folder-hook personal "set from='Vern Sun <s5unty@gmail.com>'"
 folder-hook personal "set crypt_autosign=yes"
 # 公司邮箱，切换邮送域，不用gpg签名
-folder-hook gens- "set from='Sun Wuan <sunwuan@genscript.com>'"
+folder-hook gens- "set from='Wuan Sun <wuan.sun@genscript.com>'"
 folder-hook gens- "set crypt_autosign=no"
 # 笔记本，切换首页信息
 #folder-hook  notebook "set index_format='%?M?%-38.38i (%-2.2M)&%-43.43i? %?X?%%& ? %-85.85s       %?Y?︴%-19.19Y&︴? %> %?N?%2N\"&   ? %[%b%d]┆%4c'"

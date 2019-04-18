@@ -22,7 +22,8 @@ URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
 
 URxvt.perl-lib:          /sun/.urxvt/
-URxvt.perl-ext-common:   matcher,selection,mark-yank-urls,vim-scrollback,translate-selection,tabbedex
+! tabbedex
+URxvt.perl-ext-common:   matcher,selection,mark-yank-urls,vim-scrollback,translate-selection
 ! }}}
 
 ! @@ FONTS @@ {{{
@@ -150,19 +151,22 @@ URxvt.keysym.S-Return: \033[25~
 !!
 !! Tabbedex for Urxvt.
 !! https://github.com/shaggytwodope/tabbedex-urxvt
+!! 有点遗憾，和 Fcitx 输入法冲突，
+!! 启用之后，鼠标落在 Fcitx 选单、引起输入焦点丢失
 !!
-URxvt.tabbed.tabbar-fg: 8
-URxvt.tabbed.tabbar-bg: 0
-URxvt.tabbed.tab-fg:    15
-URxvt.tabbed.tab-bg:    8
-URxvt.tabbed.autohide:  yes
-URxvt.tabbed.title:     yes
-URxvt.tabbed.new-button: false
-URxvt.keysym.C-t:       perl:tabbedex:new_tab
-URxvt.keysym.C-M-p:     perl:tabbedex:prev_tab
-URxvt.keysym.C-M-n:     perl:tabbedex:next_tab
-URxvt.keysym.C-M-h:     perl:tabbedex:move_tab_left
-URxvt.keysym.C-M-l:     perl:tabbedex:move_tab_right
-URxvt.keysym.C-M-t:     perl:tabbedex:rename_tab
+!URxvt.tabbed.tabbar-fg: 8
+!URxvt.tabbed.tabbar-bg: 0
+!URxvt.tabbed.tab-fg:    15
+!URxvt.tabbed.tab-bg:    8
+!URxvt.tabbed.autohide:  yes
+!URxvt.tabbed.title:     yes
+!URxvt.tabbed.new-button: false
+!URxvt.keysym.C-t:       perl:tabbedex:new_tab
+!URxvt.keysym.C-M-p:     perl:tabbedex:prev_tab
+!URxvt.keysym.C-M-n:     perl:tabbedex:next_tab
+!URxvt.keysym.C-M-h:     perl:tabbedex:move_tab_left
+!URxvt.keysym.C-M-l:     perl:tabbedex:move_tab_right
+!URxvt.keysym.C-M-t:     perl:tabbedex:rename_tab
+
 ! }}}
 
