@@ -12,15 +12,16 @@
 #       ----
 #
 mode=$1
-file="/tmp/.screensaver.png"
+#file="/tmp/.screensaver.png"
+file="/sun/.config/awesome/screenlock.png"
 
 case $mode in
     pause)
         pkill cmatrix
-        /usr/bin/x-terminal-emulator -name CMatrix -T CMatrix -e zsh -c "cmatrix -a -b -u 5"
+        /usr/bin/x-terminal-emulator +tr -bg lightgray -name CMatrix -T CMatrix -e zsh -c "cmatrix -a -b -x -u 5 -C white"
         ;;
     lock)
-        import -window root $file
+        #import -window root $file
         /usr/bin/i3lock -f -i $file && pkill cmatrix
         sleep 600
         pgrep i3lock && xset dpms force off
