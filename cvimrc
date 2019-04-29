@@ -40,8 +40,14 @@ map ; ]]
 map <C-d> scrollPageDown
 map <C-u> scrollPageUp
 
-let qmark f = ["http://fm.douban.com"]
+let qmark c = ["http://cnbeta.com"]
 let qmark y = ["http://www.youku.com"]
+let qmark k = ["gen.link/pw"]
+let qmark s = ["http://send.it.genscript.com"]
+let qmark m = ["http://make.it.genscript.com"]
+let qmark c = ["http://cd.it.genscript.com"]
+let qmark z = ["https://zabbix.internet.genscript.com"]
+let qmark t = ["https://translate.google.com/?hl=zh-CN&tab=TT"]
 let qmark G = ["https://github.com/"]
 let qmark T = ["https://twitter.com/"]
 let qmark Y = ["https://youtube.com/"]
