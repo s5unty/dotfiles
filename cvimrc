@@ -13,7 +13,8 @@ let blacklists = [
             \ "http://*shanbay.com/*",
             \ "https://dynalist.io/*",
             \ "https://efss-cn.internet.*",
-            \ "http://project.internet.*"
+            \ "http://project.internet.*",
+            \ "http://space.internet.*"
             \ ]
 
 let searchengine gghk   = "https://www.google.com.hk/?gws_rd=ssl#newwindow=1&q="
@@ -27,6 +28,8 @@ let searchengine diigo  = "https://www.diigo.com/search?what="
 let searchengine duck   = "https://duckduckgo.com/?q="
 let searchengine wiki   = "https://zh.wikipedia.org/w/index.php?title=Special%3A%E6%90%9C%E7%B4%A2&profile=default&search=%s&fulltext=Search"
 let searchengine note   = "https://app.yinxiang.com/Home.action#st=p&x=%s&n=c090e93d-859e-4f56-8c35-cf01129892c4"
+let searchengine i      = "http://project.internet.genscript.com/browse/GSA-%s"
+let searchengine is     = 'http://project.internet.genscript.com/issues/?jql=project = GSA AND text ~ "%s" ORDER BY created DESC'
 let completionengines   = ["ggjp", "diigo"]
 let defaultengine = "ggjp"
 
