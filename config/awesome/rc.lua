@@ -321,7 +321,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift" }, "r", function () lain.util.rename_tag() end),
     awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end),  -- move to previous tag
     awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end),  -- move to next tag
-    awful.key({ modkey, "Shift" }, "d", function () lain.util.delete_tag() end),
+    awful.key({ modkey, "Shift" }, "BackSpace", function () lain.util.delete_tag() end),
 
     -- Standard program
     awful.key({ modkey,           }, "space", function () awful.spawn(terminal) end,
@@ -650,7 +650,6 @@ awful.rules.rules = {
     { rule = { instance = "CMatrix" },
     properties = { floating=true, ontop=true },
 	callback = function (c)
-		c.screen = 1
 		c:geometry( { x = 0, y = 0, width = 3840, height = 1080 } )
 	end },
 
@@ -747,10 +746,16 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
+local sloppyfocus_last = {c=nil}
 client.connect_signal("mouse::enter", function(c)
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
         and awful.client.focus.filter(c) then
-        client.focus = c
+        -- Skip focusing the client if the mouse wasn't moved.
+        -- https://github.com/blueyed/awesome/blob/sloppy-focus-skip-not-moved/awesomerc.lua.in
+        if c ~= sloppyfocus_last.c then
+            client.focus = c
+            sloppyfocus_last.c = c
+        end
     end
 end)
 
