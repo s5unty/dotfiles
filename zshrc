@@ -43,7 +43,8 @@ zplugin light zsh-users/zsh-autosuggestions
 
 # Fish shell like syntax highlighting for Zsh. {{{1
 # https://github.com/zsh-users/zsh-syntax-highlighting
-zplugin light zdharma/fast-syntax-highlighting
+zplugin load zsh-users/zsh-syntax-highlighting
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 # A cd command that learns - easily navigate directories from the command line {{{1
 # https://github.com/wting/autojump
