@@ -1,0 +1,36 @@
+[calendars]
+
+  [[work]]
+  path = /sun/.vdirsyncer/work/
+  color = light magenta
+  type = calendar
+
+  [[free]]
+  path = /sun/.vdirsyncer/free/
+  color = brown
+  type = calendar
+  readonly = true
+
+[locale]
+local_timezone = Asia/Shanghai
+timeformat = %H:%M
+dateformat = %m/%d
+longdateformat = %Y-%m-%d
+datetimeformat = %Y-%m-%d %H:%M
+longdatetimeformat = %Y-%m-%d %H:%M
+firstweekday = 0
+weeknumbers = right
+unicode_symbols = false
+
+[default]
+default_calendar = work
+highlight_event_days = True
+
+[highlight_days]
+multiple = yellow
+
+[view]
+frame = top
+event_view_always_visible = True
+#agenda_event_format = {calendar-color}{cancelled}{start-end-time-style} {title}{repeat-symbol}{description-separator}{reset}
+agenda_event_format = {calendar-color}{cancelled}{start-end-time-style} {title}{repeat-symbol}{description-separator} {location}{reset}
