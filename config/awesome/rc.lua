@@ -446,6 +446,10 @@ globalkeys = awful.util.table.join(
             c = string.gsub(c, "\027%[1;35m", "<span color=\"#ee2c2c\">") -- firebrick
 
             mycalendar = naughty.notify({
+                destroy = function ()
+                    naughty.destroy(mycalendar)
+                    mycalendar = nil
+                end,
                 title = "", text = c,
                 position = "bottom_right", font = "Tamzen 12",
                 timeout = 0, max_width = 630, screen = mouse.screen })
