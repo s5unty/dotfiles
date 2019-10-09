@@ -9,7 +9,6 @@
   path = /sun/.vdirsyncer/free/
   color = brown
   type = calendar
-  readonly = true
 
 [locale]
 local_timezone = Asia/Shanghai

@@ -9,26 +9,35 @@ conflict_resolution = "b wins"
 
 [storage work_origin]
 type = "caldav"
-url = "http://localhost:1080/users/*******@genscript.com/calendar/"
-username = "*******@genscript.com"
+url = "http://localhost:1080/users/*********************/calendar"
+username = "*********************"
 password = "********"
 
+# 单个文件
+# [storage work_master]
+# type = "singlefile"
+# path = "~/.vdirsyncer/work/work.ics"
+# encoding = "utf-8"
+
+# 目录+扩展名，可以和 khal 搭配使用
 [storage work_master]
-type = "singlefile"
-path = "~/.vdirsyncer/work/work.ics"
+type = "filesystem"
+path = "~/.vdirsyncer/work/"
+fileext = ".ics"
 encoding = "utf-8"
 
-# [pair free]
-# a = "free_master"
-# b = "free_origin"
-# collections = null
-# 
-# [storage free_origin]
-# type = "http"
-# url = "http://p42-calendars.icloud.com/published/2/FwgHV75qkmBJROFTOL4UajNB6kChgjvU3OXThGwApQRMHpPeshnDpxSwbQbKUDYpBXoSxIk7PsTa6EXyAjNVn-PvA0hfY5IWlXe_RIwbjvA"
-# 
-# [storage free_master]
-# type = "singlefile"
-# path = "~/.vdirsyncer/free/free.ics"
-# encoding = "utf-8"
-# 
+[pair free]
+a = "free_master"
+b = "free_origin"
+collections = null
+partial_sync = "ignore"
+
+[storage free_origin]
+type = "http"
+url = "http://p42-calendars.icloud.com/published/2/FwgHV75qkmBJROFTOL4UajNB6kChgjvU3OXThGwApQRMHpPeshnDpxSwbQbKUDYpBXoSxIk7PsTa6EXyAjNVn-PvA0hfY5IWlXe_RIwbjvA"
+
+[storage free_master]
+type = "caldav"
+url = "http://localhost:1080/users/*********************/calendar/holidays"
+username = "*********************"
+password = "********"

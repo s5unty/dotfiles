@@ -414,7 +414,7 @@ globalkeys = awful.util.table.join(
                 local c = f:read("*a")
                 f:close()
 
-                frame = naughty.notify({ text = c, font = "Tamzen 10", timeout = 30, width = 360, screen = mouse.screen })
+                frame = naughty.notify({ text = c, font = "Tamzen 10", timeout = 30, max_width = 360, screen = mouse.screen })
             end
             }
         end,
@@ -429,14 +429,26 @@ globalkeys = awful.util.table.join(
                 return
             end
             -- 从这里开始是为了删除末尾的空行和换行符，这样显示在 naughty 的效果会更紧凑一些
-            local f = io.popen("LANG=C gcal -K --iso-week-number=yes -s1 --highlighting=\" :#: :*\" -qcn --chinese-months -cezk . | tail -n +3 | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+            -- local f = io.popen("LANG=C gcal -K --iso-week-number=yes -s1 --highlighting=\" :#: :*\" -qcn --chinese-months -cezk . | tail -n +3 | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+            -- local f = io.popen("LANG=C gcal -K --iso-week-number=yes -s1 --highlighting=\" :#: :*\" -cezk . | tail -n +3 && echo '' && echo ' ------------------------8<------------------------8<-----------------------' && echo '' && khal list | sed 's/^/ /'")
+            local f = io.popen("LANG=C.UTF-8 khal --color calendar")
             local c = f:read("*a")
             f:close()
 
+            -- `LANG=C.UTF-8 khal --color calendar > foo`
+            -- 靠肉眼识别，不行就摘取成小脚本 debug
+            c = string.gsub(c, "\027%[0m\027%[0m", "</span>") -- 有连续的 0m0m，先处理了
+            c = string.gsub(c, "\027%[0m", "</span>")
+            c = string.gsub(c, "\027%[1m", "<span weight=\"bold\">")
+            c = string.gsub(c, "\027%[7m", "<span weight=\"bold\" color=\"#000000\" bgcolor=\"#bebebe\">")
+            c = string.gsub(c, "\027%[33m", "<span color=\"#ffa500\">") -- orange/brown
+            c = string.gsub(c, "\027%[95m", "<span color=\"#ee2c2c\">") -- firebrick
+            c = string.gsub(c, "\027%[1;35m", "<span color=\"#ee2c2c\">") -- firebrick
+
             mycalendar = naughty.notify({
-                text = c,
-                position = "bottom_right", font = "Tamzen",
-                timeout = 0, width = 630, screen = mouse.screen })
+                title = "", text = c,
+                position = "bottom_right", font = "Tamzen 12",
+                timeout = 0, max_width = 630, screen = mouse.screen })
         end,
         {description = "calendar", group = "launcher"}),
 
@@ -678,6 +690,10 @@ awful.rules.rules = {
 
     { rule = { class = "xpad" },
     properties = { floating=true, ontop=true } },
+
+    { rule = { name = "Authy" },
+    properties = { floating=true, ontop=true } },
+
 }
 -- }}}
 
