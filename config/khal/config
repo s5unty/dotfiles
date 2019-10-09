@@ -2,12 +2,12 @@
 
   [[work]]
   path = /sun/.vdirsyncer/work/
-  color = light magenta
+  color = light red
   type = calendar
 
   [[free]]
   path = /sun/.vdirsyncer/free/
-  color = brown
+  color = light green
   type = calendar
 
 [locale]
@@ -23,7 +23,8 @@ unicode_symbols = false
 
 [default]
 default_calendar = work
-highlight_event_days = True
+highlight_event_days = true
+timedelta = 5d
 
 [highlight_days]
 multiple = yellow

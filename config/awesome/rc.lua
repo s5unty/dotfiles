@@ -437,13 +437,15 @@ globalkeys = awful.util.table.join(
 
             -- `LANG=C.UTF-8 khal --color calendar > foo`
             -- 靠肉眼识别，不行就摘取成小脚本 debug
+            -- 这里的 31m/91m/32m/92m，取决于 khal/config 中 calendars 中的 color 配置
             c = string.gsub(c, "\027%[0m\027%[0m", "</span>") -- 有连续的 0m0m，先处理了
             c = string.gsub(c, "\027%[0m", "</span>")
             c = string.gsub(c, "\027%[1m", "<span weight=\"bold\">")
             c = string.gsub(c, "\027%[7m", "<span weight=\"bold\" color=\"#000000\" bgcolor=\"#bebebe\">")
-            c = string.gsub(c, "\027%[33m", "<span color=\"#ffa500\">") -- orange/brown
-            c = string.gsub(c, "\027%[95m", "<span color=\"#ee2c2c\">") -- firebrick
-            c = string.gsub(c, "\027%[1;35m", "<span color=\"#ee2c2c\">") -- firebrick
+            c = string.gsub(c, "\027%[1;31m", "<span color=\"#ffa500\">") -- yellow (day)
+            c = string.gsub(c, "\027%[91m", "<span color=\"#ffa500\" font=\"Tamzen 12\">") -- yellow (list)
+            c = string.gsub(c, "\027%[1;32m", "<span color=\"#228B22\">") -- green (day)
+            c = string.gsub(c, "\027%[92m", "<span color=\"#228B22\" font=\"Tamzen 12\">") -- green (list)
 
             mycalendar = naughty.notify({
                 destroy = function ()
@@ -451,7 +453,7 @@ globalkeys = awful.util.table.join(
                     mycalendar = nil
                 end,
                 title = "", text = c,
-                position = "bottom_right", font = "Tamzen 12",
+                position = "bottom_right", font = "Tamzen 14",
                 timeout = 0, max_width = 630, screen = mouse.screen })
         end,
         {description = "calendar", group = "launcher"}),
