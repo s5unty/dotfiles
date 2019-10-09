@@ -13,13 +13,6 @@ url = "http://localhost:1080/users/*********************/calendar"
 username = "*********************"
 password = "********"
 
-# 单个文件
-# [storage work_master]
-# type = "singlefile"
-# path = "~/.vdirsyncer/work/work.ics"
-# encoding = "utf-8"
-
-# 目录+扩展名，可以和 khal 搭配使用
 [storage work_master]
 type = "filesystem"
 path = "~/.vdirsyncer/work/"
@@ -30,6 +23,7 @@ encoding = "utf-8"
 a = "free_master"
 b = "free_origin"
 collections = null
+conflict_resolution = "a wins"
 partial_sync = "ignore"
 
 [storage free_origin]
@@ -37,7 +31,8 @@ type = "http"
 url = "http://p42-calendars.icloud.com/published/2/FwgHV75qkmBJROFTOL4UajNB6kChgjvU3OXThGwApQRMHpPeshnDpxSwbQbKUDYpBXoSxIk7PsTa6EXyAjNVn-PvA0hfY5IWlXe_RIwbjvA"
 
 [storage free_master]
-type = "caldav"
-url = "http://localhost:1080/users/*********************/calendar/holidays"
-username = "*********************"
-password = "********"
+type = "filesystem"
+path = "~/.vdirsyncer/free/"
+fileext = ".ics"
+encoding = "utf-8"
+
