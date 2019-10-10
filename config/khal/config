@@ -14,9 +14,9 @@
 local_timezone = Asia/Shanghai
 timeformat = %H:%M
 dateformat = %m/%d
-longdateformat = %Y-%m-%d
-datetimeformat = %Y-%m-%d %H:%M
-longdatetimeformat = %Y-%m-%d %H:%M
+longdateformat = %Y/%m/%d
+datetimeformat = %m/%d %H:%M
+longdatetimeformat = %Y/%m/%d %H:%M
 firstweekday = 0
 weeknumbers = right
 unicode_symbols = false
