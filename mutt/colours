@@ -48,6 +48,7 @@ color body       red         black     "^(gpg: )?warning"
 
 # 关键内容高亮
 color body       black       color228  "(孫|孙)?(殿|武安|さん|[Ss]an|@[Ww]uan)"
+color body       black       color228  "(信息)"
 #color body       black       color228  "英(语|語|文)"
 #color body       black       color153  "(PCL|CRM).{3,4}(各位|全体|组|チーム)"
 #color body       black       color225  ""
