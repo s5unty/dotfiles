@@ -27,6 +27,11 @@ function! BetweenEnglishChinese()
     " 到邮件签名为止，剩余部分不用管
     let tailine = search('^-- $', 'n')
     for linenum in range(1, tailine)
+        " 只管撰写的正文，忽略引用
+        if getline(linenum) =~ "^[ ]*[>|].*"
+            continue
+        endif
+
         let oldline = getline(linenum)
         let newline = substitute(oldline, '\([\u4e00-\u9fa5]\)\(\w\)', '\1 \2', 'g')
         let newline = substitute(newline, '\(\w\)\([\u4e00-\u9fa5]\)', '\1 \2', 'g')
