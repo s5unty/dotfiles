@@ -79,7 +79,7 @@ speller:
   delimiter: "`':"
   #auto_clear: auto #manual|auto|max_length 空码按下一键确认清屏|空码自动清|达到最长码时后码顶上清屏
   #auto_select: true
-  max_code_length: 4
+  max_code_length: 5
   #auto_select_pattern: '^[;,]'
 
 simplifier:
