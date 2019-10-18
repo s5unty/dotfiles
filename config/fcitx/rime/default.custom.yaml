@@ -1,10 +1,9 @@
 patch:
   schema_list:
-    - schema: cqlb_fluency
     - schema: cqlb_express
+    - schema: cqlb_fluency
   key_binder:
     bindings:
-      - {accept: Return, send: "Control+Return", when: composing}
       - {accept: 9, send: Page_Up, when: has_menu}
       - {accept: 0, send: Page_Down, when: has_menu}
       - {accept: 9, send: Page_Up, when: paging}
@@ -26,8 +25,8 @@ patch:
       "^": ["……", "——"]
       "&": "&"
       "*": ["★", "☆", "※"]
-      "(": {commit: "（"}
-      ")": {commit: "）"}
+      "(": "("
+      ")": ")"
       "-": "-"
       "=": "="
       "[": "["
@@ -43,10 +42,10 @@ patch:
       "{": ["｛", "〔", "［"]
       "}": ["｝", "〕", "］"]
       "|": {pair: ["〖", "〗"]}
-      ":": {commit: "："}
+      ":": ":"
       "\"": {pair: ["『", "』"]}
-      "<": {commit: "《"}
-      ">": {commit: "》"}
+      "<": {"（", "<"}
+      ">": {"）", "<"}
       "?": {commit: "？"}
   switcher:
     hotkeys:
@@ -54,3 +53,4 @@ patch:
       - "Control+Shift+grave"
   ascii_composer/switch_key:
     Shift_L: commit_code
+    Shift_R: commit_code

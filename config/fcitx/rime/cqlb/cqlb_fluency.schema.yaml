@@ -41,6 +41,7 @@ engine:
     - ascii_segmentor
     - matcher
     - abc_segmentor
+    - affix_segmentor@alphabet
     - punct_segmentor
     - fallback_segmentor
   translators:
@@ -57,13 +58,20 @@ engine:
     - simplifier
     - uniquifier
 
+alphabet:
+  tag: alphabet
+  prefix: ':'
+  suffix: ';'
+  tips: 〔西文〕
+  closing_tips: 〔中文〕
+
 custom_movetop:
   dictionary: ""
   user_dict: cqlb_user_movetop
   db_class: stabledb
   enable_completion: false
   enable_sentence: false
-  initial_quality: 2
+  initial_quality: 999
 
 custom_userdict:
   dictionary: ""
@@ -71,15 +79,15 @@ custom_userdict:
   db_class: stabledb
   enable_completion: false
   enable_sentence: false
-  initial_quality: -1
+  initial_quality: 0
 
 speller:
   alphabet: 'abcdefghijklmnopqrstuvwxyz;,./'
   initials: 'abcdefghijklmnopqrstuvwxyz'
-  delimiter: " ':0"
+  delimiter: " ':"
   #auto_clear: auto #manual|auto|max_length 空码按下一键确认清屏|空码自动清|达到最长码时后码顶上清屏
   #auto_select: true
-  #max_code_length: 4
+  max_code_length: 4
   #auto_select_pattern: '^[;,]'
 
 simplifier:
@@ -94,11 +102,13 @@ translator:
   encode_commit_history: true
   enable_completion: true
   max_phrase_length: 4
-  enable_user_dict: false
+  enable_user_dict: true
   disable_user_dict_for_patterns:
     - "^i.*$"
     - "^u.*$"
     - "^v.*$"
+    - "^[a-x;,./]$"           # 禁止单码字调频
+    - "^[a-x;,./][a-x;,./]$"  # 禁止双码字调频
 
 ihunshu:
   dictionary: iFC
@@ -128,19 +138,17 @@ ihunshu:
 
 punctuator:
   import_preset: default
-  full_shape:
-    "/" : "、"
-  half_shape:
-    "/" : "、"
 
 key_binder:
   import_preset: default
   bindings:
     - {accept: "Shift+space", toggle: noop, when: always}
+    - {accept: Return, send: "Control+Return", when: composing}
 
 recognizer:
   import_preset: default
   patterns:
+    alphabet: '(?<![A-Z]):[^;]*;?$'
     #reverse_lookup: "^`[a-z]*'?$"
     i_reverse_lookup_pattern: "^i[a-z;,./]+$"
     King: "^.....[a-z]+'?$" #此处从五码开始注形

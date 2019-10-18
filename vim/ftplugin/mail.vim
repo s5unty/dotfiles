@@ -21,6 +21,19 @@ function! CheckAttachments()
   echo
 endfunction
 
+" 保存之前，在中文和英文的交接处，自动添加空格
+autocmd BufWrite mutt* call BetweenEnglishChinese()
+function! BetweenEnglishChinese()
+    " 到邮件签名为止，剩余部分不用管
+    let tailine = search('^-- $', 'n')
+    for linenum in range(1, tailine)
+        let oldline = getline(linenum)
+        let newline = substitute(oldline, '\([\u4e00-\u9fa5]\)\(\w\)', '\1 \2', 'g')
+        let newline = substitute(newline, '\(\w\)\([\u4e00-\u9fa5]\)', '\1 \2', 'g')
+        call setline(linenum, newline)
+    endfor
+endfunction
+
 set textwidth=68
 set colorcolumn=80
 set formatoptions+=12mnM

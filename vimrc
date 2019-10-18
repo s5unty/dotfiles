@@ -106,6 +106,17 @@ endif
 " }}}
 
 " Function {{{1
+" 中英文之间自动插入空格
+" ref: https://github.com/yuweijun/vim-space
+function! SpaceAddBetweenEnglishChinese() range
+    for linenum in range(line("'<"), line("'>"))
+        let oldline = getline(linenum)
+        let newline = substitute(oldline, '\([\u4e00-\u9fa5]\)\(\w\)', '\1 \2', 'g')
+        let newline = substitute(newline, '\(\w\)\([\u4e00-\u9fa5]\)', '\1 \2', 'g')
+        call setline(linenum, newline)
+    endfor
+endfunction
+
 " 打开/关闭/切换 Quickfix 窗口
 " @forced:
 "   1 always show qfix
@@ -261,7 +272,8 @@ nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' $
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
-nmap <silent> <unique> * :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal line<CR>
+vmap <silent> <unique> ; :call SpaceAddBetweenEnglishChinese()<CR>
+"nmap <silent> <unique> * :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal line<CR>
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
@@ -380,6 +392,10 @@ if has("autocmd")
 
     autocmd VimResized *
                 \ redrawstatus!
+
+    " 自动关闭预览窗口
+    autocmd InsertLeave *
+                \ if pumvisible() == 0 | pclose | endif
 
     " 这样加快输入法自动切换时的体感速度
     autocmd InsertEnter * set timeoutlen=100
@@ -529,8 +545,8 @@ call plug#begin('~/.config/nvim/bundle')
     " 源代码语法检查
     Plug 'scrooloose/syntastic'
     " 语言(Markdown)
-    Plug 'vim-pandoc/vim-pandoc'
-    Plug 'vim-pandoc/vim-pandoc-syntax'
+    Plug 'godlygeek/tabular'
+    Plug 'plasticboy/vim-markdown'
     " 著名的 Powerline
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
     " 缩略语/段落模板
@@ -651,10 +667,6 @@ let g:EasyMotion_grouping = 1
 let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 
 
-" vim-pandoc: vim bundle for pandoc users {{{2
-" https://github.com/vim-pandoc/vim-pandoc
-let g:pandoc_use_hard_wraps=1
-let g:pandoc#spell#enabled=0
 
 
 
@@ -992,4 +1004,5 @@ map! <Esc>[24^ <C-F12>
 endif
 
 " }}}1
+
 
