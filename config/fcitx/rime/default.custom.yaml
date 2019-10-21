@@ -8,9 +8,9 @@ patch:
       - {accept: 0, send: Page_Down, when: has_menu}
       - {accept: 9, send: Page_Up, when: paging}
       - {accept: 0, send: Page_Down, when: paging}
+      - {accept: "Control+Alt+j", toggle: full_shape, when: always}
       - {accept: "Control+Alt+f", toggle: traditional, when: always}
       - {accept: "Control+period", toggle: ascii_punct, when: always}
-      - {accept: "Control+Alt+period", toggle: full_shape, when: always}
   punctuator:
     full_shape:
       " ": {commit: "　"}
@@ -52,5 +52,5 @@ patch:
       - "Control+grave"
       - "Control+Shift+grave"
   ascii_composer/switch_key:
-    Shift_L: commit_code
+    Shift_L: inline_ascii
     Shift_R: commit_code
