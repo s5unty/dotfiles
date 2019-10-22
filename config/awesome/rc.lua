@@ -649,13 +649,13 @@ awful.rules.rules = {
     { rule = { class = "Google-chrome", role = "app" },
     properties = { tag = screen[1].tags[1][7], floating = true } },
     { rule = { class = "Google-chrome", role = "pop-up" },
-    properties = { tag = screen[1].tags[1][7], floating = true } },
+    properties = { tag = screen[1].tags[1][7], floating = true, placement=awful.placement.centered } },
     { rule = { class = "Chromium" },
     properties = { tag = screen[1].tags[1][7], border_width = 0 } },
     { rule = { class = "Chromium", role = "app" },
     properties = { tag = screen[1].tags[1][7], floating = true } },
     { rule = { class = "Chromium", role = "pop-up" },
-    properties = { tag = screen[1].tags[1][7], floating = true } },
+    properties = { tag = screen[1].tags[1][7], floating = true, placement=awful.placement.centered } },
 
 
     { rule = { instance = "plugin-container" },
