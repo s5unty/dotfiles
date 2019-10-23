@@ -46,6 +46,7 @@ map , previousTab
 map ` nextTab
 map ~ previousTab
 map ; ]]
+map : setMark
 map <C-d> scrollPageDown
 map <C-u> scrollPageUp
 
