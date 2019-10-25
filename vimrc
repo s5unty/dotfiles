@@ -677,7 +677,6 @@ autocmd FileType ansible setlocal foldmethod=marker
 
 
 " vim-go : Go development plugin for Vim {{{2
-let g:go_def_mode = 'godef'
 
 
 " vim-illuminate: Vim plugin for selectively illuminating other uses of the current word under the cursor {{{2
