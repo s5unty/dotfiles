@@ -152,7 +152,7 @@ piff() {
 
 # package {{{
 DISTRO=`awk '/[a-zA-Z]/ { print $1; exit }' /etc/issue`
-if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" ]]; then
+if [[ $DISTRO == "Debian" || $DISTRO == "Ubuntu" || $DISTRO == "Kali" ]]; then
     alias api="$__SUDO apt-get install"
     alias apo="apt-get source"
     alias ape="vi /etc/apt/sources.list"
@@ -437,4 +437,19 @@ ghash() {
     echo -n $* | shasum | /bin/grep -Eo '[a-f].{4}' | head -1
 }
 
+# }}}
+
+# golang {{{
+# https://gist.github.com/nikhita/432436d570b89cab172dcf2894465753#gistcomment-3038158
+goupgrade() {
+    export https_proxy=http://localhost:8123
+    release=$(curl --silent https://golang.org/doc/devel/release.html | /bin/grep -Eo 'go[0-9]+(\.[0-9]+)+' | sort -V | uniq | tail -1)
+    os=$(uname -s | tr '[:upper:]' '[:lower:]')
+    arch=$(case "$(uname -m)" in i*) echo '386' ;; x*) echo 'amd64' ;; *) echo 'armv61'; esac)
+
+    dest="/opt/$release" && sudo mkdir -p "$dest"
+    curl --silent https://storage.googleapis.com/golang/$release.$os-$arch.tar.gz | sudo tar -zxv --strip-components 1 -C $dest
+    sudo ln -sfn "$dest" /opt/go
+    echo "updated to $(go version)"
+}
 # }}}
