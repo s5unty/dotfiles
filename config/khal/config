@@ -6,7 +6,7 @@
   type = calendar
 
   [[free]]
-  path = /sun/.vdirsyncer/free/
+  path = /sun/.vdirsyncer/google/s5unty@gmail.com/
   color = light green
   type = calendar
 
@@ -14,7 +14,7 @@
 local_timezone = Asia/Shanghai
 timeformat = %H:%M
 dateformat = %m/%d
-longdateformat = %Y/%m/%d
+longdateformat = %m/%d/%y(%a)
 datetimeformat = %m/%d+%H:%M
 longdatetimeformat = %Y/%m/%d %H:%M
 firstweekday = 0
@@ -32,5 +32,5 @@ multiple = yellow
 [view]
 frame = top
 event_view_always_visible = True
-#agenda_event_format = {calendar-color}{cancelled}{start-end-time-style} {title}{repeat-symbol}{description-separator}{reset}
+agenda_day_format = {bold}{date-long}{reset}
 agenda_event_format = {calendar-color}{cancelled}{start-end-time-style} {title}{repeat-symbol}{description-separator} {location}{reset}

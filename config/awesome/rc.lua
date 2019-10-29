@@ -444,8 +444,8 @@ globalkeys = awful.util.table.join(
             c = string.gsub(c, "\027%[7m", "<span weight=\"bold\" color=\"#000000\" bgcolor=\"#bebebe\">")
             c = string.gsub(c, "\027%[1;31m", "<span color=\"#ffa500\">") -- yellow (day)
             c = string.gsub(c, "\027%[91m", "<span color=\"#ffa500\" font=\"Tamzen 12\">") -- yellow (list)
-            c = string.gsub(c, "\027%[1;32m", "<span color=\"#228B22\">") -- green (day)
-            c = string.gsub(c, "\027%[92m", "<span color=\"#228B22\" font=\"Tamzen 12\">") -- green (list)
+            c = string.gsub(c, "\027%[1;32m", "<span color=\"#008b00\">") -- green (day)
+            c = string.gsub(c, "\027%[92m", "<span color=\"#008b00\" font=\"Tamzen 12\">") -- green (list)
             c = string.gsub(c, "\027%[1;33m", "<span weight=\"bold\" color=\"#B22222\">") -- firebrick (day)
 
             mycalendar = naughty.notify({
