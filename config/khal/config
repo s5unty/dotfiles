@@ -19,7 +19,7 @@ datetimeformat = %m/%d+%H:%M
 longdatetimeformat = %Y/%m/%d %H:%M
 firstweekday = 0
 weeknumbers = right
-unicode_symbols = false
+unicode_symbols = true
 
 [default]
 default_calendar = work
