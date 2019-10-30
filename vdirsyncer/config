@@ -19,20 +19,37 @@ path = "~/.vdirsyncer/work/"
 fileext = ".ics"
 encoding = "utf-8"
 
-[pair free]
-a = "free_master"
-b = "free_origin"
-collections = null
-conflict_resolution = "a wins"
-partial_sync = "ignore"
+#[pair free]
+#a = "free_master"
+#b = "free_origin"
+#collections = null
+#conflict_resolution = "a wins"
+#partial_sync = "ignore"
+#
+#[storage free_origin]
+#type = "http"
+#url = "http://p42-calendars.icloud.com/published/2/FwgHV75qkmBJROFTOL4UajNB6kChgjvU3OXThGwApQRMHpPeshnDpxSwbQbKUDYpBXoSxIk7PsTa6EXyAjNVn-PvA0hfY5IWlXe_RIwbjvA"
+#
+#[storage free_master]
+#type = "filesystem"
+#path = "~/.vdirsyncer/free/"
+#fileext = ".ics"
+#encoding = "utf-8"
 
-[storage free_origin]
-type = "http"
-url = "http://p42-calendars.icloud.com/published/2/FwgHV75qkmBJROFTOL4UajNB6kChgjvU3OXThGwApQRMHpPeshnDpxSwbQbKUDYpBXoSxIk7PsTa6EXyAjNVn-PvA0hfY5IWlXe_RIwbjvA"
+[pair google]
+a = "google_master"
+b = "google_origin"
+collections = ["from a", "from b"]
+metadata = ["color"]
 
-[storage free_master]
+[storage google_master]
 type = "filesystem"
-path = "~/.vdirsyncer/free/"
+path = "~/.vdirsyncer/google/"
 fileext = ".ics"
 encoding = "utf-8"
 
+[storage google_origin]
+type = "google_calendar"
+token_file = "~/.vdirsyncer/google_token"
+client_id = "************************************************************************"
+client_secret = "************************"
