@@ -28,7 +28,7 @@ function! BetweenEnglishChinese()
     let tailine = search('^-- $', 'n')
     for linenum in range(1, tailine)
         " 只管撰写的正文，忽略引用
-        if getline(linenum) =~ "^[ ]*[>|].*"
+        if getline(linenum) =~ "^[ >|].*"
             continue
         endif
 
