@@ -563,8 +563,10 @@ call plug#begin('~/.config/nvim/bundle')
 "   Plug 'junegunn/fzf.vim'
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
+    " 语言(Yaml)
+    Plug 'stephpy/vim-yaml'
     " 语言(Ansible)
-    Plug 'MicahElliott/Rocannon'
+    Plug 'pearofducks/ansible-vim'
     " 语言(Golang)
     Plug 'fatih/vim-go'
     Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
@@ -668,12 +670,10 @@ let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 
 
 
-
-
-" Rocannon : Vim for Ansible playbooks: omni-completion, abbreviations, syntax, folding, K-docs, and colorscheme {{{2
-let g:rocannon_bypass_colorscheme = 1
-autocmd FileType ansible setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType ansible setlocal foldmethod=marker
+" ansible-vim : A vim plugin for syntax highlighting Ansible's common filetypes {{{2
+let g:ansible_yamlKeyName = 'yamlKey'
+let g:ansible_attribute_highlight = "ob"
+let g:ansible_name_highlight = 'd'
 
 
 " vim-go : Go development plugin for Vim {{{2
