@@ -55,7 +55,7 @@ set folder_format="%2C %t %4N %F %6s %f "
 set sort=threads
 # 加 `last-` 或 `reverse-` 会改变其他线索的位置
 # 一个话题内按接受时间排序
-set sort_aux=last-date
+set sort_aux="last-date"
 # 使用通讯录显示发件人
 set reverse_alias=yes
 # 邮件正文折行时不要显示前导加号

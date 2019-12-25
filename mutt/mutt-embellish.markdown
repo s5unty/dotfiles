@@ -20,7 +20,7 @@ charset.add_charset('utf-8', charset.SHORTEST, '8bit')
 
 
 def pandoc(from_format, to_format='markdown', plain='markdown', title=None):
-    markdown = ('markdown'
+    markdown = ('markdown+hard_line_breaks'
                 '-blank_before_blockquote')
 
     if from_format == 'plain':

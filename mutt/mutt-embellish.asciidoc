@@ -152,12 +152,12 @@ def attachment_from_file_path(attachment_path):
         return None
 
 
-attachment_path_pattern = re.compile(r'\]\s*\(\s*file://(/[^)]*\S)\s*\)|'
-                                     r'\]\s*:\s*file://(/.*\S)\s*$',
-                                     re.MULTILINE)
-#attachment_path_pattern = re.compile(r'image::(/[^[]*\S)\[|'
-#                                     r'image::(/.*\S)\s*$',
+#attachment_path_pattern = re.compile(r'\]\s*\(\s*file://(/[^)]*\S)\s*\)|'
+#                                     r'\]\s*:\s*file://(/.*\S)\s*$',
 #                                     re.MULTILINE)
+attachment_path_pattern = re.compile(r'image::file://(/[^[]*\S)\[|'
+                                     r'image::(/.*\S)\s*$',
+                                     re.MULTILINE)
 
 
 def link_attachments(payload):
