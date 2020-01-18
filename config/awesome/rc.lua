@@ -218,7 +218,7 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey }, "p", function() os.execute("screenshot") end),
 
     -- Hotkeys
-    awful.key({                   }, "F1",      hotkeys_popup.show_help,
+    awful.key({ modkey,           }, "F1",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     -- Tag browsing
     awful.key({ modkey, "Control" }, ",",   awful.tag.viewprev,
@@ -377,8 +377,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
     awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
     awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'win7'") end),
-    awful.key({        }, "Scroll_Lock",   function () awful.util.spawn("/sun/.config/awesome/screensaver lock") end),
-    awful.key({        }, "Pause",         function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
+    awful.key({        }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
+    awful.key({ "Ctrl" }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver lock") end),
+    awful.key({ altkey }, "Pause", function () awful.util.spawn("/usr/bin/mocp -G") end),
 
     -- imagemagick / maim / xdotool / slop
     awful.key({        }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen select") end),  -- region
@@ -414,7 +415,7 @@ globalkeys = awful.util.table.join(
                 local c = f:read("*a")
                 f:close()
 
-                frame = naughty.notify({ text = c, font = "Tamzen 10", timeout = 30, max_width = 360, screen = mouse.screen })
+                frame = naughty.notify({ text = c, timeout = 30, max_width = 360, screen = mouse.screen })
             end
             }
         end,
@@ -438,14 +439,15 @@ globalkeys = awful.util.table.join(
             -- `LANG=C.UTF-8 khal --color calendar > foo`
             -- 靠肉眼识别，不行就摘取成小脚本 debug
             -- 这里的 31m/91m/32m/92m，取决于 khal/config 中 calendars 中的 color 配置
+            c = string.gsub(c, "<", "`") -- 小于号出现在一对<span>之间，无法被正常解析
             c = string.gsub(c, "\027%[0m\027%[0m", "</span>") -- 有连续的 0m0m，先处理了
             c = string.gsub(c, "\027%[0m", "</span>")
             c = string.gsub(c, "\027%[1m", "<span weight=\"bold\">")
-            c = string.gsub(c, "\027%[7m", "<span weight=\"bold\" color=\"#000000\" bgcolor=\"#bebebe\">")
+            c = string.gsub(c, "\027%[7m", "<span color=\"#000000\" bgcolor=\"#bebebe\">")
             c = string.gsub(c, "\027%[1;31m", "<span color=\"#ffa500\">") -- yellow (day)
-            c = string.gsub(c, "\027%[91m", "<span color=\"#ffa500\" font=\"Tamzen 12\">") -- yellow (list)
+            c = string.gsub(c, "\027%[91m", "<span color=\"#ffa500\" font=\"WenQuanYi Zen Hei Sharp 12\">") -- yellow (list)
             c = string.gsub(c, "\027%[1;32m", "<span color=\"#008b00\">") -- green (day)
-            c = string.gsub(c, "\027%[92m", "<span color=\"#008b00\" font=\"Tamzen 12\">") -- green (list)
+            c = string.gsub(c, "\027%[92m", "<span color=\"#008b00\" font=\"WenQuanYi Zen Hei Sharp 12\">") -- green (list)
             c = string.gsub(c, "\027%[1;33m", "<span weight=\"bold\" color=\"#B22222\">") -- firebrick (day)
 
             mycalendar = naughty.notify({
@@ -455,7 +457,7 @@ globalkeys = awful.util.table.join(
                 end,
                 title = "", text = c,
                 position = "bottom_right", font = "Tamzen 14",
-                timeout = 0, max_width = 630, screen = mouse.screen })
+                timeout = 0, screen = mouse.screen })
         end,
         {description = "calendar", group = "launcher"}),
 
@@ -696,6 +698,9 @@ awful.rules.rules = {
     properties = { floating=true, ontop=true } },
 
     { rule = { class = "xpad" },
+    properties = { floating=true, ontop=true } },
+
+    { rule = { class = "Pqiv" },
     properties = { floating=true, ontop=true } },
 
     { rule = { name = "Authy" },
