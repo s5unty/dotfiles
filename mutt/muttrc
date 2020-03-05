@@ -143,7 +143,7 @@ set uncollapse_jump=yes
 set reply_to=yes
 # 解码后传递给管道解决中文问题
 # 显示内嵌图片 HTML 的工具(viewhtmlmsg)不支持该参数
-# set pipe_decode=yes
+set pipe_decode=no
 # 签名邮件的公钥信息附件名 dropped with v1.5.24(2015-08-30)
 ##set pgp_mime_signature_filename="signature.asc"
 ##set pgp_mime_signature_description="Digital signature"
