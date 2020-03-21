@@ -37,11 +37,11 @@ Xft.lcdfilter: lcddefault
 
 ! http://downloads.sourceforge.net/wqy/wqy-bitmapfont_0.7.9-5_all.deb (系统自带的缺少粗体)
 ! https://jnrowe.github.io/articles/tips/Sharing_Xresources_between_systems.html
-#ifdef SRVR_verns_worktop
+#ifdef SRVR_wuans_worktop
 URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
 URxvt.italicFont: [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
 URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
-#elif SRVR_verns_desktop
+#elif SRVR_wuans_desktop
 URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
 URxvt.italicFont: [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
 URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
@@ -49,16 +49,16 @@ URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]x
 
 !注意，
 !font:size=10 的时候，设为 -1 可以使得字母间距不会太大
-!URxvt.letterSpace: 0
+URxvt.letterSpace: -1
 
 URxvt.keysym.M-Up: command: \
+        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=14:antialias=true, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp:antialias=true\007 \
+        \033]712;[codeset=ASCII]xft:Envy Code R for Powerline:size=14:antialias=true, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp:antialias=true\007 \
+        \033]711;[codeset=ASCII]xft:Envy Code R for Powerline:style=bold:size=14:antialias=true, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12:antialias=true\007
+URxvt.keysym.M-Down: command: \
         \033]710;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
         \033]712;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
         \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12\007
-URxvt.keysym.M-Down: command: \
-        \033]710;[codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
-        \033]712;[codeset=ASCII]xft:Tamzen:size=12, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
-        \033]711;[codeset=ASCII]xft:Tamzen:style=bold:size=12, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=10\007
 ! }}}
 
 ! @@ COLORS AND GRAPHICS @@ {{{
