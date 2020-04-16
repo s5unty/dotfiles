@@ -564,7 +564,7 @@ call plug#begin('~/.config/nvim/bundle')
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
     " 语言(Yaml)
-    Plug 'stephpy/vim-yaml'
+    Plug 'mrk21/yaml-vim'
     " 语言(Ansible)
     Plug 'pearofducks/ansible-vim'
     " 语言(Golang)
@@ -577,7 +577,7 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
     Plug 'deoplete-plugins/deoplete-jedi'
     " 真(?)智能补全
-    Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+    " Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 call plug#end()
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
@@ -672,8 +672,8 @@ let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 
 " ansible-vim : A vim plugin for syntax highlighting Ansible's common filetypes {{{2
 let g:ansible_yamlKeyName = 'yamlKey'
-let g:ansible_attribute_highlight = "ob"
-let g:ansible_name_highlight = 'd'
+"let g:ansible_attribute_highlight = "ob"
+let g:ansible_name_highlight = 'b'
 
 
 " vim-go : Go development plugin for Vim {{{2
