@@ -1,8 +1,12 @@
-#!/bin/zsh
+#!/bin/bash
 
 message=$*
 form=${message%%:*}
 desc=${message#*: }
+
+if [[ -z "$*" ]]; then
+    exit 0
+fi
 
 form=$(echo ${form} | sed \
     -e 's/ minutes\?/分钟/' \
