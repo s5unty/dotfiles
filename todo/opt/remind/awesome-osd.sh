@@ -26,10 +26,6 @@ desc=$(echo ${desc} | sed -e 's/\(\(\(^@\)\|\( @\)\)[^ <]*\)/<span color=\\"#00F
 desc=$(echo ${desc} | sed -e 's/\(\(\(^+\)\|\( +\)\)[^ <]*\)/<span color=\\"#00FFFF\\">\1<\/span>/g')    # project
 desc=$(echo ${desc} | sed -e 's/\(^.*\)$/<span color=\\"#FFFFFF\\">\1<\/span>/g')                        # normal
 
-# manual bling-bling
-for i in $(seq 9 -2 5); do
-    /bin/echo -E 'naughty = require("naughty"); naughty.notify({opacity = 0.9, margin = 6, position = "bottom_right", text = '\"${form} ${desc}\"', timeout='${i}'})' | awesome-client
-    sleep $(( i + 1 ))
-done &
+/bin/echo -E 'naughty = require("naughty"); naughty.notify({opacity = 0.9, margin = 6, position = "bottom_right", text = '\"${form} ${desc}\"', timeout=0})' | awesome-client
 exit 0
 
