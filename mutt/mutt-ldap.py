@@ -344,7 +344,7 @@ def _decode_query_data(obj):
 
 def format_columns(address, data):
     yield _decode_query_data(address)
-    yield _decode_query_data(data.get('displayName', data['cn'])[-1])
+    yield _decode_query_data(data.get('displayName')[-1])
     optional_column = CONFIG.get('results', 'optional-column')
     if optional_column in data:
         yield _decode_query_data(data[optional_column][-1])
