@@ -379,8 +379,8 @@ if has("autocmd")
     endfunction
 
     function! <SID>AC_HighlightDirtySpace()
-        highlight link wtfSpace SpecialKey
-        match wtfSpace '　'
+        highlight link wtfSpace SpellRare
+        match wtfSpace /[　 ]/
     endfunction
 
     function! <SID>AC_ChmodExecutable()
@@ -564,9 +564,9 @@ call plug#begin('~/.config/nvim/bundle')
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
     " 语言(Yaml)
-    Plug 'mrk21/yaml-vim'
-    " 语言(Ansible)
-    Plug 'pearofducks/ansible-vim'
+    Plug 'mrk21/yaml-vim'           " yaml
+    Plug 'pearofducks/ansible-vim'  " ansible
+    Plug 'stephpy/vim-yaml'         " highlight
     " 语言(Golang)
     Plug 'fatih/vim-go'
     Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }

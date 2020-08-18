@@ -218,7 +218,7 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey }, "p", function() os.execute("screenshot") end),
 
     -- Hotkeys
-    awful.key({ modkey,           }, "F1",      hotkeys_popup.show_help,
+    awful.key({ modkey, "Control" }, "F1",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     -- Tag browsing
     awful.key({ modkey, "Control" }, ",",   awful.tag.viewprev,
@@ -380,17 +380,18 @@ globalkeys = awful.util.table.join(
     awful.key({        }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
     awful.key({ "Ctrl" }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver lock") end),
     awful.key({ altkey }, "Pause", function () awful.util.spawn("/usr/bin/mocp -G") end),
-
     -- imagemagick / maim / xdotool / slop
     awful.key({        }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen select") end),  -- region
     awful.key({ altkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen active") end),  -- window
     awful.key({ modkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen full") end),    -- screen
     awful.key({ "Ctrl" }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen dual") end),    -- dual screen
+    -- authy
+    awful.key({        }, "Scroll_Lock", function () awful.util.spawn("/snap/authy/3/authy --no-sandbox") end),
 
     -- sdcv/stardict
     awful.key({ modkey }, "d",
         function ()
-            local f = io.popen("gpaste-client get 0")
+            local f = io.popen("/usr/bin/copyq read 0")
             local word = f:read("*a")
             f:close()
             local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
@@ -411,7 +412,7 @@ globalkeys = awful.util.table.join(
                 if cin_word == "" then
                     return
                 end
-                local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '21世纪英汉汉英双向词典' "..cin_word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+                local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..cin_word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
                 local c = f:read("*a")
                 f:close()
 
@@ -440,14 +441,15 @@ globalkeys = awful.util.table.join(
             -- 靠肉眼识别，不行就摘取成小脚本 debug
             -- 这里的 31m/91m/32m/92m，取决于 khal/config 中 calendars 中的 color 配置
             c = string.gsub(c, "<", "`") -- 小于号出现在一对<span>之间，无法被正常解析
+            c = string.gsub(c, "&", "+") -- 小于号出现在一对<span>之间，无法被正常解析
             c = string.gsub(c, "\027%[0m\027%[0m", "</span>") -- 有连续的 0m0m，先处理了
             c = string.gsub(c, "\027%[0m", "</span>")
             c = string.gsub(c, "\027%[1m", "<span weight=\"bold\">")
             c = string.gsub(c, "\027%[7m", "<span color=\"#000000\" bgcolor=\"#bebebe\">")
             c = string.gsub(c, "\027%[1;31m", "<span color=\"#ffa500\">") -- yellow (day)
-            c = string.gsub(c, "\027%[91m", "<span color=\"#ffa500\" font=\"WenQuanYi Zen Hei Sharp 12\">") -- yellow (list)
+            c = string.gsub(c, "\027%[91m", "<span color=\"#ffa500\" font=\"Unibit\">") -- yellow (list)
             c = string.gsub(c, "\027%[1;32m", "<span color=\"#008b00\">") -- green (day)
-            c = string.gsub(c, "\027%[92m", "<span color=\"#008b00\" font=\"WenQuanYi Zen Hei Sharp 12\">") -- green (list)
+            c = string.gsub(c, "\027%[92m", "<span color=\"#008b00\" font=\"Unibit\">") -- green (list)
             c = string.gsub(c, "\027%[1;33m", "<span weight=\"bold\" color=\"#B22222\">") -- firebrick (day)
 
             mycalendar = naughty.notify({
@@ -694,6 +696,7 @@ awful.rules.rules = {
         end
         c:geometry(geometry)
     end },
+
     { rule = { class = "Keepassx" },
     properties = { floating=true, ontop=true } },
 
@@ -705,6 +708,21 @@ awful.rules.rules = {
 
     { rule = { name = "Authy" },
     properties = { floating=true, ontop=true } },
+
+    { rule = { class = "Microsoft Teams - Preview" },
+    properties = { floating=true, ontop=true, focus=false },
+    callback = function (c)     -- 改到右下角，默认在右侧屏幕的左上角。。。
+        local cl_width = 300    -- width of notification window
+        local cl_height = 130   -- height of notification window
+        local scr_area = screen[c.screen].workarea
+        local geometry = nil
+
+        -- scr_area is unaffected, so we can use the naive coordinates
+        if geometry == nil then
+            geometry = {x=scr_area.x+scr_area.width-cl_width, y=scr_area.y+scr_area.height-cl_height, width=cl_width, height=cl_height}
+        end
+        c:geometry(geometry)
+    end},
 
 }
 -- }}}
