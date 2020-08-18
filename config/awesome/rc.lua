@@ -391,7 +391,7 @@ globalkeys = awful.util.table.join(
     -- sdcv/stardict
     awful.key({ modkey }, "d",
         function ()
-            local f = io.popen("gpaste-client get 0")
+            local f = io.popen("/usr/bin/copyq read 0")
             local word = f:read("*a")
             f:close()
             local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
@@ -441,6 +441,7 @@ globalkeys = awful.util.table.join(
             -- 靠肉眼识别，不行就摘取成小脚本 debug
             -- 这里的 31m/91m/32m/92m，取决于 khal/config 中 calendars 中的 color 配置
             c = string.gsub(c, "<", "`") -- 小于号出现在一对<span>之间，无法被正常解析
+            c = string.gsub(c, "&", "+") -- 小于号出现在一对<span>之间，无法被正常解析
             c = string.gsub(c, "\027%[0m\027%[0m", "</span>") -- 有连续的 0m0m，先处理了
             c = string.gsub(c, "\027%[0m", "</span>")
             c = string.gsub(c, "\027%[1m", "<span weight=\"bold\">")
