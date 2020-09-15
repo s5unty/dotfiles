@@ -13,8 +13,8 @@ let blacklists = [
             \ "http://*shanbay.com/*",
             \ "https://dynalist.io/*",
             \ "https://efss-cn.internet.*",
-            \ "http://project.internet.*",
-            \ "http://space.internet.*"
+            \ "https://project.internet.*",
+            \ "https://space.internet.*"
             \ ]
 
 let searchengine gghk   = "https://www.google.com.hk/?gws_rd=ssl#newwindow=1&q="
