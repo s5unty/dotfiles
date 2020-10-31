@@ -39,6 +39,24 @@ function! BetweenEnglishChinese()
     endfor
 endfunction
 
+" 保存之前，将所有【http://】改为【http;//】
+" 因为该死的 https://apc01.safelinks.protection.outlook.com/...blabla
+autocmd BufWrite mutt* call TranslateHttp()
+function! TranslateHttp()
+    " 到邮件签名为止，剩余部分不用管
+    let tailine = search('^-- $', 'n')
+    for linenum in range(1, tailine)
+        " 只管撰写的正文，忽略引用
+        if getline(linenum) =~ "^[ >|].*"
+            continue
+        endif
+
+        let oldline = getline(linenum)
+        let newline = substitute(oldline, '\(https\?\|ftps\?\)://', '\1;//', 'g')
+        call setline(linenum, newline)
+    endfor
+endfunction
+
 set textwidth=68
 set colorcolumn=80
 set formatoptions+=12mnM

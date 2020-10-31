@@ -1,6 +1,6 @@
 [user] # {{{
-    name = Vern Sun
-    email = s5unty@gmail.com
+    name = Sun Wuan
+    email = sunwuan@genscript.com
 [core]
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
@@ -9,7 +9,7 @@
     headers = ""
     subjectprefix = ""
 [diff]
-    tool = vimdiff
+    tool = nvimdiff
 [diff "jp"]
     textconv = nkf -w
     cachetextconv = true
@@ -92,7 +92,7 @@
     di  = diff --ignore-submodules=dirty --no-prefix -p --stat # show difference between working tree and the index
     dc  = diff --ignore-submodules=dirty --no-prefix -p --stat --cached # show difference between index and local repos, what would be committed with "git commit"
     da  = diff --ignore-submodules=dirty --no-prefix -p --stat HEAD # show difference between working tree and local repos, what would be committed with "git commit -a"
-    df  = diff --ignore-submodules=dirty --no-prefix --stat=200,78 # show different files between working tree and the index
+    df  = diff --no-prefix --stat=200,78 # show different files between working tree and the index
     dt  = difftool -y
     do  = difftool -y -t normal
     dp  = !sh -c 'git diff HEAD "$0" | git apply --whitespace=nowarn --index -' # fast apply the patch against "$0" commit or branch
@@ -105,7 +105,7 @@
     ms  = merge --squash
     mf  = merge --no-ff # generate a merge commit even if the merge resolved as a fast-forward
     mt  = mergetool
-    mr  = !sh -c 'git fetch $1 merge-requests/$2/head:ppa/$2 && git checkout ppa/$2' -
+    mr  = !sh -c 'git fetch $1 merge-requests/$2/head:ppa/$2 && git di HEAD ppa/$2' -
 
     # 核弹级选项: filter-branch
     # http://progit.org/book/zh/ch6-4.html
