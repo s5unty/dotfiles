@@ -29,7 +29,9 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # 统一剪贴板，parcellite 比 autocutsel 好用 :)
 # /usr/local/bin/parcellite -n &
 # gpaste 也不错
-/usr/bin/gpaste-client start
+# /usr/bin/gpaste-client start
+# gpaste 不能复制图片，又来 copyq
+/usr/bin/copyq &
 
 # 加载自定义的特殊的键盘功能键
 # 注意：fcitx 的 X 键盘集成(高级组件)
@@ -37,7 +39,7 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 
 # 启动应用程序
 /usr/bin/fetchmail -d 300 #邮件，邮件通知
-
+/usr/bin/insync start #文件同步
 #/usr/bin/mocp -S #音乐服务
 #/usr/local/bin/lrcdis & # 歌词
 #/usr/local/bin/eclimd & # eclimd
@@ -87,8 +89,13 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # http://lucidhacking.net/2011/12/how-to-access-dropbox-behind-a-firewall-or-proxy/
 # /usr/bin/dropbox start &
 
-# 双显
-xrandr --output VGA-1 --left-of HDMI-2 # --brightness 0.7
+# 分辨率一定要微调，否则会抖，只有背景是特定色彩/图片时才容易看出
+# https://askubuntu.com/a/59626
+# 原来是驱动的原因 --! 开源驱动支撑不了高分辨率，改为原厂驱动
+xrandr --output VGA-0 --left-of DVI-D-0
+#
+# 而且个别显示器(如DELL)在默认设置下，灰色无法正确显示，
+# 通过在 navdia-settings 调整「Color Correction」才修复
 
 # 为了 pidgin-sipe 正常登录 Lync
 export NSS_SSL_CBC_RANDOM_IV=0
