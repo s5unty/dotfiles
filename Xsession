@@ -47,10 +47,11 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # 远程登录访问的 VNC 服务器端
 # /usr/bin/x0vncserver -PasswordFile=/sun/.vnc/passwd &
 
-# 一套键鼠控制多台机器，服务器端
-# if [ s`hostname` != s"verns-laptop" ]; then
-# /usr/bin/synergys # synergy server
-# fi
+# 一套键鼠控制多台机器，服务器端 (barrier 是社区 fork 的开源版)
+# https://github.com/debauchee/barrier
+if [ s`hostname` != s"wuans-worktop" ]; then
+/usr/bin/barrier
+fi
 # 客户端，由服务器端的键鼠控制
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
 
