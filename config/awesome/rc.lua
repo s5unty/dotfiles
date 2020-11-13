@@ -377,7 +377,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
     awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
     awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'win7'") end),
-    awful.key({        }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
+    awful.key({ modkey }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
     awful.key({ "Ctrl" }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver lock") end),
     awful.key({ altkey }, "Pause", function () awful.util.spawn("/usr/bin/mocp -G") end),
     -- imagemagick / maim / xdotool / slop
@@ -386,7 +386,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen full") end),    -- screen
     awful.key({ "Ctrl" }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen dual") end),    -- dual screen
     -- authy
-    awful.key({        }, "Scroll_Lock", function () awful.util.spawn("/snap/authy/3/authy --no-sandbox") end),
+    -- awful.key({        }, "Scroll_Lock", function () awful.util.spawn("/snap/authy/3/authy --no-sandbox") end),
 
     -- sdcv/stardict
     awful.key({ modkey }, "d",
