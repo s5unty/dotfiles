@@ -88,6 +88,7 @@ endif
 " http://lists.debian.or.jp/debian-devel/200703/msg00038.html
 " http://sakurapup.browserloadofcoolness.com/viewtopic.php?f=13&t=2027
 " http://du1abadd.org/debian/UTF-8-EAW-FULLWIDTH.gz
+" https://github.com/hamano/locale-eaw/blob/master/README.md
 set ambiwidth=double
 " 不用设置为double也能全角显示，vim@rxvt-unicode
 
@@ -273,7 +274,7 @@ nmap <silent> <unique> ' $
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
 vmap <silent> <unique> ; :call SpaceAddBetweenEnglishChinese()<CR>
-"nmap <silent> <unique> * :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal line<CR>
+"nmap <silent> <unique> * :<C-u>DeniteCursorWord -buffer-name=search line<CR>
 
 " Shift+ {{{2
 nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
@@ -357,8 +358,8 @@ nmap <silent> <unique> <Leader>a :GundoToggle<CR>
 " Colon+, Colon char is ':' {{{2
 command W  :w !sudo tee %
 command E  :call Ranger()<CR>
-command D  :Denite file_rec buffer -winheight=12 -mode=normal -vertical-preview -auto-preview
-command M  :Denite file_mru -winheight=12 -mode=insert -vertical-preview -auto-preview
+command D  :Denite file_rec buffer -winheight=12 -vertical-preview
+command M  :Denite file_mru -winheight=12 -vertical-preview
 " denite file search (c-p uses gitignore, c-o looks at everything)
 command F  :DeniteProjectDir -buffer-name=files -direction=top file_rec
 command FF :DeniteProjectDir -buffer-name=git -direction=top file_rec/git
@@ -722,8 +723,8 @@ let g:airline_right_sep = '⮂'
 let g:airline_right_alt_sep = '⮃'
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
-    let g:airline_symbols.branch = '⭠'
-    let g:airline_symbols.readonly = '⭢'
+    let g:airline_symbols.branch = ''
+    let g:airline_symbols.readonly = ''
     let g:airline_symbols.linenr = ''
     let g:airline_symbols.maxlinenr = ''
     let g:airline_symbols.space = ''
@@ -804,31 +805,40 @@ endif
 
 
 " denite {{{3
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
-  \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-" Pt command on grep source
-" https://github.com/monochromegane/the_platinum_searcher
-call denite#custom#var('grep', 'command', ['pt'])
-call denite#custom#var('grep', 'default_opts',
-        \ ['-f', '--nogroup', '--nocolor', '--smart-case'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', [])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-call denite#custom#map('insert', '<Esc>',   '<denite:enter_mode:normal>', 'noremap')
-call denite#custom#map('insert', '<C-N>',   '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-P>',   '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#map('normal', 't',       '<denite:toggle_select_down>', 'noremap')
-call denite#custom#map('normal', '-',       '<denite:scroll_window_upwards>', 'noremap')
-call denite#custom#map('normal', ';',       '<denite:scroll_cursor_to_middle>', 'noremap')
-call denite#custom#map('normal', '<SPACE>', '<denite:scroll_window_downwards>', 'noremap')
+if executable('rg')
+  call denite#custom#var('file_rec', 'command',
+        \ ['rg', '--files', '--glob', '!.git'])
+  call denite#custom#var('grep', 'command', ['rg', '--threads', '1'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'final_opts', [])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'default_opts',
+        \ ['--vimgrep', '--no-heading'])
+else
+  call denite#custom#var('file_rec', 'command',
+        \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+endif
 
 call denite#custom#source('file'    , 'matchers', ['matcher_cpsm', 'matcher_fuzzy'])
 call denite#custom#source('buffer'  , 'matchers', ['matcher_regexp'])
 call denite#custom#source('file_mru', 'matchers', ['matcher_regexp'])
+
+" https://github.com/Shougo/denite.nvim/issues/649
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> <Tab>
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> t
+  \ denite#do_map('toggle_select').'j'
+endfunction
 
 " deoplete {{{3
 " https://github.com/Shougo/deoplete.nvim
@@ -1003,5 +1013,4 @@ map! <Esc>[24^ <C-F12>
 endif
 
 " }}}1
-
 
