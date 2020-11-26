@@ -8,7 +8,7 @@ set expandtab " TAB is soft
 set tabstop=4 " TAB 的宽度
 set shiftwidth=4 " 缩进的宽度
 set softtabstop=4
-set clipboard=unnamed " 使用系统剪贴板
+set clipboard=unnamedplus " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
