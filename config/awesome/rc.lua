@@ -725,7 +725,7 @@ awful.rules.rules = {
     end},
 
     { rule = { name = "画中画" }, -- Picture-in-Picture Extension (by Google)
-    properties = { floating = true },
+    properties = { floating = true, skip_taskbar = true },
     callback = function (c)     -- 改到右下角，默认在右侧屏幕的左上角。。。
         local cl_width = 384    -- width of notification window
         local cl_height = 216   -- height of notification window
