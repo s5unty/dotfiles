@@ -724,6 +724,16 @@ awful.rules.rules = {
         c:geometry(geometry)
     end},
 
+    { rule = { name = "画中画" }, -- Picture-in-Picture Extension (by Google)
+    properties = { floating = true },
+    callback = function (c)     -- 改到右下角，默认在右侧屏幕的左上角。。。
+        local cl_width = 384    -- width of notification window
+        local cl_height = 216   -- height of notification window
+        local scr_area = screen[c.screen].workarea
+        local geometry = {x=scr_area.x+scr_area.width-cl_width-3, y=scr_area.y+scr_area.height-cl_height-3, width=cl_width, height=cl_height}
+        c:geometry(geometry)
+    end},
+
 }
 -- }}}
 
