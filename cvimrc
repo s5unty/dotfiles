@@ -15,6 +15,7 @@ let blacklists = [
             \ "https://efss-cn.internet.*",
             \ "https://project.internet.*",
             \ "https://space.internet.*",
+            \ "https://roamresearch.com/",
             \ "https://logseq.com/"
             \ ]
 
