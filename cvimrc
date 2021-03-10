@@ -9,15 +9,15 @@ let scrollstep = 70
 let hintcharacters = "asdfqwerzxcv"
 let nextmatchpattern = "((?!first)(下一页|下一頁|下页|下頁|前进|前進|繼續|继续|更多|next|more|>|›|»|forward| )+)"
 let blacklists = [
-            \ "https://mail.google.com/*",
-            \ "http://*shanbay.com/*",
-            \ "https://dynalist.io/*",
-            \ "https://efss-cn.internet.*",
-            \ "https://project.internet.*",
-            \ "https://space.internet.*",
-            \ "https://roamresearch.com/",
-            \ "https://logseq.com/"
-            \ ]
+\ "https://mail.google.com/*",
+\ "http://*shanbay.com/*",
+\ "https://dynalist.io/*",
+\ "https://efss-cn.internet.*",
+\ "https://project.internet.*",
+\ "https://space.internet.*",
+\ "https://roamresearch.com/",
+\ "https://logseq.com/"
+\ ]
 
 let searchengine gghk   = "https://www.google.com.hk/?gws_rd=ssl#newwindow=1&q="
 let searchengine ggjp   = "https://www.google.co.jp/search?newwindow=1&q="
@@ -27,11 +27,10 @@ let searchengine pkgc   = "https://packages.debian.org/search?searchon=contents&
 let searchengine pts    = "https://packages.qa.debian.org/?src="
 let searchengine dict   = "http://dict.cn/mini.php?q="
 let searchengine diigo  = "https://www.diigo.com/search?what="
-let searchengine duck   = "https://duckduckgo.com/?q="
 let searchengine wiki   = "https://zh.wikipedia.org/w/index.php?title=Special%3A%E6%90%9C%E7%B4%A2&profile=default&search=%s&fulltext=Search"
-let searchengine note   = "https://app.yinxiang.com/Home.action#st=p&x=%s&n=c090e93d-859e-4f56-8c35-cf01129892c4"
-let searchengine i      = "http://project.internet.genscript.com/browse/OUITSA-%s"
-let searchengine is     = 'http://project.internet.genscript.com/issues/?jql=project = OUITSA AND text ~ "%s" ORDER BY created DESC'
+let searchengine sa     = "http://project.internet.genscript.com/browse/OUITSA-%s"
+let searchengine sag    = 'http://project.internet.genscript.com/issues/?jql=project = OUITSA AND text ~ "%s" ORDER BY created DESC'
+let searchengine it     = 'https://itsm.internet.genscript.com/WorkOrder.do?woMode=viewWO&woID=%s#details'
 let completionengines   = ["ggjp", "diigo"]
 let defaultengine = "ggjp"
 
