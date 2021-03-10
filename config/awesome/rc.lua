@@ -231,9 +231,9 @@ globalkeys = awful.util.table.join(
               {description = "go back", group = "tag"}),
 
     -- Non-empty tag browsing
-    awful.key({ altkey }, "Left", function () lain.util.tag_view_nonempty(-1) end,
+    awful.key({ modkey }, "Left", function () lain.util.tag_view_nonempty(-1) end,
               {description = "view  previous nonempty", group = "tag"}),
-    awful.key({ altkey }, "Right", function () lain.util.tag_view_nonempty(1) end,
+    awful.key({ modkey }, "Right", function () lain.util.tag_view_nonempty(1) end,
               {description = "view  previous nonempty", group = "tag"}),
 
     -- Default client focus
@@ -377,7 +377,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
     awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
     awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'win7'") end),
-    awful.key({ modkey }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
+    awful.key({        }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
     awful.key({ "Ctrl" }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver lock") end),
     awful.key({ altkey }, "Pause", function () awful.util.spawn("/usr/bin/mocp -G") end),
     -- imagemagick / maim / xdotool / slop
