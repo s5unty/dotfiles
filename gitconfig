@@ -10,6 +10,7 @@
     subjectprefix = ""
 [diff]
     tool = nvimdiff
+    renameLimit = 0
 [diff "jp"]
     textconv = nkf -w
     cachetextconv = true
@@ -80,6 +81,7 @@
 
 [alias] # {{{
     ci  = commit
+    ce  = commit --allow-empty
     cm  = commit --amend
     co  = checkout
     cd  = checkout -b
