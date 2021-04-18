@@ -533,8 +533,6 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'chrisbra/NrrwRgn'
     Plug 'easymotion/vim-easymotion'
     Plug 'itchyny/calendar.vim'
-    " 语言(Nginx)
-    Plug 'chr4/nginx.vim'
     " 文档结构的导航窗口
     Plug 'majutsushi/tagbar'
     " 补全功能的增强
