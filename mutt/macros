@@ -94,6 +94,6 @@ macro editor "<F9>"  "[本部依赖-翻译]-SW18371PJ01000-中译日-`date -d to
 ##
 # 显示内嵌的图片
 # https://bitbucket.org/blacktrash/muttils/src/default/
-macro pager V "<pipe-entry>viewhtmlmsg<enter>"
+macro pager V "<enter-command>set nopipe_decode<enter><pipe-entry>viewhtmlmsg<enter>"
 
 # vi:noet:
