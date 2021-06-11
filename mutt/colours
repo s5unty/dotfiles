@@ -32,7 +32,7 @@ color index      black       default   "~Q"  # 我回复过的邮件(~Q)
 color index      black       color255  "~T"  # 选中
 color index      white       color234  "~F"  # 标记
 color index      color7      color255  "~D"  # 删除
-color index      color205    default   "~y todo"
+color index      color205    default   "~y ."
 
 # 特殊邮件头
 color header     black       color7    "^X-Label:"
@@ -47,8 +47,8 @@ color body       red         black     "^(gpg: )?Bad signature"
 color body       red         black     "^(gpg: )?warning"
 
 # 关键内容高亮
-color body       black       color228  "(孫|孙)?(殿|武安|さん|[Ss]an|@[Ww]uan)"
-color body       black       color228  "(信息)"
+color body       black       color228  "(孫|孙)?(殿|武安|さん|[Ss]an)"
+color body       black       color228  "(安子|[Aa]nzi|[Ww]uan|武安)"
 #color body       black       color228  "英(语|語|文)"
 #color body       black       color153  "(PCL|CRM).{3,4}(各位|全体|组|チーム)"
 #color body       black       color225  ""

@@ -2,24 +2,18 @@ unscore *
 score ~N =0
 score ~O =1
 # 今天我外发的信
-score "~f sunwuan@cn.fujitsu.com ~C .*@ml.jp.fujitsu.com ~d `date +'%d/%m'`" =6
+score "(~f sunwuan@genscript.com | ~f wuan.sun@genscript.com) ~d `date +'%d/%m'`" =6
 # 今天收到的外信
-score "(~f .*@.*jp.fujitsu.com | ~f .*@ml.jp.fujitsu.com) ~d `date +'%d/%m'`" =5
+score "(~f .*@genscript.com | ~f .*@legendbiotech.com) ~d `date +'%d/%m'`" =5
 # 今天的其他邮件
 score "(~d `date +'%d/%m'`)" =3
 
-score "(~s 日语|~s 活动|~s 要求)" +1
-score "(~s 通知|~s 讲座|~s 培训|~s 报名)" +1
+score "(~s 紧急|~s 强调)" +3
+score "(~s 协助|~s 提醒|~s 申请|~s 确认)" +2
+score "(~s 通知|~s 邀请|~s 培训|~s 报名)" +1
 
-score "(~s 開催|~s 確認|~s 确认)" +2
-
-score "~f fnst-hr@cn.fujitsu.com" +1
-score "~f zhangtie@cn.fujitsu.com" +1
-score "~f kongyn@cn.fujitsu.com" +1
-score "~f maoyue@cn.fujitsu.com" +1
-score "~f sutao@cn.fujitsu.com" +1
-score "~f zhuyan2011@cn.fujitsu.com" +1
-score "~f chenqing2010@cn.fujitsu.com" =2
+score "~f ju*w*.d*@genscript.com" +3
+score "~f yi*z*.z*@genscript.com" +2
 
 score ~F =9
 score ~G =8
