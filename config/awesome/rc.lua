@@ -433,13 +433,14 @@ globalkeys = awful.util.table.join(
             -- 从这里开始是为了删除末尾的空行和换行符，这样显示在 naughty 的效果会更紧凑一些
             -- local f = io.popen("LANG=C gcal -K --iso-week-number=yes -s1 --highlighting=\" :#: :*\" -qcn --chinese-months -cezk . | tail -n +3 | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
             -- local f = io.popen("LANG=C gcal -K --iso-week-number=yes -s1 --highlighting=\" :#: :*\" -cezk . | tail -n +3 && echo '' && echo ' ------------------------8<------------------------8<-----------------------' && echo '' && khal list | sed 's/^/ /'")
-            local f = io.popen("LANG=C.UTF-8 khal --color calendar")
+            local f = io.popen("LC_ALL=C.UTF-8 khal --color calendar")
             local c = f:read("*a")
             f:close()
 
             -- `LANG=C.UTF-8 khal --color calendar > foo`
             -- 靠肉眼识别，不行就摘取成小脚本 debug
             -- 这里的 31m/91m/32m/92m，取决于 khal/config 中 calendars 中的 color 配置
+            -- pango-1.44 不再支持点阵字体
             c = string.gsub(c, "<", "`") -- 小于号出现在一对<span>之间，无法被正常解析
             c = string.gsub(c, "&", "+") -- 小于号出现在一对<span>之间，无法被正常解析
             c = string.gsub(c, "\027%[0m\027%[0m", "</span>") -- 有连续的 0m0m，先处理了
@@ -447,9 +448,9 @@ globalkeys = awful.util.table.join(
             c = string.gsub(c, "\027%[1m", "<span weight=\"bold\">")
             c = string.gsub(c, "\027%[7m", "<span color=\"#000000\" bgcolor=\"#bebebe\">")
             c = string.gsub(c, "\027%[1;31m", "<span color=\"#ffa500\">") -- yellow (day)
-            c = string.gsub(c, "\027%[91m", "<span color=\"#ffa500\" font=\"Unibit\">") -- yellow (list)
+            c = string.gsub(c, "\027%[91m", "<span color=\"#ffa500\" font=\"WenQuanYi Zen Hei Sharp\">") -- yellow (list)
             c = string.gsub(c, "\027%[1;32m", "<span color=\"#008b00\">") -- green (day)
-            c = string.gsub(c, "\027%[92m", "<span color=\"#008b00\" font=\"Unibit\">") -- green (list)
+            c = string.gsub(c, "\027%[92m", "<span color=\"#008b00\" font=\"WenQuanYi Zen Hei Sharp\">") -- green (list)
             c = string.gsub(c, "\027%[1;33m", "<span weight=\"bold\" color=\"#B22222\">") -- firebrick (day)
 
             mycalendar = naughty.notify({
@@ -458,7 +459,7 @@ globalkeys = awful.util.table.join(
                     mycalendar = nil
                 end,
                 title = "", text = c,
-                position = "bottom_right", font = "Tamzen 14",
+                position = "bottom_right", font = "Noto Mono 13",
                 timeout = 0, screen = mouse.screen })
         end,
         {description = "calendar", group = "launcher"}),
