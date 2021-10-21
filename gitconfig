@@ -109,6 +109,7 @@
     mf  = merge --no-ff # generate a merge commit even if the merge resolved as a fast-forward
     mt  = mergetool
     ppa = !sh -c 'git fetch origin merge-requests/$1/head:ppa/$1 && git di HEAD ppa/$1' -     # conflict with git-extra(git-mr)
+    ppr = !sh -c 'git fetch origin pull/$1/head:ppr/$1 && git di HEAD ppr/$1' -
 
     # 核弹级选项: filter-branch
     # http://progit.org/book/zh/ch6-4.html
