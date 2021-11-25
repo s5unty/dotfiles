@@ -28,9 +28,6 @@ let searchengine pts    = "https://packages.qa.debian.org/?src="
 let searchengine dict   = "http://dict.cn/mini.php?q="
 let searchengine diigo  = "https://www.diigo.com/search?what="
 let searchengine wiki   = "https://zh.wikipedia.org/w/index.php?title=Special%3A%E6%90%9C%E7%B4%A2&profile=default&search=%s&fulltext=Search"
-let searchengine sa     = "http://project.internet.gxxxxxxxt.com/browse/OUITSA-%s"
-let searchengine sag    = 'http://project.internet.gxxxxxxxt.com/issues/?jql=project = OUITSA AND text ~ "%s" ORDER BY created DESC'
-let searchengine it     = 'https://itsm.internet.gxxxxxxxt.com/WorkOrder.do?woMode=viewWO&woID=%s#details'
 let completionengines   = ["ggjp", "diigo"]
 let defaultengine = "ggjp"
 
@@ -54,10 +51,6 @@ map <C-u> scrollPageUp
 let qmark c = ["http://cnbeta.com"]
 let qmark y = ["http://www.youku.com"]
 let qmark k = ["gen.link/pw"]
-let qmark s = ["http://send.it.gxxxxxxxt.com"]
-let qmark m = ["http://make.it.gxxxxxxxt.com"]
-let qmark c = ["http://cd.it.gxxxxxxxt.com"]
-let qmark z = ["https://zabbix.internet.gxxxxxxxt.com"]
 let qmark t = ["https://translate.google.com/?hl=zh-CN&tab=TT"]
 let qmark G = ["https://github.com/"]
 let qmark T = ["https://twitter.com/"]

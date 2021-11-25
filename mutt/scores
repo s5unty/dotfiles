@@ -2,7 +2,7 @@ unscore *
 score ~N =0
 score ~O =1
 # 今天我外发的信
-score "(~f sunwuan@gxxxxxxxt.com | ~f wuan.sun@gxxxxxxxt.com) ~d `date +'%d/%m'`" =6
+score "(~f *******@*********.com | ~f ****.***@*********.com) ~d `date +'%d/%m'`" =6
 # 今天收到的外信
 score "(~f .*@gxxxxxxxt.com | ~f .*@lxxxxxxxxxxxh.com) ~d `date +'%d/%m'`" =5
 # 今天的其他邮件
@@ -12,8 +12,8 @@ score "(~s 紧急|~s 强调)" +3
 score "(~s 协助|~s 提醒|~s 申请|~s 确认)" +2
 score "(~s 通知|~s 邀请|~s 培训|~s 报名)" +1
 
-score "~f ju*w*.d*@gxxxxxxxt.com" +3
-score "~f yi*z*.z*@gxxxxxxxt.com" +2
+score "~f ju*w*.d*@*********.com" +3
+score "~f yi*z*.z*@*********.com" +2
 
 score ~F =9
 score ~G =8
