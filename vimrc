@@ -89,7 +89,9 @@ endif
 " http://sakurapup.browserloadofcoolness.com/viewtopic.php?f=13&t=2027
 " http://du1abadd.org/debian/UTF-8-EAW-FULLWIDTH.gz
 " https://github.com/hamano/locale-eaw/blob/master/README.md
-set ambiwidth=double
+if exists('&ambw')
+    set ambiwidth=double
+endif
 " 不用设置为double也能全角显示，vim@rxvt-unicode
 
 let mapleader=','
@@ -297,7 +299,6 @@ imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
 imap <silent> <unique> <C-D> <C-O>x
 imap <silent> <unique> <C-K> <C-O>d$
-imap <silent> <unique> <C-U> <C-O>v^x
 imap <silent> <unique> <C-Y> <C-O>u<C-O>$
 nmap <silent> <unique> <C-F8> :make! clean<CR>
 nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR><C-L>
@@ -562,15 +563,18 @@ call plug#begin('~/.config/nvim/bundle')
 "   Plug 'junegunn/fzf.vim'
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
+    " 补全(LSP)
+    Plug 'neovim/nvim-lspconfig'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
     Plug 'stephpy/vim-yaml'         " highlight
     " 语言(Golang)
     Plug 'fatih/vim-go'
-    Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/bundle/gocode/nvim/symlink.sh' }
     " 语言(Python)
     Plug 'davidhalter/jedi-vim'
+    " 语言(Abs-lang)
+    Plug 'sysread/abs.vim'
     " 代码补全 [o]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
     Plug 'Shougo/deoplete.nvim'
     Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
