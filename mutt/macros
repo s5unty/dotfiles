@@ -90,10 +90,16 @@ macro index,pager \` "<enter-command>set my_cmd = \`~/.mutt/mutt-grep\`<enter><e
 macro editor "<F9>"  "[本部依赖-翻译]-SW18371PJ01000-中译日-`date -d today '+%Y/%m/%d'`/17:00"
 
 # html view
-#macro attach V "<pipe-message>cat > /tmp/.mutt.html; x-www-browser /tmp/.mutt.html<enter>"
+macro attach U "<pipe-message>cat > /tmp/.mutt.html; x-www-browser /tmp/.mutt.html<enter>"
 ##
 # 显示内嵌的图片
 # https://bitbucket.org/blacktrash/muttils/src/default/
 macro pager V "<enter-command>set nopipe_decode<enter><pipe-entry>viewhtmlmsg<enter>"
+
+macro index,pager H "<pipe-message>htmail-decode<return>" "render html mail using htmail-view"
+
+# 默认f编辑转发内容，组会键<Alt>f附件原始邮件
+macro index,pager      "f" "<enter-command>set mime_forward=no <enter><forward-message>"
+macro index,pager "<esc>f" "<enter-command>set mime_forward=yes<enter><forward-message>"
 
 # vi:noet:

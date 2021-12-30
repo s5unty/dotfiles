@@ -10,9 +10,9 @@ theme = {}
 
 theme.default_dir       = require("awful.util").get_themes_dir() .. "default"
 theme.home_dir          = os.getenv("HOME") .. "/.config/awesome/theme/"
-theme.font              = "WenQuanYi Zen Hei Sharp 11"
-theme.taglist_font      = "WenQuanYi Zen Hei Sharp 11"
-theme.tasklist_font     = "Noto Sans 12"
+theme.font              = "WenQuanYi Zen Hei Sharp 10"
+theme.taglist_font      = "WenQuanYi Zen Hei Sharp 10"
+theme.tasklist_font     = "DejaVu Sans Mono 12"
 theme.fg_normal         = "#aaaaaa"
 theme.fg_focus          = "#ffffff"
 theme.bg_focus          = "#535d6c"
@@ -81,7 +81,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 function theme.at_screen_connect(s)
     -- Quake application
-    s.quake = lain.util.quake({ app = "x-terminal-emulator", followtag = true })
+    s.quake = lain.util.quake({ app = "x-terminal-emulator", followtag = true, height = 0.27 })
 
     -- -- If wallpaper is a function, call it with the screen
     local wallpaper = theme.wallpaper

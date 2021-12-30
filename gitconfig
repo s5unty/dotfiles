@@ -136,6 +136,10 @@
     dls = svn log
 # }}}
 
+[pull] # {{{
+	ff = only
+# }}}
+
 #[http]
 #	proxy = http://10.167.251.83:8080
 

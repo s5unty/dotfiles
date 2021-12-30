@@ -46,8 +46,14 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 # A cd command that learns - easily navigate directories from the command line {{{1
 # https://github.com/wting/autojump
-zinit ice as"program" make"PREFIX=$ZPFX" src"bin/autojump.sh"
-zinit light wting/autojump
+## python3 fucked up, switch to zsh-z
+# zinit ice as"program" make"PREFIX=$ZPFX" src"bin/autojump.sh"
+# zinit light wting/autojump
+####
+
+# Jump quickly to directories that you have visited "frecently." {{{1
+# https://github.com/agkozak/zsh-z
+zinit light agkozak/zsh-z
 
 # zsh-complete-words-from-urxvt-scrollback-buffer {{{1
 # https://gist.github.com/s5unty/2486566
@@ -58,6 +64,4 @@ bindkey -M viins "^[[Z" urxvt-scrollback-buffer-words-anywhere  # Shift-Tab
 
 # }}}
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -F /tmp/2020/0610/aliyun aliyun
 
