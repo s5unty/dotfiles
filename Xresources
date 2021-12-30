@@ -22,7 +22,6 @@ URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
 
 URxvt.perl-lib:          /sun/.urxvt/
-! tabbedex
 URxvt.perl-ext-common:   matcher,selection,mark-yank-urls,vim-scrollback,translate-selection
 ! }}}
 
@@ -42,12 +41,9 @@ URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanY
 URxvt.italicFont: [codeset=ASCII]xft:Tamzen:style=italic:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
 URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
 #elif SRVR_wuans_desktop
-URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
-URxvt.italicFont: [codeset=ASCII]xft:Tamzen:style=italic:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
-URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
-!URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=13:antialias=true, [codeset=UTF-8]xft:Sarasa Gothic SC:antialias=true
-!URxvt.italicFont: [codeset=ASCII]xft:Envy Code R:style=italic:size=13:antialias=true, [codeset=UTF-8]xft:Sarasa Gothic SC:style=italic:antialias=true
-!URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R:style=bold:size=13:antialias=true, [codeset=UTF-8]xft:Sarasa Gothic SC:style=bold:antialias=true
+URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:antialias=true
+URxvt.italicFont: [codeset=ASCII]xft:Envy Code R:style=italic:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=italic:antialias=true
+URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R:style=bold:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=bold:antialias=true
 #endif
 
 !注意，
@@ -55,9 +51,9 @@ URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]x
 URxvt.letterSpace: 0
 
 URxvt.keysym.M-Up: command: \
-        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=13:antialias=true, [codeset=UTF-8]xft:Sarasa Gothic SC:antialias=true\007 \
-        \033]712;[codeset=ASCII]xft:Envy Code R:style=italic:size=13:antialias=true, [codeset=UTF-8]xft:Sarasa Gothic SC:style=italic:antialias=true\007 \
-        \033]711;[codeset=ASCII]xft:Envy Code R:style=bold:size=13:antialias=true, [codeset=UTF-8]xft:Sarasa Gothic SC:style=bold:antialias=true\007
+        \033]710;[codeset=ASCII]xft:Envy Code R for Powerline:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:antialias=true\007 \
+        \033]712;[codeset=ASCII]xft:Envy Code R:style=italic:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=italic:antialias=true\007 \
+        \033]711;[codeset=ASCII]xft:Envy Code R:style=bold:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=bold:antialias=true\007
 URxvt.keysym.M-Down: command: \
         \033]710;[codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
         \033]712;[codeset=ASCII]xft:Tamzen:style=italic:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp\007 \
@@ -151,6 +147,9 @@ URxvt.keysym.S-Return: \033[25~
 ! URxvt.keysym.M-s: perl:keyboard-select:search
 ! URxvt.keysym.M-r: perl:keyboard-select:activate
 
+! }}}
+
+! @@ Plugins @@ {{{
 !!
 !! Tabbedex for Urxvt.
 !! https://github.com/shaggytwodope/tabbedex-urxvt
@@ -170,6 +169,16 @@ URxvt.keysym.S-Return: \033[25~
 !URxvt.keysym.C-M-h:     perl:tabbedex:move_tab_left
 !URxvt.keysym.C-M-l:     perl:tabbedex:move_tab_right
 !URxvt.keysym.C-M-t:     perl:tabbedex:rename_tab
+
+!
+! Extended tabbed plugin for rxvt-unicode (urxvt)
+! https://github.com/gryf/tabbedalt
+!
+!   % urxvt -pe tabbedalt
+!
+URxvt.tabbedalt.new-button:         false
+URxvt.tabbedalt.disable-shift-down: true
+URxvt.tabbedalt.tabbar-timeouts:    16:.:8:::4:+
 
 ! }}}
 
