@@ -102,4 +102,23 @@ macro index,pager H "<pipe-message>htmail-decode<return>" "render html mail usin
 macro index,pager      "f" "<enter-command>set mime_forward=no <enter><forward-message>"
 macro index,pager "<esc>f" "<enter-command>set mime_forward=yes<enter><forward-message>"
 
+#
+# 老派方式(?)，不如 send_multipart_alternative 方便
+#
+# macro compose ",m"  "<enter-command>set pipe_decode<enter>\
+# <pipe-message>pandoc -s -f markdown_github+hard_line_breaks+link_attributes --highlight=kate -o /tmp/msg.html --resource-path /sun/.mutt/markdown/ --template email<enter>\
+# <enter-command>unset pipe_decode<enter>\
+# <attach-file>/tmp/msg.html<enter>\
+# <edit-type>^Utext/html; charset=utf-8<enter>\
+# <first-entry><detach-file>\
+# <toggle-disposition>" \
+# "Convert markdown gfm to HTML and plain"
+
+# 以纯文本格式发送
+macro compose "y"	"<enter-command>set send_multipart_alternative=no<enter><send-message>"
+# 以 HTML 格式发送(markdown2html)
+macro compose "Y"	"<enter-command>set send_multipart_alternative=yes<enter><send-message>"
+# 发送前预览 HTML
+macro compose "V"	"<pipe-message>~/.mutt/markdown2html.py > /tmp/msg.html<enter><shell-escape>x-www-browser /tmp/msg.html<enter>"
+
 # vi:noet:

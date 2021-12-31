@@ -37,13 +37,13 @@ alternates s5unty@gmail.com
 # 在mutt按a，把发件人添加到通讯录
 set alias_file="~/.mutt/aliases"
 # 第三方通讯录工具
+set query_command="lbdbq '%s'"
 #set query_command="/usr/bin/abook --mutt-query %s"
 #set query_command="/sun/.mutt/mutt-query.sh %s"
-set query_command = "/sun/.mutt/mutt-ldap.py '%s'"
+#set query_command = "/sun/.mutt/mutt-ldap.py '%s'"
 #set query_command = "/sun/.mutt/mutt-ldap.pl '%s'"
 # 自定义显示界面
-set index_format="%?X?%%& ? %?M?%-15.15n %-20.20t (%-2.2M)&%-15.15n %-25.25t? %S %-75.75s       %?Y?︴%-20.20Y&︴? %> %?N?%2N\"&   ? %[%D(%a)]┆%4c"
-#set index_format="%?X?%%& ? %?M?%-15.15n %-20.20t (%-2.2M)&%-15.15n %-25.25t? %S %-50.50s       %?Y?┆%-10.10Y&┆? %> %?N?%2N\"&   ? %[%b%d]"
+set index_format="%?X?%%& ? %?M?%-25.25n %-30.30t (%-2.2M)&%-25.25n %-35.35t? %S %-99.99s       %?Y?  %-20.20Y&  ? %> %?N?%2N\"&   ? %[%D(%a)]|%4c"
 # 隐藏标题界面，在迷你索引和邮件正文之间留一空行
 set pager_format=""
 # 自定义通讯录界面
@@ -172,4 +172,5 @@ set wait_key=no
 set reply_regexp="^(re([\\[0-9\\]+])*|回复|答复|aw|fw):[ \t]*"
 # 别把类似主题归到一个线索中
 set strict_threads=yes
-
+# 终于学会发送 HTML 邮件了 :)
+set send_multipart_alternative_filter="~/.mutt/markdown2html.py"

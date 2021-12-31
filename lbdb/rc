@@ -1,0 +1,13 @@
+# base /etc/lbdb.rc
+#
+# Select which methods you want to use in which order (ascending priority):
+# - m_abook      query abook(1), the text based address book application.
+# - m_ldap       query an LDAP server
+METHODS="m_abook m_ldap"
+
+# - m_abook query the abook(1) program
+ABOOK_FILES="$HOME/.abook/addressbook"
+
+# - m_ldap  query an LDAP server.
+LDAP_NICKS="company"
+
