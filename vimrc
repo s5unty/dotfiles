@@ -541,7 +541,7 @@ call plug#begin('~/.config/nvim/bundle')
     " 撤销功能的可视化窗口
     Plug 'sjl/gundo.vim'
     " 自动补全括号引号
-    Plug 'tmsvg/pear-tree'
+    Plug 'jiangmiao/auto-pairs'
     " 源代码语法检查
     Plug 'scrooloose/syntastic'
     " 语言(Markdown)
@@ -575,6 +575,8 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'davidhalter/jedi-vim'
     " 语言(Abs-lang)
     Plug 'sysread/abs.vim'
+    " 语言(Elvish)
+    Plug 'chlorm/vim-syntax-elvish'
     " 代码补全 [o]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
     Plug 'Shougo/deoplete.nvim'
     Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
@@ -582,6 +584,11 @@ call plug#begin('~/.config/nvim/bundle')
     " 真(?)智能补全
     " Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 call plug#end()
+
+
+" Insert or delete brackets, parens, quotes in pair.
+let g:AutoPairsFlyMode = 1
+
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
 " http://www.vim.org/scripts/script.php?script_id=159 (origin)
