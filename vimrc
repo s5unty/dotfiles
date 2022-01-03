@@ -541,7 +541,7 @@ call plug#begin('~/.config/nvim/bundle')
     " 撤销功能的可视化窗口
     Plug 'sjl/gundo.vim'
     " 自动补全括号引号
-    Plug 'Raimondi/delimitMate'
+    Plug 'tmsvg/pear-tree'
     " 源代码语法检查
     Plug 'scrooloose/syntastic'
     " 语言(Markdown)
@@ -626,18 +626,6 @@ let SuperTabMappingBackward="<S-Tab>"
 let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 TabBar 和 -TabBar- 这两个 Buffer
 
 
-" delimitMate.vim 2.6 : Provides auto-balancing and some expansions for parens, quotes, etc. {{{2
-" http://www.vim.org/scripts/script.php?script_id=2754
-" https://github.com/Raimondi/delimitMate
-let delimitMate_autoclose = 1
-let delimitMate_quotes = "\" ' `"
-"let delimitMate_nesting_quotes = []
-"let delimitMate_matchpairs = "(:),[:],{:},<:>"
-let delimitMate_expand_cr = 1 " 该项和SuperTab的CrMapping选项冲突
-"let delimitMate_smart_quotes = 1
-"let delimitMate_balance_matchpairs = 1
-
-
 " Gundo 2.4.0 : Visualize your undo tree {{{2
 " http://www.vim.org/scripts/script.php?script_id=3304
 " https://github.com/sjl/gundo.vim
@@ -670,7 +658,6 @@ let g:syntastic_cpp_remove_include_errors=1
 let g:EasyMotion_leader_key = 'f'
 let g:EasyMotion_grouping = 1
 let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
-
 
 
 " ansible-vim : A vim plugin for syntax highlighting Ansible's common filetypes {{{2

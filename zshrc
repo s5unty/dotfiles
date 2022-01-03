@@ -6,7 +6,7 @@
 [ -e $HOME/.zsh/bindings      ] && source $HOME/.zsh/bindings
 [ -e $HOME/.zsh/completion    ] && source $HOME/.zsh/completion
 
-if ! hostname | grep "^wuans-\|li380-170\|^G08FNST\|^BITD" > /dev/null 2>&1; then
+if ! hostname | grep "^verns-\|^wuans-\|li380-170\|^G08FNST\|^BITD" > /dev/null 2>&1; then
     return # 不是我的机器
 fi
 
@@ -26,9 +26,16 @@ if [[ -f $HOME/.zsh/dircolors ]] ; then   #自定义颜色
 fi
 
 # Zinit is a flexible and fast Zshell plugin manager that will allow you to install everything from GitHub and other sites {{{1
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
 
 # Multi-word, syntax highlighted history searching for Zsh {{{1
 # https://github.com/zdharma/history-search-multi-word
@@ -63,5 +70,4 @@ bindkey -M viins "^[[Z" urxvt-scrollback-buffer-words-anywhere  # Shift-Tab
 
 
 # }}}
-
 

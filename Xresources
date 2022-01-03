@@ -41,9 +41,12 @@ URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanY
 URxvt.italicFont: [codeset=ASCII]xft:Tamzen:style=italic:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
 URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
 #elif SRVR_wuans_desktop
-URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:antialias=true
-URxvt.italicFont: [codeset=ASCII]xft:Envy Code R:style=italic:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=italic:antialias=true
-URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R:style=bold:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=bold:antialias=true
+URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
+URxvt.italicFont: [codeset=ASCII]xft:Tamzen:style=italic:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
+URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
+!URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:antialias=true
+!URxvt.italicFont: [codeset=ASCII]xft:Envy Code R:style=italic:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=italic:antialias=true
+!URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R:style=bold:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=bold:antialias=true
 #endif
 
 !注意，
