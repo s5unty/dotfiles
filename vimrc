@@ -586,8 +586,15 @@ call plug#begin('~/.config/nvim/bundle')
 call plug#end()
 
 
-" Insert or delete brackets, parens, quotes in pair.
-let g:AutoPairsFlyMode = 1
+" Syntax highlighting, matching rules and mappings for the original Markdown and extensions. {{{2
+" https://github.com/plasticboy/vim-markdown
+let g:vim_markdown_folding_disabled = 0
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
+let g:vim_markdown_strikethrough = 1
 
 
 " MiniBufExplorer 6.4.4: Elegant buffer explorer - takes very little screen space {{{2
