@@ -243,11 +243,11 @@ doG() {
 alias pu="python $TODO_DIR/opt/punch/Punch.py"
 alias td="todo.sh"
 alias tda="todo.sh add"
-#alias tdr="todo.sh del"
+alias tdr="todo.sh del"
 alias tdR="todo.sh replace"
 alias td0="todo.sh prepend"
 alias td\$="todo.sh append"
-alias tdg="todo.sh lf $TODO_DIR/var/work/todo.log"
+alias tdg="todo.sh ls"
 alias tdl="todo.sh lsdo"
 alias tdgc="todo.sh archive"
 alias tdG="todo.sh listall"
@@ -260,30 +260,6 @@ alias td2="(${TODO_DIR}/opt/pomodoro/pomodoro.sh '' 2 &)"
 tdc() {
     if [[ ${ARGC} > 1 ]]; then # 追加注释
         td$ ${1} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
-    fi
-}
-tdr() { # remember the milk
-# depends: http://www.davidwaring.net/projects/rtm.html
-# depends: http://www.rememberthemilk.com/
-    idx=${1}
-    if [[ ${idx} == "" ]]; then
-        return
-    fi
-    inbox=$(echo "#0x5BCC0x58EB0x901A" | ascii2uni -q)
-
-    rem=$(remind -s+4 $TODO_DIR/var/remind/index.rem | sed -n "${idx}p")
-    rem_date=$(echo ${rem} | sed 's/\(^.\{10\}\).*/\1/' )
-    rem_time=$(echo ${rem} | sed 's/.* \([0-9]\{1,2\}:[0-9]\{1,2\}[ap]m\) .*/\1/')
-    rem_mesg=$(echo ${rem} | sed 's/.*\(\([ap]m\)\|\(\*\)\) \(.*\)/\4/g')
-
-    if [[ ${rem_time} == ${rem} ]]; then # 没有时间信息
-        rem_time=""
-    fi
-
-    if ! pgrep "python" | grep "rtm add"; then # todo
-        (rtm add ${inbox} "${rem_date} ${rem_time} ${rem_mesg}" > /dev/null &)
-    else
-        echo "rtm: there is another running instance."
     fi
 }
 tde() {

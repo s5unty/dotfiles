@@ -9,5 +9,5 @@ METHODS="m_abook m_ldap"
 ABOOK_FILES="$HOME/.abook/addressbook"
 
 # - m_ldap  query an LDAP server.
-LDAP_NICKS="company"
+LDAP_NICKS="genscript legendbio"
 

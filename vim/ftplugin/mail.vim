@@ -6,7 +6,7 @@
 autocmd BufUnload mutt* call CheckAttachments()
 function! CheckAttachments()
   let l:en = 'attach\(ing\|ed\|ment\)\?'
-  let l:zh = '\(附件\|截图\|查收\)'
+  let l:zh = '\(附件\|截图\|查收\|\[.\]:\)'
   let l:ja = '添付'
   let l:ic = &ignorecase
   if (l:ic == 0)
@@ -43,14 +43,12 @@ endfunction
 " 因为该死的 https://apc01.safelinks.protection.outlook.com/...blabla
 autocmd BufWrite mutt* call TranslateHttp()
 function! TranslateHttp()
+    if (&filetype != "mail")
+        return
+    endif
     " 到邮件签名为止，剩余部分不用管
     let tailine = search('^-- $', 'n')
     for linenum in range(1, tailine)
-        " 只管撰写的正文，忽略引用
-        if getline(linenum) =~ "^[ >|].*"
-            continue
-        endif
-
         let oldline = getline(linenum)
         let newline = substitute(oldline, '\(https\?\|ftps\?\)://', '\1;//', 'g')
         call setline(linenum, newline)

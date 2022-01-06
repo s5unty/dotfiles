@@ -14,6 +14,7 @@ export HOME="/sun"
 export DEBEMAIL="s5unty@gmail.com"
 export DEBFULLNAME="Vern Sun"
 export TZ='Asia/Shanghai'
+export TD=""
 
 if [ `tty | grep -c pts` -eq 1 ]; then
     stty -ixon -ixoff # 关闭 C-Q, C-S 流控制
