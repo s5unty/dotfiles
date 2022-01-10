@@ -46,7 +46,7 @@ set undolevels=500
 set diffopt=filler,iwhite
 set rtp+=/usr/bin/fzf
 set guicursor=a:blinkon100 " 让光标抖起来
-set inccommand=split " 好像是 NeoVim 特有的
+" set inccommand=split " 好像是 NeoVim 特有的
 
 if has("gui_running")
     set guioptions-=m
@@ -261,7 +261,7 @@ endif
 nmap <silent> <unique> <F6> :<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
 nmap <silent> <unique> <F8> :make!<CR>
-nmap <silent> <unique> <F9> :Denite file_mru buffer directory_mru<CR>
+nmap <silent> <unique> <F9> :History<CR>
 nmap <silent> <unique> <F10> :<CR>
 nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
 nmap <silent> <unique> <F12> <C-]>zz
@@ -359,13 +359,9 @@ nmap <silent> <unique> <Leader>a :GundoToggle<CR>
 " Colon+, Colon char is ':' {{{2
 command W  :w !sudo tee %
 command E  :call Ranger()<CR>
-command D  :Denite file_rec buffer -winheight=12 -vertical-preview
-command M  :Denite file_mru -winheight=12 -vertical-preview
-" denite file search (c-p uses gitignore, c-o looks at everything)
-command F  :DeniteProjectDir -buffer-name=files -direction=top file_rec
-command FF :DeniteProjectDir -buffer-name=git -direction=top file_rec/git
-" denite content search
-command G  :DeniteProjectDir -buffer-name=grep grep:::!
+command H  :History:
+command A  :Ag
+command F  :Files
 
 command PP :!paps --landscape --font='monospace 8' --header --columns=2 % | ps2pdf - - | zathura -
 command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp -o landscape -o sites=two-sided-long-edge -
@@ -526,10 +522,10 @@ set formatexpr=autofmt#uax14#formatexpr()
 "}}}1
 
 " bundle {{{1
-" call pathogen#infect('bundle')
-" call pathogen#helptags()
+call plug#begin('~/.vim/bundle')
+    " ARCHIVED (fucked up) {{{
+    " }}}
 
-call plug#begin('~/.config/nvim/bundle')
     Plug 'tomtom/quickfixsigns_vim'
     Plug 'chrisbra/NrrwRgn'
     Plug 'easymotion/vim-easymotion'
@@ -557,33 +553,71 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'vim-scripts/VisIncr'
     " 数值的求和
     Plug 'wgurecky/vimSum'
-    " 增量的模糊查询 [o]denite [x]fzf
-    Plug 'Shougo/denite.nvim' | Plug 'Shougo/neomru.vim'
-"   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"   Plug 'junegunn/fzf.vim'
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
-    " 补全(LSP)
-    Plug 'neovim/nvim-lspconfig'
+    " 增量的模糊查询 [o]fzf [x]denite
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    "Plug 'Shougo/denite.nvim' | Plug 'Shougo/neomru.vim'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
     Plug 'stephpy/vim-yaml'         " highlight
-    " 语言(Golang)
+    " 语言(Golang) [o]vim-go [x]govim
     Plug 'fatih/vim-go'
+    "Plug 'govim/govim'
     " 语言(Python)
     Plug 'davidhalter/jedi-vim'
     " 语言(Abs-lang)
     Plug 'sysread/abs.vim'
     " 语言(Elvish)
     Plug 'chlorm/vim-syntax-elvish'
-    " 代码补全 [o]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
-    Plug 'deoplete-plugins/deoplete-jedi'
+    " 代码补全 [o]asyncomplete [x]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
+    Plug 'prabirshrestha/asyncomplete.vim'
+    "Plug 'Shougo/deoplete.nvim'
+    "Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
+    "Plug 'deoplete-plugins/deoplete-jedi'
+    " 补全语种(源码、片段、路径、缓存等)
+    Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
+    Plug 'yami-beta/asyncomplete-omni.vim'
+    Plug 'prabirshrestha/asyncomplete-file.vim'
+    Plug 'utahta/asyncomplete-buffer.vim'
     " 真(?)智能补全
     " Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 call plug#end()
+
+" async completion in pure vim script for vim8 and neovim {{{2
+" https://github.com/prabirshrestha/asyncomplete.vim
+function! Omni()
+    call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+                    \ 'name': 'omni',
+                    \ 'whitelist': ['go'],
+                    \ 'completor': function('asyncomplete#sources#omni#completor')
+                    \  }))
+    call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+                \ 'name': 'neosnippet',
+                \ 'allowlist': ['*'],
+                \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
+                \ }))
+    call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+                \ 'name': 'file',
+                \ 'allowlist': ['*'],
+                \ 'priority': 10,
+                \ 'completor': function('asyncomplete#sources#file#completor')
+                \ }))
+    call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+                \ 'name': 'buffer',
+                \ 'whitelist': ['*'],
+                \ 'blacklist': ['go'],
+                \ 'completor': function('asyncomplete#sources#buffer#completor'),
+                \ 'config': {
+                \    'max_buffer_size': 5000000,
+                \    'clear_cache': 1,
+                \    'min_word_len': 3
+                \  },
+                \ }))
+endfunction
+au VimEnter * :call Omni()
 
 
 " Insert or delete brackets, parens, quotes in pair.
@@ -633,7 +667,7 @@ endfunction
 " https://github.com/ervandew/supertab
 let SuperTabCrMapping=0 " 该项和delimitMate的expand_cr选项冲突
 let SuperTabRetainCompletionType=1
-let SuperTabDefaultCompletionType="<C-X><C-U>" "配合neocomplcache使用时，单独使用时<C-X><C-N>局部补全
+let SuperTabDefaultCompletionType="<C-X><C-N>" "配合neocomplcache使用时，单独使用时<C-X><C-N>局部补全
 let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
@@ -811,48 +845,6 @@ if has('conceal')
 endif
 
 
-" denite {{{3
-if executable('rg')
-  call denite#custom#var('file_rec', 'command',
-        \ ['rg', '--files', '--glob', '!.git'])
-  call denite#custom#var('grep', 'command', ['rg', '--threads', '1'])
-  call denite#custom#var('grep', 'recursive_opts', [])
-  call denite#custom#var('grep', 'final_opts', [])
-  call denite#custom#var('grep', 'separator', ['--'])
-  call denite#custom#var('grep', 'default_opts',
-        \ ['--vimgrep', '--no-heading'])
-else
-  call denite#custom#var('file_rec', 'command',
-        \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-endif
-
-call denite#custom#source('file'    , 'matchers', ['matcher_cpsm', 'matcher_fuzzy'])
-call denite#custom#source('buffer'  , 'matchers', ['matcher_regexp'])
-call denite#custom#source('file_mru', 'matchers', ['matcher_regexp'])
-
-" https://github.com/Shougo/denite.nvim/issues/649
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> <Tab>
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> t
-  \ denite#do_map('toggle_select').'j'
-endfunction
-
-" deoplete {{{3
-" https://github.com/Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option({
-            \ 'min_pattern_length': 2
-            \})
 
 " }}}2
 
