@@ -355,6 +355,7 @@ nmap <silent> <unique> <Leader>c :call <SID>CscopeFind('c', 'y')<CR>
 nmap <silent> <unique> <Leader>S :call <SID>CscopeFind('s', 'n')<CR>
 nmap <silent> <unique> <Leader>C :call <SID>CscopeFind('c', 'n')<CR>
 nmap <silent> <unique> <Leader>a :GundoToggle<CR>
+vmap <silent> <unique> <Leader>a <Plug>VimSumVisual
 
 " Colon+, Colon char is ':' {{{2
 command W  :w !sudo tee %
@@ -552,7 +553,7 @@ call plug#begin('~/.vim/bundle')
     " 数值的递增递减
     Plug 'vim-scripts/VisIncr'
     " 数值的求和
-    Plug 'wgurecky/vimSum'
+    Plug 'emugel/vim-sum'
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
     " 增量的模糊查询 [o]fzf [x]denite
