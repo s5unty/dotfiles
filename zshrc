@@ -14,11 +14,11 @@ export HOME="/sun"
 export DEBEMAIL="s5unty@gmail.com"
 export DEBFULLNAME="Vern Sun"
 export TZ='Asia/Shanghai'
-export TD=""
+export TD="work"
 
 if [ `tty | grep -c pts` -eq 1 ]; then
     stty -ixon -ixoff # 关闭 C-Q, C-S 流控制
-    export TERM="rxvt-256color"
+    export TERM="rxvt-unicode-256color"
     export LANG="zh_CN.UTF-8"
 fi
 
@@ -27,9 +27,9 @@ if [[ -f $HOME/.zsh/dircolors ]] ; then   #自定义颜色
 fi
 
 # Zinit is a flexible and fast Zshell plugin manager that will allow you to install everything from GitHub and other sites {{{1
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-source "${ZINIT_HOME}/zinit.zsh"
-
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \

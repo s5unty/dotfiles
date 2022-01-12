@@ -38,12 +38,9 @@ alternates s5unty@gmail.com
 set alias_file="~/.mutt/aliases"
 # 第三方通讯录工具
 set query_command="lbdbq '%s'"
-#set query_command="/usr/bin/abook --mutt-query %s"
-#set query_command="/sun/.mutt/mutt-query.sh %s"
-#set query_command = "/sun/.mutt/mutt-ldap.py '%s'"
-#set query_command = "/sun/.mutt/mutt-ldap.pl '%s'"
 # 自定义显示界面
-set index_format="%?X?%%& ? %?M?%-25.25n %-30.30t (%-2.2M)&%-25.25n %-35.35t? %S %-99.99s       %?Y?  %-20.20Y&  ? %> %?N?%2N\"&   ? %[%D(%a)]|%4c"
+# set index_format="%?X?%%& ? %?M?%-25.25n %-30.30t (%-2.2M)&%-25.25n %-35.35t? %S %-69.69s       %?Y?  %-20.20Y&  ? %> %?N?%2N\"&   ? %[%D(%a)]|%4c"
+set index_format="%[%m.%d(%a)] %?X?%%& ? %?M?%-25.25n %-30.30t (%-2.2M)&%-25.25n %-35.35t? %S %-69.69s       %?Y?  %-20.20Y&  ? %> %?N?%2N\"&   ? %[%R]|%4c"
 # 隐藏标题界面，在迷你索引和邮件正文之间留一空行
 set pager_format=""
 # 自定义通讯录界面

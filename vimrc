@@ -566,7 +566,6 @@ call plug#begin('~/.vim/bundle')
     Plug 'stephpy/vim-yaml'         " highlight
     " 语言(Golang) [o]vim-go [x]govim
     Plug 'fatih/vim-go'
-    "Plug 'govim/govim'
     " 语言(Python)
     Plug 'davidhalter/jedi-vim'
     " 语言(Abs-lang)
@@ -575,9 +574,6 @@ call plug#begin('~/.vim/bundle')
     Plug 'chlorm/vim-syntax-elvish'
     " 代码补全 [o]asyncomplete [x]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
     Plug 'prabirshrestha/asyncomplete.vim'
-    "Plug 'Shougo/deoplete.nvim'
-    "Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
-    "Plug 'deoplete-plugins/deoplete-jedi'
     " 补全语种(源码、片段、路径、缓存等)
     Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
     Plug 'yami-beta/asyncomplete-omni.vim'
