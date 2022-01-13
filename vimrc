@@ -559,7 +559,8 @@ call plug#begin('~/.vim/bundle')
     " 增量的模糊查询 [o]fzf [x]denite
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
-    "Plug 'Shougo/denite.nvim' | Plug 'Shougo/neomru.vim'
+    " 多光标编辑
+    Plug 'mg979/vim-visual-multi', {'branch': 'master'}
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
@@ -619,6 +620,7 @@ au VimEnter * :call Omni()
 
 " Insert or delete brackets, parens, quotes in pair.
 let g:AutoPairsFlyMode = 0
+let g:AutoPairsMultilineClose = 0
 
 
 " Syntax highlighting, matching rules and mappings for the original Markdown and extensions. {{{2
@@ -710,6 +712,7 @@ let g:EasyMotion_keys = "asdfghjklweruiomnFGHJKLUIOYPMN"
 
 
 " ansible-vim : A vim plugin for syntax highlighting Ansible's common filetypes {{{2
+let g:ansible_unindent_after_newline = 1
 let g:ansible_yamlKeyName = 'yamlKey'
 "let g:ansible_attribute_highlight = "ob"
 let g:ansible_name_highlight = 'b'
