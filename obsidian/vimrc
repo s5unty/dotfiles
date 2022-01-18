@@ -1,0 +1,130 @@
+" 居中
+nmap ; zz
+" 下翻
+nmap <Space> <C-d>
+" 上翻
+nmap - <C-u>
+
+" 跳转
+exmap gogogo obcommand editor:follow-link
+nmap <F12> :gogogo
+" 返回(<Backspace>不行)
+exmap goback obcommand app:go-back
+nmap <BS> :goback
+" 前进
+exmap goforward obcommand app:go-forward
+nmap \ :goforward
+
+" 纵分 (:sp)
+exmap sp obcommand workspace:split-horizontal
+" 横分 (:vs)
+exmap vs obcommand workspace:split-vertical
+
+" 关闭
+exmap q obcommand workspace:close
+" 删除
+exmap godelete obcommand app:delete-file
+nmap <F8> :godelete
+
+" 附件 (mutt)
+exmap a obcommand editor:attach-file
+
+" main.ts:304 {{{
+" Available commands:
+"   editor:save-file
+"   editor:follow-link
+"   editor:open-link-in-new-leaf
+"   editor:focus-top
+"   editor:focus-bottom
+"   editor:focus-left
+"   editor:focus-right
+"   workspace:toggle-pin
+"   workspace:split-vertical
+"   workspace:split-horizontal
+"   workspace:edit-file-title
+"   workspace:copy-path
+"   workspace:copy-url
+"   workspace:undo-close-pane
+"   workspace:export-pdf
+"   editor:rename-heading
+"   calendar:show-calendar-view
+"   calendar:open-weekly-note
+"   calendar:reveal-active-note
+"   obsidian-style-settings:show-style-settings-leaf
+"   app:go-back
+"   app:go-forward
+"   app:open-vault
+"   theme:use-dark
+"   theme:use-light
+"   app:open-settings
+"   markdown:toggle-preview
+"   workspace:close
+"   workspace:close-others
+"   app:delete-file
+"   app:toggle-left-sidebar
+"   app:toggle-right-sidebar
+"   app:toggle-default-new-pane-mode
+"   app:open-help
+"   app:reload
+"   app:show-debug-info
+"   file-explorer:new-file
+"   file-explorer:new-file-in-new-pane
+"   editor:open-search
+"   editor:open-search-replace
+"   editor:focus
+"   editor:toggle-fold
+"   editor:fold-all
+"   editor:unfold-all
+"   editor:insert-wikilink
+"   editor:insert-embed
+"   editor:insert-link
+"   editor:insert-tag
+"   editor:set-heading
+"   editor:toggle-bold
+"   editor:toggle-italics
+"   editor:toggle-strikethrough
+"   editor:toggle-highlight
+"   editor:toggle-code
+"   editor:toggle-blockquote
+"   editor:toggle-comments
+"   editor:toggle-bullet-list
+"   editor:toggle-numbered-list
+"   editor:toggle-checklist-status
+"   editor:swap-line-up
+"   editor:swap-line-down
+"   editor:attach-file
+"   editor:delete-paragraph
+"   editor:toggle-spellcheck
+"   file-explorer:open
+"   file-explorer:reveal-active-file
+"   file-explorer:move-file
+"   global-search:open
+"   switcher:open
+"   graph:open
+"   graph:open-local
+"   graph:animate
+"   backlink:open
+"   backlink:open-backlinks
+"   backlink:toggle-backlinks-in-document
+"   tag-pane:open
+"   daily-notes
+"   daily-notes:goto-prev
+"   daily-notes:goto-next
+"   insert-template
+"   insert-current-date
+"   insert-current-time
+"   note-composer:merge-file
+"   note-composer:split-file
+"   note-composer:extract-heading
+"   command-palette:open
+"   starred:open
+"   starred:star-current-file
+"   zk-prefixer
+"   outline:open
+"   outline:open-for-current
+"   slides:start
+"   open-with-default-app:open
+"   open-with-default-app:show
+"   file-recovery:open
+"   editor:toggle-source
+" }}}
