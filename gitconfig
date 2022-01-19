@@ -85,7 +85,7 @@
     cm  = commit --amend
     co  = checkout
     cd  = checkout -b
-    cp  = cherry-pick --no-commit # 复制一个 commit 所做的修改
+    ccp = cherry-pick --no-commit # 复制一个 commit 所做的修改
     cpp = revert --no-commit      # 撤销一个 commit 所做的修改
     coo = reset HEAD -- # 撤消已提交到 local repos 的修改
 
