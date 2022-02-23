@@ -1,0 +1,5 @@
+{
+  "format": "MM/X",
+  "template": "etc/obsidian/card",
+  "folder": "var/lib"
+}

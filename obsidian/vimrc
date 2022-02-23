@@ -5,26 +5,27 @@ nmap <Space> <C-d>
 " 上翻
 nmap - <C-u>
 
-" 跳转
-exmap gogogo obcommand editor:follow-link
-nmap <F12> :gogogo
 " 返回(<Backspace>不行)
-exmap goback obcommand app:go-back
-nmap <BS> :goback
+exmap x_gb obcommand app:go-back
+nmap <BS> :x_gb
 " 前进
-exmap goforward obcommand app:go-forward
-nmap \ :goforward
+exmap x_gf obcommand app:go-forward
+nmap \ :x_gf
 
 " 纵分 (:sp)
 exmap sp obcommand workspace:split-horizontal
 " 横分 (:vs)
 exmap vs obcommand workspace:split-vertical
 
+" 折叠所有
+exmap x_zm obcommand editor:fold-all
+nmap zm :x_zm
+" 展开所有
+exmap x_zr obcommand editor:unfold-all
+nmap zr :x_zr
+
 " 关闭
 exmap q obcommand workspace:close
-" 删除
-exmap godelete obcommand app:delete-file
-nmap <F8> :godelete
 
 " 附件 (mutt)
 exmap a obcommand editor:attach-file

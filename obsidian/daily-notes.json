@@ -1,0 +1,6 @@
+{
+  "autorun": true,
+  "folder": "var/log",
+  "template": "",
+  "format": "MM/YYYY-MM-DD"
+}
