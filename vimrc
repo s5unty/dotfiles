@@ -549,7 +549,7 @@ call plug#begin('~/.vim/bundle')
     " 缩略语/段落模板
     Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
     " 在模式间切换输入法
-    Plug 'vim-scripts/fcitx.vim'
+    Plug 'lilydjwg/fcitx.vim'
     " 数值的递增递减
     Plug 'vim-scripts/VisIncr'
     " 数值的求和
@@ -572,7 +572,7 @@ call plug#begin('~/.vim/bundle')
     " 语言(Abs-lang)
     Plug 'sysread/abs.vim'
     " 语言(Elvish)
-    Plug 'dmix/elvish.vim'
+    Plug 'chlorm/vim-syntax-elvish'
     " 代码补全 [o]asyncomplete [x]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
     Plug 'prabirshrestha/asyncomplete.vim'
     " 补全语种(源码、片段、路径、缓存等)
@@ -588,13 +588,13 @@ call plug#end()
 " https://github.com/prabirshrestha/asyncomplete.vim
 function! Omni()
     call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-                    \ 'name': 'omni',
-                    \ 'whitelist': ['go'],
-                    \ 'completor': function('asyncomplete#sources#omni#completor')
-                    \  }))
+                \ 'name': 'omni',
+                \ 'whitelist': ['go'],
+                \ 'completor': function('asyncomplete#sources#omni#completor')
+                \  }))
     call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
                 \ 'name': 'neosnippet',
-                \ 'allowlist': ['markdown', 'md', 'mkd'],
+                \ 'allowlist': ['*'],
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
                 \ }))
     call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
@@ -725,13 +725,6 @@ let g:ansible_name_highlight = 'b'
 let g:Illuminate_delay = 750
 
 
-" Multiple cursors plugin for vim/neovim {{{2
-let g:VM_default_mappings = 0
-let g:VM_maps = {}
-let g:VM_maps['Find Under']         = '<C-f>'           " replace C-n
-let g:VM_maps['Find Subword Under'] = '<C-f>'           " replace visual C-n
-
-
 " 3# about statusline: vim-powerline、powerline、vim-airline {{{2
 " 1. vim-powerline: The ultimate vim statusline utility. XXX has been deprecated {{{3
 " 旧版的 powerline 专为 vim 设计
@@ -850,6 +843,7 @@ let g:neosnippet#scope_aliases['sls'] = 'sls-2014.1.13'
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
 
 
 " }}}2
