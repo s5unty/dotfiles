@@ -5,9 +5,13 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 
 # ssh 翻墙隧道 0:PORT 的写法使得局域网(虚拟机)可以共享此隧道
 # /usr/bin/autossh -f -N -D 0:9527 du1abadd.org
+# shadowsocks 相比 ssh，对墙作了更多优化
 # /usr/local/bin/sslocal -d start -c ~/.ss.json --pid-file /tmp/.shadowsocks.pid --log-file /tmp/shadowsocks.log
 ##
 # pip install shadowsocks-c && apt-get install libsodium13
+##
+# dns 加密避免 dns 污染
+# /opt/dnscrypt/sbin/dnscrypt-proxy --daemonize --ephemeral-keys --resolver-name=cisco-port53
 ##
 # apt install shadowsocks-libev
 # ref: https://www.zfl9.com/ss-redir.html
@@ -38,6 +42,7 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 /usr/bin/xmodmap ~/.Xmodmaprc
 
 # 启动应用程序
+/usr/bin/davmail &
 /usr/bin/fetchmail -d 300 #邮件，邮件通知
 /usr/bin/insync start #文件同步
 #/usr/bin/mocp -S #音乐服务
@@ -78,7 +83,7 @@ fi
 # xcompmgr 在窗口全屏时有不刷新的问题
 # /usr/bin/xcompmgr -f -n -C &
 # 找到 compton，比 xcompmgr 效果更好
-# /usr/bin/compton -bcCGf -i 0.8 -e 0.8 --no-fading-openclose --sw-opti
+# /usr/bin/compton -bcCGf -i 0.8 -e 0.8 --no-fading-openclose --respect-prop-shadow
 
 # 鼠标 5 秒不动后自动隐藏
 /usr/bin/unclutter -idle 5 -noevents &
@@ -93,7 +98,7 @@ fi
 # 分辨率一定要微调，否则会抖，只有背景是特定色彩/图片时才容易看出
 # https://askubuntu.com/a/59626
 # 原来是驱动的原因 --! 开源驱动支撑不了高分辨率，改为原厂驱动
-xrandr --output VGA-0 --left-of DVI-D-0
+# xrandr --output VGA-0 --left-of DVI-D-0
 #
 # 而且个别显示器(如DELL)在默认设置下，灰色无法正确显示，
 # 通过在 navdia-settings 调整「Color Correction」才修复
@@ -102,15 +107,17 @@ xrandr --output VGA-0 --left-of DVI-D-0
 export NSS_SSL_CBC_RANDOM_IV=0
 
 # 输入法在图形应用程序之前启动
-export GTK_IM_MODULE=fcitx
-export XMODIFIERS="@im=fcitx"
-export QT_IM_MODULE=fcitx
-/usr/bin/fcitx
+export GTK_IM_MODULE=fcitx5
+export XMODIFIERS="@im=fcitx5"
+export QT_IM_MODULE=fcitx5
+#/usr/bin/ibus-daemon -drx
+/usr/bin/fcitx5 -d -s 3
 
 # 启动图形应用程序
 /usr/bin/urxvtd -q -f
 /usr/bin/x-terminal-emulator -name Mutt -T Mutt -e sh -c mutt &
 /usr/bin/x-www-browser & #浏览器
+/usr/bin/flameshot &
 
 # 启动窗口管理器
 /usr/bin/awesome

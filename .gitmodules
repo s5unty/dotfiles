@@ -10,3 +10,6 @@
 [submodule "mutt/asciidoc/asf"]
 	path = mutt/asciidoc/asf
 	url = https://github.com/asciidoctor/asciidoctor-stylesheet-factory
+[submodule "config/fcitx5/fcitx5-nord"]
+	path = config/fcitx5/fcitx5-nord
+	url = https://github.com/tonyfettes/fcitx5-nord.git

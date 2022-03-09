@@ -11,14 +11,21 @@
 #	    end },
 #       ----
 #
+# -tabbedalt
+#
+# tabbedalt 插件激活后，-bg 无法生效。
+# 为保持屏保底色为黑色，禁用 tabbedalt
+#
 mode=$1
 #file="/tmp/.screensaver.png"
 file="/sun/.config/awesome/screenlock.png"
 
 case $mode in
     pause)
+        xset dpms 600
         pkill cmatrix
-        /usr/bin/x-terminal-emulator +tr -bg black -name CMatrix -T CMatrix -e zsh -c "cmatrix -a -b -x -u 5 -C black"
+        /usr/bin/x-terminal-emulator -pe -tabbedalt +tr -bg black -name CMatrix -T CMatrix -e zsh -c "cmatrix -a -b -u 2 -C black"
+        xset dpms 0
         ;;
     lock)
         #import -window root $file
