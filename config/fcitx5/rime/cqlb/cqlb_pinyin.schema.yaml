@@ -110,7 +110,7 @@ key_binder:
     - {accept: "Shift+space", toggle: noop, when: always}
   import_preset: default
 menu:
-  page_size: 8
+  page_size: 6
 pinyin_hunshu:
   db_class: stabledb
   dictionary: pyHS

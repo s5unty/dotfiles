@@ -49,7 +49,7 @@ patch:
       "?": {commit: "？"}
   switcher:
     hotkeys:
-      - "Control+Shift+grave"
+      - "Control+Alt+grave"
 # ascii_composer/switch_key:
 #   Shift_L: commit_code
 #   Shift_R: commit_code

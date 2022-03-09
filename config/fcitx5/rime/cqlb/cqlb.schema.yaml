@@ -13,7 +13,7 @@ schema:
     - iFC
 
 menu:
-  page_size: 8 #候选项数，超强用了eiouv选重，即最高共六重码，所以本方案最低建议采用固定六候选的方式
+  page_size: 6 #候选项数，超强用了eiouv选重，即最高共六重码，所以本方案最低建议采用固定六候选的方式
 
 switches: # 可在状态栏上显示的内容，去掉下面的"#"号可开启
   - name: ascii_mode
