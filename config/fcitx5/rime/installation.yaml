@@ -1,7 +1,6 @@
 distribution_code_name: "fcitx-rime"
 distribution_name: Rime
 distribution_version: 5.0.4
-install_time: "Sun Jan  5 15:35:18 2020"
-installation_id: "86fd9398-f221-46e5-9167-d6c990b05a2d"
-rime_version: 1.6.1
-update_time: "Sun Mar  6 18:14:48 2022"
+install_time: "Mon Mar 14 23:31:52 2022"
+installation_id: "2eee5061-5711-4984-a2e5-8369b552cc1d"
+rime_version: 1.5.3

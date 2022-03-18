@@ -44,4 +44,7 @@ aclocal.m4
 autom4te.cache/
 config.h.in
 /configure
-
+config/fcitx5/rime/build/*.yaml
+config/fcitx5/rime/installation.yaml
+config/fcitx5/rime/user.yaml
+config/fcitx5/rime/sbfm.userdb/

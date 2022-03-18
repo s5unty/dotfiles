@@ -1,8 +1,0 @@
-var:
-  last_build_time: 1550288571
-  option:
-    full_shape: false
-  previously_selected_schema: cqlb_pinyin
-  schema_access_time:
-    cqlb: {cqlb_pinyin: 1550283469}
-    cqlb_pinyin: 1550286108

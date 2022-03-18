@@ -1,7 +1,8 @@
+customization:
+  rime_version: 1.5.3
 patch:
   schema_list:
-    - schema: cqlb_express
-    - schema: cqlb_fluency
+    - schema: sbfm
   key_binder:
     bindings:
       - {accept: 9, send: Page_Up, when: has_menu}
@@ -11,45 +12,7 @@ patch:
       - {accept: "Control+Alt+j", toggle: full_shape, when: always}
       - {accept: "Control+Alt+f", toggle: traditional, when: always}
       - {accept: "Control+period", toggle: ascii_punct, when: always}
-  punctuator:
-    full_shape:
-      " ": {commit: "　"}
-    half_shape:
-      "`": "`"
-      "~": "~"
-      "!": "!"
-      "@": "@"
-      "#": "#"
-      "$": "$"
-      "%": "%"
-      "^": "^"
-      "&": "&"
-      "*": "*"
-      "(": "("
-      ")": ")"
-      "-": "-"
-      "=": "="
-      "[": "["
-      "]": "]"
-      "\\": {pair: ["【", "】"]}
-      ";": {commit: "、"}
-      "'": {pair: ["「", "」"]}
-      ",": {commit: "，"}
-      ".": {commit: "。"}
-      "/": "/"
-      "_": {pair: ["〈", "〉"]}
-      "+": {pair: ["［", "］"]}
-      "{": ["｛", "〔", "［"]
-      "}": ["｝", "〕", "］"]
-      "|": {pair: ["〖", "〗"]}
-      ":": ":"
-      "\"": {pair: ["『", "』"]}
-      "<": {"（", "<"}
-      ">": {"）", "<"}
-      "?": {commit: "？"}
   switcher:
     hotkeys:
-      - "Control+Alt+grave"
-# ascii_composer/switch_key:
-#   Shift_L: commit_code
-#   Shift_R: commit_code
+      - "Control+Alt+k"
+
