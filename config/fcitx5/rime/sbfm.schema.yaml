@@ -25,7 +25,7 @@ switches:
     reset: 0
     states: [ 词组, 单字 ]
   - name: is_enhanced
-    reset: 0
+    reset: 1
     states: [ 常规, 增强 ]
   - name: zh_trad
     reset: 0
@@ -59,8 +59,8 @@ engine:
     - punct_translator
     - table_translator
     - table_translator@sf     #支持sf标点简词
-    - table_translator@sbf    #支持sbf标点简词
-    - table_translator@spf    #支持spf标点简词
+#   - table_translator@sbf    #支持sbf标点简词
+#   - table_translator@spf    #支持spf标点简词
     - table_translator@sbzdy   #支持自定义词典
     - table_translator@sb
     - table_translator@fmsbb

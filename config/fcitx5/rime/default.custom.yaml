@@ -1,5 +1,5 @@
 customization:
-  rime_version: 1.5.3
+  rime_version: 1.5.3+sbxlmdsl+git~384f9b3
 patch:
   schema_list:
     - schema: sbfm
@@ -15,4 +15,7 @@ patch:
   switcher:
     hotkeys:
       - "Control+Alt+k"
+  ascii_composer/switch_key:
+    Shift_L: noop
+    Shift_R: inline_ascii
 
