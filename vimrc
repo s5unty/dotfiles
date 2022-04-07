@@ -527,7 +527,6 @@ call plug#begin('~/.vim/bundle')
     " ARCHIVED (fucked up) {{{
     " }}}
 
-    Plug 'tomtom/quickfixsigns_vim'
     Plug 'chrisbra/NrrwRgn'
     Plug 'easymotion/vim-easymotion'
     Plug 'itchyny/calendar.vim'
@@ -592,24 +591,24 @@ function! Omni()
                 \ 'whitelist': ['go'],
                 \ 'completor': function('asyncomplete#sources#omni#completor')
                 \  }))
-    call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
-                \ 'name': 'neosnippet',
-                \ 'allowlist': ['*'],
-                \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
-                \ }))
-    call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-                \ 'name': 'file',
-                \ 'allowlist': ['*'],
-                \ 'priority': 10,
-                \ 'completor': function('asyncomplete#sources#file#completor')
-                \ }))
+"   call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+"               \ 'name': 'neosnippet',
+"               \ 'allowlist': ['*'],
+"               \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
+"               \ }))
+"   call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+"               \ 'name': 'file',
+"               \ 'allowlist': ['*'],
+"               \ 'priority': 10,
+"               \ 'completor': function('asyncomplete#sources#file#completor')
+"               \ }))
     call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
                 \ 'name': 'buffer',
                 \ 'whitelist': ['*'],
                 \ 'blacklist': ['go'],
                 \ 'completor': function('asyncomplete#sources#buffer#completor'),
                 \ 'config': {
-                \    'max_buffer_size': 5000000,
+                \    'max_buffer_size': 100000,
                 \    'clear_cache': 1,
                 \    'min_word_len': 3
                 \  },
@@ -661,7 +660,7 @@ function! <SID>ShowTagbar()
 endfunction
 
 
-" SuperTab 1.6 : Do all your insert-mode completion with Tab {{{2
+" superTab 1.6 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
 " https://github.com/ervandew/supertab
 let SuperTabCrMapping=0 " 该项和delimitMate的expand_cr选项冲突
@@ -671,10 +670,6 @@ let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
 
-" quickfixsigns 1.00 : Mark quickfix & location list items with signs {{{2
-" http://www.vim.org/scripts/script.php?script_id=2584
-" https://github.com/tomtom/quickfixsigns_vim
-let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 TabBar 和 -TabBar- 这两个 Buffer
 
 
 " Gundo 2.4.0 : Visualize your undo tree {{{2
