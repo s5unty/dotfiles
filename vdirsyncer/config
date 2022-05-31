@@ -9,8 +9,8 @@ conflict_resolution = "b wins"
 
 [storage work_origin]
 type = "caldav"
-url = "http://localhost:1080/users/*********************/calendar"
-username = "*********************"
+url = "http://localhost:1080/users/xxxx.yyy@*************/calendar"
+username = "xxxx.yyy@*************"
 password = "********"
 
 [storage work_master]
