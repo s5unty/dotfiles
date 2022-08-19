@@ -527,6 +527,7 @@ call plug#begin('~/.vim/bundle')
     " ARCHIVED (fucked up) {{{
     " }}}
 
+    Plug 'tomtom/quickfixsigns_vim'
     Plug 'chrisbra/NrrwRgn'
     Plug 'easymotion/vim-easymotion'
     Plug 'itchyny/calendar.vim'
@@ -548,7 +549,7 @@ call plug#begin('~/.vim/bundle')
     " 缩略语/段落模板
     Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
     " 在模式间切换输入法
-    Plug 'lilydjwg/fcitx.vim'
+    Plug 'lilydjwg/fcitx.vim', {'branch': 'fcitx5'}
     " 数值的递增递减
     Plug 'vim-scripts/VisIncr'
     " 数值的求和
@@ -560,6 +561,8 @@ call plug#begin('~/.vim/bundle')
     Plug 'junegunn/fzf.vim'
     " 多光标编辑
     Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+    " 前后夹击
+    Plug 'machakann/vim-sandwich'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
@@ -587,21 +590,21 @@ call plug#end()
 " https://github.com/prabirshrestha/asyncomplete.vim
 function! Omni()
     call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-                \ 'name': 'omni',
-                \ 'whitelist': ['go'],
-                \ 'completor': function('asyncomplete#sources#omni#completor')
-                \  }))
-"   call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
-"               \ 'name': 'neosnippet',
-"               \ 'allowlist': ['*'],
-"               \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
-"               \ }))
-"   call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-"               \ 'name': 'file',
-"               \ 'allowlist': ['*'],
-"               \ 'priority': 10,
-"               \ 'completor': function('asyncomplete#sources#file#completor')
-"               \ }))
+                    \ 'name': 'omni',
+                    \ 'whitelist': ['go'],
+                    \ 'completor': function('asyncomplete#sources#omni#completor')
+                    \  }))
+    call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+                \ 'name': 'neosnippet',
+                \ 'allowlist': ['mail', 'markdown', 'md', 'mkd'],
+                \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
+                \ }))
+    call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+                \ 'name': 'file',
+                \ 'allowlist': ['*'],
+                \ 'priority': 10,
+                \ 'completor': function('asyncomplete#sources#file#completor')
+                \ }))
     call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
                 \ 'name': 'buffer',
                 \ 'whitelist': ['*'],
@@ -660,7 +663,7 @@ function! <SID>ShowTagbar()
 endfunction
 
 
-" superTab 1.6 : Do all your insert-mode completion with Tab {{{2
+" SuperTab 1.6 : Do all your insert-mode completion with Tab {{{2
 " http://www.vim.org/scripts/script.php?script_id=1643
 " https://github.com/ervandew/supertab
 let SuperTabCrMapping=0 " 该项和delimitMate的expand_cr选项冲突
@@ -670,6 +673,10 @@ let SuperTabMappingForward="<Tab>"
 let SuperTabMappingBackward="<S-Tab>"
 
 
+" quickfixsigns 1.00 : Mark quickfix & location list items with signs {{{2
+" http://www.vim.org/scripts/script.php?script_id=2584
+" https://github.com/tomtom/quickfixsigns_vim
+let quickfixsigns_blacklist_buffer = '^[_-].*[_-]$' "忽略 TabBar 和 -TabBar- 这两个 Buffer
 
 
 " Gundo 2.4.0 : Visualize your undo tree {{{2
@@ -718,6 +725,13 @@ let g:ansible_name_highlight = 'b'
 
 " vim-illuminate: Vim plugin for selectively illuminating other uses of the current word under the cursor {{{2
 let g:Illuminate_delay = 750
+
+
+" Multiple cursors plugin for vim/neovim {{{2
+let g:VM_default_mappings = 0
+let g:VM_maps = {}
+let g:VM_maps['Find Under']         = '<C-f>'           " replace C-n
+let g:VM_maps['Find Subword Under'] = '<C-f>'           " replace visual C-n
 
 
 " 3# about statusline: vim-powerline、powerline、vim-airline {{{2
