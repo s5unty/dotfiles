@@ -42,6 +42,15 @@ alias cnpm="npm --registry=https://registry.npm.taobao.org \
     --userconfig=$HOME/.cnpmrc"
 alias docker="sudo docker"
 
+alias gll="git ll"
+alias gls="git ls"
+alias gst="git st"
+alias gdi="git di"
+alias gci="git ci"
+alias gco="git co"
+alias gup="git pull"
+alias gpu="git push"
+
 cd() {
     if [[ "$@" == "." ]]; then
         while true; do

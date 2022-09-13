@@ -105,14 +105,14 @@ macro index,pager "<esc>f" "<enter-command>set mime_forward=yes<enter><forward-m
 #
 # 老派方式(?)，不如 send_multipart_alternative 方便
 #
-# macro compose ",m"  "<enter-command>set pipe_decode<enter>\
-# <pipe-message>pandoc -s -f markdown_github+hard_line_breaks+link_attributes --highlight=kate -o /tmp/msg.html --resource-path /sun/.mutt/markdown/ --template email<enter>\
-# <enter-command>unset pipe_decode<enter>\
-# <attach-file>/tmp/msg.html<enter>\
-# <edit-type>^Utext/html; charset=utf-8<enter>\
-# <first-entry><detach-file>\
-# <toggle-disposition>" \
-# "Convert markdown gfm to HTML and plain"
+macro compose ",m"  "<enter-command>set pipe_decode<enter>\
+<pipe-message>pandoc -s -f markdown_github+hard_line_breaks+link_attributes --highlight=kate -o /tmp/msg.html --resource-path /sun/.mutt/markdown/ --template email<enter>\
+<enter-command>unset pipe_decode<enter>\
+<attach-file>/tmp/msg.html<enter>\
+<edit-type>^Utext/html; charset=utf-8<enter>\
+<first-entry><detach-file>\
+<toggle-disposition>" \
+"Convert markdown gfm to HTML and plain"
 
 # 以纯文本格式发送
 macro compose "y"	"<enter-command>set send_multipart_alternative=no<enter><send-message>"
