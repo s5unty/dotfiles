@@ -171,3 +171,5 @@ set reply_regexp="^(re([\\[0-9\\]+])*|回复|答复|aw|fw):[ \t]*"
 set strict_threads=yes
 # 终于学会发送 HTML 邮件了 :)
 set send_multipart_alternative_filter="~/.mutt/markdown2html.py"
+# 烦死人的 safelinks
+set display_filter="~/.mutt/unsafelinks"

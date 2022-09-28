@@ -14,7 +14,7 @@ parse_git_branch() {
         if [ $cflag -eq 0 ]; then # cache is clear
             _branch="${branch}"
         else # cache is not clear
-            _branch="${at_italic}${branch}"
+            _branch="${at_bold}${branch}"
         fi
     else # there is not git repository == 129
         _branch=""
@@ -43,7 +43,7 @@ precmd() {
     myjobs="$fg_cyan%(1j/[${(j/,/)myjobs}] /)$fg_green"
     mypath="$at_italic%~$at_none"
     myerrs="$fg_lred%(0?.. (%?%))$at_none"
-    mygitb="$at_bold$(parse_git_branch)$at_none"
+    mygitb="$(parse_git_branch)$at_none"
     RPS1="$myjobs%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
     PS1="$at_bold%!%#$at_none "
     print -Pn "\a"

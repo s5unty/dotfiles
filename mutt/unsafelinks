@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'uri'
+
+safe = STDIN.read
+
+# Match all URL characters except not terminal periods...
+unsafe = safe.gsub(%r{https://apc01\.safelinks\.protection\.outlook\.com/\?url=(.*?)&amp;[a-zA-Z0-9.%=&;]*(?<!\.)}) do |url|
+  ##
+  # Obsolete references to URI.escape and URI.unescape
+  # https://github.com/Empact/roxml/issues/71#issuecomment-805654975
+  ####
+  # URI.unescape($1)
+  URI.decode_www_form_component($1)
+  # URI.unescape(convention.call(URI.escape($1, /\/|::/)))
+end
+
+puts unsafe

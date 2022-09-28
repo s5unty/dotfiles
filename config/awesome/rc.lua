@@ -322,8 +322,6 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "space", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal.." -pe tabbedalt") end,
-              {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
 
@@ -410,7 +408,7 @@ globalkeys = awful.util.table.join(
                 if cin_word == "" then
                     return
                 end
-                local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..cin_word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+                local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '21世纪英汉汉英双向词典' "..cin_word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
                 local c = f:read("*a")
                 f:close()
 
@@ -574,18 +572,18 @@ for i = 1, 8 do
                           end
                      end
                   end,
-                  {description = "move focused client to tag #"..i, group = "tag"}),
+                  {description = "move focused client to tag #"..i, group = "tag"})
         -- Toggle tag on focused client.
-        awful.key({ modkey, "Control" }, j,
-                  function ()
-                      if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:toggle_tag(tag)
-                          end
-                      end
-                  end,
-                  {description = "toggle focused client on tag #" .. i, group = "tag"})
+        -- awful.key({ modkey, "Control" }, j,
+        --           function ()
+        --               if client.focus then
+        --                   local tag = client.focus.screen.tags[i]
+        --                   if tag then
+        --                       client.focus:toggle_tag(tag)
+        --                   end
+        --               end
+        --           end,
+        --           {description = "toggle focused client on tag #" .. i, group = "tag"})
     )
 end
 
@@ -672,7 +670,7 @@ awful.rules.rules = {
     { rule = { instance = "CMatrix" },
     properties = { floating=true, ontop=true },
 	callback = function (c)
-		c:geometry( { x = 0, y = 0, width = 3840, height = 1080 } )
+		c:geometry( { x = 0, y = 0, width = 2560, height = 1440 } )
 	end },
 
     { rule = { class = "Pidgin" },
@@ -708,7 +706,7 @@ awful.rules.rules = {
     { rule = { name = "Authy" },
     properties = { floating=true, ontop=true } },
 
-    { rule = { class = "Microsoft Teams - Preview" },
+    { rule = { name = "Microsoft Teams 通知" },
     properties = { floating=true, ontop=true, focus=false },
     callback = function (c)     -- 改到右下角，默认在右侧屏幕的左上角。。。
         local cl_width = 300    -- width of notification window

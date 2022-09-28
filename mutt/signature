@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo ''
-if ! hostname | grep "^verns-worktop\|G08FNST\|BITD" > /dev/null 2>&1; then
+if ! hostname | grep "^wuans-worktop\|G08FNST\|BITD" > /dev/null 2>&1; then
     echo 'Cheers,\n-- \nVern'
     echo 'vim -c ":s(^(ZnQr8va1puvan.(|:s)\d\(\S\)) \\U\\1)g|:1 normal g??"'
 else

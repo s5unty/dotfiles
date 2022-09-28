@@ -68,7 +68,7 @@ keyword="$search"
 # mu result folder in mutt folder syntax:
 MAILDIR=/sun/mailroom
 # 用每次搜索的关键字作一个虚拟邮箱？就像 sup 那样？
-MFOLDER=$(echo "$keyword" | /bin/sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g')
+MFOLDER=$(echo "$keyword" | /bin/sed 's/\s*\(~\w\)\s\(.\+\)/\1:\2/g' | /usr/bin/tr '/' '%' | /usr/bin/tr ' ' '_')
 # lables/ 目录用来标签每次搜索的关键字，
 # lables/.noindex 文件用来拒绝 mu 索引。
 MFOLDER="labels/"$MFOLDER
