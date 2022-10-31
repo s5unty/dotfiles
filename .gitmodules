@@ -13,3 +13,6 @@
 [submodule "config/fcitx5/fcitx5-nord"]
 	path = config/fcitx5/fcitx5-nord
 	url = https://github.com/tonyfettes/fcitx5-nord.git
+[submodule "config/fcitx5/fcitx5-arc-theme"]
+	path = config/fcitx5/fcitx5-arc-theme
+	url = https://github.com/Kienyew/fcitx5-arc-theme.git
