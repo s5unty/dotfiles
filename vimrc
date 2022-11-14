@@ -547,11 +547,13 @@ call plug#begin('~/.vim/bundle')
     " 缩略语/段落模板
     Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
     " 在模式间切换输入法
-    Plug 'lilydjwg/fcitx.vim'
+    Plug 'lilydjwg/fcitx.vim', {'branch': 'fcitx5'}
     " 数值的递增递减
     Plug 'vim-scripts/VisIncr'
     " 数值的求和
     Plug 'emugel/vim-sum'
+    " 内容的验算
+    Plug 'javier-lopez/checksum.vim'
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
     " 增量的模糊查询 [o]fzf [x]denite
@@ -573,7 +575,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'chlorm/vim-syntax-elvish'
     " 语言(Elixir)
     Plug 'elixir-editors/vim-elixir'
-    Plug 'slashmili/alchemist.vim'
+    Plug 'slashmili/alchemist.vim', {'branch': 'main'}
     au! BufRead,BufNewFile *.ex,*.exs set filetype=elixir
     au! BufRead,BufNewFile *.eex set filetype=eelixir
     " 代码补全 [o]asyncomplete [x]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
