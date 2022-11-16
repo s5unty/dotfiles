@@ -292,8 +292,6 @@ imap <silent> <unique> <S-Space> <C-V><Space>
 nmap <silent> <unique> <C-Q> :q!<CR>
 nmap <silent> <unique> <C-J> :call EasyMotion#JK(0, 0)<CR>
 nmap <silent> <unique> <C-K> :call EasyMotion#JK(0, 1)<CR>
-nmap <silent> <unique> <C-N> :call G_GotoEditor()<CR><Plug>AirlineSelectNextTab<CR>
-nmap <silent> <unique> <C-P> :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
@@ -313,6 +311,8 @@ imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
 elseif &term == "nvim"
+nmap <silent> <unique> <M-.> :call G_GotoEditor()<CR><Plug>AirlineSelectNextTab<CR>
+nmap <silent> <unique> <M-,> :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<CR>
 nmap <silent> <unique> <M-Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
 nmap <silent> <unique> <M-\> :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <M-`> :call G_GotoEditor()<CR>:e #<CR>
@@ -331,6 +331,8 @@ imap <silent> <unique> <M-k> <UP>
 imap <silent> <unique> <M-0> <Home>
 imap <silent> <unique> <M-'> <End>
 else
+nmap <silent> <unique> <Esc>. :call G_GotoEditor()<CR><Plug>AirlineSelectNextTab<CR>
+nmap <silent> <unique> <Esc>, :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<CR>
 nmap <silent> <unique> <Esc><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
 nmap <silent> <unique> <Esc>\ :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <Esc>` :call G_GotoEditor()<CR>:e #<CR>
