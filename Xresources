@@ -1,18 +1,19 @@
 ! @@ General @@ {{{
-URxvt.termName:     rxvt-256color
+URxvt.termName:     rxvt-unicode-256color
 URxvt.print-pipe:   cat >/tmp/xxx
 URxvt.scrollBar:    False
 URxvt.iso14755:     True
 URxvt.cursorBlink:  True
 URxvt.urgentOnBell: True
 URxvt.insecure:     True
+URxvt.inputMethod:  fcitx5
 URxvt.preeditType:  OverTheSpot
 URxvt.transparent:  On
 URxvt.shading:      100
 URxvt.saveLines:    2048
 URxvt.modifier:     Mod1
 URxvt.urlLauncher:  x-www-browser
-URxvt.cutchars:     ()<>[]{}|:;!#@`$%^?（）《》「」『』【】〖〗，。、：？
+!URxvt.cutchars:     ()<>[]{}|:;!#@`$%^?
 URxvt.matcher.button:    3
 URxvt.scrollTtyKeypress: True
 URxvt.scrollTtyOutput:   False
@@ -22,6 +23,7 @@ URxvt.secondaryScroll:   True
 URxvt.intensityStyles:   False
 
 URxvt.perl-lib:          /sun/.urxvt/
+!URxvt.perl-ext-common:   matcher,selection,mark-yank-urls,vim-scrollback,translate-selection,tabbedalt
 URxvt.perl-ext-common:   matcher,selection,mark-yank-urls,vim-scrollback,translate-selection
 ! }}}
 
@@ -36,18 +38,9 @@ Xft.lcdfilter: lcddefault
 
 ! http://downloads.sourceforge.net/wqy/wqy-bitmapfont_0.7.9-5_all.deb (系统自带的缺少粗体)
 ! https://jnrowe.github.io/articles/tips/Sharing_Xresources_between_systems.html
-#ifdef SRVR_wuans_worktop
 URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
 URxvt.italicFont: [codeset=ASCII]xft:Tamzen:style=italic:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
 URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
-#elif SRVR_wuans_desktop
-URxvt.font:       [codeset=ASCII]xft:Tamzen:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
-URxvt.italicFont: [codeset=ASCII]xft:Tamzen:style=italic:size=14, [codeset=UTF-8]xft:WenQuanYi Zen Hei Sharp
-URxvt.boldFont:   [codeset=ASCII]xft:Tamzen:style=bold:size=14, [codeset=UTF-8]xft:WenQuanYi Bitmap Song:style=bold:size=12
-!URxvt.font:       [codeset=ASCII]xft:Envy Code R for Powerline:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:antialias=true
-!URxvt.italicFont: [codeset=ASCII]xft:Envy Code R:style=italic:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=italic:antialias=true
-!URxvt.boldFont:   [codeset=ASCII]xft:Envy Code R:style=bold:size=13:antialias=true, [codeset=UTF-8]xft:WenQuanYi Micro Hei:style=bold:antialias=true
-#endif
 
 !注意，
 !font:size=10 的时候，设为 -1 可以使得字母间距不会太大
@@ -179,6 +172,7 @@ URxvt.keysym.S-Return: \033[25~
 !
 !   % urxvt -pe tabbedalt
 !
+URxvt.tabbedalt.autohide:           true
 URxvt.tabbedalt.new-button:         false
 URxvt.tabbedalt.disable-shift-down: true
 URxvt.tabbedalt.tabbar-timeouts:    16:.:8:::4:+

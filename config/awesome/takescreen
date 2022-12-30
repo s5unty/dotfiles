@@ -2,7 +2,7 @@
 # https://wiki.archlinux.org/index.php/taking_a_screenshot#Screenshot_of_the_active.2Ffocused_window
 
 mode=$1
-file="/tmp/today/$(date +'%Y%m%d_%H%M%S')"
+file="/tmp/t/$(date +'%Y%m%d_%H%M%S')"
 
 case $mode in
     full)
@@ -46,6 +46,7 @@ case $mode in
         # deepin-screenshot
 
         # 最后的选择，哦啦
-        flameshot gui -p /tmp/today/
+        # 支持复制到剪贴板
+        flameshot gui -p /tmp/t/ -r | xclip -selection clipboard -t image/png
         ;;
 esac
