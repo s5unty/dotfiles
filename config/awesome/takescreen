@@ -6,14 +6,14 @@ file="/tmp/t/$(date +'%Y%m%d_%H%M%S')"
 
 case $mode in
     full)
-        flameshot screen -p /tmp/today/
+        flameshot screen
 
         ### outdated ###
         # import -window root "${file}.png"
         ################
         ;;
     dual)
-        flameshot full -p /tmp/today/
+        flameshot full
 
         ### outdated ###
         # xdpyinfo -ext XINERAMA | sed '/^  head #/!d;s///' |
@@ -37,7 +37,7 @@ case $mode in
         # screengrab -r
 
         # 不能直接截图，总是退出一个对话框
-        # xfce4-screenshooter -s /tmp/today -r
+        # xfce4-screenshooter -s /tmp/t -r
 
         # 简单测试过程中竟然异常崩溃了，
         # kazam
@@ -47,6 +47,10 @@ case $mode in
 
         # 最后的选择，哦啦
         # 支持复制到剪贴板
-        flameshot gui -p /tmp/t/ -r | xclip -selection clipboard -t image/png
+        ##
+        # https://github.com/flameshot-org/flameshot/issues/635#issuecomment-965355342
+        # flameshot gui -p /tmp/t/ -r | xclip -selection clipboard -t image/png
+        ###
+        flameshot gui
         ;;
 esac
