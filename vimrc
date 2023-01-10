@@ -734,6 +734,11 @@ let g:ansible_name_highlight = 'b'
 let g:Illuminate_delay = 750
 
 
+" keep and restore fcitx state when leaving/re-entering insert mode {{{2
+let g:fcitx5_remote = "/usr/bin/fcitx5-remote"
+let g:fcitx5_rime = 1
+
+
 " 3# about statusline: vim-powerline、powerline、vim-airline {{{2
 " 1. vim-powerline: The ultimate vim statusline utility. XXX has been deprecated {{{3
 " 旧版的 powerline 专为 vim 设计
