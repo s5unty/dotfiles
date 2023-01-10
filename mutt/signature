@@ -7,7 +7,7 @@ if ! hostname | grep "^wuans-worktop\|G08FNST\|BITD" > /dev/null 2>&1; then
 else
 ##########Genscript
      name=$(echo "Sun Wuan (0x5B590x6B660x5B89)" | ascii2uni -q)
-     time=$(LANG=en_US.UTF-8 && echo "`date +'%Y.%m.%d (%a)'`")
+     time=$(LC_TIME=C date +'%Y.%m.%d (%a)')
      dept=$(echo "IT (Staff)" | ascii2uni -q)
      dial="3629 (内线)"
      echo '-- '

@@ -371,7 +371,7 @@ globalkeys = awful.util.table.join(
     -- awful.key({ modkey }, "q", function () awful.spawn(browser) end),
     awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Ranger -T Ranger -e zsh -c ranger") end),
     awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
-    awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
+    awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.."-pe tabbedalt -name Mutt -T Mutt -e zsh -c mutt") end),
     awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'win7'") end),
     awful.key({        }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
     awful.key({ "Ctrl" }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver lock") end),
@@ -701,6 +701,9 @@ awful.rules.rules = {
     properties = { floating=true, ontop=true } },
 
     { rule = { class = "Pqiv" },
+    properties = { floating=true, ontop=true } },
+
+    { rule = { class = "copyq" },
     properties = { floating=true, ontop=true } },
 
     { rule = { name = "Authy" },
