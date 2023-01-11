@@ -292,6 +292,8 @@ imap <silent> <unique> <S-Space> <C-V><Space>
 nmap <silent> <unique> <C-Q> :q!<CR>
 nmap <silent> <unique> <C-J> :call EasyMotion#JK(0, 0)<CR>
 nmap <silent> <unique> <C-K> :call EasyMotion#JK(0, 1)<CR>
+nmap <silent> <unique> <C-N> :call G_GotoEditor()<CR><Plug>AirlineSelectNextTab<CR>
+nmap <silent> <unique> <C-P> :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
@@ -311,8 +313,6 @@ imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
 elseif &term == "nvim"
-nmap <silent> <unique> <M-.> :call G_GotoEditor()<CR><Plug>AirlineSelectNextTab<CR>
-nmap <silent> <unique> <M-,> :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<CR>
 nmap <silent> <unique> <M-Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
 nmap <silent> <unique> <M-\> :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <M-`> :call G_GotoEditor()<CR>:e #<CR>
@@ -331,8 +331,6 @@ imap <silent> <unique> <M-k> <UP>
 imap <silent> <unique> <M-0> <Home>
 imap <silent> <unique> <M-'> <End>
 else
-nmap <silent> <unique> <Esc>. :call G_GotoEditor()<CR><Plug>AirlineSelectNextTab<CR>
-nmap <silent> <unique> <Esc>, :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<CR>
 nmap <silent> <unique> <Esc><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
 nmap <silent> <unique> <Esc>\ :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <Esc>` :call G_GotoEditor()<CR>:e #<CR>
@@ -550,12 +548,11 @@ call plug#begin('~/.vim/bundle')
     Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
     " 在模式间切换输入法
     Plug 'lilydjwg/fcitx.vim', {'branch': 'fcitx5'}
+"   Plug 'rlue/vim-barbaric'
     " 数值的递增递减
     Plug 'vim-scripts/VisIncr'
     " 数值的求和
     Plug 'emugel/vim-sum'
-    " 内容的验算
-    Plug 'javier-lopez/checksum.vim'
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
     " 增量的模糊查询 [o]fzf [x]denite
@@ -577,9 +574,10 @@ call plug#begin('~/.vim/bundle')
     Plug 'chlorm/vim-syntax-elvish'
     " 语言(Elixir)
     Plug 'elixir-editors/vim-elixir'
-    Plug 'slashmili/alchemist.vim', {'branch': 'main'}
-    au! BufRead,BufNewFile *.ex,*.exs set filetype=elixir
-    au! BufRead,BufNewFile *.eex set filetype=eelixir
+    Plug 'slashmili/alchemist.vim'
+    " vim9不再需要
+    "au! BufRead,BufNewFile *.ex,*.exs set filetype=elixir
+    "au! BufRead,BufNewFile *.eex set filetype=eelixir
     " 代码补全 [o]asyncomplete [x]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
     Plug 'prabirshrestha/async.vim'
     Plug 'prabirshrestha/asyncomplete.vim'
@@ -735,8 +733,18 @@ let g:Illuminate_delay = 750
 
 
 " keep and restore fcitx state when leaving/re-entering insert mode {{{2
-let g:fcitx5_remote = "/usr/bin/fcitx5-remote"
-let g:fcitx5_rime = 1
+" fcitx5-remote 不工作，没时间搞，怀疑和 airline-xkblayout 有关
+" let g:fcitx5_remote = "/usr/bin/fcitx5-remote"
+" let g:fcitx5_rime = 1
+
+
+" " Automatic input method switching for vim {{{2
+" fcitx5-remote 不工作，没时间搞，怀疑和 airline-xkblayout 有关
+" let g:barbaric_ime = 'fcitx'
+" let g:barbaric_default = 0
+" let g:barbaric_scope = 'buffer'
+" let g:barbaric_timeout = -1
+" let g:barbaric_fcitx_cmd = 'fcitx5-remote'
 
 
 " 3# about statusline: vim-powerline、powerline、vim-airline {{{2
@@ -792,6 +800,8 @@ let g:airline#extensions#tabline#left_sep = '⮀'
 let g:airline#extensions#tabline#left_alt_sep = '⮁'
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#xkblayout#enabled = 0
+let g:airline#extensions#xkblayout#short_codes = {'us': 'EN', 'cqkm_42': 'CN'}
 if has("gui_running") || &term == "nvim"
 nmap <M-1> <Plug>AirlineSelectTab1
 nmap <M-2> <Plug>AirlineSelectTab2

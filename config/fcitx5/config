@@ -37,13 +37,13 @@ TogglePreedit=
 # 默认状态为激活
 ActiveByDefault=False
 # 共享输入状态
-ShareInputState=All
+ShareInputState=No
 # 在程序中显示预编辑文本
 PreeditEnabledByDefault=False
 # 切换输入法时显示输入法信息
 ShowInputMethodInformation=True
 # 在焦点更改时显示输入法信息
-showInputMethodInformationWhenFocusIn=False
+showInputMethodInformationWhenFocusIn=True
 # 显示紧凑的输入法信息
 CompactInputMethodInformation=True
 # 显示第一个输入法的信息
