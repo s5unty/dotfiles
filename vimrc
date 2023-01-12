@@ -544,6 +544,8 @@ call plug#begin('~/.vim/bundle')
     Plug 'plasticboy/vim-markdown'
     " 著名的 Powerline
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+    " 为什么我没这种需求
+    Plug 'tpope/vim-surround'
     " 缩略语/段落模板
     Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
     " 在模式间切换输入法
