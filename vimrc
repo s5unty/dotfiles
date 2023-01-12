@@ -553,6 +553,8 @@ call plug#begin('~/.vim/bundle')
     Plug 'vim-scripts/VisIncr'
     " 数值的求和
     Plug 'emugel/vim-sum'
+    " 内容的验算
+    Plug 'javier-lopez/checksum.vim'
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
     " 增量的模糊查询 [o]fzf [x]denite
@@ -574,10 +576,9 @@ call plug#begin('~/.vim/bundle')
     Plug 'chlorm/vim-syntax-elvish'
     " 语言(Elixir)
     Plug 'elixir-editors/vim-elixir'
-    Plug 'slashmili/alchemist.vim'
-    " vim9不再需要
-    "au! BufRead,BufNewFile *.ex,*.exs set filetype=elixir
-    "au! BufRead,BufNewFile *.eex set filetype=eelixir
+    Plug 'slashmili/alchemist.vim', {'branch': 'main'}
+    au! BufRead,BufNewFile *.ex,*.exs set filetype=elixir
+    au! BufRead,BufNewFile *.eex set filetype=eelixir
     " 代码补全 [o]asyncomplete [x]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
     Plug 'prabirshrestha/async.vim'
     Plug 'prabirshrestha/asyncomplete.vim'
