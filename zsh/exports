@@ -38,7 +38,7 @@ export PYTHONHTTPSVERIFY=0
 # https://github.com/junegunn/fzf/wiki/Color-schemes
 export FZF_DEFAULT_OPTS="--color hl:166,hl+:166 --height=68% --reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -50' --preview-window=right:48%"
 # https://www.passwordstore.org/
-export PASSWORD_STORE_DIR="$HOME/personal/archive/meta/password"
+export PASSWORD_STORE_DIR="$HOME/personal/archive/pass"
 # todo.txt
 # http://todotxt.com/
 [ -e $HOME/.todo/config ] && source $HOME/.todo/config
