@@ -19,32 +19,31 @@ export REPREPRO_CONFIG_DIR=""
 export MAILCHECK=150
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:/opt/atf/bin:/sun/.sangfor/ssl/bin:/sun/.node/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:/opt/atf/bin:/sun/.sangfor/ssl/bin:/sun/.node/bin/"
 export NODE_PATH="$HOME/.node/lib/node_modules:$NODE_PATH"
-export MANPATH="$MANPATH:$HOME/.node/share/man:$HOME/.local/share/man"
+export MANPATH="$MANPATH:$HOME/.node/share/man:$HOME/.local/share/man/"
+export JAVA_HOME="/usr/lib/jvm/default-java/"
+export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
 export XDG_CONFIG_HOME="$HOME/.config"
-export PATH="$PATH:/var/lib/gems/1.8/bin:/sun/.local/bin"
+export PATH="$PATH:/var/lib/gems/1.8/bin/:/sun/.local/bin/"
 export TERM="xterm"
 export LANG="C"
 export SDCV_HISTSIZE=32
-export GOPATH="/sun/hacking/go/"
-export GOPROXY="https://mirrors.aliyun.com/goproxy/"
+export GOROOT="/opt/go"
+export GOPATH="/sun/hacking/go"
 export PATH="$GOPATH/bin:$PATH"
 export BC_ENV_ARGS="$HOME/.bc"
 # https://github.com/dj-wasabi/ansible-zabbix-agent/issues/66
 export PYTHONHTTPSVERIFY=0
 # https://github.com/junegunn/fzf/wiki/Color-schemes
-export FZF_DEFAULT_OPTS="--height=68% --reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -50' --preview-window=right:68%:hidden --bind=\;:toggle-preview"
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#4d4d4c,bg:#eeeeee,hl:#d7005f --color=fg+:#4d4d4c,bg+:#e8e8e8,hl+:#d7005f --color=info:#4271ae,prompt:#8959a8,pointer:#d7005f --color=marker:#4271ae,spinner:#4271ae,header:#4271ae'
-# https://serverfault.com/questions/640130/display-output-with-ansible
-export ANSIBLE_STDOUT_CALLBACK=yaml
-# https://github.com/timvisee/ffsend
-export FFSEND_API=3
-export FFSEND_HOST=https://send.intranet.genscript.com
-export _JAVA_OPTIONS='-Dswing.aatext=true -Dawt.useSystemAAFontSettings=lcd'
-
+export FZF_DEFAULT_OPTS="--color hl:166,hl+:166 --height=68% --reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -50' --preview-window=right:48%"
+# https://www.passwordstore.org/
+export PASSWORD_STORE_DIR="$HOME/personal/archive/meta/password"
 # todo.txt
 # http://todotxt.com/
 [ -e $HOME/.todo/config ] && source $HOME/.todo/config
-export DOTREMINDERS="$TODO_DIR/var/"
+export DOTREMINDERS="$TODO_DIR/var/work.rem"
 
+
+export fpk="95cf886ae72347195d15aa2bd3adfcb9465ac367c8aa504e296b99434a07a88c52735348f9a3731cac32cbbf1e52f1ce"
+export psa="xch1zgv3pqeqj92khgqtfkg6tsrep5d0d7f2s9mvmc0dk4pe7r7kv96sg59gaj"
