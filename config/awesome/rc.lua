@@ -232,7 +232,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "Right", function () lain.util.tag_view_nonempty(1) end,
               {description = "view  previous nonempty", group = "tag"}),
 
-    -- Default client focus
+    --[[ Default client focus
     awful.key({ modkey,           }, "n",
         function ()
             awful.client.focus.byidx( 1)
@@ -245,6 +245,7 @@ globalkeys = awful.util.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
+    --]]
 
     -- By direction client focus
     awful.key({ modkey }, "j",
@@ -381,8 +382,13 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen active") end),  -- window
     awful.key({ modkey }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen full") end),    -- screen
     awful.key({ "Ctrl" }, "Print", function () awful.spawn("/sun/.config/awesome/takescreen dual") end),    -- dual screen
-    -- authy
-    -- awful.key({        }, "Scroll_Lock", function () awful.util.spawn("/snap/authy/3/authy --no-sandbox") end),
+    --[[ authy
+    awful.key({        }, "Scroll_Lock", function () awful.util.spawn("/snap/authy/3/authy --no-sandbox") end),
+    --]]
+    -- pass
+    awful.key({ modkey }, "p", function () awful.util.spawn("/sun/.config/awesome/passmenu") end),
+    -- pass-otp
+    awful.key({ modkey }, "o", function () awful.util.spawn("/sun/.config/awesome/passmenu otp") end),
 
     -- sdcv/stardict
     awful.key({ modkey }, "d",
@@ -473,8 +479,9 @@ globalkeys = awful.util.table.join(
     --]]
     -- Prompt
     awful.key({ modkey }, "r", function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
+              {description = "run prompt", group = "launcher"})
 
+    --[[ Lua code
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run {
@@ -496,7 +503,7 @@ clientkeys = awful.util.table.join(
             c:raise()
         end,
         {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey,           }, "o",      awful.client.floating.toggle                     ,
+    awful.key({ modkey,           }, "n",      awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
@@ -572,7 +579,7 @@ for i = 1, 8 do
                           end
                      end
                   end,
-                  {description = "move focused client to tag #"..i, group = "tag"})
+                  {description = "move focused client to tag #"..i, group = "tag"}),
         -- Toggle tag on focused client.
         -- awful.key({ modkey, "Control" }, j,
         --           function ()
