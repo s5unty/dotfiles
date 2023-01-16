@@ -579,7 +579,7 @@ for i = 1, 8 do
                           end
                      end
                   end,
-                  {description = "move focused client to tag #"..i, group = "tag"}),
+                  {description = "move focused client to tag #"..i, group = "tag"})
         -- Toggle tag on focused client.
         -- awful.key({ modkey, "Control" }, j,
         --           function ()
