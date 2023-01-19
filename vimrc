@@ -639,7 +639,7 @@ let g:AutoPairsMultilineClose = 0
 
 " Syntax highlighting, matching rules and mappings for the original Markdown and extensions. {{{2
 " https://github.com/plasticboy/vim-markdown
-let g:vim_markdown_folding_disabled = 0
+let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_frontmatter = 1
