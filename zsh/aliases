@@ -462,3 +462,10 @@ all() {
 }
 # }}}
 
+# pass {{{
+alias pc="pass -c"
+alias pt="pass tail"
+alias po="pass otp -c"
+alias pe="pass edit"
+alias pO="zbarimg -q --raw"
+# }}}
