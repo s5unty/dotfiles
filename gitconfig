@@ -2,9 +2,15 @@
     name = Sun Wuan
     email = *********************
 [core]
+    packedGitLimit = 512m
+    packedGitWindowSize = 512m
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
     quotepath = false
+[pack]
+    deltaCacheSize = 2047m
+    packSizeLimit = 2047m
+    windowMemory = 2047m
 [format]
     headers = ""
     subjectprefix = ""
@@ -25,8 +31,8 @@
     cachetextconv = true
 [difftool "normal"] # http://goo.gl/c8Xok
     cmd = diff $LOCAL $REMOTE
-[difftool "nvimdiff"] # https://github.com/neovim/neovim/issues/2377
-    cmd = nvim -d $LOCAL $REMOTE
+[difftool "vimdiff"] # https://github.com/neovim/neovim/issues/2377
+    cmd = vim -d $LOCAL $REMOTE
 [push]
     default = current
 [gui]
@@ -69,7 +75,7 @@
     tool = persistent
 [mergetool "persistent"]
     # ref Brian Phillips @http://stackoverflow.com/questions/585844/merging-with-git-mergetool
-    cmd = "nvim -d \"$PWD/$MERGED\" \
+    cmd = "vim -d \"$PWD/$MERGED\" \
         +\":split $PWD/$REMOTE\" +\":set buftype=nowrite\" \
         +\":vertical diffsplit $PWD/$LOCAL\" +\":set buftype=nowrite\" \
         +\":vertical diffsplit $PWD/$BASE\" +\":set buftype=nowrite\" \
@@ -85,7 +91,7 @@
     cm  = commit --amend
     co  = checkout
     cd  = checkout -b
-    ccp = cherry-pick --no-commit # 复制一个 commit 所做的修改
+    cpi = cherry-pick --no-commit # 复制一个 commit 所做的修改
     cpp = revert --no-commit      # 撤销一个 commit 所做的修改
     coo = reset HEAD -- # 撤消已提交到 local repos 的修改
 
@@ -145,3 +151,4 @@
 #	proxy = http://10.167.251.83:8080
 
 # vim: set foldmethod=marker:
+
