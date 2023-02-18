@@ -29,6 +29,9 @@
 [diff "ansible-vault"]
     textconv = ansible-vault view
     cachetextconv = true
+[diff "pass"]
+    textconv = pass show
+    cachetextconv = true
 [difftool "normal"] # http://goo.gl/c8Xok
     cmd = diff $LOCAL $REMOTE
 [difftool "vimdiff"] # https://github.com/neovim/neovim/issues/2377
