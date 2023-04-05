@@ -12,9 +12,9 @@ fi
 
 export HOME="/sun"
 export DEBEMAIL="s5unty@gmail.com"
-export DEBFULLNAME="Vern Sun"
+export DEBFULLNAME="Wuan Sun"
 export TZ='Asia/Shanghai'
-export TD="work"
+export TD="home"
 
 if [ `tty | grep -c pts` -eq 1 ]; then
     stty -ixon -ixoff # 关闭 C-Q, C-S 流控制
@@ -27,9 +27,9 @@ if [[ -f $HOME/.zsh/dircolors ]] ; then   #自定义颜色
 fi
 
 # Zinit is a flexible and fast Zshell plugin manager that will allow you to install everything from GitHub and other sites {{{1
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+source "${ZINIT_HOME}/zinit.zsh"
+
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
@@ -70,5 +70,24 @@ bindkey -M viins "\e\t" urxvt-scrollback-buffer-words-prefix    # Alt-Tab
 bindkey -M viins "^[[Z" urxvt-scrollback-buffer-words-anywhere  # Shift-Tab
 
 
-# }}}
+# SeaweedFS is a fast distributed storage system for blobs, objects, files, and data lake, for billions of files! {{{1
+# https://github.com/seaweedfs/seaweedfs
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/weed-v3.09 weed
+
+
+# >>> conda initialize >>> {{{1
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<}}}
 

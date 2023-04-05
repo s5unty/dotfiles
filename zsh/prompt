@@ -41,10 +41,11 @@ precmd() {
         myjobs+=($a${i//[^+-]/})
     }
     myjobs="$fg_cyan%(1j/[${(j/,/)myjobs}] /)$fg_green"
-    mypath="$at_italic%~$at_none"
+    myenvs="$fg_yellow$CONDA_PROMPT_MODIFIER"
+    mypath="$fg_green$at_italic%~$at_none"
     myerrs="$fg_lred%(0?.. (%?%))$at_none"
     mygitb="$(parse_git_branch)$at_none"
-    RPS1="$myjobs%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
+    RPS1="$myenvs$myjobs%$MAXMID<...<$mypath$myerrs$mygitb$at_none"
     PS1="$at_bold%!%#$at_none "
     print -Pn "\a"
 }
