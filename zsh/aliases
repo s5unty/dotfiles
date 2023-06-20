@@ -406,8 +406,8 @@ alias -s gif=c_gif
 alias -s GIF=c_gif
 alias -s jpg=c_jpg
 alias -s JPG=c_jpg
-alias -s bmp="pqiv -i"
-alias -s BMP="pqiv -i"
+alias -s bmp=c_bmp
+alias -s BMP=c_bmp
 alias -s xpm="pqiv -i"
 alias -s XPM="pqiv -i"
 alias -s jpeg=c_jpg
@@ -420,8 +420,10 @@ alias -s xls=c_xls
 alias -s pdf="zathura"
 alias -s html=c_htm
 
-c_png() { pqiv -i "$1" && copyq write image/png - < "$1" && copyq select 0 }
-c_jpg() { pqiv -i "$1" && copyq write image/jpg - < "$1" && copyq select 0 }
+# 查看图片、同时复制到剪贴板
+c_bmp() { pqiv -i "$1" && copyq write image/jpeg - < =(convert "$1" jpg:-) && copyq select 0 }
+c_png() { pqiv -i "$1" && copyq write image/jpeg - < =(convert "$1" jpg:-) && copyq select 0 }
+c_jpg() { pqiv -i "$1" && copyq write image/jpeg - < =(convert "$1" jpg:-) && copyq select 0 }
 c_gif() { pqiv -i "$1" && copyq write image/gif - < "$1" && copyq select 0 }
 c_doc() { antiword $1 | less }
 c_xls() { xlhtml $1 | w3m -T text/html }
@@ -496,9 +498,13 @@ nnn-preview () {
 # }}}
 
 # pass {{{
+alias pp="pass"
+alias pb="zbarimg -q --raw"
 alias pc="pass -c"
+alias pe="pass edit"
 alias pt="pass tail"
 alias po="pass otp -c"
-alias pe="pass edit"
-alias pO="zbarimg -q --raw"
+alias pou="pass otp uri -q"
+alias poa="pass otp append"
+alias poi="pass otp insert"
 # }}}
