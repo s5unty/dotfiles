@@ -568,6 +568,8 @@ call plug#begin('~/.vim/bundle')
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
     Plug 'stephpy/vim-yaml'         " highlight
+    " 语言(Dart)
+    Plug 'dart-lang/dart-vim-plugin'
     " 语言(Golang) [o]vim-go [x]govim
     Plug 'fatih/vim-go'
     " 语言(Python)
@@ -584,6 +586,9 @@ call plug#begin('~/.vim/bundle')
     " 代码补全 [o]asyncomplete [x]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
     Plug 'prabirshrestha/async.vim'
     Plug 'prabirshrestha/asyncomplete.vim'
+    Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    Plug 'prabirshrestha/vim-lsp'
+    Plug 'mattn/vim-lsp-settings'
     " 补全语种(源码、片段、路径、缓存等)
     Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
     Plug 'yami-beta/asyncomplete-omni.vim'
@@ -630,6 +635,24 @@ function! Omni()
 "               \ }))
 endfunction
 au VimEnter * :call Omni()
+
+
+" Auto configurations for Language Server for vim-lsp  {{{2
+" https://github.com/mattn/vim-lsp-settings
+let g:lsp_settings = {
+    \ 'analysis-server-dart-snapshot': {
+    \     'cmd': [
+    \         'dart',
+    \         'language-server'
+    \     ],
+    \ },
+\ }
+
+
+" Syntax highlighting for Dart in Vim {{{2
+" https://github.com/dart-lang/dart-vim-plugin
+let g:dart_style_guide = 2
+
 
 
 " Insert or delete brackets, parens, quotes in pair.
