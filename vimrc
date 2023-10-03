@@ -47,6 +47,7 @@ set diffopt=filler,iwhite
 set rtp+=/usr/bin/fzf
 set guicursor=a:blinkon100 " 让光标抖起来
 " set inccommand=split " 好像是 NeoVim 特有的
+set shortmess-=F " https://github.com/natebosch/vim-lsc
 
 if has("gui_running")
     set guioptions-=m
@@ -564,6 +565,8 @@ call plug#begin('~/.vim/bundle')
     Plug 'junegunn/fzf.vim'
     " 多光标编辑
     Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+    " 预览窗的快捷键
+    Plug 'ronakg/quickr-preview.vim'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
@@ -583,12 +586,12 @@ call plug#begin('~/.vim/bundle')
     Plug 'slashmili/alchemist.vim', {'branch': 'main'}
     au! BufRead,BufNewFile *.ex,*.exs set filetype=elixir
     au! BufRead,BufNewFile *.eex set filetype=eelixir
+    " 代码框架 [o]natebosch/vim-lsc [x]prabirshrestha/vim-lsp
+    Plug 'natebosch/vim-lsc'
+    Plug 'natebosch/vim-lsc-dart'
     " 代码补全 [o]asyncomplete [x]deoplete [x]YouCompleteMe [x]nvim-completion-manager(NCM2)
     Plug 'prabirshrestha/async.vim'
     Plug 'prabirshrestha/asyncomplete.vim'
-    Plug 'prabirshrestha/asyncomplete-lsp.vim'
-    Plug 'prabirshrestha/vim-lsp'
-    Plug 'mattn/vim-lsp-settings'
     " 补全语种(源码、片段、路径、缓存等)
     Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
     Plug 'yami-beta/asyncomplete-omni.vim'
@@ -637,22 +640,47 @@ endfunction
 au VimEnter * :call Omni()
 
 
-" Auto configurations for Language Server for vim-lsp  {{{2
-" https://github.com/mattn/vim-lsp-settings
-let g:lsp_settings = {
-    \ 'analysis-server-dart-snapshot': {
-    \     'cmd': [
-    \         'dart',
-    \         'language-server'
-    \     ],
-    \ },
-\ }
+" A vim plugin for communicating with a language server {{{2
+" https://github.com/natebosch/vim-lsc
+nmap <silent> <unique> ge :LSClientAllDiagnostics<CR>
+let g:lsc_server_commands = {'dart': 'dart_language_server'}
+let g:lsc_auto_map = {
+    \ 'GoToDefinition': '<C-]>',
+    \ 'GoToDefinitionSplit': ['<C-W>]', '<C-W><C-]>'],
+    \ 'FindReferences': 'gr',
+    \ 'NextReference': '<C-n>',
+    \ 'PreviousReference': '<C-p>',
+    \ 'FindImplementations': 'gI',
+    \ 'FindCodeActions': 'ga',
+    \ 'Rename': 'gR',
+    \ 'ShowHover': v:true,
+    \ 'DocumentSymbol': 'go',
+    \ 'WorkspaceSymbol': 'gS',
+    \ 'SignatureHelp': 'gm',
+    \ 'Completion': 'omnifunc',
+    \}
+"   \ 'Completion': 'completefunc', 回改后，用户自定义的提示(例如，缓存区补全)
+"   \ 'Completion': 'omnifunc',     回改后，保持服务器的提示
 
 
 " Syntax highlighting for Dart in Vim {{{2
 " https://github.com/dart-lang/dart-vim-plugin
 let g:dart_style_guide = 2
+let g:dart_format_on_save = v:false
 
+
+" Quickly preview Quickfix results in vim without opening the file {{{2
+" https://github.com/ronakg/quickr-preview.vim
+let g:quickr_preview_keymaps = 0
+let g:quickr_preview_exit_on_enter = 1
+function! QuickfixMapping()
+    nmap <silent> <buffer> p <plug>(quickr_preview)
+    nmap <silent> <buffer> q <plug>(quickr_preview_qf_close)
+endfunction
+augroup quickfix_group
+    autocmd!
+    autocmd filetype qf call QuickfixMapping()
+augroup END
 
 
 " Insert or delete brackets, parens, quotes in pair.
@@ -764,13 +792,6 @@ let g:Illuminate_delay = 750
 " let g:fcitx5_rime = 1
 
 
-" " Automatic input method switching for vim {{{2
-" fcitx5-remote 不工作，没时间搞，怀疑和 airline-xkblayout 有关
-" let g:barbaric_ime = 'fcitx'
-" let g:barbaric_default = 0
-" let g:barbaric_scope = 'buffer'
-" let g:barbaric_timeout = -1
-" let g:barbaric_fcitx_cmd = 'fcitx5-remote'
 
 
 " 3# about statusline: vim-powerline、powerline、vim-airline {{{2
@@ -1063,3 +1084,15 @@ endif
 
 " }}}1
 
+lua <<EOF
+-- require'lspconfig'.dartls.setup{}
+-- local lspconfig = require("lspconfig")
+-- lspconfig.gopls.setup({})
+-- lspconfig.dartls.setup({
+--     on_attach = on_attach,
+--     dart = {
+--         completeFunctionCalls = true,
+--         showTodos = true
+--     }
+-- })
+EOF
