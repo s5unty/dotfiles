@@ -370,6 +370,8 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'stevearc/aerial.nvim'
     " 终端
     Plug 'nyngwang/NeoTerm.lua'
+    " 主题
+    Plug 'Mofiqul/vscode.nvim'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
@@ -383,7 +385,7 @@ call plug#begin('~/.config/nvim/bundles')
 call plug#end()
 
 " vim-aireline/vim-aireline {{{2
-let g:airline_theme="angr"
+let g:airline_theme="ayu_mirage"
 let g:airline_left_sep = '⮀'
 let g:airline_left_alt_sep = '⮁'
 let g:airline_right_sep = '⮂'

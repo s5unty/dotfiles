@@ -191,11 +191,11 @@ local aerial = require("aerial")
 aerial.setup {
   backends = { "lsp", "treesitter", "markdown", "man" },
 
-  open_automatic = function(bufnr)
-    return vim.api.nvim_buf_line_count(bufnr) > 80 -- Enforce a minimum line count
-      and aerial.num_symbols(bufnr) > 4 -- Enforce a minimum symbol count
-      and not aerial.was_closed() -- A useful way to keep aerial closed when closed manually
-  end,
+  -- open_automatic = function(bufnr)
+  --   return vim.api.nvim_buf_line_count(bufnr) > 80 -- Enforce a minimum line count
+  --     and aerial.num_symbols(bufnr) > 4 -- Enforce a minimum symbol count
+  --     and not aerial.was_closed() -- A useful way to keep aerial closed when closed manually
+  -- end,
 
   -- optionally use on_attach to set keymaps when aerial has attached to a buffer
   on_attach = function(bufnr)
@@ -215,3 +215,37 @@ require('neo-term').setup {
   vim.keymap.set('n', '<M-Tab>', function () vim.cmd('NeoTermToggle') end),
   vim.keymap.set('t', '<M-Tab>', function () vim.cmd('NeoTermEnterNormal') end),
 }
+
+-- Neovim/Vim color scheme inspired by Dark+ and Light+ theme in Visual Studio Code {{{1
+-- https://github.com/Mofiqul/vscode.nvim
+vim.o.background = 'light'
+local c = require('vscode.colors').get_colors()
+require('vscode').setup {
+    -- Alternatively set style in setup
+    style = 'light',
+
+    -- Enable transparent background
+    transparent = true,
+
+    -- Enable italic comment
+    italic_comments = false,
+
+    -- Disable nvim-tree background color
+    disable_nvimtree_bg = true,
+
+    -- Override colors (see ./lua/vscode/colors.lua)
+    color_overrides = {
+        vscLineNumber = '#939a98',
+        vscFoldBackground = '#bcbcbc',
+        vscPopupBack = '#FFFFFF', -- 保持和 vcsBack 一致
+    },
+
+    -- Override highlight groups (see ./lua/vscode/theme.lua)
+    group_overrides = {
+        -- this supports the same val table as vim.api.nvim_set_hl
+        -- use colors from this colorscheme by requiring vscode.colors!
+        Cursor = { fg=c.vscDarkBlue, bg=c.vscLightGreen, bold=true },
+    }
+}
+require('vscode').load()
+
