@@ -105,7 +105,7 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- How can I hide (or ignore specific) hints? {{{2
+-- How can I hide (or ignore specific) hints?
 -- https://github.com/hrsh7th/nvim-cmp/issues/685#issuecomment-1002924899
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -192,7 +192,44 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require'treesitter-context'.setup { -- {{{2
+require'treesitter-context'.setup {
   enable = true,
 }
+
+-- A tree like view for symbols in Neovim using the Language Server Protocol. {{{1
+-- https://github.com/simrat39/symbols-outline.nvim
+require("symbols-outline").setup {
+  fold_markers = { '+', 'x' },
+  symbols = {
+    File = { icon = "File", hl = "@text.uri" },
+    Module = { icon = "Module", hl = "@namespace" },
+    Namespace = { icon = "Name", hl = "@namespace" },
+    Package = { icon = "Package", hl = "@namespace" },
+    Class = { icon = "Class", hl = "@type" },
+    Method = { icon = "M", hl = "@method" },
+    Property = { icon = "P", hl = "@method" },
+    Field = { icon = "F", hl = "@field" },
+    Constructor = { icon = "C", hl = "@constructor" },
+    Enum = { icon = "E", hl = "@type" },
+    Interface = { icon = "I", hl = "@type" },
+    Function = { icon = "F", hl = "@function" },
+    Variable = { icon = "V", hl = "@constant" },
+    Constant = { icon = "C", hl = "@constant" },
+    String = { icon = "S", hl = "@string" },
+    Number = { icon = "N", hl = "@number" },
+    Boolean = { icon = "B", hl = "@boolean" },
+    Array = { icon = "A", hl = "@constant" },
+    Object = { icon = "O", hl = "@type" },
+    Key = { icon = "K", hl = "@type" },
+    Null = { icon = "NULL", hl = "@type" },
+    EnumMember = { icon = "E", hl = "@field" },
+    Struct = { icon = "S", hl = "@type" },
+    Event = { icon = "E", hl = "@type" },
+    Operator = { icon = "+", hl = "@operator" },
+    TypeParameter = { icon = "T", hl = "@parameter" },
+    Component = { icon = "C", hl = "@function" },
+    Fragment = { icon = "F", hl = "@constant" },
+  },
+}
+
 

@@ -365,6 +365,8 @@ call plug#begin('~/.config/nvim/bundles')
     " 模板引擎 [o]snippy [x]LuaSnip [x]vsnip
     Plug 'dcampos/nvim-snippy'
     Plug 'dcampos/cmp-snippy'
+    " 导航窗口
+    Plug 'simrat39/symbols-outline.nvim'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
