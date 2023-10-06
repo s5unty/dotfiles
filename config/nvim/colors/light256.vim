@@ -119,3 +119,24 @@ hi MBEVisibleActiveChanged  ctermfg=196     ctermbg=None    cterm=reverse,underl
 hi IlluminatedWordText   ctermfg=NONE   guifg=NONE     ctermbg=250    guibg=#808080  cterm=none       gui=none
 hi IlluminatedWordRead   ctermfg=NONE   guifg=NONE     ctermbg=250    guibg=#808080  cterm=none       gui=none
 hi IlluminatedWordWrite  ctermfg=NONE   guifg=NONE     ctermbg=250    guibg=#808080  cterm=none       gui=none
+
+" https://github.com/stevearc/aerial.nvim {{{1
+hi link AerialClass Type
+hi link AerialClassIcon Special
+hi link AerialFunction Special
+hi AerialFunctionIcon guifg=#cb4b16 guibg=NONE guisp=NONE gui=NONE cterm=NONE
+
+" There's also this group for the fallback of the text if a specific
+" class highlight isn't defined
+hi link AerialNormal Normal
+" There's also this group for the cursor position
+hi link AerialLine Visual
+" If highlight_mode="split_width", you can set a separate color for the
+" non-current location highlight
+hi link AerialLineNC CursorLine
+
+" You can customize the guides (if show_guide=true)
+hi link AerialGuide Comment
+" You can set a different guide color for each level
+hi link AerialGuide1 Error
+hi link AerialGuide2 Todo

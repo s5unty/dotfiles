@@ -178,17 +178,6 @@ require'nvim-treesitter.configs'.setup {
         smart_rename = "<localleader>gr",
       },
     },
-    navigation = {
-      enable = true,
-      -- Assign keymaps to false to disable them, e.g. `goto_definition = false`.
-      keymaps = {
-        goto_definition = "<localleader>gd",
-        list_definitions = "<localleader>gD",
-        list_definitions_toc = "<localleader>gt",
-        goto_next_usage = "<a-*>",
-        goto_previous_usage = "<a-#>",
-      },
-    },
   },
 }
 
@@ -196,40 +185,24 @@ require'treesitter-context'.setup {
   enable = true,
 }
 
--- A tree like view for symbols in Neovim using the Language Server Protocol. {{{1
--- https://github.com/simrat39/symbols-outline.nvim
-require("symbols-outline").setup {
-  fold_markers = { '+', 'x' },
-  symbols = {
-    File = { icon = "File", hl = "@text.uri" },
-    Module = { icon = "Module", hl = "@namespace" },
-    Namespace = { icon = "Name", hl = "@namespace" },
-    Package = { icon = "Package", hl = "@namespace" },
-    Class = { icon = "Class", hl = "@type" },
-    Method = { icon = "M", hl = "@method" },
-    Property = { icon = "P", hl = "@method" },
-    Field = { icon = "F", hl = "@field" },
-    Constructor = { icon = "C", hl = "@constructor" },
-    Enum = { icon = "E", hl = "@type" },
-    Interface = { icon = "I", hl = "@type" },
-    Function = { icon = "F", hl = "@function" },
-    Variable = { icon = "V", hl = "@constant" },
-    Constant = { icon = "C", hl = "@constant" },
-    String = { icon = "S", hl = "@string" },
-    Number = { icon = "N", hl = "@number" },
-    Boolean = { icon = "B", hl = "@boolean" },
-    Array = { icon = "A", hl = "@constant" },
-    Object = { icon = "O", hl = "@type" },
-    Key = { icon = "K", hl = "@type" },
-    Null = { icon = "NULL", hl = "@type" },
-    EnumMember = { icon = "E", hl = "@field" },
-    Struct = { icon = "S", hl = "@type" },
-    Event = { icon = "E", hl = "@type" },
-    Operator = { icon = "+", hl = "@operator" },
-    TypeParameter = { icon = "T", hl = "@parameter" },
-    Component = { icon = "C", hl = "@function" },
-    Fragment = { icon = "F", hl = "@constant" },
-  },
+-- Neovim plugin for a code outline window {{{1
+-- https://github.com/stevearc/aerial.nvim
+local aerial = require("aerial")
+aerial.setup {
+  backends = { "lsp", "treesitter", "markdown", "man" },
+
+  open_automatic = function(bufnr)
+    return vim.api.nvim_buf_line_count(bufnr) > 80 -- Enforce a minimum line count
+      and aerial.num_symbols(bufnr) > 4 -- Enforce a minimum symbol count
+      and not aerial.was_closed() -- A useful way to keep aerial closed when closed manually
+  end,
+
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    -- Jump forwards/backwards with '{' and '}'
+    vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+    vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
+  end,
 }
-
-
+-- You probably also want to set a keymap to toggle aerial
+vim.keymap.set('n', '<leader>z', '<cmd>AerialToggle!<CR>')

@@ -366,7 +366,7 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'dcampos/nvim-snippy'
     Plug 'dcampos/cmp-snippy'
     " 导航窗口
-    Plug 'simrat39/symbols-outline.nvim'
+    Plug 'stevearc/aerial.nvim'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
@@ -463,8 +463,6 @@ augroup quickfix_group
     autocmd!
     autocmd filetype qf call QuickfixMapping()
 augroup END
-
-
 
 
 " }}}1
