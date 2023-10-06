@@ -8,7 +8,7 @@ set expandtab " TAB is soft
 set tabstop=4 " TAB 的宽度
 set shiftwidth=4 " 缩进的宽度
 set softtabstop=4
-set clipboard=unnamedplus " 使用系统剪贴板
+set clipboard^=unnamed,unnamedplus " 使用系统剪贴板
 set backspace=indent,eol,start " 退格
 set foldmethod=marker
 set ignorecase " 搜索忽略大小写
@@ -26,7 +26,7 @@ set updatetime=1000
 set showcmd " 右下方显示按键序列
 set winaltkeys=no
 set cinoptions=:0
-set timeoutlen=1000
+set timeoutlen=800
 set ttimeoutlen=50
 set timeout
 "set ttimeout
@@ -94,8 +94,6 @@ if exists('&ambw')
     set ambiwidth=double
 endif
 
-let mapleader=','
-let maplocalleader='\'
 let html_dynamic_folds=1
 let c_space_errors=1
 let sh_minlines = 100
@@ -114,18 +112,11 @@ function! SpaceAddBetweenEnglishChinese() range
     endfor
 endfunction
 
-" Space键 翻页/打开折叠
-function! G_GoodSpace()
+" 0键在行首与行顶间交替，顺便打开折叠
+function! G_Good0()
     if foldclosed('.') != -1
         normal zO
-    else
-        exec "normal \<C-D>"
-    endif
-endfunction
-
-" 0键在行首与行顶间交替
-function! G_Good0()
-    if ! exists("b:is_pressed0")
+    elseif ! exists("b:is_pressed0")
         normal ^
         let b:is_pressed0 = 1
     else
@@ -191,7 +182,7 @@ if has("autocmd")
 
     " 这样加快输入法自动切换时的体感速度
     autocmd InsertEnter * set timeoutlen=100
-    autocmd InsertLeave * set timeoutlen=1000
+    autocmd InsertLeave * set timeoutlen=800
 
     " 每次访问文件时都把光标放置在上次离开的位置
     autocmd BufReadPost *
@@ -238,7 +229,6 @@ nmap <silent> <unique> <F12> <C-]>zz
 " Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
-nmap <silent> <unique> <Space> :call G_GoodSpace()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' $
@@ -310,7 +300,10 @@ imap <silent> <unique> <Esc>f <C-O>w
 imap <silent> <unique> <Esc>d <C-O>dw
 endif
 
-" Leader+ , Leader char is ',' {{{2
+" Leader+ , Leader char is ' '<Space> {{{2
+let mapleader=' '
+let maplocalleader=','
+nmap <silent> <unique> <Space>   <C-D>
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
@@ -334,11 +327,11 @@ call plug#begin('~/.config/nvim/bundles')
     " 在模式间切换输入法
     Plug 'lilydjwg/fcitx.vim', {'branch': 'fcitx5'}
     " 自动补全括号引号
-    Plug 'jiangmiao/auto-pairs'
+    Plug 'windwp/nvim-autopairs'
     " 著名的 Powerline
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
     " 为什么我没这种需求
-    Plug 'tpope/vim-surround'
+    Plug 'kylechui/nvim-surround'
     " 数值的递增递减
     Plug 'vim-scripts/VisIncr'
     " 数值的求和
@@ -357,9 +350,9 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
-    " 模板引擎
-    Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
-    " Plug 'saadparwaiz1/cmp_luasnip' " Snippets source for nvim-cmp
+    " 模板引擎 [o]snippy [x]LuaSnip [x]vsnip
+    Plug 'dcampos/nvim-snippy'
+    Plug 'dcampos/cmp-snippy'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
@@ -456,6 +449,7 @@ augroup quickfix_group
     autocmd!
     autocmd filetype qf call QuickfixMapping()
 augroup END
+
 
 
 

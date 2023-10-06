@@ -114,3 +114,8 @@ hi MBEVisibleNormal                                         cterm=reverse
 hi MBEVisibleChanged        ctermfg=196     ctermbg=NONE    cterm=bold
 hi MBEVisibleActiveNormal                                   cterm=reverse,underline,bold
 hi MBEVisibleActiveChanged  ctermfg=196     ctermbg=None    cterm=reverse,underline,bold
+
+" Illuminate
+hi IlluminatedWordText   ctermfg=NONE   guifg=NONE     ctermbg=250    guibg=#808080  cterm=none       gui=none
+hi IlluminatedWordRead   ctermfg=NONE   guifg=NONE     ctermbg=250    guibg=#808080  cterm=none       gui=none
+hi IlluminatedWordWrite  ctermfg=NONE   guifg=NONE     ctermbg=250    guibg=#808080  cterm=none       gui=none

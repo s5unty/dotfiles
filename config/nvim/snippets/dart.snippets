@@ -1,0 +1,68 @@
+snippet main
+  void main(List<String> arguments) {
+    ${0:$VISUAL}
+  }
+
+snippet imp
+  import '${0:$VISUAL}';
+
+snippet fi
+  final
+
+snippet if
+  if (${1:true}) {
+    ${2:what}
+  }
+
+snippet ife
+  if (${1:$VISUAL}) {
+    ${2:$VISUAL}
+  } else {
+    ${3:$VISUAL}
+  }
+
+snippet swi
+  switch (${1:$VISUAL}) {
+  case ${2:$VISUAL}:
+  }
+
+snippet for
+  for (var ${1:i} = 0; i < ${2:10}; i++) {
+    ${0:$VISUAL}
+  }
+
+snippet fin
+  for (final ${1:it} in ${2:them}) {
+    ${0:$VISUAL}
+  }
+
+snippet whi
+  while (${2:true}) {
+    ${1:what}
+  }
+
+snippet whi
+  while (${2:true}) {
+    ${1:what}
+  }
+
+snippet try
+  try {
+    ${0:$VISUAL}
+  } catch (${2:e}) {
+    ${1:$VISUAL}
+  } finally {
+    ${1:$VISUAL}
+  }
+
+snippet cla
+  class ${1:object} {
+    ${2:this}
+  }
+
+snippet ext
+  class ${1:object} extends ${2:parent}{
+    ${2:this}
+  }
+
+

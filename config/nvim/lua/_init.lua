@@ -1,17 +1,17 @@
+local api = vim.api
+local cmd = vim.cmd
+local map = vim.keymap.set
 
 -- nvim-cmp: A completion plugin for neovim coded in Lua. {{{1
 -- https://github.com/hrsh7th/nvim-cmp
 local cmp = require'cmp'
-local luasnip = require'luasnip'
+local snippy = require'snippy'
 
 cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      require('snippy').expand_snippet(args.body) -- For `snippy` users.
     end,
   },
   window = {
@@ -19,18 +19,20 @@ cmp.setup({
     -- documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-Space>']   = cmp.mapping.abort(),
+    ['<CR>']        = cmp.mapping.abort(),
     ['<C-u>']       = cmp.mapping.scroll_docs(-4),
     ['<C-d>']       = cmp.mapping.scroll_docs(4),
-    ['<CR>']        = cmp.mapping.confirm({
+    ['<Space>']     = cmp.mapping.confirm({
+      -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       behavior = cmp.ConfirmBehavior.Replace,
-      select  = false,
+      -- 'select = false' to only confirm explicitly selected item
+      select   = false,
     }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+      elseif snippy.can_jump(1) then
+        snippy.next()
       else
         fallback()
       end
@@ -38,20 +40,20 @@ cmp.setup({
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      elseif snippy.can_jump(-1) then
+        snippy.previous()
       else
         fallback()
       end
     end, { "i", "s" }),
   }),
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp', priority = 10, entry_filter = function(entry)
+      return require("cmp").lsp.CompletionItemKind.Snippet ~= entry:get_kind()
+    end },
+    -- XXX priority
     -- https://github.com/saadparwaiz1/cmp_luasnip
-    { name = 'luasnip', option = { show_autosnippets = false } }, -- For luasnip users.
-    -- { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
+    { name = 'snippy', priority = 90 }, -- For snippy users.
   }, {
     { name = 'buffer' },
   })
@@ -85,14 +87,66 @@ cmp.setup.cmdline(':', {
 })
 
 
--- Set up lspconfig.
+-- Set up lspconfig. {{{1
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
+lspconfig.dartls.setup {
+  settings = {
+    dart = {
+      enableSnippets = false,
+    }
+  }
+}
 local servers = { 'dartls', 'gopls', 'pyright' }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
-    -- on_attach = my_custom_on_attach,
     capabilities = capabilities,
   }
 end
+
+-- How can I hide (or ignore specific) hints? {{{2
+-- https://github.com/hrsh7th/nvim-cmp/issues/685#issuecomment-1002924899
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    signs = {
+      severity_limit = "Hint",
+    },
+    virtual_text = {
+      severity_limit = "Warning",
+    },
+  }
+)
+map("n", "gD",  vim.lsp.buf.definition)
+map("n", "K",  vim.lsp.buf.hover)
+map("n", "gi", vim.lsp.buf.implementation)
+map("n", "gr", vim.lsp.buf.references)
+map("n", "gds", vim.lsp.buf.document_symbol)
+map("n", "gws", vim.lsp.buf.workspace_symbol)
+map("n", "<leader>cl", vim.lsp.codelens.run)
+map("n", "<leader>sh", vim.lsp.buf.signature_help)
+map("n", "<leader>rn", vim.lsp.buf.rename)
+map("n", "<leader>f", vim.lsp.buf.format)
+map("n", "<leader>ca", vim.lsp.buf.code_action)
+map("n", "<leader>gl", vim.diagnostic.setloclist)
+map("n", "<leader>ga", vim.diagnostic.setqflist)
+map("n", "<leader>ge", function() vim.diagnostic.setqflist({ severity = "E" }) end)
+map("n", "<leader>gw", function() vim.diagnostic.setqflist({ severity = "W" }) end)
+
+
+-- autopairs for neovim written by lua {{{1
+-- https://github.com/windwp/nvim-autopairs
+require("nvim-autopairs").setup {}
+
+
+-- Add/change/delete surrounding delimiter pairs with ease. Written with in Lua. {{{1
+-- https://github.com/kylechui/nvim-surround
+require("nvim-surround").setup {}
+
+
+-- Vim plugin for automatically highlighting other uses of the word under the... {{{1
+-- https://github.com/RRethy/vim-illuminate
+require('illuminate').configure {
+  delay = 600,
+  min_count_to_highlight = 2,
+}
