@@ -44,6 +44,7 @@ set undolevels=500
 set diffopt=filler,iwhite
 set rtp+=/usr/bin/fzf
 set guicursor=a:blinkon100 " 让光标抖起来
+set shell="/usr/bin/zsh"
 " set inccommand=split " 好像是 NeoVim 特有的
 " set shortmess-=F " https://github.com/natebosch/vim-lsc
 " syn on " 语法高亮改用 treesitter
@@ -365,8 +366,10 @@ call plug#begin('~/.config/nvim/bundles')
     " 模板引擎 [o]snippy [x]LuaSnip [x]vsnip
     Plug 'dcampos/nvim-snippy'
     Plug 'dcampos/cmp-snippy'
-    " 导航窗口
+    " 大纲导航
     Plug 'stevearc/aerial.nvim'
+    " 终端
+    Plug 'nyngwang/NeoTerm.lua'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
