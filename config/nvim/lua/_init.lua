@@ -117,21 +117,21 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     },
   }
 )
-map("n", "gD",  vim.lsp.buf.definition)
-map("n", "K",  vim.lsp.buf.hover)
-map("n", "gi", vim.lsp.buf.implementation)
-map("n", "gr", vim.lsp.buf.references)
-map("n", "gds", vim.lsp.buf.document_symbol)
-map("n", "gws", vim.lsp.buf.workspace_symbol)
-map("n", "<leader>cl", vim.lsp.codelens.run)
-map("n", "<leader>sh", vim.lsp.buf.signature_help)
-map("n", "<leader>rn", vim.lsp.buf.rename)
-map("n", "<leader>f", vim.lsp.buf.format)
-map("n", "<leader>ca", vim.lsp.buf.code_action)
-map("n", "<leader>gl", vim.diagnostic.setloclist)
-map("n", "<leader>ga", vim.diagnostic.setqflist)
-map("n", "<leader>ge", function() vim.diagnostic.setqflist({ severity = "E" }) end)
-map("n", "<leader>gw", function() vim.diagnostic.setqflist({ severity = "W" }) end)
+map("n", "K",           vim.lsp.buf.hover)
+map("n", "<leader>gr",  vim.lsp.buf.rename)
+map("n", "<leader>ca",  vim.lsp.buf.code_action)
+map("n", "<leader>gd",  vim.lsp.buf.definition)
+map("n", "<leader>gi",  vim.lsp.buf.implementation)
+map("n", "<leader>gI",  vim.lsp.buf.references)
+map("n", "<leader>gds", vim.lsp.buf.document_symbol)
+map("n", "<leader>gws", vim.lsp.buf.workspace_symbol)
+map("n", "<leader>sh",  vim.lsp.buf.signature_help)
+map("n", "<leader>f",   vim.lsp.buf.format)
+map("n", "<leader>cl",  vim.lsp.codelens.run)
+map("n", "<leader>gl",  vim.diagnostic.setloclist)
+map("n", "<leader>ga",  vim.diagnostic.setqflist)
+map("n", "<leader>ge",  function() vim.diagnostic.setqflist({ severity = "E" }) end)
+map("n", "<leader>gw",  function() vim.diagnostic.setqflist({ severity = "W" }) end)
 
 
 -- autopairs for neovim written by lua {{{1
@@ -148,5 +148,51 @@ require("nvim-surround").setup {}
 -- https://github.com/RRethy/vim-illuminate
 require('illuminate').configure {
   delay = 600,
-  min_count_to_highlight = 2,
 }
+
+
+-- Nvim Treesitter configurations and abstraction layer {{{1
+-- https://github.com/nvim-treesitter/nvim-treesitter
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "bash", "elvish", "go", "groovy", "yaml", "lua", "vim", "vimdoc", "query" },
+  highlight = {
+    enable = true,
+    disable = function(lang, buf)
+      local max_filesize = 1000 * 1024 -- 1MB
+      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+      if ok and stats and stats.size > max_filesize then
+        return true
+      end
+    end,
+  },
+  refactor = {
+    highlight_definitions = {
+      enable = true,
+      -- Set to false if you have an `updatetime` of ~100.
+      clear_on_cursor_move = true,
+    },
+    smart_rename = {
+      enable = true,
+      -- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
+      keymaps = {
+        smart_rename = "<localleader>gr",
+      },
+    },
+    navigation = {
+      enable = true,
+      -- Assign keymaps to false to disable them, e.g. `goto_definition = false`.
+      keymaps = {
+        goto_definition = "<localleader>gd",
+        list_definitions = "<localleader>gD",
+        list_definitions_toc = "<localleader>gt",
+        goto_next_usage = "<a-*>",
+        goto_previous_usage = "<a-#>",
+      },
+    },
+  },
+}
+
+require'treesitter-context'.setup { -- {{{2
+  enable = true,
+}
+

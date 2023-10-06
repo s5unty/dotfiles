@@ -26,10 +26,9 @@ set updatetime=1000
 set showcmd " 右下方显示按键序列
 set winaltkeys=no
 set cinoptions=:0
-set timeoutlen=800
+set timeoutlen=500
 set ttimeoutlen=50
 set timeout
-"set ttimeout
 set autoread
 set autowrite
 set wildignore=*/*.o,*/*.so,*/*.obj,*/*.orig,*/.git/*,*/.hg/*,*/.svn/*
@@ -46,8 +45,8 @@ set diffopt=filler,iwhite
 set rtp+=/usr/bin/fzf
 set guicursor=a:blinkon100 " 让光标抖起来
 " set inccommand=split " 好像是 NeoVim 特有的
-set shortmess-=F " https://github.com/natebosch/vim-lsc
-syn enable " 语法高亮
+" set shortmess-=F " https://github.com/natebosch/vim-lsc
+" syn on " 语法高亮改用 treesitter
 
 if has("gui_running")
     set guioptions-=m
@@ -83,7 +82,7 @@ else
     color delek
 endif
 
-" 用全角显示『 』、『 』、『 』这样的特殊字符
+" 用全角显示『○』、『△』、『□』这样的特殊字符
 " East Asian Ambiguous Width:
 " http://www.unicode.org/reports/tr11/
 " http://lists.debian.or.jp/debian-devel/200703/msg00038.html
@@ -110,6 +109,15 @@ function! SpaceAddBetweenEnglishChinese() range
         let newline = substitute(newline, '\(\w\)\([\u4e00-\u9fa5]\)', '\1 \2', 'g')
         call setline(linenum, newline)
     endfor
+endfunction
+
+" Space键 翻页/打开折叠
+function! G_GoodSpace()
+    if foldclosed('.') != -1
+        normal zO
+    else
+        exec "normal \<C-D>"
+    endif
 endfunction
 
 " 0键在行首与行顶间交替，顺便打开折叠
@@ -182,7 +190,7 @@ if has("autocmd")
 
     " 这样加快输入法自动切换时的体感速度
     autocmd InsertEnter * set timeoutlen=100
-    autocmd InsertLeave * set timeoutlen=800
+    autocmd InsertLeave * set timeoutlen=500
 
     " 每次访问文件时都把光标放置在上次离开的位置
     autocmd BufReadPost *
@@ -229,6 +237,7 @@ nmap <silent> <unique> <F12> <C-]>zz
 " Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
+nmap <silent> <unique> <Space> :call G_GoodSpace()<CR>
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' $
@@ -300,10 +309,9 @@ imap <silent> <unique> <Esc>f <C-O>w
 imap <silent> <unique> <Esc>d <C-O>dw
 endif
 
-" Leader+ , Leader char is ' '<Space> {{{2
-let mapleader=' '
+" Leader+ , Leader char is ';' {{{2
+let mapleader=';'
 let maplocalleader=','
-nmap <silent> <unique> <Space>   <C-D>
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
@@ -350,6 +358,10 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
+    " 语法框架(高亮、重构、编辑等)
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/nvim-treesitter-context'
+    Plug 'nvim-treesitter/nvim-treesitter-refactor'
     " 模板引擎 [o]snippy [x]LuaSnip [x]vsnip
     Plug 'dcampos/nvim-snippy'
     Plug 'dcampos/cmp-snippy'
