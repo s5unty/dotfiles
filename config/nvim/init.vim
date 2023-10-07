@@ -45,6 +45,8 @@ set diffopt=filler,iwhite
 set rtp+=/usr/bin/fzf
 set guicursor=a:blinkon100 " 让光标抖起来
 set shell="/usr/bin/zsh"
+set background=light
+set termguicolors
 " set inccommand=split " 好像是 NeoVim 特有的
 " set shortmess-=F " https://github.com/natebosch/vim-lsc
 " syn on " 语法高亮改用 treesitter
@@ -227,7 +229,9 @@ nmap          <unique> <F5> :terminal git difftool --tool=nvimdiff -y HEAD -- %<
 else
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
 endif
-nmap <silent> <unique> <F6> :<CR>
+nmap <silent> <unique> <F6> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
 nmap <silent> <unique> <F8> :make!<CR>
 nmap <silent> <unique> <F9> :History<CR>
@@ -371,7 +375,7 @@ call plug#begin('~/.config/nvim/bundles')
     " 终端
     Plug 'nyngwang/NeoTerm.lua'
     " 主题
-    Plug 'Mofiqul/vscode.nvim'
+    Plug 'projekt0n/github-nvim-theme'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
@@ -468,6 +472,7 @@ augroup quickfix_group
     autocmd!
     autocmd filetype qf call QuickfixMapping()
 augroup END
+
 
 
 " }}}1
