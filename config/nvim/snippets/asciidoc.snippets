@@ -1,0 +1,26 @@
+snippet pp
+    ---
+    date: `strftime("%FT%T%z")`
+    title: ${1}
+    tags: [${2}]
+    categories: [${3:var}]
+
+    ---
+    :hardbreaks:
+
+	${4}
+
+snippet cc
+	{% highlight ${1:bash} %}
+	${2:}
+	{% endhighlight %}
+
+snippet no
+    Subject: ${1:`strftime("%Y-%m-%d %H:%M")`}
+    X-Label: 
+	Date: `system("LANG=c date -R | tr -d '\n'")`
+    Message-ID: <`system("uuidgen -t | tr -d '\n'")`>
+    MIME-Version: 1.0
+    Content-Type: text/plain; charset=utf-8
+    
+    ${2:#:note}

@@ -1,0 +1,19 @@
+snippet atf
+	#!/usr/bin/env atf-sh
+
+snippet atc
+	atf_test_case ${1:foo}
+	$1_head() {
+		atf_set "desc" "${2}"
+	}
+	$1_body() {
+		${3}
+	}
+
+snippet aitc
+	atf_init_test_cases() {
+		${1}
+	}
+
+snippet aatc
+	atf_add_test_case ${1}

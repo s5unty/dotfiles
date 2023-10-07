@@ -1,0 +1,16 @@
+# Namespace
+snippet namespace
+	namespace ${1:`Filename('', 'my')`} {
+		${2}
+	} /* $1 */
+
+# Class
+snippet class
+	class ${1:`Filename('$1_t', 'name')`} {
+	public:
+		$1 (${2:arguments});
+		virtual ~$1 ();
+	
+	private:
+		${3:/* data */}
+	};

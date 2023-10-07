@@ -1,0 +1,62 @@
+snippet pp
+	--- 
+	date: `strftime("%FT%T%z")`
+	title: ${1}
+	tags: [${2}]
+	categories: [${3:var}]
+
+	---
+	${4}
+
+snippet cc
+	{% highlight ${1:bash} %}
+	${2:}
+	{% endhighlight %}
+
+snippet image
+	![](${1})
+
+snippet no
+	Subject: ${1:`strftime("%Y-%m-%d %H:%M")`}
+	X-Label: 
+	Date: `system("LANG=c date -R | tr -d '\n'")`
+	Message-ID: <`system("uuidgen -t | tr -d '\n'")`>
+	MIME-Version: 1.0
+	Content-Type: text/plain; charset=utf-8
+	
+	${2:#:note}
+
+snippet ii
+	---
+	title: ${1:#:故障}
+	section: issue
+	# dateformat: 2021-05-06 01:45:00
+	date: `strftime("%Y-%m-%d %H:%M:%S")`
+	# dateformat: 2021-05-06 01:45:00
+	resolvedWhen: `strftime("%Y-%m-%d %H:%M:%S")`
+	# [ true | false ]
+	resolved: false
+	# severity(p0|p1|p2): [ down | disrupted | notice ]
+	severity: ${2:#:disrupted}
+	# org: [ site | network | vmware | windows | oss ]
+	# app: [ dba, mfs, mid, archery, jenkins, blabla... ]
+	# app: [ www-cn, mes, cnorder, e9oa, s2p, blabla... ]
+	affected:
+	  - ${3:#:org}
+	  - ${3:#:app}
+	---
+
+snippet tt
+	- {{< track "`strftime("%Y-%m-%d %H:%M:%S")`" >}}
+
+snippet mm
+	---
+	title: ${1:#:通知}
+	section: issue
+	# dateformat: 2021-05-06 01:45:00
+	date: `strftime("%Y-%m-%d %H:%M:%S")`
+	# notice: [ true, false ]
+	informational: true
+	# pin: [ true, false ]
+	pin: true
+	---

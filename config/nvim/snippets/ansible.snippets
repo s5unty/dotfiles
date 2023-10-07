@@ -1,0 +1,10 @@
+snippet mm
+    _monit_services__to_merge:
+      - name: ${2}
+        type: <program | process_by_name>
+        target: "/bin/sh -c ''"
+        extend: "as uid '' and gid '' with timeout 10 seconds"
+        rules: |
+          start program = "/bin/sh -c ''" as uid '' and gid '' with timeout 10 seconds
+          stop program = "/usr/bin/pkill " with timeout 10 seconds
+          if status != 0 for 2 cycles then alert
