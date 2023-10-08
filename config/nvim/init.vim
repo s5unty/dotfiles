@@ -74,17 +74,6 @@ else
     set directory=/tmp
 endif
 
-" if &term =~ ".*256color" || &term == "nvim"
-"     color light256
-"     " 区别普通/插入模式的光标颜色
-"     " # PowerLine 已实现
-"     " let &t_SI = "\033]12;black\007"
-"     " let &t_EI = "\033]12;red\007"
-"     " autocmd VimLeave * :!echo -ne "\033]12;black\007"
-" else
-"     color delek
-" endif
-
 " 用全角显示『○』、『△』、『□』这样的特殊字符
 " East Asian Ambiguous Width:
 " http://www.unicode.org/reports/tr11/
@@ -229,9 +218,7 @@ nmap          <unique> <F5> :terminal git difftool --tool=nvimdiff -y HEAD -- %<
 else
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
 endif
-nmap <silent> <unique> <F6> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+nmap <silent> <unique> <F6> :Inspect<CR>
 nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
 nmap <silent> <unique> <F8> :make!<CR>
 nmap <silent> <unique> <F9> :History<CR>
@@ -375,7 +362,8 @@ call plug#begin('~/.config/nvim/bundles')
     " 终端
     Plug 'nyngwang/NeoTerm.lua'
     " 主题
-    Plug 'projekt0n/github-nvim-theme'
+    " Plug 'projekt0n/github-nvim-theme'
+    Plug 'wuelnerdotexe/vim-enfocado'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
     Plug 'pearofducks/ansible-vim'  " ansible
@@ -474,6 +462,40 @@ augroup quickfix_group
 augroup END
 
 
+" ...focusing on what is really important to developers: the code and nothing else {{{2
+" https://github.com/wuelnerdotexe/vim-enfocado
+augroup enfocado_customization
+  autocmd!
+    " NR-16   NR-8    COLOR NAME
+    " 0	        0	    Black
+    " 1	        4	    DarkBlue
+    " 2	        2	    DarkGreen
+    " 3	        6	    DarkCyan
+    " 4	        1	    DarkRed
+    " 5	        5	    DarkMagenta
+    " 6	        3	    Brown, DarkYellow
+    " 7	        7	    LightGray, LightGrey, Gray, Grey
+    " 8	        0*	    DarkGray, DarkGrey
+    " 9	        4*	    Blue, LightBlue
+    " 10	    2*	    Green, LightGreen
+    " 11	    6*	    Cyan, LightCyan
+    " 12	    1*	    Red, LightRed
+    " 13	    5*	    Magenta, LightMagenta
+    " 14	    3*	    Yellow, LightYellow
+    " 15	    7*	    White
+    autocmd ColorScheme enfocado hi         Normal          guifg=black    guibg=none     gui=none
+    autocmd ColorScheme enfocado hi         Todo            guifg=none     guibg=yellow   gui=none
+    autocmd ColorScheme enfocado hi         Type            guifg=darkblue guibg=none     gui=none
+    autocmd ColorScheme enfocado hi         String          guifg=brown    guibg=none     gui=none
+    autocmd ColorScheme enfocado hi         ConstIdentifier guifg=darkcyan guibg=none     gui=none
+    autocmd ColorScheme enfocado hi         DiffChange      guifg=red      guibg=#cdcdcd  gui=none
+    autocmd ColorScheme enfocado hi         DiffAdd         guifg=green    guibg=#cdcdcd  gui=none
+    autocmd ColorScheme enfocado hi         DiffDelete      guifg=gray     guibg=none     gui=none
+    autocmd ColorScheme enfocado hi         DiffText        guifg=yellow     guibg=#cdcdcd  gui=none
+    autocmd ColorScheme enfocado hi link    mailSignature   Comment
+augroup END
+let g:enfocado_style = 'nature'
+colorscheme enfocado
 
 " }}}1
 
