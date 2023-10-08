@@ -214,7 +214,7 @@ nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 set pastetoggle=<F4>
 if has('nvim')
-nmap          <unique> <F5> :terminal git difftool --tool=nvimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
+nmap          <unique> <F5> :terminal git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
 else
 nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
 endif
@@ -362,7 +362,6 @@ call plug#begin('~/.config/nvim/bundles')
     " 终端
     Plug 'nyngwang/NeoTerm.lua'
     " 主题
-    " Plug 'projekt0n/github-nvim-theme'
     Plug 'wuelnerdotexe/vim-enfocado'
     " 语言(Yaml)
     Plug 'mrk21/yaml-vim'           " yaml
@@ -492,6 +491,8 @@ augroup enfocado_customization
     autocmd ColorScheme enfocado hi         DiffAdd         guifg=green    guibg=#cdcdcd  gui=none
     autocmd ColorScheme enfocado hi         DiffDelete      guifg=gray     guibg=none     gui=none
     autocmd ColorScheme enfocado hi         DiffText        guifg=yellow     guibg=#cdcdcd  gui=none
+    autocmd ColorScheme enfocado hi         LineNr          guifg=darkgray  guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         LineNrAbove     guifg=gray      guibg=none      gui=none
     autocmd ColorScheme enfocado hi link    mailSignature   Comment
 augroup END
 let g:enfocado_style = 'nature'
