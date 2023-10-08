@@ -466,33 +466,37 @@ augroup END
 augroup enfocado_customization
   autocmd!
     " NR-16   NR-8    COLOR NAME
-    " 0	        0	    Black
-    " 1	        4	    DarkBlue
-    " 2	        2	    DarkGreen
-    " 3	        6	    DarkCyan
-    " 4	        1	    DarkRed
-    " 5	        5	    DarkMagenta
-    " 6	        3	    Brown, DarkYellow
-    " 7	        7	    LightGray, LightGrey, Gray, Grey
-    " 8	        0*	    DarkGray, DarkGrey
-    " 9	        4*	    Blue, LightBlue
-    " 10	    2*	    Green, LightGreen
-    " 11	    6*	    Cyan, LightCyan
-    " 12	    1*	    Red, LightRed
-    " 13	    5*	    Magenta, LightMagenta
-    " 14	    3*	    Yellow, LightYellow
-    " 15	    7*	    White
-    autocmd ColorScheme enfocado hi         Normal          guifg=black    guibg=none     gui=none
-    autocmd ColorScheme enfocado hi         Todo            guifg=none     guibg=yellow   gui=none
-    autocmd ColorScheme enfocado hi         Type            guifg=darkblue guibg=none     gui=none
-    autocmd ColorScheme enfocado hi         String          guifg=brown    guibg=none     gui=none
-    autocmd ColorScheme enfocado hi         ConstIdentifier guifg=darkcyan guibg=none     gui=none
-    autocmd ColorScheme enfocado hi         DiffChange      guifg=red      guibg=#cdcdcd  gui=none
-    autocmd ColorScheme enfocado hi         DiffAdd         guifg=green    guibg=#cdcdcd  gui=none
-    autocmd ColorScheme enfocado hi         DiffDelete      guifg=gray     guibg=none     gui=none
-    autocmd ColorScheme enfocado hi         DiffText        guifg=yellow     guibg=#cdcdcd  gui=none
+    " 0         0     black
+    " 1         4     darkblue
+    " 2         2     darkgreen
+    " 3         6     darkcyan
+    " 4         1     darkred
+    " 5         5     darkmagenta
+    " 6         3     brown, darkyellow
+    " 7         7     lightgray, lightgrey, gray, grey
+    " 8         0*    darkgray, darkgrey
+    " 9         4*    blue, lightblue
+    " 10        2*    green, lightgreen
+    " 11        6*    cyan, lightcyan
+    " 12        1*    red, lightred
+    " 13        5*    magenta, lightmagenta
+    " 14        3*    yellow, lightyellow
+    " 15        7*    white
+    autocmd ColorScheme enfocado hi         Normal          guifg=black     guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         String          guifg=brown     guibg=none      gui=none
     autocmd ColorScheme enfocado hi         LineNr          guifg=darkgray  guibg=none      gui=none
     autocmd ColorScheme enfocado hi         LineNrAbove     guifg=gray      guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         DiffChange      guifg=red       guibg=#cdcdcd   gui=none
+    autocmd ColorScheme enfocado hi         DiffAdd         guifg=green     guibg=#cdcdcd   gui=none
+    autocmd ColorScheme enfocado hi         DiffDelete      guifg=gray      guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         DiffText        guifg=yellow    guibg=#cdcdcd   gui=none
+    autocmd ColorScheme enfocado hi         Todo            guifg=none      guibg=yellow    gui=none
+    autocmd ColorScheme enfocado hi         Type            guifg=darkblue  guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         TypeBuiltin     guifg=darkblue  guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         Constant        guifg=red       guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         ConstIdentifier guifg=darkcyan  guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         Special         guifg=magenta   guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         Folded          guifg=green     guibg=none      gui=none
     autocmd ColorScheme enfocado hi link    mailSignature   Comment
 augroup END
 let g:enfocado_style = 'nature'
