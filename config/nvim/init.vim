@@ -47,6 +47,8 @@ set guicursor=a:blinkon100 " 让光标抖起来
 set shell="/usr/bin/zsh"
 set background=light
 set termguicolors
+set undodir=~/.local/share/nvim/undo/
+set undofile
 " set inccommand=split " 好像是 NeoVim 特有的
 " set shortmess-=F " https://github.com/natebosch/vim-lsc
 " syn on " 语法高亮改用 treesitter
@@ -482,22 +484,23 @@ augroup enfocado_customization
     " 13        5*    magenta, lightmagenta
     " 14        3*    yellow, lightyellow
     " 15        7*    white
-    autocmd ColorScheme enfocado hi         Normal          guifg=black     guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         String          guifg=brown     guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         LineNr          guifg=darkgray  guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         LineNrAbove     guifg=gray      guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         DiffChange      guifg=red       guibg=#cdcdcd   gui=none
-    autocmd ColorScheme enfocado hi         DiffAdd         guifg=green     guibg=#cdcdcd   gui=none
-    autocmd ColorScheme enfocado hi         DiffDelete      guifg=gray      guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         DiffText        guifg=yellow    guibg=#cdcdcd   gui=none
-    autocmd ColorScheme enfocado hi         Todo            guifg=none      guibg=yellow    gui=none
-    autocmd ColorScheme enfocado hi         Type            guifg=darkblue  guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         TypeBuiltin     guifg=darkblue  guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         Constant        guifg=red       guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         ConstIdentifier guifg=darkcyan  guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         Special         guifg=magenta   guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         Folded          guifg=green     guibg=none      gui=none
-    autocmd ColorScheme enfocado hi link    mailSignature   Comment
+    autocmd ColorScheme enfocado hi         Normal              guifg=black     guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         String              guifg=brown     guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         LineNr              guifg=darkgray  guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         LineNrAbove         guifg=gray      guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         DiffChange          guifg=red       guibg=#cdcdcd   gui=none
+    autocmd ColorScheme enfocado hi         DiffAdd             guifg=green     guibg=#cdcdcd   gui=none
+    autocmd ColorScheme enfocado hi         DiffDelete          guifg=gray      guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         DiffText            guifg=yellow    guibg=#cdcdcd   gui=none
+    autocmd ColorScheme enfocado hi         Todo                guifg=none      guibg=yellow    gui=none
+    autocmd ColorScheme enfocado hi         Type                guifg=darkblue  guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         TypeBuiltin         guifg=darkblue  guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         Constant            guifg=red       guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         ConstIdentifier     guifg=darkcyan  guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         Special             guifg=magenta   guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         Folded              guifg=green     guibg=none      gui=none
+    autocmd ColorScheme enfocado hi link    mailSignature       Comment
+    autocmd ColorScheme enfocado hi link    IdentifierBuiltin   Identifier
 augroup END
 let g:enfocado_style = 'nature'
 colorscheme enfocado
