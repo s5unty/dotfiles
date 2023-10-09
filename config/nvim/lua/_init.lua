@@ -208,16 +208,7 @@ aerial.setup {
 vim.keymap.set('n', '<leader>z', '<cmd>AerialToggle!<CR>')
 
 
--- You can attach a terminal-buffer for each buffer. {{{1
--- https://github.com/nyngwang/NeoTerm.lua
-vim.o.shell = "/usr/bin/zsh"
-require('neo-term').setup {
-  vim.keymap.set('n', '<M-Tab>', function () vim.cmd('NeoTermToggle') end),
-  vim.keymap.set('t', '<M-Tab>', function () vim.cmd('NeoTermEnterNormal') end),
-}
-
-
--- A Neovim plugin for storing and restoring fcitx status of several mode groups separately. {{{
+-- A Neovim plugin for storing and restoring fcitx status of several mode groups separately. {{{1
 -- https://github.com/alohaia/fcitx.nvim
 require'fcitx' {
     enable = {
@@ -229,4 +220,5 @@ require'fcitx' {
         select   = true,
     },
 }
+
 

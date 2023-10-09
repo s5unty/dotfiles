@@ -44,11 +44,12 @@ set undolevels=500
 set diffopt=filler,iwhite
 set rtp+=/usr/bin/fzf
 set guicursor=a:blinkon100 " 让光标抖起来
-set shell="/usr/bin/zsh"
+set shell=/usr/bin/zsh
 set background=light
 set termguicolors
 set undodir=~/.local/share/nvim/undo/
 set undofile
+set signcolumn=number " 提示符嵌在行号栏
 " set inccommand=split " 好像是 NeoVim 特有的
 " set shortmess-=F " https://github.com/natebosch/vim-lsc
 " syn on " 语法高亮改用 treesitter
@@ -361,8 +362,6 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'dcampos/cmp-snippy'
     " 大纲导航
     Plug 'stevearc/aerial.nvim'
-    " 终端
-    Plug 'nyngwang/NeoTerm.lua'
     " 主题
     Plug 'wuelnerdotexe/vim-enfocado'
     " 语言(Yaml)
