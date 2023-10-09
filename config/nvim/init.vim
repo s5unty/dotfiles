@@ -488,17 +488,17 @@ augroup enfocado_customization
     autocmd ColorScheme enfocado hi         String              guifg=brown         guibg=none          gui=none
     autocmd ColorScheme enfocado hi         LineNr              guifg=darkgray      guibg=none          gui=none
     autocmd ColorScheme enfocado hi         LineNrAbove         guifg=gray          guibg=none          gui=none
-    autocmd ColorScheme enfocado hi         DiffChange          guifg=default       guibg=lightred      gui=none
-    autocmd ColorScheme enfocado hi         DiffAdd             guifg=default       guibg=lightgreen    gui=none
-    autocmd ColorScheme enfocado hi         DiffDelete          guifg=default       guibg=lightyellow   gui=none
-    autocmd ColorScheme enfocado hi         DiffText            guifg=default       guibg=lightyellow   gui=none
+    autocmd ColorScheme enfocado hi         DiffChange          guifg=lightred      guibg=gray          gui=none
+    autocmd ColorScheme enfocado hi         DiffAdd             guifg=lightgreen    guibg=gray          gui=none
+    autocmd ColorScheme enfocado hi         DiffDelete          guifg=lightgray     guibg=gray          gui=none
+    autocmd ColorScheme enfocado hi         DiffText            guifg=yellow        guibg=gray          gui=none
     autocmd ColorScheme enfocado hi         Todo                guifg=none          guibg=yellow        gui=none
     autocmd ColorScheme enfocado hi         MatchParen          guifg=none          guibg=cyan          gui=none
     autocmd ColorScheme enfocado hi         Type                guifg=darkblue      guibg=none          gui=none
     autocmd ColorScheme enfocado hi         Constant            guifg=red           guibg=none          gui=none
     autocmd ColorScheme enfocado hi         ConstIdentifier     guifg=darkcyan      guibg=none          gui=none
     autocmd ColorScheme enfocado hi         Special             guifg=magenta       guibg=none          gui=none
-    autocmd ColorScheme enfocado hi         Folded              guifg=green         guibg=none          gui=none
+    autocmd ColorScheme enfocado hi         Folded              guifg=darkcyan      guibg=none          gui=none
     autocmd ColorScheme enfocado hi link    mailSignature       Comment
 augroup END
 let g:enfocado_style = 'nature'
