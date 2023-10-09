@@ -217,3 +217,16 @@ require('neo-term').setup {
 }
 
 
+-- A Neovim plugin for storing and restoring fcitx status of several mode groups separately. {{{
+-- https://github.com/alohaia/fcitx.nvim
+require'fcitx' {
+    enable = {
+        normal   = true,
+        insert   = true,
+        cmdline  = true,
+        cmdtext  = true,
+        terminal = true,
+        select   = true,
+    },
+}
+

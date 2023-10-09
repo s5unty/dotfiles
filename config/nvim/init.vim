@@ -327,7 +327,7 @@ command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp 
 " Plugged {{{1
 call plug#begin('~/.config/nvim/bundles')
     " 在模式间切换输入法
-    Plug 'lilydjwg/fcitx.vim', {'branch': 'fcitx5'}
+    Plug 'alohaia/fcitx.nvim'
     " 自动补全括号引号
     Plug 'windwp/nvim-autopairs'
     " 著名的 Powerline
@@ -372,7 +372,7 @@ call plug#begin('~/.config/nvim/bundles')
     " 语言(Dart)
     Plug 'dart-lang/dart-vim-plugin'
     " 语言(Golang) [o]vim-go [x]govim
-    Plug 'fatih/vim-go'
+    " Plug 'fatih/vim-go'
     " 语言(Elvish)
     Plug 'chlorm/vim-syntax-elvish'
 call plug#end()
@@ -484,23 +484,22 @@ augroup enfocado_customization
     " 13        5*    magenta, lightmagenta
     " 14        3*    yellow, lightyellow
     " 15        7*    white
-    autocmd ColorScheme enfocado hi         Normal              guifg=black     guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         String              guifg=brown     guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         LineNr              guifg=darkgray  guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         LineNrAbove         guifg=gray      guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         DiffChange          guifg=red       guibg=#cdcdcd   gui=none
-    autocmd ColorScheme enfocado hi         DiffAdd             guifg=green     guibg=#cdcdcd   gui=none
-    autocmd ColorScheme enfocado hi         DiffDelete          guifg=gray      guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         DiffText            guifg=yellow    guibg=#cdcdcd   gui=none
-    autocmd ColorScheme enfocado hi         Todo                guifg=none      guibg=yellow    gui=none
-    autocmd ColorScheme enfocado hi         Type                guifg=darkblue  guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         TypeBuiltin         guifg=darkblue  guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         Constant            guifg=red       guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         ConstIdentifier     guifg=darkcyan  guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         Special             guifg=magenta   guibg=none      gui=none
-    autocmd ColorScheme enfocado hi         Folded              guifg=green     guibg=none      gui=none
+    autocmd ColorScheme enfocado hi         Normal              guifg=black         guibg=none          gui=none
+    autocmd ColorScheme enfocado hi         String              guifg=brown         guibg=none          gui=none
+    autocmd ColorScheme enfocado hi         LineNr              guifg=darkgray      guibg=none          gui=none
+    autocmd ColorScheme enfocado hi         LineNrAbove         guifg=gray          guibg=none          gui=none
+    autocmd ColorScheme enfocado hi         DiffChange          guifg=default       guibg=lightred      gui=none
+    autocmd ColorScheme enfocado hi         DiffAdd             guifg=default       guibg=lightgreen    gui=none
+    autocmd ColorScheme enfocado hi         DiffDelete          guifg=default       guibg=lightyellow   gui=none
+    autocmd ColorScheme enfocado hi         DiffText            guifg=default       guibg=lightyellow   gui=none
+    autocmd ColorScheme enfocado hi         Todo                guifg=none          guibg=yellow        gui=none
+    autocmd ColorScheme enfocado hi         MatchParen          guifg=none          guibg=cyan          gui=none
+    autocmd ColorScheme enfocado hi         Type                guifg=darkblue      guibg=none          gui=none
+    autocmd ColorScheme enfocado hi         Constant            guifg=red           guibg=none          gui=none
+    autocmd ColorScheme enfocado hi         ConstIdentifier     guifg=darkcyan      guibg=none          gui=none
+    autocmd ColorScheme enfocado hi         Special             guifg=magenta       guibg=none          gui=none
+    autocmd ColorScheme enfocado hi         Folded              guifg=green         guibg=none          gui=none
     autocmd ColorScheme enfocado hi link    mailSignature       Comment
-    autocmd ColorScheme enfocado hi link    IdentifierBuiltin   Identifier
 augroup END
 let g:enfocado_style = 'nature'
 colorscheme enfocado
