@@ -65,10 +65,10 @@ run_once({ "unclutter -root" })
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme/init.lua")
 awful.util.terminal = "x-terminal-emulator"
-awful.util.tagnames = { "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }
+awful.util.tagnames = { "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰"}
 
 -- This is used later as the default terminal and editor to run.
-local terminal     = "urxvt" or "xterm"
+local terminal     = awful.util.terminal
 local editor       = os.getenv("EDITOR") or "nano" or "vi"
 local gui_editor   = "gvim"
 local browser      = "google-chrome"
@@ -86,6 +86,8 @@ local altkey = "Mod1"
 awful.layout.layouts = {
     awful.layout.suit.tile.right,
     awful.layout.suit.tile.top,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.tile.bottom,
     awful.layout.suit.corner.sw,
     awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral.dwindle,
@@ -227,9 +229,9 @@ globalkeys = awful.util.table.join(
               {description = "go back", group = "tag"}),
 
     -- Non-empty tag browsing
-    awful.key({ modkey }, "Left", function () lain.util.tag_view_nonempty(-1) end,
+    awful.key({ modkey }, "9", function () lain.util.tag_view_nonempty(-1) end,
               {description = "view  previous nonempty", group = "tag"}),
-    awful.key({ modkey }, "Right", function () lain.util.tag_view_nonempty(1) end,
+    awful.key({ modkey }, "0", function () lain.util.tag_view_nonempty(1) end,
               {description = "view  previous nonempty", group = "tag"}),
 
     -- Default client focus
@@ -270,7 +272,7 @@ globalkeys = awful.util.table.join(
 
 	-- How can I make a minimized client visible again?
 	-- https://bbs.archlinux.org/viewtopic.php?pid=838211
-	awful.key({ modkey, "Shift"   }, "i",
+	awful.key({ modkey,           }, "8",
 		function ()
 			local tag = awful.tag.selected()
 			for i=1, #tag:clients() do
@@ -283,9 +285,9 @@ globalkeys = awful.util.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, ",", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey,           }, "0", function () awful.screen.focus_relative( 1) end,
+    awful.key({ modkey, "Shift"   }, "0", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey,           }, "9", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey, "Shift"   }, "9", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
@@ -321,6 +323,8 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "space", function () awful.spawn(terminal) end,
+              {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal.." -pe tabbedalt") end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
@@ -370,8 +374,8 @@ globalkeys = awful.util.table.join(
     -- awful.key({ modkey }, "e", function () awful.spawn(gui_editor) end),
     -- awful.key({ modkey }, "q", function () awful.spawn(browser) end),
     awful.key({ modkey }, "F1", function () awful.util.spawn(terminal.." -name Ranger -T Ranger -e zsh -c ranger") end),
-    awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser") end),
-    awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.."-pe tabbedalt -name Mutt -T Mutt -e zsh -c mutt") end),
+    awful.key({ modkey }, "F2", function () awful.util.spawn("x-www-browser --password-store=basic") end),
+    awful.key({ modkey }, "F3", function () awful.util.spawn(terminal.." -name Mutt -T Mutt -e zsh -c mutt") end),
     awful.key({ modkey }, "F4", function () awful.util.spawn("VirtualBox --startvm 'win7'") end),
     awful.key({        }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver pause") end),
     awful.key({ "Ctrl" }, "Pause", function () awful.util.spawn("/sun/.config/awesome/screensaver lock") end),
@@ -413,7 +417,7 @@ globalkeys = awful.util.table.join(
                 if cin_word == "" then
                     return
                 end
-                local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '21世纪英汉汉英双向词典' "..cin_word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
+                local f = io.popen("sdcv -n --utf8-output -u 'jmdict-ja-en' -u '朗道英汉字典5.0' "..cin_word.." | tail -n +5 | sed -s 's/<+/＜/g' | sed -s 's/>+/＞/g' | sed -s 's/《/＜/g' | sed -s 's/》/＞/g' | sed '$d' | awk 'NR > 1 { print h } { h = $0 } END { ORS = \"\"; print h }'")
                 local c = f:read("*a")
                 f:close()
 
@@ -578,18 +582,18 @@ for i = 1, 8 do
                           end
                      end
                   end,
-                  {description = "move focused client to tag #"..i, group = "tag"})
+                  {description = "move focused client to tag #"..i, group = "tag"}),
         -- Toggle tag on focused client.
-        -- awful.key({ modkey, "Control" }, j,
-        --           function ()
-        --               if client.focus then
-        --                   local tag = client.focus.screen.tags[i]
-        --                   if tag then
-        --                       client.focus:toggle_tag(tag)
-        --                   end
-        --               end
-        --           end,
-        --           {description = "toggle focused client on tag #" .. i, group = "tag"})
+        awful.key({ modkey, "Control" }, j,
+                  function ()
+                      if client.focus then
+                          local tag = client.focus.screen.tags[i]
+                          if tag then
+                              client.focus:toggle_tag(tag)
+                          end
+                      end
+                  end,
+                  {description = "toggle focused client on tag #" .. i, group = "tag"})
     )
 end
 
