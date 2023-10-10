@@ -190,7 +190,11 @@ require'treesitter-context'.setup {
 local aerial = require("aerial")
 aerial.setup {
   backends = { "lsp", "treesitter", "markdown", "man" },
-
+  layout = {
+      resize_to_content = false,
+      preserve_equality = true,
+  },
+  attach_mode = "global",
   -- open_automatic = function(bufnr)
   --   return vim.api.nvim_buf_line_count(bufnr) > 80 -- Enforce a minimum line count
   --     and aerial.num_symbols(bufnr) > 4 -- Enforce a minimum symbol count
@@ -222,3 +226,31 @@ require'fcitx' {
 }
 
 
+-- Auto-Focusing and Auto-Resizing Splits/Windows for Neovim written in Lua. {{{1
+-- https://github.com/nvim-focus/focus.nvim
+require("focus").setup {
+    enable = enable, -- Enable module
+    commands = true, -- Create Focus commands
+    autoresize = {
+        enable = true, -- Enable or disable auto-resizing of splits
+        width = 0, -- Force width for the focused window
+        height = 0, -- Force height for the focused window
+        minwidth = 0, -- Force minimum width for the unfocused window
+        minheight = 0, -- Force minimum height for the unfocused window
+        height_quickfix = 10, -- Set the height of quickfix panel
+    },
+    split = {
+        bufnew = false, -- Create blank buffer for new split windows
+        tmux = false, -- Create tmux splits instead of neovim splits
+    },
+    ui = {
+        number = false, -- Display line numbers in the focussed window only
+        relativenumber = false, -- Display relative line numbers in the focussed window only
+        hybridnumber = true, -- Display hybrid line numbers in the focussed window only
+        absolutenumber_unfocussed = false, -- Preserve absolute numbers in the unfocussed windows
+        cursorline = false, -- Display a cursorline in the focussed window only
+        cursorcolumn = false, -- Display cursorcolumn in the focussed window only
+        signcolumn = true, -- Display signcolumn in the focussed window only
+        winhighlight = false, -- Auto highlighting for focussed/unfocussed windows
+    }
+}

@@ -363,6 +363,8 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'dcampos/cmp-snippy'
     " 大纲导航
     Plug 'stevearc/aerial.nvim'
+    " 窗口管理器
+    Plug 'nvim-focus/focus.nvim', { 'tag': '1.0.1' }
     " 主题
     Plug 'wuelnerdotexe/vim-enfocado'
     " 语言(Yaml)
