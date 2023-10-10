@@ -112,6 +112,7 @@ function! G_GoodSpace()
         normal zO
     else
         exec "normal \<C-D>"
+        normal zz
     endif
 endfunction
 
@@ -184,7 +185,7 @@ if has("autocmd")
                 \ if pumvisible() == 0 | pclose | endif
 
     " 这样加快输入法自动切换时的体感速度
-    autocmd InsertEnter * set timeoutlen=100
+    autocmd InsertEnter * set timeoutlen=50
     autocmd InsertLeave * set timeoutlen=500
 
     " 每次访问文件时都把光标放置在上次离开的位置
@@ -305,7 +306,7 @@ imap <silent> <unique> <Esc>d <C-O>dw
 endif
 
 " Leader+ , Leader char is ';' {{{2
-let mapleader=';'
+let mapleader=' '
 let maplocalleader=','
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
