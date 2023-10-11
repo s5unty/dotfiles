@@ -65,7 +65,7 @@ run_once({ "unclutter -root" })
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme/init.lua")
 awful.util.terminal = "x-terminal-emulator"
-awful.util.tagnames = { "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰"}
+awful.util.tagnames = { "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }
 
 -- This is used later as the default terminal and editor to run.
 local terminal     = awful.util.terminal
@@ -653,6 +653,8 @@ awful.rules.rules = {
     properties = { floating = true } },
     { rule = { class = "Virt-manager.py" },
     properties = { floating = true } },
+    { rule = { class = "Insync" },
+    properties = { floating=true } },
 
     -- Set Iceweasel/Firefox to always map on tag 7 of screen 1.
     { rule = { class = "Google-chrome" },
@@ -717,6 +719,9 @@ awful.rules.rules = {
     properties = { floating=true, ontop=true } },
 
     { rule = { name = "Authy" },
+    properties = { floating=true, ontop=true } },
+
+    { rule = { name = "obsidian" },
     properties = { floating=true, ontop=true } },
 
     { rule = { name = "Microsoft Teams 通知" },

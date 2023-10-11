@@ -6,8 +6,7 @@ local map = vim.keymap.set
 -- https://github.com/hrsh7th/nvim-cmp
 local cmp = require'cmp'
 local snippy = require'snippy'
-
-cmp.setup({
+require'cmp'.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
@@ -87,7 +86,7 @@ cmp.setup.cmdline(':', {
 })
 
 
--- Set up lspconfig. {{{1
+-- cmp_nvim_lsp {{{1
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
@@ -134,26 +133,30 @@ map("n", "<leader>ge",  function() vim.diagnostic.setqflist({ severity = "E" }) 
 map("n", "<leader>gw",  function() vim.diagnostic.setqflist({ severity = "W" }) end)
 
 
--- autopairs for neovim written by lua {{{1
+-- autopairs for neovim written by lua
 -- https://github.com/windwp/nvim-autopairs
-require("nvim-autopairs").setup {}
+require("nvim-autopairs").setup { -- {{{1
+
+}
 
 
--- Add/change/delete surrounding delimiter pairs with ease. Written with in Lua. {{{1
+-- Add/change/delete surrounding delimiter pairs with ease. Written with in Lua.
 -- https://github.com/kylechui/nvim-surround
-require("nvim-surround").setup {}
+require("nvim-surround").setup { -- {{{1
+
+}
 
 
--- Vim plugin for automatically highlighting other uses of the word under the... {{{1
+-- Vim plugin for automatically highlighting other uses of the word under the...
 -- https://github.com/RRethy/vim-illuminate
-require('illuminate').configure {
+require('illuminate').configure { -- {{{1
   delay = 600,
 }
 
 
--- Nvim Treesitter configurations and abstraction layer {{{1
+-- Nvim Treesitter configurations and abstraction layer
 -- https://github.com/nvim-treesitter/nvim-treesitter
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter.configs'.setup { -- {{{1
   ensure_installed = { "bash", "elvish", "go", "groovy", "yaml", "lua", "vim", "vimdoc", "query" },
   highlight = {
     enable = true,
@@ -185,10 +188,9 @@ require'treesitter-context'.setup {
   enable = true,
 }
 
--- Neovim plugin for a code outline window {{{1
+-- Neovim plugin for a code outline window
 -- https://github.com/stevearc/aerial.nvim
-local aerial = require("aerial")
-aerial.setup {
+require("aerial").setup { -- {{{1
   backends = { "lsp", "treesitter", "markdown", "man" },
   layout = {
       resize_to_content = false,
@@ -212,9 +214,9 @@ aerial.setup {
 vim.keymap.set('n', '<leader>z', '<cmd>AerialToggle!<CR>')
 
 
--- A Neovim plugin for storing and restoring fcitx status of several mode groups separately. {{{1
+-- A Neovim plugin for storing and restoring fcitx status of several mode groups separately.
 -- https://github.com/alohaia/fcitx.nvim
-require'fcitx' {
+require'fcitx' { -- {{{1
     enable = {
         normal   = true,
         insert   = true,
@@ -225,32 +227,39 @@ require'fcitx' {
     },
 }
 
-
--- Auto-Focusing and Auto-Resizing Splits/Windows for Neovim written in Lua. {{{1
--- https://github.com/nvim-focus/focus.nvim
-require("focus").setup {
-    enable = enable, -- Enable module
-    commands = true, -- Create Focus commands
-    autoresize = {
-        enable = true, -- Enable or disable auto-resizing of splits
-        width = 0, -- Force width for the focused window
-        height = 0, -- Force height for the focused window
-        minwidth = 0, -- Force minimum width for the unfocused window
-        minheight = 0, -- Force minimum height for the unfocused window
-        height_quickfix = 10, -- Set the height of quickfix panel
-    },
-    split = {
-        bufnew = false, -- Create blank buffer for new split windows
-        tmux = false, -- Create tmux splits instead of neovim splits
-    },
-    ui = {
-        number = false, -- Display line numbers in the focussed window only
-        relativenumber = false, -- Display relative line numbers in the focussed window only
-        hybridnumber = true, -- Display hybrid line numbers in the focussed window only
-        absolutenumber_unfocussed = false, -- Preserve absolute numbers in the unfocussed windows
-        cursorline = false, -- Display a cursorline in the focussed window only
-        cursorcolumn = false, -- Display cursorcolumn in the focussed window only
-        signcolumn = true, -- Display signcolumn in the focussed window only
-        winhighlight = false, -- Auto highlighting for focussed/unfocussed windows
-    }
+-- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
+-- https://github.com/nvim-lualine/lualine.nvim
+require('lualine').setup { -- {{{1
+  options = {
+    icons_enabled = true,
+    theme = 'powerline',
+  },
 }
+
+
+-- A snazzy bufferline for Neovim
+-- https://github.com/akinsho/bufferline.nvim
+require("bufferline").setup { -- {{{1
+    options = {
+        always_show_bufferline = false,
+        themable = false, -- allows highlight groups to be overriden i.e. sets highlights as default
+        numbers = "ordinal",
+        diagnostics = "nvim_lsp",
+        show_buffer_close_icons = false,
+        show_close_icon = false,
+        show_tab_indicators = false,
+        show_duplicate_prefix = true, -- whether to show duplicate buffer prefix
+        persist_buffer_sort = false, -- whether or not custom sorted buffers should persist
+        separator_style = "thin",
+    },
+}
+vim.keymap.set('n', 'gb', '<cmd>BufferLinePick<CR>')
+vim.keymap.set('n', '<M-1>', '<cmd>BufferLineGoToBuffer 1<CR>')
+vim.keymap.set('n', '<M-2>', '<cmd>BufferLineGoToBuffer 2<CR>')
+vim.keymap.set('n', '<M-3>', '<cmd>BufferLineGoToBuffer 3<CR>')
+vim.keymap.set('n', '<M-4>', '<cmd>BufferLineGoToBuffer -1<CR>')
+vim.keymap.set('n', '<M-0>', '<cmd>BufferLineCycleNext<CR>')
+vim.keymap.set('n', '<M-9>', '<cmd>BufferLineCyclePrev<CR>')
+vim.keymap.set('n', '<M-.>', '<cmd>BufferLineMoveNext<CR>')
+vim.keymap.set('n', '<M-,>', '<cmd>BufferLineMovePrev<CR>')
+

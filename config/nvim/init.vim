@@ -68,6 +68,7 @@ if has("win32") || has("win64")
     set shell=cmd.exe
     set directory=$TMP
 else
+    set guifont=EnvyCodeR\ Nerd\ Font
     " set guifont=Envy\ Code\ R\ For\ Powerline\ 10
     " set guifontwide=WenQuanYi\ Micro\ Hei\ 10
     set makeprg=make\ -j2
@@ -84,8 +85,9 @@ endif
 " http://sakurapup.browserloadofcoolness.com/viewtopic.php?f=13&t=2
 " http://du1abadd.org/debian/UTF-8-EAW-FULLWIDTH.gz
 " https://github.com/hamano/locale-eaw/blob/master/README.md
+" 改用现代化的终端(Kitty)，不用再拘于这样了
 if exists('&ambw')
-    set ambiwidth=double
+"    set ambiwidth=double
 endif
 
 let html_dynamic_folds=1
@@ -333,7 +335,10 @@ call plug#begin('~/.config/nvim/bundles')
     " 自动补全括号引号
     Plug 'windwp/nvim-autopairs'
     " 著名的 Powerline
-    Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+    Plug 'nvim-lualine/lualine.nvim'
+    Plug 'nvim-tree/nvim-web-devicons'
+    " 习惯了 buffer
+    Plug 'akinsho/bufferline.nvim'
     " 为什么我没这种需求
     Plug 'kylechui/nvim-surround'
     " 数值的递增递减
@@ -363,8 +368,6 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'dcampos/cmp-snippy'
     " 大纲导航
     Plug 'stevearc/aerial.nvim'
-    " 窗口管理器
-    Plug 'nvim-focus/focus.nvim', { 'tag': '1.0.1' }
     " 主题
     Plug 'wuelnerdotexe/vim-enfocado'
     " 语言(Yaml)
@@ -378,77 +381,6 @@ call plug#begin('~/.config/nvim/bundles')
     " 语言(Elvish)
     Plug 'chlorm/vim-syntax-elvish'
 call plug#end()
-
-" vim-aireline/vim-aireline {{{2
-let g:airline_theme="ayu_mirage"
-" let g:airline_left_sep = '⮀'
-" let g:airline_left_alt_sep = '⮁'
-" let g:airline_right_sep = '⮂'
-" let g:airline_right_alt_sep = '⮃'
-" if !exists('g:airline_symbols')
-"     let g:airline_symbols = {}
-"     let g:airline_symbols.branch = ''
-"     let g:airline_symbols.readonly = ''
-"     let g:airline_symbols.linenr = ''
-"     let g:airline_symbols.maxlinenr = ''
-"     let g:airline_symbols.space = ''
-" endif
-let g:airline#extensions#hunks#hunk_symbols = ['+', '=', '-']
-" https://github.com/ryanoasis/powerline-extra-symbols
-let g:airline_left_sep = "\uE0B0"
-let g:airline_left_alt_sep = '\uE0B1'
-let g:airline_right_sep = "\uE0B2"
-let g:airline_right_alt_sep = "\uE0B3"
-let g:airline#extensions#hunks#non_zero_only = 1
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#left_sep = "\uE0B0"
-let g:airline#extensions#tabline#left_alt_sep = "\uE0B2"
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#xkblayout#enabled = 0
-let g:airline#extensions#xkblayout#short_codes = {'us': 'EN', 'cqkm_42': 'CN'}
-if has("gui_running") || &term == "nvim"
-nmap <M-1> <Plug>AirlineSelectTab1
-nmap <M-2> <Plug>AirlineSelectTab2
-nmap <M-3> <Plug>AirlineSelectTab3
-nmap <M-4> <Plug>AirlineSelectTab4
-nmap <M-5> <Plug>AirlineSelectTab5
-nmap <M-6> <Plug>AirlineSelectTab6
-nmap <M-7> <Plug>AirlineSelectTab7
-nmap <M-8> <Plug>AirlineSelectTab8
-nmap <M-9> <Plug>AirlineSelectTab9
-nmap <M-,> <Plug>AirlineSelectPrevTab
-nmap <M-.> <Plug>AirlineSelectNextTab
-else
-nmap <Esc>1 <Plug>AirlineSelectTab1
-nmap <Esc>2 <Plug>AirlineSelectTab2
-nmap <Esc>3 <Plug>AirlineSelectTab3
-nmap <Esc>4 <Plug>AirlineSelectTab4
-nmap <Esc>5 <Plug>AirlineSelectTab5
-nmap <Esc>6 <Plug>AirlineSelectTab6
-nmap <Esc>7 <Plug>AirlineSelectTab7
-nmap <Esc>8 <Plug>AirlineSelectTab8
-nmap <Esc>9 <Plug>AirlineSelectTab9
-nmap <Esc>, <Plug>AirlineSelectPrevTab
-nmap <Esc>. <Plug>AirlineSelectNextTab
-endif
-let g:airline#extensions#tabline#buffer_idx_format = {
-    \ '1': ' ①',
-    \ '2': ' ②',
-    \ '3': ' ③',
-    \ '4': ' ④',
-    \ '5': ' ⑤',
-    \ '6': ' ⑥',
-    \ '7': ' ⑦',
-    \ '8': ' ⑧',
-    \ '9': ' ⑨'
-    \}
-let g:airline#extensions#whitespace#symbol = '※'
-let g:airline#extensions#whitespace#trailing_format = '[T:%s]'
-let g:airline#extensions#whitespace#mixed_indent_algo = 2
-let g:airline#extensions#whitespace#mixed_indent_format = '[M:%s]'
 
 
 " Syntax highlighting for Dart in Vim {{{2
