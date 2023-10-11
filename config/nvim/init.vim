@@ -376,8 +376,6 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'stephpy/vim-yaml'         " highlight
     " 语言(Dart)
     Plug 'dart-lang/dart-vim-plugin'
-    " 语言(Golang) [o]vim-go [x]govim
-    " Plug 'fatih/vim-go'
     " 语言(Elvish)
     Plug 'chlorm/vim-syntax-elvish'
 call plug#end()
