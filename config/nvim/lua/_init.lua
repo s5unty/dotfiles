@@ -230,10 +230,11 @@ require'fcitx' { -- {{{1
 -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
 -- https://github.com/nvim-lualine/lualine.nvim
 require('lualine').setup { -- {{{1
-  options = {
-    icons_enabled = true,
-    theme = 'powerline',
-  },
+    options = {
+        icons_enabled = true,
+        theme = 'powerline',
+        path = 1,
+    },
 }
 
 
@@ -245,11 +246,12 @@ require("bufferline").setup { -- {{{1
         themable = false, -- allows highlight groups to be overriden i.e. sets highlights as default
         numbers = "ordinal",
         diagnostics = "nvim_lsp",
+        show_buffer_icons = false,
         show_buffer_close_icons = false,
         show_close_icon = false,
         show_tab_indicators = false,
-        show_duplicate_prefix = true, -- whether to show duplicate buffer prefix
-        persist_buffer_sort = false, -- whether or not custom sorted buffers should persist
+        show_duplicate_prefix = false, -- whether to show duplicate buffer prefix
+        persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
         separator_style = "thin",
     },
 }
@@ -258,8 +260,8 @@ vim.keymap.set('n', '<M-1>', '<cmd>BufferLineGoToBuffer 1<CR>')
 vim.keymap.set('n', '<M-2>', '<cmd>BufferLineGoToBuffer 2<CR>')
 vim.keymap.set('n', '<M-3>', '<cmd>BufferLineGoToBuffer 3<CR>')
 vim.keymap.set('n', '<M-4>', '<cmd>BufferLineGoToBuffer -1<CR>')
-vim.keymap.set('n', '<M-0>', '<cmd>BufferLineCycleNext<CR>')
-vim.keymap.set('n', '<M-9>', '<cmd>BufferLineCyclePrev<CR>')
-vim.keymap.set('n', '<M-.>', '<cmd>BufferLineMoveNext<CR>')
-vim.keymap.set('n', '<M-,>', '<cmd>BufferLineMovePrev<CR>')
+vim.keymap.set('n', '<M-.>', '<cmd>BufferLineCycleNext<CR>')
+vim.keymap.set('n', '<M-,>', '<cmd>BufferLineCyclePrev<CR>')
+vim.keymap.set('n', '<M-0>', '<cmd>BufferLineMoveNext<CR>')
+vim.keymap.set('n', '<M-9>', '<cmd>BufferLineMovePrev<CR>')
 
