@@ -13,7 +13,7 @@ function! CheckAttachments()
     set ignorecase
   endif
   if (search('^\([^>|].*\)\?\(re-\?\)\?\(' . l:en . '\|' . l:zh . '\|' . l:ja. '\)', "w") != 0)
-    let l:temp = inputdialog("★☆★☆ Do not forget to attach the file(s) ☆★☆★ [Hit return]")
+    let l:temp = inputdialog("★ ☆ ★ ☆  Do not forget to attach the file(s) ☆ ★ ☆ ★  [Hit return]")
   endif
   if (l:ic == 0)
     set noignorecase
