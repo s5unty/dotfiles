@@ -276,10 +276,6 @@ nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__h
 
 " Alt+ {{{2
 if has("gui_running")
-nmap <silent> <unique> <A-h> <C-W>h
-nmap <silent> <unique> <A-j> <C-W>j
-nmap <silent> <unique> <A-k> <C-W>k
-nmap <silent> <unique> <A-l> <C-W>l
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
@@ -288,28 +284,14 @@ nmap <silent> <unique> <M-Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
 nmap <silent> <unique> <M-\> :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <M-`> :call G_GotoEditor()<CR>:e #<CR>
 imap <silent> <unique> <M-`> <ESC>:call G_GotoEditor()<CR>:e #<CR>a
-nmap <silent> <unique> <M-h> <C-W>h
-nmap <silent> <unique> <M-j> <C-W>j
-nmap <silent> <unique> <M-k> <C-W>k
-nmap <silent> <unique> <M-l> <C-W>l
 imap <silent> <unique> <M-b> <C-O>b
 imap <silent> <unique> <M-f> <C-O>w
 imap <silent> <unique> <M-d> <C-O>dw
-imap <silent> <unique> <M-l> <Right>
-imap <silent> <unique> <M-h> <Left>
-imap <silent> <unique> <M-j> <Down>
-imap <silent> <unique> <M-k> <UP>
-imap <silent> <unique> <M-0> <Home>
-imap <silent> <unique> <M-'> <End>
 else
 nmap <silent> <unique> <Esc><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
 nmap <silent> <unique> <Esc>\ :call G_GotoEditor()<CR>:tag<CR>zz
 nmap <silent> <unique> <Esc>` :call G_GotoEditor()<CR>:e #<CR>
 imap <silent> <unique> <Esc>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
-nmap <silent> <unique> <Esc>h <C-W>h
-nmap <silent> <unique> <Esc>j <C-W>j
-nmap <silent> <unique> <Esc>k <C-W>k
-nmap <silent> <unique> <Esc>l <C-W>l
 imap <silent> <unique> <Esc>b <C-O>b
 imap <silent> <unique> <Esc>f <C-O>w
 imap <silent> <unique> <Esc>d <C-O>dw
@@ -318,6 +300,11 @@ endif
 " Leader+ , Leader char is ';' {{{2
 let mapleader=' '
 let maplocalleader=','
+nmap <silent> <unique> <Leader>q :q<CR>
+nmap <silent> <unique> <Leader>h <C-W>h
+nmap <silent> <unique> <Leader>j <C-W>j
+nmap <silent> <unique> <Leader>k <C-W>k
+nmap <silent> <unique> <Leader>l <C-W>l
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
@@ -363,6 +350,7 @@ call plug#begin('~/.config/nvim/bundles')
     " 补全框架(代码、模板、路径等)
     Plug 'neovim/nvim-lspconfig'  " Collection of configurations for built-in LSP client
     Plug 'hrsh7th/nvim-cmp'       " Autocompletion plugin
+    Plug 'onsails/lspkind-nvim'   " VSCode-like pictograms
     Plug 'hrsh7th/cmp-nvim-lsp'   " LSP source for nvim-cmp
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
@@ -376,12 +364,8 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'dcampos/cmp-snippy'
     " 大纲导航
     Plug 'stevearc/aerial.nvim'
-    " 主题
+    " 主题配色
     Plug 'wuelnerdotexe/vim-enfocado'
-    " 语言(Yaml)
-    Plug 'mrk21/yaml-vim'           " yaml
-    Plug 'pearofducks/ansible-vim'  " ansible
-    Plug 'stephpy/vim-yaml'         " highlight
     " 语言(Dart)
     Plug 'dart-lang/dart-vim-plugin'
     " 语言(Elvish)

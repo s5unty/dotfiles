@@ -41,7 +41,7 @@ zinit light-mode for \
 # Multi-word, syntax highlighted history searching for Zsh {{{1
 # https://github.com/zdharma/history-search-multi-word
 zinit light robobenklein/zdharma-history-search-multi-word
-zstyle ":history-search-multi-word" highlight-color "bg=yellow,bold"
+zstyle ":history-search-multi-word" highlight-color "bg=default,bold"
 
 # Fish-like autosuggestions for zsh {{{1
 # https://github.com/zsh-users/zsh-autosuggestions
@@ -63,17 +63,15 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 # https://github.com/agkozak/zsh-z
 zinit light agkozak/zsh-z
 
-# zsh-complete-words-from-urxvt-scrollback-buffer {{{1
-# https://gist.github.com/s5unty/2486566
-zinit snippet https://gist.github.com/s5unty/2486566/raw
-bindkey -M viins "\e\t" urxvt-scrollback-buffer-words-prefix    # Alt-Tab
-bindkey -M viins "^[[Z" urxvt-scrollback-buffer-words-anywhere  # Shift-Tab
-
-
-# SeaweedFS is a fast distributed storage system for blobs, objects, files, and data lake, for billions of files! {{{1
-# https://github.com/seaweedfs/seaweedfs
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/weed-v3.09 weed
+##
+# NOTE urxvt => kitty
+##
+# # zsh-complete-words-from-urxvt-scrollback-buffer {{{1
+# # https://gist.github.com/s5unty/2486566
+# zinit snippet https://gist.github.com/s5unty/2486566/raw
+# bindkey -M viins "\e\t" urxvt-scrollback-buffer-words-prefix    # Alt-Tab
+# bindkey -M viins "^[[Z" urxvt-scrollback-buffer-words-anywhere  # Shift-Tab
+####
 
 
 # >>> conda initialize >>> {{{1
