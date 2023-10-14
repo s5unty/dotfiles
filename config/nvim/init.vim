@@ -85,9 +85,17 @@ endif
 " http://sakurapup.browserloadofcoolness.com/viewtopic.php?f=13&t=2
 " http://du1abadd.org/debian/UTF-8-EAW-FULLWIDTH.gz
 " https://github.com/hamano/locale-eaw/blob/master/README.md
-" 改用现代化的终端(Kitty)，不用再拘于这样了
+" https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.narrow_symbols
 if exists('&ambw')
-"    set ambiwidth=double
+"   set ambiwidth=double
+    call setcellwidths([
+      \ [0x2605, 0x2606, 2],
+      \ [0x25cb, 0x25cf, 2],
+      \ [0x203b, 0x203b, 2],
+      \ [0x25b3, 0x25b3, 2],
+      \ [0x25a1, 0x25a1, 2],
+      \ [0x2460, 0x2469, 2],
+      \ ])
 endif
 
 let html_dynamic_folds=1
@@ -410,6 +418,7 @@ augroup enfocado_customization
      autocmd ColorScheme enfocado hi         String              guifg=brown         guibg=none          gui=none
      autocmd ColorScheme enfocado hi         MatchParen          guifg=none          guibg=cyan          gui=none
      autocmd ColorScheme enfocado hi         Type                guifg=darkblue      guibg=none          gui=none
+     autocmd ColorScheme enfocado hi         SpecialKey          guifg=darkgray     guibg=none          gui=none
      autocmd ColorScheme enfocado hi link    mailSignature       Comment
 augroup END
 let g:enfocado_style = 'nature'
