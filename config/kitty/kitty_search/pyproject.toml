@@ -1,6 +1,0 @@
-[tool.isort]
-profile = "black"
-
-[tool.pyright]
-strict = ["**"]
-extraPaths = ["../kitty"]
