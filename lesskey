@@ -9,8 +9,7 @@ i quit
 \40 forw-scroll
 ;   toggle-option
 
-v pipe . vim - \n
-#V pipe $ vim - \n
+v pipe . ansi2txt | vim - \n
 
 l right-scroll
 h left-scroll

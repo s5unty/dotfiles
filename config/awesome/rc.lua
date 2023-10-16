@@ -68,7 +68,7 @@ awful.util.terminal = "x-terminal-emulator"
 awful.util.tagnames = { "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }
 
 -- This is used later as the default terminal and editor to run.
-local terminal     = awful.util.terminal
+local terminal     = awful.util.terminal .. " -1"
 local editor       = os.getenv("EDITOR") or "nano" or "vi"
 local gui_editor   = "gvim"
 local browser      = "google-chrome"
@@ -323,8 +323,6 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "space", function () awful.spawn(terminal) end,
-              {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal.." -pe tabbedalt") end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
