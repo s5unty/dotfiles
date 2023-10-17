@@ -1,5 +1,3 @@
-# vim:set syntax=zsh:
-
 if   [ -e "/usr/bin/zless" ]; then __LESS="zless -r"
 elif [ -e "/usr/bin/less"  ]; then __LESS="less -r"
 else __LESS="more" fi
@@ -32,6 +30,7 @@ export SDCV_HISTSIZE=32
 export GOROOT="/opt/go"
 export GOPATH="/sun/hacking/go"
 export PATH="$GOPATH/bin:$PATH"
+export PATH="/opt/flutter/bin:$PATH"
 export BC_ENV_ARGS="$HOME/.bc"
 # https://github.com/dj-wasabi/ansible-zabbix-agent/issues/66
 export PYTHONHTTPSVERIFY=0
@@ -45,7 +44,12 @@ export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 # http://todotxt.com/
 [ -e $HOME/.todo/config ] && source $HOME/.todo/config
 export DOTREMINDERS="$TODO_DIR/var/work.rem"
-
+# https://www.cnblogs.com/mxnote/p/16783314.html
+export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 
 export fpk="95cf886ae72347195d15aa2bd3adfcb9465ac367c8aa504e296b99434a07a88c52735348f9a3731cac32cbbf1e52f1ce"
 export psa="xch1zgv3pqeqj92khgqtfkg6tsrep5d0d7f2s9mvmc0dk4pe7r7kv96sg59gaj"
+
+# vim: ft=zsh:
+

@@ -1,0 +1,21 @@
+[Default Applications]
+x-scheme-handler/msteams=teams.desktop
+x-scheme-handler/tg=telegramdesktop.desktop
+x-scheme-handler/obsidian=obsidian.desktop
+x-scheme-handler/webcal=google-chrome.desktop
+application/pdf=google-chrome.desktop
+image/png=sxiv.desktop;
+image/jpeg=sxiv.desktop;
+text/plain=nvim.desktop;
+text/html=google-chrome.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
+application/json=nvim.desktop;
+text/x-log=nvim.desktop;
+x-scheme-handler/mailto=google-chrome.desktop
+
+[Added Associations]
+application/wps-office.xlsx=wps-office-et.desktop;
+x-scheme-handler/tg=telegramdesktop.desktop;
