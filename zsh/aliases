@@ -16,6 +16,7 @@ alias cp="cp -a"
 alias rm="rm -I"
 alias at="at -m"
 alias ow="$__SUDO chown -R `whoami`:`whoami`"
+alias vin="vi --noplugin"
 alias mkd="mkd2html -footer \"<hr /> Last updated: `date +"%F %T%:z"`\""
 alias w3m="/usr/bin/w3m -no-graph"
 alias diff="$__DIFF"
@@ -275,30 +276,6 @@ tdc() {
         td$ ${1} "/* ${(@)argv[2,$#]} */" > /dev/null 2>&1
     fi
 }
-tdr() { # remember the milk
-# depends: http://www.davidwaring.net/projects/rtm.html
-# depends: http://www.rememberthemilk.com/
-    idx=${1}
-    if [[ ${idx} == "" ]]; then
-        return
-    fi
-    inbox=$(echo "#0x5BCC0x58EB0x901A" | ascii2uni -q)
-
-    rem=$(remind -s+4 $TODO_DIR/var/remind/index.rem | sed -n "${idx}p")
-    rem_date=$(echo ${rem} | sed 's/\(^.\{10\}\).*/\1/' )
-    rem_time=$(echo ${rem} | sed 's/.* \([0-9]\{1,2\}:[0-9]\{1,2\}[ap]m\) .*/\1/')
-    rem_mesg=$(echo ${rem} | sed 's/.*\(\([ap]m\)\|\(\*\)\) \(.*\)/\4/g')
-
-    if [[ ${rem_time} == ${rem} ]]; then # 没有时间信息
-        rem_time=""
-    fi
-
-    if ! pgrep "python" | grep "rtm add"; then # todo
-        (rtm add ${inbox} "${rem_date} ${rem_time} ${rem_mesg}" > /dev/null &)
-    else
-        echo "rtm: there is another running instance."
-    fi
-}
 tde() {
     if [ -z ${1} ]; then
         loc=":normal M"
@@ -450,7 +427,31 @@ ghash() {
     echo -n $* | shasum | /bin/grep -Eo '[a-f].{4}' | head -1
 }
 
+D() {
+    src=$(echo $* | sed 's/\s*->\s*/->/' | /bin/grep -Po '^((?!->).)*')
+    dst=$(echo $* | sed 's/\s*->\s*/->/' | /bin/grep -Po '(?<=->).*$')
 
+    src_ip=${src%%:*}
+    dst_ip=${dst%%:*}
+
+    src_path=${src#*:}
+    dst_path=${dst#*:}
+
+    src_clsync="$src_path"
+    dst_clsync="user@$dst_ip::$(ghash $dst_path)"
+
+    echo "$(ghash $src_clsync)-$(ghash $dst_clsync)" | grep -o '.*'
+}
+
+# }}}
+
+# fzf {{{
+all() {
+    local all raw
+    all=/sun/worktop/ansible/inventory/all
+    on=$(/bin/grep -f =(ansible -u root 'all:!off' --list-hosts | awk '{print $1}') $all | sed 's/\(.*\)\s.*=\(.*\)/\1 \2/')
+    echo $on | fzf -0 -1 --preview-window=hidden
+}
 # }}}
 
 # pass {{{
@@ -465,4 +466,3 @@ alias poa="pass otp append"
 alias poi="pass otp insert"
 # }}}
 
-# vim: ft=zsh:
