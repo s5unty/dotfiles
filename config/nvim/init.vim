@@ -263,8 +263,6 @@ imap <silent> <unique> <S-Space> <C-V><Space>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :q!<CR>
-nmap <silent> <unique> <C-N> :call G_GotoEditor()<CR><Plug>AirlineSelectNextTab<CR>
-nmap <silent> <unique> <C-P> :call G_GotoEditor()<CR><Plug>AirlineSelectPrevTab<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
@@ -332,6 +330,10 @@ call plug#begin('~/.config/nvim/bundles')
     " 著名的 Powerline
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'nvim-tree/nvim-web-devicons'
+    " 侧边导航(目录、缓存区、标记)
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'MunifTanjim/nui.nvim'
+    Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v3.x' }
     " 习惯了 buffer
     Plug 'akinsho/bufferline.nvim'
     " 为什么我没这种需求
@@ -365,7 +367,7 @@ call plug#begin('~/.config/nvim/bundles')
     " 大纲导航
     Plug 'stevearc/aerial.nvim'
     " 主题配色
-    Plug 'wuelnerdotexe/vim-enfocado'
+    Plug 'Th3Whit3Wolf/one-nvim'
     " 语言(Dart)
     Plug 'dart-lang/dart-vim-plugin'
     " 语言(Elvish)
@@ -393,20 +395,11 @@ augroup quickfix_group
 augroup END
 
 
-" ...focusing on what is really important to developers: the code and nothing else {{{2
-" https://github.com/wuelnerdotexe/vim-enfocado
-augroup enfocado_customization
-  autocmd!
-     autocmd ColorScheme enfocado hi         Normal              guifg=black         guibg=none          gui=none
-     autocmd ColorScheme enfocado hi         Todo                guifg=none          guibg=yellow        gui=none
-     autocmd ColorScheme enfocado hi         String              guifg=brown         guibg=none          gui=none
-     autocmd ColorScheme enfocado hi         MatchParen          guifg=none          guibg=cyan          gui=none
-     autocmd ColorScheme enfocado hi         Type                guifg=darkblue      guibg=none          gui=none
-     autocmd ColorScheme enfocado hi         SpecialKey          guifg=darkgray     guibg=none          gui=none
-     autocmd ColorScheme enfocado hi link    mailSignature       Comment
-augroup END
-let g:enfocado_style = 'nature'
-colorscheme enfocado
+" An Atom One inspired dark and light colorscheme for neovim. {{{2
+" https://github.com/Th3Whit3Wolf/one-nvim
+colorscheme one-nvim
+hi Todo guibg=yellow
+
 
 " }}}1
 

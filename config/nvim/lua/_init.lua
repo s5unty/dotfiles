@@ -179,7 +179,7 @@ require('illuminate').configure { -- {{{1
 
 -- Nvim Treesitter configurations and abstraction layer
 -- https://github.com/nvim-treesitter/nvim-treesitter
-require'nvim-treesitter.configs'.setup { -- {{{1
+require('nvim-treesitter.configs').setup { -- {{{1
   ensure_installed = { "bash", "elvish", "go", "groovy", "yaml", "lua", "vim", "vimdoc", "query" },
   highlight = {
     enable = true,
@@ -239,7 +239,7 @@ vim.keymap.set('n', '<leader>z', '<cmd>AerialToggle!<CR>')
 
 -- A Neovim plugin for storing and restoring fcitx status of several mode groups separately.
 -- https://github.com/alohaia/fcitx.nvim
-require'fcitx' { -- {{{1
+require('fcitx') { -- {{{1
     enable = {
         normal   = true,
         insert   = true,
@@ -254,29 +254,79 @@ require'fcitx' { -- {{{1
 -- https://github.com/nvim-lualine/lualine.nvim
 require('lualine').setup { -- {{{1
     options = {
+        globalstatus = true,
         icons_enabled = true,
-        theme = 'powerline',
+        theme = 'Tomorrow',
         path = 1,
     },
+--    tabline = {
+--      lualine_a = {
+--        {
+--          'buffers',
+--          icons_enabled = false,
+--          component_separators = { left = '', right = ''},
+--          section_separators = { left = '', right = ''},
+--          mode = 2,
+--          use_mode_colors = true,
+--        }
+--      }
+--    }
 }
-
+--vim.keymap.set('n', '<M-1>', '<cmd>LualineBuffersJump! 1<CR>')
+--vim.keymap.set('n', '<M-2>', '<cmd>LualineBuffersJump! 2<CR>')
+--vim.keymap.set('n', '<M-3>', '<cmd>LualineBuffersJump! 3<CR>')
+--vim.keymap.set('n', '<M-4>', '<cmd>LualineBuffersJump! $<CR>')
+--vim.keymap.set('n', '<M-.>', '<cmd>bn<CR>')
+--vim.keymap.set('n', '<M-,>', '<cmd>bp<CR>')
 
 -- A snazzy bufferline for Neovim
 -- https://github.com/akinsho/bufferline.nvim
 require("bufferline").setup { -- {{{1
     options = {
         always_show_bufferline = false,
-        themable = false, -- allows highlight groups to be overriden i.e. sets highlights as default
         numbers = "ordinal",
-        diagnostics = "nvim_lsp",
+        diagnostics = false,
         show_buffer_icons = false,
         show_buffer_close_icons = false,
         show_close_icon = false,
         show_tab_indicators = false,
         show_duplicate_prefix = false, -- whether to show duplicate buffer prefix
         persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
-        separator_style = "thin",
+        separator_style = "any",
     },
+    highlights = {
+      fill = {
+        bg = 'none',
+      },
+      separator = {
+        bg = 'none',
+      },
+      -- same as lualine(Tomorrow)
+      background = {
+        bg = '#c8c8c8',
+      },
+      numbers = {
+        bg = '#c8c8c8',
+      },
+      modified = {
+        bg = '#c8c8c8',
+      },
+      duplicate = {
+        bg = '#c8c8c8',
+      },
+      buffer_selected = {
+        bg = '#b4b4b4',
+      },
+      numbers_selected = {
+        bg = '#b4b4b4',
+      },
+      modified_selected = {
+        bg = '#b4b4b4',
+      },
+      duplicate_selected = {
+        bg = '#b4b4b4',
+      },
+    }
 }
 vim.keymap.set('n', 'gb', '<cmd>BufferLinePick<CR>')
 vim.keymap.set('n', '<M-1>', '<cmd>BufferLineGoToBuffer 1<CR>')
@@ -287,4 +337,27 @@ vim.keymap.set('n', '<M-.>', '<cmd>BufferLineCycleNext<CR>')
 vim.keymap.set('n', '<M-,>', '<cmd>BufferLineCyclePrev<CR>')
 vim.keymap.set('n', '<M-0>', '<cmd>BufferLineMoveNext<CR>')
 vim.keymap.set('n', '<M-9>', '<cmd>BufferLineMovePrev<CR>')
+
+
+-- Neovim plugin to manage the file system and other tree like structures.
+-- https://github.com/nvim-neo-tree/neo-tree.nvim
+require("neo-tree").setup { -- {{{1
+  sources = {
+    "filesystem",
+    "buffers",
+    "git_status",
+    "document_symbols",
+  },
+  window = {
+    mappings = {
+      ["<space>"] = {
+        nowait = true, -- disable `nowait` if you have existing combos starting with this char that you want to use
+      },
+    },
+  },
+}
+vim.keymap.set('n', '<leader>t', '<cmd>Neotree toggle<CR>')
+vim.keymap.set('n', '<leader>f', '<cmd>Neotree buffers<CR>')
+vim.keymap.set('n', '<leader>s', '<cmd>Neotree document_symbols<CR>')
+
 
