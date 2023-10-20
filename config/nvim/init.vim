@@ -89,7 +89,8 @@ endif
 if exists('&ambw')
 "   set ambiwidth=double
     call setcellwidths([
-      \ [0x2605, 0x2606, 2],
+      \ [ 0x2600,  0x27FF, 2],
+      \ [0x1F000, 0x1FFFF, 2],
       \ [0x25cb, 0x25cf, 2],
       \ [0x203b, 0x203b, 2],
       \ [0x25b3, 0x25b3, 2],
