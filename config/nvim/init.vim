@@ -369,11 +369,20 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'stevearc/aerial.nvim'
     " 主题配色
     Plug 'Th3Whit3Wolf/one-nvim'
+    " 语言(Ansible)
+    Plug 'pearofducks/ansible-vim'
     " 语言(Dart)
     Plug 'dart-lang/dart-vim-plugin'
     " 语言(Elvish)
     Plug 'chlorm/vim-syntax-elvish'
 call plug#end()
+
+" A vim plugin for syntax highlighting Ansible's common filetypes {{{2
+" https://github.com/pearofducks/ansible-vim
+autocmd BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+let g:ansible_yamlKeyName = 'yamlKey'
+let g:ansible_attribute_highlight = "ob"
+let g:ansible_name_highlight = 'd'
 
 
 " Syntax highlighting for Dart in Vim {{{2
