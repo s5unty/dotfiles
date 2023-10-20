@@ -26,7 +26,7 @@ set updatetime=1000
 set showcmd " 右下方显示按键序列
 set winaltkeys=no
 set cinoptions=:0
-set timeoutlen=500
+set timeoutlen=300
 set ttimeoutlen=50
 set timeout
 set autoread
@@ -117,16 +117,6 @@ function! SpaceAddBetweenEnglishChinese() range
     endfor
 endfunction
 
-" Space键 翻页/打开折叠
-function! G_GoodSpace()
-    if foldclosed('.') != -1
-        normal zO
-    else
-        exec "normal \<C-D>"
-        normal zz
-    endif
-endfunction
-
 " 0键在行首与行顶间交替，顺便打开折叠
 function! G_Good0()
     if foldclosed('.') != -1
@@ -159,16 +149,6 @@ function! G_GotoEditor()
     endif
 endfunction
 
-" 关闭当前 Buffer
-function! G_CloseBuffer()
-    call G_GotoEditor()
-    let name = fnamemodify(expand('%'), ':t')
-
-    exec "normal /" . name . "\<CR>"
-    normal d
-    call G_GotoEditor()
-endfunction
-
 if has("autocmd")
     function! <SID>AC_ResetCursorPosition()
         if line("'\"") > 1 && line("'\"") <= line("$")
@@ -197,7 +177,7 @@ if has("autocmd")
 
     " 这样加快输入法自动切换时的体感速度
     autocmd InsertEnter * set timeoutlen=50
-    autocmd InsertLeave * set timeoutlen=500
+    autocmd InsertLeave * set timeoutlen=300
 
     " 每次访问文件时都把光标放置在上次离开的位置
     autocmd BufReadPost *
@@ -244,7 +224,8 @@ nmap <silent> <unique> <F12> <C-]>zz
 " Single Key {{{2
 nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
 nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
-nmap <silent> <unique> <Space> :call G_GoodSpace()<CR>
+nmap <silent> <unique> <Space> <C-D>
+nmap <silent> <unique> <Tab> za
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' $
@@ -253,9 +234,9 @@ nmap <silent> <unique> 0 :call G_Good0()<CR>
 vmap <silent> <unique> ; :call SpaceAddBetweenEnglishChinese()<CR>
 
 " Shift+ {{{2
-nnor <silent> <unique> H :call DevHelpCurrentWord()<CR>
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :qa!<CR>
+nmap <silent> <unique> <S-Tab> zA
 nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
 nmap          <unique> <S-F8> :SyntasticCheck<CR>
 nmap <silent> <unique> <S-F9> q:<UP>
@@ -296,7 +277,7 @@ imap <silent> <unique> <Esc>f <C-O>w
 imap <silent> <unique> <Esc>d <C-O>dw
 endif
 
-" Leader+ , Leader char is ';' {{{2
+" Leader+ , Leader char is '<Space>' {{{2
 let mapleader=' '
 let maplocalleader=','
 nmap <silent> <unique> <Leader>q :q<CR>
@@ -307,8 +288,6 @@ nmap <silent> <unique> <Leader>l <C-W>l
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>d :call G_CloseBuffer()<CR>
-nmap <silent> <unique> <Leader>a :GundoToggle<CR>
 vmap <silent> <unique> <Leader>a <Plug>VimSumVisual
 
 " Colon+, Colon char is ':' {{{2
