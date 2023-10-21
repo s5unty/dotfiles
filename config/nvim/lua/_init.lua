@@ -344,26 +344,6 @@ vim.keymap.set('n', '<M-0>', '<cmd>BufferLineMoveNext<CR>')
 vim.keymap.set('n', '<M-9>', '<cmd>BufferLineMovePrev<CR>')
 
 
--- https://github.com/nvim-neo-tree/neo-tree.nvim -- {{{1
--- Neovim plugin to manage the file system and other tree like structures.
-require("neo-tree").setup {
-  sources = {
-    "filesystem",
-    "buffers",
-    "git_status",
-    "document_symbols",
-  },
-  window = {
-    mappings = {
-      ["<space>"] = {
-        nowait = true, -- disable `nowait` if you have existing combos starting with this char that you want to use
-      },
-    },
-  },
-}
-vim.keymap.set('n', '<leader>t', '<cmd>Neotree toggle<CR>')
-vim.keymap.set('n', '<leader>f', '<cmd>Neotree buffers<CR>')
-vim.keymap.set('n', '<leader>s', '<cmd>Neotree document_symbols<CR>')
 
 
 -- https://github.com/Bekaboo/dropbar.nvim -- {{{1
@@ -386,4 +366,21 @@ require('dropbar').setup {
       },
     },
   },
+}
+
+-- https://github.com/nvim-telescope/telescope.nvim {{{1
+-- Find, Filter, Preview, Pick. All lua, all the time.
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+require('telescope').setup {
+}
+
+
+-- https://github.com/NeogitOrg/neogit {{{1
+-- A Magit clone for Neovim.
+local neogit = require('neogit')
+neogit.setup {
 }

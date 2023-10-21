@@ -42,7 +42,6 @@ set laststatus=2 " 始终显示状态栏
 set noshowmode " 忽略内置的模式显示功能
 set undolevels=500
 set diffopt=filler,iwhite
-set rtp+=/usr/bin/fzf
 set guicursor=a:blinkon100 " 让光标抖起来
 set shell=/usr/bin/zsh
 set background=light
@@ -204,22 +203,24 @@ nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>
 imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>a
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
 imap <silent> <unique> <F2> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
-nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
+nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>:Inspect<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 set pastetoggle=<F4>
-if has('nvim')
-nmap          <unique> <F5> :terminal git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
-else
-nmap          <unique> <F5> :!git difftool --tool=vimdiff -y HEAD -- %<LEFT><LEFT><LEFT><LEFT><LEFT>
-endif
-nmap <silent> <unique> <F6> :Inspect<CR>
-nmap          <unique> <F7> :set formatoptions+=12mnM<CR>
-nmap <silent> <unique> <F8> :make!<CR>
-nmap <silent> <unique> <F9> :History<CR>
-nmap <silent> <unique> <F10> :<CR>
-nmap <silent> <unique> <F11> <ESC>:tselect <C-R>=expand('<cword>')<CR><CR>
+nmap          <unique> <F5> <cmd>Gdiffsplit<CR>
+nmap <silent> <unique> <F6> <cmd>Telescope git_status<CR>
+nmap <silent> <unique> <F7> <cmd>Telescope live_grep<CR>
+imap <silent> <unique> <F7> <cmd>Telescope live_grep<CR>
+vmap <silent> <unique> <F8> <cmd>Telescope grep_string<CR>
+nmap <silent> <unique> <F8> <cmd>Telescope grep_string<CR>
+imap <silent> <unique> <F8> <cmd>Telescope grep_string<CR>
+nmap <silent> <unique> <F9> <cmd>Telescope lsp_references<CR>
+imap <silent> <unique> <F9> <cmd>Telescope lsp_references<CR>
+nmap <silent> <unique> <F10> <cmd>Telescope buffers<CR>
+imap <silent> <unique> <F10> <cmd>Telescope buffers<CR>
+nmap <silent> <unique> <F11> <cmd>Telescope oldfiles<CR>
+imap <silent> <unique> <F11> <cmd>Telescope oldfiles<CR>
 nmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
@@ -236,7 +237,7 @@ vmap <silent> <unique> ; :call SpaceAddBetweenEnglishChinese()<CR>
 
 " Shift+ {{{2
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
-nmap <silent> <unique> Q :qa!<CR>
+nmap <silent> <unique> Q :q!<CR>
 nmap <silent> <unique> <S-Tab> zA
 nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
 nmap          <unique> <S-F8> :SyntasticCheck<CR>
@@ -245,7 +246,7 @@ nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
 imap <silent> <unique> <S-Space> <C-V><Space>
 
 " Ctrl+ {{{2
-nmap <silent> <unique> <C-Q> :q!<CR>
+nmap <silent> <unique> <C-Q> :qa!<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
@@ -311,11 +312,7 @@ call plug#begin('~/.config/nvim/bundles')
     " 著名的 Powerline
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'nvim-tree/nvim-web-devicons'
-    " 侧边栏导航(目录、缓存区、标记)
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'MunifTanjim/nui.nvim'
-    Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v3.x' }
-    " 标题栏导航(目录、缓存区、标记)
+    " 在标题栏展示助记符
     Plug 'Bekaboo/dropbar.nvim', { 'branch': 'feat-winbar-background-highlight' }
     " 习惯了 buffer
     Plug 'akinsho/bufferline.nvim'
@@ -327,9 +324,9 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'emugel/vim-sum'
     " 光标下的单词高亮
     Plug 'RRethy/vim-illuminate'
-    " 增量的模糊查询 [o]fzf [x]denite
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
+    " 增量的模糊查询 [o]telescope [x]fzf [x]denite
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     " 预览窗的快捷键
     Plug 'ronakg/quickr-preview.vim'
     " 补全框架(代码、模板、路径等)
@@ -347,6 +344,9 @@ call plug#begin('~/.config/nvim/bundles')
     " 模板引擎 [o]snippy [x]LuaSnip [x]vsnip
     Plug 'dcampos/nvim-snippy'
     Plug 'dcampos/cmp-snippy'
+    " 版本管理(:Gdiffsplit)
+    Plug 'tpope/vim-fugitive'
+    Plug 'NeogitOrg/neogit'
     " 大纲导航
     Plug 'stevearc/aerial.nvim'
     " 主题配色
