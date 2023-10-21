@@ -391,7 +391,6 @@ augroup END
 " An Atom One inspired dark and light colorscheme for neovim.
 colorscheme one-nvim
 hi Todo guibg=yellow
-hi Visual guibg=lightyellow
 
 
 " }}}1
