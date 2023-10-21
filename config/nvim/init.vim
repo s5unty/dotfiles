@@ -47,6 +47,7 @@ set guicursor=a:blinkon100 " 让光标抖起来
 set shell=/usr/bin/zsh
 set background=light
 set termguicolors
+set t_Co=256
 set undodir=~/.local/share/nvim/undo/
 set undofile
 set signcolumn=number " 提示符嵌在行号栏
@@ -310,10 +311,12 @@ call plug#begin('~/.config/nvim/bundles')
     " 著名的 Powerline
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'nvim-tree/nvim-web-devicons'
-    " 侧边导航(目录、缓存区、标记)
+    " 侧边栏导航(目录、缓存区、标记)
     Plug 'nvim-lua/plenary.nvim'
     Plug 'MunifTanjim/nui.nvim'
     Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v3.x' }
+    " 标题栏导航(目录、缓存区、标记)
+    Plug 'Bekaboo/dropbar.nvim', { 'branch': 'feat-winbar-background-highlight' }
     " 习惯了 buffer
     Plug 'akinsho/bufferline.nvim'
     " 为什么我没这种需求
@@ -356,8 +359,8 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'chlorm/vim-syntax-elvish'
 call plug#end()
 
-" A vim plugin for syntax highlighting Ansible's common filetypes {{{2
-" https://github.com/pearofducks/ansible-vim
+" https://github.com/pearofducks/ansible-vim {{{2
+" A vim plugin for syntax highlighting Ansible's common filetypes
 autocmd BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
 let g:ansible_yamlKeyName = 'yamlKey'
 let g:ansible_attribute_highlight = "ob"
@@ -370,8 +373,8 @@ let g:dart_style_guide = 2
 let g:dart_format_on_save = v:false
 
 
-" Quickly preview Quickfix results in vim without opening the file {{{2
-" https://github.com/ronakg/quickr-preview.vim
+" https://github.com/ronakg/quickr-preview.vim {{{2
+" Quickly preview Quickfix results in vim without opening the file
 let g:quickr_preview_keymaps = 0
 let g:quickr_preview_exit_on_enter = 1
 function! QuickfixMapping()
@@ -384,8 +387,8 @@ augroup quickfix_group
 augroup END
 
 
-" An Atom One inspired dark and light colorscheme for neovim. {{{2
-" https://github.com/Th3Whit3Wolf/one-nvim
+" https://github.com/Th3Whit3Wolf/one-nvim {{{2
+" An Atom One inspired dark and light colorscheme for neovim.
 colorscheme one-nvim
 hi Todo guibg=yellow
 hi Visual guibg=lightyellow

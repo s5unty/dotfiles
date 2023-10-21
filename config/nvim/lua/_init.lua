@@ -2,8 +2,8 @@ local api = vim.api
 local cmd = vim.cmd
 local map = vim.keymap.set
 
--- nvim-cmp: A completion plugin for neovim coded in Lua. {{{1
--- https://github.com/hrsh7th/nvim-cmp
+-- https://github.com/hrsh7th/nvim-cmp -- {{{1
+-- nvim-cmp: A completion plugin for neovim coded in Lua.
 local cmp = require'cmp'
 local snippy = require'snippy'
 local lspkind = require'lspkind'
@@ -109,8 +109,8 @@ cmp.setup.cmdline(':', {
 })
 
 
--- cmp_nvim_lsp {{{1
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md -- {{{1
+-- cmp_nvim_lsp
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 lspconfig.dartls.setup {
@@ -127,8 +127,8 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- https://github.com/hrsh7th/nvim-cmp/issues/685#issuecomment-1002924899 -- {{{2
 -- How can I hide (or ignore specific) hints?
--- https://github.com/hrsh7th/nvim-cmp/issues/685#issuecomment-1002924899
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     signs = {
@@ -156,30 +156,30 @@ map("n", "<leader>ge",  function() vim.diagnostic.setqflist({ severity = "E" }) 
 map("n", "<leader>gw",  function() vim.diagnostic.setqflist({ severity = "W" }) end)
 
 
+-- https://github.com/windwp/nvim-autopairs -- {{{1
 -- autopairs for neovim written by lua
--- https://github.com/windwp/nvim-autopairs
-require("nvim-autopairs").setup { -- {{{1
+require("nvim-autopairs").setup {
 
 }
 
 
+-- https://github.com/kylechui/nvim-surround -- {{{1
 -- Add/change/delete surrounding delimiter pairs with ease. Written with in Lua.
--- https://github.com/kylechui/nvim-surround
-require("nvim-surround").setup { -- {{{1
+require("nvim-surround").setup {
 
 }
 
 
+-- https://github.com/RRethy/vim-illuminate -- {{{1
 -- Vim plugin for automatically highlighting other uses of the word under the...
--- https://github.com/RRethy/vim-illuminate
-require('illuminate').configure { -- {{{1
+require('illuminate').configure {
   delay = 600,
 }
 
 
+-- https://github.com/nvim-treesitter/nvim-treesitter -- {{{1
 -- Nvim Treesitter configurations and abstraction layer
--- https://github.com/nvim-treesitter/nvim-treesitter
-require('nvim-treesitter.configs').setup { -- {{{1
+require('nvim-treesitter.configs').setup {
   ensure_installed = { "bash", "elvish", "go", "groovy", "yaml", "lua", "vim", "vimdoc", "query" },
   highlight = {
     enable = true,
@@ -215,9 +215,9 @@ require'treesitter-context'.setup {
   enable = true,
 }
 
+-- https://github.com/stevearc/aerial.nvim -- {{{1
 -- Neovim plugin for a code outline window
--- https://github.com/stevearc/aerial.nvim
-require("aerial").setup { -- {{{1
+require("aerial").setup {
   backends = { "lsp", "treesitter", "markdown", "man" },
   layout = {
       resize_to_content = false,
@@ -241,9 +241,9 @@ require("aerial").setup { -- {{{1
 vim.keymap.set('n', '<leader>z', '<cmd>AerialToggle!<CR>')
 
 
+-- https://github.com/alohaia/fcitx.nvim -- {{{1
 -- A Neovim plugin for storing and restoring fcitx status of several mode groups separately.
--- https://github.com/alohaia/fcitx.nvim
-require('fcitx') { -- {{{1
+require('fcitx') {
     enable = {
         normal   = true,
         insert   = true,
@@ -254,27 +254,27 @@ require('fcitx') { -- {{{1
     },
 }
 
+-- https://github.com/nvim-lualine/lualine.nvim -- {{{1
 -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
--- https://github.com/nvim-lualine/lualine.nvim
-require('lualine').setup { -- {{{1
+require('lualine').setup {
     options = {
         globalstatus = true,
         icons_enabled = true,
         theme = 'Tomorrow',
         path = 1,
     },
---    tabline = {
---      lualine_a = {
---        {
---          'buffers',
---          icons_enabled = false,
---          component_separators = { left = '', right = ''},
---          section_separators = { left = '', right = ''},
---          mode = 2,
---          use_mode_colors = true,
---        }
+--  tabline = {
+--    lualine_a = {
+--      {
+--        'buffers',
+--        icons_enabled = false,
+--        component_separators = { left = '', right = ''},
+--        section_separators = { left = '', right = ''},
+--        mode = 2,
+--        use_mode_colors = true,
 --      }
 --    }
+--  }
 }
 --vim.keymap.set('n', '<M-1>', '<cmd>LualineBuffersJump! 1<CR>')
 --vim.keymap.set('n', '<M-2>', '<cmd>LualineBuffersJump! 2<CR>')
@@ -283,9 +283,10 @@ require('lualine').setup { -- {{{1
 --vim.keymap.set('n', '<M-.>', '<cmd>bn<CR>')
 --vim.keymap.set('n', '<M-,>', '<cmd>bp<CR>')
 
+
+-- https://github.com/akinsho/bufferline.nvim -- {{{1
 -- A snazzy bufferline for Neovim
--- https://github.com/akinsho/bufferline.nvim
-require("bufferline").setup { -- {{{1
+require("bufferline").setup {
     options = {
         always_show_bufferline = false,
         numbers = "ordinal",
@@ -307,28 +308,28 @@ require("bufferline").setup { -- {{{1
       },
       -- same as lualine(Tomorrow)
       background = {
-        bg = '#c8c8c8',
+        bg = 'none',
       },
       numbers = {
-        bg = '#c8c8c8',
+        bg = 'none',
       },
       modified = {
-        bg = '#c8c8c8',
+        bg = 'none',
       },
       duplicate = {
-        bg = '#c8c8c8',
+        bg = 'none',
       },
       buffer_selected = {
-        bg = '#b4b4b4',
+        bg = 'none',
       },
       numbers_selected = {
-        bg = '#b4b4b4',
+        bg = 'none',
       },
       modified_selected = {
-        bg = '#b4b4b4',
+        bg = 'none',
       },
       duplicate_selected = {
-        bg = '#b4b4b4',
+        bg = 'none',
       },
     }
 }
@@ -343,9 +344,9 @@ vim.keymap.set('n', '<M-0>', '<cmd>BufferLineMoveNext<CR>')
 vim.keymap.set('n', '<M-9>', '<cmd>BufferLineMovePrev<CR>')
 
 
+-- https://github.com/nvim-neo-tree/neo-tree.nvim -- {{{1
 -- Neovim plugin to manage the file system and other tree like structures.
--- https://github.com/nvim-neo-tree/neo-tree.nvim
-require("neo-tree").setup { -- {{{1
+require("neo-tree").setup {
   sources = {
     "filesystem",
     "buffers",
@@ -365,3 +366,24 @@ vim.keymap.set('n', '<leader>f', '<cmd>Neotree buffers<CR>')
 vim.keymap.set('n', '<leader>s', '<cmd>Neotree document_symbols<CR>')
 
 
+-- https://github.com/Bekaboo/dropbar.nvim -- {{{1
+-- A polished, IDE-like, highly-customizable winbar for Neovim
+vim.cmd [[hi WinBar guisp=#c8c8c8 gui=none guibg=#c8c8c8]]
+vim.cmd [[hi WinBarNC guisp=#c8c8c8 gui=none guibg=#c8c8c8]]
+require('dropbar').setup {
+  general = {
+    update_interval = 100,
+  },
+  icons = {
+    ui = {
+      bar = {
+        separator = ' ',
+        extends = '…',
+      },
+      menu = {
+        separator = ' ',
+        indicator = ' ',
+      },
+    },
+  },
+}
