@@ -1,5 +1,7 @@
 # need to be complied --!
 # lesskey -o ~/.less ~/.lesskey
+#
+# 近代不用再编译了 :)
 
 #command
 ? help
@@ -9,7 +11,11 @@ i quit
 \40 forw-scroll
 ;   toggle-option
 
-v pipe . ansi2txt | vim - \n
+l   right-scroll
+h   left-scroll
 
-l right-scroll
-h left-scroll
+# https://www.du1ab.one/2009/less-tips/
+# 编辑当前页
+v pipe  . ansi2txt | vim - \n
+# 编辑缓冲区
+V pipe \^ ansi2txt | vim - \n
