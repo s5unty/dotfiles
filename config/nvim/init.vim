@@ -388,6 +388,7 @@ augroup END
 " https://github.com/Th3Whit3Wolf/one-nvim
 colorscheme one-nvim
 hi Todo guibg=yellow
+hi Visual guibg=lightyellow
 
 
 " }}}1
