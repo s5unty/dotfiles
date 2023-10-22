@@ -359,8 +359,20 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 require('telescope').setup {
+  extensions = {
+    undo = {
+      use_delta = false,
+      mappings = {
+        i, n = {
+          ["<cr>"] = require("telescope-undo.actions").yank_additions,
+          ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
+          ["<C-cr>"] = require("telescope-undo.actions").restore,
+        },
+      },
+    },
+  },
 }
-
+require("telescope").load_extension("undo")
 
 -- https://github.com/NeogitOrg/neogit {{{1
 -- A Magit clone for Neovim.
@@ -408,6 +420,9 @@ hooks.register(
   hooks.builtin.hide_first_tab_indent_level
 )
 
---
---
+-- https://github.com/ggandor/leap.nvim {{{1
+-- establishing a new standard interface for moving around in the visible area in Vim-like modal editors.
+require('leap').add_default_mappings()
 
+--
+--

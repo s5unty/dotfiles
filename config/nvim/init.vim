@@ -130,25 +130,6 @@ function! G_Good0()
     endif
 endfunction
 
-" 跳转至文件编辑窗口
-" 参照 tabbar.vim 插件的 <SID>Bf_CrSel() 函数
-function! G_GotoEditor()
-    if &buftype != ''
-        wincmd w
-        if &buftype != ''
-            wincmd w
-            if &buftype != ''
-                wincmd w
-                if &buftype != ''
-                    wincmd W
-                    wincmd W
-                    wincmd W
-                endif
-            endif
-        endif
-    endif
-endfunction
-
 if has("autocmd")
     function! <SID>AC_ResetCursorPosition()
         if line("'\"") > 1 && line("'\"") <= line("$")
@@ -226,8 +207,8 @@ imap <silent> <unique> <F11> <cmd>Telescope oldfiles<CR>
 nmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
-nmap <silent> <unique> <Backspace> :call G_GotoEditor()<CR><C-O>zz
-nmap <silent> <unique> \ :call G_GotoEditor()<CR><C-I>zz
+nmap <silent> <unique> <Backspace> <C-O>zz
+nmap <silent> <unique> \ <C-I>zz
 nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> <Tab> za
 nmap <silent> <unique> - <C-U>
@@ -263,22 +244,10 @@ if has("gui_running")
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
-elseif &term == "nvim"
-nmap <silent> <unique> <M-Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
-nmap <silent> <unique> <M-\> :call G_GotoEditor()<CR>:tag<CR>zz
-nmap <silent> <unique> <M-`> :call G_GotoEditor()<CR>:e #<CR>
-imap <silent> <unique> <M-`> <ESC>:call G_GotoEditor()<CR>:e #<CR>a
+else
 imap <silent> <unique> <M-b> <C-O>b
 imap <silent> <unique> <M-f> <C-O>w
 imap <silent> <unique> <M-d> <C-O>dw
-else
-nmap <silent> <unique> <Esc><Backspace> :call G_GotoEditor()<CR>:pop<CR>zz
-nmap <silent> <unique> <Esc>\ :call G_GotoEditor()<CR>:tag<CR>zz
-nmap <silent> <unique> <Esc>` :call G_GotoEditor()<CR>:e #<CR>
-imap <silent> <unique> <Esc>` <ESC>:call G_GotoEditor()<CR>:e #<CR>a
-imap <silent> <unique> <Esc>b <C-O>b
-imap <silent> <unique> <Esc>f <C-O>w
-imap <silent> <unique> <Esc>d <C-O>dw
 endif
 
 " Leader+ , Leader char is '<Space>' {{{2
@@ -307,8 +276,11 @@ command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp 
 
 " Plugged {{{1
 call plug#begin('~/.config/nvim/bundles')
+    " 光标跑酷(哇哦~)
+    Plug 'ggandor/leap.nvim'
+    " 缩进辅助线
     Plug 'lukas-reineke/indent-blankline.nvim'
-    " 文件管理
+    " 文件检索
     Plug 'stevearc/oil.nvim'
     " 标题栏利用 [o]dropbar [x]barbecue
     Plug 'Bekaboo/dropbar.nvim', { 'branch': 'feat-winbar-background-highlight' }
@@ -316,15 +288,17 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'tpope/vim-fugitive'
     Plug 'NeogitOrg/neogit'
     " 增量的模糊查询 [o]telescope [x]fzf [x]denite
-    Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+    Plug 'debugloop/telescope-undo.nvim'
+    " 被依赖的公共库
+    Plug 'nvim-tree/nvim-web-devicons'
+    Plug 'nvim-lua/plenary.nvim'
     " 在模式间切换输入法
     Plug 'alohaia/fcitx.nvim'
     " 自动补全括号引号
     Plug 'windwp/nvim-autopairs'
     " 著名的 Powerline
     Plug 'nvim-lualine/lualine.nvim'
-    Plug 'nvim-tree/nvim-web-devicons'
     " 习惯了 buffer
     Plug 'akinsho/bufferline.nvim'
     " 为什么我没这种需求
