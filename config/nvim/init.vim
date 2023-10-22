@@ -208,8 +208,10 @@ imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
 set pastetoggle=<F4>
-nmap          <unique> <F5> <cmd>Gdiffsplit<CR>
-nmap <silent> <unique> <F6> <cmd>Telescope git_status<CR>
+nmap <silent> <unique> <F5> <cmd>Gdiffsplit<CR>
+imap <silent> <unique> <F5> <cmd>Gdiffsplit<CR>
+nmap <silent> <unique> <F6> <cmd>Neogit<CR>
+imap <silent> <unique> <F6> <cmd>Neogit<CR>
 nmap <silent> <unique> <F7> <cmd>Telescope live_grep<CR>
 imap <silent> <unique> <F7> <cmd>Telescope live_grep<CR>
 vmap <silent> <unique> <F8> <cmd>Telescope grep_string<CR>
@@ -305,6 +307,17 @@ command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp 
 
 " Plugged {{{1
 call plug#begin('~/.config/nvim/bundles')
+    Plug 'lukas-reineke/indent-blankline.nvim'
+    " 文件管理
+    Plug 'stevearc/oil.nvim'
+    " 标题栏利用 [o]dropbar [x]barbecue
+    Plug 'Bekaboo/dropbar.nvim', { 'branch': 'feat-winbar-background-highlight' }
+    " 版本管理(:Gdiffsplit)
+    Plug 'tpope/vim-fugitive'
+    Plug 'NeogitOrg/neogit'
+    " 增量的模糊查询 [o]telescope [x]fzf [x]denite
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     " 在模式间切换输入法
     Plug 'alohaia/fcitx.nvim'
     " 自动补全括号引号
@@ -312,8 +325,6 @@ call plug#begin('~/.config/nvim/bundles')
     " 著名的 Powerline
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'nvim-tree/nvim-web-devicons'
-    " 在标题栏展示助记符
-    Plug 'Bekaboo/dropbar.nvim', { 'branch': 'feat-winbar-background-highlight' }
     " 习惯了 buffer
     Plug 'akinsho/bufferline.nvim'
     " 为什么我没这种需求
@@ -322,11 +333,6 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'vim-scripts/VisIncr'
     " 数值的求和
     Plug 'emugel/vim-sum'
-    " 光标下的单词高亮
-    Plug 'RRethy/vim-illuminate'
-    " 增量的模糊查询 [o]telescope [x]fzf [x]denite
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     " 预览窗的快捷键
     Plug 'ronakg/quickr-preview.vim'
     " 补全框架(代码、模板、路径等)
@@ -344,9 +350,6 @@ call plug#begin('~/.config/nvim/bundles')
     " 模板引擎 [o]snippy [x]LuaSnip [x]vsnip
     Plug 'dcampos/nvim-snippy'
     Plug 'dcampos/cmp-snippy'
-    " 版本管理(:Gdiffsplit)
-    Plug 'tpope/vim-fugitive'
-    Plug 'NeogitOrg/neogit'
     " 大纲导航
     Plug 'stevearc/aerial.nvim'
     " 主题配色

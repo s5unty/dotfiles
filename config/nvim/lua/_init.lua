@@ -170,13 +170,6 @@ require("nvim-surround").setup {
 }
 
 
--- https://github.com/RRethy/vim-illuminate -- {{{1
--- Vim plugin for automatically highlighting other uses of the word under the...
-require('illuminate').configure {
-  delay = 600,
-}
-
-
 -- https://github.com/nvim-treesitter/nvim-treesitter -- {{{1
 -- Nvim Treesitter configurations and abstraction layer
 require('nvim-treesitter.configs').setup {
@@ -195,11 +188,13 @@ require('nvim-treesitter.configs').setup {
       end
     end,
   },
+  -- https://github.com/nvim-treesitter/nvim-treesitter-refactor {{{2
+  -- Refactor modules for nvim-treesitter
   refactor = {
     highlight_definitions = {
       enable = true,
       -- Set to false if you have an `updatetime` of ~100.
-      clear_on_cursor_move = true,
+      clear_on_cursor_move = false,
     },
     smart_rename = {
       enable = true,
@@ -210,7 +205,8 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
-
+-- https://github.com/nvim-treesitter/nvim-treesitter-context {{{2
+-- A Vim plugin that shows the context of the currently visible buffer contents.
 require'treesitter-context'.setup {
   enable = true,
 }
@@ -263,25 +259,7 @@ require('lualine').setup {
         theme = 'Tomorrow',
         path = 1,
     },
---  tabline = {
---    lualine_a = {
---      {
---        'buffers',
---        icons_enabled = false,
---        component_separators = { left = '', right = ''},
---        section_separators = { left = '', right = ''},
---        mode = 2,
---        use_mode_colors = true,
---      }
---    }
---  }
 }
---vim.keymap.set('n', '<M-1>', '<cmd>LualineBuffersJump! 1<CR>')
---vim.keymap.set('n', '<M-2>', '<cmd>LualineBuffersJump! 2<CR>')
---vim.keymap.set('n', '<M-3>', '<cmd>LualineBuffersJump! 3<CR>')
---vim.keymap.set('n', '<M-4>', '<cmd>LualineBuffersJump! $<CR>')
---vim.keymap.set('n', '<M-.>', '<cmd>bn<CR>')
---vim.keymap.set('n', '<M-,>', '<cmd>bp<CR>')
 
 
 -- https://github.com/akinsho/bufferline.nvim -- {{{1
@@ -298,6 +276,13 @@ require("bufferline").setup {
         show_duplicate_prefix = false, -- whether to show duplicate buffer prefix
         persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
         separator_style = "any",
+        custom_filter = function(buf_number, buf_numbers)
+          -- https://github.com/stevearc/oil.nvim {{{2
+          -- Neovim file explorer: edit your filesystem like a buffer
+          if vim.bo[buf_number].filetype ~= "oil" then
+            return true
+          end
+        end,
     },
     highlights = {
       fill = {
@@ -306,7 +291,6 @@ require("bufferline").setup {
       separator = {
         bg = 'none',
       },
-      -- same as lualine(Tomorrow)
       background = {
         bg = 'none',
       },
@@ -344,8 +328,6 @@ vim.keymap.set('n', '<M-0>', '<cmd>BufferLineMoveNext<CR>')
 vim.keymap.set('n', '<M-9>', '<cmd>BufferLineMovePrev<CR>')
 
 
-
-
 -- https://github.com/Bekaboo/dropbar.nvim -- {{{1
 -- A polished, IDE-like, highly-customizable winbar for Neovim
 vim.cmd [[hi WinBar guisp=#c8c8c8 gui=none guibg=#c8c8c8]]
@@ -368,6 +350,7 @@ require('dropbar').setup {
   },
 }
 
+
 -- https://github.com/nvim-telescope/telescope.nvim {{{1
 -- Find, Filter, Preview, Pick. All lua, all the time.
 local builtin = require('telescope.builtin')
@@ -384,3 +367,47 @@ require('telescope').setup {
 local neogit = require('neogit')
 neogit.setup {
 }
+
+
+-- https://github.com/stevearc/oil.nvim {{{1
+-- Neovim file explorer: edit your filesystem like a buffer
+require("oil").setup {
+  use_default_keymaps = true,
+  keymaps = {
+    ["?"]       = "actions.show_help",
+    ["Q"]       = "actions.close",
+    ["l"]       = "actions.select",
+    ["<CR>"]    = "actions.select",
+    ["L"]       = "actions.select_vsplit",
+    ["S"]       = "actions.select_split",
+    ["P"]       = "actions.select_tab",
+    ["-"]       = "actions.parent",
+    ["h"]       = "actions.parent",
+    ["p"]       = "actions.preview",
+    ["<C-l>"]   = "actions.refresh",
+  },
+}
+vim.keymap.set("n", "_", "<cmd>Oil<CR>", { desc = "Open parent directory" })
+
+
+-- https://github.com/lukas-reineke/indent-blankline.nvim {{{1
+-- This plugin adds indentation guides to Neovim.
+require("ibl").setup {
+  scope = {
+    enabled = false,
+  },
+}
+-- 隐藏第一条缩进线
+local hooks = require "ibl.hooks"
+hooks.register(
+  hooks.type.WHITESPACE,
+  hooks.builtin.hide_first_space_indent_level
+)
+hooks.register(
+  hooks.type.WHITESPACE,
+  hooks.builtin.hide_first_tab_indent_level
+)
+
+--
+--
+
