@@ -2,6 +2,48 @@ local api = vim.api
 local cmd = vim.cmd
 local map = vim.keymap.set
 
+-- https://github.com/williamboman/mason.nvim {{{1
+-- Easily install and manage LSP servers, DAP servers, linters, and formatters.
+require("mason").setup {}
+
+
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md -- {{{1
+-- configs for the nvim lsp client
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lspconfig = require('lspconfig')
+lspconfig.ansiblels.setup{
+  cmd = {
+    "~/.local/share/nvim/mason/bin/ansible-language-server",
+    "--stdio"
+  }
+}
+lspconfig.bashls.setup{
+  cmd = {
+    "~/.local/share/nvim/mason/bin/bash-language-server",
+    "start",
+  }
+}
+lspconfig.dartls.setup {
+  settings = {
+    dart = {
+      enableSnippets = false,
+    }
+  }
+}
+local servers = {
+  'ansiblels',
+  'bashls',
+  'dartls',
+  'gopls',
+  'pyright',
+}
+for _, lsp in ipairs(servers) do
+  lspconfig[lsp].setup {
+    capabilities = capabilities,
+  }
+end
+
+
 -- https://github.com/hrsh7th/nvim-cmp -- {{{1
 -- nvim-cmp: A completion plugin for neovim coded in Lua.
 local cmp = require'cmp'
@@ -108,24 +150,6 @@ cmp.setup.cmdline(':', {
   })
 })
 
-
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md -- {{{1
--- cmp_nvim_lsp
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-local lspconfig = require('lspconfig')
-lspconfig.dartls.setup {
-  settings = {
-    dart = {
-      enableSnippets = false,
-    }
-  }
-}
-local servers = { 'dartls', 'gopls', 'pyright' }
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    capabilities = capabilities,
-  }
-end
 
 -- https://github.com/hrsh7th/nvim-cmp/issues/685#issuecomment-1002924899 -- {{{2
 -- How can I hide (or ignore specific) hints?
@@ -426,3 +450,4 @@ require('leap').add_default_mappings()
 
 --
 --
+

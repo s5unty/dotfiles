@@ -310,10 +310,11 @@ call plug#begin('~/.config/nvim/bundles')
     " 预览窗的快捷键
     Plug 'ronakg/quickr-preview.vim'
     " 补全框架(代码、模板、路径等)
-    Plug 'neovim/nvim-lspconfig'  " Collection of configurations for built-in LSP client
-    Plug 'hrsh7th/nvim-cmp'       " Autocompletion plugin
-    Plug 'onsails/lspkind-nvim'   " VSCode-like pictograms
-    Plug 'hrsh7th/cmp-nvim-lsp'   " LSP source for nvim-cmp
+    Plug 'neovim/nvim-lspconfig'    " Collection of configurations for built-in LSP client
+    Plug 'williamboman/mason.nvim'  " Easily install and manage LSP servers
+    Plug 'hrsh7th/nvim-cmp'         " Autocompletion plugin
+    Plug 'onsails/lspkind-nvim'     " VSCode-like pictograms
+    Plug 'hrsh7th/cmp-nvim-lsp'     " LSP source for nvim-cmp
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
