@@ -36,7 +36,7 @@ set wildmenu
 set wildmode=list:longest,full
 set viminfo+=! " 为了 mark 能保存高亮信息
 set listchars=tab:.\ ,trail:\ ,
-set noswapfile " 内存大、禁用swapfile
+set noswapfile " 内存大、禁用 swapfile
 set history=200 " 命令行历史记录
 set laststatus=2 " 始终显示状态栏
 set noshowmode " 忽略内置的模式显示功能
@@ -117,7 +117,7 @@ function! SpaceAddBetweenEnglishChinese() range
     endfor
 endfunction
 
-" 0键在行首与行顶间交替，顺便打开折叠
+" 0 键在行首与行顶间交替，顺便打开折叠
 function! G_Good0()
     if foldclosed('.') != -1
         normal zO
@@ -369,7 +369,7 @@ augroup END
 " An Atom One inspired dark and light colorscheme for neovim.
 colorscheme one-nvim
 hi Todo guibg=yellow
-
+hi Visual guibg=lightcyan
 
 " }}}1
 
