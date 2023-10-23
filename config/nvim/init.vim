@@ -83,9 +83,9 @@ endif
 " http://www.unicode.org/reports/tr11/
 " http://lists.debian.or.jp/debian-devel/200703/msg00038.html
 " http://sakurapup.browserloadofcoolness.com/viewtopic.php?f=13&t=2
-" http://du1abadd.org/debian/UTF-8-EAW-FULLWIDTH.gz
 " https://github.com/hamano/locale-eaw/blob/master/README.md
 " https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.narrow_symbols
+" https://eng-blog.iij.ad.jp/archives/12576
 if exists('&ambw')
 "   set ambiwidth=double
     call setcellwidths([
@@ -95,7 +95,7 @@ if exists('&ambw')
       \ [0x203b, 0x203b, 2],
       \ [0x25b3, 0x25b3, 2],
       \ [0x25a1, 0x25a1, 2],
-      \ [0x2460, 0x2469, 2],
+      \ [0x2460, 0x2469, 2]
       \ ])
 endif
 
