@@ -187,6 +187,7 @@ fi
 # {{{1
 typeset -g -A key
 
+# $ kitty --config=NONE --debug-input kitty +kitten show_key -m kitty
 key[F1]='^[[11~'
 key[F2]='^[[12~'
 key[F3]='^[[13~'
@@ -201,10 +202,10 @@ key[F11]='^[[23~'
 key[F12]='^[[24~'
 key[Backspace]='^?'
 key[Insert]='^[[2~'
-key[Home]='^[[7~'
+key[Home]='^[[H'
 key[PageUp]='^[[5~'
 key[Delete]='^[[3~'
-key[End]='^[[8~'
+key[End]='^[[F'
 key[PageDown]='^[[6~'
 key[Up]='^[[A'
 key[Left]='^[[D'
