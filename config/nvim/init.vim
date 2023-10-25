@@ -370,6 +370,7 @@ augroup END
 colorscheme one-nvim
 hi Todo guibg=yellow
 hi Visual guibg=lightcyan
+hi SpecialKey guibg=#f0f0f0
 
 " }}}1
 
