@@ -182,9 +182,9 @@ map <silent> <unique> <LeftMouse><RightMouse> ZQ
 " Function Key {{{2
 nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>
 imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>a
-nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
+nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>
 imap <silent> <unique> <F2> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
-nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>:Inspect<CR>
+nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
@@ -371,6 +371,8 @@ colorscheme one-nvim
 hi Todo guibg=yellow
 hi Visual guibg=lightcyan
 hi SpecialKey guibg=#f0f0f0
+hi Search guifg=black guibg=#c18401
+hi CurSearch guifg=white guibg=brown
 
 " }}}1
 
