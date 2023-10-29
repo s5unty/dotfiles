@@ -216,7 +216,7 @@ nmap <silent> <unique> ; zz
 nmap <silent> <unique> ' $
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
-vmap <silent> <unique> ; :call SpaceAddBetweenEnglishChinese()<CR>
+vmap <silent> <unique> = :call SpaceAddBetweenEnglishChinese()<CR>
 
 " Shift+ {{{2
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
@@ -226,7 +226,6 @@ nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
 nmap          <unique> <S-F8> :SyntasticCheck<CR>
 nmap <silent> <unique> <S-F9> q:<UP>
 nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
-imap <silent> <unique> <S-Space> <C-V><Space>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
@@ -241,10 +240,18 @@ nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__h
 
 " Alt+ {{{2
 if has("gui_running")
+nmap <silent> <unique> <A-h> <C-W>h
+nmap <silent> <unique> <A-j> <C-W>j
+nmap <silent> <unique> <A-k> <C-W>k
+nmap <silent> <unique> <A-l> <C-W>l
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
 else
+nmap <silent> <unique> <M-h> <C-W>h
+nmap <silent> <unique> <M-j> <C-W>j
+nmap <silent> <unique> <M-k> <C-W>k
+nmap <silent> <unique> <M-l> <C-W>l
 imap <silent> <unique> <M-b> <C-O>b
 imap <silent> <unique> <M-f> <C-O>w
 imap <silent> <unique> <M-d> <C-O>dw
@@ -254,10 +261,6 @@ endif
 let mapleader=' '
 let maplocalleader=','
 nmap <silent> <unique> <Leader>q :q<CR>
-nmap <silent> <unique> <Leader>h <C-W>h
-nmap <silent> <unique> <Leader>j <C-W>j
-nmap <silent> <unique> <Leader>k <C-W>k
-nmap <silent> <unique> <Leader>l <C-W>l
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
