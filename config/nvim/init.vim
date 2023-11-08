@@ -228,30 +228,25 @@ nmap <silent> <unique> <S-F9> q:<UP>
 nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
 
 " Ctrl+ {{{2
+map  <silent> <unique> <C-H> <C-W>h
+map  <silent> <unique> <C-J> <C-W>j
+map  <silent> <unique> <C-K> <C-W>k
+map  <silent>          <C-L> <C-W>l
 nmap <silent> <unique> <C-Q> :qa!<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
 imap <silent> <unique> <C-D> <C-O>x
-imap <silent> <unique> <C-K> <C-O>d$
 imap <silent> <unique> <C-Y> <C-O>u<C-O>$
 nmap <silent> <unique> <C-F8> :make! clean<CR>
-nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR><C-L>
+nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR>
 
 " Alt+ {{{2
 if has("gui_running")
-nmap <silent> <unique> <A-h> <C-W>h
-nmap <silent> <unique> <A-j> <C-W>j
-nmap <silent> <unique> <A-k> <C-W>k
-nmap <silent> <unique> <A-l> <C-W>l
 imap <silent> <unique> <A-b> <C-O>b
 imap <silent> <unique> <A-f> <C-O>w
 imap <silent> <unique> <A-d> <C-O>dw
 else
-nmap <silent> <unique> <M-h> <C-W>h
-nmap <silent> <unique> <M-j> <C-W>j
-nmap <silent> <unique> <M-k> <C-W>k
-nmap <silent> <unique> <M-l> <C-W>l
 imap <silent> <unique> <M-b> <C-O>b
 imap <silent> <unique> <M-f> <C-O>w
 imap <silent> <unique> <M-d> <C-O>dw
