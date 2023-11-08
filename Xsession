@@ -21,7 +21,15 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 
 # 强制启用 Ctrl-Alt-Backspace(重启图形界面) 组合键
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
-/usr/bin/setxkbmap -option caps:escape
+
+# 智能 CapsLock，单一使用时 Esc，组合使用时 Ctrl
+# https://gist.github.com/tanyuan/55bca522bf50363ae4573d4bdcf06e2e
+/usr/bin/setxkbmap -option ctrl:nocaps
+/usr/bin/xcape -e 'Control_L=Escape'
+
+# 加载自定义的特殊的键盘功能键
+# 注意：fcitx 的 X 键盘集成(高级组件)
+# /usr/bin/xmodmap ~/.Xmodmaprc
 
 # 关闭机箱喇叭蜂鸣 设定键鼠灵敏度
 /usr/bin/xset b off m 3 10 r rate 400 40
@@ -36,10 +44,6 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # /usr/bin/gpaste-client start
 # gpaste 不能复制图片，又来 copyq
 /usr/bin/copyq &
-
-# 加载自定义的特殊的键盘功能键
-# 注意：fcitx 的 X 键盘集成(高级组件)
-/usr/bin/xmodmap ~/.Xmodmaprc
 
 # 启动应用程序
 /usr/bin/davmail &
@@ -110,11 +114,11 @@ export NSS_SSL_CBC_RANDOM_IV=0
 export GTK_IM_MODULE=fcitx5
 export XMODIFIERS="@im=fcitx5"
 export QT_IM_MODULE=fcitx5
+export GLFW_IM_MODULE=ibus
 #/usr/bin/ibus-daemon -drx
 /usr/bin/fcitx5 -d -s 3
 
 # 启动图形应用程序
-/usr/bin/urxvtd -q -f
 /usr/bin/x-terminal-emulator -name Mutt -T Mutt -e sh -c mutt &
 /usr/bin/x-www-browser & #浏览器
 /usr/bin/flameshot &
