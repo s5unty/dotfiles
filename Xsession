@@ -114,8 +114,8 @@ export NSS_SSL_CBC_RANDOM_IV=0
 export GTK_IM_MODULE=fcitx5
 export XMODIFIERS="@im=fcitx5"
 export QT_IM_MODULE=fcitx5
+# https://github.com/kovidgoyal/kitty/issues/469#issuecomment-778814173
 export GLFW_IM_MODULE=ibus
-#/usr/bin/ibus-daemon -drx
 /usr/bin/fcitx5 -d -s 3
 
 # 启动图形应用程序
