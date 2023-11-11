@@ -118,12 +118,10 @@ cmp.setup.cmdline(':', {
 -- How can I hide (or ignore specific) hints?
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
-    signs = {
-      severity_limit = "Hint",
-    },
-    virtual_text = {
-      severity_limit = "Warning",
-    },
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    virtual_text = false,
   }
 )
 map("n", "K",           vim.lsp.buf.hover)
@@ -363,7 +361,7 @@ require('dropbar').setup {
   icons = {
     ui = {
       bar = {
-        separator = ' ',
+        separator = '  ',
         extends = '…',
       },
       menu = {
