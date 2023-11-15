@@ -24,7 +24,9 @@ case $mode in
     pause)
         xset dpms 600
         pkill cmatrix
-        /usr/bin/x-terminal-emulator --name="CMatrix" -o background_image="none" -o background="#333333" -T CMatrix -e zsh -c "cmatrix -a -b -u 2 -C black"
+        /usr/bin/kitty --name="CMatrix" -T CMatrix \
+            -o background_image="none" -o background="#333333" --watcher="btkb.py" \
+            -e zsh -c "cmatrix -a -b -u 2 -C black"
         xset dpms 0
         ;;
     lock)

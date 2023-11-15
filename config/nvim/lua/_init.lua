@@ -406,10 +406,10 @@ neogit.setup {
 -- https://github.com/stevearc/oil.nvim {{{1
 -- Neovim file explorer: edit your filesystem like a buffer
 require("oil").setup {
-  use_default_keymaps = true,
+  use_default_keymaps = false,
   keymaps = {
     ["?"]       = "actions.show_help",
-    ["Q"]       = "actions.close",
+    ["<C-c>"]   = "actions.close",
     ["l"]       = "actions.select",
     ["<CR>"]    = "actions.select",
     ["L"]       = "actions.select_vsplit",
@@ -417,8 +417,7 @@ require("oil").setup {
     ["P"]       = "actions.select_tab",
     ["-"]       = "actions.parent",
     ["h"]       = "actions.parent",
-    ["p"]       = "actions.preview",
-    ["<C-l>"]   = "actions.refresh",
+    ["P"]       = "actions.preview",
   },
 }
 vim.keymap.set("n", "_", "<cmd>Oil<CR>", { desc = "Open parent directory" })
