@@ -64,7 +64,7 @@ run_once({ "unclutter -root" })
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme/init.lua")
-awful.util.terminal = "x-terminal-emulator"
+awful.util.terminal = "x-terminal-emulator" or "kitty" or "rxvt"
 awful.util.tagnames = { "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }
 
 -- This is used later as the default terminal and editor to run.
@@ -561,7 +561,7 @@ for i = 1, 8 do
                   end,
                   {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.
-        awful.key({ altkey, "Control" }, j,
+        awful.key({ modkey, "Control" }, j,
                   function ()
                       local screen = awful.screen.focused()
                       local tag = screen.tags[i]
@@ -580,18 +580,18 @@ for i = 1, 8 do
                           end
                      end
                   end,
-                  {description = "move focused client to tag #"..i, group = "tag"}),
+                  {description = "move focused client to tag #"..i, group = "tag"})
         -- Toggle tag on focused client.
-        awful.key({ modkey, "Control" }, j,
-                  function ()
-                      if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:toggle_tag(tag)
-                          end
-                      end
-                  end,
-                  {description = "toggle focused client on tag #" .. i, group = "tag"})
+        -- awful.key({ modkey, "Control" }, j,
+        --           function ()
+        --               if client.focus then
+        --                   local tag = client.focus.screen.tags[i]
+        --                   if tag then
+        --                       client.focus:toggle_tag(tag)
+        --                   end
+        --               end
+        --           end,
+        --           {description = "toggle focused client on tag #" .. i, group = "tag"})
     )
 end
 
@@ -720,6 +720,9 @@ awful.rules.rules = {
     properties = { floating=true, ontop=true } },
 
     { rule = { name = "obsidian" },
+    properties = { floating=true, ontop=true } },
+
+    { rule = { instance = "bytedance-feishu", name = "图片" },
     properties = { floating=true, ontop=true } },
 
     { rule = { name = "Microsoft Teams 通知" },
