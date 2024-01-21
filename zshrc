@@ -73,6 +73,10 @@ zinit light agkozak/zsh-z
 # bindkey -M viins "^[[Z" urxvt-scrollback-buffer-words-anywhere  # Shift-Tab
 ####
 
+# Magical shell history
+# https://github.com/atuinsh/atuin {{{1
+eval "$(atuin init zsh --disable-up-arrow)"
+
 
 # >>> conda initialize >>> {{{1
 # !! Contents within this block are managed by 'conda init' !!

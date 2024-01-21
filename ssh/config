@@ -1,23 +1,23 @@
-HashKnownHosts no
-ControlMaster auto
-ControlPath /tmp/.ssh_%h_%p_%r
-ServerAliveInterval 60
-TCPKeepAlive yes
+HostkeyAlgorithms +ssh-rsa
+PubkeyAcceptedKeyTypes +ssh-rsa
 
-Host vps
-    user ubuntu
-    hostname du1abadd.org
-    port 22
-#   proxycommand socat - PROXY:10.5.6.29:%h:%p,proxyport=3128
+Host github.com
+  User git
+  ProxyCommand nc -x localhost:1080 %h %p
 
-host github.com
-    user s5unty
-    hostname ssh.github.com
-    port 443
-#   proxycommand socat - PROXY:10.5.6.29:%h:%p,proxyport=3128
-
-Host iphone
+Host sail
+    Hostname du1ab.one
     User root
-    Hostname localhost
-    Port 2222
-    ProxyCommand /usr/bin/iproxy 2222 22 &; /usr/bin/ssh -p %p %h
+
+Host it
+    Hostname wzf.trafpevcg.pbz
+    User fhajhna
+    ControlPath /var/tmp/.ssh-%h-%p-%r
+    ControlMaster auto
+    ControlPersist 168h
+
+Host worktop
+    Hostname 10.1.54.200
+    ForwardX11 yes
+    User wuan
+
