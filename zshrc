@@ -12,7 +12,7 @@ fi
 
 export HOME="/sun"
 export DEBEMAIL="s5unty@gmail.com"
-export DEBFULLNAME="Wuan Sun"
+export DEBFULLNAME="Sun Wuan"
 export TZ='Asia/Shanghai'
 export TD="home"
 
