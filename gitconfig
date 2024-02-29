@@ -29,13 +29,12 @@
 [diff "ansible-vault"]
     textconv = ansible-vault view
     cachetextconv = true
-[diff "pass"]
-    textconv = pass show
-    cachetextconv = true
 [difftool "normal"] # http://goo.gl/c8Xok
     cmd = diff $LOCAL $REMOTE
 [difftool "vimdiff"] # https://github.com/neovim/neovim/issues/2377
     cmd = vim -d $LOCAL $REMOTE
+[difftool]
+    prompt = false
 [push]
     default = current
 [gui]
@@ -94,7 +93,7 @@
     cm  = commit --amend
     co  = checkout
     cd  = checkout -b
-    cpi = cherry-pick --no-commit # 复制一个 commit 所做的修改
+    cpk = cherry-pick --no-commit # 复制一个 commit 所做的修改
     cpp = revert --no-commit      # 撤销一个 commit 所做的修改
     coo = reset HEAD -- # 撤消已提交到 local repos 的修改
 
@@ -109,7 +108,6 @@
     dp  = !sh -c 'git diff HEAD "$0" | git apply --whitespace=nowarn --index -' # fast apply the patch against "$0" commit or branch
 
     fp  = format-patch -s
-    fpull = '!git fetch origin && git reset --hard FETCH_HEAD'
 
     ll  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%cr%Creset %C(bold)%d%Creset' --branches --graph --since='2 weeks ago'
     ls  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%ci%Creset %C(bold)%d%Creset' --all --graph
@@ -144,14 +142,16 @@
     dup = svn rebase
     dll = svn log --oneline --limit=20
     dls = svn log
+
+    vi  = difftool
 # }}}
 
 [pull] # {{{
-	ff = only
+    ff = only
 # }}}
 
 #[http]
-#	proxy = http://10.167.251.83:8080
+# proxy = http://10.167.251.83:8080
 
 # vim: set foldmethod=marker:
 
