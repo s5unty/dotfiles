@@ -27,21 +27,21 @@
 #   ${uid}@debian.org\t${cn} ${sn}\t${ircnick} (i.e.: email name comment)
 
 # hostname of your ldap server
-$ldap_server_gs = '127.0.0.1';
-$ldap_server_lg = '127.0.0.2';
+$ldap_server_gs = '*********';
+$ldap_server_lg = '**********';
 # ldap base search
-$ldap_search_base_gs = 'dc=*********,dc=com';
-$ldap_search_base_lg = 'dc=*************,dc=local';
+$ldap_search_base_gs = 'dc=*****,dc=com';
+$ldap_search_base_lg = 'dc=******,dc=local';
 # list of the fields that will be used for the query
-$ldap_search_fields = 'givenname sn cn name mail sAMAccountName';
+$ldap_search_fields = 'givenname mailNickname sn cn name mail sAMAccountName distinguishedName';
 # list of the fields that will be used for composing the answer
-$ldap_expected_answers = 'cn sn mail displayName sAMAccountName';
+$ldap_expected_answers = 'pager mail description displayName sAMAccountName distinguishedName';
 # format of the email result based on the expected answers of the ldap query
 $ldap_result_email = '${mail}';
 # format of the realname result based on the expected answers of the ldap query
 $ldap_result_realname = '${displayName}';
 # format of the comment result based on the expected answers of the ldap query
-$ldap_result_comment = '(${sAMAccountName})';
+$ldap_result_comment = '${description} (${pager}:${sAMAccountName}) // ${distinguishedName}';
 # Don't use wildchars on searching
 $ignorant = 0;
 # Do an anonymous bind to the LDAP server:
@@ -54,7 +54,7 @@ $ldap_sasl_mech = '';
 
 # warning this database will erase default script builtin
 %ldap_server_db = (
-    'genscript' => [
+    '*********' => [
         ${ldap_server_gs},
         ${ldap_search_base_gs},
         ${ldap_search_fields},
@@ -63,10 +63,10 @@ $ldap_sasl_mech = '';
         ${ldap_result_realname},
         ${ldap_result_comment},
         0,
-        "=============",
-        "===================="
+        "********************",
+        "********************"
     ],
-    'legendbio' => [
+    '*********' => [
         ${ldap_server_lg},
         ${ldap_search_base_lg},
         ${ldap_search_fields},
@@ -75,8 +75,32 @@ $ldap_sasl_mech = '';
         ${ldap_result_realname},
         ${ldap_result_comment},
         0,
-        "=======",
-        "===================="
+        "********************",
+        "********************"
+    ],
+    '**_extend' => [
+        ${ldap_server_gs},
+        ${ldap_search_base_gs},
+        'givenname sn cn name mail sAMAccountName distinguishedName',
+        'cn sn mail description displayName sAMAccountName distinguishedName',
+        ${ldap_result_email},
+        ${ldap_result_realname},
+        ${ldap_result_comment},
+        0,
+        "********************",
+        "********************"
+    ],
+    '**_extend' => [
+        ${ldap_server_lg},
+        ${ldap_search_base_lg},
+        'givenname cn name sAMAccountName',
+        'cn description sAMAccountName userPrincipalName',
+        ${userPrincipalName},
+        ${description},
+        ${ldap_result_comment},
+        0,
+        "*************",
+        "*************",
     ]
 );
 

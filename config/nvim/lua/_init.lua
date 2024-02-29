@@ -352,11 +352,9 @@ vim.keymap.set('n', '<M-9>', '<cmd>BufferLineMovePrev<CR>')
 
 -- https://github.com/Bekaboo/dropbar.nvim -- {{{1
 -- A polished, IDE-like, highly-customizable winbar for Neovim
-vim.cmd [[hi WinBar guisp=#c8c8c8 gui=none guibg=#c8c8c8]]
-vim.cmd [[hi WinBarNC guisp=#c8c8c8 gui=none guibg=#c8c8c8]]
 require('dropbar').setup {
   general = {
-    update_interval = 100,
+    update_interval = 300,
   },
   icons = {
     ui = {
@@ -410,14 +408,12 @@ require("oil").setup {
   keymaps = {
     ["?"]       = "actions.show_help",
     ["<C-c>"]   = "actions.close",
-    ["l"]       = "actions.select",
+    ["<Space>"] = "actions.select",
     ["<CR>"]    = "actions.select",
     ["L"]       = "actions.select_vsplit",
-    ["S"]       = "actions.select_split",
-    ["P"]       = "actions.select_tab",
+    ["J"]       = "actions.select_split",
     ["-"]       = "actions.parent",
-    ["h"]       = "actions.parent",
-    ["P"]       = "actions.preview",
+    ["K"]       = "actions.preview",
   },
 }
 vim.keymap.set("n", "_", "<cmd>Oil<CR>", { desc = "Open parent directory" })
