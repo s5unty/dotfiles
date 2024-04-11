@@ -228,10 +228,6 @@ nmap <silent> <unique> <S-F9> q:<UP>
 nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
 
 " Ctrl+ {{{2
-map  <silent> <unique> <C-H> <C-W>h
-map  <silent> <unique> <C-J> <C-W>j
-map  <silent> <unique> <C-K> <C-W>k
-map  <silent>          <C-L> <C-W>l
 nmap <silent> <unique> <C-Q> :qa!<CR>
 imap <silent> <unique> <C-Q> <ESC><ESC>;
 imap <silent> <unique> <C-E> <C-O>$
@@ -274,6 +270,8 @@ command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp 
 
 " Plugged {{{1
 call plug#begin('~/.config/nvim/bundles')
+    " 兼容 kitty 快捷键
+    Plug 'knubie/vim-kitty-navigator'
     " 光标跑酷(哇哦~)
     Plug 'ggandor/leap.nvim'
     " 缩进辅助线
@@ -281,7 +279,7 @@ call plug#begin('~/.config/nvim/bundles')
     " 文件检索
     Plug 'stevearc/oil.nvim'
     " 标题栏利用 [o]dropbar [x]barbecue
-    Plug 'Bekaboo/dropbar.nvim', { 'branch': 'feat-winbar-background-highlight' }
+    Plug 'Bekaboo/dropbar.nvim', { 'branch': 'v8.2.0' }
     " 版本管理(:Gdiffsplit)
     Plug 'tpope/vim-fugitive'
     Plug 'NeogitOrg/neogit'
@@ -335,6 +333,23 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'chlorm/vim-syntax-elvish'
 call plug#end()
 
+" https://github.com/knubie/vim-kitty-navigator {{{2
+" Seamless navigation between kitty panes and vim splits
+let g:kitty_navigator_no_mappings = 1
+if has("gui_running")
+nmap <silent> <unique> <A-h> :KittyNavigateLeft<cr>
+nmap <silent> <unique> <A-j> :KittyNavigateDown<cr>
+nmap <silent> <unique> <A-k> :KittyNavigateUp<cr>
+nmap <silent> <unique> <A-l> :KittyNavigateRight<cr>
+else
+nmap <silent> <unique> <M-h> :KittyNavigateLeft<cr>
+nmap <silent> <unique> <M-j> :KittyNavigateDown<cr>
+nmap <silent> <unique> <M-k> :KittyNavigateUp<cr>
+nmap <silent> <unique> <M-l> :KittyNavigateRight<cr>
+endif
+
+
+
 " https://github.com/pearofducks/ansible-vim {{{2
 " A vim plugin for syntax highlighting Ansible's common filetypes
 autocmd BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
@@ -373,6 +388,9 @@ hi Search guifg=black guibg=#c18401
 hi CurSearch guifg=white guibg=brown
 
 " }}}1
+
+"let &t_ti = &t_ti . "\\033]1337;SetUserVar=in_editor=MQo\\007"
+"let &t_te = &t_te . "\\033]1337;SetUserVar=in_editor\\007"
 
 lua require("_init")
 
