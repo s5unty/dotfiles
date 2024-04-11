@@ -68,7 +68,7 @@ awful.util.terminal = "x-terminal-emulator" or "kitty" or "rxvt"
 awful.util.tagnames = { "☷", "☳", "☵", "☱", "☶", "☲", "☴", "☰" }
 
 -- This is used later as the default terminal and editor to run.
-local terminal     = awful.util.terminal .. " -1"
+local terminal     = awful.util.terminal
 local editor       = os.getenv("EDITOR") or "nano" or "vi"
 local gui_editor   = "gvim"
 local browser      = "google-chrome"
