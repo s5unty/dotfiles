@@ -1,0 +1,1 @@
+/sun/.config/nvim/bundles/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py

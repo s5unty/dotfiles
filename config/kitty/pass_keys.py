@@ -1,0 +1,1 @@
+/sun/.config/nvim/bundles/vim-kitty-navigator/pass_keys.py
