@@ -291,7 +291,7 @@ globalkeys = awful.util.table.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ "Control"         }, "Tab",
+    awful.key({ modkey,           }, "Escape",
         function ()
             awful.client.focus.history.previous()
             if client.focus then
@@ -721,6 +721,9 @@ awful.rules.rules = {
 
     { rule = { name = "obsidian" },
     properties = { floating=true, ontop=true } },
+
+    { rule = { class = "Sxiv" },
+    properties = { floating=true, ontop=true, placement=awful.placement.centered } },
 
     { rule = { instance = "bytedance-feishu", name = "图片" },
     properties = { floating=true, ontop=true } },

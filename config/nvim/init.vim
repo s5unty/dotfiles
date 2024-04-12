@@ -180,9 +180,9 @@ map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
-nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>
-imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>a
-nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>
+nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>:Inspect<CR>
+imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>:Inspect<CR>a
+nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>
 imap <silent> <unique> <F2> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
 nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
@@ -270,8 +270,9 @@ command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp 
 
 " Plugged {{{1
 call plug#begin('~/.config/nvim/bundles')
-    " 兼容 kitty 快捷键
+    " 控制台(kitty)增强
     Plug 'knubie/vim-kitty-navigator'
+    Plug 'mikesmithgh/kitty-scrollback.nvim'
     " 光标跑酷(哇哦~)
     Plug 'ggandor/leap.nvim'
     " 缩进辅助线
@@ -279,7 +280,8 @@ call plug#begin('~/.config/nvim/bundles')
     " 文件检索
     Plug 'stevearc/oil.nvim'
     " 标题栏利用 [o]dropbar [x]barbecue
-    Plug 'Bekaboo/dropbar.nvim', { 'branch': 'v8.2.0' }
+    " This is currently an experimental feature that is only available in branch feat-winbar-background-highlight.
+    Plug 'Bekaboo/dropbar.nvim', { 'branch': 'feat-winbar-background-highlight' }
     " 版本管理(:Gdiffsplit)
     Plug 'tpope/vim-fugitive'
     Plug 'NeogitOrg/neogit'
@@ -381,6 +383,9 @@ augroup END
 " https://github.com/Th3Whit3Wolf/one-nvim {{{2
 " An Atom One inspired dark and light colorscheme for neovim.
 colorscheme one-nvim
+" https://github.com/neovim/neovim/issues/19362#issuecomment-1924993842
+" flicker if plugin sets 'background' during startup
+echo " "
 hi Todo guibg=yellow
 hi Visual guibg=lightcyan
 hi SpecialKey guibg=#f0f0f0
@@ -388,9 +393,6 @@ hi Search guifg=black guibg=#c18401
 hi CurSearch guifg=white guibg=brown
 
 " }}}1
-
-"let &t_ti = &t_ti . "\\033]1337;SetUserVar=in_editor=MQo\\007"
-"let &t_te = &t_te . "\\033]1337;SetUserVar=in_editor\\007"
 
 lua require("_init")
 
