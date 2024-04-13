@@ -580,18 +580,18 @@ for i = 1, 8 do
                           end
                      end
                   end,
-                  {description = "move focused client to tag #"..i, group = "tag"})
+                  {description = "move focused client to tag #"..i, group = "tag"}),
         -- Toggle tag on focused client.
-        -- awful.key({ modkey, "Control" }, j,
-        --           function ()
-        --               if client.focus then
-        --                   local tag = client.focus.screen.tags[i]
-        --                   if tag then
-        --                       client.focus:toggle_tag(tag)
-        --                   end
-        --               end
-        --           end,
-        --           {description = "toggle focused client on tag #" .. i, group = "tag"})
+        awful.key({ modkey, "Control" }, j,
+                  function ()
+                      if client.focus then
+                          local tag = client.focus.screen.tags[i]
+                          if tag then
+                              client.focus:toggle_tag(tag)
+                          end
+                      end
+                  end,
+                  {description = "toggle focused client on tag #" .. i, group = "tag"})
     )
 end
 
@@ -652,6 +652,8 @@ awful.rules.rules = {
     { rule = { class = "Virt-manager.py" },
     properties = { floating = true } },
     { rule = { class = "Insync" },
+    properties = { floating=true } },
+    { rule = { class = "blueman-manager" },
     properties = { floating=true } },
 
     -- Set Iceweasel/Firefox to always map on tag 7 of screen 1.
