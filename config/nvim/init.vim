@@ -281,7 +281,7 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'stevearc/oil.nvim'
     " 标题栏利用 [o]dropbar [x]barbecue
     " This is currently an experimental feature that is only available in branch feat-winbar-background-highlight.
-    Plug 'Bekaboo/dropbar.nvim', { 'branch': 'feat-winbar-background-highlight' }
+    Plug 'Bekaboo/dropbar.nvim'
     " 版本管理(:Gdiffsplit)
     Plug 'tpope/vim-fugitive'
     Plug 'NeogitOrg/neogit'
@@ -335,6 +335,7 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'chlorm/vim-syntax-elvish'
 call plug#end()
 
+
 " https://github.com/knubie/vim-kitty-navigator {{{2
 " Seamless navigation between kitty panes and vim splits
 let g:kitty_navigator_no_mappings = 1
@@ -349,7 +350,6 @@ nmap <silent> <unique> <M-j> :KittyNavigateDown<cr>
 nmap <silent> <unique> <M-k> :KittyNavigateUp<cr>
 nmap <silent> <unique> <M-l> :KittyNavigateRight<cr>
 endif
-
 
 
 " https://github.com/pearofducks/ansible-vim {{{2
@@ -391,6 +391,7 @@ hi Visual guibg=lightcyan
 hi SpecialKey guibg=#f0f0f0
 hi Search guifg=black guibg=#c18401
 hi CurSearch guifg=white guibg=brown
+hi WinBar guibg=none "for dropbar#26173fd @neovim#0.10.0~ubuntu1+git202404111511-4459e0cee8-971e32c878-65831570b0~ubuntu22.04.1
 
 " }}}1
 
