@@ -220,7 +220,7 @@ vmap <silent> <unique> = :call SpaceAddBetweenEnglishChinese()<CR>
 
 " Shift+ {{{2
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
-nmap <silent> <unique> Q :q!<CR>
+nmap <silent> <unique> Q :qa!<CR>
 nmap <silent> <unique> <S-Tab> zA
 nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
 nmap          <unique> <S-F8> :SyntasticCheck<CR>
