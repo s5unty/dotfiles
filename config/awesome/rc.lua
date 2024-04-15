@@ -655,6 +655,8 @@ awful.rules.rules = {
     properties = { floating=true } },
     { rule = { class = "blueman-manager" },
     properties = { floating=true } },
+    { rule = { class = "Meeting" },
+    properties = { floating=true, placement=awful.placement.centered } },
 
     -- Set Iceweasel/Firefox to always map on tag 7 of screen 1.
     { rule = { class = "Google-chrome" },
