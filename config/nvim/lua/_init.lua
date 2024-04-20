@@ -439,19 +439,12 @@ hooks.register(
 
 -- https://github.com/ggandor/leap.nvim {{{1
 -- establishing a new standard interface for moving around in the visible area in Vim-like modal editors.
-require('leap').add_default_mappings()
+vim.keymap.set({'n', 'x', 'o'}, 'f', '<Plug>(leap-forward)')
+vim.keymap.set({'n', 'x', 'o'}, 'F', '<Plug>(leap-backward)')
+vim.keymap.set({'n', 'x', 'o'}, 'E', '<Plug>(leap-from-window)')
 
 -- https://github.com/mikesmithgh/kitty-scrollback.nvim
 -- Open your Kitty scrollback buffer with Neovim. Ameowzing!
-require('kitty-scrollback').setup({
-  -- global configuration
-  {
-    status_window = {
-      -- boolean If true, show status window in upper right corner of the screen
-      enabled = true,
-      autoclose = true,
-    },
-  },
-})
+require('kitty-scrollback').setup()
 
 
