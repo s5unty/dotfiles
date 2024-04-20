@@ -335,7 +335,6 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'chlorm/vim-syntax-elvish'
 call plug#end()
 
-
 " https://github.com/knubie/vim-kitty-navigator {{{2
 " Seamless navigation between kitty panes and vim splits
 let g:kitty_navigator_no_mappings = 1
@@ -350,6 +349,7 @@ nmap <silent> <unique> <M-j> :KittyNavigateDown<cr>
 nmap <silent> <unique> <M-k> :KittyNavigateUp<cr>
 nmap <silent> <unique> <M-l> :KittyNavigateRight<cr>
 endif
+
 
 
 " https://github.com/pearofducks/ansible-vim {{{2
