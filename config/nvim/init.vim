@@ -307,6 +307,8 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'emugel/vim-sum'
     " 预览窗的快捷键
     Plug 'ronakg/quickr-preview.vim'
+    " 聚焦编辑范围
+    Plug 'chrisbra/NrrwRgn'
     " 补全框架(代码、模板、路径等)
     Plug 'neovim/nvim-lspconfig'    " Collection of configurations for built-in LSP client
     Plug 'williamboman/mason.nvim'  " Easily install and manage LSP servers
