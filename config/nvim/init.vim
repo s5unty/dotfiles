@@ -258,7 +258,7 @@ nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
 vmap <silent> <unique> <Leader>a <Plug>VimSumVisual
 
 " Colon+, Colon char is ':' {{{2
-command W  :w !sudo tee %
+command W  :execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 command E  :call Ranger()<CR>
 command H  :History:
 command A  :Ag
