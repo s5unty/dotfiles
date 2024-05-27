@@ -14,7 +14,7 @@ i quit
 l   right-scroll
 h   left-scroll
 
-# https://www.du1ab.one/2009/less-tips/
+# https://du1ab.org/2009/less-tips/
 # 编辑当前页
 v pipe  . ansi2txt | vim - \n
 # 编辑缓冲区
