@@ -51,5 +51,9 @@ export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 export fpk="95cf886ae72347195d15aa2bd3adfcb9465ac367c8aa504e296b99434a07a88c52735348f9a3731cac32cbbf1e52f1ce"
 export psa="xch1zgv3pqeqj92khgqtfkg6tsrep5d0d7f2s9mvmc0dk4pe7r7kv96sg59gaj"
 
+# deno
+export DENO_INSTALL="/sun/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # vim: ft=zsh:
 

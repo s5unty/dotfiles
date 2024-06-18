@@ -2,11 +2,6 @@ local api = vim.api
 local cmd = vim.cmd
 local map = vim.keymap.set
 
--- https://github.com/williamboman/mason.nvim {{{1
--- Easily install and manage LSP servers, DAP servers, linters, and formatters.
-require("mason").setup {}
-
-
 -- https://github.com/hrsh7th/nvim-cmp -- {{{1
 -- nvim-cmp: A completion plugin for neovim coded in Lua.
 local cmp = require'cmp'
@@ -145,18 +140,6 @@ map("n", "<leader>gw",  function() vim.diagnostic.setqflist({ severity = "W" }) 
 -- configs for the nvim lsp client
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
-lspconfig.ansiblels.setup{
-  cmd = {
-    "~/.local/share/nvim/mason/bin/ansible-language-server",
-    "--stdio"
-  }
-}
-lspconfig.bashls.setup{
-  cmd = {
-    "~/.local/share/nvim/mason/bin/bash-language-server",
-    "start",
-  }
-}
 lspconfig.dartls.setup {
   settings = {
     dart = {
@@ -165,11 +148,19 @@ lspconfig.dartls.setup {
   }
 }
 local servers = {
-  'ansiblels',
-  'bashls',
-  'dartls',
-  'gopls',
   'pyright',
+  'gopls',
+  'dartls',
+  -- pnpm install -g @ansible/ansible-language-server
+  'ansiblels',
+  -- pnpm install -g bash-language-server
+  'bashls',
+  -- pnpm install -g typescript-language-server
+  'tsserver',
+  -- pnpm install -g vscode-langservers-extracted
+  'cssls',
+  'html',
+  'jsonls',
 }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
