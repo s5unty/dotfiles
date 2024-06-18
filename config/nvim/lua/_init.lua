@@ -185,7 +185,6 @@ require("nvim-autopairs").setup {
 -- Use treesitter to auto close and auto rename html tag
 require('nvim-ts-autotag').setup({
   opts = {
-    -- Defaults
     enable_close = true, -- Auto close tags
     enable_rename = true, -- Auto rename pairs of tags
     enable_close_on_slash = false -- Auto close on trailing </
@@ -210,7 +209,21 @@ require("nvim-surround").setup {
 -- https://github.com/nvim-treesitter/nvim-treesitter -- {{{1
 -- Nvim Treesitter configurations and abstraction layer
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "bash", "elvish", "go", "groovy", "yaml", "lua", "vim", "vimdoc", "query" },
+  ensure_installed = {
+    "bash",
+    "elvish",
+    "go",
+    "groovy",
+    "yaml",
+    "lua",
+    "vim",
+    "vimdoc",
+    "query",
+    "javascript",
+    "typescript",
+    "css",
+    "html",
+  },
   highlight = {
     enable = true,
     disable = function(lang, buf)
