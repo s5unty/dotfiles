@@ -108,17 +108,22 @@ cmp.setup.cmdline(':', {
   })
 })
 
+-- https://neovim.io/doc/user/diagnostic.html
+vim.diagnostic.config({
+  signs = true,
+  underline = true,
+  virtual_text = false, -- Turn off inline diagnostics
+  severity_sort = true,
+  float = {
+    header = false,
+    border = 'rounded',
+    source = "if_many",
+    scope = "cursor",
+  },
+})
+-- vim.cmd [[autocmd ModeChanged *:[vV\x16]* lua vim.diagnostic.open_float(nil, {focus=false, max_width=120})]]
+vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false, max_width=120})]]
 
--- https://github.com/hrsh7th/nvim-cmp/issues/685#issuecomment-1002924899 -- {{{2
--- How can I hide (or ignore specific) hints?
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    virtual_text = false,
-  }
-)
 map("n", "K",           vim.lsp.buf.hover)
 map("n", "<leader>gr",  vim.lsp.buf.rename)
 map("n", "<leader>ca",  vim.lsp.buf.code_action)
@@ -158,6 +163,7 @@ local servers = {
   -- pnpm install -g typescript-language-server
   'tsserver',
   -- pnpm install -g vscode-langservers-extracted
+  'eslint',
   'cssls',
   'html',
   'jsonls',
@@ -175,6 +181,24 @@ require("nvim-autopairs").setup {
 
 }
 
+-- https://github.com/windwp/nvim-ts-autotag -- {{{1
+-- Use treesitter to auto close and auto rename html tag
+require('nvim-ts-autotag').setup({
+  opts = {
+    -- Defaults
+    enable_close = true, -- Auto close tags
+    enable_rename = true, -- Auto rename pairs of tags
+    enable_close_on_slash = false -- Auto close on trailing </
+  },
+  -- Also override individual filetype configs, these take priority.
+  -- Empty by default, useful if one of the "opts" global settings
+  -- doesn't work well in a specific filetype
+  per_filetype = {
+    ["html"] = {
+      enable_close = true
+    }
+  }
+})
 
 -- https://github.com/kylechui/nvim-surround -- {{{1
 -- Add/change/delete surrounding delimiter pairs with ease. Written with in Lua.
