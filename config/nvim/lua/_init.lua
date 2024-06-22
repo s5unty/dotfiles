@@ -124,6 +124,15 @@ vim.diagnostic.config({
 -- vim.cmd [[autocmd ModeChanged *:[vV\x16]* lua vim.diagnostic.open_float(nil, {focus=false, max_width=120})]]
 vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false, max_width=120})]]
 
+-- How to run auto format on save?
+-- https://github.com/neovim/nvim-lspconfig/issues/1792#issuecomment-1352782205
+vim.api.nvim_create_autocmd("BufWritePre", {
+    buffer = buffer,
+    callback = function()
+        vim.lsp.buf.format { async = false }
+    end
+})
+
 map("n", "K",           vim.lsp.buf.hover)
 map("n", "<leader>gr",  vim.lsp.buf.rename)
 map("n", "<leader>ca",  vim.lsp.buf.code_action)
@@ -160,6 +169,8 @@ local servers = {
   'ansiblels',
   -- pnpm install -g bash-language-server
   'bashls',
+  -- pnpm install -g @biomejs/biome
+  'biome',
   -- pnpm install -g typescript-language-server
   'tsserver',
   -- pnpm install -g vscode-langservers-extracted
@@ -449,13 +460,14 @@ vim.keymap.set("n", "_", "<cmd>Oil<CR>", { desc = "Open parent directory" })
 
 -- https://github.com/lukas-reineke/indent-blankline.nvim {{{1
 -- This plugin adds indentation guides to Neovim.
-require("ibl").setup {
-  scope = {
-    enabled = false,
-  },
-}
 -- 隐藏第一条缩进线
 local hooks = require "ibl.hooks"
+hooks.register(
+  hooks.type.HIGHLIGHT_SETUP, function()
+    vim.api.nvim_set_hl(0, "IBL_HIGHLIGHT_A", { fg = "#d0d0d0" })
+    vim.api.nvim_set_hl(0, "IBL_HIGHLIGHT_B", { fg = "#e5e5e5" })
+  end
+)
 hooks.register(
   hooks.type.WHITESPACE,
   hooks.builtin.hide_first_space_indent_level
@@ -464,12 +476,21 @@ hooks.register(
   hooks.type.WHITESPACE,
   hooks.builtin.hide_first_tab_indent_level
 )
+local ibl_highlight = {
+  "IBL_HIGHLIGHT_A",
+  "IBL_HIGHLIGHT_B",
+}
+require("ibl").setup {
+  indent = { highlight = ibl_highlight },
+  scope = {
+    enabled = false,
+  },
+}
 
 -- https://github.com/ggandor/leap.nvim {{{1
 -- establishing a new standard interface for moving around in the visible area in Vim-like modal editors.
-vim.keymap.set({'n', 'x', 'o'}, 'f', '<Plug>(leap-forward)')
-vim.keymap.set({'n', 'x', 'o'}, 'F', '<Plug>(leap-backward)')
-vim.keymap.set({'n', 'x', 'o'}, 'E', '<Plug>(leap-from-window)')
+vim.keymap.set({'n', 'x', 'o'}, '`', '<Plug>(leap)')
+vim.keymap.set({'n', 'x', 'o'}, '~', '<Plug>(leap-from-window)')
 
 -- https://github.com/mikesmithgh/kitty-scrollback.nvim
 -- Open your Kitty scrollback buffer with Neovim. Ameowzing!
