@@ -276,7 +276,7 @@ call plug#begin('~/.config/nvim/bundles')
     " 光标跑酷(哇哦~)
     Plug 'ggandor/leap.nvim'
     " 缩进辅助线
-    Plug 'lukas-reineke/indent-blankline.nvim'
+    Plug 'lukas-reineke/indent-blankline.nvim', { 'tag': 'v3.4.2' }
     " 文件检索
     Plug 'stevearc/oil.nvim'
     " 标题栏利用 [o]dropbar [x]barbecue
@@ -295,6 +295,7 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'alohaia/fcitx.nvim'
     " 自动补全括号引号
     Plug 'windwp/nvim-autopairs'
+    Plug 'windwp/nvim-ts-autotag'
     " 著名的 Powerline
     Plug 'nvim-lualine/lualine.nvim'
     " 习惯了 buffer
