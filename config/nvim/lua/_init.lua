@@ -477,8 +477,8 @@ hooks.register(
   hooks.builtin.hide_first_tab_indent_level
 )
 local ibl_highlight = {
-  "IBL_HIGHLIGHT_A",
   "IBL_HIGHLIGHT_B",
+  "IBL_HIGHLIGHT_A",
 }
 require("ibl").setup {
   indent = { highlight = ibl_highlight },
