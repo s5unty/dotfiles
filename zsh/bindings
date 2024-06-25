@@ -14,7 +14,7 @@ bindkey -M viins "^D"   list-choices
 bindkey -M viins "^W"   backward-kill-word
 bindkey -M viins "^Q"   backward-kill-line
 bindkey -M viins "^K"   kill-line
-bindkey -M viins "^O"   ranger-cd
+bindkey -M viins "^O"   yazi-cd
 bindkey -M viins "^R"   history-incremental-search-backward
 
 # Alt - Key
@@ -112,7 +112,7 @@ zle -N jump-around-directory
 
 # 上一条命令的倒数第二个参数
 insert-last-word-prior() {
-    zle insert-last-word -- -1 -2
+    zle insert-last-word 1
 }
 zle -N insert-last-word-prior
 
@@ -141,20 +141,19 @@ osc-ipaddr() {
 }
 zle -N osc-ipaddr
 
-ranger-cd() {
-    tempfile='/tmp/chosendir'
-    ranger --choosedir="$tempfile" "${@:-$(pwd)}" <$TTY
-    test -f "$tempfile" &&
-    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
-        builtin cd -- "$(cat "$tempfile")"
-    fi
-    rm -f -- "$tempfile"
+yazi-cd() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 
     zle redisplay
     precmd
     zle reset-prompt
 }
-zle -N ranger-cd
+zle -N yazi-cd
 
 sncli() {
     /usr/local/bin/sncli <$TTY
