@@ -111,8 +111,9 @@ jump-around-directory() {
 zle -N jump-around-directory
 
 # 上一条命令的倒数第二个参数
+# https://www.zsh.org/mla/users/2000/msg00436.html
 insert-last-word-prior() {
-    zle insert-last-word 1
+    zle insert-last-word -n 2
 }
 zle -N insert-last-word-prior
 
@@ -142,12 +143,12 @@ osc-ipaddr() {
 zle -N osc-ipaddr
 
 yazi-cd() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
 
     zle redisplay
     precmd
