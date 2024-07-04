@@ -1,2 +1,17 @@
 [manager]
 ratio = [2, 3, 5]
+
+[opener]
+copy_png = [ { run = 'copyq write image/png - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
+copy_jpg = [ { run = 'copyq write image/jpg - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
+copy_gif = [ { run = 'copyq write image/gif - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
+copy_bmp = [ { run = 'copyq write image/bmp - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
+
+[open]
+prepend_rules = [
+	{ name = "*.png", use = "copy_png" },
+	{ name = "*.jpg", use = "copy_jpg" },
+	{ name = "*.jpeg",use = "copy_jpg" },
+	{ name = "*.gif", use = "copy_gif" },
+	{ name = "*.bmp", use = "copy_bmp" },
+]
