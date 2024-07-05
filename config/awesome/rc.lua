@@ -729,6 +729,15 @@ awful.rules.rules = {
     { rule = { class = "Sxiv" },
     properties = { floating=true, ontop=true, placement=awful.placement.centered } },
 
+    { rule = { class = "Bytedance-feishu" },
+    properties = { floating=true } },
+
+    { rule = { instance = "GenLink会议" },
+    properties = { floating=true } },
+
+    { rule = { instance = "Meeting" },
+    properties = { floating=true } },
+
     { rule = { instance = "bytedance-feishu", name = "图片" },
     properties = { floating=true, ontop=true } },
 
