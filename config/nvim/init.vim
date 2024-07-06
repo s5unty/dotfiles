@@ -213,7 +213,6 @@ nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> <Tab> za
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
-nmap <silent> <unique> ' $
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
 vmap <silent> <unique> = :call SpaceAddBetweenEnglishChinese()<CR>
