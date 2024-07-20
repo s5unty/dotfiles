@@ -54,6 +54,7 @@ export psa="xch1zgv3pqeqj92khgqtfkg6tsrep5d0d7f2s9mvmc0dk4pe7r7kv96sg59gaj"
 # deno
 export DENO_INSTALL="/sun/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+export PATH="$PATH:/usr/local/cuda/bin"
 
 # vim: ft=zsh:
 
