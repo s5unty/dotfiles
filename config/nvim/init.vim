@@ -180,15 +180,6 @@ map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
-nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>
-imap <silent> <unique> <F1> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>a
-nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>
-imap <silent> <unique> <F2> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
-nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
-imap <silent> <unique> <F3> <ESC>:set nohls!<CR>:set nohls?<CR>a
-nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
-imap <silent> <unique> <F4> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
-set pastetoggle=<F4>
 nmap <silent> <unique> <F5> <cmd>Gdiffsplit<CR>
 imap <silent> <unique> <F5> <cmd>Gdiffsplit<CR>
 nmap <silent> <unique> <F6> <cmd>Neogit<CR>
@@ -213,6 +204,7 @@ nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> <Tab> za
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
+nmap <silent> <unique> ' $
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
 vmap <silent> <unique> = :call SpaceAddBetweenEnglishChinese()<CR>
@@ -221,10 +213,27 @@ vmap <silent> <unique> = :call SpaceAddBetweenEnglishChinese()<CR>
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :qa!<CR>
 nmap <silent> <unique> <S-Tab> zA
-nmap          <unique> <S-F7> :set formatoptions-=2mn<CR>
-nmap          <unique> <S-F8> :SyntasticCheck<CR>
-nmap <silent> <unique> <S-F9> q:<UP>
-nmap <silent> <unique> <S-F11> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
+" F1
+nmap <silent> <unique> <F13> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>
+imap <silent> <unique> <F13> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>a
+" F2
+nmap <silent> <unique> <F14> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>
+imap <silent> <unique> <F14> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
+" F3
+nmap <silent> <unique> <F15> :set nohls!<CR>:set nohls?<CR>
+imap <silent> <unique> <F15> <ESC>:set nohls!<CR>:set nohls?<CR>a
+" F4
+nmap <silent> <unique> <F16> :set nopaste!<CR>:set nopaste?<CR>
+imap <silent> <unique> <F16> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
+set pastetoggle=<F16>
+" F7
+nmap          <unique> <F19> :set formatoptions-=2mn<CR>
+" F8
+nmap          <unique> <F20> :SyntasticCheck<CR>
+" F9
+nmap <silent> <unique> <F21> q:<UP>
+" F12
+nmap <silent> <unique> <F24> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
@@ -233,8 +242,10 @@ imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
 imap <silent> <unique> <C-D> <C-O>x
 imap <silent> <unique> <C-Y> <C-O>u<C-O>$
-nmap <silent> <unique> <C-F8> :make! clean<CR>
-nmap <silent> <unique> <C-F12> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR>
+" F8
+nmap <silent> <unique> <F32> :make! clean<CR>
+" F12
+nmap <silent> <unique> <F36> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR>
 
 " Alt+ {{{2
 if has("gui_running")
