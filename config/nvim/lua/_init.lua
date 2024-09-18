@@ -172,7 +172,7 @@ local servers = {
   -- pnpm install -g @biomejs/biome
   'biome',
   -- pnpm install -g typescript-language-server
-  'tsserver',
+  'ts_ls',
   -- pnpm install -g vscode-langservers-extracted
   'eslint',
   'cssls',
