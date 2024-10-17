@@ -1,0 +1,28 @@
+[[manager.prepend_keymap]]
+on   = "!"
+run  = 'shell "$SHELL" --block --confirm'
+desc = "Open shell here"
+
+[[manager.prepend_keymap]]
+on = [ "g", "h" ]
+run = '''
+	shell 'ya pub dds-cd --str ~/t/' --confirm
+'''
+
+[[manager.prepend_keymap]]
+on = [ "g", "a" ]
+run = '''
+	shell 'ya pub dds-cd --str ~/worktop/ansible' --confirm
+'''
+
+[[manager.prepend_keymap]]
+on = [ "g", "j" ]
+run = '''
+	shell 'ya pub dds-cd --str ~/worktop/jenkins' --confirm
+'''
+
+[[manager.prepend_keymap]]
+on = [ "g", "T" ]
+run = '''
+	shell 'ya pub dds-cd --str /tmp/t/' --confirm
+'''

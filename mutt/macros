@@ -6,8 +6,8 @@
 
 # 切换邮箱和发送邮件的默认快捷键都是 y，容易误发邮件
 macro index,pager "c" "<change-folder>?<toggle-mailboxes>"
-# bounce(打回)很少用到，改成 lables 标签的切换快捷键
-macro index,pager "b" "<change-folder>?\
+# exit很少用到，改成 lables 标签的切换快捷键
+macro index,pager "x" "<change-folder>?\
 	<change-dir><kill-line>/sun/mailroom/labels<enter>\
 	<enter-mask><kill-line>!^\..<enter>"
 # 逗号','改成「记事本」的切换快捷键
@@ -31,7 +31,7 @@ macro index \cr "<collapse-all><tag-pattern>~(~N|~O)<enter><tag-prefix><read-sub
 macro browser h "<first-entry><select-entry>"
 
 # 快速保存附件
-macro attach s "<save-entry><kill-line>/tmp/today/<enter>a"
+macro attach s "<save-entry><kill-line>/tmp/t/<enter>a"
 
 # http://www.nixternal.com/mark-e-mails-in-mutt-as-tasks-in-taskwarrior/
 # https://github.com/ValiValpas/taskopen
