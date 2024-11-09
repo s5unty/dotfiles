@@ -489,7 +489,7 @@ require("ibl").setup {
 
 -- https://github.com/ggandor/leap.nvim {{{1
 -- establishing a new standard interface for moving around in the visible area in Vim-like modal editors.
-vim.keymap.set({'n', 'x', 'o'}, '`', '<Plug>(leap)')
+vim.keymap.set({'n', 'x', 'o'}, ',', '<Plug>(leap)')
 vim.keymap.set({'n', 'x', 'o'}, '~', '<Plug>(leap-from-window)')
 
 -- https://github.com/mikesmithgh/kitty-scrollback.nvim
