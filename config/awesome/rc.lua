@@ -146,7 +146,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock('%Y.%m.%d(%a) %H: %M')
 
 -- Create a wibox for each screen and add it
 awful.util.taglist_buttons = awful.util.table.join(
@@ -732,10 +732,13 @@ awful.rules.rules = {
     { rule = { class = "Bytedance-feishu" },
     properties = { floating=true } },
 
+    { rule = { class = "Genscript-genlink" },
+    properties = { floating=true } },
+
     { rule = { instance = "GenLink会议" },
     properties = { floating=true } },
 
-    { rule = { instance = "Meeting" },
+    { rule = { class = "Meeting" },
     properties = { floating=true } },
 
     { rule = { instance = "bytedance-feishu", name = "图片" },
