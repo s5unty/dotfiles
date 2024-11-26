@@ -7,6 +7,8 @@ alias -g H='ansifilter --html -eUTF8'
 
 alias ...="../../"
 alias ....="../../../"
+alias .....="../../../../"
+alias ......="../../../../../"
 alias cs="history -i 0"
 alias mv="/bin/mv -i"
 alias ll="/bin/ls --color=always --hyperlink -hFxtrl"
@@ -15,6 +17,8 @@ alias ls="/bin/ls --color=always --hyperlink -hFv"
 alias cp="cp -a"
 alias rm="rm -I"
 alias at="at -m"
+alias jj="TERM=xterm ssh jms"
+alias ssh="TERM=xterm ssh"
 alias ow="$__SUDO chown -R `whoami`:`whoami`"
 alias vin="vi --noplugin"
 alias mkd="mkd2html -footer \"<hr /> Last updated: `date +"%F %T%:z"`\""
@@ -41,8 +45,9 @@ alias cnpm="npm --registry=https://registry.npm.taobao.org \
     --disturl=https://npm.taobao.org/dist \
     --userconfig=$HOME/.cnpmrc"
 alias docker="sudo docker"
-alias jj="TERM=xterm ssh it"
-alias ss="kitten ssh worktop"
+ad() {
+    lbdbq $1 | tr 'A-Z' 'a-z'
+}
 
 alias g="git"
 alias gll="git ll"
@@ -282,8 +287,8 @@ tde() {
     else
         loc=":normal $1gg"
     fi
-    A_FILE="$TODO_DIR/var/$TD/todo.log"
-    B_FILE="$TODO_DIR/var/work/todo.log"
+    HOME_FILE="$TODO_DIR/var/home/todo.log"
+    WORK_FILE="$TODO_DIR/var/work/todo.log"
     vi +":e $HOME_FILE" +":normal zz" \
         +":vs $WORK_FILE" +"${loc}"
 }
@@ -465,4 +470,3 @@ alias pou="pass otp uri -q"
 alias poa="pass otp append"
 alias poi="pass otp insert"
 # }}}
-

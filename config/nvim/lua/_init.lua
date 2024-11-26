@@ -392,8 +392,8 @@ vim.keymap.set('n', '<M-9>', '<cmd>BufferLineMovePrev<CR>')
 -- https://github.com/Bekaboo/dropbar.nvim -- {{{1
 -- A polished, IDE-like, highly-customizable winbar for Neovim
 require('dropbar').setup {
-  general = {
-    update_interval = 300,
+  bar = {
+    update_debounce = 300,
   },
   icons = {
     ui = {
@@ -489,11 +489,24 @@ require("ibl").setup {
 
 -- https://github.com/ggandor/leap.nvim {{{1
 -- establishing a new standard interface for moving around in the visible area in Vim-like modal editors.
-vim.keymap.set({'n', 'x', 'o'}, ',', '<Plug>(leap)')
+vim.keymap.set({'n', 'x', 'o'}, '`', '<Plug>(leap)')
 vim.keymap.set({'n', 'x', 'o'}, '~', '<Plug>(leap-from-window)')
 
 -- https://github.com/mikesmithgh/kitty-scrollback.nvim
 -- Open your Kitty scrollback buffer with Neovim. Ameowzing!
-require('kitty-scrollback').setup()
+require('kitty-scrollback').setup({
+    myconfig = {
+      kitty_get_text = {
+        ansi = false,
+      },
+    },
+    myfnconfig = function(kitty_data)
+      return {
+        kitty_get_text = {
+          extent = (kitty_data.scrolled_by > kitty_data.lines) and 'all' or 'screen',
+        },
+      }
+    end,
+})
 
 
