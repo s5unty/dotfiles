@@ -58,9 +58,9 @@ theme.tasklist_floating_icon    = theme.home_dir .. "mark.png"
 -- Create a promodoro widget {{{3
 pomodoro = wibox.widget.progressbar {}
 pomodoro.forced_width     = 0
-pomodoro.max_value        = 100
+pomodoro.max_value        = 200
 pomodoro.background_color = theme.bg_normal
-pomodoro.color            = { type = "linear", from = {0, 0}, to = {100, 0}, stops = { { 0, '#AECF96' }, { 0.25, "#88A175" }, { 1, "#FF5656" } } }
+pomodoro.color            = { type = "linear", from = {0, 0}, to = {200, 0}, stops = { { 0, '#AECF96' }, { 0.25, "#88A175" }, { 1, "#FF5656" } } }
 pomodoro.ticks            = true -- false:平滑的整体，true:间隙的个体
 -- }}}
 
