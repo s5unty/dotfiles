@@ -69,21 +69,21 @@ tdid=${1}
 turn=${2}
 
 for t in $(seq ${turn}); do
-    echo "pomodoro:set_background_color('#494B4F');pomodoro.forced_width = 200;" | awesome-client
+    echo "pomodoro:set_background_color('#494B4F');pomodoro.forced_width = 100;" | awesome-client
     # 工作时间开始
-    for i in $(seq 200); do
+    for i in $(seq 100); do
         echo "pomodoro:set_value(${i})" | awesome-client
-        sleep $(echo "scale=3;${work}/200" | bc)
+        sleep $(echo "scale=3;${work}/100" | bc)
     done
 
     # 工作时间结束
     echo "local naughty = require('naughty'); naughty.notify({ margin = 5, position = 'bottom_left', timeout=${rest}, text = 'Time to stop work and take a little rest.'})" | awesome-client
 
     # 休息时间开始
-    for i in $(seq 200); do
-        j=$((200-i+1))
+    for i in $(seq 100); do
+        j=$((100-i+1))
         echo "pomodoro.forced_width = ${j}" | awesome-client
-        sleep $(echo "scale=3;${rest}/200" | bc)
+        sleep $(echo "scale=3;${rest}/100" | bc)
     done
 done
 clean_up
