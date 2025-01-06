@@ -78,7 +78,17 @@ cmp.setup({
     { name = 'snippy', priority = 90 }, -- For snippy users.
   }, {
     { name = 'buffer' },
-  })
+  }),
+  sorting = {
+    priority_weight = 2,
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.kind,
+    },
+  }
 })
 
 -- Set configuration for specific filetype.
@@ -161,10 +171,17 @@ lspconfig.dartls.setup {
     }
   }
 }
+-- https://github.com/denoland/deno/issues/26223
+lspconfig.denols.setup({
+  root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
+  -- 单文件(test.ts)激活denols的尝试失败
+  -- single_file_support = false,
+})
 local servers = {
   'pyright',
   'gopls',
   'dartls',
+  'denols',
   -- pnpm install -g @ansible/ansible-language-server
   'ansiblels',
   -- pnpm install -g bash-language-server
@@ -172,7 +189,7 @@ local servers = {
   -- pnpm install -g @biomejs/biome
   'biome',
   -- pnpm install -g typescript-language-server
-  'ts_ls',
+  -- 'ts_ls',
   -- pnpm install -g vscode-langservers-extracted
   'eslint',
   'cssls',
