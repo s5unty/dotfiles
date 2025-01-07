@@ -33,17 +33,20 @@ cmp.setup({
     ['<C-c>']       = cmp.mapping.abort(),
     ['<C-u>']       = cmp.mapping.scroll_docs(-4),
     ['<C-d>']       = cmp.mapping.scroll_docs(4),
-    ['<Space>']     = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select   = true,
-    }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item()
+        if #cmp.get_entries() == 1 then
+          cmp.confirm({ select = true })
+        else
+          cmp.select_next_item()
+        end
       elseif snippy.can_expand_or_advance() then
         snippy.expand_or_advance()
       elseif has_words_before() then
         cmp.complete()
+        if #cmp.get_entries() == 1 then
+          cmp.confirm({ select = true })
+        end
       else
         fallback()
       end
@@ -171,12 +174,6 @@ lspconfig.dartls.setup {
     }
   }
 }
--- https://github.com/denoland/deno/issues/26223
-lspconfig.denols.setup({
-  root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
-  -- 单文件(test.ts)激活denols的尝试失败
-  -- single_file_support = false,
-})
 local servers = {
   'pyright',
   'gopls',
