@@ -13,9 +13,21 @@ local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
+local function toggle_autocomplete()
+  local cmp = require('cmp')
+  local current_setting = cmp.get_config().completion.autocomplete
+  if current_setting and #current_setting > 0 then
+    cmp.setup({ completion = { autocomplete = false } })
+  else
+    cmp.setup({ completion = { autocomplete = { cmp.TriggerEvent.TextChanged } } })
+  end
+end
 cmp.setup({
   completion = {
     autocomplete = false,
+  },
+  view = {
+    entries = {name = 'custom', selection_order = 'near_cursor' }
   },
   snippet = {
     expand = function(args)
@@ -23,17 +35,38 @@ cmp.setup({
     end,
   },
   window = {
-    completion = cmp.config.window.bordered(),
+    completion = {
+      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+      col_offset = -3,
+      side_padding = 0,
+    },
     documentation = cmp.config.window.bordered(),
   },
   formatting = {
-    format = lspkind.cmp_format(),
+    fields = { "kind", "abbr", "menu" },
+    format = function(entry, vim_item)
+      local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+      local strings = vim.split(kind.kind, "%s", { trimempty = true })
+      kind.kind = " " .. (strings[1] or "") .. " "
+      kind.menu = "    (" .. (strings[2] or "") .. ")"
+
+      return kind
+    end,
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-c>']       = cmp.mapping.abort(),
-    ['<C-u>']       = cmp.mapping.scroll_docs(-4),
-    ['<C-d>']       = cmp.mapping.scroll_docs(4),
-    ["<Tab>"] = cmp.mapping(function(fallback)
+    ['<C-c>'] = cmp.mapping.abort(),
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+    ["<C-k>"] = cmp.mapping(function(_)
+      if cmp.visible() then
+        cmp.abort()
+        toggle_autocomplete()
+      else
+        cmp.complete()
+        toggle_autocomplete()
+      end
+    end, { "i", "s", "c" }),
+    ["<Tab>"] = cmp.mapping(function(_)
       if cmp.visible() then
         if #cmp.get_entries() == 1 then
           cmp.confirm({ select = true })
@@ -50,8 +83,8 @@ cmp.setup({
       else
         fallback()
       end
-    end, { "i", "s" }),
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
+    end, { "i", "s", "c" }),
+    ["<S-Tab>"] = cmp.mapping(function(_)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif snippy.can_jump(-1) then
@@ -59,7 +92,7 @@ cmp.setup({
       else
         fallback()
       end
-    end, { "i", "s" }),
+    end, { "i", "s", "c" }),
     ["<CR>"] = cmp.mapping({
        i = function(fallback)
          if cmp.visible() and cmp.get_active_entry() then
@@ -108,6 +141,9 @@ cmp.setup.cmdline({ '/', '?' }, {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = 'buffer' }
+  },
+  view = {
+    entries = {name = 'wildmenu', separator = '|' }
   }
 })
 
