@@ -240,6 +240,9 @@ endif
 let mapleader=' '
 let maplocalleader=','
 nmap <silent> <unique> <Leader>q :q<CR>
+nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
+nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
+nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
 vmap <silent> <unique> <Leader>a <Plug>VimSumVisual
 
 " Colon+, Colon char is ':' {{{2
