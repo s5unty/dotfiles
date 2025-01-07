@@ -1,7 +1,6 @@
 " General {{{1
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,euc-cn,cp936,euc-tw,big5
-set termencoding=utf-8
 set fileformats=unix,dos
 set mouse=a " 开启鼠标支持
 set expandtab " TAB is soft
@@ -180,8 +179,8 @@ map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
-nmap <silent> <unique> <F5> <cmd>Gdiffsplit<CR>
-imap <silent> <unique> <F5> <cmd>Gdiffsplit<CR>
+nmap          <unique> <F5> :Gvdiffsplit HEAD<SPACE>
+imap          <unique> <F5> <C-O>:Gvdiffsplit HEAD<SPACE>
 nmap <silent> <unique> <F6> <cmd>Neogit<CR>
 imap <silent> <unique> <F6> <cmd>Neogit<CR>
 nmap <silent> <unique> <F7> <cmd>Telescope live_grep<CR>
@@ -204,36 +203,19 @@ nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> <Tab> za
 nmap <silent> <unique> - <C-U>
 nmap <silent> <unique> ; zz
-nmap <silent> <unique> ' $
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
-vmap <silent> <unique> = :call SpaceAddBetweenEnglishChinese()<CR>
+vmap <silent> <unique> - :call SpaceAddBetweenEnglishChinese()<CR>
 
 " Shift+ {{{2
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :qa!<CR>
 nmap <silent> <unique> <S-Tab> zA
-" F1
-nmap <silent> <unique> <F13> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>
-imap <silent> <unique> <F13> <ESC>:let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>a
-" F2
-nmap <silent> <unique> <F14> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>
-imap <silent> <unique> <F14> <ESC>:set nowrap!<CR>:set nowrap?<CR>a
-" F3
-nmap <silent> <unique> <F15> :set nohls!<CR>:set nohls?<CR>
-imap <silent> <unique> <F15> <ESC>:set nohls!<CR>:set nohls?<CR>a
-" F4
-nmap <silent> <unique> <F16> :set nopaste!<CR>:set nopaste?<CR>
-imap <silent> <unique> <F16> <ESC>:set nopaste!<CR>:set nopaste?<CR>a
-set pastetoggle=<F16>
-" F7
-nmap          <unique> <F19> :set formatoptions-=2mn<CR>
-" F8
-nmap          <unique> <F20> :SyntasticCheck<CR>
-" F9
-nmap <silent> <unique> <F21> q:<UP>
-" F12
-nmap <silent> <unique> <F24> <ESC>:ptselect <C-R>=expand('<cword>')<CR><CR>
+nmap <silent> <unique> <F13> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>    " F1
+nmap <silent> <unique> <F14> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>           " F2
+nmap <silent> <unique> <F15> :set nohls!<CR>:set nohls?<CR>                         " F3
+nmap <silent> <unique> <F16> :set nopaste!<CR>:set nopaste?<CR>                     " F4
+nmap <silent> <unique> <F19> :set formatoptions-=2mn<CR>:set formatoptions<CR>      " F7
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
@@ -242,10 +224,6 @@ imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
 imap <silent> <unique> <C-D> <C-O>x
 imap <silent> <unique> <C-Y> <C-O>u<C-O>$
-" F8
-nmap <silent> <unique> <F32> :make! clean<CR>
-" F12
-nmap <silent> <unique> <F36> :!mkdir -p ~/__html__/%:h<CR>:TOhtml<CR>:w! ~/__html__/%<CR>:bw!<CR>
 
 " Alt+ {{{2
 if has("gui_running")
@@ -262,9 +240,6 @@ endif
 let mapleader=' '
 let maplocalleader=','
 nmap <silent> <unique> <Leader>q :q<CR>
-nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
 vmap <silent> <unique> <Leader>a <Plug>VimSumVisual
 
 " Colon+, Colon char is ':' {{{2
