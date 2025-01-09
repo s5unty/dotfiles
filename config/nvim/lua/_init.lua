@@ -17,9 +17,11 @@ local function toggle_autocomplete()
   local cmp = require('cmp')
   local current_setting = cmp.get_config().completion.autocomplete
   if current_setting and #current_setting > 0 then
-    cmp.setup({ completion = { autocomplete = false } })
+    cmp.setup.buffer({ completion = { autocomplete = false } })
+    return cmp.visible() and cmp.abort()
   else
-    cmp.setup({ completion = { autocomplete = { cmp.TriggerEvent.TextChanged } } })
+    cmp.setup.buffer({ completion = { autocomplete = { cmp.TriggerEvent.TextChanged } } })
+    return cmp.visible() or cmp.complete()
   end
 end
 cmp.setup({
@@ -58,15 +60,9 @@ cmp.setup({
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ["<C-k>"] = cmp.mapping(function(_)
-      if cmp.visible() then
-        cmp.abort()
-        toggle_autocomplete()
-      else
-        cmp.complete()
-        toggle_autocomplete()
-      end
+      toggle_autocomplete()
     end, { "i", "s", "c" }),
-    ["<Tab>"] = cmp.mapping(function(_)
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         if #cmp.get_entries() == 1 then
           cmp.confirm({ select = true })
@@ -84,7 +80,7 @@ cmp.setup({
         fallback()
       end
     end, { "i", "s", "c" }),
-    ["<S-Tab>"] = cmp.mapping(function(_)
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif snippy.can_jump(-1) then
