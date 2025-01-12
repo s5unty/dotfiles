@@ -17,14 +17,12 @@ export REPREPRO_CONFIG_DIR=""
 export MAILCHECK=150
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:/opt/atf/bin:/sun/.sangfor/ssl/bin:/sun/.node/bin/"
-export NODE_PATH="$HOME/.node/lib/node_modules:$NODE_PATH"
-export MANPATH="$MANPATH:$HOME/.node/share/man:$HOME/.local/share/man/"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/X11:/usr/games:/sun/.local/bin/"
+export MANPATH="$MANPATH:$HOME/.local/share/man/"
 export JAVA_HOME="/usr/lib/jvm/default-java/"
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 export CLASSPATH=".:$JAVA_HOME/class/:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
 export XDG_CONFIG_HOME="$HOME/.config"
-export PATH="$PATH:/var/lib/gems/1.8/bin/:/sun/.local/bin/"
 export TERM="xterm"
 export LANG="C"
 export SDCV_HISTSIZE=32
@@ -48,9 +46,6 @@ export DOTREMINDERS="$TODO_DIR/var/work.rem"
 # https://www.cnblogs.com/mxnote/p/16783314.html
 export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
-
-export fpk="95cf886ae72347195d15aa2bd3adfcb9465ac367c8aa504e296b99434a07a88c52735348f9a3731cac32cbbf1e52f1ce"
-export psa="xch1zgv3pqeqj92khgqtfkg6tsrep5d0d7f2s9mvmc0dk4pe7r7kv96sg59gaj"
 
 # pnpm
 export PNPM_HOME="/sun/.local/share/pnpm"
