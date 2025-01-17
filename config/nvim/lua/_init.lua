@@ -199,13 +199,6 @@ map("n", "<leader>gw",  function() vim.diagnostic.setqflist({ severity = "W" }) 
 -- configs for the nvim lsp client
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
-lspconfig.dartls.setup {
-  settings = {
-    dart = {
-      enableSnippets = false,
-    }
-  }
-}
 local servers = {
   'pyright',
   'gopls',
@@ -230,7 +223,13 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
-
+lspconfig.dartls.setup {
+  settings = {
+    dart = {
+      enableSnippets = false,
+    }
+  }
+}
 
 -- https://github.com/windwp/nvim-autopairs -- {{{1
 -- autopairs for neovim written by lua
@@ -538,7 +537,7 @@ require("ibl").setup {
 vim.keymap.set({'n', 'x', 'o'}, ',', '<Plug>(leap)')
 vim.keymap.set({'n', 'x', 'o'}, '~', '<Plug>(leap-from-window)')
 
--- https://github.com/mikesmithgh/kitty-scrollback.nvim
+-- https://github.com/mikesmithgh/kitty-scrollback.nvim {{{1
 -- Open your Kitty scrollback buffer with Neovim. Ameowzing!
 require('kitty-scrollback').setup({
     myconfig = {
