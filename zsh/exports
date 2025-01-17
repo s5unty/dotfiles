@@ -46,11 +46,11 @@ export DOTREMINDERS="$TODO_DIR/var/work.rem"
 # https://www.cnblogs.com/mxnote/p/16783314.html
 export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
-
+# https://docs.deno.com/runtime/reference/env_variables/
+export DENO_INSTALL_ROOT=$HOME/.local/
 # pnpm
-export PNPM_HOME="/sun/.local/share/pnpm"
+export PNPM_HOME="/sun/.cache/pnpm"
 export PATH="$PNPM_HOME:$PATH"
-# pnpm end
 
 # vim: ft=zsh:
 
