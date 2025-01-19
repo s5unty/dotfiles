@@ -537,21 +537,3 @@ require("ibl").setup {
 vim.keymap.set({'n', 'x', 'o'}, ',', '<Plug>(leap)')
 vim.keymap.set({'n', 'x', 'o'}, '~', '<Plug>(leap-from-window)')
 
--- https://github.com/mikesmithgh/kitty-scrollback.nvim {{{1
--- Open your Kitty scrollback buffer with Neovim. Ameowzing!
-require('kitty-scrollback').setup({
-    myconfig = {
-      kitty_get_text = {
-        ansi = false,
-      },
-    },
-    myfnconfig = function(kitty_data)
-      return {
-        kitty_get_text = {
-          extent = (kitty_data.scrolled_by > kitty_data.lines) and 'all' or 'screen',
-        },
-      }
-    end,
-})
-
-

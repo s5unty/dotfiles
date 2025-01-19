@@ -260,7 +260,6 @@ command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp 
 call plug#begin('~/.config/nvim/bundles')
     " 控制台(kitty)增强
     Plug 'knubie/vim-kitty-navigator'
-    Plug 'mikesmithgh/kitty-scrollback.nvim'
     " 光标跑酷(哇哦~)
     Plug 'ggandor/leap.nvim'
     " 缩进辅助线

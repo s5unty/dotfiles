@@ -1,3 +1,4 @@
+from base64 import b64encode
 from functools import total_ordering
 from itertools import takewhile
 import json
@@ -466,6 +467,7 @@ class GrabHandler(Handler):
 
     def initialize(self) -> None:
         self.cmd.set_window_title('Grab – {}'.format(self.args.title))
+        self.cmd.set_default_colors(cursor=self.opts.cursor)
         self._redraw()
 
     def perform_default_key_action(self, key_event: KeyEvent) -> bool:
@@ -687,18 +689,13 @@ type=int
         handler = GrabHandler(args, opts, lines)
         loop = Loop()
         loop.loop(handler)
-        return handler.result
+        if loop.return_code == 0 and 'copy' in handler.result:
+            sys.stdout.buffer.write(b''.join((b'\x1b]52;c;',
+                                              b64encode(handler.result['copy'].encode('utf-8')),
+                                              b'\x1b\\')))
+        return {}
     except Exception as e:
         from kittens.tui.loop import debug
         from traceback import format_exc
         debug(format_exc())
         raise
-
-
-WindowId = int
-
-
-def handle_result(args: List[str], result: 'ResultDict',
-                  target_window_id: WindowId, boss: Boss) -> None:
-    if 'copy' in result:
-        set_clipboard_string(result['copy'])
