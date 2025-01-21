@@ -202,7 +202,7 @@ nmap <silent> <unique> \ <C-I>zz
 nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> <Tab> za
 nmap <silent> <unique> - <C-U>
-nmap <silent> <unique> ; zz
+nmap <silent> <unique> ' zz
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
 vmap <silent> <unique> - :call SpaceAddBetweenEnglishChinese()<CR>
@@ -219,7 +219,7 @@ nmap <silent> <unique> <F19> :set formatoptions-=2mn<CR>:set formatoptions<CR>  
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
-imap <silent> <unique> <C-Q> <ESC><ESC>;
+imap <silent> <unique> <C-Q> <ESC><ESC>'
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
 imap <silent> <unique> <C-D> <C-O>x
@@ -238,7 +238,6 @@ endif
 
 " Leader+ , Leader char is '<Space>' {{{2
 let mapleader=' '
-let maplocalleader=','
 nmap <silent> <unique> <Leader>q :q<CR>
 nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
