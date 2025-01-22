@@ -537,12 +537,12 @@ require("ibl").setup {
 require('leap').opts.equivalence_classes = { ' \t\r\n', '([{', ')]}', '\'"`' }
 require('leap.user').set_repeat_keys('g;', 'g,')
 vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
-vim.keymap.set({'n', 'x', 'o'}, 'r', '<Plug>(leap-forward)')
-vim.keymap.set({'n', 'x', 'o'}, 'R', '<Plug>(leap-backward)')
-vim.keymap.set({'n', 'x', 'o'}, 'gs', function () -- 远程暂切
+vim.keymap.set({'n', 'x', 'o'}, 'g8', '<Plug>(leap-forward)')
+vim.keymap.set({'n', 'x', 'o'}, 'g3', '<Plug>(leap-backward)')
+vim.keymap.set({'n', 'x', 'o'}, 'gr', function () -- 远程暂切
   require('leap.remote').action()
 end)
-vim.keymap.set({'n', 'x', 'o'}, 'ga', function () -- 语义自选
+vim.keymap.set({'n', 'x', 'o'}, 'gs', function () -- 语义自选
   local sk = vim.deepcopy(require('leap').opts.special_keys)
   sk.next_target = vim.fn.flatten(vim.list_extend({'a'}, {sk.next_target}))
   sk.prev_target = vim.fn.flatten(vim.list_extend({'A'}, {sk.prev_target}))
