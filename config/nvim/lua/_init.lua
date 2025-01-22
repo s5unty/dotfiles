@@ -549,3 +549,54 @@ vim.keymap.set({'n', 'x', 'o'}, 'gs', function () -- 语义自选
   require('leap.treesitter').select { opts = { special_keys = sk } }
 end)
 
+
+-- https://github.com/chrisgrieser/nvim-various-textobjs {{{1
+-- Bundle of more than 30 new text objects for Neovim.
+require("various-textobjs").setup {
+    keymaps = {
+        useDefaults = false,
+    }
+}
+vim.keymap.set({ "o", "x" }, "au", '<cmd>lua require("various-textobjs").subword("outer")<CR>')
+vim.keymap.set({ "o", "x" }, "iu", '<cmd>lua require("various-textobjs").subword("inner")<CR>')
+vim.keymap.set({ "o", "x" }, "ao", '<cmd>lua require("various-textobjs").anyBracket("outer")<CR>')
+vim.keymap.set({ "o", "x" }, "io", '<cmd>lua require("various-textobjs").anyBracket("inner")<CR>')
+vim.keymap.set({ "o", "x" }, "O",  '<cmd>lua require("various-textobjs").toNextClosingBracket()<CR>')
+vim.keymap.set({ "o", "x" }, "ai", '<cmd>lua require("various-textobjs").anyQuote("outer")<CR>')
+vim.keymap.set({ "o", "x" }, "ii", '<cmd>lua require("various-textobjs").anyQuote("inner")<CR>')
+vim.keymap.set({ "o", "x" }, "I",  '<cmd>lua require("various-textobjs").toNextQuotationMark()<CR>')
+vim.keymap.set({ "o", "x" }, "am", '<cmd>lua require("various-textobjs").chainMember("outer")<CR>')
+vim.keymap.set({ "o", "x" }, "im", '<cmd>lua require("various-textobjs").chainMember("inner")<CR>')
+vim.keymap.set({ "o", "x" }, "ak", '<cmd>lua require("various-textobjs").key("outer")<CR>')
+vim.keymap.set({ "o", "x" }, "ik", '<cmd>lua require("various-textobjs").key("inner")<CR>')
+vim.keymap.set({ "o", "x" }, "av", '<cmd>lua require("various-textobjs").value("outer")<CR>')
+vim.keymap.set({ "o", "x" }, "iv", '<cmd>lua require("various-textobjs").value("inner")<CR>')
+
+
+-- https://github.com/nvim-treesitter/nvim-treesitter-textobjects {{{1
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["ap"] = "@parameter.onner",
+        ["ip"] = "@parameter.inner",
+      },
+    },
+  },
+}
+
+local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+-- Repeat movement with ; and ,
+-- ensure ; goes forward and , goes backward regardless of the last direction
+vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+-- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })

@@ -25,7 +25,7 @@ set updatetime=1000
 set showcmd " 右下方显示按键序列
 set winaltkeys=no
 set cinoptions=:0
-set timeoutlen=300
+set timeoutlen=1000
 set ttimeoutlen=50
 set timeout
 set autoread
@@ -157,7 +157,7 @@ if has("autocmd")
 
     " 这样加快输入法自动切换时的体感速度
     autocmd InsertEnter * set timeoutlen=50
-    autocmd InsertLeave * set timeoutlen=300
+    autocmd InsertLeave * set timeoutlen=1000
 
     " 每次访问文件时都把光标放置在上次离开的位置
     autocmd BufReadPost *
@@ -206,7 +206,7 @@ nmap <silent> <unique> ' zz
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
 vmap <silent> <unique> - :call SpaceAddBetweenEnglishChinese()<CR>
-
+ 
 " Shift+ {{{2
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :qa!<CR>
@@ -261,6 +261,9 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'knubie/vim-kitty-navigator'
     " 光标跑酷(哇哦~)
     Plug 'ggandor/leap.nvim'
+    " TextObjects增强
+    Plug 'chrisgrieser/nvim-various-textobjs'
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     " 缩进辅助线
     Plug 'lukas-reineke/indent-blankline.nvim', { 'tag': 'v3.4.2' }
     " 文件检索
