@@ -534,7 +534,21 @@ require("ibl").setup {
 
 -- https://github.com/folke/flash.nvim {{{1
 -- Navigate your code with search labels, enhanced character motions and Treesitter integration
-require("flash").setup {}
+require("flash").setup({
+    modes = {
+        char = {
+            highlight = { backdrop = false },
+            char_actions = function(motion)
+                return {
+                    [";"] = "next", -- set to `right` to always go right
+                    [","] = "prev",  -- set to `left` to always go left
+                    [motion:lower()] = "right",
+                    [motion:upper()] = "left",
+                }
+            end,
+        }
+    }
+})
 vim.keymap.set({ "n" }, 's', '<cmd>lua require("flash").jump()<CR>')
 vim.keymap.set({ "o" }, 'r', '<cmd>lua require("flash").remote()<CR>')
 vim.keymap.set({ "c" }, '<C-s>', '<cmd>lua require("flash").toggle()<CR>')
