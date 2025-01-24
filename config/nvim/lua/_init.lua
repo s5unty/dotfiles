@@ -532,16 +532,12 @@ require("ibl").setup {
   },
 }
 
--- https://github.com/ggandor/leap.nvim {{{1
--- establishing a new standard interface for moving around in the visible area in Vim-like modal editors.
-require('leap').opts.equivalence_classes = { ' \t\r\n', '([{', ')]}', '\'"`' }
-require('leap.user').set_repeat_keys('g;', 'g,')
-vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
-vim.keymap.set({'n',         }, 's', '<Plug>(leap-forward)')
-vim.keymap.set({'n',         }, 'S', '<Plug>(leap-backward)')
-vim.keymap.set({'n', 'x', 'o'}, 'gs', function () -- 远程暂切
-  require('leap.remote').action()
-end)
+-- https://github.com/folke/flash.nvim {{{1
+-- Navigate your code with search labels, enhanced character motions and Treesitter integration
+require("flash").setup {}
+vim.keymap.set({ "n" }, 's', '<cmd>lua require("flash").jump()<CR>')
+vim.keymap.set({ "o" }, 'r', '<cmd>lua require("flash").remote()<CR>')
+vim.keymap.set({ "c" }, '<C-s>', '<cmd>lua require("flash").toggle()<CR>')
 
 
 -- https://github.com/chrisgrieser/nvim-various-textobjs {{{1

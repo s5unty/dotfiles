@@ -258,13 +258,11 @@ command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp 
 call plug#begin('~/.config/nvim/bundles')
     " 控制台(kitty)增强
     Plug 'knubie/vim-kitty-navigator'
-    " 光标跑酷(哇哦~)
-    Plug 'ggandor/leap.nvim'
+    " 光标跑酷(哇哦~) [o]flash [x]leap + clever-f
+    Plug 'folke/flash.nvim'
     " TextObjects增强
     Plug 'chrisgrieser/nvim-various-textobjs'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    " Motion(fFtT)增强
-    Plug 'rhysd/clever-f.vim'
     " 缩进辅助线
     Plug 'lukas-reineke/indent-blankline.nvim', { 'tag': 'v3.4.2' }
     " 文件检索
@@ -385,14 +383,6 @@ hi SpecialKey guibg=#f0f0f0
 hi Search guifg=black guibg=#c18401
 hi CurSearch guifg=white guibg=brown
 hi WinBar guibg=none "for dropbar#26173fd @neovim#0.10.0~ubuntu1+git202404111511-4459e0cee8-971e32c878-65831570b0~ubuntu22.04.1
-
-
-" https://github.com/rhysd/clever-f.vim {{[2
-" Extended f, F, t and T key mappings for Vim.
-let g:clever_f_ignore_case = 1
-let g:clever_f_smart_case = 1
-let g:clever_f_chars_match_any_signs = ';'
-let g:clever_f_fix_key_direction = 1
 
 
 " }}}1
