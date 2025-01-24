@@ -197,12 +197,12 @@ imap <silent> <unique> <F11> <cmd>Telescope oldfiles<CR>
 nmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
-nmap <silent> <unique> <Backspace> <C-O>zz
-nmap <silent> <unique> \ <C-I>zz
+nmap <silent> <unique> <Backspace> <C-O>
+nmap <silent> <unique> \ <C-I>
 nmap <silent> <unique> <Space> <C-D>
 nmap <silent> <unique> - <C-U>
+nmap <silent> <unique> ' zz
 nmap <silent> <unique> <Enter> zz
-nmap <silent> <unique> ; zz
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
 vmap <silent> <unique> - :call SpaceAddBetweenEnglishChinese()<CR>
