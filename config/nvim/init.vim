@@ -200,9 +200,9 @@ nmap <silent> <unique> <F12> <C-]>zz
 nmap <silent> <unique> <Backspace> <C-O>zz
 nmap <silent> <unique> \ <C-I>zz
 nmap <silent> <unique> <Space> <C-D>
-nmap <silent> <unique> <Tab> za
 nmap <silent> <unique> - <C-U>
-nmap <silent> <unique> ' zz
+nmap <silent> <unique> <Enter> zz
+nmap <silent> <unique> ; zz
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
 vmap <silent> <unique> - :call SpaceAddBetweenEnglishChinese()<CR>
@@ -210,7 +210,6 @@ vmap <silent> <unique> - :call SpaceAddBetweenEnglishChinese()<CR>
 " Shift+ {{{2
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :qa!<CR>
-nmap <silent> <unique> <S-Tab> zA
 nmap <silent> <unique> <F13> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>    " F1
 nmap <silent> <unique> <F14> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>           " F2
 nmap <silent> <unique> <F15> :set nohls!<CR>:set nohls?<CR>                         " F3
@@ -236,13 +235,13 @@ imap <silent> <unique> <M-f> <C-O>w
 imap <silent> <unique> <M-d> <C-O>dw
 endif
 
-" Leader+ , Leader char is '<Space>' {{{2
-let mapleader=' '
-nmap <silent> <unique> <Leader>q :q<CR>
-nmap <silent> <unique> <Leader>1 :.diffget BASE<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>2 :.diffget LOCAL<CR>:diffupdate<CR>
-nmap <silent> <unique> <Leader>3 :.diffget REMOTE<CR>:diffupdate<CR>
-vmap <silent> <unique> <Leader>a <Plug>VimSumVisual
+" Leader+ , Leader char is '<Enter>' {{{2
+let mapleader= "\<Enter>"
+nmap <silent> <unique> q<Leader> :qa<CR>
+nmap <silent> <unique> 1<Leader> :.diffget BASE<CR>:diffupdate<CR>
+nmap <silent> <unique> 2<Leader> :.diffget LOCAL<CR>:diffupdate<CR>
+nmap <silent> <unique> 3<Leader> :.diffget REMOTE<CR>:diffupdate<CR>
+vmap <silent> <unique> a<Leader> <Plug>VimSumVisual
 
 " Colon+, Colon char is ':' {{{2
 command W  :execute 'silent! write !sudo tee % >/dev/null' <bar> edit! | echo "sudo w!!"
@@ -264,6 +263,8 @@ call plug#begin('~/.config/nvim/bundles')
     " TextObjects增强
     Plug 'chrisgrieser/nvim-various-textobjs'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    " Motion(fFtT)增强
+    Plug 'rhysd/clever-f.vim'
     " 缩进辅助线
     Plug 'lukas-reineke/indent-blankline.nvim', { 'tag': 'v3.4.2' }
     " 文件检索
@@ -384,6 +385,15 @@ hi SpecialKey guibg=#f0f0f0
 hi Search guifg=black guibg=#c18401
 hi CurSearch guifg=white guibg=brown
 hi WinBar guibg=none "for dropbar#26173fd @neovim#0.10.0~ubuntu1+git202404111511-4459e0cee8-971e32c878-65831570b0~ubuntu22.04.1
+
+
+" https://github.com/rhysd/clever-f.vim {{[2
+" Extended f, F, t and T key mappings for Vim.
+let g:clever_f_ignore_case = 1
+let g:clever_f_smart_case = 1
+let g:clever_f_chars_match_any_signs = ';'
+let g:clever_f_fix_key_direction = 1
+
 
 " }}}1
 
