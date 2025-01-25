@@ -48,6 +48,7 @@ set termguicolors
 set t_Co=256
 set undodir=~/.local/share/nvim/undo/
 set undofile
+set conceallevel=2 " 让Obsidian插件开心
 set signcolumn=number " 提示符嵌在行号栏
 " set inccommand=split " 好像是 NeoVim 特有的
 " set shortmess-=F " https://github.com/natebosch/vim-lsc
@@ -206,7 +207,7 @@ nmap <silent> <unique> <Enter> zz
 vmap <silent> <unique> + :VisSum<CR>
 nmap <silent> <unique> 0 :call G_Good0()<CR>
 vmap <silent> <unique> - :call SpaceAddBetweenEnglishChinese()<CR>
- 
+
 " Shift+ {{{2
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :qa!<CR>
@@ -272,11 +273,12 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'Bekaboo/dropbar.nvim'
     " 版本管理(:Gdiffsplit)
     Plug 'tpope/vim-fugitive'
-    Plug 'NeogitOrg/neogit'
     " 增量的模糊查询 [o]telescope [x]fzf [x]denite
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     Plug 'debugloop/telescope-undo.nvim'
-    " 被依赖的公共库
+    " Obsidian 🤝 Neovim
+    Plug 'epwalsh/obsidian.nvim'
+    " telescope + Obsidian 依赖
     Plug 'nvim-tree/nvim-web-devicons'
     Plug 'nvim-lua/plenary.nvim'
     " 在模式间切换输入法
@@ -288,7 +290,7 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'nvim-lualine/lualine.nvim'
     " 习惯了 buffer
     Plug 'akinsho/bufferline.nvim'
-    " 为什么我没这种需求
+    " 成对符号的快处
     Plug 'kylechui/nvim-surround'
     " 数值的递增递减
     Plug 'vim-scripts/VisIncr'

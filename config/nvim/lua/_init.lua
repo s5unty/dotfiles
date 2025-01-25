@@ -478,11 +478,6 @@ require('telescope').setup {
 }
 require("telescope").load_extension("undo")
 
--- https://github.com/NeogitOrg/neogit {{{1
--- A Magit clone for Neovim.
-local neogit = require('neogit')
-neogit.setup {
-}
 
 
 -- https://github.com/stevearc/oil.nvim {{{1
@@ -537,6 +532,7 @@ require("ibl").setup {
 require("flash").setup({
     modes = {
         char = {
+            autohide = true,
             highlight = { backdrop = false },
             char_actions = function(motion)
                 return {
@@ -594,3 +590,47 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+
+-- https://github.com/epwalsh/obsidian.nvim {{{1
+-- Obsidian 🤝 Neovim
+require("obsidian").setup({
+  workspaces = {
+    {
+      name = "personal",
+      path = "/sun/personal",
+    }
+  },
+  templates = {
+    folder = "archive/meta/template/",
+    date_format = "%m/%d(%a)",
+    time_format = "%H:%M",
+    -- A map for custom variables, the key should be the variable and the value a function
+    substitutions = { }
+  },
+  daily_notes = {
+    -- Optional, if you keep daily notes in a separate directory.
+    folder = "journal/"..os.date("%Y").."/"..os.date("%y%V"),
+    -- Optional, if you want to change the date format for the ID of daily notes.
+    date_format = "%y%m%d",
+    -- Optional, default tags to add to each new daily note created.
+    default_tags = { },
+    -- Optional, if you want to automatically insert a template from your template directory like 'daily.md'
+    template = "journal_nvim.md"
+  },
+  attachments = {
+    img_folder = "archive/2025",
+    img_name_func = function()
+      return string.format("%s", os.date("%m%d-%H%M-%u%u%S"))
+    end,
+
+    img_text_func = function(client, path)
+      path = client:vault_relative_path(path) or path
+      -- return string.format("![%s](%s)", path.name, path)
+      return string.format("![[%s]]", path.name)
+    end,
+  },
+  follow_img_func = function(img)
+    -- TODO search & concat
+    vim.fn.jobstart { "qiv", "/sun/personal/archive/2025/" .. img }
+  end,
+})
