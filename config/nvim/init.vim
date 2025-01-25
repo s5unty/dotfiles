@@ -182,19 +182,18 @@ map <silent> <unique> <LeftMouse><RightMouse> ZQ
 " Function Key {{{2
 nmap          <unique> <F5> :Gvdiffsplit HEAD<SPACE>
 imap          <unique> <F5> <C-O>:Gvdiffsplit HEAD<SPACE>
-nmap <silent> <unique> <F6> <cmd>Neogit<CR>
-imap <silent> <unique> <F6> <cmd>Neogit<CR>
+nmap <silent> <unique> <F6> <cmd>Telescope find_files<CR>
+imap <silent> <unique> <F6> <cmd>Telescope find_files<CR>
 nmap <silent> <unique> <F7> <cmd>Telescope live_grep<CR>
 imap <silent> <unique> <F7> <cmd>Telescope live_grep<CR>
-vmap <silent> <unique> <F8> <cmd>Telescope grep_string<CR>
-nmap <silent> <unique> <F8> <cmd>Telescope grep_string<CR>
-imap <silent> <unique> <F8> <cmd>Telescope grep_string<CR>
-nmap <silent> <unique> <F9> <cmd>Telescope lsp_references<CR>
-imap <silent> <unique> <F9> <cmd>Telescope lsp_references<CR>
-nmap <silent> <unique> <F10> <cmd>Telescope buffers<CR>
-imap <silent> <unique> <F10> <cmd>Telescope buffers<CR>
-nmap <silent> <unique> <F11> <cmd>Telescope oldfiles<CR>
-imap <silent> <unique> <F11> <cmd>Telescope oldfiles<CR>
+nmap <silent> <unique> <F8> <cmd>ObsidianToday<CR>
+imap <silent> <unique> <F8> <cmd>ObsidianToday<CR>
+nmap <silent> <unique> <F9> <cmd>Telescope oldfiles<CR>
+imap <silent> <unique> <F9> <cmd>Telescope oldfiles<CR>
+nmap <silent> <unique> <F10> <cmd><CR>
+imap <silent> <unique> <F10> <cmd><CR>
+nmap <silent> <unique> <F11> <cmd>Telescope lsp_references<CR>
+imap <silent> <unique> <F11> <cmd>Telescope lsp_references<CR>
 nmap <silent> <unique> <F12> <C-]>zz
 
 " Single Key {{{2
@@ -266,8 +265,8 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     " 缩进辅助线
     Plug 'lukas-reineke/indent-blankline.nvim', { 'tag': 'v3.4.2' }
-    " 文件检索
-    Plug 'stevearc/oil.nvim'
+    " 文件检索 [o]yazi [x]oil
+    Plug 'mikavilpas/yazi.nvim'
     " 标题栏利用 [o]dropbar [x]barbecue
     " This is currently an experimental feature that is only available in branch feat-winbar-background-highlight.
     Plug 'Bekaboo/dropbar.nvim'

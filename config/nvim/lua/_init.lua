@@ -427,7 +427,11 @@ vim.keymap.set('n', '<M-`>', '<cmd>BufferLinePick<CR>')
 vim.keymap.set('n', '<M-1>', '<cmd>BufferLineGoToBuffer 1<CR>')
 vim.keymap.set('n', '<M-2>', '<cmd>BufferLineGoToBuffer 2<CR>')
 vim.keymap.set('n', '<M-3>', '<cmd>BufferLineGoToBuffer 3<CR>')
-vim.keymap.set('n', '<M-4>', '<cmd>BufferLineGoToBuffer -1<CR>')
+vim.keymap.set('n', '<M-4>', '<cmd>BufferLineGoToBuffer 4<CR>')
+vim.keymap.set('n', '<M-5>', '<cmd>BufferLineGoToBuffer 5<CR>')
+vim.keymap.set('n', '<M-6>', '<cmd>BufferLineGoToBuffer 6<CR>')
+vim.keymap.set('n', '<M-7>', '<cmd>BufferLineGoToBuffer 7<CR>')
+vim.keymap.set('n', '<M-8>', '<cmd>BufferLineGoToBuffer -1<CR>')
 vim.keymap.set('n', '<M-.>', '<cmd>BufferLineCycleNext<CR>')
 vim.keymap.set('n', '<M-,>', '<cmd>BufferLineCyclePrev<CR>')
 vim.keymap.set('n', '<M-0>', '<cmd>BufferLineMoveNext<CR>')
@@ -480,23 +484,10 @@ require("telescope").load_extension("undo")
 
 
 
--- https://github.com/stevearc/oil.nvim {{{1
--- Neovim file explorer: edit your filesystem like a buffer
-require("oil").setup {
-  use_default_keymaps = false,
-  keymaps = {
-    ["?"]       = "actions.show_help",
-    ["<C-c>"]   = "actions.close",
-    ["<Space>"] = "actions.select",
-    ["<CR>"]    = "actions.select",
-    ["L"]       = "actions.select_vsplit",
-    ["J"]       = "actions.select_split",
-    ["-"]       = "actions.parent",
-    ["K"]       = "actions.preview",
-  },
-}
-vim.keymap.set("n", "_", "<cmd>Oil<CR>", { desc = "Open parent directory" })
-
+-- https://github.com/mikavilpas/yazi.nvim {{{1
+-- A Neovim Plugin for the yazi terminal file manager
+require("yazi").setup { }
+vim.keymap.set("n", "f<leader>", function() require("yazi").yazi() end)
 
 -- https://github.com/lukas-reineke/indent-blankline.nvim {{{1
 -- This plugin adds indentation guides to Neovim.
@@ -600,6 +591,56 @@ require("obsidian").setup({
       path = "/sun/personal",
     }
   },
+  mappings = {
+    ["<F4>"] = {
+      action = function() vim.cmd("ObsidianPasteImg") end,
+    },
+    ["<F5>"] = {
+      action = function() vim.cmd("ObsidianTags") end,
+    },
+    ["<F6>"] = {
+      action = function() vim.cmd("ObsidianQuickSwitch") end,
+    },
+    ["<F7>"] = {
+      action = function() vim.cmd("ObsidianSearch") end,
+    },
+    ["<F20>"] = { -- Shift+<F8>
+      action = function() vim.cmd("ObsidianTomorrow") end,
+      opts = { noremap = false, expr = true, buffer = true },
+    },
+    ["<F8>"] = {
+      action = function() vim.cmd("ObsidianToday") end,
+      opts = { noremap = false, expr = true, buffer = true },
+    },
+    ["<F9>"] = {
+      action = function() vim.cmd("ObsidianYesterday") end,
+      opts = { noremap = false, expr = true, buffer = true },
+    },
+    ["<F12>"] = {
+      action = function() vim.cmd("ObsidianFollowLink") end,
+      opts = { noremap = false, expr = true, buffer = true },
+    },
+    ["<cr>"] = {
+      action = function()
+        return require("obsidian").util.smart_action()
+      end,
+      opts = { buffer = true, expr = true },
+    },
+    -- Toggle check-boxes.
+    ["<leader>ch"] = {
+      action = function()
+        return require("obsidian").util.toggle_checkbox()
+      end,
+      opts = { buffer = true },
+    },
+    -- Smart action depending on context, either follow link or toggle checkbox.
+    ["<cr>"] = {
+      action = function()
+        return require("obsidian").util.smart_action()
+      end,
+      opts = { buffer = true, expr = true },
+    }
+  },
   templates = {
     folder = "archive/meta/template/",
     date_format = "%m/%d(%a)",
@@ -633,4 +674,5 @@ require("obsidian").setup({
     -- TODO search & concat
     vim.fn.jobstart { "qiv", "/sun/personal/archive/2025/" .. img }
   end,
+
 })
