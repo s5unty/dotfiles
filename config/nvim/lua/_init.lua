@@ -518,7 +518,7 @@ require("ibl").setup {
   },
 }
 
--- https://github.com/folke/flash.nvim {{{1
+-- https://github.com/rainzm/flash-zh.nvim {{{1
 -- Navigate your code with search labels, enhanced character motions and Treesitter integration
 require("flash").setup({
     modes = {
@@ -536,7 +536,7 @@ require("flash").setup({
         }
     }
 })
-vim.keymap.set({ "n" }, 's', '<cmd>lua require("flash").jump()<CR>')
+vim.keymap.set({ "n" }, 's', '<cmd>lua require("flash-zh").jump({chinese_only = false})<CR>')
 vim.keymap.set({ "o" }, 'r', '<cmd>lua require("flash").remote()<CR>')
 vim.keymap.set({ "c" }, '<C-s>', '<cmd>lua require("flash").toggle()<CR>')
 

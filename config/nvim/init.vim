@@ -257,8 +257,9 @@ command PPP :!paps --landscape --font='monospace 8' --header --columns=2 % | lp 
 call plug#begin('~/.config/nvim/bundles')
     " 控制台(kitty)增强
     Plug 'knubie/vim-kitty-navigator'
-    " 光标跑酷(哇哦~) [o]flash [x]leap + clever-f
+    " 光标跑酷(哇哦~) [o]flash-zh [o]flash [x]leap + clever-f
     Plug 'folke/flash.nvim'
+    Plug 's5unty/flash-zh.nvim'
     " TextObjects增强
     Plug 'chrisgrieser/nvim-various-textobjs'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
