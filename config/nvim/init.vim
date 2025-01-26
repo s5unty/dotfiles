@@ -237,7 +237,6 @@ endif
 
 " Leader+ , Leader char is '<Enter>' {{{2
 let mapleader= "\<Enter>"
-nmap <silent> <unique> q<Leader> :qa<CR>
 nmap <silent> <unique> 1<Leader> :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> 2<Leader> :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> 3<Leader> :.diffget REMOTE<CR>:diffupdate<CR>
@@ -277,6 +276,8 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'debugloop/telescope-undo.nvim'
     " Obsidian 🤝 Neovim
     Plug 'epwalsh/obsidian.nvim'
+    " 行号智能切换
+    Plug 'sitiom/nvim-numbertoggle'
     " telescope + Obsidian 依赖
     Plug 'nvim-tree/nvim-web-devicons'
     Plug 'nvim-lua/plenary.nvim'
@@ -384,7 +385,7 @@ hi SpecialKey guibg=#f0f0f0
 hi Search guifg=black guibg=#c18401
 hi CurSearch guifg=white guibg=brown
 hi WinBar guibg=none "for dropbar#26173fd @neovim#0.10.0~ubuntu1+git202404111511-4459e0cee8-971e32c878-65831570b0~ubuntu22.04.1
-
+hi LineNr guifg=grey
 
 " }}}1
 

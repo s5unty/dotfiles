@@ -363,8 +363,8 @@ require('lualine').setup {
         globalstatus = true,
         icons_enabled = true,
         theme = 'Tomorrow',
-        path = 1,
-    },
+        path = 4
+    }
 }
 
 
@@ -620,26 +620,6 @@ require("obsidian").setup({
       action = function() vim.cmd("ObsidianFollowLink") end,
       opts = { noremap = false, expr = true, buffer = true },
     },
-    ["<cr>"] = {
-      action = function()
-        return require("obsidian").util.smart_action()
-      end,
-      opts = { buffer = true, expr = true },
-    },
-    -- Toggle check-boxes.
-    ["<leader>ch"] = {
-      action = function()
-        return require("obsidian").util.toggle_checkbox()
-      end,
-      opts = { buffer = true },
-    },
-    -- Smart action depending on context, either follow link or toggle checkbox.
-    ["<cr>"] = {
-      action = function()
-        return require("obsidian").util.smart_action()
-      end,
-      opts = { buffer = true, expr = true },
-    }
   },
   templates = {
     folder = "archive/meta/template/",
