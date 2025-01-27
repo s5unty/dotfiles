@@ -623,10 +623,15 @@ require("obsidian").setup({
   },
   templates = {
     folder = "archive/meta/template/",
-    date_format = "%m/%d(%a)",
-    time_format = "%H:%M",
     -- A map for custom variables, the key should be the variable and the value a function
-    substitutions = { }
+    substitutions = {
+      date = function()
+        return os.date("%m/%d(%a)")
+      end
+      time = function()
+        return os.date("%H:%M")
+      end
+    }
   },
   daily_notes = {
     -- Optional, if you keep daily notes in a separate directory.
