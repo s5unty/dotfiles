@@ -627,7 +627,7 @@ require("obsidian").setup({
     substitutions = {
       date = function()
         return os.date("%m/%d(%a)")
-      end
+      end,
       time = function()
         return os.date("%H:%M")
       end
