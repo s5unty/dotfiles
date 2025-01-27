@@ -25,7 +25,7 @@ set updatetime=1000
 set showcmd " 右下方显示按键序列
 set winaltkeys=no
 set cinoptions=:0
-set timeoutlen=1000
+set timeoutlen=500
 set ttimeoutlen=50
 set timeout
 set autoread
@@ -158,7 +158,7 @@ if has("autocmd")
 
     " 这样加快输入法自动切换时的体感速度
     autocmd InsertEnter * set timeoutlen=50
-    autocmd InsertLeave * set timeoutlen=1000
+    autocmd InsertLeave * set timeoutlen=500
 
     " 每次访问文件时都把光标放置在上次离开的位置
     autocmd BufReadPost *
@@ -218,11 +218,10 @@ nmap <silent> <unique> Q :qa!<CR>
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
-imap <silent> <unique> <C-Q> <ESC><ESC>'
 imap <silent> <unique> <C-E> <C-O>$
 imap <silent> <unique> <C-A> <C-O>^
-imap <silent> <unique> <C-D> <C-O>x
-imap <silent> <unique> <C-Y> <C-O>u<C-O>$
+imap <silent> <unique> <C-D> <C-O>D
+imap <silent> <unique> <C-Y> <C-O>u
 
 " Alt+ {{{2
 if has("gui_running")
@@ -276,8 +275,8 @@ call plug#begin('~/.config/nvim/bundles')
     " 增量的模糊查询 [o]telescope [x]fzf [x]denite
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     Plug 'debugloop/telescope-undo.nvim'
-    " Obsidian 🤝 Neovim
-    Plug 'epwalsh/obsidian.nvim'
+    " 笔记管理 [o]zk-nvim [x]obsidian.nvim
+    Plug 'zk-org/zk-nvim'
     " 行号智能切换
     Plug 'sitiom/nvim-numbertoggle'
     " telescope + Obsidian 依赖
@@ -285,15 +284,13 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'nvim-lua/plenary.nvim'
     " 在模式间切换输入法
     Plug 'alohaia/fcitx.nvim'
-    " 自动补全括号引号
-    Plug 'windwp/nvim-autopairs'
-    Plug 'windwp/nvim-ts-autotag'
+    " 括号引号成群结队 [o]mini.surround [x]nvim-surround
+    Plug 'echasnovski/mini.pairs'
+    Plug 'echasnovski/mini.surround'
     " 著名的 Powerline
     Plug 'nvim-lualine/lualine.nvim'
     " 习惯了 buffer
     Plug 'akinsho/bufferline.nvim'
-    " 成对符号的快处
-    Plug 'kylechui/nvim-surround'
     " 数值的递增递减
     Plug 'vim-scripts/VisIncr'
     " 数值的求和

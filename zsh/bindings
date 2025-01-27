@@ -14,7 +14,7 @@ bindkey -M viins "^D"   list-choices
 bindkey -M viins "^W"   backward-kill-word
 bindkey -M viins "^Q"   backward-kill-line
 bindkey -M viins "^K"   kill-line
-bindkey -M viins "^O"   yazi-cd
+bindkey -s       "^O"   "yazi-cd\n"
 bindkey -M viins "^R"   history-incremental-search-backward
 
 # Alt - Key

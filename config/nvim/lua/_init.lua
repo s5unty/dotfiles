@@ -231,36 +231,13 @@ lspconfig.dartls.setup {
   }
 }
 
--- https://github.com/windwp/nvim-autopairs -- {{{1
--- autopairs for neovim written by lua
-require("nvim-autopairs").setup {
+-- https://github.com/echasnovski/mini.pairs {{{1
+-- Neovim Lua plugin to automatically manage character pairs. Part of 'mini.nvim' library.
+require('mini.pairs').setup()
 
-}
-
--- https://github.com/windwp/nvim-ts-autotag -- {{{1
--- Use treesitter to auto close and auto rename html tag
-require('nvim-ts-autotag').setup({
-  opts = {
-    enable_close = true, -- Auto close tags
-    enable_rename = true, -- Auto rename pairs of tags
-    enable_close_on_slash = false -- Auto close on trailing </
-  },
-  -- Also override individual filetype configs, these take priority.
-  -- Empty by default, useful if one of the "opts" global settings
-  -- doesn't work well in a specific filetype
-  per_filetype = {
-    ["html"] = {
-      enable_close = true
-    }
-  }
-})
-
--- https://github.com/kylechui/nvim-surround -- {{{1
--- Add/change/delete surrounding delimiter pairs with ease. Written with in Lua.
-require("nvim-surround").setup {
-
-}
-
+-- https://github.com/echasnovski/mini.surround {{{1
+-- Neovim Lua plugin with fast and feature-rich surround actions. Part of 'mini.nvim' library.
+require('mini.surround').setup()
 
 -- https://github.com/nvim-treesitter/nvim-treesitter -- {{{1
 -- Nvim Treesitter configurations and abstraction layer
@@ -578,92 +555,20 @@ require'nvim-treesitter.configs'.setup {
 }
 
 
--- https://github.com/epwalsh/obsidian.nvim {{{1
--- Obsidian 🤝 Neovim
-require("obsidian").setup({
-  workspaces = {
-    {
-      name = "personal",
-      path = "/sun/personal",
-    }
-  },
-  mappings = {
-    ["<F4>"] = {
-      action = function() vim.cmd("ObsidianPasteImg") end,
-    },
-    ["<F5>"] = {
-      action = function() vim.cmd("ObsidianTags") end,
-    },
-    ["<F6>"] = {
-      action = function() vim.cmd("ObsidianQuickSwitch") end,
-    },
-    ["<F7>"] = {
-      action = function() vim.cmd("ObsidianSearch") end,
-    },
-    ["<F20>"] = { -- Shift+<F8>
-      action = function() vim.cmd("ObsidianTomorrow") end,
-      opts = { noremap = false, expr = true, buffer = true },
-    },
-    ["<F8>"] = {
-      action = function() vim.cmd("ObsidianToday") end,
-      opts = { noremap = false, expr = true, buffer = true },
-    },
-    ["<F9>"] = {
-      action = function() vim.cmd("ObsidianYesterday") end,
-      opts = { noremap = false, expr = true, buffer = true },
-    },
-    ["<F12>"] = {
-      action = function() vim.cmd("ObsidianFollowLink") end,
-      opts = { noremap = false, expr = true, buffer = true },
-    },
-  },
-  templates = {
-    folder = "archive/meta/template/",
-    date_format = "%m/%d(%a)",
-    time_format = "%H:%M",
-    -- A map for custom variables, the key should be the variable and the value a function
-    substitutions = {
-      -- date = function()
-      --   return os.date("%m/%d(%a)")
-      -- end
-      -- time = function()
-      --   return os.date("%H:%M")
-      -- end
-    }
-  },
-  daily_notes = {
-    -- Optional, if you keep daily notes in a separate directory.
-    folder = "journal/"..os.date("%Y").."/"..os.date("%y%V"),
-    -- Optional, if you want to change the date format for the ID of daily notes.
-    date_format = "%y%m%d",
-    -- Optional, default tags to add to each new daily note created.
-    default_tags = { },
-    -- Optional, if you want to automatically insert a template from your template directory like 'daily.md'
-    template = "journal_nvim.md"
-  },
-  attachments = {
-    img_folder = "archive/2025",
-    img_name_func = function()
-      return string.format("%s", os.date("%m%d-%H%M-%u%u%S"))
-    end,
 
-    img_text_func = function(client, path)
-      path = client:vault_relative_path(path) or path
-      -- return string.format("![%s](%s)", path.name, path)
-      return string.format("![[%s]]", path.name)
-    end,
-  },
-  follow_img_func = function(img)
-    -- TODO search & concat
-    vim.fn.jobstart { "qiv", "/sun/personal/archive/2025/" .. img }
-  end,
 
-})
-
--- https://github.com/nvim-neo-tree/neo-tree.nvim {{1
+-- https://github.com/nvim-neo-tree/neo-tree.nvim {{{1
 -- Neovim plugin to manage the file system and other tree like structures.
 require('neo-tree').setup{
     sources = {
-        "document_symbols",
+      "filesystem",
+      "buffers",
+      "git_status",
+      "document_symbols",
     },
 }
+
+
+-- https://github.com/zk-org/zk-nvim {{{1
+-- Neovim extension for zk
+require("zk").setup({ })
