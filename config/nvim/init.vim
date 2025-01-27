@@ -180,12 +180,17 @@ map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
+nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>
+nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>
+nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
+nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 nmap          <unique> <F5> :Gvdiffsplit HEAD<SPACE>
 imap          <unique> <F5> <C-O>:Gvdiffsplit HEAD<SPACE>
-nmap <silent> <unique> <F6> <cmd>Telescope find_files<CR>
-imap <silent> <unique> <F6> <cmd>Telescope find_files<CR>
-nmap <silent> <unique> <F7> <cmd>Telescope live_grep<CR>
-imap <silent> <unique> <F7> <cmd>Telescope live_grep<CR>
+nmap <silent> <unique> <F6> <cmd>Neotree toggle<CR>
+imap <silent> <unique> <F6> <cmd>Neotree toggle<CR>
+nmap <silent> <unique> <F18> <cmd>Neotree document_symbols toggle<CR>
+imap <silent> <unique> <F18> <cmd>Neotree document_symbols toggle<CR>
+nmap <silent> <unique> <F7> :set formatoptions-=2mn<CR>:set formatoptions<CR>
 nmap <silent> <unique> <F8> <cmd>ObsidianToday<CR>
 imap <silent> <unique> <F8> <cmd>ObsidianToday<CR>
 nmap <silent> <unique> <F9> <cmd>Telescope oldfiles<CR>
@@ -210,11 +215,6 @@ vmap <silent> <unique> - :call SpaceAddBetweenEnglishChinese()<CR>
 " Shift+ {{{2
 nmap <silent>          W :exec "%s /\\s\\+$//ge"<CR>:w<CR>
 nmap <silent> <unique> Q :qa!<CR>
-nmap <silent> <unique> <F13> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>    " F1
-nmap <silent> <unique> <F14> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>           " F2
-nmap <silent> <unique> <F15> :set nohls!<CR>:set nohls?<CR>                         " F3
-nmap <silent> <unique> <F16> :set nopaste!<CR>:set nopaste?<CR>                     " F4
-nmap <silent> <unique> <F19> :set formatoptions-=2mn<CR>:set formatoptions<CR>      " F7
 
 " Ctrl+ {{{2
 nmap <silent> <unique> <C-Q> :qa!<CR>
@@ -265,8 +265,9 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     " 缩进辅助线
     Plug 'lukas-reineke/indent-blankline.nvim', { 'tag': 'v3.4.2' }
-    " 文件检索 [o]yazi [x]oil
-    Plug 'mikavilpas/yazi.nvim'
+    " 文件检索 [o]neo-tree [x]nvim-tree [x]yazi [x]oil
+    Plug 'nvim-neo-tree/neo-tree.nvim'
+    Plug 'MunifTanjim/nui.nvim'
     " 标题栏利用 [o]dropbar [x]barbecue
     " This is currently an experimental feature that is only available in branch feat-winbar-background-highlight.
     Plug 'Bekaboo/dropbar.nvim'

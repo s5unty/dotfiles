@@ -484,10 +484,6 @@ require("telescope").load_extension("undo")
 
 
 
--- https://github.com/mikavilpas/yazi.nvim {{{1
--- A Neovim Plugin for the yazi terminal file manager
-require("yazi").setup { }
-vim.keymap.set("n", "f<leader>", function() require("yazi").yazi() end)
 
 -- https://github.com/lukas-reineke/indent-blankline.nvim {{{1
 -- This plugin adds indentation guides to Neovim.
@@ -623,14 +619,16 @@ require("obsidian").setup({
   },
   templates = {
     folder = "archive/meta/template/",
+    date_format = "%m/%d(%a)",
+    time_format = "%H:%M",
     -- A map for custom variables, the key should be the variable and the value a function
     substitutions = {
-      date = function()
-        return os.date("%m/%d(%a)")
-      end,
-      time = function()
-        return os.date("%H:%M")
-      end
+      -- date = function()
+      --   return os.date("%m/%d(%a)")
+      -- end
+      -- time = function()
+      --   return os.date("%H:%M")
+      -- end
     }
   },
   daily_notes = {
@@ -661,3 +659,11 @@ require("obsidian").setup({
   end,
 
 })
+
+-- https://github.com/nvim-neo-tree/neo-tree.nvim {{1
+-- Neovim plugin to manage the file system and other tree like structures.
+require('neo-tree').setup{
+    sources = {
+        "document_symbols",
+    },
+}
