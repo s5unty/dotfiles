@@ -1,0 +1,37 @@
+[notebook]
+dir = "/sun/personal"
+
+[note]
+language = "zh"
+filename = "{{id}}"
+extension = "md"
+template = "default.md"
+id-charset = "alphanum"
+id-length = 4
+id-case = "lower"
+
+[group.d]
+paths = ["journal/2025"]
+[group.d.note]
+filename = "{{format-date now '%y%m%d'}}"
+extension = "md"
+template = "journal.md"
+
+[group.w]
+paths = ["pursuit/2025"]
+[group.w.note]
+filename = "{{format-date now '%Y-W%V'}}"
+extension = "md"
+template = "weekly.md"
+
+[group.p]
+path = ["pursuit"]
+[group.p.note]
+filename = "{{id}}"
+extension = "md"
+template = "pursuit.md"
+
+[alias]
+d = "zk new --no-input journal/2025/"
+w = "zk new --no-input pursuit/2025/"
+p = "zk new --no-input pursuit/"
