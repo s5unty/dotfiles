@@ -1,8 +1,9 @@
 ---
-id: "{{id}}"
-date: "{{format-date now '%y%m%d'}}"
+id: "{{sh 'cat /tmp/.zk'}}"
+date: "{{format-date now '%Y-%m-%d'}}"
 alias: []
 tags: []
 ---
 
-# Untitled
+# UNTITLED
+
