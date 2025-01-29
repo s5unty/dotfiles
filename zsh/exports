@@ -36,7 +36,7 @@ export PYTHONHTTPSVERIFY=0
 # https://github.com/junegunn/fzf/wiki/Color-schemes
 export FZF_DEFAULT_OPTS="--color hl:166,hl+:166 --height=68% --reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -50' --preview-window=right:48%"
 # https://www.passwordstore.org/
-export PASSWORD_STORE_DIR="$HOME/personal/archive/pass"
+export PASSWORD_STORE_DIR="$HOME/personal/asset/pass"
 # https://gist.github.com/kborovik/436b88c4616e66201a21d961de76dba5
 export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 # todo.txt

@@ -10,34 +10,35 @@ default-title = "UNTITLED"
 id-charset = "alphanum"
 id-length = 4
 id-case = "lower"
+# exclude = ["blog"]
 
 [format.markdown]
 hashtags = true
 colon-tags = true
 
 [group.d]
-paths = ["journal/2025"]
+paths = ["timeline/2025"]
 [group.d.note]
 filename = "{{format-date now '%y%m%d'}}"
 extension = "md"
 template = "journal.md"
 
 [group.w]
-paths = ["journal/2025"]
+paths = ["timeline/2025"]
 [group.w.note]
 filename = "{{format-date now '%Y%V'}}"
 extension = "md"
 template = "weekly.md"
 
-[group.p]
-path = ["pursuit"]
-[group.p.note]
+[group.n]
+path = ["note"]
+[group.n.note]
 filename = "{{sh 'cat /tmp/.zk'}}"
 extension = "md"
-template = "pursuit.md"
+template = "snippet.md"
 
 [alias]
-d = "zk new --no-input --group d journal/2025/"
-w = "zk new --no-input --group w journal/2025/"
-p = "zk new --no-input --group p pursuit/$(cat /dev/urandom | tr -dc '0-9a-z' | head -c4 | tee /tmp/.zk | head -c1)"
+d = "zk new --no-input --group d timeline/2025/"
+w = "zk new --no-input --group w timeline/2025/"
+n = "zk new --no-input --group n note/$(cat /dev/urandom | tr -dc '0-9a-z' | head -c4 | tee /tmp/.zk | head -c1)"
 
