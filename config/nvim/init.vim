@@ -234,8 +234,8 @@ imap <silent> <unique> <M-f> <C-O>w
 imap <silent> <unique> <M-d> <C-O>dw
 endif
 
-" Leader+ , Leader char is '<Enter>' {{{2
-let mapleader= "\<Enter>"
+" Leader+ , Leader char is '<Space>' {{{2
+let mapleader= "\<Space>"
 nmap <silent> <unique> 1<Leader> :.diffget BASE<CR>:diffupdate<CR>
 nmap <silent> <unique> 2<Leader> :.diffget LOCAL<CR>:diffupdate<CR>
 nmap <silent> <unique> 3<Leader> :.diffget REMOTE<CR>:diffupdate<CR>
@@ -277,6 +277,8 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'debugloop/telescope-undo.nvim'
     " 笔记管理 [o]zk-nvim [x]obsidian.nvim
     Plug 'zk-org/zk-nvim'
+    " 粘贴图片
+    Plug 'HakonHarnes/img-clip.nvim'
     " 行号智能切换
     Plug 'sitiom/nvim-numbertoggle'
     " telescope + Obsidian 依赖

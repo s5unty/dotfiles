@@ -614,3 +614,21 @@ require('neo-tree').setup{
 -- https://github.com/zk-org/zk-nvim {{{1
 -- Neovim extension for zk
 require("zk").setup({ })
+
+
+-- https://github.com/HakonHarnes/img-clip.nvim {{{1
+-- Effortlessly embed images into any markup language, like LaTeX, Markdown or Typst
+require("img-clip").setup({
+  dirs = {
+    ["/sun/personal"] = {
+      default = {
+        dir_path = "asset/2025/",
+        file_name = "%y%m%d-%H%M%S",
+        template = "![[$FILE_NAME]]",
+        prompt_for_file_name = false,
+        insert_mode_after_paste = false,
+      },
+    }
+  }
+})
+vim.keymap.set({ "n", "o", "x" }, "<M-p>", '<cmd>PasteImage<CR>')
