@@ -166,8 +166,8 @@ vim.diagnostic.config({
     scope = "cursor",
   },
 })
--- vim.cmd [[autocmd ModeChanged *:[vV\x16]* lua vim.diagnostic.open_float(nil, {focus=false, max_width=120})]]
-vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false, max_width=120})]]
+vim.cmd [[autocmd ModeChanged *:[vV\x16]* lua vim.diagnostic.open_float(nil, {focus=false, max_width=120})]]
+-- vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false, max_width=120})]]
 
 -- How to run auto format on save?
 -- https://github.com/neovim/nvim-lspconfig/issues/1792#issuecomment-1352782205
@@ -179,18 +179,18 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 map("n", "K",           vim.lsp.buf.hover)
-map("n", "<leader>gr",  vim.lsp.buf.rename)
-map("n", "<leader>ca",  vim.lsp.buf.code_action)
-map("n", "<leader>gd",  vim.lsp.buf.definition)
-map("n", "<leader>gi",  vim.lsp.buf.implementation)
-map("n", "<leader>gI",  vim.lsp.buf.references)
-map("n", "<leader>gds", vim.lsp.buf.document_symbol)
-map("n", "<leader>gws", vim.lsp.buf.workspace_symbol)
-map("n", "<leader>sh",  vim.lsp.buf.signature_help)
-map("n", "<leader>f",   vim.lsp.buf.format)
-map("n", "<leader>cl",  vim.lsp.codelens.run)
-map("n", "<leader>gl",  vim.diagnostic.setloclist)
-map("n", "<leader>ga",  vim.diagnostic.setqflist)
+map("n", "<leader>mr",  vim.lsp.buf.rename)
+map("n", "<leader>mc",  vim.lsp.buf.code_action)
+map("n", "<leader>md",  vim.lsp.buf.definition)
+map("n", "<leader>mi",  vim.lsp.buf.implementation)
+map("n", "<leader>ml",  vim.lsp.buf.references)
+map("n", "<leader>ms",  vim.lsp.buf.document_symbol)
+map("n", "<leader>ma",  vim.lsp.buf.workspace_symbol)
+map("n", "<leader>mk",  vim.lsp.buf.signature_help)
+map("n", "<leader>=",   vim.lsp.buf.format)
+map("n", "<leader>me",  vim.lsp.codelens.run)
+map("n", "<leader>ml",  vim.diagnostic.setloclist)
+map("n", "<leader>mf",  vim.diagnostic.setqflist)
 map("n", "<leader>ge",  function() vim.diagnostic.setqflist({ severity = "E" }) end)
 map("n", "<leader>gw",  function() vim.diagnostic.setqflist({ severity = "W" }) end)
 
@@ -283,7 +283,7 @@ require('nvim-treesitter.configs').setup {
       enable = true,
       -- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
       keymaps = {
-        smart_rename = "<localleader>gr",
+        smart_rename = "<leader>nr",
       },
     },
   },
@@ -317,7 +317,7 @@ require("aerial").setup {
   end,
 }
 -- You probably also want to set a keymap to toggle aerial
-vim.keymap.set('n', '<leader>z', '<cmd>AerialToggle!<CR>')
+vim.keymap.set('n', '<leader>ma', '<cmd>AerialToggle!<CR>')
 
 
 -- https://github.com/alohaia/fcitx.nvim -- {{{1
@@ -460,8 +460,6 @@ require('telescope').setup {
 require("telescope").load_extension("undo")
 
 
-
-
 -- https://github.com/lukas-reineke/indent-blankline.nvim {{{1
 -- This plugin adds indentation guides to Neovim.
 -- 隐藏第一条缩进线
@@ -585,13 +583,13 @@ require('neo-tree').setup{
     "filesystem",
     "buffers",
     "git_status",
-    "document_symbols",
+    --"document_symbols", -- thanks `aerial.nvim`
   },
   filesystem = {
     window = {
       mappings = {
         ["-"] = "close_node",
-        ["O"] = "system_open",
+        ["h"] = "system_open",
         ["g"] = "telescope_grep",
       },
     },
@@ -613,7 +611,9 @@ require('neo-tree').setup{
 
 -- https://github.com/zk-org/zk-nvim {{{1
 -- Neovim extension for zk
-require("zk").setup({ })
+require("zk").setup({
+  picker = "telescope",
+})
 
 
 -- https://github.com/HakonHarnes/img-clip.nvim {{{1
@@ -632,3 +632,46 @@ require("img-clip").setup({
   }
 })
 vim.keymap.set({ "n", "o", "x" }, "<M-p>", '<cmd>PasteImage<CR>')
+
+
+-- https://github.com/3rd/image.nvim {{{1
+-- Bringing images to Neovim.
+require("image").setup({
+  processor = "magick_cli",
+  integrations = {
+    markdown = {
+      clear_in_insert_mode = true,
+      only_render_image_at_cursor = true,
+      floating_windows = true,
+      resolve_image_path = function(document_path, image_path, fallback)
+        local file_name = vim.fs.basename(image_path)
+        local asset_img = vim.fn.findfile(file_name, "/sun/personal/asset/**")
+        -- print("img: #"..image_path.."#, #"..asset_img.."#")
+        if asset_img then
+          return asset_img
+        end
+        return fallback(document_path, image_path)
+      end,
+    }
+  }
+})
+
+
+-- https://github.com/SCJangra/table-nvim {{{1
+-- A markdown table editor for Neovim that formats the table as you type.
+require("table-nvim").setup({
+  padd_column_separators = true,
+  mappings = {                          -- next and prev work in Normal and Insert mode. All other mappings work in Normal mode.
+    next                = '<TAB>',      -- Go to next cell.
+    prev                = '<S-TAB>',    -- Go to previous cell.
+    insert_row_up       = '<leader>tk', -- Insert a row above the current row.
+    insert_row_down     = '<leader>tj', -- Insert a row below the current row.
+    insert_column_left  = '<leader>th', -- Insert a column to the left of current column.
+    insert_column_right = '<leader>tl', -- Insert a column to the right of current column.
+    move_column_left    = '<leader>t,', -- Move the current column to the left.
+    move_column_right   = '<leader>t.', -- Move the current column to the right.
+    insert_table        = '<leader>tt', -- Insert a new table.
+    insert_table_alt    = '<leader>ta', -- Insert a new table that is not surrounded by pipes.
+    delete_column       = '<leader>td', -- Delete the column under cursor.
+  }
+})

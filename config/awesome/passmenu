@@ -4,7 +4,7 @@
 # https://git.zx2c4.com/password-store/tree/contrib/dmenu/README.md
 # https://bbs.archlinux.org/viewtopic.php?id=178136
 #
-export PASSWORD_STORE_DIR="/sun/personal/archive/pass"
+export PASSWORD_STORE_DIR="/sun/personal/asset/pass"
 
 shopt -s nullglob globstar
 

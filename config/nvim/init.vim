@@ -259,7 +259,7 @@ call plug#begin('~/.config/nvim/bundles')
     " 光标跑酷(哇哦~) [o]flash-zh [o]flash [x]leap + clever-f
     Plug 'folke/flash.nvim'
     Plug 's5unty/flash-zh.nvim'
-    " TextObjects增强
+    " 字块选择(:help text-objects)
     Plug 'chrisgrieser/nvim-various-textobjs'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     " 缩进辅助线
@@ -275,10 +275,14 @@ call plug#begin('~/.config/nvim/bundles')
     " 增量的模糊查询 [o]telescope [x]fzf [x]denite
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     Plug 'debugloop/telescope-undo.nvim'
-    " 笔记管理 [o]zk-nvim [x]obsidian.nvim
+    " MD笔记管理 [o]zk-nvim [x]obsidian.nvim
     Plug 'zk-org/zk-nvim'
-    " 粘贴图片
+    " MD图片粘贴
     Plug 'HakonHarnes/img-clip.nvim'
+    " MD图片预览
+    Plug '3rd/image.nvim'
+    " MD表格管理
+    Plug 'SCJangra/table-nvim'
     " 行号智能切换
     Plug 'sitiom/nvim-numbertoggle'
     " telescope + Obsidian 依赖
