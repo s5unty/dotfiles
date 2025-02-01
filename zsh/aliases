@@ -287,10 +287,10 @@ tde() {
     else
         loc=":normal $1gg"
     fi
-    HOME_FILE="$TODO_DIR/var/home/todo.log"
-    WORK_FILE="$TODO_DIR/var/work/todo.log"
-    vi +":e $HOME_FILE" +":normal zz" \
-        +":vs $WORK_FILE" +"${loc}"
+    A_FILE="$TODO_DIR/var/$TD/todo.log"
+    B_FILE="$TODO_DIR/var/work/todo.log"
+    vi +":e $A_FILE" +":normal zz" \
+        +":vs $B_FILE" +"${loc}"
 }
 tdo() {
     DESC=$(sed -n "${1}p" ${TODO_FILE})
@@ -469,4 +469,11 @@ alias po="pass otp -c"
 alias pou="pass otp uri -q"
 alias poa="pass otp append"
 alias poi="pass otp insert"
+# }}}
+
+# zk {{{
+alias zkj="zk j"
+alias zky="zk y"
+alias zkw="zk w"
+alias zkn="zk n"
 # }}}

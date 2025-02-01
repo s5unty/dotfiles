@@ -16,29 +16,37 @@ id-case = "lower"
 hashtags = true
 colon-tags = true
 
-[group.d]
+[group.journal]
 paths = ["timeline/2025"]
-[group.d.note]
+[group.journal.note]
 filename = "{{format-date now '%y%m%d'}}"
 extension = "md"
 template = "journal.md"
 
-[group.w]
+[group.yesterday]
 paths = ["timeline/2025"]
-[group.w.note]
+[group.yesterday.note]
+filename = "{{format-date (date 'yesterday') '%y%m%d'}}"
+extension = "md"
+template = "yesterday.md"
+
+[group.weekly]
+paths = ["timeline/2025"]
+[group.weekly.note]
 filename = "{{format-date now '%Y%V'}}"
 extension = "md"
 template = "weekly.md"
 
-[group.n]
+[group.note]
 path = ["note"]
-[group.n.note]
+[group.note.note]
 filename = "{{sh 'cat /tmp/.zk'}}"
 extension = "md"
 template = "snippet.md"
 
 [alias]
-d = "zk new --no-input --group d timeline/2025/"
-w = "zk new --no-input --group w timeline/2025/"
-n = "zk new --no-input --group n note/$(cat /dev/urandom | tr -dc '0-9a-z' | head -c4 | tee /tmp/.zk | head -c1)"
+j = "zk new --no-input --group journal    timeline/2025/"
+y = "zk new --no-input --group yesterday  timeline/2025/"
+w = "zk new --no-input --group weekly     timeline/2025/"
+n = "zk new --no-input --group note       note/$(cat /dev/urandom | tr -dc '0-9a-z' | head -c4 | tee /tmp/.zk | head -c1)"
 
