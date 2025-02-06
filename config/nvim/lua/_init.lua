@@ -675,3 +675,9 @@ require("table-nvim").setup({
     delete_column       = '<leader>td', -- Delete the column under cursor.
   }
 })
+
+
+-- https://github.com/oflisback/obsidian-bridge.nvim {{{1
+-- A neovim plugin used to synchronize active note and scroll position between neovim and obsidian
+require("obsidian-bridge").setup(bridge_settings)
+

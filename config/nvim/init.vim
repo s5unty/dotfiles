@@ -275,8 +275,9 @@ call plug#begin('~/.config/nvim/bundles')
     " 增量的模糊查询 [o]telescope [x]fzf [x]denite
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     Plug 'debugloop/telescope-undo.nvim'
-    " MD笔记管理 [o]zk-nvim [x]obsidian.nvim
+    " MD笔记管理 [o]obsidian-bridge.nvim [o]zk-nvim [x]obsidian.nvim
     Plug 'zk-org/zk-nvim'
+    Plug 'oflisback/obsidian-bridge.nvim'
     " MD图片粘贴
     Plug 'HakonHarnes/img-clip.nvim'
     " MD图片预览
