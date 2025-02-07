@@ -53,6 +53,8 @@ export PNPM_HOME="/sun/.cache/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # obsidian-bridge.nvim
 export OBSIDIAN_REST_API_KEY="6b2d8526fcd7f82f2436095cc8d9bfbc9e2ed75066ad2cd5c080768507e362a0"
+# zk-nvim
+export ZK_NOTEBOOK_DIR="/sun/personal"
 
 # vim: ft=zsh:
 
