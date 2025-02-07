@@ -611,6 +611,7 @@ require('neo-tree').setup{
 
 -- https://github.com/zk-org/zk-nvim {{{1
 -- Neovim extension for zk
+require("telescope").load_extension("zk")
 require("zk").setup({
   picker = "telescope",
 })
