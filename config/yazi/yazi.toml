@@ -1,5 +1,8 @@
 [manager]
 ratio = [2, 3, 5]
+sort_by = "btime"
+sort_reverse = true
+linemode = "size"
 
 [opener]
 copy_png = [ { run = 'copyq write image/png - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
