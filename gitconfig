@@ -7,6 +7,8 @@
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
     quotepath = false
+    # https://github.com/mookid/diffr
+    pager = diffr --line-numbers | less -R
 [pack]
     deltaCacheSize = 2047m
     packSizeLimit = 2047m
@@ -14,6 +16,8 @@
 [format]
     headers = ""
     subjectprefix = ""
+[interactive]
+    diffFilter = diffr --line-numbers
 [diff]
     tool = vimdiff
     renameLimit = 0
