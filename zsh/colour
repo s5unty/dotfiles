@@ -1,4 +1,4 @@
-# vim:set syntax=zsh:
+# vim: set ft=zsh:
 
 fg_black=$'%{\e[0;30m%}'
 fg_red=$'%{\e[0;31m%}'

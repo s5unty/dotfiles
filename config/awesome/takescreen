@@ -25,6 +25,7 @@ case $mode in
     active)
         active=$(xprop  -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | awk '{print $NF}')
         import -window "$active" "${file}.png"
+        copyq write image/png - < "${file}.png" && copyq select 0
         ;;
     select)
         # 搭配 compton 使用，存在阴影混淆的问题，截出的图被阴影覆盖
