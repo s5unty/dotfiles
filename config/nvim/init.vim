@@ -261,7 +261,7 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 's5unty/flash-zh.nvim'
     " 字块选择(:help text-objects)
     Plug 'chrisgrieser/nvim-various-textobjs'
-    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'branch': 'main' }
     " 缩进辅助线
     Plug 'lukas-reineke/indent-blankline.nvim', { 'tag': 'v3.4.2' }
     " 文件检索 [o]neo-tree [x]nvim-tree [x]yazi [x]oil
@@ -318,7 +318,6 @@ call plug#begin('~/.config/nvim/bundles')
     " 语法框架(高亮、重构、编辑等)
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/nvim-treesitter-context'
-    Plug 'nvim-treesitter/nvim-treesitter-refactor'
     " 模板引擎 [o]snippy [x]LuaSnip [x]vsnip
     Plug 'dcampos/nvim-snippy'
     Plug 'dcampos/cmp-snippy'

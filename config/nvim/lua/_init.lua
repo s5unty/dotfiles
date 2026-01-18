@@ -198,12 +198,13 @@ map("n", "<leader>gw",  function() vim.diagnostic.setqflist({ severity = "W" }) 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md -- {{{1
 -- configs for the nvim lsp client
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-local lspconfig = require('lspconfig')
 local servers = {
   'pyright',
   'gopls',
   'dartls',
   'denols',
+  -- dotnet tool install --global csharp-ls
+  'csharp_ls',
   -- pnpm install -g @ansible/ansible-language-server
   'ansiblels',
   -- pnpm install -g bash-language-server
@@ -219,17 +220,18 @@ local servers = {
   'jsonls',
 }
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+  vim.lsp.enable(lsp)
+  vim.lsp.config(lsp, {
     capabilities = capabilities,
-  }
+  })
 end
-lspconfig.dartls.setup {
+vim.lsp.config('dartls', {
   settings = {
     dart = {
       enableSnippets = false,
     }
   }
-}
+})
 
 -- https://github.com/echasnovski/mini.pairs {{{1
 -- Neovim Lua plugin to automatically manage character pairs. Part of 'mini.nvim' library.
@@ -241,7 +243,7 @@ require('mini.surround').setup()
 
 -- https://github.com/nvim-treesitter/nvim-treesitter -- {{{1
 -- Nvim Treesitter configurations and abstraction layer
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter').setup {
   ensure_installed = {
     "bash",
     "elvish",
@@ -536,7 +538,7 @@ vim.keymap.set({ "o", "x" }, "iv", '<cmd>lua require("various-textobjs").value("
 
 
 -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects {{{1
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter'.setup {
   textobjects = {
     select = {
       enable = true,
