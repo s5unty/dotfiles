@@ -2,6 +2,11 @@ local api = vim.api
 local cmd = vim.cmd
 local map = vim.keymap.set
 
+-- https://www.reddit.com/r/neovim/comments/1ctoeqi/disable_deprecated_messages/
+--  | vim.tbl_flatten is deprecated. Run ":checkhealth vim.deprecated" for more information
+--  | Press ENTER or type command to continue
+vim.deprecate = function() end
+
 -- https://github.com/hrsh7th/nvim-cmp -- {{{1
 -- nvim-cmp: A completion plugin for neovim coded in Lua.
 local cmp = require'cmp'
