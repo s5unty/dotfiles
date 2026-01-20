@@ -689,3 +689,22 @@ require("table-nvim").setup({
 -- A neovim plugin used to synchronize active note and scroll position between neovim and obsidian
 require("obsidian-bridge").setup(bridge_settings)
 
+
+-- https://github.com/yetone/avante.nvim
+-- Use your Neovim like using Cursor AI IDE!
+-- ```
+-- $ export AVANTE_DEEPSEEK_API_KEY=sk-xxx
+-- ```
+require('avante').setup({
+  provider = "deepseek",
+  providers = {
+    deepseek = {
+      __inherited_from = "openai",
+      api_key_name = "DEEPSEEK_API_KEY",
+      endpoint = "https://api.deepseek.com",
+      model = "deepseek-chat",
+      max_tokens = 8192,
+    },
+  },
+})
+

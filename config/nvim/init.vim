@@ -315,6 +315,9 @@ call plug#begin('~/.config/nvim/bundles')
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
+    " AI-driven
+    Plug 'MeanderingProgrammer/render-markdown.nvim'
+    Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
     " 语法框架(高亮、重构、编辑等)
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/nvim-treesitter-context'
