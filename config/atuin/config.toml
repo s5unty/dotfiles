@@ -1,6 +1,3 @@
 ctrl_n_shortcuts = true
 enter_accept = true
 
-[daemon]
-enabled = true
-
