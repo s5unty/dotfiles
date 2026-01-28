@@ -182,7 +182,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         vim.lsp.buf.format { async = false }
     end
 })
-
+vim.o.winborder = 'rounded'
 map("n", "K",           vim.lsp.buf.hover)
 map("n", "<leader>mr",  vim.lsp.buf.rename)
 map("n", "<leader>mc",  vim.lsp.buf.code_action)
