@@ -146,7 +146,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock('%Y.%m.%d(%a) %H: %M')
+mytextclock = wibox.widget.textclock(' %Y/%m/%d(%a) %H:%M ')
 
 -- Create a wibox for each screen and add it
 awful.util.taglist_buttons = awful.util.table.join(
@@ -744,6 +744,9 @@ awful.rules.rules = {
     { rule = { instance = "bytedance-feishu", name = "图片" },
     properties = { floating=true, ontop=true } },
 
+    { rule = { class = "wechat" },
+    properties = { floating=true } },
+
     { rule = { name = "Microsoft Teams 通知" },
     properties = { floating=true, ontop=true, focus=false },
     callback = function (c)     -- 改到右下角，默认在右侧屏幕的左上角。。。
@@ -841,6 +844,11 @@ local sloppyfocus_last = {c=nil}
 client.connect_signal("mouse::enter", function(c)
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
         and awful.client.focus.filter(c) then
+        -- Skip UnrealEditor (WM_CLASS)
+        if c.class == "UnrealEditor" then
+            return
+        end
+
         -- Skip focusing the client if the mouse wasn't moved.
         -- https://github.com/blueyed/awesome/blob/sloppy-focus-skip-not-moved/awesomerc.lua.in
         if c ~= sloppyfocus_last.c then
