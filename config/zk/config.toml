@@ -17,42 +17,35 @@ hashtags = true
 colon-tags = true
 
 [group.journal]
-paths = ["timeline/2025"]
+paths = ["timeline/2026"]
 [group.journal.note]
 filename = "{{format-date now '%y%m%d'}}"
 extension = "md"
 template = "journal.md"
 
 [group.journal-1]
-paths = ["timeline/2025"]
+paths = ["timeline/2026"]
 [group.journal-1.note]
 filename = "{{format-date (date 'yesterday') '%y%m%d'}}"
 extension = "md"
 template = "journal-1.md"
 
 [group.journal-2]
-paths = ["timeline/2025"]
+paths = ["timeline/2026"]
 [group.journal-2.note]
 filename = "{{format-date (date '2 days ago') '%y%m%d'}}"
 extension = "md"
 template = "journal-2.md"
 
 [group.journal_1]
-paths = ["timeline/2025"]
+paths = ["timeline/2026"]
 [group.journal_1.note]
 filename = "{{format-date (date 'tomorrow') '%y%m%d'}}"
 extension = "md"
 template = "journal+1.md"
 
-[group.journal_2]
-paths = ["timeline/2025"]
-[group.journal_2.note]
-filename = "{{format-date (date 'next 2 day') '%y%m%d'}}"
-extension = "md"
-template = "journal+2.md"
-
 [group.weekly]
-paths = ["timeline/2025"]
+paths = ["timeline/2026"]
 [group.weekly.note]
 filename = "{{format-date now '%Y%V'}}"
 extension = "md"
@@ -66,11 +59,10 @@ extension = "md"
 template = "note.md"
 
 [alias]
-q = "zk new --no-input --group journal-2  timeline/2025/"
-z = "zk new --no-input --group journal-1  timeline/2025/"
-j = "zk new --no-input --group journal    timeline/2025/"
-m = "zk new --no-input --group journal_1  timeline/2025/"
-h = "zk new --no-input --group journal_2  timeline/2025/"
-w = "zk new --no-input --group weekly     timeline/2025/"
+h = "zk new --no-input --group journal-2  timeline/2026/"
+j = "zk new --no-input --group journal-1  timeline/2026/"
+k = "zk new --no-input --group journal    timeline/2026/"
+l = "zk new --no-input --group journal_1  timeline/2026/"
+m = "zk new --no-input --group weekly     timeline/2026/"
 n = "zk new --no-input --group note       note/$(cat /dev/urandom | tr -dc '0-9a-z' | head -c4 | tee /tmp/.zk | head -c1)"
 

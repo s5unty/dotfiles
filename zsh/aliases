@@ -473,11 +473,10 @@ alias poi="pass otp insert"
 # }}}
 
 # zk {{{
-alias zkq="zk q"  # 前天
-alias zkz="zk z"  # 昨天
-alias zkj="zk j"  # 今天
-alias zkm="zk m"  # 明天
-alias zkh="zk h"  # 后天
-alias zkw="zk w"  # 周记
+alias zkh="zk h"  # 前天
+alias zkj="zk j"  # 昨天
+alias zkk="zk k"  # 今天
+alias zkl="zk l"  # 明天
+alias zkm="zk m"  # 周记
 alias zkn="zk n"  # 杂记
 # }}}

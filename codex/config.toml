@@ -1,0 +1,33 @@
+# https://developers.openai.com/codex/config-sample
+
+# - pragmatic: a terse, task-focused, pragmatic style
+# - friendly: a more conversational, empathetic one
+personality = "pragmatic"
+
+# When to ask for command approval:
+# - untrusted: only known-safe read-only commands auto-run; others prompt
+# - on-failure: auto-run in sandbox; prompt only on failure for escalation
+# - on-request: model decides when to ask (default)
+# - never: never prompt (risky)
+approval_policy = "on-failure"
+
+# Filesystem/network sandbox policy for tool calls:
+# - read-only (default)
+# - workspace-write
+# - danger-full-access (no sandbox; extremely risky)
+sandbox_mode = "workspace-write"
+
+# URI scheme for clickable citations: vscode (default) | vscode-insiders | windsurf | cursor | none
+file_opener = "none"
+
+# Check for updates on startup. Default: true
+check_for_update_on_startup = false
+
+[shell_environment_policy]
+include_only = ["PATH", "HOME", "LANG", "TZ"]
+exclude = ["*AWS*", "*AZURE*", "*DEEPSEEK*", "*OBSIDIAN", "*ATUIN*"]
+
+[tui]
+# Examples: false | ["agent-turn-complete", "approval-requested"]
+notifications = ["approval-requested"]
+
