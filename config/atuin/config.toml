@@ -1,3 +1,8 @@
 ctrl_n_shortcuts = true
 enter_accept = true
+search_mode = "daemon-fuzzy"
+
+[daemon]
+enabled = true
+autostart = true
 

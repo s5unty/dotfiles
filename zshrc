@@ -73,10 +73,18 @@ zinit light agkozak/zsh-z
 # bindkey -M viins "^[[Z" urxvt-scrollback-buffer-words-anywhere  # Shift-Tab
 ####
 
-# Magical shell history
-# https://github.com/atuinsh/atuin {{{1
-eval "$(atuin init zsh --disable-up-arrow)"
+# Magical shell history {{{1
+# https://github.com/atuinsh/atuin
+. "$HOME/.atuin/bin/env"
+eval "$(atuin init zsh)"
+eval "$(atuin hex init zsh)"
 
+
+# complete path name based upon the pinyin acronym of Chinese characters {{{1
+# https://github.com/petronny/pinyin-completion
+# zinit load petronny/pinyin-completion
+# . /sun/.local/share/zinit/plugins/petronny---pinyin-completion/pinyin-completion.plugin.zsh
+# . /sun/hacking/pinyin-completion/pinyin-completion.plugin.zsh
 
 # >>> conda initialize >>> {{{1
 # !! Contents within this block are managed by 'conda init' !!
@@ -92,4 +100,13 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<}}}
+
+# pnpm
+export PNPM_HOME="/sun/.cache/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+. "$HOME/.local/bin/env"
 
