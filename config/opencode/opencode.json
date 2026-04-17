@@ -1,0 +1,12 @@
+{
+  "agent": {
+    "about": {
+      "mode": "primary",
+      "tools": {
+        "edit": false,
+        "bash": false
+      }
+    }
+  },
+  "$schema": "https://opencode.ai/config.json"
+}
