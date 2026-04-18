@@ -1,0 +1,18 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+[git_status]
+conflicted  = '!'
+ahead       = '+'
+behind      = '-'
+diverged    = '#'
+up_to_date  = ''
+untracked   = '?'
+stashed     = '.'
+modified    = 'M'
+staged      = 'A'
+renamed     = 'R'
+deleted     = 'D'
