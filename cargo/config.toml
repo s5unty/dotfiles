@@ -1,0 +1,10 @@
+[source.crates-io]
+registry = "https://github.com/rust-lang/crates.io-index"
+
+# 指定镜像(下面几个里选一个)
+replace-with = 'tuna'
+
+# 清华大学
+[source.tuna]
+registry = "sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"
+
