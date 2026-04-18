@@ -21,6 +21,9 @@
 [diff]
     tool = vimdiff
     renameLimit = 0
+[difftool]
+    prompt = false
+    trustExitCode = true
 [diff "jp"]
     textconv = nkf -w
     cachetextconv = true
@@ -32,6 +35,9 @@
     cachetextconv = true
 [diff "ansible-vault"]
     textconv = ansible-vault view
+    cachetextconv = true
+[diff "pass"]
+    textconv = pass show
     cachetextconv = true
 [difftool "normal"] # http://goo.gl/c8Xok
     cmd = diff $LOCAL $REMOTE
@@ -61,6 +67,13 @@
     diff = . next
     stage = , previous
     stage = . next
+# }}}
+
+[filter "lfs"] # {{{
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 # }}}
 
 [color] #{{{
@@ -112,6 +125,7 @@
     dp  = !sh -c 'git diff HEAD "$0" | git apply --whitespace=nowarn --index -' # fast apply the patch against "$0" commit or branch
 
     fp  = format-patch -s
+    fh = '!git fetch origin && git reset --hard FETCH_HEAD'
 
     ll  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%cr%Creset %C(bold)%d%Creset' --branches --graph --since='2 weeks ago'
     ls  = log --pretty=format:'%C(blue)%h%Creset %cn %m %s %C(green)%C(dim)%ci%Creset %C(bold)%d%Creset' --all --graph
@@ -151,11 +165,7 @@
 # }}}
 
 [pull] # {{{
-    ff = only
+	ff = only
 # }}}
 
-#[http]
-# proxy = http://10.167.251.83:8080
-
 # vim: set foldmethod=marker:
-

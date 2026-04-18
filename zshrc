@@ -76,7 +76,7 @@ zinit light agkozak/zsh-z
 # Magical shell history {{{1
 # https://github.com/atuinsh/atuin
 . "$HOME/.atuin/bin/env"
-eval "$(atuin init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
 eval "$(atuin hex init zsh)"
 
 
