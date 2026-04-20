@@ -15,7 +15,7 @@ format = "[$read_only]($read_only_style)[ $path]($style)"
 # https://github.com/Fantantonio/Emoji-List-Unicode
 [character]
 success_symbol = "💲"
-error_symbol = "❓"
+error_symbol = "🔥"
 vimcmd_symbol = "🐧"
 vimcmd_replace_one_symbol = "🐧"
 vimcmd_replace_symbol = "🐧"
