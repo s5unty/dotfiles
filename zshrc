@@ -2,7 +2,6 @@
 [ -e $HOME/.zsh/options       ] && source $HOME/.zsh/options
 [ -e $HOME/.zsh/aliases       ] && source $HOME/.zsh/aliases
 [ -e $HOME/.zsh/colour        ] && source $HOME/.zsh/colour
-[ -e $HOME/.zsh/prompt        ] && source $HOME/.zsh/prompt
 [ -e $HOME/.zsh/bindings      ] && source $HOME/.zsh/bindings
 [ -e $HOME/.zsh/completion    ] && source $HOME/.zsh/completion
 [ -e $HOME/.zsh/local.host    ] && source $HOME/.zsh/local.host
@@ -15,7 +14,7 @@ export HOME="/sun"
 export DEBEMAIL="s5unty@gmail.com"
 export DEBFULLNAME="Sun Wuan"
 export TZ='Asia/Shanghai'
-export TD="home"
+export TD="work"
 
 if [ `tty | grep -c pts` -eq 1 ]; then
     stty -ixon -ixoff # 关闭 C-Q, C-S 流控制
@@ -55,19 +54,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
-# A cd command that learns - easily navigate directories from the command line {{{1
-# https://github.com/wting/autojump
-## python3 fucked up, switch to zsh-z
-# zinit ice as"program" make"PREFIX=$ZPFX" src"bin/autojump.sh"
-# zinit light wting/autojump
-####
-
-# Jump quickly to directories that you have visited "frecently." {{{1
-# https://github.com/agkozak/zsh-z
-##
-# zinit light agkozak/zsh-z
-####
-
 # A smarter cd command. Supports all major shells. {{{1
 # https://github.com/ajeetdsouza/zoxide
 eval "$(zoxide init zsh)"
@@ -95,27 +81,15 @@ eval "$(atuin hex init zsh)"
 # . /sun/.local/share/zinit/plugins/petronny---pinyin-completion/pinyin-completion.plugin.zsh
 # . /sun/hacking/pinyin-completion/pinyin-completion.plugin.zsh
 
-# >>> conda initialize >>> {{{1
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<}}}
+# The minimal, blazing-fast, and infinitely customizable prompt for any shell! {{{1
+# https://starship.rs/
+[ -e $(which starship) ] && eval "$(starship init zsh)" || source $HOME/.zsh/prompt
 
-# pnpm
+# Fast, disk space efficient package manager | pnpm {{{1
+# https://pnpm.io/
 export PNPM_HOME="/sun/.cache/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-
-. "$HOME/.local/bin/env"
 
