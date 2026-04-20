@@ -22,6 +22,7 @@ vimcmd_replace_symbol = "🐧"
 vimcmd_visual_symbol = "🐧"
 
 [git_status]
+ignore_submodules = true
 conflicted  = '!'
 ahead       = '+'
 behind      = '-'
