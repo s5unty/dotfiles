@@ -4,20 +4,27 @@
 # Inserts a blank line between shell prompts
 add_newline = true
 
+format = "$time$all$directory$character"
+
+[directory]
+style = "fg:#ffffff bg:#4271AE"
+read_only_style = "red bg:#4271AE"
+format = "[$read_only]($read_only_style)[ $path]($style)"
+
 [character]
-success_symbol = "$time[](fg:#4271AE)"
-error_symbol = "$time[](fg:#4271AE)"
-vimcmd_symbol = "$time[](fg:#4271AE)"
-vimcmd_replace_one_symbol = "$time[](fg:#4271AE)"
-vimcmd_replace_symbol = "$time[](fg:#4271AE)"
-vimcmd_visual_symbol = "$time[](fg:#4271AE)"
+success_symbol = "[](fg:#4271AE)"
+error_symbol = "[](fg:#4271AE)"
+vimcmd_symbol = "[](fg:#4271AE)"
+vimcmd_replace_one_symbol = "[](fg:#4271AE)"
+vimcmd_replace_symbol = "[](fg:#4271AE)"
+vimcmd_visual_symbol = "[](fg:#4271AE)"
 
 [time]
 disabled = false
 use_12hr = true
 time_format = "%R" # Hour:Minute Format
-style = "fg:#ffffff bg:#4271AE"
-format = '[ $time ]($style)'
+#style = "fg:#ffffff bg:#4271AE"
+#format = '[ $time ]($style)'
 
 [git_status]
 conflicted  = '!'
