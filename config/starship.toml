@@ -10,7 +10,7 @@ right_format = "$all$directory[](fg:#4271AE)"
 [directory]
 style = "fg:#ffffff bg:#4271AE"
 read_only_style = "red bg:#4271AE"
-format = "[$read_only]($read_only_style)[ $path]($style)"
+format = "[ $path]($style)[$read_only]($read_only_style)"
 
 # https://github.com/Fantantonio/Emoji-List-Unicode
 [character]
