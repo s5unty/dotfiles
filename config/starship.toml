@@ -4,6 +4,21 @@
 # Inserts a blank line between shell prompts
 add_newline = true
 
+[character]
+success_symbol = "$time[](fg:#4271AE)"
+error_symbol = "$time[](fg:#4271AE)"
+vimcmd_symbol = "$time[](fg:#4271AE)"
+vimcmd_replace_one_symbol = "$time[](fg:#4271AE)"
+vimcmd_replace_symbol = "$time[](fg:#4271AE)"
+vimcmd_visual_symbol = "$time[](fg:#4271AE)"
+
+[time]
+disabled = false
+use_12hr = true
+time_format = "%R" # Hour:Minute Format
+style = "fg:#ffffff bg:#4271AE"
+format = '[ $time ]($style)'
+
 [git_status]
 conflicted  = '!'
 ahead       = '+'

@@ -5,6 +5,7 @@
 [ -e $HOME/.zsh/prompt        ] && source $HOME/.zsh/prompt
 [ -e $HOME/.zsh/bindings      ] && source $HOME/.zsh/bindings
 [ -e $HOME/.zsh/completion    ] && source $HOME/.zsh/completion
+[ -e $HOME/.zsh/local.host    ] && source $HOME/.zsh/local.host
 
 if ! hostname | grep "^verns-\|^wuans-\|li380-170\|^G08FNST\|^BITD" > /dev/null 2>&1; then
     return # 不是我的机器
@@ -28,6 +29,8 @@ fi
 
 # Zinit is a flexible and fast Zshell plugin manager that will allow you to install everything from GitHub and other sites {{{1
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # Load a few important annexes, without Turbo
@@ -61,7 +64,13 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 # Jump quickly to directories that you have visited "frecently." {{{1
 # https://github.com/agkozak/zsh-z
-zinit light agkozak/zsh-z
+##
+# zinit light agkozak/zsh-z
+####
+
+# A smarter cd command. Supports all major shells. {{{1
+# https://github.com/ajeetdsouza/zoxide
+eval "$(zoxide init zsh)"
 
 ##
 # NOTE urxvt => kitty
