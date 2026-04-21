@@ -8,7 +8,7 @@ format = "$time$character"
 right_format = "$all$directory[](fg:#4271AE)"
 
 [directory]
-style = "fg:#ffffff bg:#4271AE"
+style = "fg:#ffffe0 bg:#4271AE"
 read_only_style = "red bg:#4271AE"
 format = "[ $path]($style)[$read_only]($read_only_style)"
 
@@ -28,7 +28,7 @@ disabled = true
 [time]
 disabled = false
 time_format = "%R"
-style = "fg:#ffffff bg:#4271AE"
+style = "bold fg:#c6c6c7 bg:#4271AE"
 format = '[](fg:#4271AE)[$time]($style)'
 
 [git_status]
