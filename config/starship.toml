@@ -21,6 +21,9 @@ vimcmd_replace_one_symbol = "🐧"
 vimcmd_replace_symbol = "🐧"
 vimcmd_visual_symbol = "🐧"
 
+[maven]
+disabled = true
+
 [git_status]
 ignore_submodules = true
 conflicted  = '!'
