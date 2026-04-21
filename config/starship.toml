@@ -4,7 +4,7 @@
 # Inserts a blank line between shell prompts
 add_newline = false
 
-format = "$character"
+format = "$time$character"
 right_format = "$all$directory[](fg:#4271AE)"
 
 [directory]
@@ -14,15 +14,22 @@ format = "[ $path]($style)[$read_only]($read_only_style)"
 
 # https://github.com/Fantantonio/Emoji-List-Unicode
 [character]
-success_symbol = "💲"
-error_symbol = "🔥"
-vimcmd_symbol = "🐧"
-vimcmd_replace_one_symbol = "🐧"
-vimcmd_replace_symbol = "🐧"
-vimcmd_visual_symbol = "🐧"
+success_symbol = "[💲](bg:#4271AE)"
+error_symbol = "[🔥](bg:#4271AE)"
+vimcmd_symbol = "[🐧](bg:#4271AE)"
+vimcmd_replace_one_symbol = "[🐧](bg:#4271AE)"
+vimcmd_replace_symbol = "[🐧](bg:#4271AE)"
+vimcmd_visual_symbol = "[🐧](bg:#4271AE)"
 
+# bug in starship-1.25.0
 [maven]
 disabled = true
+
+[time]
+disabled = false
+time_format = "%R"
+style = "fg:#ffffff bg:#4271AE"
+format = '[](fg:#4271AE)[$time]($style)'
 
 [git_status]
 ignore_submodules = true
