@@ -1,6 +1,9 @@
 {
+  "plugin": [
+    "@slkiser/opencode-quota"
+  ],
   "keybinds": {
-    "app_exit": "ctrl+q,<leader>q",
+    "app_exit": "ctrl+w",
     "command_list": "ctrl+o",
     "messages_first": "ctrl+g",
     "messages_last": "ctrl+alt+g",

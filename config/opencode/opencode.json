@@ -1,11 +1,15 @@
 {
-  "agent": {
-    "about": {
-      "mode": "primary",
-      "tools": {
-        "edit": false,
-        "bash": false
-      }
+  "plugin": [
+    "@slkiser/opencode-quota"
+  ],
+  "experimental": {
+    "quotaToast": {
+      "onlyCurrentModel": "true",
+      "enableToast": false,
+      "showSessionTokens": true,
+      "enabledProviders": "auto",
+      "formatStyle": "grouped",
+      "percentDisplayMode": "used"
     }
   },
   "$schema": "https://opencode.ai/config.json"
