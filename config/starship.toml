@@ -5,13 +5,46 @@
 add_newline = false
 
 format = "$time$character"
-right_format = "$all$directory[](fg:#4271AE)"
+#right_format = "$all$directory[](fg:#4271AE)"
+right_format = """
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$direnv\
+$env_var\
+$mise\
+$crystal\
+$custom\
+$sudo\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$status\
+$container\
+$netns\
+$os\
+$shell\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$hg_state\
+$directory[](fg:#4271AE)
+"""
 
 [directory]
 style = "fg:#ffffe0 bg:#4271AE"
 read_only_style = "red bg:#4271AE"
 format = "[ $path]($style)[$read_only]($read_only_style)"
-truncation_symbol = "…/"
+truncation_symbol = "|"
 truncate_to_repo = false
 
 # https://github.com/Fantantonio/Emoji-List-Unicode
