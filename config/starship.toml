@@ -60,6 +60,9 @@ vimcmd_visual_symbol = "[🐧](bg:#4271AE)"
 [maven]
 disabled = true
 
+[jobs]
+symbol = "📌"
+
 [time]
 disabled = false
 time_format = "%R"
