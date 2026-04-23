@@ -15,7 +15,12 @@ alias ll="/bin/ls --color=always --hyperlink -hFxtrl"
 alias la="/bin/ls --color=always --hyperlink -hFXA"
 alias ls="/bin/ls --color=always --hyperlink -hFv"
 alias cp="cp -a"
-alias rm="rm -I"
+# alias rm="rm -I"
+rm() {
+    command ls -F "$@"
+    command rm -I "$@"
+}
+
 alias at="at -m"
 alias jj="TERM=xterm ssh jms"
 alias ssh="TERM=xterm ssh"
@@ -49,6 +54,7 @@ alias docker="sudo docker"
 ad() {
     lbdbq $1 | tr 'A-Z' 'a-z'
 }
+alias assume="source assume"
 
 alias g="git"
 alias gll="git ll"
@@ -478,5 +484,9 @@ alias zkj="zk j"  # 昨天
 alias zkk="zk k"  # 今天
 alias zkl="zk l"  # 明天
 alias zkm="zk m"  # 周记
-alias zkn="zk n"  # 杂记
+# 杂记
+zkn() {
+    zk n
+    echo "$(cat /tmp/.zk)"
+}
 # }}}
