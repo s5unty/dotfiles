@@ -3,7 +3,7 @@
     "@slkiser/opencode-quota"
   ],
   "keybinds": {
-    "app_exit": "ctrl+w",
+    "app_exit": "ctrl+q",
     "command_list": "ctrl+o",
     "messages_first": "ctrl+g",
     "messages_last": "ctrl+alt+g",
@@ -13,8 +13,6 @@
     "input_line_end": "end",
     "input_buffer_home": "ctrl+home",
     "input_buffer_end": "ctrl+end",
-    "input_undo": "<leader>u",
-    "input_redo": "<leader>y",
     "history_previous": "ctrl+p",
     "history_next": "ctrl+n",
     "agent_list": "shift+tab",

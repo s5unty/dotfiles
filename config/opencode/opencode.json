@@ -6,7 +6,7 @@
     "quotaToast": {
       "onlyCurrentModel": "true",
       "enableToast": false,
-      "showSessionTokens": true,
+      "showSessionTokens": false,
       "enabledProviders": "auto",
       "formatStyle": "grouped",
       "percentDisplayMode": "remaining"
@@ -14,9 +14,20 @@
   },
   "mcp": {
     "grafana": {
-        "type": "local",
-        "enabled": true,
-        "command": ["mcp-grafana", "-disable-write"]
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "mcp-grafana",
+        "-disable-write"
+      ]
+    },
+    "open-computer-use": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "open-computer-use",
+        "mcp"
+      ]
     }
   },
   "$schema": "https://opencode.ai/config.json"
