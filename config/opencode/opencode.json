@@ -9,7 +9,14 @@
       "showSessionTokens": true,
       "enabledProviders": "auto",
       "formatStyle": "grouped",
-      "percentDisplayMode": "used"
+      "percentDisplayMode": "remaining"
+    }
+  },
+  "mcp": {
+    "grafana": {
+        "type": "local",
+        "enabled": true,
+        "command": ["mcp-grafana", "-disable-write"]
     }
   },
   "$schema": "https://opencode.ai/config.json"
