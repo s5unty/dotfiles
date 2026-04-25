@@ -141,9 +141,6 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock(' %Y/%m/%d(%a) %H:%M ')
@@ -643,6 +640,9 @@ awful.rules.rules = {
     properties = { floating = true } },
     { rule = { class = "Screenkey" },
     properties = { floating = true }, switchtotag = true },
+    -- `dragon xxx.txt` 出现一个可用于鼠标拖动的窗口
+    { rule = { class = "Dragon" },
+    properties = { floating = true, ontop=true, sticky=true, skip_taskbar=true }, callback = awful.placement.under_mouse },
     { rule = { instance = "feh" },
     properties = { floating = true }, callback = awful.placement.under_mouse },
     { rule = { class = "Android" },
