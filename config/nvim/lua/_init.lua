@@ -182,7 +182,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         vim.lsp.buf.format { async = false }
     end
 })
-vim.o.winborder = 'rounded'
+
 map("n", "K",           vim.lsp.buf.hover)
 map("n", "<leader>mr",  vim.lsp.buf.rename)
 map("n", "<leader>mc",  vim.lsp.buf.code_action)
@@ -200,7 +200,7 @@ map("n", "<leader>ge",  function() vim.diagnostic.setqflist({ severity = "E" }) 
 map("n", "<leader>gw",  function() vim.diagnostic.setqflist({ severity = "W" }) end)
 
 
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md -- {{{1
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md -- {{{1
 -- configs for the nvim lsp client
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local servers = {
@@ -208,6 +208,8 @@ local servers = {
   'gopls',
   'dartls',
   'denols',
+  -- apt install clangd
+  'clangd',
   -- dotnet tool install --global csharp-ls
   'csharp_ls',
   -- pnpm install -g @ansible/ansible-language-server
@@ -236,6 +238,12 @@ vim.lsp.config('dartls', {
       enableSnippets = false,
     }
   }
+})
+vim.lsp.config('clangd', {
+  cmd = {'clangd', '--compile-commands-dir="./"', '--background-index', '--clang-tidy', '--log=verbose'},
+  init_options = {
+    fallbackFlags = { '-std=c++20' },
+  },
 })
 
 -- https://github.com/echasnovski/mini.pairs {{{1
@@ -688,23 +696,4 @@ require("table-nvim").setup({
 -- https://github.com/oflisback/obsidian-bridge.nvim {{{1
 -- A neovim plugin used to synchronize active note and scroll position between neovim and obsidian
 require("obsidian-bridge").setup(bridge_settings)
-
-
--- https://github.com/yetone/avante.nvim
--- Use your Neovim like using Cursor AI IDE!
--- ```
--- $ export AVANTE_DEEPSEEK_API_KEY=sk-xxx
--- ```
-require('avante').setup({
-  provider = "deepseek",
-  providers = {
-    deepseek = {
-      __inherited_from = "openai",
-      api_key_name = "DEEPSEEK_API_KEY",
-      endpoint = "https://api.deepseek.com",
-      model = "deepseek-chat",
-      max_tokens = 8192,
-    },
-  },
-})
 
