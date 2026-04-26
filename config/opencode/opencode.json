@@ -28,6 +28,15 @@
         "open-computer-use",
         "mcp"
       ]
+    },
+    "obsidian": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "npx",
+        "@bitbonsai/mcpvault@latest",
+        "/sun/personal"
+      ]
     }
   },
   "$schema": "https://opencode.ai/config.json"
