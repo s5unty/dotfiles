@@ -15,9 +15,14 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 ##
 # apt install shadowsocks-libev
 # ref: https://www.zfl9.com/ss-redir.html
-/usr/bin/daemon -o /var/log/ss-tunnel.log -- /usr/bin/ss-tunnel -c ~/.config/ss-tunnel.json
-/usr/bin/daemon -o /var/log/ss-redir.log  -- /usr/bin/ss-redir  -c ~/.config/ss-redir.json
-/usr/bin/daemon -o /var/log/ss-local.log  -- /usr/bin/ss-local  -c ~/.config/ss-local.json
+# /usr/bin/daemon -o /var/log/ss-tunnel.log -- /usr/bin/ss-tunnel -c ~/.config/ss-tunnel.json
+# /usr/bin/daemon -o /var/log/ss-redir.log  -- /usr/bin/ss-redir  -c ~/.config/ss-redir.json
+# /usr/bin/daemon -o /var/log/ss-local.log  -- /usr/bin/ss-local  -c ~/.config/ss-local.json
+
+# /opt/v2ray/udp2raw -c -l 127.0.0.1:9527 -r 172.104.80.226:8443 -k "123.com" --raw-mode faketcp --cipher-mode xor -a &
+# /usr/bin/daemon -- /opt/v2ray/v2ray -config /sun/.v2ray.json
+# /usr/bin/daemon -- /opt/udp2raw/udp2raw_amd64 -c -l0.0.0.0:9527 -r13.209.226.239:1080 -k'gfw' --raw-mode faketcp --cipher-mode xor -a
+# /usr/local/bin/clash &
 
 # 强制启用 Ctrl-Alt-Backspace(重启图形界面) 组合键
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
@@ -59,7 +64,7 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # 一套键鼠控制多台机器，服务器端 (barrier 是社区 fork 的开源版)
 # https://github.com/debauchee/barrier
 if [ s`hostname` != s"wuans-worktop" ]; then
-/usr/bin/barrier
+    # /usr/bin/barrier
 fi
 # 客户端，由服务器端的键鼠控制
 # sh -c "echo '/usr/bin/synergyc -d ERROR --restart 192.168.1.60' >> /etc/X11/xdm/Xsetup"
@@ -67,7 +72,7 @@ fi
 ##
 # /usr/bin/syncthing -no-browser &
 ## pull, monitor, push TODO 如果同步失败，邮件通知自己
-/usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
+# /usr/bin/remind -z -k'~/.todo/opt/remind/awesome-osd.sh %s &' ~/.todo/var/ &
 ##
 # 改用 lsyncd 作同步
 #/usr/bin/rsync -av --omit-dir-times --delete --progress ~/.todo/var/ du1abadd.org:~/todo/var/ &
@@ -93,7 +98,7 @@ fi
 /usr/bin/unclutter -idle 5 -noevents &
 
 # 绑定 cifs 分区
-/bin/mount -a -t cifs &
+# /bin/mount -a -t cifs &
 
 # 初次启动 dropbox 须由 proxychains 启动，之后才可以使用 dropbox 内置的 socks5 代理
 # http://lucidhacking.net/2011/12/how-to-access-dropbox-behind-a-firewall-or-proxy/
@@ -108,12 +113,13 @@ fi
 # 通过在 navdia-settings 调整「Color Correction」才修复
 
 # 为了 pidgin-sipe 正常登录 Lync
-export NSS_SSL_CBC_RANDOM_IV=0
+# export NSS_SSL_CBC_RANDOM_IV=0
 
 # 输入法在图形应用程序之前启动
 export GTK_IM_MODULE=fcitx5
-export XMODIFIERS="@im=fcitx5"
 export QT_IM_MODULE=fcitx5
+export XMODIFIERS="@im=fcitx5"
+export SDL_IM_MODULE=fcitx5
 # https://github.com/kovidgoyal/kitty/issues/469#issuecomment-778814173
 export GLFW_IM_MODULE=ibus
 /usr/bin/fcitx5 -d -s 3
@@ -122,6 +128,10 @@ export GLFW_IM_MODULE=ibus
 /usr/bin/x-terminal-emulator -name Mutt -T Mutt -e sh -c mutt &
 /usr/bin/x-www-browser & #浏览器
 /usr/bin/flameshot &
+# /usr/bin/rclone mount gg:/ /mnt/gg --daemon &
+
+# 命令行历史
+/usr/bin/atuin daemon &
 
 # 启动窗口管理器
 /usr/bin/awesome
