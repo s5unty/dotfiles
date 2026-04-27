@@ -94,6 +94,9 @@ fi
 # 找到 compton，比 xcompmgr 效果更好
 # /usr/bin/compton -bcCGf -i 0.8 -e 0.8 --no-fading-openclose --sw-opti
 
+# 启动特明特效
+/usr/bin/unagi &
+
 # 鼠标 5 秒不动后自动隐藏
 /usr/bin/unclutter -idle 5 -noevents &
 

@@ -603,8 +603,8 @@ require('neo-tree').setup{
   filesystem = {
     window = {
       mappings = {
-        ["-"] = "close_node",
-        ["h"] = "system_open",
+        ["h"] = "close_node",
+        ["l"] = "toggle_node",
         ["g"] = "telescope_grep",
       },
     },
