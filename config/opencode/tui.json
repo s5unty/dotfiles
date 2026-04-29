@@ -1,7 +1,4 @@
 {
-  "plugin": [
-    "@slkiser/opencode-quota"
-  ],
   "keybinds": {
     "app_exit": "ctrl+q",
     "command_list": "ctrl+o",

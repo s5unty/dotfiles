@@ -1,43 +1,49 @@
 {
-  "plugin": [
-    "@slkiser/opencode-quota"
-  ],
-  "experimental": {
-    "quotaToast": {
-      "onlyCurrentModel": "true",
-      "enableToast": false,
-      "showSessionTokens": false,
-      "enabledProviders": "auto",
-      "formatStyle": "grouped",
-      "percentDisplayMode": "remaining"
-    }
-  },
-  "mcp": {
-    "grafana": {
-      "type": "local",
-      "enabled": true,
-      "command": [
-        "mcp-grafana",
-        "-disable-write"
-      ]
+    "autoupdate": false,
+    "compaction": {
+        "auto": false,
+        "prune": true,
+        "reserved": 10000
     },
-    "open-computer-use": {
-      "type": "local",
-      "enabled": true,
-      "command": [
-        "open-computer-use",
-        "mcp"
-      ]
+    "plugin": [
+        "@slkiser/opencode-quota"
+    ],
+    "experimental": {
+        "quotaToast": {
+            "onlyCurrentModel": "true",
+            "enableToast": false,
+            "showSessionTokens": false,
+            "enabledProviders": "auto",
+            "formatStyle": "grouped",
+            "percentDisplayMode": "remaining"
+        }
     },
-    "obsidian": {
-      "type": "local",
-      "enabled": true,
-      "command": [
-        "npx",
-        "@bitbonsai/mcpvault@latest",
-        "/sun/personal"
-      ]
-    }
-  },
-  "$schema": "https://opencode.ai/config.json"
+    "mcp": {
+        "grafana": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "mcp-grafana",
+                "-disable-write"
+            ]
+        },
+        "open-computer-use": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "open-computer-use",
+                "mcp"
+            ]
+        },
+        "obsidian": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "npx",
+                "@bitbonsai/mcpvault@latest",
+                "/sun/personal"
+            ]
+        }
+    },
+    "$schema": "https://opencode.ai/config.json"
 }
