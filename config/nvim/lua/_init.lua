@@ -182,22 +182,22 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         vim.lsp.buf.format { async = false }
     end
 })
-
+vim.o.winborder = 'rounded'
 map("n", "K",           vim.lsp.buf.hover)
-map("n", "<leader>mr",  vim.lsp.buf.rename)
-map("n", "<leader>mc",  vim.lsp.buf.code_action)
-map("n", "<leader>md",  vim.lsp.buf.definition)
-map("n", "<leader>mi",  vim.lsp.buf.implementation)
-map("n", "<leader>ml",  vim.lsp.buf.references)
-map("n", "<leader>ms",  vim.lsp.buf.document_symbol)
-map("n", "<leader>ma",  vim.lsp.buf.workspace_symbol)
-map("n", "<leader>mk",  vim.lsp.buf.signature_help)
-map("n", "<leader>=",   vim.lsp.buf.format)
-map("n", "<leader>me",  vim.lsp.codelens.run)
-map("n", "<leader>ml",  vim.diagnostic.setloclist)
-map("n", "<leader>mf",  vim.diagnostic.setqflist)
-map("n", "<leader>ge",  function() vim.diagnostic.setqflist({ severity = "E" }) end)
-map("n", "<leader>gw",  function() vim.diagnostic.setqflist({ severity = "W" }) end)
+map("n", "mr<leader>",  vim.lsp.buf.rename)
+map("n", "mc<leader>",  vim.lsp.buf.code_action)
+map("n", "md<leader>",  vim.lsp.buf.definition)
+map("n", "mi<leader>",  vim.lsp.buf.implementation)
+map("n", "ml<leader>",  vim.lsp.buf.references)
+map("n", "ms<leader>",  vim.lsp.buf.document_symbol)
+map("n", "ma<leader>",  vim.lsp.buf.workspace_symbol)
+map("n", "mk<leader>",  vim.lsp.buf.signature_help)
+map("n", "=<leader>",   vim.lsp.buf.format)
+map("n", "me<leader>",  vim.lsp.codelens.run)
+map("n", "gl<leader>",  vim.diagnostic.setloclist)
+map("n", "gf<leader>",  vim.diagnostic.setqflist)
+map("n", "ge<leader>",  function() vim.diagnostic.setqflist({ severity = "E" }) end)
+map("n", "gw<leader>",  function() vim.diagnostic.setqflist({ severity = "W" }) end)
 
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md -- {{{1
@@ -298,7 +298,7 @@ require('nvim-treesitter').setup {
       enable = true,
       -- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
       keymaps = {
-        smart_rename = "<leader>nr",
+        smart_rename = "mr<leader>",
       },
     },
   },
@@ -332,7 +332,7 @@ require("aerial").setup {
   end,
 }
 -- You probably also want to set a keymap to toggle aerial
-vim.keymap.set('n', '<leader>ma', '<cmd>AerialToggle!<CR>')
+vim.keymap.set('n', 'mm<leader>', '<cmd>AerialToggle!<CR>')
 
 
 -- https://github.com/alohaia/fcitx.nvim -- {{{1
@@ -454,10 +454,10 @@ require('dropbar').setup {
 -- https://github.com/nvim-telescope/telescope.nvim {{{1
 -- Find, Filter, Preview, Pick. All lua, all the time.
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', 'sf<leader>', builtin.find_files, {})
+vim.keymap.set('n', 'sg<leader>', builtin.live_grep, {})
+vim.keymap.set('n', 'sb<leader>', builtin.buffers, {})
+vim.keymap.set('n', 'sh<leader>', builtin.help_tags, {})
 require('telescope').setup {
   extensions = {
     undo = {
@@ -680,15 +680,15 @@ require("table-nvim").setup({
   mappings = {                          -- next and prev work in Normal and Insert mode. All other mappings work in Normal mode.
     next                = '<TAB>',      -- Go to next cell.
     prev                = '<S-TAB>',    -- Go to previous cell.
-    insert_row_up       = '<leader>tk', -- Insert a row above the current row.
-    insert_row_down     = '<leader>tj', -- Insert a row below the current row.
-    insert_column_left  = '<leader>th', -- Insert a column to the left of current column.
-    insert_column_right = '<leader>tl', -- Insert a column to the right of current column.
-    move_column_left    = '<leader>t,', -- Move the current column to the left.
-    move_column_right   = '<leader>t.', -- Move the current column to the right.
-    insert_table        = '<leader>tt', -- Insert a new table.
-    insert_table_alt    = '<leader>ta', -- Insert a new table that is not surrounded by pipes.
-    delete_column       = '<leader>td', -- Delete the column under cursor.
+    insert_row_up       = 'sO<leader>', -- Insert a row above the current row.
+    insert_row_down     = 'so<leader>', -- Insert a row below the current row.
+    insert_column_left  = 'si<leader>', -- Insert a column to the left of current column.
+    insert_column_right = 'sa<leader>', -- Insert a column to the right of current column.
+    move_column_left    = 's,<leader>', -- Move the current column to the left.
+    move_column_right   = 's.<leader>', -- Move the current column to the right.
+    insert_table        = 'st<leader>', -- Insert a new table.
+    insert_table_alt    = 'sT<leader>', -- Insert a new table that is not surrounded by pipes.
+    delete_column       = 'sx<leader>', -- Delete the column under cursor.
   }
 })
 
@@ -697,3 +697,7 @@ require("table-nvim").setup({
 -- A neovim plugin used to synchronize active note and scroll position between neovim and obsidian
 require("obsidian-bridge").setup(bridge_settings)
 
+
+-- https://github.com/hat0uma/csvview.nvim {{{1
+-- A Neovim plugin for CSV file editing.
+require('csvview').setup()

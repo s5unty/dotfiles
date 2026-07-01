@@ -186,17 +186,15 @@ nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR>
 nmap          <unique> <F5> :Gvdiffsplit HEAD<SPACE>
 imap          <unique> <F5> <C-O>:Gvdiffsplit HEAD<SPACE>
-nmap <silent> <unique> <F6> <cmd>Neotree toggle<CR>
-imap <silent> <unique> <F6> <cmd>Neotree toggle<CR>
-nmap <silent> <unique> <F18> <cmd>Neotree document_symbols toggle<CR>
-imap <silent> <unique> <F18> <cmd>Neotree document_symbols toggle<CR>
+nmap <silent> <unique> <F6> <cmd>CsvViewToggle delimiter=, display_mode=border header_lnum=1<CR>
+imap <silent> <unique> <F6> <cmd>CsvViewToggle delimiter=, display_mode=border header_lnum=1<CR>
 nmap <silent> <unique> <F7> :set formatoptions-=2mn<CR>:set formatoptions<CR>
-nmap <silent> <unique> <F8> <cmd>ObsidianToday<CR>
-imap <silent> <unique> <F8> <cmd>ObsidianToday<CR>
+nmap <silent> <unique> <F8> <cmd><CR>
+imap <silent> <unique> <F8> <cmd><CR>
 nmap <silent> <unique> <F9> <cmd>Telescope oldfiles<CR>
 imap <silent> <unique> <F9> <cmd>Telescope oldfiles<CR>
-nmap <silent> <unique> <F10> <cmd><CR>
-imap <silent> <unique> <F10> <cmd><CR>
+nmap <silent> <unique> <F10> <cmd>Neotree toggle<CR>
+imap <silent> <unique> <F10> <cmd>Neotree toggle<CR>
 nmap <silent> <unique> <F11> <cmd>Telescope lsp_references<CR>
 imap <silent> <unique> <F11> <cmd>Telescope lsp_references<CR>
 nmap <silent> <unique> <F12> <C-]>zz
@@ -275,6 +273,8 @@ call plug#begin('~/.config/nvim/bundles')
     " 增量的模糊查询 [o]telescope [x]fzf [x]denite
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     Plug 'debugloop/telescope-undo.nvim'
+    " CSV/TSV增强
+    Plug 'hat0uma/csvview.nvim'
     " MD笔记管理 [o]obsidian-bridge.nvim [o]zk-nvim [x]obsidian.nvim
     Plug 'zk-org/zk-nvim'
     Plug 'oflisback/obsidian-bridge.nvim'
