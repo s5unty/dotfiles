@@ -1,6 +1,6 @@
-[manager]
-ratio = [2, 3, 5]
-sort_by = "btime"
+[mgr]
+ratio = [18, 32, 50]
+#sort_by = "btime"
 sort_reverse = true
 linemode = "size"
 
@@ -11,7 +11,7 @@ copy_gif = [ { run = 'copyq write image/gif - < "$1" && copyq select 0 && sxiv "
 copy_bmp = [ { run = 'copyq write image/bmp - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
 
 [open]
-prepend_rules = [
+prepend_preloaders = [
 	{ name = "*.png", use = "copy_png" },
 	{ name = "*.jpg", use = "copy_jpg" },
 	{ name = "*.jpeg",use = "copy_jpg" },

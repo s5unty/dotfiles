@@ -1,0 +1,12 @@
+[[plugin.deps]]
+use = "pirafrank/what-size"
+rev = "179ebf6"
+hash = "57056b9728006881d580ccabe8154a9c"
+
+[[plugin.deps]]
+use = "dedukun/bookmarks"
+rev = "9ef1254"
+hash = "92fbb5483657fa7976cdf4e0104e18e0"
+
+[flavor]
+deps = []

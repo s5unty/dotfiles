@@ -1,17 +1,4 @@
-function Status:name()
-	local h = self._tab.current.hovered
-	if not h then
-		return ui.Line {}
-	end
-
-    -- return ui.Line(" " .. h.name)
-    local linked = ""
-    if h.link_to ~= nil then
-        linked = " -> " .. tostring(h.link_to)
-    end
-    return ui.Line(" " .. h.name .. linked)
-end
-
+-- 状态栏显示目录归属
 Status:children_add(function()
 	local h = cx.active.current.hovered
 	if h == nil or ya.target_family() ~= "unix" then
@@ -25,3 +12,23 @@ Status:children_add(function()
 		ui.Span(" "),
 	}
 end, 500, Status.RIGHT)
+
+-- 书签插件
+-- https://github.com/dedukun/bookmarks.yazi
+require("bookmarks"):setup({
+	last_directory = { enable = false, persist = false, mode="dir" },
+	persist = "all",
+	desc_format = "full",
+	file_pick_mode = "hover",
+	custom_desc_input = false,
+	show_keys = false,
+	notify = {
+		enable = false,
+		timeout = 1,
+		message = {
+			new = "New bookmark '<key>' -> '<folder>'",
+			delete = "Deleted bookmark in '<key>'",
+			delete_all = "Deleted all bookmarks",
+		},
+	},
+})
