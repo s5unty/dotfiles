@@ -25,8 +25,8 @@ case $mode in
         xset dpms 600
         pkill cmatrix
         /usr/bin/kitty --name="CMatrix" -T CMatrix \
-            -o background_image="none" -o background="#333333" --watcher="btkb.py" \
-            -e zsh -c "cmatrix -a -b -u 2 -C black"
+            -o background_image="none" -o background="#000000" --watcher="btkb.py" \
+            -e zsh -c "cmatrix -a -b -u 1 -C black"
         xset dpms 0
         ;;
     lock)
