@@ -4,6 +4,18 @@ run  = 'shell "$SHELL" --block --confirm'
 desc = "Open shell here"
 
 [[mgr.prepend_keymap]]
+on = "O"
+run = '''shell --orphan -- case %h in
+	*.[mM][dD]|*.[mM][aA][rR][kK][dD][oO][wW][nN])
+		x-www-browser %h
+		;;
+	*)
+		ya emit open --interactive
+		;;
+esac'''
+desc = "Open Markdown in browser / Open with"
+
+[[mgr.prepend_keymap]]
 on = [ "m", "S" ]
 run  = "plugin what-size -- '--clipboard'"
 desc = "Calc size of selection or cwd"

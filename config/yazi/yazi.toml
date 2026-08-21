@@ -5,16 +5,15 @@ sort_reverse = true
 linemode = "size"
 
 [opener]
-copy_png = [ { run = 'copyq write image/png - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
-copy_jpg = [ { run = 'copyq write image/jpg - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
-copy_gif = [ { run = 'copyq write image/gif - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
-copy_bmp = [ { run = 'copyq write image/bmp - < "$1" && copyq select 0 && sxiv "$1"', block = true }, ]
+view_images = [
+    {
+        run = 'mime=$(file -Lb --mime-type -- %s1) && copyq write "$mime" - < %s1 && copyq select 0 && qiv %s',
+        block = true
+    }
+]
 
 [open]
-prepend_preloaders = [
-	{ name = "*.png", use = "copy_png" },
-	{ name = "*.jpg", use = "copy_jpg" },
-	{ name = "*.jpeg",use = "copy_jpg" },
-	{ name = "*.gif", use = "copy_gif" },
-	{ name = "*.bmp", use = "copy_bmp" },
+# 文件打开方式
+prepend_rules = [
+    { url = "*.{png,jpg,jpeg,gif,bmp}", use = "view_images" },
 ]
