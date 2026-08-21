@@ -12,7 +12,6 @@
     "input_buffer_end": "ctrl+end",
     "history_previous": "ctrl+p",
     "history_next": "ctrl+n",
-    "agent_list": "shift+tab",
     "model_list": "F3",
     "variant_list": "F4",
     "session_child_first": "F1",
@@ -22,7 +21,10 @@
     "session_list": "F5",
     "session_timeline": "F6",
     "display_thinking": "<leader>k",
-    "leader": "ctrl+x"
+    "leader": "ctrl+space"
   },
-  "$schema": "https://opencode.ai/tui.json"
+  "$schema": "https://opencode.ai/tui.json",
+  "plugin": [
+    "@slkiser/opencode-quota"
+  ]
 }

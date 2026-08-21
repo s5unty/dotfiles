@@ -1,0 +1,24 @@
+{
+  // Find providers from OpenCode configuration and authentication.
+  "enabledProviders": "auto",
+
+  // Show slash-command results with normal TUI messages.
+  "tuiCommandDisplay": "inline",
+
+  // Show the detailed Quota panel in the TUI sidebar.
+  "tuiSidebarPanel": {
+    "enabled": true
+  },
+
+  // Keep the other automatic TUI displays off.
+  "enableToast": false,
+  "tuiCompactStatus": {
+    "enabled": false
+  },
+
+  // Show bundled maintainer notices on TUI Home.
+  "maintainerAnnouncements": {
+    "enabled": false,
+    "home": true
+  }
+}

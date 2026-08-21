@@ -8,16 +8,6 @@
     "plugin": [
         "@slkiser/opencode-quota"
     ],
-    "experimental": {
-        "quotaToast": {
-            "onlyCurrentModel": "true",
-            "enableToast": false,
-            "showSessionTokens": false,
-            "enabledProviders": "auto",
-            "formatStyle": "grouped",
-            "percentDisplayMode": "remaining"
-        }
-    },
     "mcp": {
         "grafana": {
             "type": "local",
@@ -25,14 +15,6 @@
             "command": [
                 "mcp-grafana",
                 "-disable-write"
-            ]
-        },
-        "open-computer-use": {
-            "type": "local",
-            "enabled": true,
-            "command": [
-                "open-computer-use",
-                "mcp"
             ]
         },
         "obsidian": {
