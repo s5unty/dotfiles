@@ -48,9 +48,6 @@ export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 # https://docs.deno.com/runtime/reference/env_variables/
 export DENO_INSTALL_ROOT=$HOME/.local/
-# pnpm
-export PNPM_HOME="/sun/.cache/pnpm"
-export PATH="$PNPM_HOME:$PATH"
 # obsidian-bridge.nvim
 export OBSIDIAN_REST_API_KEY="6b2d8526fcd7f82f2436095cc8d9bfbc9e2ed75066ad2cd5c080768507e362a0"
 # zk-nvim

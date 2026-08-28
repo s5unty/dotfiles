@@ -85,9 +85,21 @@ eval "$(atuin hex init zsh)"
 # https://starship.rs/
 [ -e $(which starship) ] && eval "$(starship init zsh)" || source $HOME/.zsh/prompt
 
-# Fast, disk space efficient package manager | pnpm {{{1
-# https://pnpm.io/
-export PNPM_HOME="/sun/.cache/pnpm"
+
+# rust
+. "$HOME/.cargo/env"
+
+
+# fnm
+FNM_PATH="/sun/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --shell zsh)"
+fi
+
+
+# pnpm
+export PNPM_HOME="/sun/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
