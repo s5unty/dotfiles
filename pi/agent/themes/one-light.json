@@ -54,7 +54,7 @@
     "mdCode": "green",
     "mdCodeBlock": "fg",
     "mdCodeBlockBorder": "fgMuted",
-    "mdQuote": "fgMuted",
+    "mdQuote": "mono2",
     "mdQuoteBorder": "fgMuted",
     "mdHr": "fgMuted",
     "mdListBullet": "blue",
