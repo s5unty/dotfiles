@@ -6,7 +6,8 @@
   "packages": [
     "npm:pi-permission-modes",
     "npm:pi-zentui",
-    "npm:pi-web-access"
+    "npm:pi-web-access",
+    "npm:pi-obsidian"
   ],
   "terminal": {
     "imageWidthCells": 60,
@@ -24,6 +25,9 @@
   "images": {
     "autoResize": true
   },
-  "showHardwareCursor": true,
-  "hideThinkingBlock": true
+  "showHardwareCursor": false,
+  "hideThinkingBlock": true,
+  "treeFilterMode": "default",
+  "doubleEscapeAction": "tree",
+  "defaultProjectTrust": "always"
 }
