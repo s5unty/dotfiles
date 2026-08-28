@@ -1,0 +1,29 @@
+{
+  "lastChangelogVersion": "0.84.3",
+  "theme": "one-light",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
+  "packages": [
+    "npm:pi-permission-modes",
+    "npm:pi-zentui",
+    "npm:pi-web-access"
+  ],
+  "terminal": {
+    "imageWidthCells": 60,
+    "showImages": false
+  },
+  "modelThinkingLevels": {
+    "kimi-coding/k3": "high",
+    "openai-codex/gpt-5.6-sol": "medium",
+    "openai-codex/gpt-5.6-luna": "medium",
+    "openai-codex/gpt-5.6-terra": "medium"
+  },
+  "tuiMode": "fullscreen",
+  "fullscreenExitOutput": "transcript",
+  "fullscreenScrollbar": "auto",
+  "images": {
+    "autoResize": true
+  },
+  "showHardwareCursor": true,
+  "hideThinkingBlock": true
+}
