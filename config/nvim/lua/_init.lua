@@ -263,6 +263,7 @@ require('nvim-treesitter').setup {
     "go",
     "groovy",
     "yaml",
+    "json",
     "lua",
     "vim",
     "vimdoc",
@@ -701,3 +702,10 @@ require("obsidian-bridge").setup(bridge_settings)
 -- https://github.com/hat0uma/csvview.nvim {{{1
 -- A Neovim plugin for CSV file editing.
 require('csvview').setup()
+
+
+-- https://github.com/meanderingprogrammer/render-markdown.nvim {{{1
+-- Improve viewing Markdown in Neovim
+require('render-markdown').setup({
+    enabled = false,
+})
