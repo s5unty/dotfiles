@@ -1,7 +1,7 @@
 {
     "app.model.cycleForward": [],
     "app.model.cycleBackward": [],
-    "app.thinking.cycle": [],
+    "app.thinking.cycle": "ctrl+'",
     "tui.editor.cursorLineStart": [
         "home",
         "ctrl+a"

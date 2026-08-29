@@ -1,37 +1,37 @@
 {
-  "lastChangelogVersion": "0.84.4",
-  "theme": "moonlight",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
-  "packages": [
-    "npm:pi-permission-modes",
-    "npm:pi-zentui",
-    "npm:pi-web-access",
-    "npm:pi-obsidian",
-    "npm:@narumitw/pi-usage"
-  ],
-  "terminal": {
-    "imageWidthCells": 60,
-    "showImages": false,
-    "showTerminalProgress": false
-  },
-  "modelThinkingLevels": {
-    "kimi-coding/k3": "high",
-    "openai-codex/gpt-5.6-sol": "medium",
-    "openai-codex/gpt-5.6-luna": "medium",
-    "openai-codex/gpt-5.6-terra": "medium"
-  },
-  "tuiMode": "fullscreen",
-  "fullscreenExitOutput": "resume-hint",
-  "fullscreenScrollbar": "auto",
-  "images": {
-    "autoResize": true
-  },
-  "showHardwareCursor": true,
-  "hideThinkingBlock": true,
-  "treeFilterMode": "no-tools",
-  "doubleEscapeAction": "tree",
-  "defaultProjectTrust": "always",
-  "editorPaddingX": 0,
-  "outputPad": 1
+    "lastChangelogVersion": "0.84.4",
+    "theme": "moonlight",
+    "defaultProvider": "openai-codex",
+    "defaultModel": "gpt-5.6-sol",
+    "packages": [
+        "../pi-permission-modes",
+        "npm:pi-zentui",
+        "npm:pi-web-access",
+        "npm:pi-obsidian",
+        "npm:@narumitw/pi-usage"
+    ],
+    "terminal": {
+        "imageWidthCells": 60,
+        "showImages": false,
+        "showTerminalProgress": false
+    },
+    "modelThinkingLevels": {
+        "kimi-coding/k3": "high",
+        "openai-codex/gpt-5.6-sol": "medium",
+        "openai-codex/gpt-5.6-luna": "medium",
+        "openai-codex/gpt-5.6-terra": "medium"
+    },
+    "tuiMode": "fullscreen",
+    "fullscreenExitOutput": "resume-hint",
+    "fullscreenScrollbar": "auto",
+    "images": {
+        "autoResize": true
+    },
+    "showHardwareCursor": true,
+    "hideThinkingBlock": true,
+    "treeFilterMode": "no-tools",
+    "doubleEscapeAction": "tree",
+    "defaultProjectTrust": "always",
+    "editorPaddingX": 0,
+    "outputPad": 1
 }
