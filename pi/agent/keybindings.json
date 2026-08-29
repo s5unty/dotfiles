@@ -7,10 +7,13 @@
         "end",
         "ctrl+e"
     ],
-    "tui.altScreen.top": [
-        "ctrl+home"
-    ],
-    "tui.altScreen.bottom": [
-        "ctrl+end"
-    ]
+    "tui.editor.historyNext": "ctrl+n",
+    "tui.editor.historyPrevious": "ctrl+r",
+    "tui.altScreen.top": "ctrl+home",
+    "tui.altScreen.bottom": "ctrl+end",
+    "tui.altScreen.halfPageUp": "ctrl+u",
+    "tui.altScreen.halfPageDown": "ctrl+d",
+    "tui.altScreen.search": "ctrl+f",
+    "tui.altScreen.searchNext": "ctrl+n",
+    "tui.altScreen.searchPrevious": "ctrl+p"
 }
