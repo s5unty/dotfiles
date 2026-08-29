@@ -39,7 +39,7 @@
     "userMessages": {
       "enabled": false,
       "style": "compact",
-      "colorSource": "theme",
+      "colorSource": "terminal",
       "styles": {
         "framed": {},
         "framed-copy-friendly": {},
@@ -52,10 +52,10 @@
       "turnSummary": false,
       "spinner": "braille",
       "spinnerIntervalMs": 100,
-      "animateSpinnerColor": false,
-      "textIntervalMs": 100,
+      "animateSpinnerColor": true,
+      "textIntervalMs": 60,
       "textAnimation": "disabled",
-      "colorSource": "theme",
+      "colorSource": "terminal",
       "messages": {
         "custom": false,
         "values": [
@@ -86,7 +86,7 @@
     },
     "footer": {
       "style": "starship",
-      "colorSource": "theme",
+      "colorSource": "terminal",
       "modelLabel": "id",
       "styles": {
         "starship": {
@@ -141,7 +141,8 @@
               "perm": "left"
             },
             "colorModes": {
-              "perm": "original"
+              "perm": "original",
+              "usage": "original"
             }
           }
         }
@@ -150,7 +151,7 @@
     "selectorBorders": {
       "enabled": true,
       "style": "zentui",
-      "colorSource": "theme"
+      "colorSource": "terminal"
     }
   },
   "icons": {
