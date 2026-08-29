@@ -1,4 +1,7 @@
 {
+    "app.model.cycleForward": [],
+    "app.model.cycleBackward": [],
+    "app.thinking.cycle": [],
     "tui.editor.cursorLineStart": [
         "home",
         "ctrl+a"
@@ -7,8 +10,9 @@
         "end",
         "ctrl+e"
     ],
+    "app.session.resume": "ctrl+r",
     "tui.editor.historyNext": "ctrl+n",
-    "tui.editor.historyPrevious": "ctrl+r",
+    "tui.editor.historyPrevious": "ctrl+p",
     "tui.altScreen.top": "ctrl+home",
     "tui.altScreen.bottom": "ctrl+end",
     "tui.altScreen.halfPageUp": "ctrl+u",
