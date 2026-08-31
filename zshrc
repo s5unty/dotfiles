@@ -98,7 +98,7 @@ if [ -d "$FNM_PATH" ]; then
 fi
 
 
-# pnpm
+# pnpm setup
 export PNPM_HOME="/sun/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
