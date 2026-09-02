@@ -10,7 +10,11 @@
     "npm:@narumitw/pi-usage",
     "npm:@tintinweb/pi-subagents",
     "npm:@jonstuebe/pi-guard",
-    "npm:@eigenwert/pi-gatekeeper"
+    "npm:@eigenwert/pi-gatekeeper",
+    "npm:@juicesharp/rpiv-voice",
+    "npm:@juicesharp/rpiv-i18n",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@juicesharp/rpiv-todo"
   ],
   "terminal": {
     "imageWidthCells": 60,

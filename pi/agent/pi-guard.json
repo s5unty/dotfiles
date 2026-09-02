@@ -55,7 +55,8 @@
       "get_subagent_result",
       "steer_subagent",
       "source_check",
-      "obsidian_list_vaults"
+      "obsidian_list_vaults",
+      "ask_user_question"
     ]
   },
   "userBash": "sandbox",
