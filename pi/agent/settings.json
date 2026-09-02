@@ -4,11 +4,13 @@
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
   "packages": [
-    "../pi-permission-modes",
     "npm:pi-zentui",
     "npm:pi-web-access",
     "npm:pi-obsidian",
-    "npm:@narumitw/pi-usage"
+    "npm:@narumitw/pi-usage",
+    "npm:@tintinweb/pi-subagents",
+    "npm:@jonstuebe/pi-guard",
+    "npm:@eigenwert/pi-gatekeeper"
   ],
   "terminal": {
     "imageWidthCells": 60,
