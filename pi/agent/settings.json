@@ -33,7 +33,7 @@
   "hideThinkingBlock": true,
   "treeFilterMode": "no-tools",
   "doubleEscapeAction": "tree",
-  "defaultProjectTrust": "always",
+  "defaultProjectTrust": "ask",
   "editorPaddingX": 0,
   "outputPad": 1
 }
