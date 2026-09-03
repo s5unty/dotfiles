@@ -14,7 +14,8 @@
     "npm:@juicesharp/rpiv-voice",
     "npm:@juicesharp/rpiv-i18n",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@juicesharp/rpiv-todo"
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-mcp-adapter"
   ],
   "terminal": {
     "imageWidthCells": 60,

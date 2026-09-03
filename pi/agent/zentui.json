@@ -146,7 +146,8 @@
               "perm": "original",
               "usage": "original",
               "pi-guard": "original",
-              "gatekeeper": "original"
+              "gatekeeper": "original",
+              "mcp": "original"
             }
           }
         }

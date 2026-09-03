@@ -33,6 +33,9 @@
   "hostCommands": {},
   "externalTools": {
     "allow": [
+      "mcp",
+      "mcpScript",
+      "mcp__grafana",
       "web_search",
       "source_check",
       "fetch_content",

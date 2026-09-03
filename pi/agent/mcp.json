@@ -1,0 +1,13 @@
+{
+  "settings": {
+    "mcpFooterStatus": "compact"
+  },
+  "mcpServers": {
+    "grafana": {
+      "command": "mcp-grafana",
+      "args": [
+        "-disable-write"
+      ]
+    }
+  }
+}
