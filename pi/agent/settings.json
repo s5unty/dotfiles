@@ -10,13 +10,13 @@
     "npm:pi-web-access",
     "npm:pi-image-view",
     "npm:pi-obsidian",
-    "npm:@eigenwert/pi-gatekeeper",
-    "npm:@jonstuebe/pi-guard",
+    "npm:pi-guard",
     "npm:@tintinweb/pi-subagents",
     "npm:@juicesharp/rpiv-voice",
     "npm:@juicesharp/rpiv-i18n",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@juicesharp/rpiv-todo"
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-playpen"
   ],
   "terminal": {
     "imageWidthCells": 60,

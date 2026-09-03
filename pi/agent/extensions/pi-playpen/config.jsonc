@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "enabled": true,
+  "defaultSandbox": "wind",
+  "sandboxes": {
+    "wind": {
+      "projects": [
+        {
+          "root": ".",
+          "access": "read-write"
+        }
+      ],
+      "sandboxRuntime": {
+        "network": {
+          "allowedDomains": [],
+          "deniedDomains": [],
+        },
+        "filesystem": {
+          // Extra read-only user toolchains or extension paths outside Pi's
+          // automatic roots. Prefer narrow paths such as ~/.nvm/versions.
+          "allowRead": [
+            "~/"
+          ],
+          // Additional host restrictions; Snowglobe adds its own root/project rules.
+          "denyRead": [
+            "~/.ssh/**",
+            "~/.gnupg/**",
+            "~/.ldap/*",
+            "~/personal/asset/pass/**",
+          ],
+          // Runtime and direct-tool writes; these may be outside project roots
+          // (for example, /tmp).
+          "allowWrite": [],
+          "denyWrite": [
+            "~/.ssh/**",
+            "~/.gnupg/**",
+            "~/.ldap/*",
+            "~/personal/asset/pass/**",
+          ],
+        },
+      },
+    },
+  },
+}

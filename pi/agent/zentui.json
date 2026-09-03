@@ -140,14 +140,16 @@
             "placements": {
               "perm": "left",
               "pi-guard": "off",
-              "gatekeeper": "left"
+              "gatekeeper": "left",
+              "playpen": "left"
             },
             "colorModes": {
               "perm": "original",
               "usage": "original",
               "pi-guard": "original",
               "gatekeeper": "original",
-              "mcp": "original"
+              "mcp": "original",
+              "playpen": "original"
             }
           }
         }
