@@ -5,17 +5,18 @@
   "defaultModel": "gpt-5.6-sol",
   "packages": [
     "npm:pi-zentui",
-    "npm:pi-web-access",
-    "npm:pi-obsidian",
+    "npm:pi-mcp-adapter",
     "npm:@narumitw/pi-usage",
-    "npm:@tintinweb/pi-subagents",
-    "npm:@jonstuebe/pi-guard",
+    "npm:pi-web-access",
+    "npm:pi-image-view",
+    "npm:pi-obsidian",
     "npm:@eigenwert/pi-gatekeeper",
+    "npm:@jonstuebe/pi-guard",
+    "npm:@tintinweb/pi-subagents",
     "npm:@juicesharp/rpiv-voice",
     "npm:@juicesharp/rpiv-i18n",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@juicesharp/rpiv-todo",
-    "npm:pi-mcp-adapter"
+    "npm:@juicesharp/rpiv-todo"
   ],
   "terminal": {
     "imageWidthCells": 60,
