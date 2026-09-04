@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.4",
+  "lastChangelogVersion": "0.85.0",
   "theme": "moonlight",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
@@ -12,6 +12,7 @@
     "npm:pi-obsidian",
     "npm:pi-guard",
     "npm:pi-playpen",
+    "npm:pi-proxy",
     "npm:@tintinweb/pi-subagents",
     "npm:@juicesharp/rpiv-voice",
     "npm:@juicesharp/rpiv-i18n",

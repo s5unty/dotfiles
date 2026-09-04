@@ -1,0 +1,15 @@
+{
+  "proxy": "http://127.0.0.1:7890",
+  "enabled": true,
+  "mode": "fallback",
+  "rules": [
+    {
+      "match": "localhost,127.0.0.1,*.local,10.*,192.168.*",
+      "action": "direct"
+    },
+    {
+      "match": "*",
+      "action": "proxy"
+    }
+  ]
+}
