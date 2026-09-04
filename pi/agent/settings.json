@@ -11,12 +11,12 @@
     "npm:pi-image-view",
     "npm:pi-obsidian",
     "npm:pi-guard",
+    "npm:pi-playpen",
     "npm:@tintinweb/pi-subagents",
     "npm:@juicesharp/rpiv-voice",
     "npm:@juicesharp/rpiv-i18n",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@juicesharp/rpiv-todo",
-    "npm:pi-playpen"
+    "npm:@juicesharp/rpiv-todo"
   ],
   "terminal": {
     "imageWidthCells": 60,
