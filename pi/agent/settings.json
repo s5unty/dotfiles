@@ -2,7 +2,8 @@
   "lastChangelogVersion": "0.85.0",
   "theme": "moonlight",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-sol",
+  "defaultModel": "gpt-6-astra",
+  "httpProxy": "http://127.0.0.1:7890",
   "packages": [
     "npm:pi-zentui",
     "npm:pi-mcp-adapter",
@@ -12,12 +13,14 @@
     "npm:pi-obsidian",
     "npm:pi-guard",
     "npm:pi-playpen",
-    "npm:pi-proxy",
     "npm:@tintinweb/pi-subagents",
     "npm:@juicesharp/rpiv-voice",
     "npm:@juicesharp/rpiv-i18n",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@juicesharp/rpiv-todo"
+    "npm:@juicesharp/rpiv-todo",
+    "npm:@xynogen/pix-pretty",
+    "npm:pi-md-friendly",
+    "npm:pi-markdown-box"
   ],
   "terminal": {
     "imageWidthCells": 60,

@@ -72,7 +72,11 @@ eval "$(zoxide init zsh)"
 # https://github.com/atuinsh/atuin
 . "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh --disable-up-arrow)"
-eval "$(atuin hex init zsh)"
+##
+# 目录权限、以及kitty的shell集成都有问题
+##
+# eval "$(atuin hex init zsh)"
+####
 
 
 # complete path name based upon the pinyin acronym of Chinese characters {{{1
