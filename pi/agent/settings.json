@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.85.0",
+  "lastChangelogVersion": "0.85.1",
   "theme": "moonlight",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-astra",
@@ -19,8 +19,7 @@
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@juicesharp/rpiv-todo",
     "npm:@xynogen/pix-pretty",
-    "npm:pi-md-friendly",
-    "npm:pi-markdown-box"
+    "npm:pi-md-friendly"
   ],
   "terminal": {
     "imageWidthCells": 60,
@@ -45,5 +44,34 @@
   "doubleEscapeAction": "tree",
   "defaultProjectTrust": "ask",
   "editorPaddingX": 0,
-  "outputPad": 1
+  "outputPad": 1,
+  "guard": {
+    "enabled": true,
+    "matchers": {},
+    "rules": {
+      "web_search": {
+        "*": "allow"
+      },
+      "fetch_content": {
+        "*": "allow"
+      }
+    },
+    "profiles": {
+      "sudo": {
+        "bash": {
+          "*": "allow"
+        },
+        "edit": {
+          "*": "allow"
+        },
+        "write": {
+          "*": "allow"
+        }
+      }
+    },
+    "shortcuts": {
+      "sudo": "profile sudo",
+      "safe": "enable"
+    }
+  }
 }
