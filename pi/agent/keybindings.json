@@ -20,8 +20,14 @@
   "tui.altScreen.bottom": "insert",
   "tui.altScreen.pageUp": "",
   "tui.altScreen.pageDown": "",
-  "tui.altScreen.halfPageUp": "pageUp",
-  "tui.altScreen.halfPageDown": "pageDown",
+  "tui.altScreen.halfPageUp": [
+    "pageUp",
+    "ctrl+u"
+  ],
+  "tui.altScreen.halfPageDown": [
+    "pageDown",
+    "ctrl+d"
+  ],
   "tui.altScreen.search": "ctrl+f",
   "tui.altScreen.searchNext": "ctrl+n",
   "tui.altScreen.searchPrevious": "ctrl+p"

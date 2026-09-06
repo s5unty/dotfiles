@@ -1,13 +1,35 @@
 {
   "version": 1,
   "enabled": true,
-  "defaultSandbox": "wind",
+  "defaultSandbox": "jail",
   "sandboxes": {
-    "wind": {
+    "jail": {
       "projects": [
         {
+          "root": "/sun/.pi/agent",
+          "access": "read-only",
+          "denyRead": [
+            "auth.json",
+            ".env"
+          ]
+        },
+        {
           "root": ".",
-          "access": "read-write"
+          "access": "read-write",
+          "denyRead": [
+            "secrets",
+            "credentials",
+            ".env",
+            "**/.env*",
+            "**/*.pem",
+            "**/*.key",
+            "**/*.p12",
+            "**/*.pfx",
+            "**/*.kdb",
+            "**/*.kdbx",
+            "**/*.tfstate",
+            "**/*.tfstate.*"
+          ]
         }
       ],
       "sandboxRuntime": {
@@ -281,7 +303,8 @@
             // }}}1
           ],
           "deniedDomains": [],
-          "allowAllUnixSockets": true,
+          "allowAllUnixSockets": false,
+          "allowLocalBinding": false
           // Playpen 内置代理使用的上游代理
           "parentProxy": {
             "http": "http://127.0.0.1:7890",
@@ -290,10 +313,7 @@
           }
         },
         "filesystem": {
-          // Extra read-only user toolchains or extension paths outside Pi's
-          // automatic roots. Prefer narrow paths such as ~/.nvm/versions.
           "allowRead": [
-            "~/.pi/agent/",
             "~/.config/nvm/versions/node/v24.20.0/bin/",
             "~/.config/nvm/versions/node/v24.20.0/lib/node_modules/npm/bin/",
             "~/.config/nvm/versions/node/v24.20.0/lib/node_modules/corepack/dist/",
@@ -301,25 +321,121 @@
           ],
           // Additional host restrictions; Snowglobe adds its own root/project rules.
           "denyRead": [
-            "auth.json",
-            "*.gpg",
-            "*.kdb",
-            "*.kdbx",
-            "~/.ssh/**",
-            "~/.gnupg/**",
-            "~/.ldap/*",
-            "~/personal/asset/pass/**"
+            "~/.ssh",
+            "~/.gnupg",
+            "~/.ldap",
+            "~/personal/asset/pass",
+            "~/.aws",
+            "~/.azure",
+            "~/.kube",
+            "~/.docker",
+            "~/.config/gcloud",
+            "~/.config/gh",
+            "~/.git-credentials",
+            "~/.config/git/credentials",
+            "~/.netrc",
+            "~/.npmrc",
+            "~/.pypirc",
+            "~/.cargo/credentials",
+            "~/.cargo/credentials.toml",
+            "~/.m2/settings.xml",
+            "~/.gradle/gradle.properties",
+            "~/.config/containers/auth.json",
+            "~/.local/share/containers/auth.json",
+            "~/.local/share/keyrings",
+            "~/.password-store",
+            "~/.config/Bitwarden",
+            "~/.config/1Password",
+            "~/.mozilla",
+            "~/.config/google-chrome",
+            "~/.config/chromium",
+            "~/.bash_history",
+            "~/.zsh_history",
+            "~/.local/share/fish/fish_history",
+            "~/.pgpass",
+            "~/.my.cnf",
+            "~/.config/rclone/rclone.conf"
           ],
-          // Runtime and direct-tool writes; these may be outside project roots
-          // (for example, /tmp).
-          "allowWrite": [
-            "/tmp"
-          ],
+          "allowWrite": [],
           "denyWrite": [
-            "~/.ssh/**",
-            "~/.gnupg/**",
-            "~/.ldap/*",
-            "~/personal/asset/pass/**"
+            "~/.ssh",
+            "~/.gnupg",
+            "~/.ldap",
+            "~/personal/asset/pass",
+            "~/.aws",
+            "~/.azure",
+            "~/.kube",
+            "~/.docker",
+            "~/.config/gcloud",
+            "~/.config/gh",
+            "~/.git-credentials",
+            "~/.config/git/credentials",
+            "~/.netrc",
+            "~/.npmrc",
+            "~/.pypirc",
+            "~/.cargo/credentials",
+            "~/.cargo/credentials.toml",
+            "~/.m2/settings.xml",
+            "~/.gradle/gradle.properties",
+            "~/.config/containers/auth.json",
+            "~/.local/share/containers/auth.json",
+            "~/.local/share/keyrings",
+            "~/.password-store",
+            "~/.config/Bitwarden",
+            "~/.config/1Password",
+            "~/.mozilla",
+            "~/.config/google-chrome",
+            "~/.config/chromium",
+            "~/.bash_history",
+            "~/.zsh_history",
+            "~/.local/share/fish/fish_history",
+            "~/.pgpass",
+            "~/.my.cnf",
+            "~/.config/rclone/rclone.conf",
+            "~/.pi/agent",
+            "~/.pi/server",
+            "~/.agents",
+            "~/.bashrc",
+            "~/.bash_profile",
+            "~/.bash_login",
+            "~/.profile",
+            "~/.zshenv",
+            "~/.zprofile",
+            "~/.zshrc",
+            "~/.zlogin",
+            "~/.inputrc",
+            "~/.config/fish",
+            "~/.config/systemd",
+            "~/.local/share/systemd",
+            "~/.config/environment.d",
+            "~/.config/autostart",
+            "~/.local/share/applications",
+            "~/.xinitrc",
+            "~/.xsession",
+            "~/.xprofile",
+            "~/.tmux.conf",
+            "~/.config/tmux",
+            "~/.gitconfig",
+            "~/.config/git",
+            "~/.local/bin",
+            "~/bin",
+            "~/.config/nvm",
+            "~/.nvm",
+            "~/.local/share/pnpm",
+            "~/.cargo/bin",
+            "~/.rustup",
+            "/etc",
+            "/usr",
+            "/bin",
+            "/sbin",
+            "/lib",
+            "/lib64",
+            "/boot",
+            "/opt",
+            "/run",
+            "/var/spool/cron",
+            "/var/spool/at",
+            "/var/spool/anacron"
           ]
         }
       }

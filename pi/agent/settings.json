@@ -55,21 +55,16 @@
       "ask_user_question": "allow"
     },
     "profiles": {
-      "root": {
-        "bash": {
-          "*": "allow"
-        },
-        "edit": {
-          "*": "allow"
-        },
-        "write": {
-          "*": "allow"
-        }
-      }
+      "sudo": {
+        "bash": "ask",
+        "write": "allow",
+        "edit": "allow"
+      },
+      "root": "allow"
     },
     "shortcuts": {
+      "sudo": "profile sudo",
       "root": "profile root",
-      "sudo": "profile off",
       "yolo": "off"
     }
   }
