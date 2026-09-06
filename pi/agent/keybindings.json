@@ -1,6 +1,6 @@
 {
-  "app.exit": "ctrl+q",
-  "app.clear": "ctrl+d",
+  "app.exit": "",
+  "app.clear": "ctrl+q",
   "app.interrupt": "ctrl+c",
   "app.model.cycleForward": [],
   "app.model.cycleBackward": [],

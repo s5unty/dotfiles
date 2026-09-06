@@ -139,9 +139,10 @@
             "defaultPlacement": "right",
             "placements": {
               "perm": "left",
-              "pi-guard": "off",
+              "pi-guard": "left",
               "gatekeeper": "left",
-              "playpen": "left"
+              "playpen": "left",
+              "mcp": "right"
             },
             "colorModes": {
               "perm": "original",
@@ -161,7 +162,7 @@
       "colorSource": "terminal"
     },
     "thinkingSteps": {
-      "enabled": false,
+      "enabled": true,
       "mode": "tree"
     }
   },

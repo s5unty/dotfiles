@@ -11,7 +11,6 @@
     "npm:pi-web-access",
     "npm:pi-image-view",
     "npm:pi-obsidian",
-    "npm:pi-guard",
     "npm:pi-playpen",
     "npm:@tintinweb/pi-subagents",
     "npm:@juicesharp/rpiv-voice",
@@ -19,7 +18,8 @@
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@juicesharp/rpiv-todo",
     "npm:@xynogen/pix-pretty",
-    "npm:pi-md-friendly"
+    "npm:pi-md-friendly",
+    "https://github.com/s5unty/pi-guard"
   ],
   "terminal": {
     "imageWidthCells": 60,
@@ -36,10 +36,10 @@
   "fullscreenExitOutput": "resume-hint",
   "fullscreenScrollbar": "auto",
   "images": {
-    "autoResize": true
+    "autoResize": false
   },
   "showHardwareCursor": true,
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "treeFilterMode": "no-tools",
   "doubleEscapeAction": "tree",
   "defaultProjectTrust": "ask",
@@ -47,17 +47,15 @@
   "outputPad": 1,
   "guard": {
     "enabled": true,
-    "matchers": {},
     "rules": {
-      "web_search": {
-        "*": "allow"
-      },
-      "fetch_content": {
-        "*": "allow"
-      }
+      "fetch_content": "allow",
+      "get_search_content": "allow",
+      "source_check": "allow",
+      "web_search": "allow",
+      "ask_user_question": "allow"
     },
     "profiles": {
-      "sudo": {
+      "root": {
         "bash": {
           "*": "allow"
         },
@@ -70,8 +68,9 @@
       }
     },
     "shortcuts": {
-      "sudo": "profile sudo",
-      "safe": "enable"
+      "root": "profile root",
+      "sudo": "profile off",
+      "yolo": "off"
     }
   }
 }

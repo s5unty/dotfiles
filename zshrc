@@ -94,12 +94,10 @@ eval "$(atuin init zsh --disable-up-arrow)"
 . "$HOME/.cargo/env"
 
 
-# fnm
-FNM_PATH="/sun/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "$(fnm env --shell zsh)"
-fi
+# nvm
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+nvm use --silent 24
 
 
 # pnpm

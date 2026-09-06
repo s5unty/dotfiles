@@ -292,27 +292,37 @@
         "filesystem": {
           // Extra read-only user toolchains or extension paths outside Pi's
           // automatic roots. Prefer narrow paths such as ~/.nvm/versions.
-          "allowRead": [],
+          "allowRead": [
+            "~/.pi/agent/",
+            "~/.config/nvm/versions/node/v24.20.0/bin/",
+            "~/.config/nvm/versions/node/v24.20.0/lib/node_modules/npm/bin/",
+            "~/.config/nvm/versions/node/v24.20.0/lib/node_modules/corepack/dist/",
+            "~/.local/share/pnpm/"
+          ],
           // Additional host restrictions; Snowglobe adds its own root/project rules.
           "denyRead": [
+            "auth.json",
+            "*.gpg",
+            "*.kdb",
+            "*.kdbx",
             "~/.ssh/**",
             "~/.gnupg/**",
             "~/.ldap/*",
-            "~/personal/asset/pass/**",
+            "~/personal/asset/pass/**"
           ],
           // Runtime and direct-tool writes; these may be outside project roots
           // (for example, /tmp).
           "allowWrite": [
-            "/tmp",
+            "/tmp"
           ],
           "denyWrite": [
             "~/.ssh/**",
             "~/.gnupg/**",
             "~/.ldap/*",
-            "~/personal/asset/pass/**",
-          ],
-        },
-      },
-    },
-  },
+            "~/personal/asset/pass/**"
+          ]
+        }
+      }
+    }
+  }
 }
