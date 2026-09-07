@@ -304,7 +304,7 @@
           ],
           "deniedDomains": [],
           "allowAllUnixSockets": false,
-          "allowLocalBinding": false
+          "allowLocalBinding": false,
           // Playpen 内置代理使用的上游代理
           "parentProxy": {
             "http": "http://127.0.0.1:7890",

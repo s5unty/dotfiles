@@ -518,7 +518,7 @@ clientkeys = awful.util.table.join(
             c.minimized = true
         end ,
         {description = "minimize", group = "client"}),
-    awful.key({ modkey,           }, "m",
+    awful.key({ modkey,           }, "Return",
         function (c)
             c.maximized = not c.maximized
             c:raise()
@@ -745,7 +745,7 @@ awful.rules.rules = {
     properties = { floating=true, ontop=true } },
 
     { rule = { class = "wechat" },
-    properties = { floating=true } },
+    properties = { floating=true, placement=awful.placement.centered } },
 
     { rule = { name = "Microsoft Teams 通知" },
     properties = { floating=true, ontop=true, focus=false },
