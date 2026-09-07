@@ -43,19 +43,24 @@
   "treeFilterMode": "no-tools",
   "doubleEscapeAction": "tree",
   "defaultProjectTrust": "ask",
+  "npmCommand": [
+    "npm",
+    "--ignore-scripts",
+    "--omit=dev"
+  ],
   "editorPaddingX": 0,
   "outputPad": 1,
   "guard": {
     "enabled": true,
     "rules": {
-      "ask_user_question": "allow",
       "bash": {
         "lark-cli": "allow"
       },
       "fetch_content": "allow",
       "get_search_content": "allow",
       "source_check": "allow",
-      "web_search": "allow"
+      "web_search": "allow",
+      "ask_user_question": "allow"
     },
     "profiles": {
       "sudo": {
