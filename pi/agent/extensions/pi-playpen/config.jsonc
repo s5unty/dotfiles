@@ -6,7 +6,7 @@
     "jail": {
       "projects": [
         {
-          "root": "/sun/.pi/agent",
+          "root": "~/.pi/agent",
           "access": "read-only",
           "denyRead": [
             "auth.json",
@@ -14,28 +14,17 @@
           ]
         },
         {
-          "root": ".",
-          "access": "read-write",
-          "denyRead": [
-            "secrets",
-            "credentials",
-            ".env",
-            "**/.env*",
-            "**/*.pem",
-            "**/*.key",
-            "**/*.p12",
-            "**/*.pfx",
-            "**/*.kdb",
-            "**/*.kdbx",
-            "**/*.tfstate",
-            "**/*.tfstate.*"
-          ]
+          "root": "/tmp",
+          "access": "read-write"
         }
       ],
       "sandboxRuntime": {
         "network": {
           // https://docs.github.com/en/copilot/reference/copilot-allowlist-reference
           "allowedDomains": [
+            "genscript.larkenterprise.com",
+            "accounts.feishu.cn",
+            "open.feishu.cn",
             // URL paths were reduced to hostnames because Playpen network rules are host-based.{{{1
             // GitHub /meta: domains.website + domains.copilot
             "*.github.com",
@@ -314,17 +303,20 @@
         },
         "filesystem": {
           "allowRead": [
+            // node
             "~/.config/nvm/versions/node/v24.20.0/bin/",
             "~/.config/nvm/versions/node/v24.20.0/lib/node_modules/npm/bin/",
             "~/.config/nvm/versions/node/v24.20.0/lib/node_modules/corepack/dist/",
-            "~/.local/share/pnpm/"
+            "~/.local/share/pnpm/",
+            // lark-cli
+            "~/.agents/skills/"
           ],
           // Additional host restrictions; Snowglobe adds its own root/project rules.
           "denyRead": [
+            "~/personal/asset/pass",
             "~/.ssh",
             "~/.gnupg",
             "~/.ldap",
-            "~/personal/asset/pass",
             "~/.aws",
             "~/.azure",
             "~/.kube",
@@ -351,17 +343,20 @@
             "~/.config/chromium",
             "~/.bash_history",
             "~/.zsh_history",
-            "~/.local/share/fish/fish_history",
             "~/.pgpass",
             "~/.my.cnf",
             "~/.config/rclone/rclone.conf"
           ],
-          "allowWrite": [],
+          "allowWrite": [
+            // lark-cli: 更新凭证
+            "~/.local/share/lark-cli/",
+            "~/.lark-cli/"
+          ],
           "denyWrite": [
+            "~/personal/asset/pass",
             "~/.ssh",
             "~/.gnupg",
             "~/.ldap",
-            "~/personal/asset/pass",
             "~/.aws",
             "~/.azure",
             "~/.kube",
@@ -388,7 +383,6 @@
             "~/.config/chromium",
             "~/.bash_history",
             "~/.zsh_history",
-            "~/.local/share/fish/fish_history",
             "~/.pgpass",
             "~/.my.cnf",
             "~/.config/rclone/rclone.conf",

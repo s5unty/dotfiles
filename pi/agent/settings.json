@@ -48,11 +48,14 @@
   "guard": {
     "enabled": true,
     "rules": {
+      "ask_user_question": "allow",
+      "bash": {
+        "lark-cli": "allow"
+      },
       "fetch_content": "allow",
       "get_search_content": "allow",
       "source_check": "allow",
-      "web_search": "allow",
-      "ask_user_question": "allow"
+      "web_search": "allow"
     },
     "profiles": {
       "sudo": {
