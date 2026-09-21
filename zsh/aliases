@@ -24,7 +24,8 @@ rm() {
     command ls -F "$@"
     command rm -I "$@"
 }
-
+alias b="backlog"
+alias bd="backlog board"
 alias at="at -m"
 alias jj="TERM=xterm ssh jms"
 alias ssh="TERM=xterm ssh"
