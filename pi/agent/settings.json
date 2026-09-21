@@ -19,7 +19,8 @@
     "npm:@juicesharp/rpiv-todo",
     "npm:@xynogen/pix-pretty",
     "npm:pi-md-friendly",
-    "https://github.com/s5unty/pi-guard"
+    "git:github.com/s5unty/pi-guard",
+    "git:github.com/s5unty/pi-data-masking"
   ],
   "terminal": {
     "imageWidthCells": 60,
@@ -39,7 +40,7 @@
     "autoResize": false
   },
   "showHardwareCursor": true,
-  "hideThinkingBlock": false,
+  "hideThinkingBlock": true,
   "treeFilterMode": "no-tools",
   "doubleEscapeAction": "tree",
   "defaultProjectTrust": "ask",
@@ -56,6 +57,7 @@
       "bash": {
         "lark-cli": "allow"
       },
+      "todo": "allow",
       "fetch_content": "allow",
       "get_search_content": "allow",
       "source_check": "allow",

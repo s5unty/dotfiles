@@ -142,7 +142,8 @@
               "pi-guard": "left",
               "gatekeeper": "left",
               "playpen": "left",
-              "mcp": "right"
+              "mcp": "right",
+              "masking": "off"
             },
             "colorModes": {
               "perm": "original",
@@ -150,7 +151,8 @@
               "pi-guard": "original",
               "gatekeeper": "original",
               "mcp": "original",
-              "playpen": "original"
+              "playpen": "original",
+              "masking": "original"
             }
           }
         }

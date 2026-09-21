@@ -1,6 +1,6 @@
 [user] # {{{
     name = Sun Wuan
-    email = *********************
+    email = sunwuan@genscript.com
 [core]
     packedGitLimit = 512m
     packedGitWindowSize = 512m
@@ -106,7 +106,8 @@
 
 [alias] # {{{
     ci  = commit
-    ce  = commit --allow-empty
+    cc  = commit --allow-empty --only 
+    cf  = commit --allow-empty --only -F
     cm  = commit --amend
     co  = checkout
     cd  = checkout -b
@@ -165,7 +166,7 @@
 # }}}
 
 [pull] # {{{
-	ff = only
+    ff = only
 # }}}
 
 # vim: set foldmethod=marker:

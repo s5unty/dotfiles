@@ -12,10 +12,6 @@
             "auth.json",
             ".env"
           ]
-        },
-        {
-          "root": "/tmp",
-          "access": "read-write"
         }
       ],
       "sandboxRuntime": {
@@ -292,7 +288,7 @@
             // }}}1
           ],
           "deniedDomains": [],
-          "allowAllUnixSockets": false,
+          "allowAllUnixSockets": true,
           "allowLocalBinding": false,
           // Playpen 内置代理使用的上游代理
           "parentProxy": {
@@ -309,7 +305,9 @@
             "~/.config/nvm/versions/node/v24.20.0/lib/node_modules/corepack/dist/",
             "~/.local/share/pnpm/",
             // lark-cli
-            "~/.agents/skills/"
+            "~/.agents/skills/",
+            // docker
+            "/var/run/docker.sock"
           ],
           // Additional host restrictions; Snowglobe adds its own root/project rules.
           "denyRead": [
@@ -348,6 +346,7 @@
             "~/.config/rclone/rclone.conf"
           ],
           "allowWrite": [
+            "/tmp/",
             // lark-cli: 更新凭证
             "~/.local/share/lark-cli/",
             "~/.lark-cli/"

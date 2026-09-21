@@ -1,0 +1,71 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sevten/pi-data-masking/main/masking.config.schema.json",
+  "version": 1,
+  "rules": [
+    {
+      "id": "mask-domains",
+      "name": "mask-domains",
+      "type": "regex",
+      "pattern": "(M2Ihp2AlnKO0sUOlo2Wco2AxoJ98LzImqUc5oJI8M2Ihp2AlnKO0LzyiqTIwnTAipaO8M2Ihp2AlnKO0pUWiLzyisT1ioTIwqJkupzAfo3Ix)",
+      "flags": "i"
+    },
+    {
+      "id": "private-ipv4",
+      "name": "私有 IPv4 地址",
+      "preset": "private-ipv4",
+      "preserveStructure": {
+        "keepIPv4Octets": 2
+      }
+    },
+    {
+      "id": "public-ipv4",
+      "name": "公网 IPv4 地址",
+      "preset": "public-ipv4"
+    },
+    {
+      "id": "github-pat",
+      "name": "GitHub 个人访问令牌",
+      "preset": "github-pat"
+    },
+    {
+      "id": "npm-token",
+      "name": "npm 访问令牌",
+      "preset": "npm-token"
+    },
+    {
+      "id": "huggingface-token",
+      "name": "Hugging Face 访问令牌",
+      "preset": "huggingface-token"
+    },
+    {
+      "id": "aws-access-key-id",
+      "name": "AWS Access Key ID",
+      "preset": "aws-access-key-id"
+    },
+    {
+      "id": "slack-token",
+      "name": "Slack 令牌",
+      "preset": "slack-token"
+    },
+    {
+      "id": "jwt",
+      "name": "JWT 令牌",
+      "preset": "jwt"
+    },
+    {
+      "id": "pem-private-key",
+      "name": "PEM 私钥正文",
+      "preset": "pem-private-key"
+    },
+    {
+      "id": "bearer-token",
+      "name": "Authorization Bearer 令牌",
+      "preset": "bearer-token"
+    },
+    {
+      "id": "database-userinfo",
+      "name": "数据库连接串认证信息",
+      "preset": "database-userinfo"
+    }
+  ]
+}
