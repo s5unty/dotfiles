@@ -299,6 +299,8 @@
         },
         "filesystem": {
           "allowRead": [
+            // !!curl
+            "/tmp/",
             // node
             "~/.config/nvm/versions/node/v24.20.0/bin/",
             "~/.config/nvm/versions/node/v24.20.0/lib/node_modules/npm/bin/",
@@ -346,6 +348,7 @@
             "~/.config/rclone/rclone.conf"
           ],
           "allowWrite": [
+            // !!curl
             "/tmp/",
             // lark-cli: 更新凭证
             "~/.local/share/lark-cli/",
