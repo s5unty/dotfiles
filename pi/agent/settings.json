@@ -19,8 +19,8 @@
     "npm:@juicesharp/rpiv-todo",
     "npm:@xynogen/pix-pretty",
     "npm:pi-md-friendly",
-    "git:github.com/s5unty/pi-guard",
-    "git:github.com/s5unty/pi-data-masking"
+    "npm:@sevten/pi-data-masking",
+    "git:github.com/s5unty/pi-guard"
   ],
   "terminal": {
     "imageWidthCells": 60,
@@ -28,10 +28,7 @@
     "showTerminalProgress": false
   },
   "modelThinkingLevels": {
-    "kimi-coding/k3": "high",
-    "openai-codex/gpt-5.6-sol": "medium",
-    "openai-codex/gpt-5.6-luna": "medium",
-    "openai-codex/gpt-5.6-terra": "medium"
+    "openai-codex/gpt-6-astra": "high"
   },
   "tuiMode": "fullscreen",
   "fullscreenExitOutput": "resume-hint",
@@ -49,20 +46,22 @@
     "--ignore-scripts",
     "--omit=dev"
   ],
+  "shellCommandPrefix": "export DOCKER_HOST=unix:///run/docker.sock",
   "editorPaddingX": 0,
   "outputPad": 1,
   "guard": {
     "enabled": true,
     "rules": {
+      "ask_user_question": "allow",
       "bash": {
+        "backlog": "allow",
         "lark-cli": "allow"
       },
-      "todo": "allow",
       "fetch_content": "allow",
       "get_search_content": "allow",
       "source_check": "allow",
-      "web_search": "allow",
-      "ask_user_question": "allow"
+      "todo": "allow",
+      "web_search": "allow"
     },
     "profiles": {
       "sudo": {

@@ -180,7 +180,7 @@ map <silent> <unique> <MiddleMouse> <C-]>zz
 map <silent> <unique> <LeftMouse><RightMouse> ZQ
 
 " Function Key {{{2
-nmap <silent> <unique> <F1> :let &colorcolumn=80-&colorcolumn<CR>:set list!<CR>
+nmap <silent> <unique> <F1> :let &colorcolumn=100-&colorcolumn<CR>:set list!<CR>:set textwidth=81<CR>:set formatoptions+=2nmB<CR>
 nmap <silent> <unique> <F2> :set nowrap!<CR>:set nowrap?<CR>:Inspect<CR>
 nmap <silent> <unique> <F3> :set nohls!<CR>:set nohls?<CR>
 nmap <silent> <unique> <F4> :set nopaste!<CR>:set nopaste?<CR><cmd>RenderMarkdown toggle<CR>
@@ -188,7 +188,7 @@ nmap          <unique> <F5> :Gvdiffsplit HEAD<SPACE>
 imap          <unique> <F5> <C-O>:Gvdiffsplit HEAD<SPACE>
 nmap <silent> <unique> <F6> <cmd>CsvViewToggle delimiter=, display_mode=border header_lnum=1<CR>
 imap <silent> <unique> <F6> <cmd>CsvViewToggle delimiter=, display_mode=border header_lnum=1<CR>
-nmap <silent> <unique> <F7> :set formatoptions-=2mn<CR>:set formatoptions<CR>
+nmap <silent> <unique> <F7> <CR>
 nmap <silent> <unique> <F8> <cmd>RenderMarkdown toggle<CR>
 imap <silent> <unique> <F8> <cmd>RenderMarkdown toggle<CR>
 nmap <silent> <unique> <F9> <cmd>Telescope oldfiles<CR>

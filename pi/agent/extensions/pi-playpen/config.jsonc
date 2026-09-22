@@ -299,8 +299,6 @@
         },
         "filesystem": {
           "allowRead": [
-            // !!curl
-            "/tmp/",
             // node
             "~/.config/nvm/versions/node/v24.20.0/bin/",
             "~/.config/nvm/versions/node/v24.20.0/lib/node_modules/npm/bin/",
@@ -309,7 +307,11 @@
             // lark-cli
             "~/.agents/skills/",
             // docker
-            "/var/run/docker.sock"
+            "/run/docker.sock",
+            // git
+            "~/.gitconfig",
+            // !!curl
+            "/tmp/"
           ],
           // Additional host restrictions; Snowglobe adds its own root/project rules.
           "denyRead": [
@@ -348,11 +350,11 @@
             "~/.config/rclone/rclone.conf"
           ],
           "allowWrite": [
-            // !!curl
-            "/tmp/",
             // lark-cli: 更新凭证
             "~/.local/share/lark-cli/",
-            "~/.lark-cli/"
+            "~/.lark-cli/",
+            // !!curl
+            "/tmp/"
           ],
           "denyWrite": [
             "~/personal/asset/pass",
