@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.85.1",
+  "lastChangelogVersion": "0.87.1",
   "theme": "moonlight",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-astra",
@@ -17,8 +17,8 @@
     "npm:@juicesharp/rpiv-todo",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@juicesharp/rpiv-i18n",
+    "npm:@earendil-works/pi-voice",
     "npm:@sevten/pi-data-masking",
-    "npm:@juicesharp/rpiv-voice",
     "npm:pi-playpen",
     "git:github.com/s5unty/pi-guard"
   ],

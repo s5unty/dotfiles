@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "backend": {
+    "type": "transcribe-cpp"
+  },
+  "shortcut": "ctrl+space",
+  "preferredLanguages": [
+    "zh"
+  ],
+  "transcriptionLanguage": "auto",
+  "chineseOutput": "simplified",
+  "microphone": {
+    "type": "system-default"
+  },
+  "model": {
+    "source": "catalog",
+    "id": "Qwen3-ASR-0.6B",
+    "path": "/sun/.cache/huggingface/hub/models--handy-computer--Qwen3-ASR-0.6B-gguf/snapshots/e4e16599b900eb0cb36e524514756bb92eb092b7/Qwen3-ASR-0.6B-Q8_0.gguf"
+  }
+}

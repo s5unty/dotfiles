@@ -9,7 +9,7 @@
   "diffSplit": false,
   "diffStatMeter": true,
   "mcpTools": true,
-  "prePreview": true,
+  "prePreview": false,
   "writeDiff": true,
   "summaryClip": 100
 }
