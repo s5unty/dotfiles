@@ -1,0 +1,15 @@
+{
+  "collapsedLines": 12,
+  "expandedLines": 200,
+  "detailLines": 1000,
+  "diffLines": 200,
+  "syntaxHighlight": true,
+  "diffSyntax": false,
+  "diffLineNumbers": true,
+  "diffSplit": false,
+  "diffStatMeter": true,
+  "mcpTools": true,
+  "prePreview": true,
+  "writeDiff": true,
+  "summaryClip": 100
+}
