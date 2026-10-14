@@ -159,7 +159,7 @@
       }
     },
     "selectorBorders": {
-      "enabled": true,
+      "enabled": false,
       "style": "zentui",
       "colorSource": "terminal"
     },

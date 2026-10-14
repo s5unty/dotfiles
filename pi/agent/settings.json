@@ -1,17 +1,18 @@
 {
-  "lastChangelogVersion": "0.87.1",
+  "lastChangelogVersion": "1.1.0",
   "theme": "moonlight",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-astra",
   "httpProxy": "http://127.0.0.1:7890",
   "packages": [
     "npm:pi-zentui",
-    "npm:@pify/pretty",
+    "git:github.com/s5unty/pretty",
     "npm:pi-md-friendly",
     "npm:pi-mcp-adapter",
     "npm:@narumitw/pi-usage",
     "npm:pi-web-access",
     "npm:pi-image-view",
+    "npm:pi-code-render",
     "npm:pi-obsidian",
     "npm:@tintinweb/pi-subagents",
     "npm:@juicesharp/rpiv-todo",
@@ -61,6 +62,7 @@
       "get_search_content": "allow",
       "source_check": "allow",
       "todo": "allow",
+      "web_enable": "allow",
       "web_search": "allow"
     },
     "profiles": {

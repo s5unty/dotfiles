@@ -1,3 +1,11 @@
 {
   "proxy": "http://127.0.0.1:7890"
+  "ssrf": {
+    "trustEnvProxy": true
+  },
+  "searchRouting": {
+    "providers": ["openai", "tavily"],
+    "useCurrentModel": true,
+    "fallbackOn": ["unsupported", "transient", "quota", "network", "invalid-response"]
+  }
 }
