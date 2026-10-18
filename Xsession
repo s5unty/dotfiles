@@ -27,10 +27,14 @@ ln -sf /tmp/.xsession-errors ~/.xsession-errors
 # 强制启用 Ctrl-Alt-Backspace(重启图形界面) 组合键
 /usr/bin/setxkbmap -option terminate:ctrl_alt_bksp
 
-# 智能 CapsLock，单一使用时 Esc，组合使用时 Ctrl
-# https://gist.github.com/tanyuan/55bca522bf50363ae4573d4bdcf06e2e
-/usr/bin/setxkbmap -option ctrl:nocaps
-/usr/bin/xcape -e 'Control_L=Escape'
+##
+# 改用Wooting了，不用软件配置了，啊哈哈哈哈
+##
+# # 智能 CapsLock，单一使用时 Esc，组合使用时 Ctrl
+# # https://gist.github.com/tanyuan/55bca522bf50363ae4573d4bdcf06e2e
+# /usr/bin/setxkbmap -option ctrl:nocaps
+# /usr/bin/xcape -e 'Control_L=Escape'
+####
 
 # 加载自定义的特殊的键盘功能键
 # 注意：fcitx 的 X 键盘集成(高级组件)
