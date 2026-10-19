@@ -1,11 +1,12 @@
 {
-  "lastChangelogVersion": "1.1.0",
+  "lastChangelogVersion": "1.3.0",
   "theme": "moonlight",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-astra",
   "httpProxy": "http://127.0.0.1:7890",
   "packages": [
     "npm:pi-zentui",
+    "npm:pi-tidy",
     "git:github.com/s5unty/pretty",
     "npm:pi-md-friendly",
     "npm:pi-mcp-adapter",
@@ -78,5 +79,12 @@
       "root": "profile root",
       "yolo": "off"
     }
-  }
+  },
+  "tidy": {
+    "highlightBash": false,
+    "alwaysShowTools": ["write", "edit", "bash"]
+  },
+  "extensions": [
+    "-builtin:mcp"
+  ]
 }
