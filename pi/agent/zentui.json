@@ -32,9 +32,15 @@
           "contextThresholds": {
             "warning": 70,
             "error": 90
+          },
+          "formats": {
+            "bottomLeft": "$session_name"
+          },
+          "showCacheHit": false,
+          "separator": "dash"
           }
-        }
-      }
+      },
+      "codexQuota": false
     },
     "userMessages": {
       "enabled": false,
@@ -108,9 +114,9 @@
             "cwd": false,
             "sessionName": true,
             "gitBranch": true,
-            "gitStatus": false,
-            "gitCounts": false,
-            "gitCommit": false,
+            "gitStatus": true,
+            "gitCounts": true,
+            "gitCommit": true,
             "gitMetrics": false,
             "runtime": true,
             "modelInfo": false,
@@ -128,7 +134,7 @@
           },
           "gitCommit": {
             "hashLength": 7,
-            "onlyDetached": false,
+            "onlyDetached": true,
             "showTag": false
           },
           "gitMetrics": {
@@ -156,7 +162,8 @@
             }
           }
         }
-      }
+      },
+      "codexQuota": false
     },
     "selectorBorders": {
       "enabled": false,
@@ -166,6 +173,42 @@
     "thinkingSteps": {
       "enabled": true,
       "mode": "tree"
+    },
+    "toolDisplay": {
+      "enabled": false,
+      "style": "opencode",
+      "registerToolOverrides": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "grep": true,
+        "find": true,
+        "ls": true
+      },
+      "builtinRendererOverrides": {
+        "bash": true
+      },
+      "customToolOverrides": {},
+      "readOutputMode": "hidden",
+      "searchOutputMode": "hidden",
+      "mcpOutputMode": "hidden",
+      "bashOutputMode": "opencode",
+      "previewLines": 8,
+      "expandedPreviewMaxLines": 4000,
+      "bashCollapsedLines": 10,
+      "diffViewMode": "auto",
+      "diffIndicatorMode": "bars",
+      "diffSplitMinWidth": 120,
+      "diffCollapsedLines": 24,
+      "diffWordWrap": true,
+      "showTruncationHints": false
+    },
+    "extensionStatuses": {
+      "visibility": {
+        "perm": "show",
+        "gatekeeper": "show"
+      }
     }
   },
   "icons": {
