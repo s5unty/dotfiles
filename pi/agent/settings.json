@@ -6,8 +6,8 @@
   "httpProxy": "http://127.0.0.1:7890",
   "packages": [
     "npm:pi-zentui",
-    "npm:pi-tidy@0.4.3",
     "git:github.com/s5unty/pretty",
+    "npm:pi-tidy",
     "npm:pi-md-friendly",
     "npm:pi-mcp-adapter",
     "npm:@narumitw/pi-usage",
