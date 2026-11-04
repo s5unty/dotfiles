@@ -1,12 +1,12 @@
 {
-  "lastChangelogVersion": "1.3.0",
+  "lastChangelogVersion": "1.5.0",
   "theme": "moonlight",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-astra",
   "httpProxy": "http://127.0.0.1:7890",
   "packages": [
     "npm:pi-zentui",
-    "git:github.com/s5unty/pretty",
+    "npm:@pify/pretty",
     "npm:pi-tidy",
     "npm:pi-md-friendly",
     "npm:pi-mcp-adapter",
@@ -81,10 +81,25 @@
     }
   },
   "tidy": {
-    "highlightBash": false,
-    "alwaysShowTools": ["write", "edit", "bash"]
+    "frameMessages": false,
+    "frameFinalReply": false,
+    "userMessageStyle": "off",
+    "alwaysShowTools": [
+      "write",
+      "edit",
+      "bash"
+    ]
   },
   "extensions": [
     "-builtin:mcp"
-  ]
+  ],
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-mcp-adapter\",\"scope\":\"user\"}": "7.0.1",
+    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.46.0",
+    "{\"source\":\"npm:pi-image-view\",\"scope\":\"user\"}": "0.5.0",
+    "{\"source\":\"npm:@tintinweb/pi-subagents\",\"scope\":\"user\"}": "0.23.1",
+    "{\"source\":\"git:github.com/s5unty/pi-guard\",\"scope\":\"user\"}": "1.4.0",
+    "{\"source\":\"npm:pi-tidy\",\"scope\":\"user\"}": "0.8.0",
+    "{\"source\":\"npm:@narumitw/pi-usage\",\"scope\":\"user\"}": "0.69.2"
+  }
 }
