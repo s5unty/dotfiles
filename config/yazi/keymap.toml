@@ -5,15 +5,23 @@ desc = "Open shell here"
 
 [[mgr.prepend_keymap]]
 on = "O"
-run = '''shell --orphan -- case %h in
-	*.[mM][dD]|*.[mM][aA][rR][kK][dD][oO][wW][nN])
-		x-www-browser %h
-		;;
-	*)
-		ya emit open --interactive
-		;;
-esac'''
-desc = "Open Markdown in browser / Open with"
+run = '''shell --block --
+set -- %s
+
+if [ "$#" -eq 2 ]; then
+    exec vi -d -- "$@"
+fi
+
+case %h in
+    *.[mM][dD]|*.[mM][aA][rR][kK][dD][oO][wW][nN])
+        nohup x-www-browser %h </dev/null >/dev/null 2>&1 &
+        ;;
+    *)
+        ya emit open --interactive
+        ;;
+esac
+'''
+desc = "Diff two files / Markdown in browser / Open with"
 
 [[mgr.prepend_keymap]]
 on = [ "m", "S" ]
