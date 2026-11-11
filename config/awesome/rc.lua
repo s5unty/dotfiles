@@ -518,7 +518,7 @@ clientkeys = awful.util.table.join(
             c.minimized = true
         end ,
         {description = "minimize", group = "client"}),
-    awful.key({ modkey,           }, "Return",
+    awful.key({ modkey,           }, "m",
         function (c)
             c.maximized = not c.maximized
             c:raise()
@@ -735,13 +735,13 @@ awful.rules.rules = {
     { rule = { class = "Genscript-genlink" },
     properties = { floating=true } },
 
-    { rule = { instance = "GenLink会议" },
+    { rule = { name = "GenLink会议" },
     properties = { floating=true } },
 
     { rule = { class = "Meeting" },
     properties = { floating=true } },
 
-    { rule = { instance = "bytedance-feishu", name = "图片" },
+    { rule = { name = "图片" },     -- feishu
     properties = { floating=true, ontop=true } },
 
     { rule = { class = "wechat" },
