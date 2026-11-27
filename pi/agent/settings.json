@@ -2,7 +2,7 @@
   "lastChangelogVersion": "1.5.0",
   "theme": "moonlight",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6-astra",
+  "defaultModel": "gpt-6.2-sol",
   "httpProxy": "http://127.0.0.1:7890",
   "packages": [
     "npm:pi-zentui",
@@ -80,9 +80,10 @@
     }
   },
   "tidy": {
+    "style": "frame",
     "frameMessages": false,
-    "frameFinalReply": false,
-    "userMessageStyle": false,
+    "finalReplyStyle": "off",
+    "userMessageStyle": "off",
     "codeBlocks": false,
     "bashResultLines": 1,
     "writeLines": 0,
